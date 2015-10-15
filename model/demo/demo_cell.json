@@ -1,0 +1,64 @@
+{
+    "soma": {
+        "parent": null, 
+        "diam": 50, 
+        "ra": 100, 
+        "cm": 1, 
+        "nseg": 1, 
+        "connection_point": 1, 
+        "mechanisms": {
+		    "0": {
+		    	"name": "hh",
+			"params": {
+			    "gnabar": 0.01
+		 	}
+		    }
+	},
+        "l": 100
+    }, 
+    "dendrites": {
+	"0": {
+		"parent": null, 
+		"diam": 50, 
+		"ra": 100, 
+		"cm": 1, 
+		"nseg": 1, 
+		"connection_point": 1, 
+		"mechanisms": {
+		    "0": {
+		    	"name": "hh",
+			"params": {
+			    "gnabar": 0.01
+		 	}
+		    }
+		},
+		"l": 100
+	}
+    }, 
+    "axon_secs": {
+	"0": {
+		"parent": null, 
+		"diam": 50, 
+		"ra": 100, 
+		"cm": 1, 
+		"nseg": 1, 
+		"connection_point": 1, 
+		"mechanisms": {
+		    "0": {
+		    	"name": "hh"
+		    }
+		},
+		"l": 100
+	}
+    }, 
+    "rm": 50000, 
+    "celsius": 36,
+    "ion": {
+	"0": {
+	    "name":"na_ion",
+	    "params": {
+	        "ena": 20
+	    }
+	}
+    }
+}
