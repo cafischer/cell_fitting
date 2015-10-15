@@ -163,11 +163,11 @@ class Cell(object):
         :param filename: Path to the .json file containing the Cells parameters. The .json file has to be composed of
         dictionaries as follows:
         {
-        "soma":{"parent", "diam", "ra", "cm", "nseg", "connection_point", "l", "mechanisms":{ "0":{"name", "params"}}},
-        "dendrites":{"0":{ "parent", "diam", "ra", "cm", "nseg", "connection_point", "l",
-                "mechanisms":{"0":{"name", "params"}}}},
-        "axon_secs":{"0":{ "parent", "diam", "ra", "cm", "nseg", "connection_point", "l",
-                "mechanisms":{"0":{"name", "params"}}}},
+        "soma":{"parent", "diam", "ra", "cm", "nseg", "connection_point", "l", "mechanisms":{"name":{"params"}}},
+        "dendrites":{"0":{"parent", "diam", "ra", "cm", "nseg", "connection_point", "l",
+                    "mechanisms":{"name":{"params"}}}},
+        "axon_secs":{"0":{"parent", "diam", "ra", "cm", "nseg", "connection_point", "l",
+                    "mechanisms":{"name":{"params"}}}},
         "rm": 50000,
         "celsius": 36,
         "ion": {"0":{"name", "params"}
@@ -217,8 +217,8 @@ class Cell(object):
         # create sections
         self.soma = Section(l=params['soma']['l'], diam=params['soma']['diam'], nseg=params['soma']['nseg'],
                             ra=params['soma']['ra'], cm=params['soma']['cm'],
-                            mechanisms=[Mechanism(**params['soma']['mechanisms'][str(j)])
-                                        for j in range(len(params['soma']['mechanisms']))],
+                            mechanisms=[Mechanism(k, v)
+                                        for k, v in params['soma']['mechanisms'].iteritems()],
                             parent=params['soma']['parent'], connection_point=params['soma']['connection_point'])
 
         self.dendrites = [0] * len(params['dendrites'])
@@ -226,8 +226,8 @@ class Cell(object):
             self.dendrites[i] = Section(l=params['dendrites'][str(i)]['l'], diam=params['dendrites'][str(i)]['diam'],
                                         nseg=params['dendrites'][str(i)]['nseg'], ra=params['dendrites'][str(i)]['ra'],
                                         cm=params['dendrites'][str(i)]['cm'],
-                                        mechanisms=[Mechanism(**params['dendrites'][str(i)]['mechanisms'][str(j)])
-                                                    for j in range(len(params['dendrites'][str(i)]['mechanisms']))],
+                                        mechanisms=[Mechanism(k, v)
+                                                    for k, v in params['dendrites'][str(i)]['mechanisms'].iteritems()],
                                         parent=params['dendrites'][str(i)]['parent'],
                                         connection_point=params['dendrites'][str(i)]['connection_point'])
 
@@ -236,8 +236,8 @@ class Cell(object):
             self.axon_secs[i] = Section(l=params['axon_secs'][str(i)]['l'], diam=params['axon_secs'][str(i)]['diam'],
                                         nseg=params['axon_secs'][str(i)]['nseg'], ra=params['axon_secs'][str(i)]['ra'],
                                         cm=params['axon_secs'][str(i)]['cm'],
-                                        mechanisms=[Mechanism(**params['axon_secs'][str(i)]['mechanisms'][str(j)])
-                                                    for j in range(len(params['axon_secs'][str(i)]['mechanisms']))],
+                                        mechanisms=[Mechanism(k, v)
+                                                    for k, v in params['axon_secs'][str(i)]['mechanisms'].iteritems()],
                                         parent=params['axon_secs'][str(i)]['parent'],
                                         connection_point=params['axon_secs'][str(i)]['connection_point'])
 
@@ -273,7 +273,7 @@ class Cell(object):
         if '.json' not in filename:
             filename += '.json'
         fw = open(filename, 'w')
-        json.dump(self.params, fw)
+        json.dump(self.params, fw, indent=4)
 
     @staticmethod
     def load_mech(mechanism_dir):

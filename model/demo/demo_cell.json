@@ -5,17 +5,14 @@
         "ra": 100, 
         "cm": 1, 
         "nseg": 1, 
-        "connection_point": 1, 
-        "mechanisms": {
-		    "0": {
-		    	"name": "hh",
-			"params": {
-			    "gnabar": 0.01
-		 	}
-		    }
+	"connection_point": 1, 
+	"mechanisms": {
+	    "hh": {
+		"gnabar": 0.01
+	    }
 	},
-        "l": 100
-    }, 
+		"l": 100
+	    }, 
     "dendrites": {
 	"0": {
 		"parent": null, 
@@ -25,11 +22,8 @@
 		"nseg": 1, 
 		"connection_point": 1, 
 		"mechanisms": {
-		    "0": {
-		    	"name": "hh",
-			"params": {
-			    "gnabar": 0.01
-		 	}
+		    "hh": {
+			"gnabar": 0.01
 		    }
 		},
 		"l": 100
@@ -44,8 +38,8 @@
 		"nseg": 1, 
 		"connection_point": 1, 
 		"mechanisms": {
-		    "0": {
-		    	"name": "hh"
+		    "hh": {
+			"gnabar": 0.01
 		    }
 		},
 		"l": 100
