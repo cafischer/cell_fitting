@@ -156,11 +156,11 @@ class Cell(object):
     :type axon_secs: List of Sections
     """
 
-    def __init__(self, filename, mechanism_dir=None):
+    def __init__(self, model_dir, mechanism_dir=None):
         """
         Initializes a Cell.
 
-        :param filename: Path to the .json file containing the Cells parameters. The .json file has to be composed of
+        :param model_dir: Path to the .json file containing the Cells parameters. The .json file has to be composed of
         dictionaries as follows:
         {
         "soma":{"parent", "diam", "ra", "cm", "nseg", "connection_point", "l", "mechanisms":{"name":{"params"}}},
@@ -174,13 +174,13 @@ class Cell(object):
         }
         whereby the specified fields have to be filled with corresponding values (if not set by default). Dictionaries
         containing "0" can be expanded using "1", "2", etc. followed by a dictionary with the same format as "0".
-        :type filename: String
+        :type model_dir: String
         :param mechanism_dir: Specifies the path to the .mod files of the mechanisms (see :func Cell.load_mech)
         :type mechanism_dir: String
         """
 
         # load .json file
-        fr = open(filename, 'r')
+        fr = open(model_dir, 'r')
         params = json.load(fr)
 
         # assign parameters
@@ -204,7 +204,7 @@ class Cell(object):
         """
         Creates the cell from params.
 
-        :param params: Cell parameters composed as described in :param filename in func: Cell.__init__
+        :param params: Cell parameters composed as described in :param model_dir in func: Cell.__init__
         :type params: Dict
         """
 
