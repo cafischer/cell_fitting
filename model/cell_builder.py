@@ -12,10 +12,10 @@ class Mechanism(object):
     delivered that will be set when the Mechanism is inserted into a Section.
 
     :ivar name: Name of the Mechanism as specified at SUFFIX in the .mod file.
-    :type name: String
+    :type name: str
     :ivar params: Dictionary containing the parameters to be set. Only possible for parameters that are specified
     in the PARAMETER block of the corresponding .mod file.
-    :type params: Dict
+    :type params: dict
 
     :Examples:
     leak = Mechanism('pas', {'e': -65, 'g': 0.0002})
@@ -49,26 +49,26 @@ class Section(nrn.Section):
     Encapsulates NEURON sections.
 
     :cvar PROXIMAL: Number corresponding to the origin of a Section.
-    :type PROXIMAL: Float
+    :type PROXIMAL: float
     :cvar DISTAL: Number corresponding to the end of a Section.
-    :type DISTAL: Float
+    :type DISTAL: float
     :ivar l: Length (um).
-    :type l: Float
+    :type l: float
     :ivar diam: Diameter (um).
-    :type diam: FLoat
+    :type diam: float
     :ivar nseg: Number of segments. Specifies the number of internal points at which NEURON computes solutions.
-    :type nseg: Int
+    :type nseg: int
     :ivar ra: Axial resistance (Ohm * cm).
-    :type ra: Float
+    :type ra: float
     :ivar cm: Membrane capacitance (uF * cm^2)
-    :type cm: Float
+    :type cm: float
     :ivar mechanisms: Mechanisms (ion channels)
-    :type mechanisms: List of Mechanisms
+    :type mechanisms: list of Mechanisms
     :ivar parent: Section to which this Section shall be connected.
     :type parent: Section
     :ivar connection_point: Number between 0 and 1 indicating the point at which this Section will be attached on
     the parent Section.
-    :type connection_point: Float
+    :type connection_point: float
 
     :Examples:
     soma = Section(l=30, diam=30, mechanisms=[Mechanism('hh'), Mechanism('pas')])
@@ -111,7 +111,7 @@ class Section(nrn.Section):
         Records the membrane potential. Values are updated after each NEURON h.run().
 
         :param: pos: Indicates the position on the Section at which is recorded (number between 0 and 1).
-        :type: pos: Float
+        :type: pos: float
         :return: v: Membrane potential.
         :rtype: v: NEURON Vector
         """
@@ -124,9 +124,9 @@ class Section(nrn.Section):
         Records the spikes of the Cell. Values are updated after each NEURON h.run().
 
         :param: pos: Indicates the position on the Section at which is recorded (number between 0 and 1).
-        :type: pos: Float
+        :type: pos: float
         :param: threshold: Only spikes above this threshold are counted as spikes.
-        :type: threshold: Float
+        :type: threshold: float
         :return: vec: Contains the times where spikes occurred
         :rtype: vec: NEURON vector
         """
@@ -145,15 +145,15 @@ class Cell(object):
     :func: Cell.__init__.
 
     :ivar celsius: Temperature (C).
-    :type celsius: Float
+    :type celsius: float
     :ivar rm: Membrane resistance (Ohm * cm^2).
-    :type rm:Float
+    :type rm:float
     :ivar soma: Soma (cell body).
     :type soma: Section
     :ivar dendrites: Dendrites.
-    :type dendrites: List of Sections
+    :type dendrites: list of Sections
     :ivar axon_secs: Sections of the axon (e.g. axon hillock, axon initial segment, axon).
-    :type axon_secs: List of Sections
+    :type axon_secs: list of Sections
     """
 
     def __init__(self, model_dir, mechanism_dir=None):
@@ -174,9 +174,9 @@ class Cell(object):
         }
         whereby the specified fields have to be filled with corresponding values (if not set by default). Dictionaries
         containing "0" can be expanded using "1", "2", etc. followed by a dictionary with the same format as "0".
-        :type model_dir: String
+        :type model_dir: str
         :param mechanism_dir: Specifies the path to the .mod files of the mechanisms (see :func Cell.load_mech)
-        :type mechanism_dir: String
+        :type mechanism_dir: str
         """
 
         # load .json file
@@ -205,7 +205,7 @@ class Cell(object):
         Creates the cell from params.
 
         :param params: Cell parameters composed as described in :param model_dir in func: Cell.__init__
-        :type params: Dict
+        :type params: dict
         """
 
         # set temperature
@@ -254,7 +254,7 @@ class Cell(object):
         Updates the value of an attribute in self.params and recreates the Cell with the new parameters.
 
         :param keys: List of keys leading to the attribute in self.params.
-        :type keys: List of str
+        :type keys: list of str
         :param value: New value of the attribute.
         :type value: type depends on the attribute
         """
@@ -276,16 +276,16 @@ class Cell(object):
         value = reduce(lambda dic, key: dic[key], [self.params] + keys[:-1])[keys[-1]]
         return value
 
-    def save_as_json(self, filename):
+    def save_as_json(self, file_dir):
         """
         Saves all parameters of the Cell as .json file from which it can be initialized again.
 
-        :param filename: Path under which the Cell parameters shall be stored.
-        :type filename: String
+        :param file_dir: Path under which the Cell parameters shall be stored.
+        :type file_dir: str
         """
-        if '.json' not in filename:
-            filename += '.json'
-        fw = open(filename, 'w')
+        if '.json' not in file_dir:
+            file_dir += '.json'
+        fw = open(file_dir, 'w')
         json.dump(self.params, fw, indent=4)
 
     @staticmethod
@@ -295,7 +295,7 @@ class Cell(object):
 
         :param mechanism_dir: Specifies the path to the .mod files. Mod files have to be compiled in the same folder
         using nrnivmodl.
-        :type mechanism_dir: String
+        :type mechanism_dir: str
         """
         # load membrane mechanisms
         h.nrn_load_dll(mechanism_dir + '/i686/.libs/libnrnmech.so')
