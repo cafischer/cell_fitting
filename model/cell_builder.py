@@ -347,7 +347,7 @@ def test_record():
 def test_cell_creation():
 
     # create Cell
-    cell = Cell('demo/demo_cell.json')
+    cell = Cell('../demo/demo_cell.json')
 
     # test if attribute from StellateCell.json were set
     if cell.dendrites[0].l == cell.params['dendrites']['0']['l']:
@@ -364,8 +364,8 @@ def test_cell_creation():
         print "Attribute not correctly updated!"
 
     # save new Cell parameters to a .json file
-    cell.save_as_json('demo/demo_cell_new')
-    cell_new = Cell('demo/demo_cell_new.json')
+    cell.save_as_json('../demo/demo_cell_new')
+    cell_new = Cell('../demo/demo_cell_new.json')
     if cell_new.dendrites[0].l == val:
         print "Parameters saved and retrieved correctly from .json file."
 
