@@ -79,19 +79,19 @@ class Section(nrn.Section):
     PROXIMAL = 0
     DISTAL = 1
 
-    def __init__(self, l, diam, nseg=1, ra=100, cm=1, mechanisms=None, parent=None, connection_point=DISTAL):
+    def __init__(self, L, diam, nseg=1, Ra=100, cm=1, mechanisms=None, parent=None, connection_point=DISTAL):
         """
         Initializes a Section.
         """
         nrn.Section.__init__(self)  # important for inheritance from NEURON
 
         # set geometry
-        self.l = l
+        self.L = L # TODO L change everywhere , NEURON depended on same names?
         self.diam = diam
         self.nseg = nseg
 
         # set cable properties
-        self.ra = ra
+        self.Ra = Ra
         self.cm = cm
 
         # connect to parent section
@@ -193,7 +193,7 @@ class Cell(object):
         # default parameters
         self.celsius = 36
         self.rm = 10000
-        self.soma = Section(l=20, diam=20, nseg=1, ra=100, cm=1, mechanisms=[Mechanism('hh')], parent=None)
+        self.soma = Section(L=20, diam=20, nseg=1, Ra=100, cm=1, mechanisms=[Mechanism('hh')], parent=None)
         self.dendrites = []
         self.axon_secs = []
 
@@ -216,16 +216,16 @@ class Cell(object):
         self.rm = params['rm']
 
         # create sections
-        self.soma = Section(l=params['soma']['l'], diam=params['soma']['diam'], nseg=params['soma']['nseg'],
-                            ra=params['soma']['ra'], cm=params['soma']['cm'],
+        self.soma = Section(L=params['soma']['L'], diam=params['soma']['diam'], nseg=params['soma']['nseg'],
+                            Ra=params['soma']['Ra'], cm=params['soma']['cm'],
                             mechanisms=[Mechanism(k, v)
                                         for k, v in params['soma']['mechanisms'].iteritems()],
                             parent=params['soma']['parent'], connection_point=params['soma']['connection_point'])
 
         self.dendrites = [0] * len(params['dendrites'])
         for i in range(len(params['dendrites'])):
-            self.dendrites[i] = Section(l=params['dendrites'][str(i)]['l'], diam=params['dendrites'][str(i)]['diam'],
-                                        nseg=params['dendrites'][str(i)]['nseg'], ra=params['dendrites'][str(i)]['ra'],
+            self.dendrites[i] = Section(L=params['dendrites'][str(i)]['L'], diam=params['dendrites'][str(i)]['diam'],
+                                        nseg=params['dendrites'][str(i)]['nseg'], Ra=params['dendrites'][str(i)]['Ra'],
                                         cm=params['dendrites'][str(i)]['cm'],
                                         mechanisms=[Mechanism(k, v)
                                                     for k, v in params['dendrites'][str(i)]['mechanisms'].iteritems()],
@@ -234,8 +234,8 @@ class Cell(object):
 
         self.axon_secs = [0] * len(params['axon_secs'])
         for i in range(len(params['axon_secs'])):
-            self.axon_secs[i] = Section(l=params['axon_secs'][str(i)]['l'], diam=params['axon_secs'][str(i)]['diam'],
-                                        nseg=params['axon_secs'][str(i)]['nseg'], ra=params['axon_secs'][str(i)]['ra'],
+            self.axon_secs[i] = Section(L=params['axon_secs'][str(i)]['L'], diam=params['axon_secs'][str(i)]['diam'],
+                                        nseg=params['axon_secs'][str(i)]['nseg'], Ra=params['axon_secs'][str(i)]['Ra'],
                                         cm=params['axon_secs'][str(i)]['cm'],
                                         mechanisms=[Mechanism(k, v)
                                                     for k, v in params['axon_secs'][str(i)]['mechanisms'].iteritems()],
