@@ -192,8 +192,8 @@ class Cell(object):
 
         # default parameters
         self.celsius = 36
-        self.rm = 1000
-        self.soma = Section(l=100, diam=100, nseg=1, ra=100, cm=1, mechanisms=[Mechanism('hh')], parent=None)
+        self.rm = 10000
+        self.soma = Section(l=20, diam=20, nseg=1, ra=100, cm=1, mechanisms=[Mechanism('hh')], parent=None)
         self.dendrites = []
         self.axon_secs = []
 
@@ -210,6 +210,7 @@ class Cell(object):
 
         # set temperature
         self.celsius = params['celsius']
+        h.celsius = self.celsius  # set celsius also in hoc
 
         # set membrane resistance
         self.rm = params['rm']
