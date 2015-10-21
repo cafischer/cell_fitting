@@ -254,15 +254,27 @@ class Cell(object):
         Updates the value of an attribute in self.params and recreates the Cell with the new parameters.
 
         :param keys: List of keys leading to the attribute in self.params.
-        :type keys: List
+        :type keys: List of str
         :param value: New value of the attribute.
-        :type value: Type depends on the attribute to be changed.
+        :type value: type depends on the attribute
         """
         # update value in self.params
         reduce(lambda dic, key: dic[key], [self.params] + keys[:-1])[keys[-1]] = value  # tracks all changes for saving
 
         # update Cell
         self.create(self.params)
+
+    def get_attr(self, keys):
+        """
+        Returns the value of the attribute indexed by keys.
+
+        :param keys: List of keys leading to the attribute in self.params.
+        :type keys: list of str
+        :return: Value of the accessed attribute.
+        :rtype: type depends on the attribute
+        """
+        value = reduce(lambda dic, key: dic[key], [self.params] + keys[:-1])[keys[-1]]
+        return value
 
     def save_as_json(self, filename):
         """
@@ -350,15 +362,15 @@ def test_cell_creation():
     cell = Cell('../demo/demo_cell.json')
 
     # test if attribute from StellateCell.json were set
-    if cell.dendrites[0].l == cell.params['dendrites']['0']['l']:
+    if cell.dendrites[0].L == cell.params['dendrites']['0']['L']:
         print "Attribute is correct!"
     else:
         print "Attribute is not correct!"
 
     # change attribute and test again
     val = 222
-    cell.update_attr(['dendrites', '0', 'l'], val)
-    if cell.dendrites[0].l == val and cell.params['dendrites']['0']['l'] == val:
+    cell.update_attr(['dendrites', '0', 'L'], val)
+    if cell.dendrites[0].L == val and cell.params['dendrites']['0']['L'] == val:
         print "Successful update of the attribute!"
     else:
         print "Attribute not correctly updated!"
@@ -366,7 +378,7 @@ def test_cell_creation():
     # save new Cell parameters to a .json file
     cell.save_as_json('../demo/demo_cell_new')
     cell_new = Cell('../demo/demo_cell_new.json')
-    if cell_new.dendrites[0].l == val:
+    if cell_new.dendrites[0].L == val:
         print "Parameters saved and retrieved correctly from .json file."
 
 
