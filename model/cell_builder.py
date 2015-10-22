@@ -1,5 +1,6 @@
 from neuron import nrn, h
 import json
+import numpy as np
 
 __author__ = 'caro'
 
@@ -135,6 +136,30 @@ class Section(nrn.Section):
         self.spike_count.thresh = threshold
         self.spike_count.record(vec)
         return vec
+
+    def play_current(self, pos, i_amp, t):
+        """
+        At each time step inject a current equivalent to i_amp at this time step.
+
+        :param: pos: Indicates the position of the IClamp on the Section (number between 0 and 1).
+        :type: pos: float
+        :param i_amp: Current injected at each time step.
+        :type i_amp: array_like
+        :param t: Time at each time step.
+        :type t: array_like
+        :return: IClamp and the current and time vector (NEURON needs the reference).
+        :rtype: h.IClamp, h.Vector, h.Vector
+        """
+
+        stim = h.IClamp(pos, sec=self)
+        stim.delay = 0  # 0 necessary for playing the current into IClamp
+        stim.dur = 1e9  # 1e9 necessary for playing the current into IClamp
+        i_vec = h.Vector()
+        i_vec.from_python(i_amp)
+        t_vec = h.Vector()
+        t_vec.from_python(t)
+        i_vec.play(stim._ref_amp, t_vec) # play current into IClamp (use experimental current trace)
+        return stim, i_vec, t_vec
 
 
 class Cell(object):
@@ -302,6 +327,7 @@ class Cell(object):
 
 
 #######################################################################################################################
+
 
 def test_mechanism_insertion():
 
