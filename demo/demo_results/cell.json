@@ -1,0 +1,19 @@
+{
+    "ion": {}, 
+    "soma": {
+        "diam": 20, 
+        "parent": null, 
+        "cm": 1, 
+        "nseg": 1, 
+        "connection_point": 1, 
+        "mechanisms": {
+            "hh": {}
+        }, 
+        "L": 20, 
+        "Ra": 120
+    }, 
+    "dendrites": {}, 
+    "celsius": 6, 
+    "rm": 50000, 
+    "axon_secs": {}
+}

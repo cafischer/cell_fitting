@@ -1,0 +1,16 @@
+{
+    "stepcurrent": {
+        "dtype": "float64", 
+        "shape": [
+            2
+        ], 
+        "__ndarray__": "qYH+NJQsS0EiDU6SeypLQQ=="
+    }, 
+    "spike": {
+        "dtype": "float64", 
+        "shape": [
+            2
+        ], 
+        "__ndarray__": "pqhXyt5QN0Hj2eIgt1A3QQ=="
+    }
+}
