@@ -1,7 +1,6 @@
 {
     "soma": {
-        "parent": null, 
-        "diam": 20, 
+        "parent": null,  
         "Ra": 100, 
         "cm": 1, 
         "nseg": 1, 
@@ -9,12 +8,14 @@
 	"mechanisms": {
 	    "hh": {}
 	},
-		"L": 20
-	    }, 
+	"geom": {
+            "diam": 20,
+	    "L": 20
+	}
+    }, 
     "dendrites": {
 	"0": {
 		"parent": null, 
-		"diam": 10, 
 		"Ra": 100, 
 		"cm": 1, 
 		"nseg": 3, 
@@ -24,13 +25,15 @@
 			"gnabar": 0.1
 		    }
 		},
-		"L": 40
+		"geom": {
+		    "diam": 5,
+		    "L": 40
+		}
 	}
     }, 
     "axon_secs": {
 	"0": {
 		"parent": null, 
-		"diam": 10, 
 		"Ra": 100, 
 		"cm": 1, 
 		"nseg": 3, 
@@ -40,7 +43,10 @@
 			"gnabar": 0.5
 		    }
 		},
-		"L": 40
+		"geom": {
+		    "diam": 5,
+		    "L": 40
+		}
 	}
     }, 
     "rm": 50000, 

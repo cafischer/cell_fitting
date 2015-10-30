@@ -1,6 +1,7 @@
 from neuron import nrn, h
 import json
 import numpy as np
+import pylab as pl
 
 __author__ = 'caro'
 
@@ -72,23 +73,26 @@ class Section(nrn.Section):
     :type connection_point: float
 
     :Examples:
-    soma = Section(l=30, diam=30, mechanisms=[Mechanism('hh'), Mechanism('pas')])
-    apical = Section(l=600, diam=2, nseg=5, mechanisms=[Mechanism('pas')],
+    soma = Section(geom={'L':30, 'diam':30}, mechanisms={'hh': {}, 'pas': {}})
+    apical = Section(geom={'L':600, 'diam':2}, nseg=5, mechanisms={'pas': {}},
                     parent=soma, connection_point=DISTAL)
     """
 
     PROXIMAL = 0
     DISTAL = 1
 
-    def __init__(self, L, diam, nseg=1, Ra=100, cm=1, mechanisms=None, parent=None, connection_point=DISTAL):
+    def __init__(self, geom, nseg=1, Ra=100, cm=1, mechanisms=None, parent=None, connection_point=DISTAL):
         """
         Initializes a Section.
         """
         nrn.Section.__init__(self)  # important for inheritance from NEURON
 
         # set geometry
-        self.L = L # TODO L change everywhere , NEURON depended on same names?
-        self.diam = diam
+        if 'L' in geom and 'diam' in geom:
+            self.L = geom['L']
+            self.diam = geom['diam']
+        else:
+            self.set_geom(geom)
         self.nseg = nseg
 
         # set cable properties
@@ -101,11 +105,16 @@ class Section(nrn.Section):
 
         # add ion channels
         if mechanisms is not None:
-            for mechanism in mechanisms:
-                mechanism.insert_into(self)
+            for k, v in mechanisms.iteritems():
+                Mechanism(k, v).insert_into(self)
 
         # add spike_count
         self.spike_count = None  # sustains NEURON reference for recording spikes (see :func Cell.record_spikes)
+
+    def set_geom(self, geom):
+        h.pt3dclear()
+        for g in geom:
+            h.pt3dadd(g[0], g[1], g[2], g[3])
 
     def record_v(self, pos):
         """
@@ -218,7 +227,7 @@ class Cell(object):
         # default parameters
         self.celsius = 36
         self.rm = 10000
-        self.soma = Section(L=20, diam=20, nseg=1, Ra=100, cm=1, mechanisms=[Mechanism('hh')], parent=None)
+        #self.soma = Section(L=20, diam=20, nseg=1, Ra=100, cm=1, mechanisms=[Mechanism('hh')], parent=None)
         self.dendrites = []
         self.axon_secs = []
 
@@ -241,31 +250,15 @@ class Cell(object):
         self.rm = params['rm']
 
         # create sections
-        self.soma = Section(L=params['soma']['L'], diam=params['soma']['diam'], nseg=params['soma']['nseg'],
-                            Ra=params['soma']['Ra'], cm=params['soma']['cm'],
-                            mechanisms=[Mechanism(k, v)
-                                        for k, v in params['soma']['mechanisms'].iteritems()],
-                            parent=params['soma']['parent'], connection_point=params['soma']['connection_point'])
+        self.soma = Section(**params['soma'])
 
         self.dendrites = [0] * len(params['dendrites'])
         for i in range(len(params['dendrites'])):
-            self.dendrites[i] = Section(L=params['dendrites'][str(i)]['L'], diam=params['dendrites'][str(i)]['diam'],
-                                        nseg=params['dendrites'][str(i)]['nseg'], Ra=params['dendrites'][str(i)]['Ra'],
-                                        cm=params['dendrites'][str(i)]['cm'],
-                                        mechanisms=[Mechanism(k, v)
-                                                    for k, v in params['dendrites'][str(i)]['mechanisms'].iteritems()],
-                                        parent=params['dendrites'][str(i)]['parent'],
-                                        connection_point=params['dendrites'][str(i)]['connection_point'])
+            self.dendrites[i] = Section(**params['dendrites'][str(i)])
 
         self.axon_secs = [0] * len(params['axon_secs'])
         for i in range(len(params['axon_secs'])):
-            self.axon_secs[i] = Section(L=params['axon_secs'][str(i)]['L'], diam=params['axon_secs'][str(i)]['diam'],
-                                        nseg=params['axon_secs'][str(i)]['nseg'], Ra=params['axon_secs'][str(i)]['Ra'],
-                                        cm=params['axon_secs'][str(i)]['cm'],
-                                        mechanisms=[Mechanism(k, v)
-                                                    for k, v in params['axon_secs'][str(i)]['mechanisms'].iteritems()],
-                                        parent=params['axon_secs'][str(i)]['parent'],
-                                        connection_point=params['axon_secs'][str(i)]['connection_point'])
+            self.axon_secs[i] = Section(**params['axon_secs'][str(i)])
 
         # set reversal potentials, insert ions
         for sec in h.allsec():
@@ -330,29 +323,31 @@ class Cell(object):
 
 
 def test_mechanism_insertion():
+    print "Test Mechanism insertion: "
 
     # create a Mechanism
     params = {'gnabar': 0.2}
-    m = Mechanism('hh', params)
 
     # create a Section (automatically inserts the Mechanims)
-    sec = Section(l=30, diam=30, mechanisms=[m])
+    sec = Section(geom={'L':30, 'diam':30}, mechanisms={'hh': params})
 
     # print the variables of the Mechanism in the Section
     if sec.gnabar_hh == params['gnabar']:
-        print "Mechanism inserted and parameter correct!"
+        print "Correct!"
     else:
-        print "Mechanism not correctly inserted!"
+        print "Wrong!"
 
 
 def test_record():
+    print "Test record membrane potential and spikes from a Section: "
+    print "See figure."
 
     import pylab as pl
     import numpy as np
     h.load_file("stdrun.hoc")
 
     # create a Section
-    sec = Section(l=30, diam=30, mechanisms=[Mechanism('hh'), Mechanism('pas')])
+    sec = Section(geom={'L':15, 'diam':15}, mechanisms={'hh':{}, 'pas':{}})
 
     # record
     pos = 0.5
@@ -364,12 +359,12 @@ def test_record():
     # stimulate
     stim = h.IClamp(pos, sec=sec)
     stim.delay = 50
-    stim.dur = 1000
-    stim.amp = 1
+    stim.dur = 400
+    stim.amp = 0.3
 
     # run
     h.dt = 0.025
-    h.tstop = 1100
+    h.tstop = 500
     h.run()
 
     # plot
@@ -379,34 +374,87 @@ def test_record():
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane potential (mV)')
     pl.legend()
+    pl.title('Regular spiking')
     pl.show()
 
 
 def test_cell_creation():
+    print "Test the creation of a Cell: "
 
     # create Cell
     cell = Cell('../demo/demo_cell.json')
 
     # test if attribute from StellateCell.json were set
-    if cell.dendrites[0].L == cell.params['dendrites']['0']['L']:
-        print "Attribute is correct!"
+    print "Attribute set: "
+    if cell.dendrites[0].L == cell.params['dendrites']['0']['geom']['L']:
+        print "Yes!"
     else:
-        print "Attribute is not correct!"
+        print "No!"
 
     # change attribute and test again
+    print "Update of attribute: "
     val = 222
-    cell.update_attr(['dendrites', '0', 'L'], val)
-    if cell.dendrites[0].L == val and cell.params['dendrites']['0']['L'] == val:
-        print "Successful update of the attribute!"
+    cell.update_attr(['dendrites', '0', 'geom', 'L'], val)
+    if cell.dendrites[0].L == val and cell.params['dendrites']['0']['geom']['L'] == val:
+        print "Correct!"
     else:
-        print "Attribute not correctly updated!"
+        print "Wrong!"
 
     # save new Cell parameters to a .json file
+    print "Cell saved and retrieved: "
     cell.save_as_json('../demo/demo_cell_new')
     cell_new = Cell('../demo/demo_cell_new.json')
     if cell_new.dendrites[0].L == val:
-        print "Parameters saved and retrieved correctly from .json file."
+        print "Correct!"
+    else:
+        print "Wrong!"
 
+
+def test_compare_to_hoc_cell():
+    print "Compare the membrane potential of the cell created from a .json file and the cell created from a .hoc file."
+    print "See figure. Both should be the same!"
+
+    # create Cell from .json file
+    cell_json = Cell('../demo/demo_cell2.json')
+
+    # create NEURON cell from .hoc file
+    h.xopen("../demo/demo_cell2.hoc")
+
+    # record membrane potential
+    v_json = cell_json.soma.record_v(0.5)
+    v_hoc = h.Vector()
+    v_hoc.record(h.soma(0.5)._ref_v)
+
+    # inject current
+    stim_json = h.IClamp(0.5, sec=cell_json.soma)
+    stim_hoc = h.IClamp(0.5, sec=h.soma)
+    stim_json.delay = 50
+    stim_json.dur = 200
+    stim_json.amp = 0.1
+    stim_hoc.delay = 50
+    stim_hoc.dur = 200
+    stim_hoc.amp = 0.1
+
+    i_amp = h.Vector()
+    i_amp.record(stim_json._ref_i) # record the current amplitude (to check)
+
+    # run simulation
+    h.tstop = 300
+    h.init()
+    h.run()
+
+    t = np.arange(0, h.tstop+h.dt, h.dt)
+
+    # plot the results
+    f, (ax1, ax2) = pl.subplots(2, 1, sharex=True)
+    ax1.plot(t, np.array(v_json), 'b', label='Cell_json')
+    ax1.plot(t, np.array(v_hoc), 'r', label='Cell_hoc')
+    ax1.set_ylabel('Membrane potential (mV)')
+    ax1.legend()
+    ax2.plot(t, np.array(i_amp), 'k')
+    ax2.set_xlabel('Time (ms)')
+    ax2.set_ylabel('Current (nA)')
+    pl.show()
 
 if __name__ == "__main__":
 
@@ -415,3 +463,6 @@ if __name__ == "__main__":
     test_record()
 
     test_cell_creation()
+
+    test_compare_to_hoc_cell()
+

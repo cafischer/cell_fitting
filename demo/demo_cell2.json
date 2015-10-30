@@ -1,7 +1,6 @@
 {
     "soma": {
         "parent": null, 
-        "diam": 20, 
         "Ra": 120, 
         "cm": 1, 
         "nseg": 1, 
@@ -9,7 +8,10 @@
 	"mechanisms": {
 	    "hh": {}
 	},
-		"L": 20
+	"geom": {
+	    "diam": 20,
+	    "L": 20
+	}
     }, 
     "dendrites": {}, 
     "axon_secs": {}, 
