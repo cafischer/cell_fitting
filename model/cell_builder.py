@@ -257,27 +257,30 @@ class Cell(object):
 
         self.dendrites = [0] * len(params['dendrites'])
         for i in range(len(params['dendrites'])):
-            if params['dendrites'][str(i)]['parent'][0] == 'soma':  # TODO
-                params['dendrites'][str(i)]['parent'] = self.soma
-            elif params['dendrites'][str(i)]['parent'][0] == 'dendrites':
-                params['dendrites'][str(i)]['parent'] = self.dendrites[params['dendrites'][str(i)]['parent'][1]]
+            if 'parent' in params['dendrites'][str(i)].keys():
+                if params['dendrites'][str(i)]['parent'][0] == 'soma':  # TODO
+                    params['dendrites'][str(i)]['parent'] = self.soma
+                elif params['dendrites'][str(i)]['parent'][0] == 'dendrites':
+                    params['dendrites'][str(i)]['parent'] = self.dendrites[params['dendrites'][str(i)]['parent'][1]]
             self.dendrites[i] = Section(**params['dendrites'][str(i)])
 
         self.axon_secs = [0] * len(params['axon_secs'])
         for i in range(len(params['axon_secs'])):
-            if params['axon_secs'][str(i)]['parent'][0] == 'soma':  # TODO
-                params['axon_secs'][str(i)]['parent'] = self.soma
-            elif params['axon_secs'][str(i)]['parent'][0] == 'axon_secs':
-                params['axon_secs'][str(i)]['parent'] = self.axon_secs[params['axon_secs'][str(i)]['parent'][1]]
+            if 'parent' in params['axon_secs'][str(i)].keys():
+                if params['axon_secs'][str(i)]['parent'][0] == 'soma':  # TODO
+                    params['axon_secs'][str(i)]['parent'] = self.soma
+                elif params['axon_secs'][str(i)]['parent'][0] == 'axon_secs':
+                    params['axon_secs'][str(i)]['parent'] = self.axon_secs[params['axon_secs'][str(i)]['parent'][1]]
 
             self.axon_secs[i] = Section(**params['axon_secs'][str(i)])
 
         # set reversal potentials, insert ions
-        for sec in h.allsec():
-            for i in range(len(params['ion'])):
-                if h.ismembrane(str(params['ion'][str(i)]["name"]), sec=sec):
-                    for key, val in params['ion'][str(i)]["params"].iteritems():
-                        setattr(sec, key, val)
+        if 'ion' in params.keys():
+            for sec in h.allsec():
+                for ion in params['ion'].keys():
+                    if h.ismembrane(str(ion), sec=sec):
+                        for key, val in params['ion'][ion].iteritems():
+                            setattr(sec, ion, val)
 
     def update_attr(self, keys, value):
         """
@@ -288,8 +291,13 @@ class Cell(object):
         :param value: New value of the attribute.
         :type value: type depends on the attribute
         """
+        def dicorator(dic, key):
+            if key not in dic.keys():  # if the key does not exist yet it will be added with a new dict
+                dic[key] = dict()
+            return dic[key]
+
         # update value in self.params
-        reduce(lambda dic, key: dic[key], [self.params] + keys[:-1])[keys[-1]] = value  # tracks all changes for saving
+        reduce(dicorator, [self.params] + keys[:-1])[keys[-1]] = value
 
         # update Cell
         self.create(self.params)
@@ -405,9 +413,9 @@ def test_cell_creation():
 
     # change attribute and test again
     print "Update of attribute: "
-    val = 222
-    cell.update_attr(['dendrites', '0', 'geom', 'L'], val)
-    if cell.dendrites[0].L == val and cell.params['dendrites']['0']['geom']['L'] == val:
+    val = 0.11
+    cell.update_attr(['soma', 'mechanisms', 'hh', 'gnabar'], val)
+    if cell.soma(.5).hh.gnabar == val and cell.params['soma']['mechanisms']['hh']['gnabar'] == val:
         print "Correct!"
     else:
         print "Wrong!"
@@ -416,7 +424,7 @@ def test_cell_creation():
     print "Cell saved and retrieved: "
     cell.save_as_json('../demo/demo_cell_new')
     cell_new = Cell('../demo/demo_cell_new.json')
-    if cell_new.dendrites[0].L == val:
+    if cell_new.soma(.5).hh.gnabar == val:
         print "Correct!"
     else:
         print "Wrong!"
@@ -498,8 +506,6 @@ def test_morph():
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
-    ax.set_xlim([-200,200])
-    ax.set_ylim([-200,200])
     pl.show()
     #pl.savefig('morph.svg')
 
@@ -514,8 +520,9 @@ if __name__ == "__main__":
 
     #test_compare_to_hoc_cell()
 
-    test_morph()
+    #test_morph()
 
 
-# TODO: flag for geometry
-# TODO: connect statements for morph, better way?
+    # TODO: flag for geometry
+    # TODO: connect statements for morph, better way?
+    # TODO: better coping with the existance or non-existance of certain parameters
