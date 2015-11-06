@@ -1,3 +1,4 @@
+from __future__ import division
 from neuron import nrn, h
 import json
 import numpy as np
@@ -112,9 +113,11 @@ class Section(nrn.Section):
         self.spike_count = None  # sustains NEURON reference for recording spikes (see :func Cell.record_spikes)
 
     def set_geom(self, geom):
+        self.push()  # neccessary to access Section in NEURON
         h.pt3dclear()
         for g in geom:
             h.pt3dadd(g[0], g[1], g[2], g[3])
+        h.pop_section()  # restore the previously accessed Section
 
     def record_v(self, pos):
         """
@@ -227,7 +230,7 @@ class Cell(object):
         # default parameters
         self.celsius = 36
         self.rm = 10000
-        #self.soma = Section(L=20, diam=20, nseg=1, Ra=100, cm=1, mechanisms=[Mechanism('hh')], parent=None)
+        self.soma = Section(geom={'L':20, 'diam':20}, nseg=1, Ra=100, cm=1, mechanisms={'hh': {}}, parent=None)
         self.dendrites = []
         self.axon_secs = []
 
@@ -254,10 +257,19 @@ class Cell(object):
 
         self.dendrites = [0] * len(params['dendrites'])
         for i in range(len(params['dendrites'])):
+            if params['dendrites'][str(i)]['parent'][0] == 'soma':  # TODO
+                params['dendrites'][str(i)]['parent'] = self.soma
+            elif params['dendrites'][str(i)]['parent'][0] == 'dendrites':
+                params['dendrites'][str(i)]['parent'] = self.dendrites[params['dendrites'][str(i)]['parent'][1]]
             self.dendrites[i] = Section(**params['dendrites'][str(i)])
 
         self.axon_secs = [0] * len(params['axon_secs'])
         for i in range(len(params['axon_secs'])):
+            if params['axon_secs'][str(i)]['parent'][0] == 'soma':  # TODO
+                params['axon_secs'][str(i)]['parent'] = self.soma
+            elif params['axon_secs'][str(i)]['parent'][0] == 'axon_secs':
+                params['axon_secs'][str(i)]['parent'] = self.axon_secs[params['axon_secs'][str(i)]['parent'][1]]
+
             self.axon_secs[i] = Section(**params['axon_secs'][str(i)])
 
         # set reversal potentials, insert ions
@@ -456,13 +468,54 @@ def test_compare_to_hoc_cell():
     ax2.set_ylabel('Current (nA)')
     pl.show()
 
+
+def test_morph():
+    from mpl_toolkits.mplot3d import Axes3D
+
+    # cell with complex morphology
+    cell = Cell('./cells/StellateCell_full.json')
+
+    fig = pl.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # plot dendrites
+    for sec_i, sec in enumerate([cell.soma]+cell.dendrites+cell.axon_secs):
+        sec.push()
+        X = [0]*int(h.n3d())
+        Y = [0]*int(h.n3d())
+        Z = [0]*int(h.n3d())
+        d = [0]*int(h.n3d())
+        for i in range(int(h.n3d())):
+            X[i] = h.x3d(i)
+            Y[i] = h.y3d(i)
+            Z[i] = h.z3d(i)
+            d[i] = h.diam3d(i)
+        if sec_i>len(cell.dendrites)+1:
+            ax.plot(X, Y, Z, 'r', linewidth=d[0])
+        else:
+            ax.plot(X, Y, Z, 'k', linewidth=d[0])
+        h.pop_section()
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
+    ax.set_xlim([-200,200])
+    ax.set_ylim([-200,200])
+    pl.show()
+    #pl.savefig('morph.svg')
+
+
 if __name__ == "__main__":
 
-    test_mechanism_insertion()
+    #test_mechanism_insertion()
 
-    test_record()
+    #test_record()
 
-    test_cell_creation()
+    #test_cell_creation()
 
-    test_compare_to_hoc_cell()
+    #test_compare_to_hoc_cell()
 
+    test_morph()
+
+
+# TODO: flag for geometry
+# TODO: connect statements for morph, better way?
