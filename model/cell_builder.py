@@ -3,6 +3,7 @@ from neuron import nrn, h
 import json
 import numpy as np
 import pylab as pl
+import copy
 
 __author__ = 'caro'
 
@@ -55,14 +56,15 @@ class Section(nrn.Section):
     :type PROXIMAL: float
     :cvar DISTAL: Number corresponding to the end of a Section.
     :type DISTAL: float
-    :ivar l: Length (um).
-    :type l: float
+    :ivar geom: Geometry of the Section. Can be defined either by the length L (um) or diameter diam (um) given in a
+    dictionary or by a list with [x, y, z, diam] coordinates.
+    :type geom: dict or list
     :ivar diam: Diameter (um).
     :type diam: float
     :ivar nseg: Number of segments. Specifies the number of internal points at which NEURON computes solutions.
     :type nseg: int
-    :ivar ra: Axial resistance (Ohm * cm).
-    :type ra: float
+    :ivar Ra: Axial resistance (Ohm * cm).
+    :type Ra: float
     :ivar cm: Membrane capacitance (uF * cm^2)
     :type cm: float
     :ivar mechanisms: Mechanisms (ion channels)
@@ -183,8 +185,6 @@ class Cell(object):
 
     :ivar celsius: Temperature (C).
     :type celsius: float
-    :ivar rm: Membrane resistance (Ohm * cm^2).
-    :type rm:float
     :ivar soma: Soma (cell body).
     :type soma: Section
     :ivar dendrites: Dendrites.
@@ -229,10 +229,9 @@ class Cell(object):
 
         # default parameters
         self.celsius = 36
-        self.rm = 10000
-        self.soma = Section(geom={'L':20, 'diam':20}, nseg=1, Ra=100, cm=1, mechanisms={'hh': {}}, parent=None)
-        self.dendrites = []
-        self.axon_secs = []
+        self.soma = Section(geom={'L': 20, 'diam': 20}, nseg=1, Ra=100, cm=1, mechanisms={'hh': {}}, parent=None)
+        self.dendrites = {}
+        self.axon_secs = {}
 
         # create Cell with given parameters
         self.create(params)
@@ -246,36 +245,33 @@ class Cell(object):
         """
 
         # set temperature
-        self.celsius = params['celsius']
-        h.celsius = self.celsius  # set celsius also in hoc
-
-        # set membrane resistance
-        self.rm = params['rm']
+        if 'celsius' in params:
+            self.celsius = params['celsius']
+            h.celsius = self.celsius  # set celsius also in hoc
 
         # create sections
         self.soma = Section(**params['soma'])
 
-        self.dendrites = [0] * len(params['dendrites'])
-        for i in range(len(params['dendrites'])):
-            if 'parent' in params['dendrites'][str(i)].keys():
-                if params['dendrites'][str(i)]['parent'][0] == 'soma':  # TODO
-                    params['dendrites'][str(i)]['parent'] = self.soma
-                elif params['dendrites'][str(i)]['parent'][0] == 'dendrites':
-                    params['dendrites'][str(i)]['parent'] = self.dendrites[params['dendrites'][str(i)]['parent'][1]]
-            self.dendrites[i] = Section(**params['dendrites'][str(i)])
+        if 'dendrites' in params:
+            self.dendrites = [0] * len(params['dendrites'])
+            for i in range(len(params['dendrites'])):
+                if 'parent' in params['dendrites'][str(i)].keys():
+                    params_sec = self.substitute_section(params['dendrites'][str(i)])
+                else:
+                    params_sec = params['dendrites'][str(i)]
+                self.dendrites[i] = Section(**params_sec)
 
-        self.axon_secs = [0] * len(params['axon_secs'])
-        for i in range(len(params['axon_secs'])):
-            if 'parent' in params['axon_secs'][str(i)].keys():
-                if params['axon_secs'][str(i)]['parent'][0] == 'soma':  # TODO
-                    params['axon_secs'][str(i)]['parent'] = self.soma
-                elif params['axon_secs'][str(i)]['parent'][0] == 'axon_secs':
-                    params['axon_secs'][str(i)]['parent'] = self.axon_secs[params['axon_secs'][str(i)]['parent'][1]]
-
-            self.axon_secs[i] = Section(**params['axon_secs'][str(i)])
+        if 'axon_secs' in params:
+            self.axon_secs = [0] * len(params['axon_secs'])
+            for i in range(len(params['axon_secs'])):
+                if 'parent' in params['axon_secs'][str(i)].keys():
+                    params_sec = self.substitute_section(params['axon_secs'][str(i)])
+                else:
+                    params_sec = params['axon_secs'][str(i)]
+                self.axon_secs[i] = Section(**params_sec)
 
         # set reversal potentials, insert ions
-        if 'ion' in params.keys():
+        if 'ion' in params:
             for sec in h.allsec():
                 for ion in params['ion'].keys():
                     if h.ismembrane(str(ion), sec=sec):
@@ -314,6 +310,24 @@ class Cell(object):
         value = reduce(lambda dic, key: dic[key], [self.params] + keys[:-1])[keys[-1]]
         return value
 
+    def substitute_section(self, params):
+        """
+        Substitutes the name and index of a 'parent' section with the corresponding Section of the Cell.
+
+        :param params: Part of the Cell params containing the parent name and index.
+        :type params: dict
+        :return: New parameters with substituted Section
+        :rtype: dict
+        """
+        params_sec = copy.deepcopy(params)
+        if params_sec['parent'][0] == 'soma':
+            params_sec['parent'] = self.soma
+        elif params_sec['parent'][0] == 'dendrites':
+            params_sec['parent'] = self.dendrites[params_sec['parent'][1]]
+        elif params_sec['parent'][0] == 'axon_secs':
+            params_sec['parent'] = self.axon_secs[params_sec['parent'][1]]
+        return params_sec
+
     def save_as_json(self, file_dir):
         """
         Saves all parameters of the Cell as .json file from which it can be initialized again.
@@ -349,7 +363,7 @@ def test_mechanism_insertion():
     params = {'gnabar': 0.2}
 
     # create a Section (automatically inserts the Mechanims)
-    sec = Section(geom={'L':30, 'diam':30}, mechanisms={'hh': params})
+    sec = Section(geom={'L': 30, 'diam': 30}, mechanisms={'hh': params})
 
     # print the variables of the Mechanism in the Section
     if sec.gnabar_hh == params['gnabar']:
@@ -362,12 +376,10 @@ def test_record():
     print "Test record membrane potential and spikes from a Section: "
     print "See figure."
 
-    import pylab as pl
-    import numpy as np
     h.load_file("stdrun.hoc")
 
     # create a Section
-    sec = Section(geom={'L':15, 'diam':15}, mechanisms={'hh':{}, 'pas':{}})
+    sec = Section(geom={'L': 15, 'diam': 15}, mechanisms={'hh': {}, 'pas': {}})
 
     # record
     pos = 0.5
@@ -456,7 +468,7 @@ def test_compare_to_hoc_cell():
     stim_hoc.amp = 0.1
 
     i_amp = h.Vector()
-    i_amp.record(stim_json._ref_i) # record the current amplitude (to check)
+    i_amp.record(stim_json._ref_i)  # record the current amplitude
 
     # run simulation
     h.tstop = 300
@@ -489,16 +501,16 @@ def test_morph():
     # plot dendrites
     for sec_i, sec in enumerate([cell.soma]+cell.dendrites+cell.axon_secs):
         sec.push()
-        X = [0]*int(h.n3d())
-        Y = [0]*int(h.n3d())
-        Z = [0]*int(h.n3d())
-        d = [0]*int(h.n3d())
+        X = [0] * int(h.n3d())
+        Y = [0] * int(h.n3d())
+        Z = [0] * int(h.n3d())
+        d = [0] * int(h.n3d())
         for i in range(int(h.n3d())):
             X[i] = h.x3d(i)
             Y[i] = h.y3d(i)
             Z[i] = h.z3d(i)
             d[i] = h.diam3d(i)
-        if sec_i>len(cell.dendrites)+1:
+        if sec_i > len(cell.dendrites)+1:
             ax.plot(X, Y, Z, 'r', linewidth=d[0])
         else:
             ax.plot(X, Y, Z, 'k', linewidth=d[0])
@@ -512,7 +524,7 @@ def test_morph():
 
 if __name__ == "__main__":
 
-    #test_mechanism_insertion()
+    test_mechanism_insertion()
 
     #test_record()
 
@@ -521,8 +533,3 @@ if __name__ == "__main__":
     #test_compare_to_hoc_cell()
 
     #test_morph()
-
-
-    # TODO: flag for geometry
-    # TODO: connect statements for morph, better way?
-    # TODO: better coping with the existance or non-existance of certain parameters
