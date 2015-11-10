@@ -1,6 +1,5 @@
 {
     "soma": {
-        "parent": null, 
         "Ra": 120, 
         "cm": 1, 
         "nseg": 1, 

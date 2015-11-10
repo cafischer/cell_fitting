@@ -1,13 +1,15 @@
 [
     [
-        "hh", 
+        "gnabar", 
         0.01, 
         0.1, 
         [
-            "soma", 
-            "mechanisms", 
-            "hh", 
-            "gnabar"
+            [
+                "soma", 
+                "mechanisms", 
+                "hh", 
+                "gnabar"
+            ]
         ]
     ], 
     [
@@ -15,8 +17,10 @@
         100, 
         200, 
         [
-            "soma", 
-            "Ra"
+            [
+                "soma", 
+                "Ra"
+            ]
         ]
     ]
 ]

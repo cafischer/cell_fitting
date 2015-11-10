@@ -84,14 +84,18 @@ class Section(nrn.Section):
     PROXIMAL = 0
     DISTAL = 1
 
-    def __init__(self, geom, nseg=1, Ra=100, cm=1, mechanisms=None, parent=None, connection_point=DISTAL):
+    def __init__(self, geom=None, nseg=1, Ra=100, cm=1, mechanisms=None, parent=None,
+                 connection_point=DISTAL):
         """
         Initializes a Section.
         """
         nrn.Section.__init__(self)  # important for inheritance from NEURON
 
         # set geometry
-        if 'L' in geom and 'diam' in geom:
+        if geom is None:  # default values
+            self.L = 15
+            self.diam = 15
+        elif 'L' in geom and 'diam' in geom:
             self.L = geom['L']
             self.diam = geom['diam']
         else:

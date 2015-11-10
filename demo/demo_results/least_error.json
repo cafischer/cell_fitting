@@ -1,16 +1,16 @@
 {
-    "stepcurrent": {
-        "dtype": "float64", 
-        "shape": [
-            2
-        ], 
-        "__ndarray__": "D5rVX9V3S0FR+qH1cHZLQQ=="
-    }, 
     "spike": {
+        "__ndarray__": "NI6aqdRQN0E151m2sFA3QQ==", 
         "dtype": "float64", 
         "shape": [
             2
-        ], 
-        "__ndarray__": "QZ0zhOlQN0FDQBPqsVA3QQ=="
+        ]
+    }, 
+    "stepcurrent": {
+        "__ndarray__": "KOsUwlMuS0Ev4LwJdypLQQ==", 
+        "dtype": "float64", 
+        "shape": [
+            2
+        ]
     }
 }

@@ -1,3 +1,4 @@
+from __future__ import division
 import pylab as pl
 import pandas as pd
 import os
@@ -63,9 +64,9 @@ class Optimizer:
         :type mechanism_dir: str, None
         :param objectives: List of the objectives to be optimized.
         :type objectives: list of str
-        :param variables: Contains a list stating the name, lower bound, upper bound, and path (see: :param keys in
-        :func Cell.update_attr) for each variable to be optimized.
-        :type variables: list of lists each containing str, float, float, list of str
+        :param variables: Contains a list stating the name, lower bound, upper bound, and list of paths (see: :param
+        keys in :func Cell.update_attr) for each variable to be optimized.
+        :type variables: list of lists each containing str, float, float, list of list of str
         :param emoo_params: Parameters for the evolutionary multi-objective optimization (see parameters of
         :func :Optimizer.init_emoo)
         :type emoo_params: dict
@@ -116,6 +117,9 @@ class Optimizer:
         save_as_json(self.save_dir + '/' + 'emoo_params.json', emoo_params)
         save_as_json(self.save_dir + '/' + 'simulation_params.json', self.simulation_params, True)
         self.cell.save_as_json(self.save_dir + '/' + 'cell.json')
+
+        # function used after assigning the new variables to recalculate other variables
+        self.recalculate_variables = None
 
     def extract_simulation_params(self):
         """
@@ -170,7 +174,7 @@ class Optimizer:
         # insert an IClamp with the current trace from the experiment
         stim, i_vec, t_vec = self.cell.soma.play_current(pos_i, i_amp, t)
         i_amp_vec = h.Vector()
-        i_amp_vec.record(stim._ref_amp) # record the current amplitude (to check)
+        i_amp_vec.record(stim._ref_i)  # record the current amplitude (to check)
 
         # record the membrane potential
         v = self.cell.soma.record_v(pos_v)
@@ -195,8 +199,11 @@ class Optimizer:
         :rtype: dict
         """
         # update the cell with new variables
-        for i, p in enumerate(variables_new):
-            self.cell.update_attr(self.variables[i][3], variables_new[p])
+        for var in self.variables:
+            for path in var[3]:
+                self.cell.update_attr(path, variables_new[var[0]])
+        if self.recalculate_variables is not None:
+            self.recalculate_variables(variables_new)
 
         errors = dict()
         for obj in self.objectives:
@@ -287,9 +294,9 @@ class Optimizer:
         
             # best individuals: sum of all errors smallest
             if n_inds < len(population[:, 0]):
-                n_ind = len(population[:, 0])
+                n_inds = len(population[:, 0])
                 print "Less individuals saved due to smaller population!"
-            best_inds = np.argsort(np.sum([population[:, columns[obj]] for obj in self.objectives],0))[:n_inds]
+            best_inds = np.argsort(np.sum([population[:, columns[obj]] for obj in self.objectives], 0))[:n_inds]
             print "Errors of best individual: "
             for obj in self.objectives:
                 print obj + ": " + str(population[best_inds[0], columns[obj]])
@@ -301,11 +308,12 @@ class Optimizer:
                     variables_new.append([var[0], population[ind, columns[var[0]]], self.variables[j][3]])  # save
                     # name, value and path
                 save_as_json(self.save_dir + '/' + 'variables_new_' + str(i) + '.json', variables_new)
-        
+
             # update the cell with variables from best individual
             variables_new = load_json(self.save_dir + '/' + 'variables_new_0.json')
             for i, p in enumerate(variables_new):
-                self.cell.update_attr(variables_new[i][2], variables_new[i][1])
+                for path in self.variables[i][3]:
+                    self.cell.update_attr(path, variables_new[i][1])
         
             # run simulation of best individual
             for obj in self.objectives:
@@ -334,10 +342,10 @@ class Optimizer:
 
 def test_extract_simulation_params():
     optimizer = Optimizer(save_dir='./demo/demo_results',
-        data_dir={'spike': './demo/demo_data_spike.csv', 'stepcurrent': './demo/demo_data_stepcurrent.csv'},
-        model_dir='./demo/demo_cell2.json', mechanism_dir=None,
+        data_dir={'spike': '../demo/demo_data_spike.csv', 'stepcurrent': '../demo/demo_data_stepcurrent.csv'},
+        model_dir='../demo/demo_cell2.json', mechanism_dir=None,
         objectives=["spike", "stepcurrent"],
-        variables=[["hh", 0.01, 0.1, ["soma", "mechanisms", "hh", "gnabar"]], ["Ra", 100, 200, ["soma", "Ra"]]],
+        variables=[["gnabar", 0.01, 0.1, ["soma", "mechanisms", "hh", "gnabar"]], ["Ra", 100, 200, ["soma", "Ra"]]],
         n_gen=10,
         emoo_params={'N': 10, 'C': 200, 'eta_m_0': 20, 'eta_c_0': 20, 'p_m': 0.5})
     simulation_parameters = optimizer.extract_simulation_params()
@@ -360,34 +368,14 @@ def test_extract_simulation_params():
 
 def test_run():
     optimizer = Optimizer(save_dir='./demo/demo_results',
-        data_dir={'spike': './demo/demo_data_spike.csv', 'stepcurrent': './demo/demo_data_stepcurrent.csv'},
-        model_dir='./demo/demo_cell2.json', mechanism_dir=None,
+        data_dir={'spike': '../demo/demo_data_spike.csv', 'stepcurrent': '../demo/demo_data_stepcurrent.csv'},
+        model_dir='../demo/demo_cell2.json', mechanism_dir=None,
         objectives=["spike", "stepcurrent"],
-        variables=[["hh", 0.01, 0.1, ["soma", "mechanisms", "hh", "gnabar"]], ["Ra", 100, 200, ["soma", "Ra"]]],
+        variables=[["gnabar", 0.01, 0.1, ["soma", "mechanisms", "hh", "gnabar"]], ["Ra", 100, 200, ["soma", "Ra"]]],
         n_gen=10,
         emoo_params={'N': 10, 'C': 200, 'eta_m_0': 20, 'eta_c_0': 20, 'p_m': 0.5})
 
-    # NEURON model to compare
-    h.xopen("./demo/demo_cell2.hoc")
-    v_vec = h.Vector()
-
     for obj in optimizer.objectives:
-        # record from .hoc cell
-        v_vec.record(h.soma(0.5)._ref_v)
-
-        # inject current into .hoc cell
-        stim = h.IClamp(optimizer.simulation_params['pos_i'][obj], sec=h.soma)
-        stim.delay = 0  # 0 necessary for playing the current into IClamp
-        stim.dur = 1e9  # 1e9 necessary for playing the current into IClamp
-        i_vec = h.Vector()
-        i_vec.from_python(optimizer.simulation_params['i_amp'][obj])
-        t = np.arange(0, optimizer.simulation_params['tstop'][obj] + optimizer.simulation_params['dt'][obj],
-                      optimizer.simulation_params['dt'][obj])
-        t_vec = h.Vector()
-        t_vec.from_python(t)
-        t_vec = h.Vector()
-        i_vec.play(stim._ref_amp, t_vec.from_python(t)) # play current into IClamp (use experimental current trace)
-
         # run of the optimizer .json cell (also runs .hoc cell)
         v, t, i_amp = optimizer.run_simulation(**{key: optimizer.simulation_params[key][obj]
                                              for key in optimizer.simulation_params.keys()})
@@ -395,8 +383,7 @@ def test_run():
         # plot the results
         f, (ax1, ax2) = pl.subplots(2, 1, sharex=True)
         ax1.plot(t, optimizer.data[obj].v, 'k', label='data')
-        ax1.plot(t, v, 'r', label='model: json')
-        ax1.plot(t, np.array(v_vec), 'b', label='model: hoc')
+        ax1.plot(t, v, 'r', label='model')
         ax1.set_ylabel('Membrane potential (mV)')
         ax1.legend()
         ax2.plot(t, i_amp, 'k')
@@ -407,22 +394,22 @@ def test_run():
 
 def test_function_to_optimize():
     optimizer = Optimizer(save_dir='./demo/demo_results',
-        data_dir={'spike': './demo/demo_data_spike.csv', 'stepcurrent': './demo/demo_data_stepcurrent.csv'},
-        model_dir='./demo/demo_cell2.json', mechanism_dir=None,
+        data_dir={'spike': '../demo/demo_data_spike.csv', 'stepcurrent': '../demo/demo_data_stepcurrent.csv'},
+        model_dir='../demo/demo_cell2.json', mechanism_dir=None,
         objectives=["spike", "stepcurrent"],
-        variables=[["hh", 0.01, 0.1, ["soma", "mechanisms", "hh", "gnabar"]], ["Ra", 100, 200, ["soma", "Ra"]]],
+        variables=[["gnabar", 0.01, 0.1, [["soma", "mechanisms", "hh", "gnabar"]]], ["Ra", 100, 200, [["soma", "Ra"]]]],
         n_gen=10,
         emoo_params={'N': 10, 'C': 200, 'eta_m_0': 20, 'eta_c_0': 20, 'p_m': 0.5})
 
     # new variables
-    variables_new = {"g_na": 0.111, "Ra": 122}
+    variables_new = {"gnabar": 0.111, "Ra": 122}
 
     # apply func_to_optimize
     error = optimizer.func_to_optimize(variables_new)
 
     # test change of attribute
     for i, variable in enumerate(variables_new.keys()):
-        if optimizer.cell.get_attr(optimizer.variables[i][3]) == variables_new[variable]:
+        if optimizer.cell.get_attr(optimizer.variables[i][3][0]) == variables_new[variable]:
             print "Successful update of the attribute!"
         else:
             print "Attribute not correctly updated!"
@@ -439,11 +426,11 @@ def test_function_to_optimize():
 
 
 def test_evolution():
-    optimizer = Optimizer(save_dir='./demo/demo_results',
-        data_dir={'spike': './demo/demo_data_spike.csv', 'stepcurrent': './demo/demo_data_stepcurrent.csv'},
-        model_dir='./demo/demo_cell2.json', mechanism_dir=None,
+    optimizer = Optimizer(save_dir='../demo/demo_results',
+        data_dir={'spike': '../demo/demo_data_spike.csv', 'stepcurrent': '../demo/demo_data_stepcurrent.csv'},
+        model_dir='../demo/demo_cell2.json', mechanism_dir=None,
         objectives=["spike", "stepcurrent"],
-        variables=[["hh", 0.01, 0.1, ["soma", "mechanisms", "hh", "gnabar"]], ["Ra", 100, 200, ["soma", "Ra"]]],
+        variables=[["gnabar", 0.01, 0.1, [["soma", "mechanisms", "hh", "gnabar"]]], ["Ra", 100, 200, [["soma", "Ra"]]]],
         n_gen=2,
         emoo_params={'N': 10, 'C': 200, 'eta_m_0': 20, 'eta_c_0': 20, 'p_m': 0.5})
 
@@ -452,9 +439,9 @@ def test_evolution():
 
 if __name__ == "__main__":
 
-    test_extract_simulation_params()
+    #test_extract_simulation_params()
 
-    test_run()
+    #test_run()
 
     test_function_to_optimize()
 

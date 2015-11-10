@@ -21,9 +21,9 @@ def save_as_json(file_dir, d, contains_array=False):
             file_dir += '.json'
     fw = open(file_dir, 'w')
     if contains_array:
-        json.dump(d, fw, indent=4, cls=NumpyEncoder)
+        json.dump(d, fw, indent=4, sort_keys=True, cls=NumpyEncoder)
     else:
-        json.dump(d, fw, indent=4)
+        json.dump(d, fw, indent=4, sort_keys=True)
 
 
 def load_json(file_dir, contains_array=False):
