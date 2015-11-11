@@ -67,8 +67,8 @@
     },
     "celsius": 36,
     "ion": {
-	"pas_ion": {
-		"e_pas": 20
+	"pas": {
+		"e_pas": -65
 	}
     }
 }

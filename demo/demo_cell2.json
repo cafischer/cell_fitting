@@ -11,10 +11,6 @@
 	    "diam": 20,
 	    "L": 20
 	}
-    }, 
-    "dendrites": {}, 
-    "axon_secs": {}, 
-    "rm": 50000, 
-    "celsius": 6,
-    "ion": {}
+    },  
+    "celsius": 6
 }

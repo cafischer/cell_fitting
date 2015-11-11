@@ -280,7 +280,7 @@ class Cell(object):
                 for ion in params['ion'].keys():
                     if h.ismembrane(str(ion), sec=sec):
                         for key, val in params['ion'][ion].iteritems():
-                            setattr(sec, ion, val)
+                            setattr(sec, key, val)
 
     def update_attr(self, keys, value):
         """
