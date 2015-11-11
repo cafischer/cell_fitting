@@ -10,6 +10,7 @@
     },
     "dendrites":{
 	    "0": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -328,6 +329,7 @@
 		]
 	    }, 
 	    "1": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -574,6 +576,7 @@
 		]
 	    }, 
 	    "10": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -928,6 +931,7 @@
 		]
 	    }, 
 	    "11": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -1288,6 +1292,7 @@
 		]
 	    }, 
 	    "12": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -1480,6 +1485,7 @@
 		]
 	    }, 
 	    "13": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -1840,6 +1846,7 @@
 		]
 	    }, 
 	    "14": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -1990,6 +1997,7 @@
 		]
 	    }, 
 	    "15": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -2152,6 +2160,7 @@
 		]
 	    }, 
 	    "16": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -2644,6 +2653,7 @@
 		]
 	    }, 
 	    "17": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -3076,6 +3086,7 @@
 		]
 	    }, 
 	    "18": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -3442,6 +3453,7 @@
 		]
 	    }, 
 	    "19": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -3508,6 +3520,7 @@
 		]
 	    }, 
 	    "2": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -3652,6 +3665,7 @@
 		]
 	    }, 
 	    "20": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -4252,6 +4266,7 @@
 		]
 	    }, 
 	    "21": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -4570,6 +4585,7 @@
 		]
 	    }, 
 	    "22": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -4690,6 +4706,7 @@
 		]
 	    }, 
 	    "23": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -5182,6 +5199,7 @@
 		]
 	    }, 
 	    "24": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -5236,6 +5254,7 @@
 		]
 	    }, 
 	    "25": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -5902,6 +5921,7 @@
 		]
 	    }, 
 	    "26": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -6136,6 +6156,7 @@
 		]
 	    }, 
 	    "27": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -6214,6 +6235,7 @@
 		]
 	    }, 
 	    "28": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -6280,6 +6302,7 @@
 		]
 	    }, 
 	    "29": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -6370,6 +6393,7 @@
 		]
 	    }, 
 	    "3": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -6880,6 +6904,7 @@
 		]
 	    }, 
 	    "30": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -7096,6 +7121,7 @@
 		]
 	    }, 
 	    "31": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -7336,6 +7362,7 @@
 		]
 	    }, 
 	    "32": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -7702,6 +7729,7 @@
 		]
 	    }, 
 	    "33": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -7780,6 +7808,7 @@
 		]
 	    }, 
 	    "34": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -8284,6 +8313,7 @@
 		]
 	    }, 
 	    "35": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -8344,6 +8374,7 @@
 		]
 	    }, 
 	    "36": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -8506,6 +8537,7 @@
 		]
 	    }, 
 	    "37": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -8854,6 +8886,7 @@
 		]
 	    }, 
 	    "38": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -8938,6 +8971,7 @@
 		]
 	    }, 
 	    "39": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -9040,6 +9074,7 @@
 		]
 	    }, 
 	    "4": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -9118,6 +9153,7 @@
 		]
 	    }, 
 	    "40": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -9148,6 +9184,7 @@
 		]
 	    }, 
 	    "41": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -9232,6 +9269,7 @@
 		]
 	    }, 
 	    "42": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -9382,6 +9420,7 @@
 		]
 	    }, 
 	    "43": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -9682,6 +9721,7 @@
 		]
 	    }, 
 	    "44": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -9898,6 +9938,7 @@
 		]
 	    }, 
 	    "45": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -10444,6 +10485,7 @@
 		]
 	    }, 
 	    "46": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -10624,6 +10666,7 @@
 		]
 	    }, 
 	    "47": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -10840,6 +10883,7 @@
 		]
 	    }, 
 	    "48": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -11392,6 +11436,7 @@
 		]
 	    }, 
 	    "49": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -11488,6 +11533,7 @@
 		]
 	    }, 
 	    "5": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -11650,6 +11696,7 @@
 		]
 	    }, 
 	    "50": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -11728,6 +11775,7 @@
 		]
 	    }, 
 	    "51": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -12178,6 +12226,7 @@
 		]
 	    }, 
 	    "52": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -12574,6 +12623,7 @@
 		]
 	    }, 
 	    "53": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -12634,6 +12684,7 @@
 		]
 	    }, 
 	    "54": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -12856,6 +12907,7 @@
 		]
 	    }, 
 	    "55": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -12940,6 +12992,7 @@
 		]
 	    }, 
 	    "56": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -12988,6 +13041,7 @@
 		]
 	    }, 
 	    "57": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -13318,6 +13372,7 @@
 		]
 	    }, 
 	    "58": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -13792,6 +13847,7 @@
 		]
 	    }, 
 	    "59": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14098,6 +14154,7 @@
 		]
 	    }, 
 	    "6": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14188,6 +14245,7 @@
 		]
 	    }, 
 	    "60": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -14230,6 +14288,7 @@
 		]
 	    }, 
 	    "61": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14266,6 +14325,7 @@
 		]
 	    }, 
 	    "62": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14314,6 +14374,7 @@
 		]
 	    }, 
 	    "63": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14404,6 +14465,7 @@
 		]
 	    }, 
 	    "64": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14494,6 +14556,7 @@
 		]
 	    }, 
 	    "65": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14656,6 +14719,7 @@
 		]
 	    }, 
 	    "66": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14794,6 +14858,7 @@
 		]
 	    }, 
 	    "67": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -14992,6 +15057,7 @@
 		]
 	    }, 
 	    "68": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -15136,6 +15202,7 @@
 		]
 	    }, 
 	    "69": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -15226,6 +15293,7 @@
 		]
 	    }, 
 	    "7": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -15418,6 +15486,7 @@
 		]
 	    }, 
 	    "70": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -15472,6 +15541,7 @@
 		]
 	    }, 
 	    "71": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -15634,6 +15704,7 @@
 		]
 	    }, 
 	    "72": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -15772,6 +15843,7 @@
 		]
 	    }, 
 	    "73": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -16024,6 +16096,7 @@
 		]
 	    }, 
 	    "74": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -16108,6 +16181,7 @@
 		]
 	    }, 
 	    "75": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -16222,6 +16296,7 @@
 		]
 	    }, 
 	    "76": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -16258,6 +16333,7 @@
 		]
 	    }, 
 	    "77": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -16318,6 +16394,7 @@
 		]
 	    }, 
 	    "78": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -16696,6 +16773,7 @@
 		]
 	    }, 
 	    "79": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -16870,6 +16948,7 @@
 		]
 	    }, 
 	    "8": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -17248,6 +17327,7 @@
 		]
 	    }, 
 	    "80": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -17398,6 +17478,7 @@
 		]
 	    }, 
 	    "81": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -17602,6 +17683,7 @@
 		]
 	    }, 
 	    "82": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -17638,6 +17720,7 @@
 		]
 	    }, 
 	    "83": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -17722,6 +17805,7 @@
 		]
 	    }, 
 	    "84": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -17782,6 +17866,7 @@
 		]
 	    }, 
 	    "85": {
+		"Ra": 100, 
 		"connection_point": 0.5, 
 		"geom": [
 		    [
@@ -17830,6 +17915,7 @@
 		]
 	    }, 
 	    "86": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -18268,6 +18354,7 @@
 		]
 	    }, 
 	    "87": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -18574,6 +18661,7 @@
 		]
 	    }, 
 	    "9": {
+		"Ra": 100, 
 		"connection_point": 1.0, 
 		"geom": [
 		    [
@@ -18741,50 +18829,50 @@
 		    7
 		]
 	    }
+    },
+    "axon_secs": {
+	"0": {
+	    "mechanisms": {
+	        "pas": {}
+	    },
+	    "geom": [
+		[-31.809, 32.903, 0, 1.31],
+		[-31.809, 32.903, -20.0, 1.31]
+	    ],
+	    "parent": [
+	        "soma", 
+	        null
+	    ],
+	    "connection_point": 1
 	},
-	"axon_secs": {
-		"0": {
-		    "mechanisms": {
-		        "pas": {}
-		    },
-		    "geom": [
-			[-31.809, 32.903, 0, 1.31],
-			[-31.809, 32.903, -20.0, 1.31]
-		    ],
-		    "parent": [
-		        "soma", 
-		        null
-		    ],
-		    "connection_point": 1
-		},
-		"1": {
-		    "mechanisms": {
-		        "pas": {}
-		    },
-		    "geom": [
-			[-31.809, 32.903, -20.0, 1.31],
-		        [-31.809, 32.903, -40.0, 1.14]
-		    ],
-		    "parent": [
-		        "axon_secs", 
-		        0
-		    ],
-		    "connection_point": 1
-		},
-		"2": {
-		    "mechanisms": {
-		        "pas": {}
-		    },
-		    "geom": [
-			[-31.809, 32.903, -40.0, 1.14],
-		        [-31.809, 32.903, -440.0, 1.14]
-		    ],
-		    "parent": [
-		        "axon_secs", 
-		        1
-		    ],
-	 	    "connection_point": 1
-		}
+	"1": {
+	    "mechanisms": {
+	        "pas": {}
+	    },
+	    "geom": [
+		[-31.809, 32.903, -20.0, 1.31],
+	        [-31.809, 32.903, -40.0, 1.14]
+	    ],
+	    "parent": [
+	        "axon_secs", 
+	        0
+	    ],
+	    "connection_point": 1
+	},
+	"2": {
+	    "mechanisms": {
+	        "pas": {}
+	    },
+	    "geom": [
+		[-31.809, 32.903, -40.0, 1.14],
+	        [-31.809, 32.903, -440.0, 1.14]
+	    ],
+	    "parent": [
+	        "axon_secs", 
+	        1
+	    ],
+ 	    "connection_point": 1
+	}
     },
     "celsius": 36,
     "ion": {
