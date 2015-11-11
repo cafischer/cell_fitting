@@ -18843,7 +18843,8 @@
 	        "soma", 
 	        null
 	    ],
-	    "connection_point": 1
+	    "connection_point": 1,
+	    "Ra": 100
 	},
 	"1": {
 	    "mechanisms": {
@@ -18857,7 +18858,8 @@
 	        "axon_secs", 
 	        0
 	    ],
-	    "connection_point": 1
+	    "connection_point": 1,
+	    "Ra": 100
 	},
 	"2": {
 	    "mechanisms": {
@@ -18871,7 +18873,8 @@
 	        "axon_secs", 
 	        1
 	    ],
- 	    "connection_point": 1
+ 	    "connection_point": 1,
+	    "Ra": 100
 	}
     },
     "celsius": 36,
