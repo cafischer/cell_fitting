@@ -136,6 +136,7 @@ class Optimizer:
         i_amp = dict()
         pos_i = dict()
         pos_v = dict()
+        sec = dict()
         for obj in self.objectives:
             self.data[obj].v *= 1000  # convert to mV
             self.data[obj].t *= 1000  # convert to ms
@@ -144,11 +145,12 @@ class Optimizer:
             v_init[obj] = np.array(self.data[obj].v)[0]
             i_amp[obj] = np.array(self.data[obj].i)
             pos_i[obj] = 0.5  
-            pos_v[obj] = 0.5  
+            pos_v[obj] = 0.5
+            sec[obj] = [self.data[obj].sec[0], self.data[obj].sec[1]]  # [0] section name, [1] section index
 
-        return {'i_amp': i_amp, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i, 'pos_v': pos_v}
+        return {'i_amp': i_amp, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i, 'pos_v': pos_v, 'sec': sec}
 
-    def run_simulation(self, i_amp, v_init, tstop, dt, pos_i, pos_v):
+    def run_simulation(self, sec, i_amp, v_init, tstop, dt, pos_i, pos_v):
         """
         Runs a NEURON simulation of the cell for the given parameters.
 
@@ -167,17 +169,25 @@ class Optimizer:
         :return: Membrane potential of the cell, time and current amplitude at each time step.
         :rtype: tuple of three ndarrays
         """
-        
+
+        # exchange sec with real Section
+        if sec[0] == 'soma':
+            section = self.cell.soma
+        elif sec[0] == 'dendrites':
+            section = self.cell.dendrites[sec[1]]
+        else:
+            raise ValueError('Given section not defined!')
+
         # time
         t = np.arange(0, tstop + dt, dt)
 
         # insert an IClamp with the current trace from the experiment
-        stim, i_vec, t_vec = self.cell.soma.play_current(pos_i, i_amp, t)
+        stim, i_vec, t_vec = section.play_current(pos_i, i_amp, t)
         i_amp_vec = h.Vector()
         i_amp_vec.record(stim._ref_i)  # record the current amplitude (to check)
 
         # record the membrane potential
-        v = self.cell.soma.record_v(pos_v)
+        v = section.record_v(pos_v)
 
         # run simulation
         h.v_init = v_init
@@ -341,7 +351,7 @@ class Optimizer:
 
 
 def test_extract_simulation_params():
-    optimizer = Optimizer(save_dir='./demo/demo_results',
+    optimizer = Optimizer(save_dir='../demo/demo_results',
         data_dir={'spike': '../demo/demo_data_spike.csv', 'stepcurrent': '../demo/demo_data_stepcurrent.csv'},
         model_dir='../demo/demo_cell2.json', mechanism_dir=None,
         objectives=["spike", "stepcurrent"],
@@ -367,7 +377,7 @@ def test_extract_simulation_params():
 
 
 def test_run():
-    optimizer = Optimizer(save_dir='./demo/demo_results',
+    optimizer = Optimizer(save_dir='../demo/demo_results',
         data_dir={'spike': '../demo/demo_data_spike.csv', 'stepcurrent': '../demo/demo_data_stepcurrent.csv'},
         model_dir='../demo/demo_cell2.json', mechanism_dir=None,
         objectives=["spike", "stepcurrent"],
@@ -393,7 +403,7 @@ def test_run():
 
 
 def test_function_to_optimize():
-    optimizer = Optimizer(save_dir='./demo/demo_results',
+    optimizer = Optimizer(save_dir='../demo/demo_results',
         data_dir={'spike': '../demo/demo_data_spike.csv', 'stepcurrent': '../demo/demo_data_stepcurrent.csv'},
         model_dir='../demo/demo_cell2.json', mechanism_dir=None,
         objectives=["spike", "stepcurrent"],
