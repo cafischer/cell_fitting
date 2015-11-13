@@ -50,7 +50,7 @@ class Optimizer:
     """
 
     def __init__(self, save_dir, data_dir, model_dir, mechanism_dir, objectives, variables, n_gen, emoo_params,
-                 simulation_params=None):
+                 get_var_to_fit, var_to_fit, simulation_params=None):
         """
         Initializes a Optimizer.
 
@@ -95,6 +95,15 @@ class Optimizer:
         # create cell
         self.cell = Cell(model_dir, mechanism_dir)
 
+        # name of the variable that shall be fitted
+        self.var_to_fit = var_to_fit
+
+        # function used to produce model output
+        self.get_var_to_fit = get_var_to_fit
+
+        # function used after assigning the new variables to recalculate other variables
+        self.recalculate_variables = None
+
         # load experimental data
         self.data = dict()
         for obj in objectives:
@@ -117,9 +126,6 @@ class Optimizer:
         save_as_json(self.save_dir + '/' + 'emoo_params.json', emoo_params)
         save_as_json(self.save_dir + '/' + 'simulation_params.json', self.simulation_params, True)
         self.cell.save_as_json(self.save_dir + '/' + 'cell.json')
-
-        # function used after assigning the new variables to recalculate other variables
-        self.recalculate_variables = None
 
     def extract_simulation_params(self):
         """
@@ -217,13 +223,15 @@ class Optimizer:
 
         errors = dict()
         for obj in self.objectives:
-            # run simulation with new variables
-            v, _, _ = self.run_simulation(**{key: self.simulation_params[key][obj]
+            # run something
+            var_to_fit = self.get_var_to_fit[obj](**{key: self.simulation_params[key][obj]
                                              for key in self.simulation_params.keys()})
 
             # compute errors
-            errors[obj] = quadratic_error(v, np.array(self.data[obj].v))
+            data_to_fit = np.array(self.data[obj][self.var_to_fit[obj]])  # convert to array
+            data_to_fit = data_to_fit[~np.isnan(data_to_fit)]  # get rid of nans
 
+            errors[obj] = quadratic_error(var_to_fit, data_to_fit)
         return errors
 
     def checkpopulation(self, population, columns, gen):
