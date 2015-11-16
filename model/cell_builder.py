@@ -229,7 +229,7 @@ class Cell(object):
 
         # load mechanisms (ion channel implementations)
         if mechanism_dir is not None:
-            self.load_mech(mechanism_dir)  # must be loaded before insertion of Mechanisms!
+            h.nrn_load_dll(mechanism_dir)  # must be loaded before insertion of Mechanisms! (cannot be loaded twice)
 
         # default parameters
         self.celsius = 36
@@ -343,19 +343,6 @@ class Cell(object):
             file_dir += '.json'
         fw = open(file_dir, 'w')
         json.dump(self.params, fw, indent=4)
-
-    @staticmethod
-    def load_mech(mechanism_dir):
-        """
-        Loads the mechanisms (ion channel kinetics) written in NMODL. The same mechanisms cannot be loaded twice.
-
-        :param mechanism_dir: Specifies the path to the .mod files. Mod files have to be compiled in the same folder
-        using nrnivmodl.
-        :type mechanism_dir: str
-        """
-        # load membrane mechanisms
-        h.nrn_load_dll(mechanism_dir + '/i686/.libs/libnrnmech.so')
-
 
 #######################################################################################################################
 
