@@ -144,8 +144,6 @@ class Optimizer:
         pos_v = dict()
         sec = dict()
         for obj in self.objectives:
-            self.data[obj].v *= 1000  # convert to mV
-            self.data[obj].t *= 1000  # convert to ms
             tstop[obj] = np.array(self.data[obj].t)[-1]
             dt[obj] = np.diff(np.array(self.data[obj].t)[0:2])[0]
             v_init[obj] = np.array(self.data[obj].v)[0]
@@ -223,8 +221,8 @@ class Optimizer:
 
         errors = dict()
         for obj in self.objectives:
-            # run something
-            var_to_fit = self.get_var_to_fit[obj](**{key: self.simulation_params[key][obj]
+            # run simulation and compute the variable to fit
+            var_to_fit, _ = self.get_var_to_fit[obj](**{key: self.simulation_params[key][obj]
                                              for key in self.simulation_params.keys()})
 
             # compute errors
@@ -294,7 +292,7 @@ class Optimizer:
         # start evolution
         self.emoo.evolution(generations=n_gen)
 
-    def eval_emoo(self, n_inds=10):
+    def eval_emoo(self, n_inds):
         """
         Evaluates emoo:
         - finds the best cell
@@ -309,15 +307,20 @@ class Optimizer:
         if self.emoo.master_mode:  # use the master process when multiple processors are used
             population = self.emoo.getpopulation_unnormed() # get the unnormed population
             columns = self.emoo.columns # get the columns vector
+
+
+            # save error development
+            save_as_json(self.save_dir + '/' + 'least_error.json', self.least_error, True)
         
             # best individuals: sum of all errors smallest
-            if n_inds < len(population[:, 0]):
+            if n_inds > len(population[:, 0]):
                 n_inds = len(population[:, 0])
                 print "Less individuals saved due to smaller population!"
-            best_inds = np.argsort(np.sum([population[:, columns[obj]] for obj in self.objectives], 0))[:n_inds]
+            best_inds = np.argsort(np.sum([population[:, columns[obj]] for obj in self.objectives], 0))
+            best_inds = best_inds[:n_inds]  # take only the indices from the best individuals
             print "Errors of best individual: "
             for obj in self.objectives:
-                print obj + ": " + str(population[best_inds[0], columns[obj]])
+                print obj + ": " + str(population[[best_inds[0]], columns[obj]])
         
             # save variables of best individuals
             for i, ind in enumerate(best_inds):
@@ -338,21 +341,22 @@ class Optimizer:
                 simulation_params_tmp = dict()
                 for p in self.simulation_params:
                     simulation_params_tmp[p] = self.simulation_params[p][obj]
-                v, _, _ = self.run_simulation(**simulation_params_tmp)
-        
+                # run simulation and compute the variable to fit
+                var_to_fit, x = self.get_var_to_fit[obj](**simulation_params_tmp)
+
+                # data to fit
+                data_to_fit = np.array(self.data[obj][self.var_to_fit[obj]])  # convert to array
+                data_to_fit = data_to_fit[~np.isnan(data_to_fit)]  # get rid of nans
+
                 # plot the results
                 t = np.arange(0, self.simulation_params['tstop'][obj]+self.simulation_params['dt'][obj],
                               self.simulation_params['dt'][obj])
                 pl.figure()
-                pl.plot(t, v, 'k', label='model')
-                pl.plot(t, self.data[obj].v, label='data')
-                pl.xlabel('Time (ms)')
-                pl.ylabel('Membrane potential (mV)')
+                pl.plot(x, var_to_fit, 'k', label='model')
+                pl.plot(x, data_to_fit, label='data')
+                pl.ylabel(obj)
                 pl.legend()
                 pl.show()
-
-        # save error development
-        save_as_json(self.save_dir + '/' + 'least_error.json', self.least_error, True)
 
 
 ########################################################################################################################
