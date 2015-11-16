@@ -52,6 +52,7 @@ def zap_current2csv(cell_dir):
 
     # load data
     f_range = [1, 20]
+    ds = 1000  # number of steps skipped (in t, i, v) for the impedance computation
     v = np.array(np.loadtxt(cell_dir + '/zap_current/zap_voltage.txt', delimiter='\n'))
     i = np.array(np.loadtxt(cell_dir + '/zap_current/zap_current.txt', delimiter="\n"))
     t = np.array(np.loadtxt(cell_dir + '/zap_current/zap_time.txt', delimiter="\n"))
@@ -78,8 +79,13 @@ def zap_current2csv(cell_dir):
         writer.writerow(header)
         writer.writerows(data_new)
 
+    # downsample t, i, v
+    t = t[::ds]
+    i = i[::ds]
+    v = v[::ds]
+
     # compute impedance
-    imp, freqs = impedance(v, i, t[1]-t[0], f_range)
+    imp, freqs = impedance(v, i, t[1]/1000-t[0]/1000, f_range)  # dt in (sec) for fft
 
     # smooth impedance
     imp_smooth = np.array(sm.nonparametric.lowess(imp, freqs, frac=0.5)[:, 1])
@@ -100,8 +106,8 @@ def zap_current2csv(cell_dir):
     imp_smooth2save = np.zeros(np.array(t).size, dtype=object)
     imp_smooth2save[:] = np.NAN
     imp_smooth2save[:imp_smooth.size] = imp_smooth
-    data = np.column_stack((t, i, v/1000, imp_smooth2save, f_range2save, sec))
-    with open(cell_dir + './zap_current/impedance.csv', 'w') as csvoutput:
+    data = np.column_stack((t, i, v, imp_smooth2save, f_range2save, sec))
+    with open(cell_dir + '/zap_current/impedance_ds.csv', 'w') as csvoutput:
         writer = csv.writer(csvoutput, lineterminator='\n')
         writer.writerow(header)
         writer.writerows(data)
