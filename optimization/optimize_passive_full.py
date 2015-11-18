@@ -52,35 +52,32 @@ def impedance(v, i, dt, f_range):
     return imp[idx1:idx2], freqs[idx1:idx2]
 
 
-if __name__ == "__main__":
+def optimize_passive_full():
 
     # define objectives
-    objectives = ["impedance"]
-    i_steps = [-0.1]
-    for i_step in i_steps:
-        objectives.append('step_current_' + str(i_step))
+    objectives = ['impedance', 'step_current_-0.1']
 
     # specify the directory of the data for each objective
     data_dir = dict()
     data_dir[objectives[0]] = '../data/cell_2013_12_13f/zap_current/impedance_ds.csv'
-    for objective in objectives[1:]:
-        data_dir[objective] = '../data/cell_2013_12_13f/step_current/' + objective + '.csv'
+    data_dir[objectives[1]] =  '../data/cell_2013_12_13f/step_current/step_current_-0.1.csv'
 
     # variables that shall be optimized
     variables = [["cm", 0.7, 1.1, [["soma", "cm"], ["dendrites", "all", "cm"], ["axon_secs", "all", "cm"]]],
                 ["Ra_soma", 10, 500,[["soma", "Ra"]]],
-                ["g_pas", 1/100, 1/10000, [["ion", "pas", "g_pas"]]],  # g_pas: 1/1000, 1/100000
-                ["e_pas", -65, -64, [["ion", "pas", "e_pas"]]],
+                ["g_pas", 1/100, 1/100000, [["ion", "pas", "g_pas"]]],  # g_pas: 1/1000, 1/100000
+                ["e_pas", -80, -50, [["ion", "pas", "e_pas"]]],
                 ["gfastbar", 0.0, 0.01, [["soma", "mechanisms", "ih", "gfastbar"],
                                          ["dendrites", "all", "mechanisms", "ih", "gfastbar"]]],  # insert h-current
                 ["gslowbar", 0.0, 0.01, [["soma", "mechanisms", "ih", "gslowbar"],
                                          ["dendrites", "all", "mechanisms", "ih", "gslowbar"]]]
-                 ]
+                ]
 
     # create Optimizer
     optimizer = Optimizer(save_dir='./results_passive/StellateCell_full_ih',
             data_dir=data_dir,
-            model_dir='../model/cells/StellateCell_full_ih.json', mechanism_dir='../model/channels/i686/.libs/libnrnmech.so',
+            model_dir='../model/cells/StellateCell_full_ih.json',
+                          mechanism_dir='../model/channels/i686/.libs/libnrnmech.so',
             objectives=objectives,
             variables=variables,
             n_gen=50,
@@ -88,7 +85,7 @@ if __name__ == "__main__":
             get_var_to_fit=None,
             var_to_fit={'impedance': 'impedance', 'step_current_-0.1': 'v'})
 
-    # run simulation
+    # functions to optimize
     def get_var1_to_fit(sec, i_amp, v_init, tstop, dt, pos_i, pos_v):
         f_range = [optimizer.data['impedance'].f_range[0], optimizer.data['impedance'].f_range[1]]
         v, t, i = optimizer.run_simulation(sec, i_amp, v_init, tstop, dt, pos_i, pos_v)
@@ -105,6 +102,13 @@ if __name__ == "__main__":
     optimizer.get_var_to_fit = get_var_to_fit
 
     optimizer.variables = complete_paths(variables, optimizer.cell)  # complete path specifications in variables
+
+    return optimizer
+
+
+if __name__ == "__main__":
+    # load skript
+    optimizer = optimize_passive_full()
 
     # run and evaluate the evolution
     optimizer.run_emoo(optimizer.n_gen)
