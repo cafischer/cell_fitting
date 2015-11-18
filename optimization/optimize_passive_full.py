@@ -63,24 +63,26 @@ def optimize_passive_full():
     data_dir[objectives[1]] =  '../data/cell_2013_12_13f/step_current/step_current_-0.1.csv'
 
     # variables that shall be optimized
-    variables = [["cm", 0.7, 1.1, [["soma", "cm"], ["dendrites", "all", "cm"], ["axon_secs", "all", "cm"]]],
+    variables = [["cm", 0.6, 1.1, [["soma", "cm"], ["dendrites", "all", "cm"], ["axon_secs", "all", "cm"]]],
                 ["Ra_soma", 10, 500,[["soma", "Ra"]]],
                 ["g_pas", 1/100, 1/100000, [["ion", "pas", "g_pas"]]],  # g_pas: 1/1000, 1/100000
                 ["e_pas", -80, -50, [["ion", "pas", "e_pas"]]],
                 ["gfastbar", 0.0, 0.01, [["soma", "mechanisms", "ih", "gfastbar"],
                                          ["dendrites", "all", "mechanisms", "ih", "gfastbar"]]],  # insert h-current
                 ["gslowbar", 0.0, 0.01, [["soma", "mechanisms", "ih", "gslowbar"],
-                                         ["dendrites", "all", "mechanisms", "ih", "gslowbar"]]]
+                                         ["dendrites", "all", "mechanisms", "ih", "gslowbar"]]],
+                ["g", 0.0, 0.01, [["soma", "mechanisms", "kleak", "g"],
+                                         ["dendrites", "all", "mechanisms", "kleak", "g"]]]
                 ]
 
     # create Optimizer
-    optimizer = Optimizer(save_dir='./results_passive/StellateCell_full_ih',
+    optimizer = Optimizer(save_dir='./results_passive/StellateCell_full_min',
             data_dir=data_dir,
             model_dir='../model/cells/StellateCell_full_ih.json',
                           mechanism_dir='../model/channels/i686/.libs/libnrnmech.so',
             objectives=objectives,
             variables=variables,
-            n_gen=50,
+            n_gen=25,
             emoo_params={'N': 100, 'C': 150, 'eta_m_0': 20, 'eta_c_0': 20, 'p_m': 0.5},
             get_var_to_fit=None,
             var_to_fit={'impedance': 'impedance', 'step_current_-0.1': 'v'})
