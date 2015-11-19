@@ -1,66 +1,135 @@
-TITLE Potasium Type A current for RD Traub, J Neurophysiol 89:909-921, 2003
+TITLE K-A channel from Klee Ficker and Heinemann
 
 COMMENT
+--> why not temperature adjustment in taul?
 
-	Implemented by Maciej Lazarewicz 2003 (mlazarew@seas.upenn.edu)
-
+: modified to account for Dax A Current ----------
+: M.Migliore Jun 1997
+: Code taken from:
+: Y. Katz et al., Synapse distribution suggests a two-stage model 
+: of dendritic integration in CA1 pyramidal neurons.
+: Neuron 63, 171 (2009)
+: http://groups.nbp.northwestern.edu/spruston/sk_models/2stageintegration/2stageintegration_code.zip
+: ModelDB #127351
 ENDCOMMENT
 
-INDEPENDENT { t FROM 0 TO 1 WITH 1 (ms) }
-
-UNITS { 
-	(mV) = (millivolt) 
-	(mA) = (milliamp) 
-} 
-NEURON { 
-	SUFFIX ka
-	USEION k READ ek WRITE ik
-	RANGE gbar, ik
+NEURON {
+        SUFFIX ka
+        USEION k READ ek WRITE ik
+        RANGE gkabar,gka,ik
+        RANGE ninf,linf,taul,taun
+        RANGE vhalfn,vhalfl
+        GLOBAL lmin,nscale,lscale
 }
-PARAMETER { 
-	gbar = 0.0 	(mho/cm2)
-	v ek 		(mV)  
-} 
-ASSIGNED { 
-	ik 		(mA/cm2) 
-	minf hinf 	(1)
-	mtau htau 	(ms) 
-} 
+
+UNITS {
+        (mA) = (milliamp)
+        (mV) = (millivolt)
+        (mol) = (1)
+}
+
+PARAMETER {
+        dt                              (ms)
+        v                               (mV)
+        ek                              (mV)
+
+        temp    = 24                    (degC)
+
+        gkabar                          (mho/cm2)
+
+        vhalfn  = 11                    (mV)
+        a0n     = 0.05                  (/ms)
+        zetan   = -1.5                  (1)
+        gmn     = 0.55                  (1)
+        pw      = -1                    (1)
+        tq      = -40                   (mV)
+        qq      = 5                     (mV)
+        nmin    = 0.1                   (ms)
+        nscale  = 1
+
+        vhalfl  = -56                   (mV)
+        a0l     = 0.05                  (/ms)
+        zetal   = 3                     (1)
+        lmin    = 2                     (ms)
+        lscale  = 1
+
+        q10     = 5
+}
+
 STATE {
-	m h
-}
-BREAKPOINT { 
-	SOLVE states METHOD cnexp
-	ik = gbar * m * m * m * m * h * ( v - ek ) 
-} 
-INITIAL { 
-	settables(v) 
-	m  = minf
-	m  = 0
-	h  = hinf
-} 
-DERIVATIVE states { 
-	settables(v) 
-	m' = ( minf - m ) / mtau 
-	h' = ( hinf - h ) / htau
+        n
+        l
 }
 
-UNITSOFF 
-
-PROCEDURE settables(v) { 
-	TABLE minf, hinf, mtau, htau  FROM -120 TO 40 WITH 641
-
-	minf  = 1 / ( 1 + exp( ( - v - 60 ) / 8.5 ) )
-	mtau = 0.185 + 0.5 / ( exp( ( v + 35.8 ) / 19.7 ) + exp( ( - v - 79.7 ) / 12.7 ) )
-	hinf  = 1 / ( 1 + exp( ( v + 78 ) / 6 ) )
-	if( v < -63 ) {
-		htau = 0.5 / ( exp( ( v + 46 ) / 5 ) + exp( ( - v - 238 ) / 37.5 ) )
-	}else{
-		htau = 9.5
-	}
+ASSIGNED {
+        ik 	(mA/cm2)
+        ninf
+        linf      
+        taul  	(ms)
+        taun 	(ms)
+        gka 	(mho/cm2)
+        qt
+ 	celsius (degC)
 }
 
-UNITSON
+INITIAL {
+        rates(v)
+        n=ninf
+        l=linf
+        gka = gkabar*n*l
+        ik = gka*(v-ek)
+}        
+
+BREAKPOINT {
+        SOLVE states METHOD cnexp
+        gka = gkabar*n*l
+        ik = gka*(v-ek)
+}
+
+DERIVATIVE states {
+        rates(v)
+        n' = (ninf-n)/taun
+        l' = (linf-l)/taul
+}
+
+FUNCTION alpn(v(mV)) {
+LOCAL zeta
+        zeta=zetan+pw/(1+exp((v-tq)/qq))
+        alpn = exp(zeta*(v-vhalfn)*1.e-3(V/mV)*9.648e4(coulomb/mol)/(8.315(joule/mol/degC)*(273.16(degC)+celsius))) 
+}
+
+FUNCTION betn(v(mV)) {
+LOCAL zeta
+        zeta=zetan+pw/(1+exp((v-tq)/qq))
+        betn = exp(zeta*gmn*(v-vhalfn)*1.e-3(V/mV)*9.648e4(coulomb/mol)/(8.315(joule/mol/degC)*(273.16(degC)+celsius))) 
+}
+
+
+FUNCTION alpl(v(mV)) {
+        alpl = exp(zetal*(v-vhalfl)*1.e-3(V/mV)*9.648e4(coulomb/mol)/(8.315(joule/mol/degC)*(273.16(degC)+celsius))) 
+}
+
+FUNCTION betl(v(mV)) {
+        betl = exp(zetal*(v-vhalfl)*1.e-3(V/mV)*9.648e4(coulomb/mol)/(8.315(joule/mol/degC)*(273.16(degC)+celsius))) 
+}
+
+
+PROCEDURE rates(v (mV)) { :callable from hoc
+        LOCAL a,qt
+        qt=q10^((celsius-temp)/10 (degC))
+        a = alpn(v)
+        ninf = 1/(1 + a)
+        taun = betn(v)/(qt*a0n*(1+a))
+        if (taun<nmin) {taun=nmin}
+        taun=taun/nscale
+
+        a = alpl(v)
+        linf = 1/(1 + a)
+        taul = 0.26(ms/mV)*(v+50)
+        if (taul<lmin) {taul=lmin}
+        taul=taul/lscale
+}
+
 
 
 

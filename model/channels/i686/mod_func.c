@@ -3,14 +3,29 @@
 extern int nrnmpi_myid;
 extern int nrn_nobanner_;
 
-extern void _INap_reg(void);
+extern void _caLVA_reg(void);
+extern void _hcn_reg(void);
+extern void _kdr_reg(void);
+extern void _kleak_reg(void);
+extern void _nap_reg(void);
+extern void _nat_reg(void);
 
 void modl_reg(){
   if (!nrn_nobanner_) if (nrnmpi_myid < 1) {
     fprintf(stderr, "Additional mechanisms from files\n");
 
-    fprintf(stderr," INap.mod");
+    fprintf(stderr," caLVA.mod");
+    fprintf(stderr," hcn.mod");
+    fprintf(stderr," kdr.mod");
+    fprintf(stderr," kleak.mod");
+    fprintf(stderr," nap.mod");
+    fprintf(stderr," nat.mod");
     fprintf(stderr, "\n");
   }
-  _INap_reg();
+  _caLVA_reg();
+  _hcn_reg();
+  _kdr_reg();
+  _kleak_reg();
+  _nap_reg();
+  _nat_reg();
 }
