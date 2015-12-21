@@ -42,11 +42,10 @@ class Mechanism(object):
         """
         section.insert(self.name)
         if self.params is not None:
-            for name, value in self.params.items():
-                for segment in section:
-                    mech = getattr(segment, self.name)
+            for segment in section:
+                mech = getattr(segment, self.name)
+                for name, value in self.params.items():
                     setattr(mech, name, value)
-
 
 class Section(nrn.Section):
     """
@@ -84,7 +83,7 @@ class Section(nrn.Section):
     PROXIMAL = 0
     DISTAL = 1
 
-    def __init__(self, geom=None, nseg=1, Ra=100, cm=1, mechanisms=None, parent=None,
+    def __init__(self, geom, nseg=1, Ra=100, cm=1, mechanisms=None, parent=None,
                  connection_point=DISTAL):
         """
         Initializes a Section.
@@ -92,9 +91,8 @@ class Section(nrn.Section):
         nrn.Section.__init__(self)  # important for inheritance from NEURON
 
         # set geometry
-        if geom is None:  # default values
-            self.L = 15
-            self.diam = 15
+        if geom is None:
+            raise ValueError('geom is not set!')
         elif 'L' in geom and 'diam' in geom:
             self.L = geom['L']
             self.diam = geom['diam']
@@ -230,12 +228,6 @@ class Cell(object):
         # load mechanisms (ion channel implementations)
         if mechanism_dir is not None:
             h.nrn_load_dll(mechanism_dir)  # must be loaded before insertion of Mechanisms! (cannot be loaded twice)
-
-        # default parameters
-        self.celsius = 36
-        self.soma = Section(geom={'L': 20, 'diam': 20}, nseg=1, Ra=100, cm=1, mechanisms={'hh': {}}, parent=None)
-        self.dendrites = {}
-        self.axon_secs = {}
 
         # create Cell with given parameters
         self.create(params)
@@ -485,7 +477,6 @@ def test_morph():
 
     # cell with complex morphology
     cell = Cell('./cells/StellateCell_full.json')
-
     fig = pl.figure()
     ax = fig.add_subplot(111, projection='3d')
 
@@ -515,7 +506,7 @@ def test_morph():
 
 if __name__ == "__main__":
 
-    test_mechanism_insertion()
+    #test_mechanism_insertion()
 
     #test_record()
 
@@ -523,4 +514,4 @@ if __name__ == "__main__":
 
     #test_compare_to_hoc_cell()
 
-    #test_morph()
+    test_morph()
