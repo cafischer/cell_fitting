@@ -18,13 +18,15 @@ Nolan, M. F., Dudman, J. T., Dodson, P. D., & Santoro, B. (2007). HCN1 channels 
 
 link: http://senselab.med.yale.edu/modeldb/showmodel.cshtml?model=150239&file=\grid\nrn\mod\hcn.mod
 
+author: Chris Burgess, Schmidt-Hieber
+
 ENDCOMMENT
 
 NEURON {
     SUFFIX ih
     NONSPECIFIC_CURRENT i
-    RANGE i, gslow, gfast, gslowbar, gfastbar
-    GLOBAL ehcn, taufn, taufdo, taufdd, taufro, taufrd
+    RANGE i, gslow, gfast, gslowbar, gfastbar, ehcn
+    GLOBAL taufn, taufdo, taufdd, taufro, taufrd
     GLOBAL tausn, tausdo, tausdd, tausro, tausrd
     GLOBAL mifo, mifd, mife, miso, misd, mise
 }
@@ -81,8 +83,8 @@ INITIAL {
 
 BREAKPOINT {
     SOLVE states METHOD cnexp
-    gfast = gfastbar*mf * tadj
-    gslow = gslowbar*ms * tadj
+    gfast = gfastbar*mf
+    gslow = gslowbar*ms
     i = (gfast+gslow)*(v-ehcn)
 }
 

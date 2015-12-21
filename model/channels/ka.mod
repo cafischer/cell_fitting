@@ -1,22 +1,30 @@
-TITLE K-A channel from Klee Ficker and Heinemann
+TITLE A-type potassium current
 
 COMMENT
---> why not temperature adjustment in taul?
 
-: modified to account for Dax A Current ----------
-: M.Migliore Jun 1997
-: Code taken from:
-: Y. Katz et al., Synapse distribution suggests a two-stage model 
-: of dendritic integration in CA1 pyramidal neurons.
-: Neuron 63, 171 (2009)
-: http://groups.nbp.northwestern.edu/spruston/sk_models/2stageintegration/2stageintegration_code.zip
-: ModelDB #127351
+animal: Sprague–Dawley rats (Hoffman, 1997)
+cell type: pyramidal neuron (Hoffman, 1997)
+region: Hippocampus, CA1 (Hoffman, 1997)
+current isolation: current subtraction (Hoffman, 1997)
+temperature: 24°C
+temperature adjustment: activating component Q10 = 5, inactivating component Q10 = 1 (no papers found)
+model description: (Migliore, 1999)
+experimental data: (Hoffman, 1997)
+
+references:
+Hoffman, D. A., Magee, J. C., Colbert, C. M., & Johnston, D. (1997). K&plus; channel regulation of signal propagation in dendrites of hippocampal pyramidal neurons. Nature, 387(6636), 869-875.
+Migliore, M., Hoffman, D. A., Magee, J. C., & Johnston, D. (1999). Role of an A-type K+ conductance in the back-propagation of action potentials in the dendrites of hippocampal pyramidal neurons. Journal of computational neuroscience, 7(1), 5-15.
+
+author: Klee Ficker and Heinemann, Migliore
+
+link: http://groups.nbp.northwestern.edu/spruston/sk_models/2stageintegration/2stageintegration_code.zip
+(ModelDB #127351)
 ENDCOMMENT
 
 NEURON {
         SUFFIX ka
         USEION k READ ek WRITE ik
-        RANGE gkabar,gka,ik
+        RANGE gbar,gka,ik
         RANGE ninf,linf,taul,taun
         RANGE vhalfn,vhalfl
         GLOBAL lmin,nscale,lscale
@@ -32,10 +40,7 @@ PARAMETER {
         dt                              (ms)
         v                               (mV)
         ek                              (mV)
-
-        temp    = 24                    (degC)
-
-        gkabar                          (mho/cm2)
+        gbar                          (mho/cm2)
 
         vhalfn  = 11                    (mV)
         a0n     = 0.05                  (/ms)
@@ -53,7 +58,9 @@ PARAMETER {
         lmin    = 2                     (ms)
         lscale  = 1
 
-        q10     = 5
+        q10_act = 5
+	q10_inact = 1
+        temp    = 24                    (degC)
 }
 
 STATE {
@@ -68,7 +75,8 @@ ASSIGNED {
         taul  	(ms)
         taun 	(ms)
         gka 	(mho/cm2)
-        qt
+        tadj_act
+	tadj_inact
  	celsius (degC)
 }
 
@@ -76,13 +84,13 @@ INITIAL {
         rates(v)
         n=ninf
         l=linf
-        gka = gkabar*n*l
+        gka = gbar*n*l
         ik = gka*(v-ek)
 }        
 
 BREAKPOINT {
         SOLVE states METHOD cnexp
-        gka = gkabar*n*l
+        gka = gbar*n*l
         ik = gka*(v-ek)
 }
 
@@ -114,18 +122,19 @@ FUNCTION betl(v(mV)) {
 }
 
 
-PROCEDURE rates(v (mV)) { :callable from hoc
-        LOCAL a,qt
-        qt=q10^((celsius-temp)/10 (degC))
+PROCEDURE rates(v (mV)) { 
+        LOCAL a, tadj_act, tadj_inact
+        tadj_act = q10_act^((celsius-temp)/10 (degC))
         a = alpn(v)
         ninf = 1/(1 + a)
-        taun = betn(v)/(qt*a0n*(1+a))
+        taun = (betn(v)/(a0n*(1+a))) / tadj_act
         if (taun<nmin) {taun=nmin}
         taun=taun/nscale
 
+	tadj_inact = q10_inact^((celsius-temp)/10 (degC))
         a = alpl(v)
         linf = 1/(1 + a)
-        taul = 0.26(ms/mV)*(v+50)
+        taul = (0.26(ms/mV)*(v+50)) / tadj_inact
         if (taul<lmin) {taul=lmin}
         taul=taul/lscale
 }
