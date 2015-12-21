@@ -1,0 +1,85 @@
+{
+    "soma": {
+        "mechanisms": {
+            "ih": {
+                "gfastbar": 8.5e-05, 
+                "ehcn": -21.63, 
+                "gslowbar": 6.5e-05
+            }, 
+            "pas": {}, 
+            "kleak": {
+                "ekleak": -88.71, 
+                "gbar": 5.4e-05
+            }
+        }, 
+        "geom": {
+            "diam": 85.52, 
+            "L": 98.33
+        }, 
+        "Ra": 100, 
+        "cm": 1.16
+    },
+    "axon_secs": {
+        "0": {
+            "mechanisms": {
+                "pas": {}
+            },
+            "geom": [
+                [-31.809, 32.903, 0, 1.31],
+                [-31.809, 32.903, -10.0, 1.31]
+            ],
+            "parent": [
+                "soma",
+                null
+            ],
+            "connection_point": 1,
+            "Ra": 100,
+            "cm": 1.16
+        },
+	    "1": {
+            "mechanisms": {
+                "pas": {}
+            },
+            "geom": [
+                [-31.809, 32.903, -10.0, 1.31],
+                [-31.809, 32.903, -60.0, 1.14]
+            ],
+            "parent": [
+                "axon_secs",
+                0
+            ],
+            "connection_point": 1,
+            "Ra": 100,
+            "cm": 1.16
+        },
+        "2": {
+            "mechanisms": {
+              "pas": {}
+            },
+            "geom": [
+                [-31.809, 32.903, -60.0, 1.14],
+                [-31.809, 32.903, -460.0, 1.14]
+            ],
+            "parent": [
+                "axon_secs",
+                1
+            ],
+            "connection_point": 1,
+            "Ra": 100,
+            "cm": 1.16
+        }
+    },
+    "ion": {
+        "pas": {
+            "e_pas": -100.0,
+            "g_pas": 5.0e-06
+        },
+        "k_ion": {
+            "ek": -88.71
+        },
+        "na_ion": {
+            "ena": 80.0
+        }
+    },
+    "celsius": 36
+}

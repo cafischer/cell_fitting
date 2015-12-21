@@ -1,23 +1,13 @@
 {
-    "soma": {
-	  "mechanisms": {
-		"pas": {}
-	  },
-	  "geom": {
-		"L": 9.1,
-		"diam": 18.199
-	  }
+  "soma": {
+    "geom": {
+      "L": 9.1,
+      "diam": 18.199
     },
-    "celsius": 36,
-    "ion": {
-	"pas": {
-	    "e_pas": -65
-	},
-	"kleak": {
-	    "e": -83
-	},
-	"nap": {
-	    "ena": 87
-	}
-    }
+    "mechanisms": {
+	"pas":{}
+    },
+    "Ra": 100
+  },
+  "celsius": 36
 }

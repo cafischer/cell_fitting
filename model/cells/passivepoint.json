@@ -1,0 +1,35 @@
+{
+    "soma": {
+        "mechanisms": {
+            "ih": {
+                "gfastbar": 8.5e-05, 
+                "ehcn": -21.63,
+                "gslowbar": 6.5e-05
+            }, 
+            "pas": {}, 
+            "kleak": {
+                "ekleak": -88.71, 
+                "gbar": 5.4e-05
+            }
+        }, 
+        "geom": {
+            "diam": 85.52, 
+            "L": 98.33
+        }, 
+        "Ra": 100, 
+        "cm": 1.16
+    },
+    "ion": {
+        "pas": {
+            "e_pas": -100.0,
+            "g_pas": 5.0e-06
+        },
+        "k_ion": {
+            "ek": -88.71
+        },
+        "na_ion": {
+            "ena": 80.0
+        }
+    },
+    "celsius": 36
+}
