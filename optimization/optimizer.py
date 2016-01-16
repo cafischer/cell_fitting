@@ -3,15 +3,10 @@ import pylab as pl
 import pandas as pd
 import os
 import copy
-from json_utils import *
+import sys
+import json_utils
 from neuron import h
 from model.cell_builder import *
-
-# load NEURON libraries
-h.load_file("stdrun.hoc")
-
-# unvariable time step in NEURON
-h("""cvode.active(0)""")
 
 __author__ = 'caro'
 
@@ -29,7 +24,7 @@ def quadratic_error(a, b):
     return np.sum((a - b)**2)
 
 
-class Optimizer:
+class Optimizer():
     """
     Can be used to fit parameters of a Cell to experimental data.
 
@@ -51,7 +46,7 @@ class Optimizer:
     """
 
     def __init__(self, save_dir, data_dir, model_dir, mechanism_dir, objectives, variables, n_gen, emoo_params,
-                 fun_to_fit, var_to_fit, simulation_params=None):
+                 fun_to_fit, var_to_fit, simulation_params=None, recalculate_variables=None, variables_parent=None):
         """
         Initializes a Optimizer.
 
@@ -81,9 +76,6 @@ class Optimizer:
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
-        # create cell
-        self.cell = Cell(model_dir, mechanism_dir)
-
         # objectives
         self.objectives = objectives
 
@@ -91,11 +83,15 @@ class Optimizer:
         variables = self.complete_paths(variables)  # complete path specifications in variables
         self.variables = variables
 
+        # variables for parent generation
+        self.variables_parent = variables_parent
+
         # number of generations
         self.n_gen = n_gen
 
         # init emoo
         self.emoo = self.init_emoo(**emoo_params)
+        self.emoo_params = emoo_params
 
         # name of the variable that shall be fitted
         self.var_to_fit = var_to_fit
@@ -104,29 +100,37 @@ class Optimizer:
         self.fun_to_fit = fun_to_fit
 
         # function used after assigning the new variables to recalculate other variables
-        self.recalculate_variables = None
+        self.recalculate_variables = recalculate_variables
 
         # load experimental data
         self.data = dict()
         for obj in objectives:
             self.data[obj] = pd.read_csv(data_dir[obj])
+        self.data_dir = dict()
+        for obj in self.objectives:
+            self.data_dir[obj] = os.path.abspath(data_dir[obj])
 
         # simulation parameters
-        if simulation_params is None:
-            simulation_params = self.extract_simulation_params()
-        self.simulation_params = simulation_params
+        simulation_params_ext = self.extract_simulation_params()
+        simulation_params_ext.update(simulation_params)
+        self.simulation_params = simulation_params_ext
 
         # initiate error
         self.least_error = dict()
         for obj in objectives:
             self.least_error[obj] = np.zeros(self.n_gen)  # keeps track of error development over generations
 
-        # save parameters
-        save_as_json(self.save_dir + '/' + 'objectives.json', self.objectives)
-        save_as_json(self.save_dir + '/' + 'variables.json', self.variables)
-        save_as_json(self.save_dir + '/' + 'emoo_params.json', emoo_params)
-        save_as_json(self.save_dir + '/' + 'simulation_params.json', self.simulation_params, True)
-        self.cell.save_as_json(self.save_dir + '/' + 'cell.json')
+        # create cell
+        self.model_dir = os.path.abspath(model_dir)
+        self.mechanism_dir = os.path.abspath(mechanism_dir)
+        if sys.maxsize > 2**32:
+            mechanism_dir += '/x86_64/.libs/libnrnmech.so'
+        else:
+            mechanism_dir += '/i686/.libs/libnrnmech.so'
+        self.cell = Cell(model_dir, mechanism_dir)
+
+        # save optimizer
+        self.save_optimizer()
 
     def complete_paths(self, variables):
         """
@@ -175,55 +179,6 @@ class Optimizer:
 
         return {'i_amp': i_amp, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i, 'pos_v': pos_v, 'sec': sec}
 
-    def run_simulation(self, sec, i_amp, v_init, tstop, dt, pos_i, pos_v):
-        """
-        Runs a NEURON simulation of the cell for the given parameters.
-
-        :param i_amp: Amplitude of the injected current for all times t.
-        :type i_amp: array_like
-        :param v_init: Initial membrane potential of the cell.
-        :type v_init: float
-        :param tstop: Duration of a whole run.
-        :type tstop: float
-        :param dt: Time step.
-        :type dt: float
-        :param pos_i: Position of the IClamp on the Section (number between 0 and 1).
-        :type pos_i: float
-        :param pos_v: Position of the recording electrode on the Section (number between 0 and 1).
-        :type pos_v: float
-        :return: Membrane potential of the cell, time and current amplitude at each time step.
-        :rtype: tuple of three ndarrays
-        """
-
-        # exchange sec with real Section
-        if sec[0] == 'soma':
-            section = self.cell.soma
-        elif sec[0] == 'dendrites':
-            section = self.cell.dendrites[sec[1]]
-        else:
-            raise ValueError('Given section not defined!')
-
-        # time
-        t = np.arange(0, tstop + dt, dt)
-
-        # insert an IClamp with the current trace from the experiment
-        stim, i_vec, t_vec = section.play_current(pos_i, i_amp, t)
-        i_amp_vec = h.Vector()
-        i_amp_vec.record(stim._ref_i)  # record the current amplitude (to check)
-
-        # record the membrane potential
-        v = section.record_v(pos_v)
-
-        # run simulation
-        h.v_init = v_init
-        h.tstop = tstop
-        h.steps_per_ms = 1 / dt  # change steps_per_ms before dt, otherwise dt not changed properly
-        h.dt = dt
-        h.init()
-        h.run()
-
-        return np.array(v), t, np.array(i_amp_vec)
-
     def func_to_optimize(self, variables_new):
         """
         Defines the function to be optimized. It updates the cell with the new variables, runs a simulation and computes
@@ -244,8 +199,8 @@ class Optimizer:
         errors = dict()
         for obj in self.objectives:
             # run simulation and compute the variable to fit
-            var_to_fit, _ = self.fun_to_fit[obj](**{key: self.simulation_params[key][obj]
-                                                    for key in self.simulation_params.keys()})
+            var_to_fit, _ = self.fun_to_fit[obj](self.cell, **{key: self.simulation_params[key][obj]
+                                                               for key in self.simulation_params.keys()})
 
             # compute errors
             data_to_fit = np.array(self.data[obj][self.var_to_fit[obj]])  # convert to array
@@ -275,6 +230,14 @@ class Optimizer:
             self.least_error[obj][gen] = np.min(population[:, columns[obj]])
 
             print obj + ": " + str(self.least_error[obj][gen])
+
+        # if variables_parent is defined insert those parents as parent generation in the first round of the evolution
+        if gen == 0:
+            if self.variables_parent is not None:
+                for ind in range(np.shape(self.emoo.population)[0]):
+                    for i, var in enumerate(self.variables_parent):
+                        var_norm = (var[1]-self.variables[i][1])/(self.variables[i][2] - self.variables[i][1])
+                        self.emoo.population[ind, columns[var[0]]] = var_norm
 
     def init_emoo(self, N, C, eta_m_0, eta_c_0, p_m, d_eta_m=0, d_eta_c=0):
         """
@@ -307,7 +270,6 @@ class Optimizer:
 
         # define function to be called after each generation
         emoo.checkpopulation = self.checkpopulation
-
         return emoo
 
     def run_emoo(self):
@@ -329,9 +291,6 @@ class Optimizer:
         if self.emoo.master_mode:  # use the master process when multiple processors are used
             population = self.emoo.getpopulation_unnormed()  # get the unnormed population
             columns = self.emoo.columns  # get the columns vector
-
-            # save error development
-            save_as_json(self.save_dir + '/' + 'least_error.json', self.least_error, True)
         
             # best individuals: sum of all errors smallest
             if n_inds > len(population[:, 0]):
@@ -349,7 +308,8 @@ class Optimizer:
                 for j, var in enumerate(self.variables):
                     # variables_new: [name, value and path]
                     variables_new.append([var[0], population[ind, columns[var[0]]], self.variables[j][3]])
-                save_as_json(self.save_dir + '/' + 'variables_new_' + str(i) + '.json', variables_new)
+                with open(self.save_dir + '/' + 'variables_new_' + str(i) + '.json', 'w') as fj:
+                    json_utils.dump(variables_new, fj)
 
             # save variables of best individual per objective
             for obj in self.objectives:
@@ -358,73 +318,58 @@ class Optimizer:
                 for j, var in enumerate(self.variables):
                     # variables_new: [name, value and path]
                     variables_new.append([var[0], population[best_ind_obj, columns[var[0]]], self.variables[j][3]])
-                save_as_json(self.save_dir + '/' + 'variables_new_' + obj + '.json', variables_new)
+                with open(self.save_dir + '/' + 'variables_new_' + obj + '.json', 'w') as fj:
+                    json_utils.dump(variables_new, fj)
 
+            # save error
+            with open(self.save_dir + '/error.json', 'w') as fj:
+                json_utils.dump(self.least_error, fj)
 
-def impedance(v, i, dt, f_range):
-    """
-    Computes the impedance (impedance = fft(v) / fft(i)) for a given range of frequencies.
+    def save_optimizer(self):
+        optimizer_json = dict()
 
-    :param v: Membrane potential (mV)
-    :type v: array
-    :param i: Current (nA)
-    :type i: array
-    :param dt: Time step.
-    :type dt: float
-    :param f_range: Boundaries of the frequency interval.
-    :type f_range: list
-    :return: Impedance (MOhm)
-    :rtype: array
-    """
+        # transform directories using cell_fitting as reference path
+        # TODO: get rid of repeating code
+        save_dir = os.path.abspath(self.save_dir)
+        save_dir = save_dir.split("cell_fitting/")[1]
 
-    # FFT of the membrance potential and the input current
-    fft_i = np.fft.fft(i)
-    fft_v = np.fft.fft(v)
-    freqs = np.fft.fftfreq(v.size, d=dt)
+        data_dir = dict()
+        for obj in self.objectives:
+            data_dir[obj] = os.path.abspath(self.data_dir[obj])
+            data_dir[obj] = data_dir[obj].split("cell_fitting/")[1]
 
-    # sort everything according to the frequencies
-    idx = np.argsort(freqs)
-    freqs = freqs[idx]
-    fft_i = fft_i[idx]
-    fft_v = fft_v[idx]
+        model_dir = os.path.abspath(self.model_dir)
+        model_dir = model_dir.split("cell_fitting/")[1]
 
-    # calculate the impedance
-    imp = np.abs(fft_v/fft_i)
+        mechanism_dir = os.path.abspath(self.mechanism_dir)
+        mechanism_dir = mechanism_dir.split("cell_fitting/")[1]
 
-    # index with frequency range
-    idx1 = np.argmin(np.abs(freqs-f_range[0]))
-    idx2 = np.argmin(np.abs(freqs-f_range[1]))
+        # make parameters from the optimizer json saveable
+        optimizer_json['save_dir'] = save_dir
+        optimizer_json['data_dir'] = data_dir
+        optimizer_json['model_dir'] = model_dir
+        optimizer_json['mechanism_dir'] = mechanism_dir
+        optimizer_json['objectives'] = self.objectives
+        optimizer_json['variables'] = self.variables
+        optimizer_json['n_gen'] = self.n_gen
+        optimizer_json['emoo_params'] = self.emoo_params
+        optimizer_json['var_to_fit'] = self.var_to_fit
+        optimizer_json['simulation_params'] = self.simulation_params
+        optimizer_json['variables_parent'] = self.variables_parent
+        optimizer_json['fun_to_fit'] = {obj: self.fun_to_fit[obj].__name__ for obj in self.objectives}
+        if self.recalculate_variables is not None:
+            optimizer_json['recalculate_variables'] = self.recalculate_variables.__name__
+        else:
+            optimizer_json['recalculate_variables'] = None
 
-    return imp[idx1:idx2], freqs[idx1:idx2]
+        # save jsonized optimizer
+        with open(self.save_dir + '/optimizer.json', 'w') as fj:
+            json_utils.dump(optimizer_json, fj)
+
+        # to be shure save cell model extra
+        self.cell.save_as_json(self.save_dir + '/' + 'cell.json', 'w')
+
 ########################################################################################################################
-
-
-def test_extract_simulation_params():
-    optimizer = Optimizer(save_dir='../demo/demo_results',
-        data_dir={'spike': '../demo/demo_data_spike.csv', 'stepcurrent': '../demo/demo_data_stepcurrent.csv'},
-        model_dir='../demo/demo_cell2.json', mechanism_dir=None,
-        objectives=["spike", "stepcurrent"],
-        variables=[["gnabar", 0.01, 0.1, ["soma", "mechanisms", "hh", "gnabar"]], ["Ra", 100, 200, ["soma", "Ra"]]],
-        n_gen=10,
-        emoo_params={'N': 10, 'C': 200, 'eta_m_0': 20, 'eta_c_0': 20, 'p_m': 0.5},
-        fun_to_fit=None,
-        var_to_fit=None)
-    simulation_parameters = optimizer.extract_simulation_params()
-
-    for obj in optimizer.objectives:
-        print 'Objective: ' + obj
-        print 'v_init: ' + str(simulation_parameters['v_init'][obj])
-        print 'pos_i: ' + str(simulation_parameters['pos_i'][obj])
-        print 'pos_v: ' + str(simulation_parameters['pos_v'][obj])
-
-        t = np.arange(0, simulation_parameters['tstop'][obj] + simulation_parameters['dt'][obj],
-                      simulation_parameters['dt'][obj])
-        pl.figure()
-        pl.plot(t, simulation_parameters['i_amp'][obj], 'k')
-        pl.xlabel('Time (ms)')
-        pl.ylabel('Current (nA)')
-        pl.title(obj)
-        pl.show()
 
 
 def test_run():
@@ -505,8 +450,6 @@ def test_evolution():
     optimizer.eval_emoo(2)
 
 if __name__ == "__main__":
-
-    #test_extract_simulation_params()
 
     #test_run()
 
