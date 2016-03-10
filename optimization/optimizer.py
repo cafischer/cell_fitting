@@ -11,7 +11,7 @@ from model.cell_builder import *
 __author__ = 'caro'
 
 
-def quadratic_error(a, b):
+def mean_squared_error(a, b):
     """
     Computes the quadratic error of the two input arrays.
     :param a: Array containing float numbers.
@@ -21,10 +21,10 @@ def quadratic_error(a, b):
     :return: Quadratic error of the two input arrays.
     :rtype: float
     """
-    return np.sum((a - b)**2)
+    return np.sum((a - b)**2) / len(a)
 
 
-class Optimizer():
+class Optimizer:
     """
     Can be used to fit parameters of a Cell to experimental data.
 
@@ -111,7 +111,7 @@ class Optimizer():
             self.data_dir[obj] = os.path.abspath(data_dir[obj])
 
         # simulation parameters
-        simulation_params_ext = self.extract_simulation_params()
+        simulation_params_ext = extract_simulation_params(self.objectives, self.data)
         simulation_params_ext.update(simulation_params)
         self.simulation_params = simulation_params_ext
 
@@ -152,33 +152,6 @@ class Optimizer():
                         variable[3].append([path[0], str(i)] + path[2:])
         return variables
 
-    def extract_simulation_params(self):
-        """
-        Uses the experimental data to extract the simulation parameters.
-
-        :return: Parameters required for the NEURON simulation (see parameters of
-        :func Optimizer.run_simulation)
-        :rtype: dict
-        """
-        # load experimental data and simulation parameters
-        tstop = dict()
-        dt = dict()
-        v_init = dict()
-        i_amp = dict()
-        pos_i = dict()
-        pos_v = dict()
-        sec = dict()
-        for obj in self.objectives:
-            tstop[obj] = np.array(self.data[obj].t)[-1]
-            dt[obj] = np.diff(np.array(self.data[obj].t)[0:2])[0]
-            v_init[obj] = np.array(self.data[obj].v)[0]
-            i_amp[obj] = np.array(self.data[obj].i)
-            pos_i[obj] = 0.5  
-            pos_v[obj] = 0.5
-            sec[obj] = [self.data[obj].sec[0], self.data[obj].sec[1]]  # [0] section name, [1] section index
-
-        return {'i_amp': i_amp, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i, 'pos_v': pos_v, 'sec': sec}
-
     def func_to_optimize(self, variables_new):
         """
         Defines the function to be optimized. It updates the cell with the new variables, runs a simulation and computes
@@ -206,7 +179,7 @@ class Optimizer():
             data_to_fit = np.array(self.data[obj][self.var_to_fit[obj]])  # convert to array
             data_to_fit = data_to_fit[~np.isnan(data_to_fit)]  # get rid of nans
 
-            errors[obj] = quadratic_error(var_to_fit, data_to_fit)
+            errors[obj] = mean_squared_error(var_to_fit, data_to_fit)
         return errors
 
     def checkpopulation(self, population, columns, gen):
@@ -364,10 +337,38 @@ class Optimizer():
 
         # save jsonized optimizer
         with open(self.save_dir + '/optimizer.json', 'w') as fj:
-            json_utils.dump(optimizer_json, fj)
+            json_utils.dump(optimizer_json, fj, indent=4)
 
         # to be shure save cell model extra
-        self.cell.save_as_json(self.save_dir + '/' + 'cell.json', 'w')
+        self.cell.save_as_json(self.save_dir + '/' + 'cell.json')
+
+
+def extract_simulation_params(objectives, data):
+    """
+    Uses the experimental data to extract the simulation parameters.
+
+    :return: Parameters required for the NEURON simulation (see parameters of
+    :func Optimizer.run_simulation)
+    :rtype: dict
+    """
+    # load experimental data and simulation parameters
+    tstop = dict()
+    dt = dict()
+    v_init = dict()
+    i_amp = dict()
+    pos_i = dict()
+    pos_v = dict()
+    sec = dict()
+    for obj in objectives:
+        tstop[obj] = np.array(data[obj].t)[-1]
+        dt[obj] = np.diff(np.array(data[obj].t)[0:2])[0]
+        v_init[obj] = np.array(data[obj].v)[0]
+        i_amp[obj] = np.array(data[obj].i)
+        pos_i[obj] = 0.5
+        pos_v[obj] = 0.5
+        sec[obj] = [data[obj].sec[0], data[obj].sec[1]]  # [0] section name, [1] section index
+
+    return {'i_amp': i_amp, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i, 'pos_v': pos_v, 'sec': sec}
 
 ########################################################################################################################
 
@@ -428,7 +429,7 @@ def test_function_to_optimize():
     for obj in optimizer.objectives:
         v, t, i_amp = optimizer.run_simulation(**{key: optimizer.simulation_params[key][obj]
                                                   for key in optimizer.simulation_params.keys()})
-        q_error = quadratic_error(v, np.array(optimizer.data[obj].v))
+        q_error = mean_squared_error(v, np.array(optimizer.data[obj].v))
         if q_error == error[obj]:
             print "Correct error computed!"
         else:
