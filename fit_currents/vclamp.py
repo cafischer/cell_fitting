@@ -73,6 +73,10 @@ def vclamp(v, t, cell, channel_list, E_ion, plot=False):
             for seg in cell.soma:
                 seg.km2.gbar = 1
             ichannel = cell.soma(.5).km2._ref_ik2
+        elif channel == 'kleak':
+            for seg in cell.soma:
+                seg.kleak2.gbar = 1
+            ichannel = cell.soma(.5).kleak2._ref_i2
         elif channel == 'ih_fast':
             for seg in cell.soma:
                 seg.ih2.gfastbar = 1
@@ -108,6 +112,9 @@ def vclamp(v, t, cell, channel_list, E_ion, plot=False):
         elif eion == 'ehcn':
             for seg in cell.soma:
                 seg.ih2.ehcn = E
+        elif eion == 'kleak':
+            for seg in cell.soma:
+                seg.kleak2.ekleak = E
         else:
             setattr(cell.soma, eion, E)
 
@@ -118,9 +125,9 @@ def vclamp(v, t, cell, channel_list, E_ion, plot=False):
     # create SEClamp
     dt = t[1] - t[0]
     v_clamp = h.Vector()
-    v_clamp .from_python(v)
+    v_clamp.from_python(v)
     t_clamp = h.Vector()
-    t_clamp.from_python(t-dt)  # shifted by one time step because membrane potential lags behind voltage clamp
+    t_clamp.from_python(np.concatenate((np.array([0]), t)))  # shifted by one time step because membrane potential lags behind voltage clamp
     clamp = h.SEClamp(0.5, sec=cell.soma)
     clamp.rs = sys.float_info.epsilon  # series resistance should be as small as possible
     clamp.dur1 = 1e9
