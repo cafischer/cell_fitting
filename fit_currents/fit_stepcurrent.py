@@ -55,7 +55,7 @@ if __name__ == "__main__":
     #dv = np.zeros(len(t))
     #for i in range(int(len(t)/chunk)):
     #    dv[i*chunk:(i+1)*chunk] = derivative_ridgeregression(v[i*chunk:(i+1)*chunk], dt, alpha)
-    dv = np.concatenate((np.array([0]), np.diff(v) / np.diff(t)))
+    dvdt = np.concatenate((np.array([0]), np.diff(v) / np.diff(t)))
 
     #pl.figure()
     #pl.plot(t, dv, 'k', linewidth=1.5, label='dV/dt')  # alpha: '+str(alpha) + '\n' + 'n_chunks: ' + str(n_chunks))
@@ -80,10 +80,10 @@ if __name__ == "__main__":
         E_ion[var_name] = val  # TODO
 
         # compute currents
-        channel_currents = fit_currents.vclamp.vclamp(v, t, cell, channel_list, E_ion)
+        currents = fit_currents.vclamp.vclamp(v, t, cell, channel_list, E_ion)
 
         # linear regression
-        best_fit[i], residual = current_fitting(dvdt, t, copy.deepcopy(i_inj), channel_currents, cell_area,
+        best_fit[i], residual = current_fitting(dvdt, t, copy.deepcopy(i_inj), currents, cell_area,
                                                 channel_list, cm=cell.soma.cm, fit_cm=fit_cm, save_dir=save_dir,
                                                 plot=False)
 
@@ -117,19 +117,6 @@ if __name__ == "__main__":
     # plot best fit
     cell = Cell(model_dir)
     cell.update_attr(keys, var_range[best])
-
-    # set equilibrium potentials
-    for i, (eion, E) in enumerate(E_ion.iteritems()):
-        if eion == 'ehcn':
-            cell.update_attr(["soma", "mechanisms", "ih", "ehcn"], E)
-        elif eion == 'e_pas':
-            cell.update_attr(["ion", "pas", eion], E)
-        elif 'na' in eion:
-            cell.update_attr(["ion", "na_ion", eion], E)
-        elif 'k' in eion:
-            cell.update_attr(["ion", "k_ion", eion], E)
-        elif 'ca' in eion:
-            cell.update_attr(["ion", "ca_ion", eion], E)
 
     simulate(best_fit[best], cell, E_ion, data, save_dir, plot=True)
 
