@@ -32,7 +32,7 @@ INDEPENDENT {t FROM 0 TO 1 WITH 1 (ms)}
 NEURON {
 	SUFFIX caLVA
 	USEION ca READ cai,cao WRITE ica
-	RANGE pbar, m_inf, tau_m, h_inf, tau_h, shift, actshift
+	RANGE pbar, m_inf, tau_m, h_inf, tau_h, shift, actshift, ica
 	GLOBAL qm, qh
 }
 
@@ -48,12 +48,9 @@ UNITS {
 
 PARAMETER {
 	v		(mV)
-	celsius	= 36	(degC)
 	pbar = .2e-3    (cm/s) 	  : max. permeability
 	shift	=  2	(mV)	  : corresponds to 2mM ext Ca++ 
 	actshift = 0 	(mV)	  : shift of activation curve (towards hyperpol)
-	cai	= 2.4e-4(mM)	  : adjusted for eca=120 mV 
-	cao	= 2	(mM)	  : 
 	qm	= 5		  : q10's for activation and inactivation
 	qh	= 3		  : from Coulter et al., J Physiol 414: 587, 1989
 }
@@ -64,12 +61,15 @@ STATE {
 
 ASSIGNED {
 	ica	(mA/cm2)
+	cai     (Mm)
+	cao	(Mm)
 	m_inf
 	tau_m	(ms)
 	h_inf
 	tau_h	(ms)
 	phi_m
 	phi_h
+	celsius (degC)
 }
 
 BREAKPOINT {

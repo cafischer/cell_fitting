@@ -9,7 +9,7 @@ h("""cvode.active(0)""")  # unvariable time step in NEURON
 __author__ = 'caro'
 
 
-def vclamp(v, t, cell, channel_list, E_ion, plot=False):
+def vclamp(v, t, cell, channel_list, E_ion, C_ion=None, plot=False):
     """
     Note:
     - only for single compartment model
@@ -27,7 +27,7 @@ def vclamp(v, t, cell, channel_list, E_ion, plot=False):
     """
 
     # record from channels
-    channel_currents = [0] * np.size(channel_list)
+    currents = [0] * np.size(channel_list)
     for i, channel in enumerate(channel_list):
 
         # insert channel
@@ -57,6 +57,10 @@ def vclamp(v, t, cell, channel_list, E_ion, plot=False):
             for seg in cell.soma:
                 seg.nap2.gbar = 1
             ichannel = cell.soma(.5).nap2._ref_ina2
+        elif channel == 'napsh':
+            for seg in cell.soma:
+                seg.napsh2.gbar = 1
+            ichannel = cell.soma(.5).napsh2._ref_ina2
         elif channel == 'nav16':
             for seg in cell.soma:
                 seg.nav162.gbar = 1
@@ -94,15 +98,18 @@ def vclamp(v, t, cell, channel_list, E_ion, plot=False):
         elif channel == 'caLVA':
             for seg in cell.soma:
                 seg.caLVA2.pbar = 1
+                seg.caLVA2.cai = C_ion['cai']
+                seg.caLVA2.cao = C_ion['cao']
             ichannel = cell.soma(.5).caLVA2._ref_ica2
         elif channel == 'kca':
             for seg in cell.soma:
                 seg.kca2.gbar = 1
+                seg.kca2.cai = C_ion['cai']
             ichannel = cell.soma(.5).kca2._ref_ik2
 
         # record currents
-        channel_currents[i] = h.Vector()
-        channel_currents[i].record(ichannel)
+        currents[i] = h.Vector()
+        currents[i].record(ichannel)
 
     # set equilibrium potentials
     for eion, E in E_ion.iteritems():
@@ -112,15 +119,11 @@ def vclamp(v, t, cell, channel_list, E_ion, plot=False):
         elif eion == 'ehcn':
             for seg in cell.soma:
                 seg.ih2.ehcn = E
-        elif eion == 'kleak':
+        elif eion == 'ekleak':
             for seg in cell.soma:
                 seg.kleak2.ekleak = E
         else:
             setattr(cell.soma, eion, E)
-
-    # insert calcium pump if calcium is present
-    if h.ismembrane('ca_ion', sec=cell.soma):
-        Mechanism('cad').insert_into(cell.soma)
 
     # create SEClamp
     dt = t[1] - t[0]
@@ -142,14 +145,14 @@ def vclamp(v, t, cell, channel_list, E_ion, plot=False):
 
     # convert current traces to array
     for i, channel in enumerate(channel_list):
-        channel_currents[i] = np.array(channel_currents[i])
+        currents[i] = np.array(currents[i])
 
         # plot current traces
         if plot:
-            pl.plot(t, channel_currents[i], 'k')
+            pl.plot(t, currents[i], 'k')
             pl.ylabel('Current (mA/cm2)')
             pl.xlabel('Time (ms)')
             pl.title(channel)
             pl.show()
 
-    return channel_currents
+    return np.array(currents)

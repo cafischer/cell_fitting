@@ -26,7 +26,7 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
 
     # unit conversion and sign
     for i in range(len(channel_currents)):
-        channel_currents[i] *= -1 * 1e3 * cell_area
+        channel_currents[i] *= -1 * 1e3 * cell_area  # TODO: should work without loop
     i_inj *= 1e-3
 
     if fit_cm:
@@ -56,10 +56,12 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
     print "Residual: " + str(residual)
 
     if plot:
+
         pl.figure()
         pl.plot(t, y, 'k', linewidth=1.5, label='$c_m \cdot dV/dt - i_{inj} + i_{pas}$'
                 if np.any(i_passive != 0) else '$c_m \cdot dV/dt - i_{inj}$')
         pl.plot(t, np.dot(X, weights), 'r', linewidth=1.5, label='$-g \cdot \sum_{ion} i_{ion}$')
+        pl.plot(t,np.zeros(len(y)), 'b')
         pl.ylabel('Current (pA)', fontsize=18)
         pl.xlabel('Time (ms)', fontsize=18)
         #pl.xlim([5, 30])
@@ -83,7 +85,9 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
     return best_fit, residual
 
 
-def simulate(best_fit, cell, E_ion, data, save_dir, plot=False):
+def simulate(best_fit, cell, E_ion, data, C_ion=None, save_dir=None, plot=False):
+
+    # Note: assumes fixed external and internal Ca concentration
 
     # update conductances
     for var, val in best_fit.iteritems():
@@ -98,6 +102,13 @@ def simulate(best_fit, cell, E_ion, data, save_dir, plot=False):
             cell.update_attr(["soma", "mechanisms", "ih", "gslowbar"], val)
         elif var == 'caLVA':
             cell.update_attr(["soma", "mechanisms", var, "pbar"], val)
+            for seg in cell.soma:
+                seg.caLVA.cao = C_ion['cao']
+                seg.caLVA.cai = C_ion['cai']
+        elif var == 'kca':
+            cell.update_attr(["soma", "mechanisms", var, "gbar"], val)
+            for seg in cell.soma:
+                seg.kca.cai = C_ion['cai']
         else:
             cell.update_attr(["soma", "mechanisms", var, "gbar"], val)
 
@@ -112,12 +123,8 @@ def simulate(best_fit, cell, E_ion, data, save_dir, plot=False):
         else:
             setattr(cell.soma, eion, E)
 
-    # insert calcium pump if calcium is present
-    if h.ismembrane('ca_ion', sec=cell.soma):
-        Mechanism('cad').insert_into(cell.soma)
-
     # extract simulation parameters
-    objective=''  #TODO
+    objective = ''  #TODO
     simulation_params = optimization.optimizer.extract_simulation_params([objective], {objective: data})
     simulation_params.update({'onset': {objective: 200}})
     simulation_params_tmp = {p: simulation_params[p][objective] for p in simulation_params}
@@ -132,8 +139,8 @@ def simulate(best_fit, cell, E_ion, data, save_dir, plot=False):
     # plot the results
     if plot:
         pl.figure()
-        pl.plot(t, data.v, 'k', linewidth=2, label='data')
-        pl.plot(t, v_fitted, 'r', linewidth=2, label='model')
+        pl.plot(t, data.v, 'k', linewidth=1.5, label='data')
+        pl.plot(t, v_fitted, 'r', linewidth=1.5, label='model')
         pl.ylabel('Membrane \npotential (mV)', fontsize=18)
         pl.xlabel('Time (ms)', fontsize=18)
         pl.legend(loc='upper right', fontsize=18)

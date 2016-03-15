@@ -12,8 +12,8 @@ if __name__ == "__main__":
     data_dir = '../data/new_cells/'+cellid+'/stepcurrent/stepcurrent-0.1.csv'
     current_dir = './current_traces/'+cellid+'/'+objective+'/'
     model_dir = '../model/cells/point.json'
-    mechanism_dir = '../model/channels'
-    mechanism_dir_clamp = '../model/channels_without_output'
+    mechanism_dir = '../model/channels_currentfitting'
+    mechanism_dir_clamp = '../model/channels_vclamp'
 
     channel_list = ['passive', 'ih_slow', 'ih_fast']  #
     E_ion = {'ehcn': -20, 'e_pas': -73.6}  #
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
         """
         # plot current trace and derivative
-        for j, current in enumerate(channel_currents):
+        for j, current in enumerate(currents):
             pl.figure()
             pl.plot(t, dv*cell.soma.cm*cell_area-i_inj*1e-3, 'k', linewidth=1.5, label='$cm \cdot dV/dt - i_{inj}$')
             pl.plot(t, current*np.max(np.abs(dv*cell.soma.cm*cell_area-i_inj*1e-3))/np.max(np.abs(current)),

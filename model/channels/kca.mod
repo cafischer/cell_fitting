@@ -36,9 +36,7 @@ NEURON {
 
 PARAMETER { 
 	gbar = 0.0 	(mho/cm2)
-	v ek 		(mV)  
-	cai = 2		(mM)
-
+	ek 		(mV)  
 	temp = 20       (degC)
 	q10 = 1.6	
 } 
@@ -47,6 +45,8 @@ ASSIGNED {
 	ik 		(mA/cm2) 
 	alpha beta	(/ms)
 	tadj
+	cai     (Mm)
+	cao	(Mm)
 }
  
 STATE {

@@ -12,13 +12,19 @@ if __name__ == "__main__":
     data_dir = '../data/new_cells/'+cellid+'/dap/dap.csv'
     model_dir = '../model/cells/point.json'
     passive_weights_dir = './results/fit_'+cellid+'/stepcurrent-0.1/best_fit.json'
-    mechanism_dir = '../model/channels'
-    mechanism_dir_clamp = '../model/channels_without_output'
+    mechanism_dir = '../model/channels_currentfitting'
+    mechanism_dir_clamp = '../model/channels_vclamp'
     fit_cm = False
 
-    channel_list = ['na8st', 'nap', 'narsg', 'nat', 'kdr', 'ka', 'km', 'kca', 'caLVA', 'caHVA']
-    E_ion = {'ek': -83, 'ena': 87, 'eca': 90}
-    E_ion_passive = {'ehcn': -20, 'e_pas': -73.6}
+    channel_list = ['na8st', 'nap', 'napsh', 'narsg', 'nat', 'kdr', 'ka', 'km', 'caLVA', 'caHVA', 'kca']
+    E_ion = {'ek': -83, 'ena': 87, 'eca': 80}  # eca 90
+    E_ion_passive = {'ehcn': -20, 'e_pas': -73.6}  # change for different models!
+    C_ion = {'cai': 1e-04, 'cao': 2}   # (Svoboda 2000)
+
+    # parameter to loop over
+    keys = [0]  # [["soma", "mechanisms", "narsg", "x6"], ["soma", "mechanisms", "narsg2", "x6"]]
+    var_name = keys[-1]
+    var_range = [0]  # np.linspace(-1, 10, 10) #np.logspace(5e11, 2e12, 10)
 
     # load passive model
     with open(passive_weights_dir, 'r') as f:
@@ -27,10 +33,6 @@ if __name__ == "__main__":
     del weights_passive_dict['cm']
     channel_list_passive = weights_passive_dict.keys()
     weights_passive = [weights_passive_dict[channel] for channel in channel_list_passive]
-
-    keys = [0]  # [["soma", "mechanisms", "narsg", "x6"], ["soma", "mechanisms", "narsg2", "x6"]]
-    var_name = keys[-1]
-    var_range = [0]  # np.linspace(-1, 10, 10) #np.logspace(5e11, 2e12, 10)
 
     # create save_dir
     if not os.path.exists(save_dir):
@@ -52,11 +54,18 @@ if __name__ == "__main__":
 
     # compute derivative
     dvdt = np.concatenate((np.array([0]), np.diff(v) / np.diff(t)))
+    #pl.figure()
+    #pl.plot(t, dvdt, 'k', linewidth=1.5, label='dV/dt')  # alpha: '+str(alpha) + '\n' + 'n_chunks: ' + str(n_chunks))
+    #pl.plot(t, (v-v[0])*np.max(dvdt)/np.max(v-v[0]), 'b', linewidth=1.5, label='V')
+    #pl.xlabel('Time (ms)', fontsize=18)
+    #pl.legend(loc='upper right', fontsize=18)
+    #pl.show()
 
     # change parameters and find best fit
     best_fit = [[]] * len(var_range)
     best_fit_all = [[]] * len(var_range)
     errors = [[]] * len(var_range)
+    residuals = [[]] * len(var_range)
 
     for i, val in enumerate(var_range):
         #print var_name + ': ' + str(val)
@@ -77,7 +86,7 @@ if __name__ == "__main__":
         i_passive = np.dot(weights_passive, np.array(currents_passive) * 1e3 * cell_area)
 
         # linear regression
-        best_fit[i], residual = current_fitting(dvdt, t, copy.deepcopy(i_inj), currents, cell_area,
+        best_fit[i], residuals[i] = current_fitting(dvdt, t, copy.deepcopy(i_inj), copy.deepcopy(currents), cell_area,
                                             channel_list, i_passive=i_passive, cm=cell.soma.cm, fit_cm=fit_cm,
                                             save_dir=save_dir, plot=True)
 
@@ -86,14 +95,14 @@ if __name__ == "__main__":
         E_ion_all.update(E_ion_passive)
         best_fit_all[i] = best_fit[i].copy()
         best_fit_all[i].update(weights_passive_dict)
-        errors[i], _, _ = simulate(best_fit_all[i], cell, E_ion_all, data, save_dir, plot=False)
+        #errors[i], _, _ = simulate(best_fit_all[i], cell, E_ion_all, data, save_dir, plot=False)
 
-        """
+    """
         # plot current trace and derivative
         for j, current in enumerate(currents):
             pl.figure()
-            pl.plot(t, dv*cell.soma.cm*cell_area-i_inj*1e-3, 'k', linewidth=1.5, label='$cm \cdot dV/dt - i_{inj}$')
-            pl.plot(t, current*np.max(np.abs(dv*cell.soma.cm*cell_area-i_inj*1e-3))/np.max(np.abs(current)),
+            pl.plot(t, dvdt*cell.soma.cm*cell_area-i_inj*1e-3, 'k', linewidth=1.5, label='$cm \cdot dV/dt - i_{inj}$')
+            pl.plot(t, -1 * current*np.max(np.abs(dvdt*cell.soma.cm*cell_area-i_inj*1e-3))/np.max(np.abs(current)),
                     linewidth=1.5, label=channel_list[j])
             pl.ylabel('Current (pA)', fontsize=18)
             pl.xlabel('Time (ms)', fontsize=18)
@@ -101,16 +110,35 @@ if __name__ == "__main__":
             pl.legend(loc='upper right', fontsize=18)
             pl.savefig(save_dir+channel_list[j]+'.png')
             pl.show()
-        """
+"""
 
     # find best fit
-    best = np.argmin(errors)
+    best = np.argmin(residuals)
 
     print
     print "Best fit over parameter: "
     print var_range[best]
     print best_fit[best]
     print "Error: " + str(errors[best])
+
+    # integrate linear regression solution
+    weights_active = [best_fit[best][channel] for channel in channel_list]
+    for i in range(len(currents)):
+        currents[i] *= -1 * 1e3 * cell_area
+    dvdt_fromfit = (np.dot(weights_active, currents) - i_passive + i_inj * 1e-3) / (cm * cell_area)
+    dt = t[1] - t[0]
+    v_int = np.zeros(len(v))
+    v_int[0] = v[0]
+    for i in range(1, len(v)):
+        v_int[i] = v_int[i-1] + dt * dvdt_fromfit[i-1]
+
+    #pl.figure()
+    #pl.plot(t, v, 'k', label='V from data')
+    #pl.plot(t, v_int, label='V from linear regression')
+    #pl.ylabel('V (mV)')
+    #pl.xlabel('Time (ms)')
+    #pl.legend()
+    #pl.show()
 
     # plot best fit
     cell = Cell(model_dir)
