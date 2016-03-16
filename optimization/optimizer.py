@@ -111,8 +111,10 @@ class Optimizer:
             self.data_dir[obj] = os.path.abspath(data_dir[obj])
 
         # simulation parameters
-        simulation_params_ext = extract_simulation_params(self.objectives, self.data)
-        simulation_params_ext.update(simulation_params)
+        simulation_params_ext = dict()
+        for obj in objectives:
+            simulation_params_ext[obj] = extract_simulation_params(self.data[obj])
+            simulation_params_ext[obj].update(simulation_params[obj])
         self.simulation_params = simulation_params_ext
 
         # initiate error
@@ -172,8 +174,7 @@ class Optimizer:
         errors = dict()
         for obj in self.objectives:
             # run simulation and compute the variable to fit
-            var_to_fit, _ = self.fun_to_fit[obj](self.cell, **{key: self.simulation_params[key][obj]
-                                                               for key in self.simulation_params.keys()})
+            var_to_fit, _ = self.fun_to_fit[obj](self.cell, **self.simulation_params[obj])
 
             # compute errors
             data_to_fit = np.array(self.data[obj][self.var_to_fit[obj]])  # convert to array
@@ -343,7 +344,7 @@ class Optimizer:
         self.cell.save_as_json(self.save_dir + '/' + 'cell.json')
 
 
-def extract_simulation_params(objectives, data):
+def extract_simulation_params(data):
     """
     Uses the experimental data to extract the simulation parameters.
 
@@ -352,23 +353,16 @@ def extract_simulation_params(objectives, data):
     :rtype: dict
     """
     # load experimental data and simulation parameters
-    tstop = dict()
-    dt = dict()
-    v_init = dict()
-    i_amp = dict()
-    pos_i = dict()
-    pos_v = dict()
-    sec = dict()
-    for obj in objectives:
-        tstop[obj] = np.array(data[obj].t)[-1]
-        dt[obj] = np.diff(np.array(data[obj].t)[0:2])[0]
-        v_init[obj] = np.array(data[obj].v)[0]
-        i_amp[obj] = np.array(data[obj].i)
-        pos_i[obj] = 0.5
-        pos_v[obj] = 0.5
-        sec[obj] = [data[obj].sec[0], data[obj].sec[1]]  # [0] section name, [1] section index
+    tstop = np.array(data.t)[-1]
+    dt = np.diff(np.array(data.t)[0:2])[0]
+    v_init = np.array(data.v)[0]
+    i_amp = np.array(data.i)
+    pos_i = 0.5
+    pos_v = 0.5
+    sec = [data.sec[0], data.sec[1]]  # [0] section name, [1] section index
+    return {'i_amp': i_amp, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i,
+                                  'pos_v': pos_v, 'sec': sec}
 
-    return {'i_amp': i_amp, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i, 'pos_v': pos_v, 'sec': sec}
 
 ########################################################################################################################
 

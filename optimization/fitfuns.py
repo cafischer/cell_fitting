@@ -62,7 +62,7 @@ def run_simulation(cell, sec, i_amp, v_init, tstop, dt, pos_i, pos_v, onset=0, c
         h.run()
 
         if cut_onset:
-            return np.array(v)[onset/dt:], t[onset/dt:]
+            return np.array(v)[onset/dt:], t[:-1*onset/dt]
         else:
             return np.array(v), t
 

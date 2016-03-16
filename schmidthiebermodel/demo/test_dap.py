@@ -29,7 +29,7 @@ stim.dur = 1e9  # 1e9 necessary for playing the current into IClamp
 i_vec = h.Vector()
 i_vec.from_python(i_exp)
 t_vec = h.Vector()
-t_vec.from_python(t_exp)
+t_vec.from_python(np.concatenate((np.array([0]), t_exp)))
 i_vec.play(stim._ref_amp, t_vec)
 
 # holding Iclamp

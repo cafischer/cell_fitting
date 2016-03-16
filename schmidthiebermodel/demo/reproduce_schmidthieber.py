@@ -12,7 +12,8 @@ h.steps_per_ms = 1/dt
 h.dt = dt
 
 # load cell
-parsdict = load_json('settings.json')
+with open('settings.json', 'r') as f:
+    parsdict = json.load(f)
 sim_settings = loadcell.Settings(parsdict)
 cell = loadcell.loadcell(sim_settings)
 
@@ -37,9 +38,8 @@ h.run()
 t = np.arange(0, h.tstop+h.dt, h.dt)
 
 pl.figure()
-pl.plot(t, np.array(v), label='model')
-pl.ylabel('Membrane potential (mV)')
+pl.plot(t, np.array(v))
+pl.ylabel('Membrane \npotential (mV)')
 pl.xlabel('Time (ms)')
-pl.legend()
 pl.xlim([300,400])
 pl.show()

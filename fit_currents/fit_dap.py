@@ -80,7 +80,7 @@ if __name__ == "__main__":
         #E_ion[var_name] = val  # TODO
 
         # compute current
-        currents = fit_currents.vclamp.vclamp(v, t, cell, channel_list, E_ion)
+        currents = fit_currents.vclamp.vclamp(v, t, cell, channel_list, E_ion, C_ion)
         currents_passive = fit_currents.vclamp.vclamp(v, t, cell, channel_list_passive, E_ion_passive)
 
         i_passive = np.dot(weights_passive, np.array(currents_passive) * 1e3 * cell_area)
@@ -145,7 +145,7 @@ if __name__ == "__main__":
     cell.update_attr(['soma', 'cm'], cm)
     cell.update_attr(keys, var_range[best])
 
-    simulate(best_fit_all[best], cell, E_ion_all, data, save_dir, plot=True)
+    simulate(best_fit_all[best], cell, E_ion_all, data, C_ion, save_dir, plot=True)
 
     # save results
     with open(save_dir+'/best_fit.json', 'w') as f:

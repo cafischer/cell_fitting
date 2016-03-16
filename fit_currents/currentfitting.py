@@ -51,12 +51,11 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
         best_fit = {channel_list[i]: weights[i] for i in range(len(weights))}
 
     # print best fit
-    print "Best fit: "
-    print best_fit
-    print "Residual: " + str(residual)
+    #print "Best fit: "
+    #print best_fit
+    #print "Residual: " + str(residual)
 
     if plot:
-
         pl.figure()
         pl.plot(t, y, 'k', linewidth=1.5, label='$c_m \cdot dV/dt - i_{inj} + i_{pas}$'
                 if np.any(i_passive != 0) else '$c_m \cdot dV/dt - i_{inj}$')
@@ -64,9 +63,8 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
         pl.plot(t,np.zeros(len(y)), 'b')
         pl.ylabel('Current (pA)', fontsize=18)
         pl.xlabel('Time (ms)', fontsize=18)
-        #pl.xlim([5, 30])
         pl.legend(loc='upper right', fontsize=18)
-        pl.savefig(save_dir+'bestfit_derivative.png')
+        if save_dir is not None: pl.savefig(save_dir+'bestfit_derivative.png')
         pl.show()
 
         # plot current trace and derivative
@@ -77,9 +75,8 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
             pl.plot(t, X.T[j]*weights[j], linewidth=1.5, label=channel_list[j])
         pl.ylabel('Current (pA)', fontsize=18)
         pl.xlabel('Time (ms)', fontsize=18)
-        #pl.xlim([5, 30])
         pl.legend(loc='upper right', fontsize=18)
-        pl.savefig(save_dir+'currents.png')
+        if save_dir is not None: pl.savefig(save_dir+'currents.png')
         pl.show()
 
     return best_fit, residual
@@ -124,13 +121,11 @@ def simulate(best_fit, cell, E_ion, data, C_ion=None, save_dir=None, plot=False)
             setattr(cell.soma, eion, E)
 
     # extract simulation parameters
-    objective = ''  #TODO
-    simulation_params = optimization.optimizer.extract_simulation_params([objective], {objective: data})
-    simulation_params.update({'onset': {objective: 200}})
-    simulation_params_tmp = {p: simulation_params[p][objective] for p in simulation_params}
+    simulation_params = optimization.optimizer.extract_simulation_params(data)
+    simulation_params.update({'onset': 200})
 
     # run simulation
-    v_fitted, t = optimization.fitfuns.run_simulation(cell, **simulation_params_tmp)
+    v_fitted, t = optimization.fitfuns.run_simulation(cell, **simulation_params)
 
     # compute error
     error = optimization.optimizer.mean_squared_error(v_fitted, data.v)
@@ -144,7 +139,7 @@ def simulate(best_fit, cell, E_ion, data, C_ion=None, save_dir=None, plot=False)
         pl.ylabel('Membrane \npotential (mV)', fontsize=18)
         pl.xlabel('Time (ms)', fontsize=18)
         pl.legend(loc='upper right', fontsize=18)
-        pl.savefig(save_dir+'bestfit.png')
+        if save_dir is not None: pl.savefig(save_dir+'bestfit.png')
         pl.show()
 
     return error, t, v_fitted

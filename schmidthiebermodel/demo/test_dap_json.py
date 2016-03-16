@@ -7,6 +7,7 @@ from model.cell_builder import *
 
 cell = Cell("../../model/cells/morph_json.json", "../nrn/mod/i686/.libs/libnrnmech.so.0")  # stellate_garden
 
+
 # apply parameter changes
 h.celsius = 35
 k_vshift = 3.4639
@@ -57,7 +58,7 @@ for seg in cell.soma:
     seg.ih.gslowbar = 5.3e-05
 
 # compare experimental dap with model
-data = pd.read_csv('../../data/cell_2013_12_13f/dap/dap_1.csv').convert_objects(convert_numeric=True)
+data = pd.read_csv('../../data/new_cells/2015_08_11d/dap/dap.csv').convert_objects(convert_numeric=True)
 v_exp = data.as_matrix(['v'])
 t_exp = data.as_matrix(['t'])
 i_exp = data.as_matrix(['i'])
@@ -74,7 +75,7 @@ stim.dur = 1e9  # 1e9 necessary for playing the current into IClamp
 i_vec = h.Vector()
 i_vec.from_python(i_exp)
 t_vec = h.Vector()
-t_vec.from_python(t_exp)
+t_vec.from_python(np.concatenate((np.array([0]), t_exp)))
 i_vec.play(stim._ref_amp, t_vec)
 
 v = h.Vector()
