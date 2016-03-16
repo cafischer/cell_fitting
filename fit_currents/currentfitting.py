@@ -24,9 +24,7 @@ def derivative_ridgeregression(y, dt, alpha):
 def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, cm, i_passive=0, fit_cm=False,
                     save_dir=None, plot=False):
 
-    # unit conversion and sign
-    for i in range(len(channel_currents)):
-        channel_currents[i] *= -1 * 1e3 * cell_area  # TODO: should work without loop
+    channel_currents *= -1 * 1e3 * cell_area
     i_inj *= 1e-3
 
     if fit_cm:
@@ -82,7 +80,7 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
     return best_fit, residual
 
 
-def simulate(best_fit, cell, E_ion, data, C_ion=None, save_dir=None, plot=False):
+def simulate(best_fit, cell, E_ion, data, C_ion=None, onset=200, save_dir=None, plot=False):
 
     # Note: assumes fixed external and internal Ca concentration
 
@@ -122,7 +120,7 @@ def simulate(best_fit, cell, E_ion, data, C_ion=None, save_dir=None, plot=False)
 
     # extract simulation parameters
     simulation_params = optimization.optimizer.extract_simulation_params(data)
-    simulation_params.update({'onset': 200})
+    simulation_params.update({'onset': onset})
 
     # run simulation
     v_fitted, t = optimization.fitfuns.run_simulation(cell, **simulation_params)

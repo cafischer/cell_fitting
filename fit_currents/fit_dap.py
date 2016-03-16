@@ -145,7 +145,7 @@ if __name__ == "__main__":
     cell.update_attr(['soma', 'cm'], cm)
     cell.update_attr(keys, var_range[best])
 
-    simulate(best_fit_all[best], cell, E_ion_all, data, C_ion, save_dir, plot=True)
+    simulate(best_fit_all[best], cell, E_ion_all, data, C_ion, save_dir=save_dir, plot=True)
 
     # save results
     with open(save_dir+'/best_fit.json', 'w') as f:

@@ -88,7 +88,7 @@ if __name__ == "__main__":
                                                 plot=False)
 
         # run simulation to check best fit
-        errors[i], _, _ = simulate(best_fit[i], cell, E_ion, data, save_dir, plot=False)
+        errors[i], _, _ = simulate(best_fit[i], cell, E_ion, data, save_dir=save_dir, plot=False)
 
         """
         # plot current trace and derivative
