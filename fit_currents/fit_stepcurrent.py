@@ -1,5 +1,6 @@
 from fit_currents.currentfitting import *
 from fit_currents.vclamp import *
+import json_utils
 
 __author__ = 'caro'
 
@@ -7,20 +8,21 @@ if __name__ == "__main__":
 
     # parameters
     cellid = '2015_08_11d'
-    objective = 'stepcurrent_test'
-    save_dir = './fit_'+cellid+'/'+objective+'/'
+    objective = 'stepcurrent-0.1'
+    save_dir = './results/fit_'+cellid+'/'+objective+'/'
     data_dir = '../data/new_cells/'+cellid+'/stepcurrent/stepcurrent-0.1.csv'
     current_dir = './current_traces/'+cellid+'/'+objective+'/'
-    model_dir = '../model/cells/point.json'
+    model_dir = '../model/cells/point2.json'
     mechanism_dir = '../model/channels_currentfitting'
     mechanism_dir_clamp = '../model/channels_vclamp'
 
-    channel_list = ['passive', 'ih_slow', 'ih_fast']  #
-    E_ion = {'ehcn': -20, 'e_pas': -73.6}  #
+    channel_list = ['passive', 'ih_slow', 'ih_fast']
+    ion_list = ['', '_slow', '_fast']
+    E_ion = {'ehcn': -20}  # , 'e_pas': -73.9}
 
-    keys = ["ion", "pas", "e_pas"]  # [""]  #
+    keys = ["E_ion", "e_pas"]  # [""]  #
     var_name = keys[-1]
-    var_range = np.arange(-71, -69, 0.01)  # [0]  #
+    var_range = np.arange(-70, -65, 1)  # [0]  #
 
     alpha = 0.1
     n_chunks = 10
@@ -47,14 +49,14 @@ if __name__ == "__main__":
     # estimate derivative via ridge regression
     dt = t[1] - t[0]
     chunk = len(t) / n_chunks
-    ds = np.DataSource()
-    if ds.exists(save_dir+'/dv.npy'):
-        with open(save_dir+'/dv.npy', 'r') as f:
-            dv = np.load(f)
+    #ds = np.DataSource()
+    #if ds.exists(save_dir+'/dvdt.npy'):
+    #    with open(save_dir+'/dvdt.npy', 'r') as f:
+    #        dvdt = np.load(f)
     #else:
-    #dv = np.zeros(len(t))
+    #dvdt = np.zeros(len(t))
     #for i in range(int(len(t)/chunk)):
-    #    dv[i*chunk:(i+1)*chunk] = derivative_ridgeregression(v[i*chunk:(i+1)*chunk], dt, alpha)
+    #    dvdt[i*chunk:(i+1)*chunk] = derivative_ridgeregression(v[i*chunk:(i+1)*chunk], dt, alpha)
     dvdt = np.concatenate((np.array([0]), np.diff(v) / np.diff(t)))
 
     #pl.figure()
@@ -77,10 +79,11 @@ if __name__ == "__main__":
 
         # update cell
         cell.update_attr(keys, val)
-        E_ion[var_name] = val  # TODO
+        if "E_ion" in keys:
+            E_ion[var_name] = val
 
         # compute currents
-        currents = fit_currents.vclamp.vclamp(v, t, cell, channel_list, E_ion)
+        currents = vclamp(v, t, cell, channel_list, ion_list, E_ion)
 
         # linear regression
         best_fit[i], residual = current_fitting(dvdt, t, copy.deepcopy(i_inj), currents, cell_area,
@@ -117,6 +120,8 @@ if __name__ == "__main__":
     # plot best fit
     cell = Cell(model_dir)
     cell.update_attr(keys, var_range[best])
+    if "E_ion" in keys:
+        E_ion[var_name] = var_range[best]
 
     simulate(best_fit[best], cell, E_ion, data, save_dir, plot=True)
 
@@ -125,7 +130,7 @@ if __name__ == "__main__":
         json_utils.dump(best_fit[best], f)
     np.savetxt(save_dir+'/error.json', np.array([errors[best]]))
     cell.save_as_json(save_dir+'cell.json')
-    with open(save_dir+'/dv.npy', 'w') as f:
+    with open(save_dir+'/dvdt.npy', 'w') as f:
         np.save(f, dvdt)
     np.savetxt(save_dir+'/alpha.txt', np.array([alpha]))
     np.savetxt(save_dir+'/n_chunks.txt', np.array([n_chunks]))

@@ -9,107 +9,40 @@ h("""cvode.active(0)""")  # unvariable time step in NEURON
 __author__ = 'caro'
 
 
-def vclamp(v, t, cell, channel_list, E_ion, C_ion=None, plot=False):
+def vclamp(v, t, cell, channel_list, ion_list, E_ion, C_ion=None, plot=False):
     """
     Note:
     - only for single compartment model
     - channel models have to be changed: current output should be zero (for better voltage clamp) and new variable to
     measure current should be inserted
-
-    :param current_dir:
-    :type current_dir:
-    :param data_dir:
-    :type data_dir:
-    :param model_dir:
-    :type model_dir:
-    :param mechanism_dir:
-    :type mechanism_dir:
     """
 
     # record from channels
     currents = [0] * np.size(channel_list)
     for i, channel in enumerate(channel_list):
 
-        # insert channel
+        # insert channel & set gbar to 1 & record currents
+        currents[i] = h.Vector()
         if channel == 'ih_fast' or channel == 'ih_slow':
             Mechanism('ih2').insert_into(cell.soma)
+            currents[i].record(getattr(getattr(cell.soma(.5), 'ih2'), '_ref_i'+ion_list[i]))
+            setattr(getattr(cell.soma(.5), 'ih2'), 'gfastbar', 1)
+            setattr(getattr(cell.soma(.5), 'ih2'), 'gslowbar', 1)
+        elif channel == 'calva':
+            Mechanism(channel + str(2)).insert_into(cell.soma)
+            currents[i].record(getattr(getattr(cell.soma(.5), channel+'2'), '_ref_i'+ion_list[i]+'2'))
+            setattr(getattr(cell.soma(.5), channel+'2'), 'pbar', 1)
+            setattr(getattr(cell.soma(.5), channel+'2'), 'cai', C_ion['cai'])
+            setattr(getattr(cell.soma(.5), channel+'2'), 'cao', C_ion['cao'])
+        elif channel == 'kca':
+            Mechanism(channel + str(2)).insert_into(cell.soma)
+            currents[i].record(getattr(getattr(cell.soma(.5), channel+'2'), '_ref_i'+ion_list[i]+'2'))
+            setattr(getattr(cell.soma(.5), channel+'2'), 'gbar', 1)
+            setattr(getattr(cell.soma(.5), channel+'2'), 'cai', C_ion['cai'])
         else:
             Mechanism(channel + str(2)).insert_into(cell.soma)
-
-        # set gbar to 1 and set reference to current
-        if channel == 'passive':
-            for seg in cell.soma:
-                seg.passive2.gbar = 1
-            ichannel = cell.soma(.5).passive2._ref_i2
-        elif channel == 'na8st':
-            for seg in cell.soma:
-                seg.na8st2.gbar = 1
-            ichannel = cell.soma(.5).na8st2._ref_ina2
-        elif channel == 'nat':
-            for seg in cell.soma:
-                seg.nat2.gbar = 1
-            ichannel = cell.soma(.5).nat2._ref_ina2
-        elif channel == 'narsg':
-            for seg in cell.soma:
-                seg.narsg2.gbar = 1
-            ichannel = cell.soma(.5).narsg2._ref_ina2
-        elif channel == 'nap':
-            for seg in cell.soma:
-                seg.nap2.gbar = 1
-            ichannel = cell.soma(.5).nap2._ref_ina2
-        elif channel == 'napsh':
-            for seg in cell.soma:
-                seg.napsh2.gbar = 1
-            ichannel = cell.soma(.5).napsh2._ref_ina2
-        elif channel == 'nav16':
-            for seg in cell.soma:
-                seg.nav162.gbar = 1
-            ichannel = cell.soma(.5).nav162._ref_ina2
-        elif channel == 'kdr':
-            for seg in cell.soma:
-                seg.kdr2.gbar = 1
-            ichannel = cell.soma(.5).kdr2._ref_ik2
-        elif channel == 'ka':
-            for seg in cell.soma:
-                seg.ka2.gbar = 1
-            ichannel = cell.soma(.5).ka2._ref_ik2
-        elif channel == 'km':
-            for seg in cell.soma:
-                seg.km2.gbar = 1
-            ichannel = cell.soma(.5).km2._ref_ik2
-        elif channel == 'kleak':
-            for seg in cell.soma:
-                seg.kleak2.gbar = 1
-            ichannel = cell.soma(.5).kleak2._ref_i2
-        elif channel == 'ih_fast':
-            for seg in cell.soma:
-                seg.ih2.gfastbar = 1
-                seg.ih2.gslowbar = 1
-            ichannel = cell.soma(.5).ih2._ref_i_fast
-        elif channel == 'ih_slow':
-            for seg in cell.soma:
-                seg.ih2.gfastbar = 1
-                seg.ih2.gslowbar = 1
-            ichannel = cell.soma(.5).ih2._ref_i_slow
-        elif channel == 'caHVA':
-            for seg in cell.soma:
-                seg.caHVA2.gbar = 1
-            ichannel = cell.soma(.5).caHVA2._ref_ica2
-        elif channel == 'caLVA':
-            for seg in cell.soma:
-                seg.caLVA2.pbar = 1
-                seg.caLVA2.cai = C_ion['cai']
-                seg.caLVA2.cao = C_ion['cao']
-            ichannel = cell.soma(.5).caLVA2._ref_ica2
-        elif channel == 'kca':
-            for seg in cell.soma:
-                seg.kca2.gbar = 1
-                seg.kca2.cai = C_ion['cai']
-            ichannel = cell.soma(.5).kca2._ref_ik2
-
-        # record currents
-        currents[i] = h.Vector()
-        currents[i].record(ichannel)
+            currents[i].record(getattr(getattr(cell.soma(.5), channel+'2'), '_ref_i'+ion_list[i]+'2'))
+            setattr(getattr(cell.soma(.5), channel+'2'), 'gbar', 1)
 
     # set equilibrium potentials
     for eion, E in E_ion.iteritems():
@@ -156,3 +89,23 @@ def vclamp(v, t, cell, channel_list, E_ion, C_ion=None, plot=False):
             pl.show()
 
     return np.array(currents)
+
+
+def get_ionlist(channel_list):
+    ion_list = []
+    for channel in channel_list:
+        if 'na' in channel:
+            ion_list.append('na')
+        elif 'kleak' in channel:
+            ion_list.append('')
+        elif 'k' in channel:
+            ion_list.append('k')
+        elif 'ca' in channel:
+            ion_list.append('ca')
+        elif '_fast' in channel:
+            ion_list.append('_fast')
+        elif '_slow' in channel:
+            ion_list.append('_slow')
+        else:
+            ion_list.append('')
+    return ion_list

@@ -1,5 +1,7 @@
 from fit_currents.currentfitting import *
 from fit_currents.vclamp import *
+import json_utils
+import fit_currents
 
 __author__ = 'caro'
 
@@ -10,21 +12,22 @@ if __name__ == "__main__":
     objective = 'dap'
     save_dir = './results/fit_'+cellid+'/'+objective+'/'
     data_dir = '../data/new_cells/'+cellid+'/dap/dap.csv'
-    model_dir = '../model/cells/point.json'
+    model_dir = '../model/cells/point2.json'
     passive_weights_dir = './results/fit_'+cellid+'/stepcurrent-0.1/best_fit.json'
     mechanism_dir = '../model/channels_currentfitting'
     mechanism_dir_clamp = '../model/channels_vclamp'
     fit_cm = False
 
-    channel_list = ['na8st', 'nap', 'napsh', 'narsg', 'nat', 'kdr', 'ka', 'km', 'caLVA', 'caHVA', 'kca']
-    E_ion = {'ek': -83, 'ena': 87, 'eca': 80}  # eca 90
+    channel_list = ['naf', 'ka', 'calva']  #['na8st', 'nap', 'napsh', 'narsg', 'nat', 'kdr', 'ka', 'km', 'caLVA', 'caHVA', 'kca']
+    ion_list = get_ionlist(channel_list)
+    E_ion = {'ek': -83, 'ena': 87, 'eca': 90}
     E_ion_passive = {'ehcn': -20, 'e_pas': -73.6}  # change for different models!
     C_ion = {'cai': 1e-04, 'cao': 2}   # (Svoboda 2000)
 
     # parameter to loop over
-    keys = [0]  # [["soma", "mechanisms", "narsg", "x6"], ["soma", "mechanisms", "narsg2", "x6"]]
+    keys = [0]  # to change E_ion put [["E_ion", "eion"]]
     var_name = keys[-1]
-    var_range = [0]  # np.linspace(-1, 10, 10) #np.logspace(5e11, 2e12, 10)
+    var_range = [0]  # np.linspace(-1, 10, 10)
 
     # load passive model
     with open(passive_weights_dir, 'r') as f:
@@ -33,6 +36,7 @@ if __name__ == "__main__":
     del weights_passive_dict['cm']
     channel_list_passive = weights_passive_dict.keys()
     weights_passive = [weights_passive_dict[channel] for channel in channel_list_passive]
+    ion_list_passive = get_ionlist(channel_list_passive)
 
     # create save_dir
     if not os.path.exists(save_dir):
@@ -54,12 +58,12 @@ if __name__ == "__main__":
 
     # compute derivative
     dvdt = np.concatenate((np.array([0]), np.diff(v) / np.diff(t)))
-    #pl.figure()
-    #pl.plot(t, dvdt, 'k', linewidth=1.5, label='dV/dt')  # alpha: '+str(alpha) + '\n' + 'n_chunks: ' + str(n_chunks))
-    #pl.plot(t, (v-v[0])*np.max(dvdt)/np.max(v-v[0]), 'b', linewidth=1.5, label='V')
-    #pl.xlabel('Time (ms)', fontsize=18)
-    #pl.legend(loc='upper right', fontsize=18)
-    #pl.show()
+    pl.figure()
+    pl.plot(t, dvdt, 'k', linewidth=1.5, label='dV/dt')
+    pl.plot(t, (v-v[0])*np.max(dvdt)/np.max(v-v[0]), 'b', linewidth=1.5, label='V')
+    pl.xlabel('Time (ms)', fontsize=18)
+    pl.legend(loc='upper right', fontsize=18)
+    pl.show()
 
     # change parameters and find best fit
     best_fit = [[]] * len(var_range)
@@ -77,11 +81,12 @@ if __name__ == "__main__":
 
         # update cell
         cell.update_attr(keys, val)
-        #E_ion[var_name] = val  # TODO
+        if "E_ion" in keys:
+            E_ion[var_name] = val
 
         # compute current
-        currents = fit_currents.vclamp.vclamp(v, t, cell, channel_list, E_ion, C_ion)
-        currents_passive = fit_currents.vclamp.vclamp(v, t, cell, channel_list_passive, E_ion_passive)
+        currents = fit_currents.vclamp.vclamp(v, t, cell, channel_list, ion_list, E_ion, C_ion)
+        currents_passive = fit_currents.vclamp.vclamp(v, t, cell, channel_list_passive, ion_list_passive, E_ion_passive)
 
         i_passive = np.dot(weights_passive, np.array(currents_passive) * 1e3 * cell_area)
 
@@ -97,12 +102,12 @@ if __name__ == "__main__":
         best_fit_all[i].update(weights_passive_dict)
         #errors[i], _, _ = simulate(best_fit_all[i], cell, E_ion_all, data, save_dir, plot=False)
 
-    """
+
         # plot current trace and derivative
         for j, current in enumerate(currents):
             pl.figure()
             pl.plot(t, dvdt*cell.soma.cm*cell_area-i_inj*1e-3, 'k', linewidth=1.5, label='$cm \cdot dV/dt - i_{inj}$')
-            pl.plot(t, -1 * current*np.max(np.abs(dvdt*cell.soma.cm*cell_area-i_inj*1e-3))/np.max(np.abs(current)),
+            pl.plot(t, -1 * current*np.max(np.abs(dvdt*cell.soma.cm*cell_area-i_inj*1e-3))/5/np.max(np.abs(current)),
                     linewidth=1.5, label=channel_list[j])
             pl.ylabel('Current (pA)', fontsize=18)
             pl.xlabel('Time (ms)', fontsize=18)
@@ -110,7 +115,7 @@ if __name__ == "__main__":
             pl.legend(loc='upper right', fontsize=18)
             pl.savefig(save_dir+channel_list[j]+'.png')
             pl.show()
-"""
+
 
     # find best fit
     best = np.argmin(residuals)
@@ -120,6 +125,7 @@ if __name__ == "__main__":
     print var_range[best]
     print best_fit[best]
     print "Error: " + str(errors[best])
+    print 'Residual: ' + str(residuals[best])
 
     # integrate linear regression solution
     weights_active = [best_fit[best][channel] for channel in channel_list]
@@ -144,6 +150,8 @@ if __name__ == "__main__":
     cell = Cell(model_dir)
     cell.update_attr(['soma', 'cm'], cm)
     cell.update_attr(keys, var_range[best])
+    if "E_ion" in keys:
+        E_ion[var_name] = var_range[best]
 
     simulate(best_fit_all[best], cell, E_ion_all, data, C_ion, save_dir=save_dir, plot=True)
 
