@@ -139,20 +139,20 @@ if __name__ == "__main__":
     dt_exp = t_exp[1]-t_exp[0]
     vrest = np.mean(v_exp[:100])
 
-    dap_analyzer = ApAnalyzer(v_exp, t_exp)
-    AP_onsets = dap_analyzer.get_AP_onsets()
+    ap_analyzer = ApAnalyzer(v_exp, t_exp)
+    AP_onsets = ap_analyzer.get_AP_onsets()
     AP_onset = AP_onsets[0]
     AP_end = -1
 
-    AP_max = dap_analyzer.get_AP_max(AP_onset, AP_end, interval=1/dt_exp)
-    fAHP_min = dap_analyzer.get_fAHP_min(AP_max, AP_end, interval=5/dt_exp)
-    DAP_max = dap_analyzer.get_DAP_max(fAHP_min, AP_end, interval=10/dt_exp)
+    AP_max = ap_analyzer.get_AP_max(AP_onset, AP_end, interval=1/dt_exp)
+    fAHP_min = ap_analyzer.get_fAHP_min(AP_max, AP_end, interval=5/dt_exp)
+    DAP_max = ap_analyzer.get_DAP_max(fAHP_min, AP_end, interval=10/dt_exp)
 
-    AP_amp = dap_analyzer.get_AP_amp(AP_max, vrest)
-    AP_width, w1, w2 = dap_analyzer.get_AP_width(AP_onset, AP_max, AP_end)
-    DAP_amp = dap_analyzer.get_DAP_amp(DAP_max, vrest)
-    DAP_deflection = dap_analyzer.get_DAP_deflection(DAP_max, fAHP_min)
-    DAP_width = dap_analyzer.get_DAP_width(fAHP_min, DAP_max, AP_end, vrest)
+    AP_amp = ap_analyzer.get_AP_amp(AP_max, vrest)
+    AP_width, w1, w2 = ap_analyzer.get_AP_width(AP_onset, AP_max, AP_end)
+    DAP_amp = ap_analyzer.get_DAP_amp(DAP_max, vrest)
+    DAP_deflection = ap_analyzer.get_DAP_deflection(DAP_max, fAHP_min)
+    DAP_width = ap_analyzer.get_DAP_width(fAHP_min, DAP_max, AP_end, vrest)
     print 'AP amplitude: ' + str(AP_amp)
     print 'AP width: ' + str(AP_width)
     print 'DAP amplitude: ' + str(DAP_amp)
@@ -223,9 +223,9 @@ if __name__ == "__main__":
         v_model = np.array(v_model)
 
         # analyze voltage trace
-        dap_analyzer = ApAnalyzer(v_model, t)
+        ap_analyzer = ApAnalyzer(v_model, t)
         v_rest = np.mean(v_model[:100])
-        AP_onsets = dap_analyzer.get_AP_onsets(vrest=v_rest)
+        AP_onsets = ap_analyzer.get_AP_onsets(vrest=v_rest)
         if len(AP_onsets) == 0:
             print 'No APs!'
         else:
@@ -234,14 +234,14 @@ if __name__ == "__main__":
                 AP_end = -1
             elif len(AP_onsets) > 1:
                 AP_end = AP_onsets[1]
-            AP_max = dap_analyzer.get_AP_max(AP_onset, AP_end, interval=1/dt_exp)
+            AP_max = ap_analyzer.get_AP_max(AP_onset, AP_end, interval=1/dt_exp)
             if AP_max is not None:
-                fAHP_min = dap_analyzer.get_fAHP_min(AP_max, AP_end, interval=5/dt)
+                fAHP_min = ap_analyzer.get_fAHP_min(AP_max, AP_end, interval=5/dt)
             else:
                 fAHP_min = None
                 DAP_max = None
             if fAHP_min is not None:
-                DAP_max = dap_analyzer.get_DAP_max(fAHP_min, AP_end, interval=10/dt)
+                DAP_max = ap_analyzer.get_DAP_max(fAHP_min, AP_end, interval=10/dt)
             else:
                 DAP_max = None
 
