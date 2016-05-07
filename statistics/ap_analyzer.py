@@ -1,8 +1,7 @@
 from __future__ import division
 import numpy as np
-import pylab as pl
 from scipy.signal import argrelmin, argrelmax
-import warnings
+from fit_currents.error_analysis.model_generator import from_protocol
 
 __author__ = 'caro'
 
@@ -13,36 +12,30 @@ class ApAnalyzer:
         self.v = v
         self.t = t
 
-    def get_AP_onsets(self, threshold=-45, vrest=-65):
+    def get_AP_onsets(self, threshold=-45):
         """
         Returns the indices of the times where the membrane potential crossed threshold.
         :param threshold: AP threshold.
         :type threshold: float
-        :param vrest: Resting potential.
-        :type vrest: float
         :return: Indices of the times where the membrane potential crossed threshold.
         :rtype: int
         """
-        if threshold < vrest:
-            warnings.warn('Action potential threshhold is lower than resting potential', UserWarning)
-
         return np.nonzero(np.diff(np.sign(self.v-threshold)) == 2)[0]
 
     def get_AP_max(self, AP_onset, AP_end, order=5, interval=None):
         """
         Returns the index of the local maximum of the AP between AP onset and end during dur.
-        :param AP_onset: Index where the membrane potential crosses the AP threshold
+        :param AP_onset: Index where the membrane potential crosses the AP threshold.
         :type AP_onset: int
-        :param AP_end: Index of the end of the AP (e.g. delimited by the onset of the next AP or the end of the trace)
+        :param AP_end: Index of the end of the AP (e.g. delimited by the onset of the next AP or the end of the trace).
         :type AP_end: int
         :param order: Number of points to consider for determining the local maxima.
         :type order: int
         :param interval: Length of the interval during which the maximum of the AP shall occur starting from AP onset.
         :type interval: int
-        :return: Index of the Maximum of the AP.
+        :return: Index of the Maximum of the AP (None if it does not exist).
         :rtype: int
         """
-
         maxima = argrelmax(self.v[AP_onset:AP_end], order=order)[0]
         if interval is not None:
             maxima = maxima[maxima < interval]
@@ -57,16 +50,15 @@ class ApAnalyzer:
         Returns the index of the local minimum found after AP maximum.
         :param AP_max: Index of the maximum of the AP.
         :type AP_max: int
-        :param AP_end: Index of the end of the AP (e.g. delimited by the onset of the next AP or the end of the trace)
+        :param AP_end: Index of the end of the AP (e.g. delimited by the onset of the next AP or the end of the trace).
         :type AP_end: int
         :param order: Number of points to consider for determining the local minima.
         :type order: int
         :param interval: Length of the interval during which the minimum of the fAHP shall occur starting from AP max.
         :type interval: int
-        :return: Index of the Minimum of the fAHP.
+        :return: Index of the Minimum of the fAHP (None if it does not exist).
         :rtype: int
         """
-
         minima = argrelmin(self.v[AP_max:AP_end], order=order)[0]
         if interval is not None:
             minima = minima[minima < interval]
@@ -81,13 +73,13 @@ class ApAnalyzer:
         Returns the index of the local maximum found after fAHP.
         :param fAHP_min: Index of the minimum of the fAHP.
         :type fAHP_min: int
-        :param AP_end: Index of the end of the AP (e.g. delimited by the onset of the next AP or the end of the trace)
+        :param AP_end: Index of the end of the AP (e.g. delimited by the onset of the next AP or the end of the trace).
         :type AP_end: int
         :param order: Number of points to consider for determining the local minima.
         :type order: int
         :param interval: Length of the interval during which the minimum of the fAHP shall occur starting from AP max.
         :type interval: int
-        :return: Index of maximum of the DAP.
+        :return: Index of maximum of the DAP (None if it does not exist).
         :rtype: int
         """
         maxima = argrelmax(self.v[fAHP_min:AP_end], order=order)[0]
@@ -100,25 +92,95 @@ class ApAnalyzer:
             return maxima[np.argmax(self.v[fAHP_min:AP_end][maxima])] + fAHP_min
 
     def get_AP_amp(self, AP_max, vrest):
+        """
+        Computes the amplitude of the AP in relation to the resting potential.
+        :param AP_max: Index of the maximum of the AP.
+        :type AP_max: int
+        :param vrest: Resting potential.
+        :type vrest: float
+        :return: Amplitude of the AP.
+        :rtype: float
+        """
         return self.v[AP_max] - vrest
 
-    def get_AP_width(self, AP_onset, AP_max, AP_end):
+    def get_AP_width(self, AP_onset, AP_max, AP_end, vrest):
+        """
+        Computes the width at half maximum of the AP.
+        :param AP_onset: Index where the membrane potential crosses the AP threshold.
+        :type AP_onset: int
+        :param AP_max: Index of the maximum of the AP.
+        :type AP_max: int
+        :param AP_end: Index of the end of the AP (e.g. delimited by the onset of the next AP or the end of the trace).
+        :type AP_end: int
+        :param vrest: Resting potential.
+        :type vrest: float
+        :return: AP width at half maximum.
+        :rtype: float
+        """
         halfmax =(self.v[AP_max] - vrest)/2
         width1 = np.argmin(np.abs(self.v[AP_onset:AP_max]-vrest-halfmax)) + AP_onset
         width2 = np.argmin(np.abs(self.v[AP_max:AP_end]-vrest-halfmax)) + AP_max
         return self.t[width2] - self.t[width1]
 
     def get_DAP_amp(self, DAP_max, vrest):
+        """
+        Computes the amplitude of the DAP in relation to the resting potential.
+        :param DAP_max: Index of maximum of the DAP.
+        :type DAP_max: int
+        :param vrest: Resting potential.
+        :type vrest: float
+        :return: Amplitude of the DAP.
+        :rtype: float
+        """
         return self.v[DAP_max] - vrest
 
-    def get_DAP_deflection(self, DAP_max, fAHP_min):
+    def get_DAP_deflection(self, fAHP_min, DAP_max):
+        """
+        Computes the deflection of the DAP (the height of the depolarization in relation to the minimum of the fAHP).
+        :param fAHP_min: Index of the Minimum of the fAHP.
+        :type fAHP_min: int
+        :param DAP_max: Index of maximum of the DAP.
+        :type DAP_max: int
+        :return: Deflection of the DAP.
+        :rtype: float
+        """
         return self.v[DAP_max] - self.v[fAHP_min]
 
     def get_DAP_width(self, fAHP_min, DAP_max, AP_end, vrest):
+        """
+        Width of the DAP (distance between the time point of the minimum of the fAHP and the time point where the
+        downhill side of the DAP is closest to the half amplitude of the minimum of the fAHP).
+        :param fAHP_min: Index of the Minimum of the fAHP
+        :type fAHP_min: int
+        :param DAP_max: Index of maximum of the DAP.
+        :type DAP_max: int
+        :param AP_end: Index of the end of the AP (e.g. delimited by the onset of the next AP or the end of the trace)
+        :type AP_end: int
+        :param vrest: Resting potential.
+        :type vrest: float
+        :return: Width of the DAP.
+        :rtype: float
+        """
         halfmax = (self.v[fAHP_min] - vrest)/2
         halfwidth = np.nonzero(np.diff(np.sign(self.v[DAP_max:AP_end]-vrest-halfmax)) == -2)[0][0] + DAP_max
         return self.t[halfwidth] - self.t[fAHP_min]
 
+    def get_vrest(self, exp_protocol, dt):
+        """
+        Computes the resting potential as the mean of the voltage trace if there was zero current in the first time
+        interval.
+        :param exp_protocol: Name of the experimental protocol used.
+        :type exp_protocol: str
+        :param dt: Time step used in the experiments.
+        :type dt: float
+        :return: Resting potential (None if it does not exist).
+        :rtype: float
+        """
+        times, amps, amp_types = from_protocol(exp_protocol)
+        if amps[0] == 0:
+            return np.mean(self.v[:times[1]/dt])
+        else:
+            return None
 
 if __name__ == "__main__":
     import pandas as pd
@@ -137,9 +199,9 @@ if __name__ == "__main__":
     i_exp = np.array(data.i)
     t_exp = np.array(data.t)
     dt_exp = t_exp[1]-t_exp[0]
-    vrest = np.mean(v_exp[:100])
 
     ap_analyzer = ApAnalyzer(v_exp, t_exp)
+    vrest = ap_analyzer.get_vrest('ramp', dt_exp)
     AP_onsets = ap_analyzer.get_AP_onsets()
     AP_onset = AP_onsets[0]
     AP_end = -1
@@ -149,7 +211,7 @@ if __name__ == "__main__":
     DAP_max = ap_analyzer.get_DAP_max(fAHP_min, AP_end, interval=10/dt_exp)
 
     AP_amp = ap_analyzer.get_AP_amp(AP_max, vrest)
-    AP_width, w1, w2 = ap_analyzer.get_AP_width(AP_onset, AP_max, AP_end)
+    AP_width = ap_analyzer.get_AP_width(AP_onset, AP_max, AP_end, vrest)
     DAP_amp = ap_analyzer.get_DAP_amp(DAP_max, vrest)
     DAP_deflection = ap_analyzer.get_DAP_deflection(DAP_max, fAHP_min)
     DAP_width = ap_analyzer.get_DAP_width(fAHP_min, DAP_max, AP_end, vrest)
@@ -224,8 +286,11 @@ if __name__ == "__main__":
 
         # analyze voltage trace
         ap_analyzer = ApAnalyzer(v_model, t)
-        v_rest = np.mean(v_model[:100])
-        AP_onsets = ap_analyzer.get_AP_onsets(vrest=v_rest)
+        vrest = ap_analyzer.get_vrest('stepramp', dt)
+        threshold = -45
+        if threshold < vrest:
+            print 'Action potential threshold is lower than resting potential'
+        AP_onsets = ap_analyzer.get_AP_onsets(threshold=threshold)
         if len(AP_onsets) == 0:
             print 'No APs!'
         else:
@@ -246,7 +311,7 @@ if __name__ == "__main__":
                 DAP_max = None
 
             pl.figure()
-            pl.plot(t, v_model, 'xk', label='V')
+            pl.plot(t, v_model, 'k', label='V')
             pl.plot(t[AP_onsets], v_model[AP_onsets], 'or', label='AP onsets')
             if AP_max is not None: pl.plot(t[AP_max], v_model[AP_max], 'ob', label='AP maximum')
             if fAHP_min is not None: pl.plot(t[fAHP_min], v_model[fAHP_min], 'oy', label='fAHP minimum')
