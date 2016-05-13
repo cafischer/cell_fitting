@@ -4,6 +4,7 @@ import json
 import numpy as np
 import pylab as pl
 import copy
+import sys
 
 __author__ = 'caro'
 
@@ -123,7 +124,7 @@ class Section(nrn.Section):
             h.pt3dadd(g[0], g[1], g[2], g[3])
         h.pop_section()  # restore the previously accessed Section
 
-    def record_v(self, pos):
+    def record_v(self, pos=.5):
         """
         Records the membrane potential. Values are updated after each NEURON h.run().
 
@@ -136,7 +137,7 @@ class Section(nrn.Section):
         v.record(self(pos)._ref_v)
         return v
 
-    def record_spikes(self, pos, threshold=-30):
+    def record_spikes(self, threshold=-30, pos=.5):
         """
         Records the spikes of the Cell. Values are updated after each NEURON h.run().
 
@@ -153,7 +154,12 @@ class Section(nrn.Section):
         self.spike_count.record(vec)
         return vec
 
-    def play_current(self, pos, i_amp, t):
+    def record_current(self, channel, ion, pos=.5):
+        current = h.Vector()
+        current.record(getattr(getattr(self(pos), channel), '_ref_i'+ion))
+        return current
+
+    def play_current(self, i_amp, t, pos=.5):
         """
         At each time step inject a current equivalent to i_amp at this time step.
 
@@ -173,8 +179,8 @@ class Section(nrn.Section):
         i_vec = h.Vector()
         i_vec.from_python(i_amp)
         t_vec = h.Vector()
-        t_vec.from_python(t)
-        i_vec.play(stim._ref_amp, t_vec) # play current into IClamp (use experimental current trace)
+        t_vec.from_python(np.concatenate((np.array([0]), t)))  # at time 0 no current is played
+        i_vec.play(stim._ref_amp, t_vec)  # play current into IClamp (use experimental current trace)
         return stim, i_vec, t_vec
 
 
@@ -195,7 +201,7 @@ class Cell(object):
     :type axon_secs: list of Sections
     """
 
-    def __init__(self, model_dir, mechanism_dir=None):
+    def __init__(self, model, mechanism_dir=None):
         """
         Initializes a Cell.
 
@@ -218,19 +224,22 @@ class Cell(object):
         :type mechanism_dir: str
         """
 
-        # load .json file
-        fr = open(model_dir, 'r')
-        params = json.load(fr)
-
         # assign parameters
-        self.params = params
+        self.params = copy.deepcopy(model)
 
         # load mechanisms (ion channel implementations)
         if mechanism_dir is not None:
             h.nrn_load_dll(mechanism_dir)  # must be loaded before insertion of Mechanisms! (cannot be loaded twice)
 
         # create Cell with given parameters
-        self.create(params)
+        self.create(self.params)
+
+    @classmethod
+    def from_modeldir(cls, model_dir, mechanism_dir=None):
+        with open(model_dir, 'r') as f:
+            params = json.load(f)
+
+        return cls(params, mechanism_dir)
 
     def create(self, params):
         """
@@ -274,7 +283,7 @@ class Cell(object):
                         for key, val in params['ion'][ion].iteritems():
                             setattr(sec, key, val)
 
-    def update_attr(self, keys, value):
+    def update_attr(self, keys, value, create=True):
         """
         Updates the value of an attribute in self.params and recreates the Cell with the new parameters.
 
@@ -292,7 +301,8 @@ class Cell(object):
         reduce(dicorator, [self.params] + keys[:-1])[keys[-1]] = value
 
         # update Cell
-        self.create(self.params)
+        if create:
+            self.create(self.params)
 
     def get_attr(self, keys):
         """
@@ -335,6 +345,14 @@ class Cell(object):
             file_dir += '.json'
         fw = open(file_dir, 'w')
         json.dump(self.params, fw, indent=4)
+
+
+def complete_mechanismdir(mechanism_dir):
+    if sys.maxsize > 2**32:
+        mechanism_dir += '/x86_64/.libs/libnrnmech.so'
+    else:
+        mechanism_dir += '/i686/.libs/libnrnmech.so'
+    return mechanism_dir
 
 #######################################################################################################################
 
