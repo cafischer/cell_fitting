@@ -35,6 +35,9 @@ def get_AP_amp_width(v, t):
         else:
             AP_end = AP_onsets[1]
     AP_max = ap_analyzer.get_AP_max(AP_onset, AP_end, interval=5/dt)
-    AP_amp = ap_analyzer.get_AP_amp(AP_max, vrest)
-    AP_width = ap_analyzer.get_AP_width(AP_onset, AP_max, AP_end, vrest)
-    return AP_amp, AP_width
+    if AP_max is None:
+        return None, None
+    else:
+        AP_amp = ap_analyzer.get_AP_amp(AP_max, vrest)
+        AP_width = ap_analyzer.get_AP_width(AP_onset, AP_max, AP_end, vrest)
+        return AP_amp, AP_width
