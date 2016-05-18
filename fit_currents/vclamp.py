@@ -3,60 +3,54 @@ import sys
 import os
 from model.cell_builder import *
 from neuron import h
+from currentfitting import set_Epotential
 h.load_file("stdrun.hoc")  # load NEURON libraries
 h("""cvode.active(0)""")  # unvariable time step in NEURON
 
 __author__ = 'caro'
+
+# TODO: kca, cad
 
 
 def vclamp(v, t, cell, channel_list, ion_list, E_ion, C_ion=None, plot=False):
     """
     Note:
     - only for single compartment model
-    - channel models have to be changed: current output should be zero (for better voltage clamp) and new variable to
-    measure current should be inserted
+    - channel models have to be changed:
+      - current output should be zero (for better voltage clamp): delete WRITE i...
+      - add "_vclamp" to the suffix of the channel
+      - conductances needs to be named gbar
+      - cai, cao need to be read from ca_ion
     """
 
-    # record from channels
-    currents = [0] * np.size(channel_list)
     for i, channel in enumerate(channel_list):
+        # insert channel and set conductance to 1
+        cell.update_attr(['soma', 'mechanisms', channel+'_vclamp', 'gbar'], 1)
 
-        # insert channel & set gbar to 1 & record currents
-        currents[i] = h.Vector()
-        if channel == 'ih_fast' or channel == 'ih_slow':
-            Mechanism('ih2').insert_into(cell.soma)
-            currents[i].record(getattr(getattr(cell.soma(.5), 'ih2'), '_ref_i'+ion_list[i]))
-            setattr(getattr(cell.soma(.5), 'ih2'), 'gfastbar', 1)
-            setattr(getattr(cell.soma(.5), 'ih2'), 'gslowbar', 1)
-        elif channel == 'calva':
-            Mechanism(channel + str(2)).insert_into(cell.soma)
-            currents[i].record(getattr(getattr(cell.soma(.5), channel+'2'), '_ref_i'+ion_list[i]+'2'))
-            setattr(getattr(cell.soma(.5), channel+'2'), 'pbar', 1)
-            setattr(getattr(cell.soma(.5), channel+'2'), 'cai', C_ion['cai'])
-            setattr(getattr(cell.soma(.5), channel+'2'), 'cao', C_ion['cao'])
-        elif channel == 'kca':
-            Mechanism(channel + str(2)).insert_into(cell.soma)
-            currents[i].record(getattr(getattr(cell.soma(.5), channel+'2'), '_ref_i'+ion_list[i]+'2'))
-            setattr(getattr(cell.soma(.5), channel+'2'), 'gbar', 1)
-            setattr(getattr(cell.soma(.5), channel+'2'), 'cai', C_ion['cai'])
-        else:
-            Mechanism(channel + str(2)).insert_into(cell.soma)
-            currents[i].record(getattr(getattr(cell.soma(.5), channel+'2'), '_ref_i'+ion_list[i]+'2'))
-            setattr(getattr(cell.soma(.5), channel+'2'), 'gbar', 1)
+    # Ca concentration
+    if h.ismembrane(str('ca_ion'), sec=cell.soma):
+        cell.update_attr(['ion', 'ca_ion', 'cai0'], C_ion['cai'])
+        cell.update_attr(['ion', 'ca_ion', 'cao0'], C_ion['cao'])
 
     # set equilibrium potentials
     for eion, E in E_ion.iteritems():
-        if eion == "e_pas":
-            for seg in cell.soma:
-                seg.passive2.e_pas = E
+        if eion == "epas":
+            if hasattr(cell.soma(.5), 'passive_vclamp'):
+                cell.update_attr(['soma', 'mechanisms', 'passive_vclamp', eion], E)
         elif eion == 'ehcn':
-            for seg in cell.soma:
-                seg.ih2.ehcn = E
+            if hasattr(cell.soma(.5), 'ih_slow_vclamp'):
+                cell.update_attr(['soma', 'mechanisms', 'ih_slow_vclamp', eion], E)
+            if hasattr(cell.soma(.5), 'ih_fast_vclamp'):
+                cell.update_attr(['soma', 'mechanisms', 'ih_fast_vclamp', eion], E)
         elif eion == 'ekleak':
-            for seg in cell.soma:
-                seg.kleak2.ekleak = E
+            if hasattr(cell.soma(.5), 'kleak_vclamp'):
+                cell.update_attr(['soma', 'mechanisms', 'kleak_vclamp', eion], E)
         else:
-            setattr(cell.soma, eion, E)
+            cell.update_attr(['ion', eion[1:]+'_ion', eion], E)
+
+    # record currents (do not recreate cell after pointer for record are set)
+    currents = [cell.soma.record_current(channel_list[i]+'_vclamp', ion_list[i]+'_vclamp', 0.5)
+                for i in range(len(channel_list))]
 
     # create SEClamp
     dt = t[1] - t[0]
@@ -64,6 +58,64 @@ def vclamp(v, t, cell, channel_list, ion_list, E_ion, C_ion=None, plot=False):
     v_clamp.from_python(v)
     t_clamp = h.Vector()
     t_clamp.from_python(np.concatenate((np.array([0]), t)))  # shifted by one time step because membrane potential lags behind voltage clamp
+    clamp = h.SEClamp(0.5, sec=cell.soma)
+    clamp.rs = sys.float_info.epsilon  # series resistance should be as small as possible
+    clamp.dur1 = 1e9
+    v_clamp.play(clamp._ref_amp1, t_clamp)
+
+    # simulate
+    h.tstop = t[-1]
+    h.steps_per_ms = 1 / dt
+    h.dt = dt
+    h.v_init = v_clamp[0]
+    h.run()
+
+    # convert current traces to array
+    for i, channel in enumerate(channel_list):
+        currents[i] = np.array(currents[i])
+
+        # plot current traces
+        if plot:
+            pl.plot(t, currents[i], 'k')
+            pl.ylabel('Current (mA/cm2)')
+            pl.xlabel('Time (ms)')
+            pl.title(channel)
+            pl.show()
+
+    return np.array(currents)
+
+def vclamp_withcurrents(v, t, cell, channel_list, ion_list, E_ion, C_ion=None, plot=False):
+    """
+    Note:
+    - only for single compartment model
+    - channel models have to be changed:
+      - current output should be zero (for better voltage clamp): delete WRITE i...
+      - add "_vclamp" to the suffix of the channel
+      - conductances needs to be named gbar
+      - cai, cao need to be read from ca_ion
+    """
+
+    for i, channel in enumerate(channel_list):
+        # insert channel and set conductance to 1
+        cell.update_attr(['soma', 'mechanisms', channel, 'gbar'], 1)
+
+    # Ca concentration
+    if h.ismembrane(str('ca_ion'), sec=cell.soma):
+        cell.update_attr(['ion', 'ca_ion', 'cai0'], C_ion['cai'])
+        cell.update_attr(['ion', 'ca_ion', 'cao0'], C_ion['cao'])
+
+    # set equilibrium potentials
+    cell = set_Epotential(cell, E_ion)
+
+    # record currents (do not recreate cell after pointer for record are set)
+    currents = [cell.soma.record_current(channel_list[i], ion_list[i], 0.5) for i in range(len(channel_list))]
+
+    # create SEClamp
+    dt = t[1] - t[0]
+    v_clamp = h.Vector()
+    v_clamp.from_python(v)
+    t_clamp = h.Vector()
+    t_clamp.from_python(np.concatenate((np.array([0]), t)))  # shifted because membrane potential lags behind vclamp
     clamp = h.SEClamp(0.5, sec=cell.soma)
     clamp.rs = sys.float_info.epsilon  # series resistance should be as small as possible
     clamp.dur1 = 1e9
@@ -102,10 +154,8 @@ def get_ionlist(channel_list):
             ion_list.append('k')
         elif 'ca' in channel:
             ion_list.append('ca')
-        elif '_fast' in channel:
-            ion_list.append('_fast')
-        elif '_slow' in channel:
-            ion_list.append('_slow')
+        elif 'ih' in channel:
+            ion_list.append('')
         else:
             ion_list.append('')
     return ion_list

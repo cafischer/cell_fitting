@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     alpha = 0.1
     n_chunks = 10
-    fit_cm = True
+    fit_cm = False
 
     # create save_dir
     if not os.path.exists(save_dir):
@@ -54,10 +54,10 @@ if __name__ == "__main__":
     #    with open(save_dir+'/dvdt.npy', 'r') as f:
     #        dvdt = np.load(f)
     #else:
-    #dvdt = np.zeros(len(t))
-    #for i in range(int(len(t)/chunk)):
-    #    dvdt[i*chunk:(i+1)*chunk] = derivative_ridgeregression(v[i*chunk:(i+1)*chunk], dt, alpha)
-    dvdt = np.concatenate((np.array([0]), np.diff(v) / np.diff(t)))
+    dvdt = np.zeros(len(t))
+    for i in range(int(len(t)/chunk)):
+        dvdt[i*chunk:(i+1)*chunk] = derivative_ridgeregression(v[i*chunk:(i+1)*chunk], dt, alpha)
+    #dvdt = np.concatenate((np.array([0]), np.diff(v) / np.diff(t)))
 
     #pl.figure()
     #pl.plot(t, dv, 'k', linewidth=1.5, label='dV/dt')  # alpha: '+str(alpha) + '\n' + 'n_chunks: ' + str(n_chunks))

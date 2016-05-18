@@ -43,12 +43,8 @@ if __name__ == "__main__":
         os.makedirs(save_dir)
 
     # load mechanisms
-    if sys.maxsize > 2**32: mechanism_dir += '/x86_64/.libs/libnrnmech.so'
-    else: mechanism_dir += '/i686/.libs/libnrnmech.so'
-    h.nrn_load_dll(mechanism_dir)
-    if sys.maxsize > 2**32: mechanism_dir_clamp += '/x86_64/.libs/libnrnmech.so'
-    else: mechanism_dir_clamp += '/i686/.libs/libnrnmech.so'
-    h.nrn_load_dll(mechanism_dir_clamp)
+    h.nrn_load_dll(complete_mechanismdir(mechanism_dir))
+    h.nrn_load_dll(complete_mechanismdir(mechanism_dir_clamp))
 
     # load data
     data = pd.read_csv(data_dir)
@@ -59,10 +55,12 @@ if __name__ == "__main__":
     # compute derivative
     dvdt = np.concatenate((np.array([0]), np.diff(v) / np.diff(t)))
     pl.figure()
-    pl.plot(t, dvdt, 'k', linewidth=1.5, label='dV/dt')
-    pl.plot(t, (v-v[0])*np.max(dvdt)/np.max(v-v[0]), 'b', linewidth=1.5, label='V')
-    pl.xlabel('Time (ms)', fontsize=18)
+    pl.plot(t, dvdt, c='0', linewidth=1.5, label='dV/dt')
+    pl.plot(t, (v-v[0])*np.max(dvdt)/np.max(v-v[0]), c='0.5', linewidth=1.5, label='V')
+    pl.xlabel('Time $(ms)$', fontsize=18)
+    pl.ylabel('dV/dt $(mV/ms)$', fontsize=18)
     pl.legend(loc='upper right', fontsize=18)
+    pl.xlim([10,30])
     pl.show()
 
     # change parameters and find best fit

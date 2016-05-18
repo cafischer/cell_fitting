@@ -6,6 +6,7 @@ import scipy.optimize
 from model.cell_builder import *
 import optimization
 from sklearn import linear_model
+from matplotlib.pyplot import cm as cmap
 
 def derivative_ridgeregression(y, dt, alpha):
     X = np.tril(dt * np.ones((len(y), len(y))))
@@ -18,14 +19,14 @@ def derivative_ridgeregression(y, dt, alpha):
 def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, cm=1, i_passive=0, fit_cm=False,
                     save_dir=None, plot=False, return_fit=False):
 
-    channel_currents *= -1 * 1e3 * cell_area
-    i_inj *= 1e-3
+    channel_currents = -1 * 1e3 * cell_area * copy.copy(channel_currents)
+    i_inj = 1e-3 * copy.copy(i_inj)
 
     if fit_cm:
         # variables to fit
         i_inj -= i_passive
         X = np.array(np.vstack((channel_currents, i_inj))).T
-        y = dvdt
+        y = copy.copy(dvdt)
 
         # linear regression
         weights, residual = scipy.optimize.nnls(X, y)
@@ -36,62 +37,49 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
         # variables to fit
         Cm = cm * cell_area
         X = np.array(channel_currents).T
-        y = dvdt * Cm - i_inj + i_passive
+        y = copy.copy(dvdt) * Cm - i_inj + i_passive
 
         # linear regression
         weights, residual = scipy.optimize.nnls(X, y)
         best_fit = {channel_list[i]: weights[i] for i in range(len(weights))}
 
-    # print best fit
-    #print "Best fit: "
-    #print best_fit
-    #print "Residual: " + str(residual)
-    # TODO
-    #weights[5] = 18e-05
-    #weights[4] = 6e-6
-    #weights[3] = 0.001
-    #weights[2] = 0.8
-    #weights[1] = 0.01
-    #weights[0] = 0.05
-    #best_fit = {channel_list[i]: weights[i] for i in range(len(weights))}
-    # TODO
-
     if plot:
         # TODO
-        y_smooth = pd.rolling_mean(y, 10)
+        #weights[0] = 0.04
+        #weights[7] = 1
+        #best_fit = {channel_list[i]: weights[i] for i in range(len(weights))}
         # TODO
 
         pl.figure()
         pl.plot(t, y, 'k', linewidth=1.5, label='$c_m \cdot dV/dt - i_{inj} + i_{pas}$'
                 if np.any(i_passive != 0) else '$c_m \cdot dV/dt - i_{inj}$')
-        pl.plot(t, y_smooth, 'y', linewidth=1.5, label='$c_m \cdot dV/dt - i_{inj} + i_{pas}$'
-                if np.any(i_passive != 0) else '$c_m \cdot dV/dt - i_{inj}$')  # TODO
         pl.plot(t, np.dot(X, weights), 'r', linewidth=1.5, label='$-g \cdot \sum_{ion} i_{ion}$')
-        pl.plot(t, np.zeros(len(y)), 'b')
+        pl.plot(t, np.zeros(len(y)), c='0.5')
 
         #pl.plot(t, i_inj, 'b')  #TODO
         #pl.plot(t, i_passive, 'g') # TODO
-        pl.ylabel('Current (pA)', fontsize=18)
+        pl.ylabel('Current (uA)', fontsize=18)
         pl.xlabel('Time (ms)', fontsize=18)
         pl.legend(loc='upper right', fontsize=18)
-        pl.xlim([9.0, 16.0])  # TODO
+        #pl.xlim([10.0, 20.0])  # TODO
+        pl.tight_layout()
         if save_dir is not None: pl.savefig(save_dir+'bestfit_derivative.png')
         pl.show()
 
         # plot current trace and derivative
         pl.figure()
+        color = iter(cmap.gist_rainbow(np.linspace(0, 1, len(channel_list))))
         pl.plot(t, y, 'k', linewidth=1.5, label='$c_m \cdot dV/dt - i_{inj} + i_{pas}$'
                 if np.any(i_passive != 0) else '$c_m \cdot dV/dt - i_{inj}$')
-        #pl.plot(t, y_smooth, 'y', linewidth=1.5, label='$c_m \cdot dV/dt - i_{inj} + i_{pas}$'
-        #        if np.any(i_passive != 0) else '$c_m \cdot dV/dt - i_{inj}$')  # TODO
         for j, current in enumerate(channel_list):
-            pl.plot(t, X.T[j]*weights[j], linewidth=1.5, label=channel_list[j])
-        pl.plot(t, np.zeros(len(y)), 'b')
-        pl.ylabel('Current (pA)', fontsize=18)
+            pl.plot(t, X.T[j]*weights[j], c=next(color), linewidth=1.5, label=channel_list[j])
+        pl.plot(t, np.zeros(len(y)), c='0.5')
+        pl.ylabel('Current (uA)', fontsize=18)
         pl.xlabel('Time (ms)', fontsize=18)
         pl.legend(loc='upper right', fontsize=18)
-        pl.xlim([9.0, 16.0])  # TODO
-        if save_dir is not None: pl.savefig(save_dir+'currents.png')
+        #pl.xlim([10.0, 20.0])  # TODO
+        pl.tight_layout()
+        if save_dir is not None: pl.savefig(save_dir+'bestfit_currents.png')
         pl.show()
 
     if return_fit:
@@ -100,45 +88,20 @@ def current_fitting(dvdt, t, i_inj, channel_currents, cell_area, channel_list, c
     return best_fit, residual
 
 
-def simulate(best_fit, cell, E_ion, data, C_ion=None, onset=200, cut_onset=True, save_dir=None, plot=False):
-    # TODO: change standard onset to 0?
+def simulate(best_fit, cell, E_ion, data, C_ion=None, onset=0, cut_onset=True, save_dir=None, plot=False):
     # Note: assumes fixed external and internal Ca concentration
 
-    # update conductances
-    for var, val in best_fit.iteritems():
-        if var == 'cm':
-            cell.update_attr(["soma", "cm"], val)
-        elif var == 'passive':
-            cell.update_attr(["soma", "mechanisms", "pas"], {})
-            cell.update_attr(["ion", "pas", "g_pas"], val)
-        elif var == 'ih_fast':
-            cell.update_attr(["soma", "mechanisms", "ih", "gfastbar"], val)
-        elif var == 'ih_slow':
-            cell.update_attr(["soma", "mechanisms", "ih", "gslowbar"], val)
-        elif var == 'caLVA':
-            cell.update_attr(["soma", "mechanisms", "caLVA", "pbar"], val)
-            cell.update_attr(["soma", "mechanisms", "caLVA", "cai"], C_ion['cai'])
-            cell.update_attr(["soma", "mechanisms", "caLVA", "cao"], C_ion['cao'])
-        elif var == 'calva':
-            cell.update_attr(["soma", "mechanisms", "calva", "pbar"], val)
-            cell.update_attr(["soma", "mechanisms", "calva", "cai"], C_ion['cai'])
-            cell.update_attr(["soma", "mechanisms", "calva", "cao"], C_ion['cao'])
-        elif var == 'kca':
-            cell.update_attr(["soma", "mechanisms", "kca", "gbar"], val)
-            cell.update_attr(["soma", "mechanisms", "kca", "cai"], C_ion['cai'])
-        else:
-            cell.update_attr(["soma", "mechanisms", var, "gbar"], val)
+    # insert channel and set conductance to 1
+    for channel, gbar in best_fit.iteritems():
+        cell.update_attr(['soma', 'mechanisms', channel, 'gbar'], gbar)
+
+    # Ca concentration
+    if h.ismembrane(str('ca_ion'), sec=cell.soma):
+        cell.update_attr(['ion', 'ca_ion', 'cai0'], C_ion['cai'])
+        cell.update_attr(['ion', 'ca_ion', 'cao0'], C_ion['cao'])
 
     # set equilibrium potentials
-    for eion, E in E_ion.iteritems():
-        if eion == 'ehcn':
-            for seg in cell.soma:
-                seg.ih.ehcn = E
-        elif eion == 'ekleak':
-            for seg in cell.soma:
-                seg.kleak.ekleak = E
-        else:
-            setattr(cell.soma, eion, E)
+    cell = set_Epotential(cell, E_ion)
 
     # extract simulation parameters
     simulation_params = optimization.optimizer.extract_simulation_params(data)
@@ -151,10 +114,9 @@ def simulate(best_fit, cell, E_ion, data, C_ion=None, onset=200, cut_onset=True,
 
     # compute error
     if not cut_onset:
-        error = optimization.optimizer.mean_squared_error(v_fitted[onset/(t_fitted[1]-t_fitted[0]):], data.v)
+        error = optimization.errfuns.rms(v_fitted[onset/(t_fitted[1]-t_fitted[0]):], data.v)
     else:
-        error = optimization.optimizer.mean_squared_error(v_fitted, data.v)
-    #print "Error: " + str(error)
+        error = optimization.errfuns.rms(v_fitted, data.v)
 
     # plot the results
     if plot:
@@ -171,5 +133,24 @@ def simulate(best_fit, cell, E_ion, data, C_ion=None, onset=200, cut_onset=True,
         pl.show()
 
     return error, t_fitted, v_fitted
+
+
+def set_Epotential(cell, E_ion):
+    # set equilibrium potentials
+    for eion, E in E_ion.iteritems():
+        if eion == "epas":
+            if hasattr(cell.soma(.5), 'passive'):
+                cell.update_attr(['soma', 'mechanisms', 'passive', eion], E)
+        elif eion == 'ehcn':
+            if hasattr(cell.soma(.5), 'ih_slow'):
+                cell.update_attr(['soma', 'mechanisms', 'ih_slow', eion], E)
+            if hasattr(cell.soma(.5), 'ih_fast'):
+                cell.update_attr(['soma', 'mechanisms', 'ih_fast', eion], E)
+        elif eion == 'ekleak':
+            if hasattr(cell.soma(.5), 'kleak'):
+                cell.update_attr(['soma', 'mechanisms', 'kleak', eion], E)
+        else:
+            cell.update_attr(['ion', eion[1:]+'_ion', eion], E)
+    return cell
 
 # TODO: divide simulation and error calculation
