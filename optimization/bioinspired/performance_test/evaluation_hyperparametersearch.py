@@ -5,7 +5,7 @@ import json
 __author__ = 'caro'
 
 
-method = 'DEA'
+method = 'errfun_pointtopoint/SA'
 n_trials = 1000
 
 best_candidates = list()
@@ -20,6 +20,8 @@ for trial in range(n_trials):
         method_args.append(json.load(f))
 
     n_generations = len(np.unique(population_file.generation))
+    population_file.fitness.replace(' nan', np.inf, inplace=True)  # replace strange ' nan' values
+    population_file.fitness.replace(' inf', np.inf, inplace=True)  # replace strange ' inf' values
     generation_file = population_file.loc[population_file.generation == n_generations-1]
 
     # find best candidate
