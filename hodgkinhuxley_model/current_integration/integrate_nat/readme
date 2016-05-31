@@ -1,0 +1,7 @@
+
+1) Compile nat.mod
+2) Run nat_neuronsim.py: 
+Will run a NEURON simulation of a single compartment model with the nat Mechanism inserted and a step current injected. Saves the current trace and time and membrane potential.
+3) Run nat_integration:
+Will integrate the gating variables defined in nat.mod and compute ina with different methods (exponential Euler, implicit Euler, Vode) and compare it to the current trace from the simulation.
+
