@@ -11,6 +11,21 @@ from hodgkinhuxley_model.hh_solver import HHSolver
 __author__ = 'caro'
 
 
+def gradient(theta, v_star, t, v, dvdtheta):
+
+    # compute error for each parameter (theta)
+    derrordtheta = np.zeros(len(theta))
+    error = np.zeros(len(theta))
+
+    for j in range(len(theta)):
+
+        derrordtheta[j] = 1.0/len(t) * np.sum((v - v_star) * dvdtheta)
+
+        error[j] = 1.0/len(t) * np.sum(0.5 * (v - v_star)**2)
+
+    return derrordtheta, error
+
+
 if __name__ == '__main__':
 
     # make model
@@ -157,23 +172,17 @@ if __name__ == '__main__':
         pl.legend()
         pl.show()
 
-    # TODO
-    """
-    # compare numerical derrordtheta with derrordtheta with numerical dvdtheta and with derrordtheta with Euler dvdtheta
-    derrordtheta_quotientdvdtheta = np.zeros((2, len(theta_range)))
+    # compare numerical derrordtheta with derrordtheta with Euler dvdtheta
     derrordtheta_euler = np.zeros((2, len(theta_range)))
     error = np.zeros((2, len(theta_range)))
     for i, theta in enumerate(theta_range):
         g = [theta, 0.07]
-        derrordtheta_quotientdvdtheta[:, i], error[:, i] = gradient2(g, problem, v[i], dvdtheta_quotient[i, :])
-        derrordtheta_euler[:, i], _ = gradient2(g, problem, v[i], dvdtheta_euler[i, :])
+        derrordtheta_euler[:, i], _ = gradient(g, v_star, t, v[i], y[i])
 
     derrordtheta_quotient = np.gradient(error[0, :], dtheta)  # np.diff(error[0, :]) / dtheta
 
     pl.figure()
-    pl.plot(theta_range, derrordtheta_quotientdvdtheta[0, :], 'k', label='dError/dTheta with numerical dvdtheta')
     pl.plot(theta_range, derrordtheta_euler[0, :], 'r', label='dError/dTheta with Euler dvdtheta')
     pl.plot(theta_range, derrordtheta_quotient, 'b', label='numerical dError/dTheta')
     pl.legend()
     pl.show()
-    """
