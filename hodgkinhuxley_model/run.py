@@ -42,10 +42,15 @@ if __name__ == '__main__':
     cm = 1
     length = 16
     diam = 8
-    ionchannels = [ionchannel_leak, ionchannel]
+    ionchannels = [ionchannel]
+    def i_inj(ts):
+        if 0.02 <= ts <= 11:
+            return 1
+        else:
+            return 0
 
     # create cell
-    cell = Cell(cm, length, diam, ionchannels)
+    cell = Cell(cm, length, diam, ionchannels, i_inj)
 
     # create odesolver
     tstop = 100
@@ -54,24 +59,22 @@ if __name__ == '__main__':
     v0 = -65
     i_inj = np.zeros(len(t))
     i_inj[0.02/dt:11/dt] = 1
-    odesolver = HHSolver('ImplicitEuler')
-    v, current, p_gates = odesolver.solve(cell, t, v0, i_inj)
-    #v_convergence, current_convergence, _ = odesolver.solve_convergence(cell, t, v0, i_inj)
-    # TODO: does not converge
+    hhsolver = HHSolver('ImplicitEuler')
+    v, current, p_gates = hhsolver.solve(cell, t, v0, i_inj)
+    v_adaptive, a_gate, b_gate = hhsolver.solve_adaptive(cell, t, v0)
     #current, p_gates, inf_gates, tau_gates = odesolver.solve_onlygates2(cell, t, v)
-    #print np.allclose(v, v_convergence)
 
     save_dir = './test_data/'
-    with open(save_dir+'v.npy', 'r') as f:
-        v_test = np.load(f)
+    #with open(save_dir+'v.npy', 'r') as f:
+    #    v_test = np.load(f)
 
-    with open(save_dir+'current_channel.npy', 'r') as f:
-        current_test = np.load(f)
+    #with open(save_dir+'current_channel.npy', 'r') as f:
+    #    current_test = np.load(f)
 
     pl.figure()
-    pl.plot(t, v_test, 'k', label='NEURON')
+    #pl.plot(t, v_test, 'k', label='NEURON')
     pl.plot(t, v, 'b', label='Python')
-    #pl.plot(t, v_convergence, 'g', label='Python')
+    pl.plot(t, v_adaptive, 'g', label='Python adaptive')
     pl.legend()
     pl.show()
 

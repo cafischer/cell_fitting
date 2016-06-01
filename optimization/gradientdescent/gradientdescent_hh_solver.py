@@ -19,7 +19,7 @@ def gradient(theta, v_star, t, v, dvdtheta):
 
     for j in range(len(theta)):
 
-        derrordtheta[j] = 1.0/len(t) * np.sum((v - v_star) * dvdtheta)
+        derrordtheta[j] = 1.0/len(t) * np.sum((v - v_star) * dvdtheta[j])
 
         error[j] = 1.0/len(t) * np.sum(0.5 * (v - v_star)**2)
 
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # make model
 
     # make naf ionchannel
-    g_max = 0.06
+    g_max = 0.5
     ep = 80
     n_gates = 2
     power_gates = [3, 1]
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     hotau = 0.15
 
     def inf_gates(v):
-        minf = 1/(1 + np.exp(-((v + vshift) - mv) / ms))
+        minf = 1/(1 + np.exp((-(v + vshift) - mv) / ms))
         hinf = 1/(1 + np.exp(((v + vshift) + hv) / hs))
         return np.array([minf, hinf])
 
@@ -67,6 +67,7 @@ if __name__ == '__main__':
 
     naf = IonChannel(g_max, ep, n_gates, power_gates, inf_gates, tau_gates)
 
+    """
     # make ka ionchannel
     g_max = 0.07
     ep = -80
@@ -128,17 +129,34 @@ if __name__ == '__main__':
         return np.array([taun, taul])
 
     ka = IonChannel(g_max, ep, n_gates, power_gates, inf_gates, tau_gates)
+    """
 
     # create cell
     cm = 1
     length = 16
     diam = 8
-    ionchannels = [naf, ka]
+    ionchannels = [naf]
 
-    cell = Cell(cm, length, diam, ionchannels)
+    from fit_currents.error_analysis.model_generator import from_protocol
+    def i_inj(ts):
+        times, amps, amp_types = from_protocol('ramp')
+        if len(np.nonzero(ts <= np.array(times))[0]) == 0:
+            idx = len(times)-1  # in case it asks for later times return as if for last section
+        else:
+            idx = np.nonzero(ts <= np.array(times))[0][0]
+        if idx > 0:
+            idx -= 1
+        if amp_types[idx] == 'const':
+            return amps[idx]
+        elif amp_types[idx] == 'rampup' or amp_types[idx] == 'rampdown':
+            return (amps[idx+1]-amps[idx]) / (times[idx+1] - times[idx]) * (ts-times[idx]) + amps[idx]
+        else:
+            return None
+
+    cell = Cell(cm, length, diam, ionchannels, i_inj)
 
     # create odesolver
-    data_dir = '../bioinspired/performance_test/testdata/modeldata.csv'
+    data_dir = './testdata/modeldata.csv'
     data = pd.read_csv(data_dir)
 
     v_star = np.array(data.v)
@@ -147,8 +165,8 @@ if __name__ == '__main__':
     i_inj = np.array(data.i)
     y0 = 0
     hhsolver = HHSolver('ImplicitEuler')
-    dtheta = 0.01
-    theta_max = 0.1
+    dtheta = 0.001
+    theta_max = 1
     theta_range = np.arange(0, theta_max+dtheta, dtheta)
 
     v = np.zeros(len(theta_range), dtype=object)
@@ -156,7 +174,14 @@ if __name__ == '__main__':
 
     for i, theta in enumerate(theta_range):
         cell.ionchannels[0].g_max = theta
-        v[i], y[i], _, _ = hhsolver.solve_y(cell, t, v_star, v0, y0, i_inj)
+        v[i], _, _, y[i] = hhsolver.solve_adaptive_y(cell, t, v_star, v0, y0, 0)
+        #v[i], _, _ = hhsolver.solve_adaptive(cell, t, v0)
+        #v[i], current, p_gates = hhsolver.solve(cell, t, v0, np.array(data.i))
+
+        #pl.figure()
+        #pl.plot(t, v_star, 'k')
+        #pl.plot(t, v[i], 'b')
+        #pl.show()
 
     # numerical dvdtheta
     dvdtheta_quotient = np.zeros((len(theta_range), len(t)))
@@ -165,19 +190,19 @@ if __name__ == '__main__':
         dvdtheta_quotient[:, ts] = np.gradient(v_ts, dtheta)
 
     # compare y and numerical dvdtheta
-    for i, theta in enumerate(theta_range):
-        pl.figure()
-        pl.plot(t, dvdtheta_quotient[i, :], 'k', label='num. dvdtheta')
-        pl.plot(t, y[i][0, :], 'r', label='y')
-        pl.legend()
-        pl.show()
+    #for i, theta in enumerate(theta_range):
+    #    pl.figure()
+    #    pl.plot(t, dvdtheta_quotient[i, :], 'k', label='num. dvdtheta')
+    #    pl.plot(t, y[i], 'r', label='y')
+    #    pl.legend()
+    #    pl.show()
 
     # compare numerical derrordtheta with derrordtheta with Euler dvdtheta
     derrordtheta_euler = np.zeros((2, len(theta_range)))
     error = np.zeros((2, len(theta_range)))
     for i, theta in enumerate(theta_range):
         g = [theta, 0.07]
-        derrordtheta_euler[:, i], _ = gradient(g, v_star, t, v[i], y[i])
+        derrordtheta_euler[:, i], error[:, i] = gradient(g, v_star, t, v[i], [y[i], 0])
 
     derrordtheta_quotient = np.gradient(error[0, :], dtheta)  # np.diff(error[0, :]) / dtheta
 

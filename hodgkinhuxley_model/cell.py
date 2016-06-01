@@ -6,17 +6,12 @@ __author__ = 'caro'
 
 
 class Cell:
-    def __init__(self, cm, length, diam, ionchannels):
+    def __init__(self, cm, length, diam, ionchannels, i_inj):
         self.cm = cm  # (uF/cm2)
         self.length = length  # (um)
         self.diam = diam  # (um)
         self.ionchannels = ionchannels  # list of IonChannels
-
-    def i_inj(self, ts):  # (nA)
-        if 10 <= ts <= 20:
-            return 1  # TODO
-        else:
-            return 0
+        self.i_inj = i_inj  # function
 
     def derivative_v(self, i_ion, i_inj):
         cell_area = self.length * self.diam * np.pi * 1e-8  # (cm2)
