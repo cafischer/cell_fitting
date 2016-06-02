@@ -1,37 +1,60 @@
-from __future__ import division
 import numpy as np
+import csv
+import os
 import pandas as pd
-from ode_solver import solve_implicit_euler
-import matplotlib.pyplot as pl
-from neuron import h
+from fit_currents.error_analysis.model_generator import change_dt
+from optimization.optimizer import extract_simulation_params
+from optimization.bioinspired.problem import Problem
 from hodgkinhuxley_model.mechanisms import IonChannel
 from hodgkinhuxley_model.cell import Cell
 from hodgkinhuxley_model.hh_solver import HHSolver
+from fit_currents.error_analysis.model_generator import from_protocol
 
 __author__ = 'caro'
 
 
-def gradient(theta, v_star, t, v, dvdtheta):
+def save_model(save_dir, data_name, problem, candidate, dt):
+    # change dt of data
+    data = change_dt(dt, problem.data, 'ramp')
+    simulation_params = extract_simulation_params(data)
 
-    # compute error for each parameter (theta)
-    derrordtheta = np.zeros(len(theta))
-    error = np.zeros(len(theta))
+    # create cell
+    cell = problem.get_cell(candidate)
 
-    for j in range(len(theta)):
+    # run simulation and compute the variable to fit
+    var_to_fit, _ = problem.fun_to_fit(cell, **simulation_params)
 
-        derrordtheta[j] = 1.0/len(t) * np.sum((v - v_star) * dvdtheta[j])
+    nans = np.zeros(len(var_to_fit), dtype=object)
+    nans[:] = np.nan
+    data_model = np.column_stack((np.array(problem.data.t), np.array(problem.data.i), var_to_fit, nans, nans))
+    data_model[0, 3] = 'soma'
+    data_model[0, 4] = candidate
 
-        error[j] = 1.0/len(t) * np.sum(0.5 * (v - v_star)**2)
+    if not os.path.exists(save_dir):
+                os.makedirs(save_dir)
+    with open(save_dir+data_name, 'w') as csvoutput:
+        writer = csv.writer(csvoutput, lineterminator='\n')
+        writer.writerow(['t', 'i', 'v', 'sec', 'candidate'])
+        writer.writerows(data_model)
 
-    return derrordtheta, error
+def save(save_dir, data_name, v, t, i, section, candidate):
 
+    nans = np.zeros(len(v), dtype=object)
+    nans[:] = np.nan
+    data_model = np.column_stack((t, i, v, nans, nans))
+    data_model[0, 3] = section
+    data_model[0, 4] = candidate
 
-if __name__ == '__main__':
+    if not os.path.exists(save_dir):
+                os.makedirs(save_dir)
+    with open(save_dir+data_name, 'w') as csvoutput:
+        writer = csv.writer(csvoutput, lineterminator='\n')
+        writer.writerow(['t', 'i', 'v', 'sec', 'candidate'])
+        writer.writerows(data_model)
 
-    # make model
-
+def get_model():
     # make naf ionchannel
-    g_max = 0.5
+    g_max = 0.06
     ep = 80
     n_gates = 2
     power_gates = [3, 1]
@@ -67,7 +90,6 @@ if __name__ == '__main__':
 
     naf = IonChannel(g_max, ep, n_gates, power_gates, inf_gates, tau_gates)
 
-    """
     # make ka ionchannel
     g_max = 0.07
     ep = -80
@@ -129,15 +151,8 @@ if __name__ == '__main__':
         return np.array([taun, taul])
 
     ka = IonChannel(g_max, ep, n_gates, power_gates, inf_gates, tau_gates)
-    """
 
     # create cell
-    cm = 1
-    length = 16
-    diam = 8
-    ionchannels = [naf]
-
-    from fit_currents.error_analysis.model_generator import from_protocol
     def i_inj(ts):
         times, amps, amp_types = from_protocol('ramp')
         if len(np.nonzero(ts <= np.array(times))[0]) == 0:
@@ -153,61 +168,51 @@ if __name__ == '__main__':
         else:
             return None
 
+    cm = 1
+    length = 16
+    diam = 8
+    ionchannels = [naf, ka]
     cell = Cell(cm, length, diam, ionchannels, i_inj)
+    return cell
 
-    # create odesolver
-    data_dir = './testdata/modeldata.csv'
+
+
+if __name__ == '__main__':
+
+    save_dir = './testdata/'
+    data_name = 'modeldata_nafka2.csv'
+    data_dir = '../bioinspired/performance_test/testdata/modeldata.csv'
+    candidate = [0.06, 0.07]
+    dt = 0.01
+
+    """
+    path_variables = [[['soma', 'mechanisms', 'naf', 'gbar']],
+                      [['soma', 'mechanisms', 'ka', 'gbar']]]
+
+    params = {'data_dir': data_dir,
+              'model_dir': '../../model/cells/dapmodel.json',
+              'mechanism_dir': '../../model/channels_currentfitting',
+              'lower_bound': 0, 'upper_bound': 1,
+              'maximize': False,
+              'fun_to_fit': 'run_simulation', 'var_to_fit': 'v',
+              'path_variables': path_variables,
+              'errfun': 'errfun_featurebased'}
+
+    problem = Problem(params)
+
+    save_model(save_dir, data_name, problem, candidate, dt)
+    """
+
+    cell = get_model()
+
     data = pd.read_csv(data_dir)
 
-    v_star = np.array(data.v)
     t = np.array(data.t)
-    v0 = v_star[0]
-    i_inj = np.array(data.i)
-    y0 = 0
-    hhsolver = HHSolver('ImplicitEuler')
-    dtheta = 0.001
-    theta_max = 1
-    theta_range = np.arange(0, theta_max+dtheta, dtheta)
+    v0 = np.array(data.v)[0]
+    i_inj = np.array([cell.i_inj(ts) for ts in t])
 
-    v = np.zeros(len(theta_range), dtype=object)
-    y = np.zeros(len(theta_range), dtype=object)
 
-    for i, theta in enumerate(theta_range):
-        cell.ionchannels[0].g_max = theta
-        v[i], _, _, y[i] = hhsolver.solve_adaptive_y(cell, t, v_star, v0, y0, 0)
-        #v[i], _, _ = hhsolver.solve_adaptive(cell, t, v0)
-        #v[i], current, p_gates = hhsolver.solve(cell, t, v0, np.array(data.i))
+    hhsolver = HHSolver()
+    v, _, _= hhsolver.solve_adaptive(cell, t, v0)
 
-        #pl.figure()
-        #pl.plot(t, v_star, 'k')
-        #pl.plot(t, v[i], 'b')
-        #pl.show()
-
-    # numerical dvdtheta
-    dvdtheta_quotient = np.zeros((len(theta_range), len(t)))
-    for ts in range(len(t)):
-        v_ts = np.array([v[i][ts] for i in range(len(theta_range))])
-        dvdtheta_quotient[:, ts] = np.gradient(v_ts, dtheta)
-
-    # compare y and numerical dvdtheta
-    #for i, theta in enumerate(theta_range):
-    #    pl.figure()
-    #    pl.plot(t, dvdtheta_quotient[i, :], 'k', label='num. dvdtheta')
-    #    pl.plot(t, y[i], 'r', label='y')
-    #    pl.legend()
-    #    pl.show()
-
-    # compare numerical derrordtheta with derrordtheta with Euler dvdtheta
-    derrordtheta_euler = np.zeros((2, len(theta_range)))
-    error = np.zeros((2, len(theta_range)))
-    for i, theta in enumerate(theta_range):
-        g = [theta, 0.07]
-        derrordtheta_euler[:, i], error[:, i] = gradient(g, v_star, t, v[i], [y[i], 0])
-
-    derrordtheta_quotient = np.gradient(error[0, :], dtheta)  # np.diff(error[0, :]) / dtheta
-
-    pl.figure()
-    pl.plot(theta_range, derrordtheta_euler[0, :], 'r', label='dError/dTheta with Euler dvdtheta')
-    pl.plot(theta_range, derrordtheta_quotient, 'b', label='numerical dError/dTheta')
-    pl.legend()
-    pl.show()
+    save(save_dir, data_name, v, t, i_inj, 'soma', candidate)
