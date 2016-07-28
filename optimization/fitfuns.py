@@ -1,79 +1,89 @@
 import numpy as np
-from neuron import h
-
-h.load_file("stdrun.hoc")  # load NEURON libraries
-h("""cvode.active(0)""")  # invariable time step in NEURON
+from statistics.analyze_APs import *
 
 __author__ = 'caro'
 
 
-def run_impedance(self, cell, sec, i_amp, v_init, tstop, dt, pos_i, pos_v, onset, f_range):
-    # f_range = [data['impedance'].f_range[0], data['impedance'].f_range[1]]
-    i_amp = np.concatenate((np.zeros(onset/dt), i_amp))
-    v, t, i = self.run_simulation(cell, sec, i_amp, v_init, tstop + onset, dt, pos_i, pos_v)
-    imp, freqs = self.impedance(v[onset/dt:], i[onset/dt:], dt/1000, f_range)
-    return imp, freqs
+def get_v(v, t, i_inj):
+    return [v]
 
 
-def run_simulation(cell, sec, i_amp, v_init, tstop, dt, pos_i, pos_v, onset=0, cut_onset=True):
-        """
-        Runs a NEURON simulation of the cell for the given parameters.
+def get_APamp_fAHPmin_DAPamp(v, t, i_inj):
+    dt = t[1] - t[0]
+    vrest = get_vrest(v, i_inj)
+    AP_onset, AP_end = get_AP_start_end(v)
+    if AP_onset is None or AP_end is None:
+        return None, None, None
+    AP_max = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
+    if AP_max is None:
+        return None, None, None
+    AP_amp = get_AP_amp(v, AP_max, vrest)
+    fAHP_min = get_fAHP_min(v, AP_max, AP_end, order=5, interval=3/dt)
+    fAHP_amp = v[fAHP_min]-vrest
+    if fAHP_min is None:
+        return None, None, None
+    DAP_max = get_DAP_max(v, fAHP_min, AP_end, order=5, interval=5/dt)
+    if DAP_max is None:
+        return None, None, None
+    DAP_amp = get_DAP_amp(v, DAP_max, vrest)
 
-        :param i_amp: Amplitude of the injected current for all times t.
-        :type i_amp: array_like
-        :param v_init: Initial membrane potential of the cell.
-        :type v_init: float
-        :param tstop: Duration of a whole run.
-        :type tstop: float
-        :param dt: Time step.
-        :type dt: float
-        :param pos_i: Position of the IClamp on the Section (number between 0 and 1).
-        :type pos_i: float
-        :param pos_v: Position of the recording electrode on the Section (number between 0 and 1).
-        :type pos_v: float
-        :return: Membrane potential of the cell, time and current amplitude at each time step.
-        :rtype: tuple of three ndarrays
-        """
+    return AP_amp, fAHP_amp, DAP_amp
 
-        # exchange sec with real Section
-        if sec[0] == 'soma':
-            section = cell.soma
-        elif sec[0] == 'dendrites':
-            section = cell.dendrites[sec[1]]
-        else:
-            raise ValueError('Given section not defined!')
 
-        # time
-        t = np.arange(0, tstop + onset + dt, dt)
+def get_vrest_APamp_fAHPmin_DAPamp(v, t, i_inj):
+    dt = t[1] - t[0]
+    vrest = get_vrest(v, i_inj)
+    AP_onset, AP_end = get_AP_start_end(v)
+    if AP_onset is None or AP_end is None:
+        return None
+    AP_max = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
+    if AP_max is None:
+        return None
+    time_AP_max = AP_max * dt
+    AP_amp = get_AP_amp(v, AP_max, vrest)
+    fAHP_min = get_fAHP_min(v, AP_max, AP_end, order=5, interval=3/dt)
+    fAHP_amp = v[fAHP_min]-vrest
+    if fAHP_min is None:
+        return None
+    DAP_max = get_DAP_max(v, fAHP_min, AP_end, order=5, interval=5/dt)
+    if DAP_max is None:
+        return None
+    DAP_amp = get_DAP_amp(v, DAP_max, vrest)
 
-        # insert an IClamp with the current trace from the experiment
-        i_amp = np.concatenate((np.zeros(onset/dt), i_amp))  # during the onset no external current flows
-        stim, i_vec, t_vec = section.play_current(pos_i, i_amp, t)
+    return vrest, time_AP_max, AP_amp, fAHP_amp, DAP_amp
 
-        # record the membrane potential
-        v = section.record_v(pos_v)
+def get_vrest_APampwidthtime(v, t, i_inj):
+    dt = t[1] - t[0]
+    vrest = get_vrest(v, i_inj)
+    AP_onset, AP_end = get_AP_start_end(v)
+    if AP_onset is None or AP_end is None:
+        return None, None, None, None
+    AP_max = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
+    if AP_max is None:
+        return None, None, None, None
+    time_AP_max = AP_max * dt
+    AP_amp = get_AP_amp(v, AP_max, vrest)
+    AP_width = get_AP_width(v, t, AP_onset, AP_max, AP_end, vrest)
 
-        # run simulation
-        h.v_init = v_init
-        h.tstop = tstop + onset
-        h.steps_per_ms = 1 / dt  # change steps_per_ms before dt, otherwise dt not changed properly
-        h.dt = dt
-        h.init()
-        h.run()
+    return vrest, AP_amp, AP_width, time_AP_max
 
-        if cut_onset:
-            return np.array(v)[onset/dt:], t[:-1*onset/dt]
-        else:
-            return np.array(v), t
 
-def impedance(v, i, dt, f_range):
+def get_parts_restAPDAPrest(v, t, i_inj):
+    dt = t[1] - t[0]
+    i_inj_start = np.nonzero(i_inj)[0][0]
+    AP_end = int(np.round(13/dt, 0))
+    DAP_end = int(np.round(35/dt, 0))
+    return v[:i_inj_start], v[i_inj_start+1:AP_end], v[AP_end:DAP_end], v[DAP_end:]
+
+
+def impedance(v, i_inj, dt, f_range):
     """
     Computes the impedance (impedance = fft(v) / fft(i)) for a given range of frequencies.
 
     :param v: Membrane potential (mV)
     :type v: array
-    :param i: Current (nA)
-    :type i: array
+    :param i_inj: Current (nA)
+    :type i_inj: array
     :param dt: Time step.
     :type dt: float
     :param f_range: Boundaries of the frequency interval.
@@ -83,7 +93,7 @@ def impedance(v, i, dt, f_range):
     """
 
     # FFT of the membrance potential and the input current
-    fft_i = np.fft.fft(i)
+    fft_i = np.fft.fft(i_inj)
     fft_v = np.fft.fft(v)
     freqs = np.fft.fftfreq(v.size, d=dt)
 
@@ -101,9 +111,3 @@ def impedance(v, i, dt, f_range):
     idx2 = np.argmin(np.abs(freqs-f_range[1]))
 
     return imp[idx1:idx2], freqs[idx1:idx2]
-
-
-def update_diam(cell, variables, variables_new):
-    for i, var in enumerate(variables):
-        if var[0] == 'L':
-            cell.update_attr(variables[i][4], variables[i][5]/(np.pi * variables_new['L']))

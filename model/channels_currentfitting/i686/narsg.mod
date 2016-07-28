@@ -1,1 +1,0 @@
-../narsg.mod

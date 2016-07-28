@@ -1,0 +1,27 @@
+{
+    "normalize": false, 
+    "insert_mechanisms": true, 
+    "errfun": "rms", 
+    "data_dir": "../../data/toymodels/toymodel1/ramp.csv", 
+    "model_dir": "../../model/cells/toymodel1.json", 
+    "maximize": false, 
+    "get_var_to_fit": "get_v", 
+    "mechanism_dir": "../../model/channels/schmidthieber", 
+    "variables": [
+        [
+            0, 
+            0.5, 
+            [
+                [
+                    "soma", 
+                    "0.5", 
+                    "na8st", 
+                    "gbar"
+                ]
+            ]
+        ]
+    ], 
+    "fitnessweights": [
+        1.0
+    ]
+}

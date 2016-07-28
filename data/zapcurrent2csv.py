@@ -2,6 +2,7 @@ from __future__ import division
 import numpy as np
 import pylab as pl
 import csv
+import pandas as pd
 import statsmodels.api as sm
 
 __author__ = 'caro'
@@ -53,25 +54,28 @@ def zap_current2csv(cell_dir):
     # load data
     f_range = [1, 20]
     ds = 1000  # number of steps skipped (in t, i, v) for the impedance computation
-    v = np.array(np.loadtxt(cell_dir + '/zapcurrent/zap_voltage.txt', delimiter='\n'))
-    i = np.array(np.loadtxt(cell_dir + '/zapcurrent/zap_current.txt', delimiter="\n"))
-    t = np.array(np.loadtxt(cell_dir + '/zapcurrent/zap_time.txt', delimiter="\n"))
+    #v = np.array(np.loadtxt(cell_dir + '/zapcurrent/zap_voltage.txt', delimiter='\n'))
+    i = np.array(np.loadtxt('./cell_2013_12_13f' + '/zapcurrent/zap_current.txt', delimiter="\n"))
+    t = np.array(np.loadtxt('./cell_2013_12_13f' + '/zapcurrent/zap_time.txt', delimiter="\n"))
+    data_new = np.loadtxt('/media/caro/Daten/Phd/DAP-Project/cell_fitting/data/new_cells/Shared/2015_08_11d.txt')
+    v = data_new[1*len(t):2*len(t)]
 
     # convert units
     t *= 1000  # (ms)
 
     # plot data
     f, (ax1, ax2) = pl.subplots(2, 1, sharex=True)
-    ax1.plot(t, v)
-    ax1.set_ylabel('Membrane potential (mV)')
-    ax2.plot(t, i)
-    ax2.set_xlabel('Time (ms)')
-    ax2.set_ylabel('Current (nA)')
+    ax1.plot(t, v, 'k')
+    ax1.set_ylabel('Membrane \npotential (mV)', fontsize=18)
+    ax2.plot(t, i, 'k')
+    ax2.set_xlabel('Time (ms)', fontsize=18)
+    ax2.set_ylabel('Current (nA)', fontsize=18)
+    pl.savefig(cell_dir+'/zapcurrent/zap.png')
     pl.show()
 
     # save to .csv
     header = ['t', 'i', 'v', 'sec']  # units: (ms), (nA), (mV)
-    sec = np.zeros(len(t), dtype=object)  # section at which was recorded
+    sec = np.zeros(len(i), dtype=object)  # section at which was recorded
     sec[0] = 'soma'
     data_new = np.column_stack((t, i, v, sec))
     with open(cell_dir + '/zapcurrent/zap.csv', 'w') as csvoutput:
@@ -88,7 +92,7 @@ def zap_current2csv(cell_dir):
     imp, freqs = impedance(v, i, t[1]/1000-t[0]/1000, f_range)  # dt in (sec) for fft
 
     # smooth impedance
-    imp_smooth = np.array(sm.nonparametric.lowess(imp, freqs, frac=0.5)[:, 1])
+    imp_smooth = np.array(sm.nonparametric.lowess(imp, freqs, frac=0.3)[:, 1])
 
     # plot impedance
     pl.figure()
@@ -113,4 +117,4 @@ def zap_current2csv(cell_dir):
         writer.writerows(data)
 
 if __name__ == "__main__":
-    zap_current2csv('./cell_2013_12_13f')
+    zap_current2csv('./new_cells/2015_08_25h')
