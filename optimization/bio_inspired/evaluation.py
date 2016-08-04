@@ -6,7 +6,7 @@ __author__ = 'caro'
 
 
 methods = ['DEA', 'EDA', 'GA', 'SA', 'PSO']
-save_dir = '../../results/bio_inspired/test_algorithms/toymodel1/1param/'
+save_dir = '../../results/bio_inspired/test_algorithms/increase_params/5param/'
 n_trials = 10
 
 

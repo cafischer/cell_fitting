@@ -1,8 +1,9 @@
-import matplotlib.pyplot as pl
-import numpy as np
 import json
 
-from optimization.bio_inspired.problems import CellFitProblem
+import matplotlib.pyplot as pl
+import numpy as np
+
+from optimization.problems import CellFitProblem
 
 __author__ = 'caro'
 

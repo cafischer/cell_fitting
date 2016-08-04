@@ -1,13 +1,13 @@
 from random import Random
 from time import time
-import numpy as np
 import os
 import json
+
+import numpy as np
 from nrn_wrapper import Cell
 
-from optimization.bio_inspired.problems import CellFitProblem
+from optimization.problems import CellFitProblem
 from optimization.simulate import run_simulation
-
 
 __author__ = 'caro'
 
@@ -56,8 +56,8 @@ for i in range(n_data):
     candidate = problem.generator(prng, None)
 
     # run simulation
-    cell = problem.get_cell(candidate)
-    v, t = run_simulation(cell, **problem.simulation_params)
+    problem.update_cell(candidate)
+    v, t = run_simulation(problem.cell, **problem.simulation_params)
     data[i, :, 0] = v[:-1:subsample]
     data[i, :, 1] = i_inj[:-1:subsample]
     labels[i] = candidate[0]

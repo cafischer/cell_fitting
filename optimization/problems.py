@@ -1,11 +1,10 @@
 from abc import ABCMeta, abstractmethod
-
 from inspyred import ec
 import numpy as np
 import pandas as pd
 from neuron import h
-from nrn_wrapper import Cell, complete_mechanismdir
 
+from nrn_wrapper import Cell, complete_mechanismdir
 from optimization.simulate import run_simulation, extract_simulation_params
 from optimization import errfuns, fitfuns
 from optimization.bio_inspired.inspyred_extension.observers import individuals_observer
@@ -15,13 +14,11 @@ __author__ = 'caro'
 
 
 def unnorm_candidate(candidate, lower_bound, upper_bound):
-
-    return candidate * (upper_bound-lower_bound) + lower_bound
+    return list(np.array(candidate) * (upper_bound-lower_bound) + lower_bound)
 
 
 def norm_candidate(candidate, lower_bound, upper_bound):
-
-    return (candidate - lower_bound) / (upper_bound-lower_bound)
+    return list((np.array(candidate) - lower_bound) / (upper_bound-lower_bound))
 
 
 def unnorm_population(population, lower_bound, upper_bound):
@@ -36,6 +33,17 @@ def unnorm_population(population, lower_bound, upper_bound):
     return population_unnormed
 
 
+def get_variable_information(variables):
+    lower_bound = np.zeros(len(variables))
+    upper_bound = np.zeros(len(variables))
+    path_variables = list()
+    for i, var in enumerate(variables):
+        lower_bound[i] = var[0]
+        upper_bound[i] = var[1]
+        path_variables.append(var[2])
+    return lower_bound, upper_bound, path_variables
+
+
 def insert_mechanisms(cell, path_variables):
     try:
         for paths in path_variables:
@@ -44,6 +52,12 @@ def insert_mechanisms(cell, path_variables):
                                                            # [-2]: mechanism, [-1]: attribute
     except AttributeError:
         pass  # let all non mechanism variables pass
+
+
+def get_channel_list(cell, sec_name):
+    mechanism_dict = cell.get_dict()[sec_name]['mechanisms']
+    channel_list = [mech for mech in mechanism_dict if not '_ion' in mech]
+    return channel_list
 
 
 def get_ionlist(channel_list):
@@ -67,6 +81,46 @@ def get_ionlist(channel_list):
     return ion_list
 
 
+def convert_unit_prefix(from_prefix, x):
+    """
+    Converts x from unit prefix to base unit.
+    :param from_prefix: Prefix (implemented are 'da', 'd', 'c', 'm', 'u', 'n').
+    :type from_prefix:str
+    :param x: Quantity to convert.
+    :type x: array_like
+    :return: Converted quantity.
+    :rtype: array_like
+    """
+    if from_prefix == 'da':
+        return x * 1e1
+    elif from_prefix == 'd':
+        return x * 1e-1
+    elif from_prefix == 'c':
+        return x * 1e-2
+    elif from_prefix == 'm':
+        return x * 1e-3
+    elif from_prefix == 'u':
+        return x * 1e-6
+    elif from_prefix == 'n':
+        return x * 1e-9
+    else:
+        raise ValueError('No valid prefix!')
+
+
+def get_cellarea(L, diam):
+    """
+    Takes length and diameter of some cell segment and returns the area of that segment (assuming it to be the surface
+    of a cylinder without the circle surfaces as in Neuron).
+    :param L: Length (um).
+    :type L: float
+    :param diam: Diameter (um).
+    :type diam: float
+    :return: Cell area (cm).
+    :rtype: float
+    """
+    return L * diam * np.pi
+
+
 def convert_units(L, diam, cm, dvdt, i_inj, currents):
     cell_area = L * diam * np.pi * 1e-8  # cm
     Cm = cm * cell_area  # uF
@@ -77,11 +131,14 @@ def convert_units(L, diam, cm, dvdt, i_inj, currents):
     for i in range(len(currents)):
         currents_sc.append(currents[i] * cell_area * 1e-3)  # A
     return dvdt_sc, i_inj_sc, currents_sc, Cm, cell_area
+# TODO: change as in hand_tuner model
+
 
 class Problem(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, maximize):
+    def __init__(self, name, maximize):
+        self.name = name
         self.maximize = maximize
 
     @abstractmethod
@@ -99,21 +156,15 @@ class Problem(object):
 
 class CellFitProblem(Problem):
 
-    def __init__(self, maximize, normalize, model_dir, mechanism_dir, variables, data_dir, get_var_to_fit,
-                 fitnessweights, errfun, insert_mechanisms=False, recalculate_variables=None):
-        super(CellFitProblem, self).__init__(maximize)
+    def __init__(self, name, maximize, normalize, model_dir, mechanism_dir, variables, data_dir, get_var_to_fit,
+                 fitnessweights, errfun, simulation_params=None, insert_mechanisms=False, recalculate_variables=None):
+        super(CellFitProblem, self).__init__(name, maximize)
         self.normalize = normalize
         self.model_dir = model_dir
         if mechanism_dir is not None:
             h.nrn_load_dll(str(complete_mechanismdir(mechanism_dir)))
 
-        self.lower_bound = np.zeros(len(variables))
-        self.upper_bound = np.zeros(len(variables))
-        self.path_variables = list()
-        for i, var in enumerate(variables):
-            self.lower_bound[i] = var[0]
-            self.upper_bound[i] = var[1]
-            self.path_variables.append(var[2])
+        self.lower_bound, self.upper_bound, self.path_variables = get_variable_information(variables)
 
         self.fitnessweights = np.array(fitnessweights)
         self.errfun = getattr(errfuns, errfun)
@@ -121,9 +172,11 @@ class CellFitProblem(Problem):
         self.insert_mechanisms = insert_mechanisms
 
         # read in data, extract simulation parameters, get variable to fit and data to fit
+        if simulation_params is None:
+            simulation_params = {}
         if np.size(data_dir) == 1:
             self.data = pd.read_csv(data_dir)
-            self.simulation_params = extract_simulation_params(self.data)
+            self.simulation_params = extract_simulation_params(self.data, **simulation_params)
             self.fitfuns = getattr(fitfuns, get_var_to_fit)
             self.data_to_fit = self.fitfuns(self.data.v.values, self.data.t.values, self.data.i.values)
         else:
@@ -133,11 +186,12 @@ class CellFitProblem(Problem):
             self.data_to_fit = list()
             for i in range(len(data_dir)):
                 self.data.append(pd.read_csv(data_dir[i]))
-                self.simulation_params.append(extract_simulation_params(self.data[i]))
+                self.simulation_params.append(extract_simulation_params(self.data[i], **simulation_params))
                 self.fitfuns.append(getattr(fitfuns, get_var_to_fit[i]))
                 self.data_to_fit.extend(self.fitfuns[i](self.data[i].v.values, self.data[i].t.values,
                                                         self.data[i].i.values))
 
+        self.cell = self.get_cell()
 
     def generator(self, random, args):
         n_vars = len(self.path_variables)
@@ -165,20 +219,20 @@ class CellFitProblem(Problem):
         if self.normalize:
             candidate = unnorm_candidate(candidate, self.lower_bound, self.upper_bound)
 
-        # create cell
-        cell = self.get_cell(candidate)
+        # update cell
+        self.update_cell(candidate)
 
         vars_to_fit = list()
         if np.size(self.simulation_params) == 1:
             # run simulation
-            v_candidate, t_candidate = run_simulation(cell, **self.simulation_params)
+            v_candidate, t_candidate = run_simulation(self.cell, **self.simulation_params)
 
             # compute the variables to fit
             vars_to_fit.extend(self.fitfuns(v_candidate, t_candidate, self.simulation_params['i_amp']))
         else:  # in case you want to run several simulations on different data
             for i in range(len(self.simulation_params)):
                 # run simulation
-                v_candidate, t_candidate = run_simulation(cell, **self.simulation_params[i])
+                v_candidate, t_candidate = run_simulation(self.cell, **self.simulation_params[i])
 
                 # compute the variables to fit
                 vars_to_fit.extend(self.fitfuns[i](v_candidate, t_candidate, self.simulation_params[i]['i_amp']))
@@ -193,20 +247,22 @@ class CellFitProblem(Problem):
         fitness = np.sum(self.fitnessweights * fitness)
         return fitness
 
-    def get_cell(self, candidate):
-        # create cell with the candidate variables
+    def get_cell(self):
+        """
+        Create cell from saved model and insert mechanisms of variables
+        :return: Cell created from file in model_dir, with mechanisms of variables inserted.
+        :rtype: Cell
+        """
         cell = Cell.from_modeldir(self.model_dir)
+        insert_mechanisms(cell, self.path_variables)
+        return cell
 
-        if self.insert_mechanisms:
-            insert_mechanisms(cell, self.path_variables)
-
+    def update_cell(self, candidate):
         for i in range(len(candidate)):
             for path in self.path_variables[i]:
-                cell.update_attr(path, candidate[i])
+                self.cell.update_attr(path, candidate[i])
         if self.recalculate_variables is not None:
             self.recalculate_variables(candidate)
-
-        return cell
 
     def observer(self, population, num_generations, num_evaluations, args):
         """
@@ -233,18 +289,19 @@ class CellFitProblem(Problem):
         return individuals_observer(population, num_generations, num_evaluations, args)
 
 
-class CellFitFromInitPopProblem(CellFitProblem):
+class FromInitPopCellFitProblem(CellFitProblem):
 
-    def __init__(self, maximize, normalize, model_dir, mechanism_dir, variables, data_dir, get_var_to_fit,
-                 fitnessweights, errfun, init_candidate, insert_mechanisms=False, recalculate_variables=None):
-        super(CellFitFromInitPopProblem, self).__init__(maximize, normalize, model_dir, mechanism_dir, variables,
+    def __init__(self, init_pop, name, maximize, normalize, model_dir, mechanism_dir, variables, data_dir, get_var_to_fit,
+                 fitnessweights, errfun, simulation_params=None, insert_mechanisms=False, recalculate_variables=None):
+        super(FromInitPopCellFitProblem, self).__init__(name, maximize, normalize, model_dir, mechanism_dir, variables,
                                                         data_dir, get_var_to_fit, fitnessweights, errfun,
-                                                        insert_mechanisms, recalculate_variables)
-        self.init_candidate = init_candidate
+                                                        simulation_params, insert_mechanisms, recalculate_variables)
+        self.init_pop = iter(init_pop)
 
     def generator(self, random, args):
-        # initial population will consist of the same candidate
-        candidate = self.init_candidate
+
+        # get next candidate from initial population
+        candidate = self.init_pop.next()
         if self.normalize:
             candidate = norm_candidate(candidate, self.lower_bound, self.upper_bound)
-        return np.array(candidate)
+        return candidate

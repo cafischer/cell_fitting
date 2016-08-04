@@ -41,8 +41,8 @@ def dap2csv(cell_dir):
 
         # plot
         f, (ax1, ax2) = pl.subplots(2, 1, sharex=True)
-        ax1.plot(data_new.as_matrix(['t']), data_new.as_matrix(['v']), 'k', linewidth=2)
-        ax2.plot(data_new.as_matrix(['t']), data_new.as_matrix(['i']), 'k', linewidth=2)
+        ax1.plot_on_canvas(data_new.as_matrix(['t']), data_new.as_matrix(['v']), 'k')
+        ax2.plot_on_canvas(data_new.as_matrix(['t']), data_new.as_matrix(['i']), 'k')
         ax2.set_xlabel('Time (ms)', fontsize=18)
         ax1.set_ylabel('Membrane \npotential (mV)', fontsize=18)
         ax2.set_ylabel('Current (nA)', fontsize=18)

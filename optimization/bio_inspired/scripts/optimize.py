@@ -1,4 +1,4 @@
-from optimization.bio_inspired.parametersearch import optimize
+from optimization.bio_inspired.optimize import optimize
 
 __author__ = 'caro'
 
@@ -42,6 +42,7 @@ variables = [
             ]
 
 params = {
+          'name': 'CellFitProblem',
           'maximize': False,
           'normalize': True,
           'model_dir': '../../../model/cells/pointmodel.json',
@@ -54,4 +55,4 @@ params = {
           'insert_mechanisms': True
          }
 
-optimize(save_dir, n_trials, params, method, method_type, method_args)
+optimize(save_dir, n_trials, params, method, method_type, method_args, params['name'])

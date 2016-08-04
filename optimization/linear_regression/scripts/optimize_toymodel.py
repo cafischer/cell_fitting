@@ -1,10 +1,11 @@
-import numpy as np
 import json
 import os
 
+import numpy as np
 from nrn_wrapper import Cell
+
 from optimization.simulate import currents_given_v
-from optimization.bio_inspired.problems import CellFitProblem, get_ionlist, convert_units
+from optimization.problems import CellFitProblem, get_channel_list, get_ionlist, convert_units
 from optimization.linear_regression import linear_regression, plot_fit
 
 __author__ = 'caro'
@@ -19,6 +20,7 @@ variables = [
             ]
 
 params = {
+          'name': 'CellFitProblem',
           'maximize': False,
           'normalize': True,
           'model_dir': '../../../model/cells/toymodel1.json',
@@ -51,16 +53,17 @@ for trial in range(0, n_trials):
     dt = t_exp[1] - t_exp[0]
     dvdt = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt]), np.diff(v_exp) / dt))
     candidate = np.ones(len(problem.path_variables))
-    cell = problem.get_cell(candidate)
-    channel_list = list(set([problem.path_variables[i][0][2] for i in range(len(problem.path_variables))]))
-        # only works if channel name is at 2 second position in the path!
+    problem.update_cell(candidate)
+    channel_list = get_channel_list(problem.cell, 'soma')
     ion_list = get_ionlist(channel_list)
     celsius = problem.simulation_params['celsius']
 
-    currents = currents_given_v(v_exp, t_exp, cell.soma, channel_list, ion_list, celsius)
+    currents = currents_given_v(v_exp, t_exp, problem.cell.soma, channel_list, ion_list, celsius)
 
     # convert units
-    dvdt_sc, i_inj_sc, currents_sc, Cm, _ = convert_units(cell.soma.L, cell.soma.diam, cell.soma.cm, dvdt, i_exp, currents)
+    dvdt_sc, i_inj_sc, currents_sc, Cm, _ = convert_units(problem.cell.soma.L, problem.cell.soma.diam,
+                                                          problem.cell.soma.cm, dvdt, i_exp,
+                                                          currents)
 
     # linear regression
     weights, residual, y, X = linear_regression(dvdt_sc, i_inj_sc, currents_sc, i_pas=0, Cm=Cm)

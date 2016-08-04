@@ -44,62 +44,7 @@ def adagrad(theta_init, fun_gradient, num_iterations, lower_bound, upper_bound, 
     return theta
 
 
-def adagrad_single(theta_init, fun_gradient, num_iterations, lower_bound, upper_bound, gamma=0.9, eps=1e-8, *args, **kwargs):
-
-    theta = copy.copy(theta_init)
-    mean_gradient = 0
-    mean_dtheta = 0
-    rms_mean_dtheta = 1
-
-    for i in range(num_iterations):
-        for j in range(len(theta)):
-            mask = np.zeros(len(theta), dtype=bool)
-            mask[j] = 1
-            theta_old = theta
-            gradient = fun_gradient(theta, *args, **kwargs)
-
-            print 'gradient: ' + str(gradient)
-            print 'mask: ' + str(mask)  # TODO
-            print 'theta: ' + str(theta)
-            print  # TODO
-
-            mean_gradient = gamma * mean_gradient + (1-gamma) * gradient**2
-            rms_mean_gradient = np.sqrt(mean_gradient + eps)
-
-            theta[mask] = theta[mask] - (rms_mean_dtheta / rms_mean_gradient)[mask] * gradient[mask]
-            if isinstance(lower_bound, Iterable):
-                theta[mask] = min(max(theta[mask], lower_bound[mask]), upper_bound[mask])
-            else:
-                theta[mask] = min(max(theta[mask], lower_bound), upper_bound)
-
-            mean_dtheta = gamma * mean_dtheta + (1-gamma) * (theta-theta_old)**2
-            rms_mean_dtheta = np.sqrt(mean_dtheta + eps)
-    return theta
-
-
-def gradientdescent_single(theta_init, learn_rate, fun_gradient, num_iterations, lower_bound, upper_bound,
-                           *args, **kwargs):
-
-    theta = copy.copy(theta_init)
-    for i in range(num_iterations):
-        for j in range(len(theta)):
-            mask = np.zeros(len(theta), dtype=bool)
-            mask[j] = 1
-            gradient = fun_gradient(theta, *args, **kwargs)
-            theta[mask] = theta[mask] - learn_rate * gradient[mask]
-            if isinstance(lower_bound, Iterable):
-                theta[mask] = min(max(theta[mask], lower_bound[mask]), upper_bound[mask])
-            else:
-                theta[mask] = min(max(theta[mask], lower_bound), upper_bound)
-
-            print 'gradient: ' + str(gradient)
-            print 'mask: ' + str(mask)  # TODO
-            print 'theta: ' + str(theta)
-            print  # TODO
-    return theta
-
-
-def numerical_gradient(x, f, h=1e-5, method='central', *args, **kwargs):
+def numerical_gradient(x, f, h=1e-10, method='central', *args, **kwargs):
     """
     Numerical gradient of f at x based on forward difference.
 
@@ -130,21 +75,3 @@ def numerical_gradient(x, f, h=1e-5, method='central', *args, **kwargs):
     #print 'candidate: '+str(x)
     #print 'gradient: '+str(gradient)
     return gradient
-
-
-
-
-#######################################################################
-if __name__ == '__main__':
-
-    # test numerical_gradient
-    def f(x):
-        return np.array([x[0]**2 + x[1]])
-
-    x = np.array([2, 4])
-    h = 1
-
-    gradient = numerical_gradient(x, f, h)
-
-    if gradient[0] == (f(np.array([3, 4]))-f(x))/h and gradient[1] == (f(np.array([2, 5]))-f(x))/h:
-        print 'Test successful!'

@@ -1,9 +1,9 @@
 import json
 import re
-
 import matplotlib.pyplot as pl
 
-from optimization.bio_inspired.problems import *
+from optimization import problems
+from optimization.problems import *
 from optimization.simulate import run_simulation
 
 __author__ = 'caro'
@@ -17,11 +17,7 @@ if __name__ == '__main__':
 
     with open(save_dir+'problem.json', 'r') as f:
         params = json.load(f)
-    params['model_dir'] = '../../' + params['model_dir'] # TODO
-    params['data_dir'] = '../../' + params['data_dir'] # TODO
-    params['mechanism_dir'] = '../../' + params['mechanism_dir'] # TODO
-    #problem = CellFitProblem(**params)  # TODO
-    problem = CellFitFromInitPopProblem(**params)
+    problem = getattr(problems, params['name'])(**params)
 
     n_params = len(problem.path_variables)
 
@@ -37,20 +33,16 @@ if __name__ == '__main__':
 
     data = pd.read_csv(params['data_dir'])
 
-    # create cell
-    cell = problem.get_cell(candidate)
+    # update cell wth candidate variables
+    problem.update_cell(candidate)
 
-    # record currents
-    """
-    from fit_currents.vclamp import get_ionlist
-    mechanisms = cell.params['soma']['mechanisms']
-    mechanisms_names = mechanisms.keys()
-    i_ion = np.zeros(len(mechanisms_names), dtype=object)
-    for i, mech in enumerate(mechanisms_names):
-        i_ion[i] = cell.soma.record_current(mech, get_ionlist([mech])[0])
-"""
+    # record currents from the soma
+    channel_list = get_channel_list(problem.cell, 'soma')
+    ion_list = get_ionlist(channel_list)
+    currents = [problem.cell.soma.record_from(channel_list[k], 'i'+ion_list[k], pos=.5) for k in range(len(channel_list))]
+
     # run simulation
-    v, t = run_simulation(cell, **problem.simulation_params)
+    v, t = run_simulation(problem.cell, **problem.simulation_params)
 
     print 'Fitness: ' + str(individuals_file.fitness.iloc[best].values)
     print 'Candidate: ' + str(candidate)
@@ -60,21 +52,16 @@ if __name__ == '__main__':
     pl.plot(t, v, 'r', label='fitted model')
     pl.legend()
     pl.savefig(save_dir+method+'/best_candidate'+str(trial)+'.png')
-    #pl.show()
-
-    #pl.figure()
-    #pl.plot(t, problem.data.i, 'k')
-    #pl.show()
+    pl.show()
 
     # plot currents
-    """
     pl.figure()
-    for i, current in enumerate(i_ion):
-        pl.plot(t, -1 * np.array(current), label=mechanisms_names[i])
+    for i, current in enumerate(currents):
+        pl.plot(t, -1 * np.array(current), label=channel_list[i])
     pl.legend()
     pl.savefig(save_dir+method+'/best_candidate_currents'+str(trial)+'.png')
-    #pl.show()
-"""
+    pl.show()
+
     # plot error development
     if method == 'SA':
         best = individuals_file.fitness.values

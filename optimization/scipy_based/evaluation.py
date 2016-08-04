@@ -1,17 +1,19 @@
+import json
+
 import pandas as pd
 import numpy as np
-import json
 from neuron import h
-from optimization.bio_inspired.problems import complete_mechanismdir
-from optimization.bio_inspired.problems import CellFitProblem
+
+from optimization.problems import complete_mechanismdir
+from optimization.problems import CellFitProblem
 
 __author__ = 'caro'
 
 
 methods = ['Newton-CG', 'BFGS', 'Nelder-Mead', 'hhsolver']
-save_dirs = ['../../results/gradient_descent/toymodels/toymodel1/1param/Newton-CG/',
-             '../../results/gradient_descent/toymodels/toymodel1/1param/BFGS/',
-            '../../results/gradient_descent/toymodels/toymodel1/1param/Nelder-Mead/',
+save_dirs = ['../../results/scipy_based/toymodels/toymodel1/1param/Newton-CG/',
+             '../../results/scipy_based/toymodels/toymodel1/1param/BFGS/',
+            '../../results/scipy_based/toymodels/toymodel1/1param/Nelder-Mead/',
             '../../results/hhsolver/toymodels/toymodel1/1param/higher_dt/']
 n_trials = 10
 

@@ -1,4 +1,4 @@
-from optimization.bio_inspired.parametersearch import optimize
+from optimization.bio_inspired.optimize import optimize
 
 __author__ = 'caro'
 
@@ -44,6 +44,7 @@ variables = [
             ]
 
 params = {
+          'name': 'CellFitFromInitPopProblem',
           'maximize': False,
           'normalize': True,
           'model_dir': '../../../model/cells/pointmodel.json',
@@ -57,4 +58,4 @@ params = {
           'init_candidate': init_candidate
          }
 
-optimize(save_dir, n_trials, params, method, method_type, method_args, problem='CellFitFromInitPopProblem')
+optimize(save_dir, n_trials, params, method, method_type, method_args, problem=params['name'])

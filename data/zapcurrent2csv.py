@@ -65,9 +65,9 @@ def zap_current2csv(cell_dir):
 
     # plot data
     f, (ax1, ax2) = pl.subplots(2, 1, sharex=True)
-    ax1.plot(t, v, 'k')
+    ax1.plot_on_canvas(t, v, 'k')
     ax1.set_ylabel('Membrane \npotential (mV)', fontsize=18)
-    ax2.plot(t, i, 'k')
+    ax2.plot_on_canvas(t, i, 'k')
     ax2.set_xlabel('Time (ms)', fontsize=18)
     ax2.set_ylabel('Current (nA)', fontsize=18)
     pl.savefig(cell_dir+'/zapcurrent/zap.png')

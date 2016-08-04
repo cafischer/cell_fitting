@@ -19,6 +19,8 @@ def run_simulation(cell, sec, i_amp, v_init, tstop, dt, celsius=35, pos_i=0.5, p
     :type tstop: float
     :param dt: Time step.
     :type dt: float
+    :param celsius: Temperature during the simulation (affects ion channel kinetics).
+    :type celsius: float
     :param pos_i: Position of the IClamp on the Section (number between 0 and 1).
     :type pos_i: float
     :param pos_v: Position of the recording electrode on the Section (number between 0 and 1).
@@ -51,12 +53,21 @@ def run_simulation(cell, sec, i_amp, v_init, tstop, dt, celsius=35, pos_i=0.5, p
     return np.array(v), np.array(t)
 
 
-def extract_simulation_params(data, celsius=35, pos_i=0.5, pos_v=0.5):
+def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, pos_v=0.5):
     """
-    Uses the experimental data to extract the simulation parameters.
+    Uses the experimental data and additional arguments to extract the simulation parameters.
 
-    :return: Parameters required for the NEURON simulation (see parameters of
-    :func Optimizer.run_simulation)
+    :param data: Dataframe containing the columns: v (membrane potential), t (Time), i (injected current).
+    :type data: pandas.DataFrame
+    :param sec: Section to stimulate and record from. First argument name, second argument index (None for no index).
+    :type sec: tuple
+    :param celsius: Temperatur during simulation (affects ion channel kinetics).
+    :type celsius: float
+    :param pos_i: Position of the stimulating electrode (value between 0 and 1).
+    :type pos_i: float
+    :param pos_v: Position of the recording electrode (value between 0 and 1).
+    :type pos_v: float
+    :return: Simulation parameter
     :rtype: dict
     """
     # load experimental data and simulation parameters
@@ -66,7 +77,7 @@ def extract_simulation_params(data, celsius=35, pos_i=0.5, pos_v=0.5):
     i_amp = data.i.values
     pos_i = pos_i
     pos_v = pos_v
-    sec = [data.sec[0], data.sec[1]]  # [0] section name, [1] section index
+    sec = sec
     return {'i_amp': i_amp, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i,
                                   'pos_v': pos_v, 'sec': sec, 'celsius': celsius}
 
@@ -132,4 +143,4 @@ def currents_given_v(v, t, sec, channel_list, ion_list, celsius, plot=False):
             pl.title(channel_list[i])
             pl.show()
 
-    return np.array(currents)
+    return currents

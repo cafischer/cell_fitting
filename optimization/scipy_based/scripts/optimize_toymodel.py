@@ -1,30 +1,36 @@
 from random import Random
 from time import time
-import numpy as np
 import os
 import json
-from nrn_wrapper import Cell
-from optimization.bio_inspired.problems import CellFitProblem
-from scipy.optimize import minimize
 import functools
-from optimization.gradient_descent import numerical_gradient
+
+import numpy as np
+from nrn_wrapper import Cell
+from scipy.optimize import minimize
+
+from optimization.problems import CellFitProblem
+from optimization.scipy_based import numerical_gradient
 
 __author__ = 'caro'
 
 
 # parameter
 #method = 'Nelder-Mead'
-#method = 'BFGS'
-method = 'Newton-CG'
-save_dir = '../../../results/gradient_descent/test_algorithms/increase_params/2param/'+method+'/'
+method = 'BFGS'
+#method = 'Newton-CG'
+save_dir = '../../../results/test_algorithms/increase_params/5param/scipy_based/'+method+'/'
 n_trials = 20
 
 variables = [
             [0, 2.5, [['soma', '0.5', 'na8st', 'gbar']]],
-            [0, 2.5, [['soma', '0.5', 'kdr', 'gbar']]]
+            [0, 2.5, [['soma', '0.5', 'kdr', 'gbar']]],
+            [0, 2.5, [['soma', '0.5', 'pas', 'g']]],
+            [0, 1.0, [['soma', '0.5', 'na8st', 'a3_1']]],
+            [0, 50.0, [['soma', '0.5', 'na8st', 'a3_0']]],
             ]
 
 params = {
+          'name': 'CellFitProblem',
           'maximize': False,
           'normalize': False,
           'model_dir': '../../../model/cells/toymodel3.json',

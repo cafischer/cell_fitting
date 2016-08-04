@@ -4,9 +4,9 @@ import json
 
 import numpy as np
 
-from optimization.bio_inspired.problems import CellFitProblem
+from optimization.problems import CellFitProblem
 from optimization.simulate import run_simulation
-from optimization.bio_inspired.errfuns import rms
+from optimization.errfuns import rms
 
 __author__ = 'caro'
 
@@ -48,7 +48,8 @@ for i, p1 in enumerate(p1_range):
         theta[p2_idx] = p2
 
         # run simulation with these parameters
-        v_model, t = run_simulation(problem.get_cell(theta), **problem.simulation_params)
+        problem.update_cell(theta)
+        v_model, t = run_simulation(problem.cell, **problem.simulation_params)
         error[i, j] = rms(problem.data_to_fit[0], v_model)
 
 # save error

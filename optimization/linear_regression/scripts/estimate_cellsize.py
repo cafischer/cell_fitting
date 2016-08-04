@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as pl
 
-from optimization.bio_inspired.problems import CellFitProblem, get_ionlist, convert_units
+from optimization.problems import CellFitProblem, get_channel_list, get_ionlist, convert_units
 from optimization.linear_regression import linear_regression, plot_fit
 
 __author__ = 'caro'
@@ -16,6 +16,7 @@ variables = [
             ]
 
 params = {
+          'name': 'CellFitProblem',
           'maximize': False,
           'normalize': True,
           'model_dir': '../../../model/cells/toymodel1.json',
@@ -30,20 +31,26 @@ params = {
 
 # create problem
 problem = CellFitProblem(**params)
+
+# create cell
+candidate = np.ones(len(problem.path_variables))  # gbars should be 1
+problem.update_cell(candidate)
+
+# extract parameter
+channel_list = get_channel_list(problem.cell, 'soma')
+ion_list = get_ionlist(channel_list)
+
 v_exp = problem.data.v.values
 t_exp = problem.data.t.values
 i_exp = problem.data.i.values
 dt_exp = t_exp[1] - t_exp[0]
-channel_list = list(set([problem.path_variables[k][0][2] for k in range(len(problem.path_variables))]))
-    # only works if channel name is at 2 second position in the path!
-ion_list = get_ionlist(channel_list)
+
 dvdt_exp = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt_exp]), np.diff(v_exp)/dt_exp))
 celsius = problem.simulation_params['celsius']
-candidate = np.ones(len(problem.path_variables))  # gbars should be 1
-cell = problem.get_cell(candidate)
 
 # convert units
-dvdt_sc, i_inj_sc, _, _, cell_area = convert_units(cell.soma.L, cell.soma.diam, cell.soma.cm, dvdt_exp,
+dvdt_sc, i_inj_sc, _, _, cell_area = convert_units(problem.cell.soma.L, problem.cell.soma.diam,
+                                                   problem.cell.soma.cm, dvdt_exp,
                                                    i_exp, np.zeros(len(t_exp)))
 
 # extract part of current injection
@@ -75,9 +82,9 @@ r = np.sqrt(area_new / (2*np.pi*1e-8))
 L = np.sqrt(area_new / (2*np.pi*1e-8))
 # 3) diam = 2*r
 diam = 2*r
-cell.soma.L = L
-cell.soma.diam = diam
-cell_area = cell.soma(.5).area() * 1e-8
+problem.cell.soma.L = L
+problem.cell.soma.diam = diam
+cell_area = problem.cell.soma(.5).area() * 1e-8
 print 'L: ' + str(L)
 print 'diam: ' + str(diam)
 print 'cell area: ' + str(cell_area * 1e8)

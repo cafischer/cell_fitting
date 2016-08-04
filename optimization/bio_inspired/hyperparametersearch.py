@@ -1,13 +1,13 @@
-# TODO: update with new functions
-
-import inspyred
 from random import Random
 from time import time
 import numpy as np
-from optimization.bio_inspired.problem import CellFitProblem
-from run import run
 import json
 import os
+import inspyred
+
+from utilities import merge_dicts
+from optimization.problems import CellFitProblem
+from optimization.bio_inspired.optimize import evolve
 
 __author__ = 'caro'
 
@@ -45,15 +45,15 @@ if __name__ == '__main__':
               'path_variables': path_variables,
               'errfun': 'errfun_featurebased'}
 
-    problem = Problem(params)
+    problem = CellFitProblem(params)
     methods = ['DEA', 'SA', 'GA', 'EDA', 'PSO']
 
-    i = 0  # select method
+    idx = 0  # select method
     pop_size = 100
     n_trials = 1000
     max_generations = 100
     max_evaluations = max_generations
-    if methods[i] == 'SA':
+    if methods[idx] == 'SA':
         max_evaluations = max_generations * pop_size
 
     method_types = ['ec', 'ec', 'ec', 'ec', 'swarm']
@@ -76,29 +76,48 @@ if __name__ == '__main__':
                   {'pop_size': [pop_size, pop_size, 'int'], 'inertia': [0, 2, 'float'],
                    'cognitive_rate': [0, 3, 'float'], 'social_rate': [0, 3, 'float']}
                   ]
+    method = methods[idx]
+    method_type = method_types[idx]
+    method_arg = method_args[idx]
 
-    if not os.path.exists(save_dir+methods[i]):
-            os.makedirs(save_dir+methods[i])
+    if not os.path.exists(save_dir+methods[idx]):
+            os.makedirs(save_dir+methods[idx])
 
     with open(save_dir+'params.json', 'w') as f:
         json.dump(params, f)
 
     for trial in range(n_trials):
-        seed = time()
-        with open(save_dir+methods[i]+'/seed_'+str(trial)+'.npy', 'w') as f:
-            np.save(f, seed)
+        # create random number generator with seed and save seed
+        if os.path.isfile(save_dir+'/seed'+str(trial)+'.txt'):
+            seed = float(np.loadtxt(save_dir+'seed_'+str(trial)+'.txt'))
+        else:
+            seed = time()
+            np.savetxt(save_dir+'/seed_'+str(trial)+'.txt', np.array([seed]))
+        prng = Random()
+        prng.seed(seed)
 
         # sample parameter from uniform distribution
         seed_sampling = time()
-        with open(save_dir+methods[i]+'/seed_sampling_'+str(trial)+'.npy', 'w') as f:
+        with open(save_dir+methods[idx]+'/seed_sampling_'+str(trial)+'.npy', 'w') as f:
             np.save(f, seed_sampling)
-        method_args[i] = generate_hyperparameter(arg_bounds[i], seed_sampling, round=True)
-        with open(save_dir+methods[i]+'/method_args_'+str(trial)+'.json', 'w') as f:
-            json.dump(method_args[i], f)
+        method_args[idx] = generate_hyperparameter(arg_bounds[idx], seed_sampling, round=True)
+        with open(save_dir+methods[idx]+'/method_args_'+str(trial)+'.json', 'w') as f:
+            json.dump(method_args[idx], f)
 
-        individuals_file = open(save_dir+methods[i]+'/individuals_file_'+str(trial)+'.csv', 'w')
-        statistics_file = open(save_dir+methods[i]+'/statistics_file_'+str(trial)+'.csv', 'w')
+        # get optimization method
+        ea = getattr(getattr(inspyred, method_type), method)(prng)
+        if method == 'GA':
+            ea.variator = [inspyred.ec.variators.n_point_crossover, inspyred.ec.variators.gaussian_mutation]
+        ea.observer = problem.observer
+        ea.terminator = inspyred.ec.terminators.generation_termination
 
-        # run
-        run(problem, methods[i], method_types[i], method_args[i], seed, max_evaluations,
-            individuals_file, statistics_file)
+        # open individuals_file and add it to args
+        if not os.path.exists(save_dir+'/'+method):
+                os.makedirs(save_dir+'/'+method)
+        individuals_file = open(save_dir+'/'+method+'/individuals_file_'+str(trial)+'.csv', 'w')
+        args = merge_dicts(method_arg, {'individuals_file': individuals_file})
+
+        # run optimization
+        evolve(ea, problem, **args)
+
+        individuals_file.close()
