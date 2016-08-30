@@ -17,7 +17,7 @@ def optimize(initial_candidate, method, method_type, method_args, problem, max_i
         candidates.append(candidate)
 
     # function to optimize and derivative
-    fun = functools.partial(problem.evaluate, args=None)
+    fun = functools.partial(problem.save_error_weights_and_best_fitness, args=None)
     if method_type == 'gradient_based':
         # use numerical derivative
         funprime = functools.partial(numerical_gradient, f=fun, method='central')
@@ -38,8 +38,11 @@ def save_to_individuals_file(candidates, max_iterations, pop_size, problem, indi
     # generate data frame
     generation = np.repeat(range(max_iterations+1), pop_size)
     number = range(pop_size) * (max_iterations+1)
-    candidate = [str(np.array(c)) for c in candidates]
-    fitness = [problem.evaluate(c, None) for c in candidates]
+    candidate = list()
+    fitness = list()
+    for c in candidates:
+        candidate.append(str(np.array(c)))
+        fitness.append(problem.save_error_weights_and_best_fitness(c, None))
 
     individuals_data = pd.DataFrame(data={'generation': generation, 'number': number, 'fitness': np.array(fitness),
                                           'candidate': np.array(candidate)})

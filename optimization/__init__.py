@@ -8,12 +8,12 @@ from neuron import h
 from nrn_wrapper import Cell
 from optimization import problems
 from optimization.problems import complete_mechanismdir
-from optimization.problems import norm_candidate, get_variable_information
+from optimization.problems import norm_candidate, get_lowerbound_upperbound_path
 
 __author__ = 'caro'
 
 
-def save_problem_specification(save_dir, n_trials, pop_size, max_iterations, problem_dicts, generator=None):
+def save_problem_specification(save_dir, n_trials, pop_size, max_iterations, problem_dicts, variables_all, generator=None):
     save_dir += 'specification/'
 
     # create save directory
@@ -26,6 +26,8 @@ def save_problem_specification(save_dir, n_trials, pop_size, max_iterations, pro
     np.savetxt(save_dir+'/n_trials.txt', np.array([n_trials]))
     np.savetxt(save_dir+'/pop_size.txt', np.array([pop_size]))
     np.savetxt(save_dir+'/max_iterations.txt', np.array([max_iterations]))
+    with open(save_dir+'/variables_all.json', 'w') as f:
+        json.dump(variables_all, f)
 
     # load all different mechanism directories (needed for saving cell)
     mechanism_dirs = set([p['mechanism_dir'] for p in problem_dicts])
@@ -54,9 +56,9 @@ def save_problem_specification(save_dir, n_trials, pop_size, max_iterations, pro
             random = Random()
             random.seed(seed)
             initial_pop = list()
-            lower_bound, upper_bound, path_variables = get_variable_information(problem_dicts[trial]['variables'])
+            lower_bound, upper_bound, path_variables = get_lowerbound_upperbound_path(problem_dicts[trial]['variables'])
             for i in range(pop_size):
-                initial_pop.append(generator(random, len(path_variables), lower_bound, upper_bound))
+                initial_pop.append(generator(random, lower_bound, upper_bound))
             with open(save_dir_trial+'initial_pop.json', 'w') as f:
                 json.dump(initial_pop, f, indent=4)
 

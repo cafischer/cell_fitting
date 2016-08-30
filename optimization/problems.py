@@ -8,7 +8,7 @@ from nrn_wrapper import Cell, complete_mechanismdir
 from optimization.simulate import run_simulation, extract_simulation_params
 from optimization import errfuns, fitfuns
 from optimization.bio_inspired.inspyred_extension.observers import individuals_observer
-from optimization.bio_inspired.inspyred_extension.generators import bybounds_generator
+from optimization.bio_inspired.inspyred_extension.generators import randomNumberForEachLowerUpperBound
 
 __author__ = 'caro'
 
@@ -33,7 +33,7 @@ def unnorm_population(population, lower_bound, upper_bound):
     return population_unnormed
 
 
-def get_variable_information(variables):
+def get_lowerbound_upperbound_path(variables):
     lower_bound = np.zeros(len(variables))
     upper_bound = np.zeros(len(variables))
     path_variables = list()
@@ -164,7 +164,7 @@ class CellFitProblem(Problem):
         if mechanism_dir is not None:
             h.nrn_load_dll(str(complete_mechanismdir(mechanism_dir)))
 
-        self.lower_bound, self.upper_bound, self.path_variables = get_variable_information(variables)
+        self.lower_bound, self.upper_bound, self.path_variables = get_lowerbound_upperbound_path(variables)
 
         self.fitnessweights = np.array(fitnessweights)
         self.errfun = getattr(errfuns, errfun)
@@ -198,9 +198,9 @@ class CellFitProblem(Problem):
 
         # normalize variables
         if self.normalize:
-            return bybounds_generator(random, n_vars, 0, 1)
+            return randomNumberForEachLowerUpperBound(random, np.zeros(n_vars), np.ones(n_vars))
 
-        return bybounds_generator(random, n_vars, self.lower_bound, self.upper_bound)
+        return randomNumberForEachLowerUpperBound(random, self.lower_bound, self.upper_bound)
 
     def bounder(self, candidate, args):
         if self.normalize:
@@ -225,7 +225,13 @@ class CellFitProblem(Problem):
         vars_to_fit = list()
         if np.size(self.simulation_params) == 1:
             # run simulation
-            v_candidate, t_candidate = run_simulation(self.cell, **self.simulation_params)
+            v_candidate, t_candidate = run_simulation(self.cell, **self.simulation_params) # TODO
+
+            # TODO
+            import matplotlib.pyplot as pl
+            pl.figure()
+            pl.plot(t_candidate, v_candidate)
+            pl.show()
 
             # compute the variables to fit
             vars_to_fit.extend(self.fitfuns(v_candidate, t_candidate, self.simulation_params['i_amp']))
