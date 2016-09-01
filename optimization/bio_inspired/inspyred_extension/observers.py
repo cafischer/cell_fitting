@@ -13,6 +13,7 @@ def individuals_observer(population, num_generations, num_evaluations, args):
     if num_generations == 0:
         individuals_file.write('{0}, {1}, {2}, {3}\n'.format('generation', 'id', 'fitness', 'candidate'))
 
+    population = sorted(population, key=lambda p: p.fitness)
     for i, p in enumerate(population):
         individuals_file.write('{0}, {1}, {2}, {3}\n'.format(num_generations, i, p.fitness,
                                                 str(p.candidate).replace(',', '').replace('[', '').replace(']', '')))
