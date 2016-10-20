@@ -97,26 +97,41 @@ class HekaReader:
         return trace
 
 
+def get_indices_for_protocol(hekareader, protocol):
+    type_to_index = hekareader.get_type_to_index()
+    group = 'Group1'
+    protocol_to_series = hekareader.get_protocol(group)
+    series = protocol_to_series[protocol]
+    sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series]))]
+    trace = 'Trace1'
+    indices = [type_to_index[group][series][sweep][trace] for sweep in sweeps]
+    return indices
+
+
 if __name__ == '__main__':
     file_dir = './2015_08_26b/2015_08_26b.dat'
     hekareader = HekaReader(file_dir)
-
+    #hekareader.data_bundle.pgf # TODO
     type_to_index = hekareader.get_type_to_index()
 
     group = 'Group1'
-    protocol_to_series = hekareader.get_protocol(group)
-
-    protocol = 'IV'
-    series = protocol_to_series[protocol]
-    sweeps = ['Sweep'+str(i) for i in range(1, len(type_to_index[group][series]))]
+    protocol = 'rampIV'
     trace = 'Trace1'
+    protocol_to_series = hekareader.get_protocol(group)
+    series = protocol_to_series[protocol]
+    sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series]))]
 
-    for sweep in sweeps:
-        indices = type_to_index[group][series][sweep][trace]
-        x, y = hekareader.get_xy(indices)
-        x_unit, y_unit = hekareader.get_units_xy(indices)
-        pl.figure()
-        pl.plot(x, y, 'k')
-        pl.xlabel('Time ('+x_unit+')')
-        pl.ylabel('Membrane Potential (' + y_unit + ')')
+    indices = [type_to_index[group][series][sweep][trace] for sweep in sweeps]
+
+    fig = pl.figure()
+    ax = fig.add_subplot(111)
+    for index in indices:
+        x, y = hekareader.get_xy(index)
+        x_unit, y_unit = hekareader.get_units_xy(index)
+
+        ax.plot(x*1000, y*1000, 'k')
+        ax.set_xlabel('Time ('+x_unit+')', fontsize=18)
+        ax.set_ylabel('Membrane Potential (' + y_unit + ')', fontsize=18)
+        ax.tick_params(labelsize=15)
+    pl.tight_layout()
     pl.show()
