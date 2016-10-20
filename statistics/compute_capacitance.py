@@ -52,6 +52,7 @@ if __name__ == '__main__':
 
     # compute capacitance
     c_m = tau / r_in * 10 ** 6  # sec / MOhm to pF
+    print 'V_rest: ' + str(v_rest*1000) + ' mV'
     print 'tau: ' + str(tau * 1000) + ' ms'
     print 'R_in: ' + str(r_in) + ' MOhm'
     print 'c_m: ' + str(c_m) + ' pF'

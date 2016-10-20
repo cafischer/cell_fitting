@@ -5,13 +5,11 @@ from matplotlib import cm
 import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d.axes3d as p3
 import matplotlib.animation as animation
-from optimization.problems import CellFitProblem
-from optimization.simulate import run_simulation
+from optimization.problem import CellFitProblem
+from optimization.simulate import iclamp
 from errfuns import errfun_pointtopoint, errfun_featurebased
 import os.path
 import json
-
-# TODO: update to new version
 
 __author__ = 'caro'
 

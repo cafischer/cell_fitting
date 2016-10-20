@@ -6,8 +6,8 @@ import json
 import numpy as np
 from nrn_wrapper import Cell
 
-from optimization.problems import CellFitProblem
-from optimization.simulate import run_simulation
+from optimization.problem import CellFitProblem
+from optimization.simulate import iclamp
 
 __author__ = 'caro'
 
@@ -57,7 +57,7 @@ for i in range(n_data):
 
     # run simulation
     problem.update_cell(candidate)
-    v, t = run_simulation(problem.cell, **problem.simulation_params)
+    v, t = iclamp(problem.cell, **problem.simulation_params)
     data[i, :, 0] = v[:-1:subsample]
     data[i, :, 1] = i_inj[:-1:subsample]
     labels[i] = candidate[0]

@@ -3,7 +3,7 @@ import json
 import matplotlib.pyplot as pl
 import numpy as np
 
-from optimization.problems import CellFitProblem
+from optimization.problem import CellFitProblem
 
 __author__ = 'caro'
 

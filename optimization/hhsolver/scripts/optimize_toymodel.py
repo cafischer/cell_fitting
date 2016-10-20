@@ -4,8 +4,8 @@ import numpy as np
 import os
 import json
 from nrn_wrapper import Cell
-from optimization.problems import get_ionlist, convert_units
-from optimization import problems
+from optimization.problem import get_ionlist, convert_units
+from optimization import problem
 from scipy.optimize import fsolve
 from optimization.simulate import currents_given_v
 
@@ -82,7 +82,7 @@ params = {
           'insert_mechanisms': True
          }
 
-problem = getattr(problems, params['name'])(**params)
+problem = getattr(problem, params['name'])(**params)
 
 # save all information
 if not os.path.exists(save_dir):

@@ -12,9 +12,8 @@ from itertools import combinations
 import numpy.ma as ma
 
 from optimization.errfuns import rms
-from optimization.problems import norm_candidate, get_lowerbound_upperbound_path, complete_mechanismdir
-from nrn_wrapper import Cell
-from neuron import h
+from optimization.helpers import get_lowerbound_upperbound_keys
+from nrn_wrapper import Cell, load_mechanism_dir
 
 __author__ = 'caro'
 
@@ -55,7 +54,7 @@ class Evaluator:
         return statistics
 
     def save_error_weights_and_best_fitness(self, norm_weights=True, selected_trials=None,
-                                            name_error_weights='error_weigths', name_best_fitness='best_fitness'):
+                                            name_error_weights='error_weights', name_best_fitness='best_fitness'):
 
         self.load_mechanisms()
 
@@ -95,9 +94,9 @@ class Evaluator:
                                  for k in range(len(optimal_candidate))]))
 
     def get_mean_rms_candidate_normed(self, candidate, optimal_candidate, variables, method):
-        lower_bound, upper_bound, path_variables = get_lowerbound_upperbound_path(variables)
-        optimal_candidate_normed = norm_candidate(optimal_candidate, lower_bound, upper_bound)
-        candidate_normed = norm_candidate(candidate, lower_bound, upper_bound)
+        lower_bound, upper_bound, path_variables = get_lowerbound_upperbound_keys(variables)
+        optimal_candidate_normed = NormalizedProblem.norm_candidate(optimal_candidate, lower_bound, upper_bound)
+        candidate_normed = NormalizedProblem.norm_candidate(candidate, lower_bound, upper_bound)
         if method == 'Nelder-Mead':
             candidate_normed = self.norm_candidate_unbounded_method(candidate_normed)
         rms_candidate_normed = self.get_mean_rms_candidate_variables(candidate_normed, optimal_candidate_normed)
@@ -111,7 +110,7 @@ class Evaluator:
     def load_mechanisms(self):
         with open(self.save_dirs[0] + '/specification/trial0/problem.json', 'r') as f:
             problem_dict = json.load(f)
-        h.nrn_load_dll(str(complete_mechanismdir(problem_dict['mechanism_dir'])))
+        load_mechanism_dir(str(problem_dict['mechanism_dir']))
 
     def get_optimal_candidate(self, model_dir, variables):
         cell = Cell.from_modeldir(model_dir)
@@ -310,10 +309,10 @@ if __name__ == '__main__':
 
     evaluator = Evaluator(save_dir_statistics, save_dirs, n_trials, methods)
     #evaluator.save_error_weights_and_best_fitness()
-    #evaluator.save_statistics()
-    #evaluator.plot_statistic('rms(param)', 'mean')
-    #evaluator.plot_statistic('rms(param)', 'min')
-    #evaluator.plot_statistic('rms(v)', 'mean')
-    #evaluator.plot_statistic('rms(v)', 'min')
-    #evaluator.hist_mean_error_variable_comb(save_dirs[0], 1)
-    #evaluator.plot_2d_mean_error_variable_comb()
+    evaluator.save_statistics()
+    evaluator.plot_statistic('rms(param)', 'mean')
+    evaluator.plot_statistic('rms(param)', 'min')
+    evaluator.plot_statistic('rms(v)', 'mean')
+    evaluator.plot_statistic('rms(v)', 'min')
+    evaluator.hist_mean_error_variable_comb(save_dirs[0], 1)
+    evaluator.plot_2d_mean_error_variable_comb()

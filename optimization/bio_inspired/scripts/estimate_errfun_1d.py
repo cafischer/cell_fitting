@@ -4,8 +4,8 @@ import json
 
 import numpy as np
 
-from optimization.problems import CellFitProblem
-from optimization.simulate import run_simulation
+from optimization.problem import CellFitProblem
+from optimization.simulate import iclamp
 from optimization.errfuns import rms
 
 __author__ = 'caro'
@@ -44,7 +44,7 @@ for i, p1 in enumerate(p1_range):
 
         # run simulation with these parameters
         problem.update_cell(theta)
-        v_model, t = run_simulation(problem.cell, **problem.simulation_params)
+        v_model, t = iclamp(problem.cell, **problem.simulation_params)
         error[i] = rms(problem.data_to_fit, v_model)
 
         #pl.figure()

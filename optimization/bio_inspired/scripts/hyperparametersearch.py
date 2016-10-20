@@ -5,8 +5,8 @@ import json
 import os
 import inspyred
 
-from utilities import merge_dicts
-from optimization.problems import CellFitProblem
+from util import merge_dicts
+from optimization.problem import CellFitProblem
 from optimization.bio_inspired.optimize import evolve
 
 __author__ = 'caro'

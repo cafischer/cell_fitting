@@ -1,62 +1,61 @@
 import numpy as np
 import matplotlib.pyplot as pl
 
-from optimization.problems import CellFitProblem, get_channel_list, get_ionlist, convert_units
+from optimization.problem import *
 from optimization.linear_regression import linear_regression, plot_fit
+from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
 
 __author__ = 'caro'
 
 # parameter
 save_dir = '../../../results/linear_regression/estimate_cellsize/'
-n_models = 4
-dt_fac = np.arange(0, 5, 1)
 
-variables = [
-            [0, 2.5, [['soma', '0.5', 'na8st', 'gbar']]]
-            ]
+# create fiter
+variable_keys = [
+                    [['soma', '0.5', 'pas', 'g']],
+                    [['soma', '0.5', 'km', 'gbar']],
+                    [['soma', '0.5', 'ih_fast', 'gbar']],
+                    [['soma', '0.5', 'ih_slow', 'gbar']],
+                    [['soma', '0.5', 'nap', 'gbar']],
+                    [['soma', '0.5', 'kdr', 'gbar']],
+                    [['soma', '0.5', 'kap', 'gbar']],
+                    [['soma', '0.5', 'na8st', 'gbar']]
+                 ]
+errfun = 'rms'
+fitfun = 'get_v'
+fitnessweights = [1]
+model_dir = '../../../model/cells/dapmodel0.json'
+mechanism_dir = '../../../model/channels/schmidthieber'
+data_dir = '../../../data/2015_08_26b/rampIV/3.0(nA).csv'
 
-params = {
-          'name': 'CellFitProblem',
-          'maximize': False,
-          'normalize': True,
-          'model_dir': '../../../model/cells/toymodel1.json',
-          'mechanism_dir': '../../../model/channels/schmidthieber',
-          'variables': variables,
-          'data_dir': '../../../data/toymodels/toymodel1/ramp.csv',
-          'get_var_to_fit': 'get_v',
-          'fitnessweights': [1.0],
-          'errfun': 'rms',
-          'insert_mechanisms': True
-         }
-
-# create problem
-problem = CellFitProblem(**params)
+fitter = HodgkinHuxleyFitter(variable_keys, errfun, fitfun, fitnessweights,
+                 model_dir, mechanism_dir, data_dir, simulation_params={'celsius': 35})
 
 # create cell
-candidate = np.ones(len(problem.path_variables))  # gbars should be 1
-problem.update_cell(candidate)
+candidate = np.ones(len(variable_keys))  # gbars should be 1
+fitter.update_cell(candidate)
 
 # extract parameter
-channel_list = get_channel_list(problem.cell, 'soma')
+channel_list = get_channel_list(fitter.cell, 'soma')
 ion_list = get_ionlist(channel_list)
 
-v_exp = problem.data.v.values
-t_exp = problem.data.t.values
-i_exp = problem.data.i.values
+v_exp = fitter.data.v.values
+t_exp = fitter.data.t.values
+i_exp = fitter.data.i.values
 dt_exp = t_exp[1] - t_exp[0]
 
 dvdt_exp = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt_exp]), np.diff(v_exp)/dt_exp))
-celsius = problem.simulation_params['celsius']
+celsius = fitter.simulation_params['celsius']
 
 # convert units
-dvdt_sc, i_inj_sc, _, _, cell_area = convert_units(problem.cell.soma.L, problem.cell.soma.diam,
-                                                   problem.cell.soma.cm, dvdt_exp,
+dvdt_sc, i_inj_sc, _, _, cell_area = convert_units(fitter.cell.soma.L, fitter.cell.soma.diam,
+                                                   fitter.cell.soma.cm, dvdt_exp,
                                                    i_exp, np.zeros(len(t_exp)))
 
 # extract part of current injection
 current_inj = np.nonzero(i_exp)[0]
 idx_start = current_inj[0]
-idx_end = current_inj[-1]
+idx_end = current_inj[-1] / dt_exp
 dvdt_cut = dvdt_sc[idx_start:idx_end]
 t_cut = t_exp[idx_start:idx_end]
 i_exp_cut = i_inj_sc[idx_start:idx_end]
@@ -82,9 +81,9 @@ r = np.sqrt(area_new / (2*np.pi*1e-8))
 L = np.sqrt(area_new / (2*np.pi*1e-8))
 # 3) diam = 2*r
 diam = 2*r
-problem.cell.soma.L = L
-problem.cell.soma.diam = diam
-cell_area = problem.cell.soma(.5).area() * 1e-8
+fitter.cell.soma.L = L
+fitter.cell.soma.diam = diam
+cell_area = fitter.cell.soma(.5).area() * 1e-8
 print 'L: ' + str(L)
 print 'diam: ' + str(diam)
 print 'cell area: ' + str(cell_area * 1e8)

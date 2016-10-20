@@ -198,8 +198,8 @@ def get_inputresistance(v, i_inj):
     return (vstep - vrest) / i_inj[idx_step_start]
 
 
-def get_AP_start_end(v):
-    AP_onsets = get_AP_onsets(v)
+def get_AP_start_end(v, threshold=-45):
+    AP_onsets = get_AP_onsets(v, threshold)
     if len(AP_onsets) == 0:
         return None, None
     else:
@@ -217,7 +217,7 @@ if __name__ == "__main__":
     import matplotlib.pyplot as pl
 
     # # test on experimental data
-    data_dir = '../data/2015_08_11d/ramp/dap.csv'
+    data_dir = '../data/2015_08_11d/ramp/ramp.csv'
     data = pd.read_csv(data_dir)
     v_exp = np.array(data.v)
     i_exp = np.array(data.i)

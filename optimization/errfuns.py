@@ -14,4 +14,4 @@ def rms(a, b):
     :return: Mean quadratic error of the two input arrays.
     :rtype: float
     """
-    return np.sqrt(np.sum((a - b)**2) / np.size(a))
+    return np.sqrt(np.sum((np.array(a) - np.array(b))**2) / np.size(a))

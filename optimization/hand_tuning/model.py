@@ -1,8 +1,8 @@
 import numpy as np
 
-from optimization import problems
-from optimization.problems import get_channel_list, get_ionlist, get_cellarea, convert_unit_prefix
-from optimization.simulate import currents_given_v, run_simulation
+from optimization import problem
+from optimization.problem import get_channel_list, get_ionlist, get_cellarea, convert_unit_prefix
+from optimization.simulate import currents_given_v, iclamp
 
 __author__ = 'caro'
 
@@ -11,7 +11,7 @@ class Model:
 
     def __init__(self, problem_dict):
 
-        self.problem = getattr(problems, problem_dict['name'])(**problem_dict)
+        self.problem = getattr(problem, problem_dict['name'])(**problem_dict)
         self.lhsHH = self.get_lhsHH()
         self.channel_list = get_channel_list(self.problem.cell, 'soma')
         self.ion_list = get_ionlist(self.channel_list)
@@ -47,7 +47,7 @@ class Model:
         return currents
 
     def simulate(self):
-        return run_simulation(self.problem.cell, **self.problem.simulation_params)
+        return iclamp(self.problem.cell, **self.problem.simulation_params)
 
     def update_var(self, id, value):
         for path in self.problem.path_variables[id]:

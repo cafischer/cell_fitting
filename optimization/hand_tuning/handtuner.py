@@ -24,7 +24,7 @@ if __name__ == '__main__':
           'model_dir': '../../model/cells/toymodel3.json',
           'mechanism_dir': '../../model/channels/schmidthieber',
           'variables': variables,
-          'data_dir': '../../data/2015_08_11d/ramp/dap.csv',  #'../../data/toymodels/toymodel3/ramp.csv',
+          'data_dir': '../../data/2015_08_11d/ramp/ramp.csv',  #'../../data/toymodels/toymodel3/ramp.csv',
           'get_var_to_fit': 'get_v',
           'fitnessweights': [1.0],
           'errfun': 'rms',
