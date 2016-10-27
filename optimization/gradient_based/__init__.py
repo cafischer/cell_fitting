@@ -4,7 +4,7 @@ import numpy as np
 
 __author__ = 'caro'
 
-def numerical_gradient(x, f, h=1e-10, method='central', *args, **kwargs):
+def numerical_gradient(x, f, h=1e-8, method='central', *args, **kwargs):
     """
     Numerical gradient of f at x based on forward difference.
 

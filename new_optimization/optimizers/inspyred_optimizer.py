@@ -1,10 +1,12 @@
-from new_optimization import *
-import inspyred
-from optimization.bio_inspired.inspyred_extension import observers
-from optimization.bio_inspired.inspyred_extension import generators
-from optimization.bio_inspired.inspyred_extension import evaluators
 import functools
+
+import inspyred
 import pandas as pd
+
+from new_optimization import *
+from optimization.bio_inspired import evaluators, generators, observers
+from optimization.bio_inspired.inspyred_extension import generators
+from optimization.bio_inspired.inspyred_extension import observers
 from util import *
 
 

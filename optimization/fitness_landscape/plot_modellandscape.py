@@ -14,7 +14,7 @@ with open(save_dir+'/dirs.json', 'r') as f:
 
 data = pd.read_csv(dirs['data_dir'])
 
-optimum = [0.0, 0.1]  # [0.12, 0.036]
+optimum = [0.12, 0.04]  # [0.12, 0.036]
 idx_optimum = [np.where(np.isclose(p1_range, optimum[0]))[0][0], np.where(np.isclose(p2_range, optimum[1]))[0][0]]
 
 n = 5

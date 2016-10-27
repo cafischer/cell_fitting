@@ -1,8 +1,10 @@
 from random import shuffle
-from optimization import save_problem_specification
-from optimization.bio_inspired.inspyred_extension.generators import *
-from optimization.old_optimization.evaluation import Evaluator
+
 from nrn_wrapper import load_mechanism_dir
+
+from optimization import save_problem_specification
+from optimization.bio_inspired.generators import *
+from optimization.old_optimization.evaluation import Evaluator
 
 __author__ = 'caro'
 

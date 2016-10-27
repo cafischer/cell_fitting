@@ -55,7 +55,7 @@ for i in range(np.shape(modellandscape)[0]):
         AP_width = get_APwidth(modellandscape[i, j], data.t, data.i, args_others)
         AP_time = get_APtime(modellandscape[i, j], data.t, data.i, args_others)
 
-        AP_window_4 = shifted_best(modellandscape[i, j], np.array(data.t), np.array(data.i), args_4)  # TODO
+        AP_window_4 = shift_AP_max_APdata(modellandscape[i, j], np.array(data.t), np.array(data.i), args_4)  # TODO
         AP_window_2 = shifted_AP(modellandscape[i, j], np.array(data.t), np.array(data.i), args_2)
 
         error_rms[i, j] = rms(modellandscape[i, j], data.v)
@@ -115,7 +115,7 @@ cbar = fig.colorbar(im, ax=ax.ravel().tolist())
 for a in ax.ravel().tolist():
     a.set_xlabel('gmax na')
     a.set_ylabel('gmax k')
-pl.savefig(save_dir+'/'+new_name+'/fitness_landscape.png')
+#pl.savefig(save_dir+'/'+new_name+'/fitness_landscape.png')
 #pl.show()
 
 
@@ -143,7 +143,7 @@ cbar = fig.colorbar(im, ax=ax.ravel().tolist())
 for a in ax.ravel().tolist():
     a.set_xlabel('gmax na')
     a.set_ylabel('gmax k')
-pl.savefig(save_dir+'/'+new_name+'/fitness_landscape_contour.png')
+#pl.savefig(save_dir+'/'+new_name+'/fitness_landscape_contour.png')
 pl.show()
 
 

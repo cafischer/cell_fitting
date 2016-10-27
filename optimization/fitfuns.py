@@ -8,6 +8,23 @@ def get_v(v, t, i_inj, args):
     return [v]
 
 
+def phase_hist(v, t, i_inj, args):
+
+    v_min = args['v_min']
+    v_max = args['v_max']
+    dvdt_min = args['dvdt_min']
+    dvdt_max = args['dvdt_max']
+    bins_v = args['bins_v']
+    bins_dvdt = args['bins_dvdt']
+
+    dt = t[1] - t[0]
+    dvdt = np.concatenate((np.array([(v[1]-v[0])/dt]), np.diff(v) / dt))
+
+    H, v_range, dvdt_range = np.histogram2d(v, dvdt, bins=[bins_v, bins_dvdt],
+                                            range=[[v_min, v_max], [dvdt_min, dvdt_max]])
+    return [H]
+
+
 def get_APamp(v, t, i_inj, args):
     threshold = args.get('threshold', -45)
     dt = t[1] - t[0]
@@ -50,6 +67,15 @@ def get_APtime(v, t, i_inj, args):
     if AP_max is None:
         return [None]
     return [AP_max * dt]
+
+
+def has_1AP(v, t, i_inj, args):
+    threshold = args.get('threshold', -45)
+    dt = t[1] - t[0]
+    AP_onsets = get_AP_onsets(v, threshold)
+    if len(AP_onsets) == 1:
+        return True
+    return False
 
 
 def shifted_AP(v, t, i_inj, args):
@@ -137,7 +163,7 @@ def shifted_max(v, t, i_inj, args):
         return [None]
 
 
-def shifted_best(v, t, i_inj, args):
+def shift_AP_max_APdata(v, t, i_inj, args):
     """
     :param v:
     :type v:
@@ -155,6 +181,7 @@ def shifted_best(v, t, i_inj, args):
     :rtype:
     """
     dt = t[1] - t[0]
+    APtime_ref = None
     APtime_data = args['APtime'] / dt
     shift = args['shift'] / dt
     window_before = args['window_before'] / dt
@@ -174,22 +201,22 @@ def shifted_best(v, t, i_inj, args):
     inside_window = check_inside_window(AP_time / dt, len(v), window_before, window_after)
 
     if inside_shift and inside_window:  # use APtime as reference
-        window_start = int(np.round(AP_time / dt - window_before, 0))
-        window_end = int(np.round(AP_time / dt + window_after, 0))
+        APtime_ref = AP_time / dt
     else:
-        AP_onsets = get_AP_onsets(v, threshold)  # if existing use second spike as reference
-        if len(AP_onsets) > 1:
-            inside_window = check_inside_window(AP_onsets[1], len(v), window_before, window_after)
-            inside_shift = check_inside_shift(AP_onsets[1], APtime_data, shift)
-            if inside_window and inside_shift:
-                window_start = int(np.round(AP_onsets[1] - window_before, 0))
-                window_end = int(np.round(AP_onsets[1] + window_after, 0))
-            else:
-                window_start = int(np.round(APtime_data - window_before, 0))  # else use APtime from data as reference
-                window_end = int(np.round(APtime_data + window_after, 0))
-        else:
-            window_start = int(np.round(APtime_data - window_before, 0))  # else use APtime from data as reference
-            window_end = int(np.round(APtime_data + window_after, 0))
+        AP_onset, AP_end = get_AP_start_end(v, threshold, n=1)
+        if AP_onset is not None:
+            APtime_second = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
+            if APtime_second is not None:
+                inside_window = check_inside_window(APtime_second, len(v), window_before, window_after)
+                inside_shift = check_inside_shift(APtime_second, APtime_data, shift)
+                if inside_window and inside_shift:
+                    APtime_ref = APtime_second
+
+    if APtime_ref is None:
+        APtime_ref = APtime_data
+
+    window_start = int(np.round(APtime_ref - window_before, 0))  # else use APtime from data as reference
+    window_end = int(np.round(APtime_ref + window_after, 0))
 
     return [v[window_start: window_end]]
 
@@ -316,3 +343,22 @@ def impedance(v, i_inj, dt, f_range):
     idx2 = np.argmin(np.abs(freqs-f_range[1]))
 
     return imp[idx1:idx2], freqs[idx1:idx2]
+
+
+if __name__ == '__main__':
+
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as pl
+    save_dir = '../data/toymodels/hhCell/ramp.csv'
+    data = pd.read_csv(save_dir)
+
+    dt = data.t.values[1] - data.t.values[0]
+    dvdt = np.concatenate((np.array([(data.v[1]-data.v[0])/dt]), np.diff(data.v) / dt))
+    args = {'v_min': np.min(data.v), 'v_max': np.max(data.v), 'dvdt_min': np.min(dvdt), 'dvdt_max': np.max(dvdt),
+            'bins_v': 100, 'bins_dvdt': 100}
+    H = phase_hist(np.array(data.v), np.array(data.t), np.array(data.i), args)
+
+    pl.figure()
+    pl.imshow(np.log(H[0].T), origin='lower', interpolation='none')
+    pl.show()

@@ -54,7 +54,7 @@ def zap_current2csv(cell_dir):
     # load data
     f_range = [1, 20]
     ds = 1000  # number of steps skipped (in t, i, v) for the impedance computation
-    #v = np.array(np.loadtxt(cell_dir + '/zapcurrent/zap_voltage.txt', delimiter='\n'))
+    v = np.array(np.loadtxt(cell_dir + '/zapcurrent/zap_voltage.txt', delimiter='\n'))
     i = np.array(np.loadtxt('./cell_2013_12_13f' + '/zapcurrent/zap_current.txt', delimiter="\n"))
     t = np.array(np.loadtxt('./cell_2013_12_13f' + '/zapcurrent/zap_time.txt', delimiter="\n"))
     data_new = np.loadtxt('/media/caro/Daten/Phd/DAP-Project/cell_fitting/data/new_cells/Shared/2015_08_11d.txt')
@@ -117,4 +117,4 @@ def zap_current2csv(cell_dir):
         writer.writerows(data)
 
 if __name__ == "__main__":
-    zap_current2csv('./new_cells/2015_08_25h')
+    zap_current2csv('./new_cells/2015_08_11d')

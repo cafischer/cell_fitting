@@ -5,7 +5,7 @@ from statistics.analyze_APs import get_vrest
 
 __author__ = 'caro'
 
-data_real_dir = '../2015_08_11d/ramp/dap.csv'
+data_real_dir = '../2015_08_11d/ramp/ramp.csv'
 data_new_dir = './vrest.csv'
 
 data_real = pd.read_csv(data_real_dir)

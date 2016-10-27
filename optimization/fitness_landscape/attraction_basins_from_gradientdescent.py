@@ -1,30 +1,26 @@
 from __future__ import division
 import numpy as np
-import json
+import pandas as pd
 import itertools
-from util import merge_dicts
-from optimization.error_landscape_measures import *
+from optimization.fitness_landscape import *
 
-save_dir = '../../results/fitness_landscape_analysis/hhCell/3params/rms/'
+save_dir = '../../results/fitness_landscape/find_local_minima/gna_gk/APamp/trust-ncg/'
+optimum = [0.12, 0.036]
 
-distance = lambda x, y: np.abs(np.array(x) - np.array(y))
-def unmap(dictionary):
-    return {tuple(pair['key']): pair['value'] for pair in dictionary}
-
-# read
-with open(save_dir + '/optimum.npy', 'r') as f:
-    optimum = np.load(f)
-with open(save_dir + '/n_candidates.txt', 'r') as f:
-    n_candidates = int(f.read())
-with open(save_dir + '/n_repeat.txt', 'r') as f:
-    n_repeat = int(f.read())
-n_repeat = 10
+candidates = pd.read_csv(save_dir + 'candidates.csv')
+for index, row in candidates.iterrows():
+    candidates.set_value(index, 'candidate', [float(x) for x in row.candidate.split(" ")])
+n_candidates = len(candidates[candidates.generation == 0])
 
 local_minimum_per_candidate = dict()
-for i in range(n_repeat):
-    with open(save_dir + 'local_minimum_per_candidate('+str(i)+').json', 'r') as f:
-        local_minimum_per_candidate = merge_dicts(local_minimum_per_candidate, unmap(json.load(f)))
 
+for index, row in candidates[candidates.generation == 0].iterrows():
+    minimum = np.argmin(candidates[candidates.id == row.id].fitness)
+    if minimum is np.nan:
+        minimum = index
+    local_minimum_per_candidate[tuple(row.candidate)] = candidates.ix[minimum].candidate
+
+distance = lambda x, y: np.abs(np.array(x) - np.array(y))
 attraction_basins = assign_candidates_to_attraction_basin(local_minimum_per_candidate, distance, delta=10 ** (-3))
 
 minima = attraction_basins.keys()
@@ -36,6 +32,7 @@ relative_size_largest_attraction_basin = len(attraction_basins[largest_key]) / n
 distance_optimum_largest = np.sum(distance(np.array(optimum_key), np.array(largest_key)))
 mean_distance_minima = np.mean([np.sum(distance(np.array(comb[0]), np.array(comb[1])))
                                 for comb in itertools.combinations(minima, 2)])
+
 
 print 'Actual optimum: ' + str(optimum)
 print 'Minimum of optimal attraction basin: ' + str(optimum_key)

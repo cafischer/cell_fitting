@@ -29,11 +29,34 @@ def assign_candidates_to_attraction_basin(local_minimum_per_candidate, distance,
             attraction_basins[tuple(local_minimum_per_candidate[candidate])] = [list(candidate)]
     return attraction_basins
 
+
 def random_in_circle(middle, radius):
     return np.random.uniform(np.array(middle)-radius, np.array(middle)+radius)
 
 
-def get_number_local_minima(x, order):
+def get_true_local_minima(x, order):
+    """
+    Minimum = all numbers before and after the minimum are sequentially greater equal.
+    If equals occur at the trough only one minimum is assigned.
+    :param x: Array in which to find the minima.
+    :type x: ndarray
+    :param order: How many points to consider before and after the minimum.
+    :type order: int
+    :return: Indices of the minima.
+    :rtype: list
+    """
+    minima = list()
+    slope = np.diff(x)
+    i = 0
+    while i < (len(x)-2*order):
+        if np.all(slope[i:i+order] < 0) and np.all(slope[i+order:i+2*order] > 0):
+            minima.append(i+order)
+            i += 2*order
+        else:
+            i += 1
+    return minima
+
+def get_local_minima(x, order):
     """
     Minimum = all numbers before and after the minimum are sequentially greater equal.
     If equals occur at the trough only one minimum is assigned.
@@ -75,12 +98,12 @@ def test_assign_candidates_to_local_minima():
 
 
 def test_local_minima():
-    assert get_number_local_minima(np.array([2, 1, 0, 1, 2]), 1) == [2]
-    assert get_number_local_minima(np.array([2, 1, 0, 1, 2, 1, 0, 1, 1]), 1) == [2, 6]
-    assert get_number_local_minima(np.array([2, 1, 0, 1, 2]), 2) == [2]
-    assert get_number_local_minima(np.array([2, 1, 0, 1, 2]), 4) == []
-    assert get_number_local_minima(np.array([2, 1, 0, 0, 2, 3, 0, 1]), 1) == [2, 6]
-    assert get_number_local_minima(np.array([2, 1, 0, 0, 2, 3, 0, 1]), 2) == [2]
+    assert get_local_minima(np.array([2, 1, 0, 1, 2]), 1) == [2]
+    assert get_local_minima(np.array([2, 1, 0, 1, 2, 1, 0, 1, 1]), 1) == [2, 6]
+    assert get_local_minima(np.array([2, 1, 0, 1, 2]), 2) == [2]
+    assert get_local_minima(np.array([2, 1, 0, 1, 2]), 4) == []
+    assert get_local_minima(np.array([2, 1, 0, 0, 2, 3, 0, 1]), 1) == [2, 6]
+    assert get_local_minima(np.array([2, 1, 0, 0, 2, 3, 0, 1]), 2) == [2]
 
 
 if __name__ == '__main__':

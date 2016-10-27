@@ -11,7 +11,7 @@ def step_current2csv(cell_dir, steps):
     Transforms the step_current data file into a single csv file for each current step.
     """
 
-    data = pd.read_csv(cell_dir + '/stepcurrent/stepcurrent.csv').convert_objects(convert_numeric=True)
+    data = pd.read_csv(cell_dir + '/step/stepcurrent.csv').convert_objects(convert_numeric=True)
     header = ['t', 'i', 'v', 'sec']  # units: (ms), (nA), (mV)
     sec = pd.DataFrame()
     section = pd.Series(data=['soma'], dtype=str)
@@ -50,23 +50,27 @@ def step_current2csv(cell_dir, steps):
 
         # save to .csv
         data_new = pd.concat([t, i, v_new, sec], axis=1)
-        newfilename = '{}/stepcurrent/stepcurrent_shifted{}.csv'.format(cell_dir, i_steps[idx])
+        newfilename = '{}/step/stepcurrent_shifted{}.csv'.format(cell_dir, i_steps[idx])
         data_new.columns = header
         #data_new.to_csv(newfilename)
 
         # plot data
-        f, (ax1, ax2) = pl.subplots(2, 1, sharex=True)
-        ax1.plot_on_canvas(data_new.as_matrix(['t']), data_new.as_matrix(['v']), 'k')
-        #ax1.plot(data_new.as_matrix(['t']), v_new, 'k')
-        ax2.plot_on_canvas(data_new.as_matrix(['t']), data_new.as_matrix(['i']), 'k')
-        ax2.set_xlabel('Time (ms)', fontsize=18)
+        #f, (ax1, ax2) = pl.subplots(2, 1, sharex=True)
+        #ax1.plot(data_new.as_matrix(['t']), data_new.as_matrix(['v']), 'k')
+        ##ax1.plot(data_new.as_matrix(['t']), v_new, 'k')
+        #ax2.plot(data_new.as_matrix(['t']), data_new.as_matrix(['i']), 'k')
+        #ax2.set_xlabel('Time (ms)', fontsize=18)
+        #ax1.set_ylabel('Membrane \npotential (mV)', fontsize=18)
+        #ax2.set_ylabel('Current (nA)', fontsize=18)
+        #ax2.set_ylim(-0.12, 0.02)
+        #pl.savefig(cell_dir + '/step/stepcurrent_'+str(i_steps[idx]*1000)+'.png')
+
+        f, ax1 = pl.subplots(1, 1, sharex=True)
+        ax1.plot(data_new.as_matrix(['t']), data_new.as_matrix(['v']), 'k')
+        ax1.set_xlabel('Time (ms)', fontsize=18)
         ax1.set_ylabel('Membrane \npotential (mV)', fontsize=18)
-        ax2.set_ylabel('Current (nA)', fontsize=18)
-        ax2.set_ylim(-0.12, 0.02)
-        pl.savefig(cell_dir + '/stepcurrent/stepcurrent_'+str(i_steps[idx]*1000)+'.png')
-    #pl.savefig(cell_dir + '/stepcurrent/stepcurrent_shifted.png')
     pl.show()
 
 
 if __name__ == "__main__":
-    step_current2csv('./new_cells/2015_08_11d', [-0.1])
+    step_current2csv('./2015_08_26b', [-0.1, 0, 0.1, 0.2, 0.3, 0.5])

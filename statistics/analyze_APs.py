@@ -198,16 +198,16 @@ def get_inputresistance(v, i_inj):
     return (vstep - vrest) / i_inj[idx_step_start]
 
 
-def get_AP_start_end(v, threshold=-45):
+def get_AP_start_end(v, threshold=-45, n=0):
     AP_onsets = get_AP_onsets(v, threshold)
-    if len(AP_onsets) == 0:
+    if len(AP_onsets) < n+1:
         return None, None
     else:
-        AP_onset = AP_onsets[0]
-        if len(AP_onsets) == 1:
+        AP_onset = AP_onsets[n]
+        if len(AP_onsets) < n+2:
             AP_end = -1
         else:
-            AP_end = AP_onsets[1]
+            AP_end = AP_onsets[n+1]
         return AP_onset, AP_end
 
 

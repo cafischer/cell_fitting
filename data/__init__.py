@@ -25,14 +25,10 @@ def change_dt(dt_new, data):
     :rtype:
     """
     dt_old = data.t.values[1] - data.t.values[0]
-    assert power_of_2(dt_old/dt_new)
+    if dt_new < dt_old: assert power_of_2(dt_old/dt_new)
 
     t = np.arange(0, data.t.values[-1]+dt_new, dt_new)
     i = np.interp(t, data.t.values, data.i.values)
     v = np.interp(t, data.t.values, data.v.values)
-    sec = np.zeros(len(t), dtype=object)
-    sec[0] = data.sec.values[0]
-    sec[1] = data.sec.values[1]
-    sec[1:] = np.nan
 
-    return pd.DataFrame({'t': t, 'i': i, 'v': v, 'sec': sec})
+    return pd.DataFrame({'t': t, 'i': i, 'v': v})

@@ -1,10 +1,13 @@
-from new_optimization import *
-from scipy.optimize import minimize
-from optimization.gradient_based import numerical_gradient
-from optimization.bio_inspired.inspyred_extension import generators
-from util import merge_dicts
 import functools
+
+import numdifftools as nd
+import numpy as np
 import pandas as pd
+from scipy.optimize import minimize
+
+from new_optimization import *
+from optimization.bio_inspired import generators
+from util import merge_dicts
 
 
 class ScipyOptimizer(Optimizer):
@@ -18,7 +21,22 @@ class ScipyOptimizer(Optimizer):
         self.bounds = self.transform_bounds(self.optimization_settings.bounds)
 
         self.fun = functools.partial(self.optimization_settings.fitter.evaluate_fitness, args=None)
-        self.funprime = functools.partial(numerical_gradient, f=self.fun, method='central')
+
+        step = self.algorithm_settings.algorithm_params.get('step', 1e-8)
+
+        def jac(candidate):
+            jac = nd.Jacobian(self.fun, step=step, method='central')(candidate)[0]
+            jac[np.isnan(jac)] = 0
+            return jac
+
+        def hess(candidate):
+            hess = nd.Hessian(self.fun, step=step, method='central')(candidate)
+            hess[np.isnan(hess)] = 0
+            return hess
+
+        self.jac = jac
+        #self.jac = functools.partial(numerical_gradient, f=self.fun, method='central')
+        self.hess = hess
 
         self.candidates = list()
         self.num_generations = 0
@@ -31,13 +49,14 @@ class ScipyOptimizer(Optimizer):
 
     def set_stop_criterion(self):
         args = dict()
+        algorithm_name = self.algorithm_settings.algorithm_name
         if self.optimization_settings.stop_criterion[0] == 'generation_termination':
-            if self.algorithm_settings.algorithm_name == 'Nelder-Mead':
+            if algorithm_name == 'Nelder-Mead' or algorithm_name == 'BFGS':
                 options = {'maxiter': self.optimization_settings.stop_criterion[1] + 1}
-            elif self.algorithm_settings.algorithm_name == 'L-BFGS-B':
-                options = {'maxiter': self.optimization_settings.stop_criterion[1]-1}
+            elif algorithm_name == 'L-BFGS-B':
+                options = {'maxiter': self.optimization_settings.stop_criterion[1] - 1}
             else:
-                raise ValueError('maxiter not implemented for this method!')
+                options = {'maxiter': self.optimization_settings.stop_criterion[1]}
             args['options'] = options
         elif self.optimization_settings.stop_criterion[0] == 'evaluation_termination':
             options = {'maxfun': self.optimization_settings.stop_criterion[1]}  # TODO depends on method
@@ -69,8 +88,8 @@ class ScipyOptimizer(Optimizer):
             self.num_generations = 0
             self.store_candidates(candidate, id)
 
-            minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.funprime,
-                     bounds=self.bounds, callback=callback, **self.args)
+            minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
+                     hess=self.hess, bounds=self.bounds, callback=callback, **self.args)
 
             self.save_candidates()
 
@@ -80,7 +99,7 @@ class ScipyOptimizer(Optimizer):
     def store_candidates(self, candidate, id):
         fitness = self.fun(candidate)
         self.candidates.append([self.num_generations, id, fitness,
-                                str(candidate).replace(',', '').replace('[', '').replace(']', '')])
+                                str(list(candidate)).replace(',', '').replace('[', '').replace(']', '')])
         self.num_generations += 1
 
     def save_candidates(self):

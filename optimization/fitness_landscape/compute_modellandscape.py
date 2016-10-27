@@ -9,13 +9,13 @@ from optimization.simulate import extract_simulation_params
 __author__ = 'caro'
 
 # parameter
-save_dir = '../../../results/modellandscape/hhCell/gk_gl'
-p1_range = np.arange(0, 1.0, 0.01)  # 0.12
-p2_range = np.arange(0, 1.0, 0.01)  # 0.036
+save_dir = '../../../results/modellandscape/hhCell/zoom_gna_gk/'
+p1_range = np.arange(0, 0.6, 0.0001)  # 0.12
+p2_range = np.arange(0, 0.4, 0.0001)  # 0.036
 variables = [
-            #[0, 1.5, [['soma', '0.5', 'na_hh', 'gnabar']]],
-            [0, 1.5, [['soma', '0.5', 'k_hh', 'gkbar']]],
-            [0, 1.5, [['soma', '0.5', 'pas', 'g']]]
+            [0, 1.0, [['soma', '0.5', 'na_hh', 'gnabar']]],
+            [0, 1.0, [['soma', '0.5', 'k_hh', 'gkbar']]],
+            #[0, 0.6, [['soma', '0.5', 'pas', 'g']]]
             ]
 model_dir = '../../../model/cells/hhCell.json'
 mechanism_dir = '../../../model/channels/hodgkinhuxley'
