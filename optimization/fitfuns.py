@@ -1,11 +1,12 @@
 import numpy as np
 from statistics.analyze_APs import *
+import scipy
 
 __author__ = 'caro'
 
 
 def get_v(v, t, i_inj, args):
-    return [v]
+    return v
 
 
 def phase_hist(v, t, i_inj, args):
@@ -22,39 +23,39 @@ def phase_hist(v, t, i_inj, args):
 
     H, v_range, dvdt_range = np.histogram2d(v, dvdt, bins=[bins_v, bins_dvdt],
                                             range=[[v_min, v_max], [dvdt_min, dvdt_max]])
-    return [H]
+    return H
 
 
 def get_APamp(v, t, i_inj, args):
     threshold = args.get('threshold', -45)
     dt = t[1] - t[0]
-    vrest = get_vrest(v, i_inj)
+    vrest = get_v_rest(v, i_inj)
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
-        return [None]
+        return None
     AP_max = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
     if AP_max is None:
-        return [None]
+        return None
     AP_amp = get_AP_amp(v, AP_max, vrest)
     if AP_amp is None:
-        return [None]
-    return [AP_amp]
+        return None
+    return AP_amp
 
 
 def get_APwidth(v, t, i_inj, args):
     threshold = args.get('threshold', -45)
     dt = t[1] - t[0]
-    vrest = get_vrest(v, i_inj)
+    vrest = get_v_rest(v, i_inj)
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
-        return [None]
+        return None
     AP_max = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
     if AP_max is None:
-        return [None]
+        return None
     AP_width = get_AP_width(v, t, AP_onset, AP_max, AP_end, vrest)
     if AP_width is None:
-        return [None]
-    return [AP_width]
+        return None
+    return AP_width
 
 
 def get_APtime(v, t, i_inj, args):
@@ -62,20 +63,21 @@ def get_APtime(v, t, i_inj, args):
     dt = t[1] - t[0]
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
-        return [None]
+        return None
     AP_max = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
     if AP_max is None:
-        return [None]
-    return [AP_max * dt]
+        return None
+    return AP_max * dt
 
 
-def has_1AP(v, t, i_inj, args):
+def penalize_not1AP(v, t, i_inj, args):
     threshold = args.get('threshold', -45)
+    penalty = args.get('penalty', 100)
     dt = t[1] - t[0]
     AP_onsets = get_AP_onsets(v, threshold)
     if len(AP_onsets) == 1:
-        return True
-    return False
+        return 0
+    return penalty
 
 
 def shifted_AP(v, t, i_inj, args):
@@ -105,9 +107,9 @@ def shifted_AP(v, t, i_inj, args):
     if APtime_data - window_before < 0 or APtime_data + window_after >= len(v):
         raise ValueError('AP data is not inside window')
 
-    AP_time = get_APtime(v, t, i_inj, args)[0]
+    AP_time = get_APtime(v, t, i_inj, args)
     if AP_time is None:
-        return [None]
+        return None
 
     inside_shift = check_inside_shift(AP_time / dt, APtime_data, shift)
     inside_window = check_inside_window(AP_time / dt, len(v), window_before, window_after)
@@ -115,9 +117,9 @@ def shifted_AP(v, t, i_inj, args):
     if inside_shift and inside_window:  # use APtime as reference
         window_start = int(np.round(AP_time / dt - window_before, 0))
         window_end = int(np.round(AP_time / dt + window_after, 0))
-        return [v[window_start: window_end]]
+        return v[window_start: window_end]
     else:
-        return [None]
+        return None
 
 
 def shifted_max(v, t, i_inj, args):
@@ -158,9 +160,9 @@ def shifted_max(v, t, i_inj, args):
     if inside_shift and inside_window:  # use APtime as reference
         window_start = int(np.round(AP_time / dt - window_before, 0))
         window_end = int(np.round(AP_time / dt + window_after, 0))
-        return [v[window_start: window_end]]
+        return v[window_start: window_end]
     else:
-        return [None]
+        return None
 
 
 def shift_AP_max_APdata(v, t, i_inj, args):
@@ -218,7 +220,7 @@ def shift_AP_max_APdata(v, t, i_inj, args):
     window_start = int(np.round(APtime_ref - window_before, 0))  # else use APtime from data as reference
     window_end = int(np.round(APtime_ref + window_after, 0))
 
-    return [v[window_start: window_end]]
+    return v[window_start: window_end]
 
 
 def check_inside_shift(AP_time, APtime_data, shift):
@@ -237,33 +239,22 @@ def check_inside_window(AP_time, max_len, window_before, window_after):
     return inside_window
 
 
-def get_APamp_fAHPmin_DAPamp(v, t, i_inj, args):
-    threshold = args.get('threshold', -45)
-    dt = t[1] - t[0]
-    vrest = get_vrest(v, i_inj)
-    AP_onset, AP_end = get_AP_start_end(v, threshold)
-    if AP_onset is None or AP_end is None:
-        return None, None, None
-    AP_max = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
-    if AP_max is None:
-        return None, None, None
-    AP_amp = get_AP_amp(v, AP_max, vrest)
-    fAHP_min = get_fAHP_min(v, AP_max, AP_end, order=5, interval=3/dt)
-    fAHP_amp = v[fAHP_min]-vrest
-    if fAHP_min is None:
-        return None, None, None
-    DAP_max = get_DAP_max(v, fAHP_min, AP_end, order=5, interval=5/dt)
-    if DAP_max is None:
-        return None, None, None
-    DAP_amp = get_DAP_amp(v, DAP_max, vrest)
+def get_vrest(v, t, i_inj, args):
+    return get_v_rest(v, i_inj)
 
-    return AP_amp, fAHP_amp, DAP_amp
+
+def interpolate_fitness(v, t, i_inj, args):
+    fitness_mat = args['fitness']
+    p1_range = args['p1_range']
+    p2_range = args['p2_range']
+    candidate = args['candidate']
+    return scipy.interpolate.interp2d(p1_range, p2_range, fitness_mat.T)(candidate[0], candidate[1])
 
 
 def get_vrest_APamp_fAHPmin_DAPamp(v, t, i_inj, args):
     threshold = args.get('threshold', -45)
     dt = t[1] - t[0]
-    vrest = get_vrest(v, i_inj)
+    vrest = get_v_rest(v, i_inj)
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
         return None
@@ -282,30 +273,6 @@ def get_vrest_APamp_fAHPmin_DAPamp(v, t, i_inj, args):
     DAP_amp = get_DAP_amp(v, DAP_max, vrest)
 
     return vrest, time_AP_max, AP_amp, fAHP_amp, DAP_amp
-
-def get_vrest_APampwidthtime(v, t, i_inj, args):
-    threshold = args.get('threshold', -45)
-    dt = t[1] - t[0]
-    vrest = get_vrest(v, i_inj)
-    AP_onset, AP_end = get_AP_start_end(v, threshold)
-    if AP_onset is None or AP_end is None:
-        return None, None, None, None
-    AP_max = get_AP_max(v, AP_onset, AP_end, interval=3/dt)
-    if AP_max is None:
-        return None, None, None, None
-    time_AP_max = AP_max * dt
-    AP_amp = get_AP_amp(v, AP_max, vrest)
-    AP_width = get_AP_width(v, t, AP_onset, AP_max, AP_end, vrest)
-
-    return vrest, AP_amp, AP_width, time_AP_max
-
-
-def get_parts_restAPDAPrest(v, t, i_inj):
-    dt = t[1] - t[0]
-    i_inj_start = np.nonzero(i_inj)[0][0]
-    AP_end = int(np.round(13/dt, 0))
-    DAP_end = int(np.round(35/dt, 0))
-    return v[:i_inj_start], v[i_inj_start+1:AP_end], v[AP_end:DAP_end], v[DAP_end:]
 
 
 def impedance(v, i_inj, dt, f_range):

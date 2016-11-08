@@ -15,3 +15,6 @@ def rms(a, b):
     :rtype: float
     """
     return np.sqrt(np.sum((np.array(a) - np.array(b))**2) / np.size(a))
+
+def maxabs(a, b):
+    return np.max(np.abs(np.array(a) - np.array(b)))

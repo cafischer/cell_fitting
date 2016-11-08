@@ -3,18 +3,18 @@ import matplotlib.pyplot as pl
 import json
 import pandas as pd
 
-save_dir = '../../../results/modellandscape/hhCell/gna_gk'
+save_dir = '../../results/fitnesslandscapes/modellandscape/gna_gk'
 
 with open(save_dir+'/modellandscape.npy', 'r') as f:
     modellandscape = np.load(f)
 p1_range = np.loadtxt(save_dir+'/p1_range.txt')
-p2_range = np.loadtxt(save_dir+'/p1_range.txt')
+p2_range = np.loadtxt(save_dir+'/p2_range.txt')
 with open(save_dir+'/dirs.json', 'r') as f:
     dirs = json.load(f)
 
 data = pd.read_csv(dirs['data_dir'])
 
-optimum = [0.12, 0.04]  # [0.12, 0.036]
+optimum = [0.05, 0.02]  #[0.12, 0.04]  # [0.12, 0.036]
 idx_optimum = [np.where(np.isclose(p1_range, optimum[0]))[0][0], np.where(np.isclose(p2_range, optimum[1]))[0][0]]
 
 n = 5

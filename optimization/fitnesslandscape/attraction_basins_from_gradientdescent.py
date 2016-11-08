@@ -2,10 +2,10 @@ from __future__ import division
 import numpy as np
 import pandas as pd
 import itertools
-from optimization.fitness_landscape import *
+from optimization.fitnesslandscape import *
 
-save_dir = '../../results/fitness_landscape/find_local_minima/gna_gk/APamp/trust-ncg/'
-optimum = [0.12, 0.036]
+save_dir = '../../results/fitnesslandscapes/find_local_minima/combined_fitfuns/gna_gk/v_trace_maxabs/trust-ncg/'
+optimum = [0.12, 0.036]  #, 0.0003]
 
 candidates = pd.read_csv(save_dir + 'candidates.csv')
 for index, row in candidates.iterrows():

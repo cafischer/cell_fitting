@@ -88,9 +88,10 @@ class ScipyOptimizer(Optimizer):
             self.num_generations = 0
             self.store_candidates(candidate, id)
 
-            minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
+            result = minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
                      hess=self.hess, bounds=self.bounds, callback=callback, **self.args)
-
+            self.candidates[-1][4] = result.success
+            self.candidates[-1][5] = result.message
             self.save_candidates()
 
         # scipy.optimize.minimize(fun, x0, args=(), method=None, jac=None, hess=None, hessp=None, bounds=None,
@@ -98,12 +99,15 @@ class ScipyOptimizer(Optimizer):
 
     def store_candidates(self, candidate, id):
         fitness = self.fun(candidate)
+        #self.candidates.append([self.num_generations, id, fitness,
+        #                        str(list(candidate)).replace(',', '').replace('[', '').replace(']', '')])
         self.candidates.append([self.num_generations, id, fitness,
-                                str(list(candidate)).replace(',', '').replace('[', '').replace(']', '')])
+                                str(list(candidate)).replace(',', '').replace('[', '').replace(']', ''), '', ''])
         self.num_generations += 1
 
     def save_candidates(self):
-        individuals_data = pd.DataFrame(self.candidates, columns=['generation', 'id', 'fitness', 'candidate'])
+        individuals_data = pd.DataFrame(self.candidates, columns=['generation', 'id', 'fitness', 'candidate', 'success',
+                                                                  'termination'])
         individuals_data = individuals_data.groupby('generation').apply(lambda x: x.sort_values(['fitness']))
         with open(self.algorithm_settings.save_dir + 'candidates.csv', 'w') as f:
             individuals_data.to_csv(f, header=True, index=False)

@@ -1,3 +1,4 @@
+from __future__ import division
 import numpy as np
 
 
@@ -56,6 +57,7 @@ def get_true_local_minima(x, order):
             i += 1
     return minima
 
+
 def get_local_minima(x, order):
     """
     Minimum = all numbers before and after the minimum are sequentially greater equal.
@@ -69,18 +71,57 @@ def get_local_minima(x, order):
     """
     minima = list()
     slope = np.diff(x)
-    i = 0
-    while i < (len(x)-2*order):
+    for i in range(len(x)-2*order):
         if np.all(slope[i:i+order] <= 0) and np.all(slope[i+order:i+2*order] >= 0):
             minima.append(i+order)
-            i += 2*order
-        else:
-            i += 1
     return minima
 
 
-# tests
+def get_local_minima_2d(mat, order):
+    minima_x = list()
+    minima_y = list()
+    minima_ullr = list()
+    minima_urll = list()
+    minima = list()
 
+    # check x, y direction
+    for offset in range(mat.shape[0]):
+        minima_x.extend([[offset, y] for y in get_local_minima(mat[offset, :], order=order)])
+    for offset in range(mat.shape[1]):
+        minima_y.extend([[x, offset] for x in get_local_minima(mat[:, offset], order=order)])
+
+    # check diagonals
+    x_index_mat, y_index_mat = np.indices((mat.shape[0], mat.shape[1]))
+    x_index_mat_rot = np.rot90(x_index_mat, 3)
+    y_index_mat_rot = np.rot90(y_index_mat, 3)
+
+    len_mat = max(mat.shape[0], mat.shape[1])
+
+    for offset in np.arange(-1*(len_mat-2), len_mat-1):
+        diagonal_ullr = np.diagonal(mat, offset=offset)
+        add_minima_from_diagonal(diagonal_ullr, x_index_mat, y_index_mat, minima_ullr, offset, order)
+
+    for offset in np.arange(-1*(len_mat-2), len_mat-1):
+        diagonal_urll = np.diagonal(np.rot90(mat, 3), offset=int(offset))
+        add_minima_from_diagonal(diagonal_urll, x_index_mat_rot, y_index_mat_rot, minima_urll, offset, order)
+
+    # find common minima
+    for minimum in minima_x:
+        if minimum in minima_y:
+            if minimum in minima_ullr:
+                if minimum in minima_urll:
+                    minima.append(minimum)
+    return minima
+
+
+def add_minima_from_diagonal(diagonal, x_index_mat, y_index_mat, minima, offset, order):
+    x_indices = np.diag(x_index_mat, k=offset)
+    y_indices = np.diag(y_index_mat, k=offset)
+    for min in get_local_minima(diagonal, order=order):
+        minima.append([x_indices[min], y_indices[min]])
+
+
+# tests
 
 def test_assign_candidates_to_local_minima():
     candidates = np.linspace(-np.pi, 2*np.pi, 10)
@@ -106,6 +147,17 @@ def test_local_minima():
     assert get_local_minima(np.array([2, 1, 0, 0, 2, 3, 0, 1]), 2) == [2]
 
 
+def test_minima2d():
+    mat = np.array([[1, 2, 1, 4], [3, 0, 2, 4], [0, 1, 2, 4], [5, 4, 4, 5]])
+    minima = get_local_minima_2d(mat, 1)
+    assert minima == [[1, 1]]
+    mat = np.array([[1, 1, 4, 2, 1], [2, 0, 5, 0, 1], [1, 3, 2, 1, 2]])
+    minima = get_local_minima_2d(mat, 1)
+    assert minima == [[1, 1], [1, 3]]
+
+
 if __name__ == '__main__':
     #test_assign_candidates_to_local_minima()
-    test_local_minima()
+    #test_local_minima()
+    test_minima2d()
+

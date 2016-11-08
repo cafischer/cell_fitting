@@ -158,7 +158,7 @@ def get_DAP_width(v, t, fAHP_min, DAP_max, AP_end, vrest):
     halfwidth = np.nonzero(np.diff(np.sign(v[DAP_max:AP_end]-vrest-halfmax)) == -2)[0][0] + DAP_max
     return t[halfwidth] - t[fAHP_min]
 
-def get_vrest(v, i_inj):
+def get_v_rest(v, i_inj):
     """
     Computes the resting potential as the mean of the voltage starting at 0 until current is injected.
 
@@ -191,7 +191,7 @@ def get_inputresistance(v, i_inj):
     idx_step_half = int(idx_step_start + np.round(len(step)/2.0))
     idx_step_end = step[-1]
 
-    vrest = get_vrest(v, 0, idx_step_start-1)
+    vrest = get_v_rest(v, 0, idx_step_start - 1)
 
     vstep = np.mean(v[idx_step_half:idx_step_end])  # start at the middle of the step to get the steady-state voltage
 
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     t_exp = np.array(data.t)
     dt_exp = t_exp[1]-t_exp[0]
 
-    vrest = get_vrest(v_exp, i_exp)
+    vrest = get_v_rest(v_exp, i_exp)
     AP_onsets = get_AP_onsets(v_exp)
     AP_onset = AP_onsets[0]
     AP_end = -1

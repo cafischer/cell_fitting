@@ -5,22 +5,26 @@ from time import time
 import numpy as np
 from optimization.fitfuns import get_APtime
 
-save_dir = '../../results/fitness_landscape/find_local_minima/gna_gk/rms/'
+save_dir = '../../results/fitnesslandscapes/find_local_minima/combined_fitfuns/gna_gk/interpolate_v_trace+penalize_not1AP+APamp/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
+
+save_dir_ranges = '../../results/fitnesslandscapes/modellandscape/gna_gk/'
+save_dir_fitness = '../../results/fitnesslandscapes/modellandscape/gna_gk/fitfuns/APamp+v_trace+penalize_not1AP/error.npy'
+optimum = [0.12, 0.036]
 
 maximize = False
 n_candidates = 100
 stop_criterion = ['generation_termination', 200]
-seed = time()
+seed = 1.11  #time()
 generator = 'get_random_numbers_in_bounds'
 bounds = {'lower_bounds': [0, 0], 'upper_bounds': [1, 1]}
 variable_keys = [[['soma', '0.5', 'na_hh', 'gnabar']],
-                 [['soma', '0.5', 'k_hh', 'gkbar']]]
+                 [['soma', '0.5', 'k_hh', 'gkbar']]
+                 #[['soma', '0.5', 'pas', 'g']]
+                 ]
 errfun = 'rms'
-fitfun = 'get_v'
-#fitfun = 'shift_AP_max_APdata'
-#fitfun = 'get_APamp'
+fitfun = ['interpolate_fitness']  #['get_v', 'penalize_not1AP', 'get_APamp']
 fitnessweights = [1]
 model_dir = '../../model/cells/hhCell.json'
 mechanism_dir = '../../model/channels/hodgkinhuxley'
@@ -29,17 +33,23 @@ data_dir = '../../data/toymodels/hhCell/ramp.csv'
 window_before = 5
 window_after = 20
 threshold = -30
+penalty = 50
+with open(save_dir_fitness, 'r') as f:
+    fitness = np.load(f)
+p1_range = np.loadtxt(save_dir_ranges + '/p1_range.txt')
+p2_range = np.loadtxt(save_dir_ranges + '/p2_range.txt')
 data = pd.read_csv(data_dir)
-args_data = {'shift': 0, 'window_before': window_before, 'window_after': window_after, 'threshold': threshold}
-AP_time_data = get_APtime(np.array(data.v), np.array(data.t), np.array(data.i), args_data)
-
-args = {'shift': 4, 'window_before': window_before, 'window_after': window_after, 'APtime': AP_time_data[0],
-        'threshold': threshold}
+args = {'shift': 4, 'window_before': window_before, 'window_after': window_after,
+        'threshold': threshold,
+        'penalty': penalty,
+        'fitness': fitness, 'p1_range': p1_range, 'p2_range': p2_range, 'candidate': optimum}
+AP_time_data = get_APtime(np.array(data.v), np.array(data.t), np.array(data.i), args)
+args['APtime'] = AP_time_data
 
 fitter = HodgkinHuxleyFitter(variable_keys, errfun, fitfun, fitnessweights,
                  model_dir, mechanism_dir, data_dir, simulation_params={'celsius': 6.3}, args=args)
 
-algorithm_name = 'CG'
+algorithm_name = 'L-BFGS-B'
 algorithm_params = {'step': 1e-8}
 normalize = False
 
