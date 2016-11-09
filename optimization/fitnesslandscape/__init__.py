@@ -107,10 +107,9 @@ def get_local_minima_2d(mat, order):
 
     # find common minima
     for minimum in minima_x:
-        if minimum in minima_y:
-            if minimum in minima_ullr:
-                if minimum in minima_urll:
-                    minima.append(minimum)
+        if (removed_from_list(minima_y, minimum) and removed_from_list(minima_ullr, minimum)
+                and removed_from_list(minima_urll, minimum)):
+            minima.append(minimum)
     return minima
 
 
@@ -119,6 +118,14 @@ def add_minima_from_diagonal(diagonal, x_index_mat, y_index_mat, minima, offset,
     y_indices = np.diag(y_index_mat, k=offset)
     for min in get_local_minima(diagonal, order=order):
         minima.append([x_indices[min], y_indices[min]])
+
+
+def removed_from_list(some_list, elem):
+    try:
+        some_list.remove(elem)
+        return True
+    except ValueError:
+        return False
 
 
 # tests
