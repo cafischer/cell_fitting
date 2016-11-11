@@ -35,29 +35,6 @@ def random_in_circle(middle, radius):
     return np.random.uniform(np.array(middle)-radius, np.array(middle)+radius)
 
 
-def get_true_local_minima(x, order):
-    """
-    Minimum = all numbers before and after the minimum are sequentially greater equal.
-    If equals occur at the trough only one minimum is assigned.
-    :param x: Array in which to find the minima.
-    :type x: ndarray
-    :param order: How many points to consider before and after the minimum.
-    :type order: int
-    :return: Indices of the minima.
-    :rtype: list
-    """
-    minima = list()
-    slope = np.diff(x)
-    i = 0
-    while i < (len(x)-2*order):
-        if np.all(slope[i:i+order] < 0) and np.all(slope[i+order:i+2*order] > 0):
-            minima.append(i+order)
-            i += 2*order
-        else:
-            i += 1
-    return minima
-
-
 def get_local_minima(x, order):
     """
     Minimum = all numbers before and after the minimum are sequentially greater equal.
@@ -77,42 +54,6 @@ def get_local_minima(x, order):
     return minima
 
 
-def get_local_minima_2d(mat, order):
-    minima_x = list()
-    minima_y = list()
-    minima_ullr = list()
-    minima_urll = list()
-    minima = list()
-
-    # check x, y direction
-    for offset in range(mat.shape[0]):
-        minima_x.extend([[offset, y] for y in get_local_minima(mat[offset, :], order=order)])
-    for offset in range(mat.shape[1]):
-        minima_y.extend([[x, offset] for x in get_local_minima(mat[:, offset], order=order)])
-
-    # check diagonals
-    x_index_mat, y_index_mat = np.indices((mat.shape[0], mat.shape[1]))
-    x_index_mat_rot = np.rot90(x_index_mat, 3)
-    y_index_mat_rot = np.rot90(y_index_mat, 3)
-
-    len_mat = max(mat.shape[0], mat.shape[1])
-
-    for offset in np.arange(-1*(len_mat-2), len_mat-1):
-        diagonal_ullr = np.diagonal(mat, offset=offset)
-        add_minima_from_diagonal(diagonal_ullr, x_index_mat, y_index_mat, minima_ullr, offset, order)
-
-    for offset in np.arange(-1*(len_mat-2), len_mat-1):
-        diagonal_urll = np.diagonal(np.rot90(mat, 3), offset=int(offset))
-        add_minima_from_diagonal(diagonal_urll, x_index_mat_rot, y_index_mat_rot, minima_urll, offset, order)
-
-    # find common minima
-    for minimum in minima_x:
-        if (removed_from_list(minima_y, minimum) and removed_from_list(minima_ullr, minimum)
-                and removed_from_list(minima_urll, minimum)):
-            minima.append(minimum)
-    return minima
-
-
 def add_minima_from_diagonal(diagonal, x_index_mat, y_index_mat, minima, offset, order):
     x_indices = np.diag(x_index_mat, k=offset)
     y_indices = np.diag(y_index_mat, k=offset)
@@ -127,6 +68,15 @@ def removed_from_list(some_list, elem):
     except ValueError:
         return False
 
+def get_local_minima_2d(mat):
+    minima = list()
+    for i in range(1, mat.shape[0]):
+        for j in range(1, mat.shape[1]):
+            middle = mat[i, j]
+            neighbors = mat[i-1:i+2, j-1:j+2]
+            if np.all(neighbors - middle >= 0):
+                minima.append([i, j])
+    return minima
 
 # tests
 
