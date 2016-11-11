@@ -80,10 +80,10 @@ def plot_1AP(save_dir, has_1AP_mat, p1_range, p2_range):
 
 if __name__ == '__main__':
     save_dir = '../../results/fitnesslandscapes/modellandscape/gna_gk/'
-    #method = 'L-BFGS-B'
-    #save_dir_minima = '../../results/fitnesslandscapes/find_local_minima/combined_fitfuns/gna_gk/interpolate_v_trace+penalize_not1AP+APamp/' + method + '/'
-    new_folder = 'fitfuns/v_trace'
-    fitfun = 'v_trace'
+    method = 'TNC'
+    #save_dir_minima = '../../results/fitnesslandscapes/find_local_minima/combined_fitfuns/gna_gk/interpolate_v_trace/' + method + '/'
+    new_folder = 'fitfuns/APshift'
+    fitfun = 'APshift'
     order = 1
     optimum = [0.12, 0.036]
 
@@ -94,15 +94,17 @@ if __name__ == '__main__':
     p1_range = np.loadtxt(save_dir + '/p1_range.txt')
     p2_range = np.loadtxt(save_dir + '/p2_range.txt')
 
-    save_dir_tmp = save_dir + '1AP.png'
-    plot_1AP(save_dir_tmp, has_1AP_mat, p1_range, p2_range)
+    #save_dir_tmp = save_dir + '1AP.png'
+    #plot_1AP(save_dir_tmp, has_1AP_mat, p1_range, p2_range)
 
-    minima_xy = get_local_minima_2d(error, order)
+    minima_xy = get_local_minima_2d(error)
+    with open(save_dir + '/' + new_folder + '/minima2d.npy', 'w') as f:
+        np.save(f, np.array(minima_xy))
     save_dir_tmp = save_dir + '/' + new_folder + '/fitness_landscape_' + str(order) + '.png'
     plot_fitnesslandscape(save_dir_tmp, error, has_1AP_mat, p1_range, p2_range, optimum, minima_xy)
 
-    save_dir_tmp = save_dir + '/' + new_folder + '/fitness_landscape3d_' + str(order) + '.png'
-    plot_fitnesslandscape3d(save_dir_tmp, error, has_1AP_mat, p1_range, p2_range, optimum, minima_xy)
+    #save_dir_tmp = save_dir + '/' + new_folder + '/fitness_landscape3d_' + str(order) + '.png'
+    #plot_fitnesslandscape3d(save_dir_tmp, error, has_1AP_mat, p1_range, p2_range, optimum, minima_xy)
 
     with open(save_dir_minima + '/minima_descent.npy', 'r') as f:
         minima_descent = np.load(f)
