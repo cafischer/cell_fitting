@@ -9,17 +9,17 @@ __author__ = 'caro'
 
 class HandTuner:
 
-    def __init__(self, save_dir, problem_dict, precision_slds):
+    def __init__(self, save_dir, fitter_params, precision_slds, lower_bounds, upper_bounds):
 
         self.save_dir = save_dir
 
         # model
-        self.model = Model(problem_dict)
+        self.model = Model(fitter_params)
 
         # view
-        name_variables = [p[0][-2]+' '+p[0][-1] for p in self.model.problem.path_variables]  # TODO
-        lower_bounds = self.model.problem.lower_bound
-        upper_bounds = self.model.problem.upper_bound
+        name_variables = [p[0][-2] + ' ' + p[0][-1] for p in self.model.fitter.variable_keys]  # TODO
+        lower_bounds = lower_bounds
+        upper_bounds = upper_bounds
         slider_fun = self.update_img
         button_names = ['Reset Traces', 'Save Cell']
         button_funs = [self.reset_all_imgs, self.save_cell]
@@ -35,15 +35,15 @@ class HandTuner:
 
         # save cell dictionary
         with open(self.save_dir+'/cell.json', 'w') as f:
-            json.dump(self.model.problem.cell.get_dict(), f, indent=4)
+            json.dump(self.model.fitter.cell.get_dict(), f, indent=4)
 
     def reset_img(self, img_id):
         self.view.clear_ax(img_id)
         if img_id == 0:
-            self.view.plot_on_ax(img_id, self.model.problem.data.t.values, self.model.problem.data.v.values, color='k',
+            self.view.plot_on_ax(img_id, self.model.fitter.data.t.values, self.model.fitter.data.v.values, color='k',
                                  xlabel='Time (ms)', ylabel='V (mV)')
         elif img_id == 1:
-            self.view.plot_on_ax(img_id, self.model.problem.data.t.values, self.model.lhsHH, color='k',
+            self.view.plot_on_ax(img_id, self.model.fitter.data.t.values, self.model.lhsHH, color='k',
                                  xlabel='Time (ms)', ylabel='$c_m \cdot dV/dt - i_{inj}$')
         self.view.plot_img(img_id)
 
@@ -71,7 +71,7 @@ class HandTuner:
         rhsHH = self.model.get_rhsHH(currents)
 
         # update plots
-        self.view.plot_on_ax(0, t, v)  # no reset to see how successive changes affect the trace
+        self.view.plot_on_ax(0, t, v, xlabel='Time (ms)', ylabel='V (mV)')  # no reset to see how successive changes affect the trace
         self.view.plot_img(0)
 
         self.reset_img(1)  # needs to be reset for clarity (different currents have different colors)
