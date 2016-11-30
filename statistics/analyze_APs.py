@@ -137,7 +137,7 @@ def get_DAP_deflection(v, fAHP_min, DAP_max):
     :return: Deflection of the DAP.
     :rtype: float
     """
-    return v[DAP_max] - v[fAHP_min]
+    return np.abs(v[DAP_max] - v[fAHP_min])
 
 def get_DAP_width(v, t, fAHP_min, DAP_max, AP_end, vrest):
     """
@@ -191,7 +191,7 @@ def get_inputresistance(v, i_inj):
     idx_step_half = int(idx_step_start + np.round(len(step)/2.0))
     idx_step_end = step[-1]
 
-    vrest = get_v_rest(v, 0, idx_step_start - 1)
+    vrest = get_v_rest(v, i_inj)
 
     vstep = np.mean(v[idx_step_half:idx_step_end])  # start at the middle of the step to get the steady-state voltage
 
@@ -217,7 +217,7 @@ if __name__ == "__main__":
     import matplotlib.pyplot as pl
 
     # # test on experimental data
-    data_dir = '../data/2015_08_11d/ramp/ramp.csv'
+    data_dir = '../data/2015_08_26b/raw/rampIV/3.0(nA).csv'
     data = pd.read_csv(data_dir)
     v_exp = np.array(data.v)
     i_exp = np.array(data.i)
@@ -225,7 +225,7 @@ if __name__ == "__main__":
     dt_exp = t_exp[1]-t_exp[0]
 
     vrest = get_v_rest(v_exp, i_exp)
-    AP_onsets = get_AP_onsets(v_exp)
+    AP_onsets = get_AP_onsets(v_exp, threshold=-30)
     AP_onset = AP_onsets[0]
     AP_end = -1
 
@@ -238,11 +238,11 @@ if __name__ == "__main__":
     DAP_amp = get_DAP_amp(v_exp, DAP_max, vrest)
     DAP_deflection = get_DAP_deflection(v_exp, DAP_max, fAHP_min)
     DAP_width = get_DAP_width(v_exp, t_exp, fAHP_min, DAP_max, AP_end, vrest)
-    print 'AP amplitude: ' + str(AP_amp)
-    print 'AP width: ' + str(AP_width)
-    print 'DAP amplitude: ' + str(DAP_amp)
-    print 'DAP deflection: ' + str(DAP_deflection)
-    print 'DAP width: ' + str(DAP_width)
+    print 'AP amplitude: ' + str(AP_amp) + ' (mV)'
+    print 'AP width: ' + str(AP_width) + ' (ms)'
+    print 'DAP amplitude: ' + str(DAP_amp) + ' (mV)'
+    print 'DAP deflection: ' + str(DAP_deflection) + ' (mV)'
+    print 'DAP width: ' + str(DAP_width) + ' (ms)'
 
     pl.figure()
     pl.plot(t_exp, v_exp, 'k', label='V')
@@ -253,7 +253,7 @@ if __name__ == "__main__":
     pl.legend()
     pl.show()
 
-    data_dir = '../data/2015_08_11d/step/stepcurrent0.1.csv'
+    data_dir = '../data/2015_08_26b/raw/rampIV/3.0(nA).csv'
     data = pd.read_csv(data_dir)
     v_step = np.array(data.v)
     i_step = np.array(data.i)
@@ -261,4 +261,4 @@ if __name__ == "__main__":
     dt_step = t_step[1]-t_step[0]
 
     rin = get_inputresistance(v_step, i_step)
-    print 'Input resistance: ' + str(rin)
+    print 'Input resistance: ' + str(rin) + ' (MOhm)'
