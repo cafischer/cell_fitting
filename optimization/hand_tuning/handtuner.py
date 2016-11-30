@@ -26,7 +26,7 @@ if __name__ == '__main__':
           'fitnessweights': [1],
           'model_dir': '../../model/cells/dapmodel_simpel.json',
           'mechanism_dir': '../../model/channels/stellate',
-          'data_dir': '../../data/2015_08_11d/rampIV/2.5(nA).csv',
+          'data_dir': '../../data/2015_08_26b/raw/rampIV/3.0(nA).csv',
           'simulation_params': {}
          }
 
@@ -35,5 +35,3 @@ if __name__ == '__main__':
     save_dir = '../../results/hand_tuning/test'
     ex = HandTuner(save_dir, fitter_params, precision_slds, lower_bounds, upper_bounds)
     sys.exit(app.exec_())
-
-    # TODO: add xlim, ylim

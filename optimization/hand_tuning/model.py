@@ -1,7 +1,7 @@
 import numpy as np
 
 from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
-from optimization.helpers import get_channel_list, get_ionlist, get_cellarea, convert_unit_prefix
+from optimization.helpers import *
 from optimization.simulate import currents_given_v
 from nrn_wrapper import iclamp
 

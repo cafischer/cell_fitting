@@ -2,6 +2,8 @@ from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import QWidget, QSlider, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QInputDialog
 import numpy as np
 import matplotlib.pyplot as pl
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from cycler import cycler
 
 __author__ = 'caro'
@@ -35,10 +37,12 @@ class ViewHandTuner(QWidget):
         self.imgs = list()
         for i in range(2):
             self.imgs.append(dict())
-            self.imgs[i]['fig'] = pl.figure(figsize=(7, 4.2), tight_layout=True)
+            self.imgs[i]['fig'] = pl.figure(tight_layout=True)
             self.imgs[i]['ax'] = self.imgs[i]['fig'].add_subplot(111)
-            self.imgs[i]['qpixmap'] = QLabel()
-            layout_right.addWidget(self.imgs[i]['qpixmap'])
+            self.imgs[i]['canvas'] = FigureCanvas(self.imgs[i]['fig'])
+            self.toolbar = NavigationToolbar(self.imgs[i]['canvas'], self, coordinates=True)
+            layout_right.addWidget(self.imgs[i]['canvas'])
+            layout_right.addWidget(self.toolbar)
 
         # create outer layout
         layout_outer = QHBoxLayout()
@@ -89,14 +93,9 @@ class ViewHandTuner(QWidget):
         colors = cmap(np.linspace(0.1, 0.9, 10))
         ax.set_prop_cycle(cycler('color', colors))
 
-    def plot_on_ax(self, img_id, x, y, color=None, linewidth=1.0, label=None, xlim=None, ylim=None,
-                xlabel=None, ylabel=None, title=''):
+    def plot_on_ax(self, img_id, x, y, color=None, linewidth=1.0, label=None, xlabel=None, ylabel=None, title=''):
         ax = self.imgs[img_id]['ax']
         ax.plot(x, y, color=color, linewidth=linewidth, label=label)
-        if xlim is not None:
-            ax.set_xlim(xlim)
-        if ylim is not None:
-            ax.set_ylim(ylim)
         ax.set_xlabel(xlabel)
         ax.set_ylabel(ylabel)
         ax.set_title(title)
@@ -104,11 +103,7 @@ class ViewHandTuner(QWidget):
             ax.legend()
 
     def plot_img(self, img_id):
-        canvas = self.imgs[img_id]['fig'].canvas
-        canvas.draw()
-        size = canvas.size()
-        im = QtGui.QImage(canvas.buffer_rgba(), size.width(), size.height(), QtGui.QImage.Format_ARGB32)
-        self.imgs[img_id]['qpixmap'].setPixmap(QtGui.QPixmap(im))
+        self.imgs[img_id]['fig'].canvas.draw()
 
     def clear_ax(self, img_id):
         self.imgs[img_id]['ax'].cla()

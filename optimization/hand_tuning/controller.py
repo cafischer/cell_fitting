@@ -41,10 +41,10 @@ class HandTuner:
         self.view.clear_ax(img_id)
         if img_id == 0:
             self.view.plot_on_ax(img_id, self.model.fitter.data.t.values, self.model.fitter.data.v.values, color='k',
-                                 xlabel='Time (ms)', ylabel='V (mV)')
+                                 xlabel='Time (ms)', ylabel='V (mV)', linewidth=1.5)
         elif img_id == 1:
             self.view.plot_on_ax(img_id, self.model.fitter.data.t.values, self.model.lhsHH, color='k',
-                                 xlabel='Time (ms)', ylabel='$c_m \cdot dV/dt - i_{inj}$')
+                                 xlabel='Time (ms)', ylabel='$c_m \cdot dV/dt - i_{inj}$', linewidth=1.5)
         self.view.plot_img(img_id)
 
     def reset_all_imgs(self):
@@ -71,11 +71,13 @@ class HandTuner:
         rhsHH = self.model.get_rhsHH(currents)
 
         # update plots
-        self.view.plot_on_ax(0, t, v, xlabel='Time (ms)', ylabel='V (mV)')  # no reset to see how successive changes affect the trace
+        self.view.plot_on_ax(0, t, v, xlabel='Time (ms)', ylabel='V (mV)', linewidth=1.5)  # no reset to see how successive changes affect the trace
         self.view.plot_img(0)
 
         self.reset_img(1)  # needs to be reset for clarity (different currents have different colors)
-        self.view.plot_on_ax(1, t, rhsHH, color='0.5', linewidth=1.5, label='$-\sum_{ion} i_{ion}$')
+        self.view.plot_on_ax(1, t, rhsHH, color='0.5', label='$-\sum_{ion} i_{ion}$',
+                             xlabel='Time (ms)', ylabel='$c_m \cdot dV/dt - i_{inj}$', linewidth=1.5)
         for i, current in enumerate(currents):
-            self.view.plot_on_ax(1, t, -current, label=self.model.channel_list[i])
+            self.view.plot_on_ax(1, t, -current, label=self.model.channel_list[i],
+                                 xlabel='Time (ms)', ylabel='$c_m \cdot dV/dt - i_{inj}$')
         self.view.plot_img(1)
