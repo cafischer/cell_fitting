@@ -1,5 +1,3 @@
-import numpy as np
-
 from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
 from optimization.helpers import *
 from optimization.simulate import currents_given_v
@@ -18,16 +16,15 @@ class Model:
         self.ion_list = get_ionlist(self.channel_list)
 
     def get_lhsHH(self):
-        dt = self.fitter.simulation_params['dt']
-        v_exp = self.fitter.data.v.values
-        dvdt = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt]), np.diff(v_exp) / dt))  # TODO: check again if this is right
+        dt = self.fitter.simulation_params['dt']  # ms
+        v_exp = self.fitter.data.v.values  # mV
+        dvdt = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt]), np.diff(v_exp) / dt))  # V/m
 
         # convert units
         cell_area = get_cellarea(convert_unit_prefix('u', self.fitter.cell.soma.L),
-                                 convert_unit_prefix('u', self.fitter.cell.soma.diam))  # m
+                                 convert_unit_prefix('u', self.fitter.cell.soma.diam))  # m**2
         Cm = convert_unit_prefix('c', self.fitter.cell.soma.cm) * cell_area  # F
         i_inj = convert_unit_prefix('n', self.fitter.data.i.values)  # A
-        dvdt = convert_unit_prefix('m', dvdt)  # V
 
         return dvdt * Cm - i_inj  # A
 
@@ -37,12 +34,11 @@ class Model:
     def get_current(self):
         # generate current traces
         currents = currents_given_v(self.fitter.data.v.values, self.fitter.data.t.values, self.fitter.cell.soma,
-                                    self.channel_list, self.ion_list, self.fitter.simulation_params['celsius'])
+                                    self.channel_list, self.ion_list, self.fitter.simulation_params['celsius'])  # mA/cm**2
 
         # convert units
         cell_area = get_cellarea(convert_unit_prefix('u', self.fitter.cell.soma.L),
-                                 convert_unit_prefix('u', self.fitter.cell.soma.diam))  # m
-        Cm = convert_unit_prefix('c', self.fitter.cell.soma.cm) * cell_area  # F
+                                 convert_unit_prefix('u', self.fitter.cell.soma.diam))  # m**2
         currents = convert_unit_prefix('da', currents) * cell_area  # A
 
         return currents
