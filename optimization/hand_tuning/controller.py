@@ -27,6 +27,8 @@ class HandTuner:
                                   button_names, button_funs)
         self.reset_img(0)
         self.reset_img(1)
+        for i in range(len(name_variables)):
+            self.model.update_var(i, lower_bounds[i])
 
     def save_cell(self):
         # create folders
