@@ -17,7 +17,7 @@ class HandTuner:
         self.model = Model(fitter_params)
 
         # view
-        name_variables = [p[0][-2] + ' ' + p[0][-1] for p in self.model.fitter.variable_keys]  # TODO
+        name_variables = [p[0][-2] + ' ' + p[0][-1] for p in self.model.fitter.variable_keys]
         lower_bounds = lower_bounds
         upper_bounds = upper_bounds
         slider_fun = self.update_img

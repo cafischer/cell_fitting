@@ -10,10 +10,11 @@ if __name__ == '__main__':
     # create app
     app = QApplication(sys.argv)
 
-    # create problem
+    # fitter parameter
     variables = [
-            [0, 1.0, [['soma', '0.5', 'kdr', 'gbar']]],
-            [0, 1.0, [['soma', '0.5', 'nat', 'gbar']]],
+            [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
+            [0, 1.0, [['soma', '0.5', 'ih', 'gslowbar']]],
+            [0, 1.0, [['soma', '0.5', 'ih', 'gfastbar']]],
             [0, 0.01, [['soma', '0.5', 'pas', 'g']]]
             ]
 
@@ -27,11 +28,11 @@ if __name__ == '__main__':
           'model_dir': '../../model/cells/dapmodel_simpel.json',
           'mechanism_dir': '../../model/channels/stellate',
           'data_dir': '../../data/2015_08_26b/raw/rampIV/3.0(nA).csv',
-          'simulation_params': {}
+          'simulation_params': {'celsius': 35}
          }
 
     # create widget
-    precision_slds = [1e-5, 1e-5, 1e-5]
-    save_dir = '../../results/hand_tuning/test'
+    precision_slds = [1e-5, 1e-5, 1e-5, 1e-5]
+    save_dir = '../../results/hand_tuning/test0'
     ex = HandTuner(save_dir, fitter_params, precision_slds, lower_bounds, upper_bounds)
     sys.exit(app.exec_())
