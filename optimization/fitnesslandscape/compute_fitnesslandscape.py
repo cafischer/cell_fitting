@@ -10,8 +10,8 @@ from optimization.fitnesslandscape import *
 from optimization import errfuns
 
 save_dir = '../../results/fitnesslandscapes/modellandscape/gna_gk/'
-new_folder = 'fitfuns/v_rest'
-fitfun = 'v_rest'
+new_folder = 'fitfuns/stefans_fun'
+fitfun = 'stefans_fun'
 errfun_name = 'rms'
 order = 1
 optimum = [0.12, 0.036]
@@ -21,7 +21,7 @@ window_before = 5
 window_after = 20
 bins_v = 100
 bins_dvdt = 100
-penalty = 50
+penalty = 0
 
 with open(save_dir+'/chunk_size.txt', 'r') as f:
     chunk_size = int(f.read())
@@ -41,7 +41,8 @@ args = {'shift': shift, 'window_before': window_before, 'window_after': window_a
         'threshold': threshold,
         'v_min': np.min(data.v), 'v_max': np.max(data.v), 'dvdt_min': np.min(dvdt), 'dvdt_max': np.max(dvdt),
         'bins_v': bins_v, 'bins_dvdt': bins_dvdt,
-        'penalty': penalty}
+        'penalty': penalty,
+        'v_mean': np.mean(data.v)}
 v_data = get_v(np.array(data.v), data.t, data.i, args)
 APtime_data = get_APtime(np.array(data.v), np.array(data.t), np.array(data.i), args)
 args['APtime'] = APtime_data
@@ -52,6 +53,11 @@ APmax_data = np.max(np.array(data.v))
 phasehist_data = phase_hist(np.array(data.v), np.array(data.t), np.array(data.i), args)
 has_1AP_data = penalize_not1AP(np.array(data.v), np.array(data.t), np.array(data.i), args)
 vrest_data = get_vrest(np.array(data.v), np.array(data.t), np.array(data.i), args)
+args['v_rest'] = vrest_data
+i_inj_start = np.where(np.array(data.i) > 0)[0][0]
+time_i_inj2AP = APtime_data - i_inj_start
+v_half2AP_data = v_data[(i_inj_start + time_i_inj2AP / 2) * dt]
+args['v_half2AP'] = v_half2AP_data
 
 # compute fitness landscape
 n_chunks_p1 = len(p1_range) / chunk_size
@@ -75,7 +81,7 @@ for c1 in range(n_chunks_p1):
                     model_data = get_v(modellandscape[i, j], data.t, data.i, args)
                     exp_data = v_data
                 elif fitfun == 'APshift':
-                    model_data = shift_AP_max_APdata(modellandscape[i, j], data.t, data.i, args)
+                    model_data = shifted_AP(modellandscape[i, j], data.t, data.i, args)
                     exp_data = AP_window_data
                 elif fitfun == 'APamp':
                     model_data = get_APamp(modellandscape[i, j], data.t, data.i, args)
@@ -96,12 +102,17 @@ for c1 in range(n_chunks_p1):
                     model_data = get_vrest(modellandscape[i, j], data.t, data.i, args)
                     exp_data = vrest_data
                 else:
-                    raise ValueError('Unknown error function!')
+                    model_data = None
+                    exp_data = None
 
                 if model_data is None:
                     error[i + c1*chunk_size, j+c2*chunk_size] = None
                 else:
                     error[i + c1*chunk_size, j+c2*chunk_size] = errfun(model_data, exp_data)
+
+                if fitfun == 'stefans_fun':
+                    error[i + c1 * chunk_size, j + c2 * chunk_size] = stefans_fun(modellandscape[i, j],
+                                                                                  data.t, data.i, args)
 
 
 if not os.path.exists(save_dir + '/' + new_folder + '/'):

@@ -1,8 +1,7 @@
 import pandas as pd
-
 from new_optimization import *
+from new_optimization.optimizer.optimizer_interface import Optimizer
 from optimization.bio_inspired import generators
-
 
 class RandomOptimizer(Optimizer):
 

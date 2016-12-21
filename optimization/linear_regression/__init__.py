@@ -2,31 +2,34 @@ import numpy as np
 from scipy.optimize import nnls
 import matplotlib.pyplot as pl
 from matplotlib.pyplot import cm as cmap
+from optimization.helpers import *
 
 __author__ = 'caro'
 
 
 def linear_regression(dvdt, i_inj, currents, i_pas=0, Cm=None, cell_area=None):
-    if Cm is None:  # estimate cm in the linear regression (in this case we need cell_area)
+    if Cm is None:  # estimate cm in the linear regression (in this case we need the cell_area)
         # variables to fit
         i_inj -= i_pas
-        X = np.matrix(np.vstack((-1 * np.matrix(currents), i_inj))).T
+        X = np.c_[-1 * np.vstack(currents).T, i_inj.T]
         y = dvdt
 
         # linear regression
         weights, residual = nnls(X, y)
         Cm = 1/weights[-1]
-        weights *= Cm
-        weights[-1] = Cm / cell_area
+        weights_adjusted = weights * Cm
+        weights_adjusted[-1] = convert_unit_prefix('h', Cm / cell_area)  # uF/cm**2
+
+        return weights_adjusted, weights, residual, y, X
     else:
         # variables to fit
-        X = -1 * np.matrix(currents).T
+        X = -1 * np.vstack(currents).T
         y = dvdt * Cm - i_inj + i_pas
 
         # linear regression
         weights, residual = nnls(X, y)
 
-    return weights, residual, y, X
+        return weights, residual, y, X
 
 
 def plot_fit(y, X, weights, t, channel_list, i_pas=0, save_dir=None):

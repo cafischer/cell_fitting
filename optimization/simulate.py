@@ -22,7 +22,6 @@ def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, p
     :return: Simulation parameter
     :rtype: dict
     """
-    # load experimental data and simulation parameters
     tstop = data.t.values[-1]
     dt = data.t.values[1] - data.t.values[0]
     v_init = data.v.values[0]

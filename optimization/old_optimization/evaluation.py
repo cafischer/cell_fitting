@@ -41,7 +41,7 @@ class Evaluator:
 
         if not os.path.exists(self.save_dir_statistics):
             os.makedirs(self.save_dir_statistics)
-        statistics.to_csv(self.save_dir_statistics+'statistics.csv')
+        statistics.to_csv(self.save_dir_statistics+'cell_characteristics.csv')
 
     def create_statistics_dataframe(self):
         columns = pd.MultiIndex(levels=[self.methods, ['rms(param)', 'rms(v)'], ['mean', 'var', 'min']],
@@ -123,7 +123,7 @@ class Evaluator:
         return problem_dict
 
     def plot_statistic(self, error, statistic='mean'):
-        statistics = pd.read_csv(self.save_dir_statistics+'statistics.csv', header=[0, 1, 2], index_col=[0])
+        statistics = pd.read_csv(self.save_dir_statistics+'cell_characteristics.csv', header=[0, 1, 2], index_col=[0])
         statistics.sortlevel(axis=0, inplace=True, sort_remaining=True)
         statistics.sortlevel(axis=1, inplace=True, sort_remaining=True)
         statistics[statistics == np.inf] = np.nan
@@ -147,21 +147,24 @@ class Evaluator:
             elif statistic == 'mean':
                 statistic_mean = statistics.loc[(slice(None)), (slice(None), error, statistic)]
                 statistic_std = np.sqrt(statistics.loc[(slice(None)), (slice(None), error, 'var')])
-                base_line, = ax.plot(statistics.index, statistic_mean[method], label=method)
+                base_line, = ax.plot(statistics.index, statistic_mean[method], label=method, linewidth=1.5)
 
                 ax.fill_between(statistics.index.values,
                                 (statistic_mean[method].values - statistic_std[method].values).flatten(),
                                 (statistic_mean[method].values + statistic_std[method].values).flatten(),
-                                facecolor=base_line.get_color(), alpha=0.1)
+                                facecolor=base_line.get_color(), alpha=0.05)
                 table(ax, statistic_mean[idx].transpose().apply(lambda x: x.map(lambda y: "%.6f" % y)),
                   rowLabels=self.methods, loc='bottom', bbox=[0, -0.7, 1, 0.55])
         pl.tight_layout(rect=[0.15, 0.36, 1.0, 1.0])
         ax.set_xticks(statistics.index)
         ax.set_xticklabels(statistics.index)
-        pl.legend(fontsize=12)
+        pl.legend(fontsize=14)
         pl.ylim([0, None])
-        pl.xlabel(statistics.index.name)
-        pl.ylabel(statistic + ' ' + error)
+        #pl.xlabel(statistics.index.name, fontsize=16)
+        pl.xlabel('$\# param$', fontsize=18)
+        #pl.ylabel(statistic + '(' + error + ')', fontsize=16)
+        #pl.ylabel('$mean_{trials}[rms(param_{to fit}, param_{best})]$', fontsize=18)
+        pl.ylabel('$mean_{trials}[rms(V_{to fit}, V_{best})]$', fontsize=18)
         pl.savefig(self.save_dir_statistics+'/plot_'+error+'_'+statistic+'.png')
         pl.show()
 
@@ -310,9 +313,9 @@ if __name__ == '__main__':
     evaluator = Evaluator(save_dir_statistics, save_dirs, n_trials, methods)
     #evaluator.save_error_weights_and_best_fitness()
     evaluator.save_statistics()
-    evaluator.plot_statistic('rms(param)', 'mean')
-    evaluator.plot_statistic('rms(param)', 'min')
+    #evaluator.plot_statistic('rms(param)', 'mean')
+    #evaluator.plot_statistic('rms(param)', 'min')
     evaluator.plot_statistic('rms(v)', 'mean')
-    evaluator.plot_statistic('rms(v)', 'min')
-    evaluator.hist_mean_error_variable_comb(save_dirs[0], 1)
-    evaluator.plot_2d_mean_error_variable_comb()
+    #evaluator.plot_statistic('rms(v)', 'min')
+    #evaluator.hist_mean_error_variable_comb(save_dirs[0], 1)
+    #evaluator.plot_2d_mean_error_variable_comb()

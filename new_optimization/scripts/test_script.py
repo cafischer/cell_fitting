@@ -1,7 +1,7 @@
 from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
-from new_optimization.optimizers.inspyred_optimizer import *
-from new_optimization.optimizers.scipy_optimizer import *
-from new_optimization.optimizers.random_optimizer import *
+from new_optimization.optimizer.inspyred_optimizer import *
+from new_optimization.optimizer.scipy_optimizer import *
+from new_optimization.optimizer.random_optimizer import *
 import os
 
 save_dir = '../../results/test_new_opt/'

@@ -1,24 +1,14 @@
 import pandas as pd
-import numpy as np
 from nrn_wrapper import Cell, load_mechanism_dir, iclamp
 from optimization import errfuns
 from optimization import fitfuns
 from optimization.simulate import extract_simulation_params
+import functools
 
 __author__ = 'caro'
 
 
-def insert_mechanisms(cell, path_variables):  # TODO: think of better method to insert/identify mechanisms
-    try:
-        for paths in path_variables:
-            for path in paths:
-                cell.get_attr(path[:-3]).insert(path[-2])  # [-3]: pos (not needed insert into section)
-                                                           # [-2]: mechanism, [-1]: attribute
-    except AttributeError:
-        pass  # let all non mechanism variables pass
-
-
-class HodgkinHuxleyFitter:
+class HodgkinHuxleyFitter(object):
 
     def __init__(self, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
@@ -47,8 +37,6 @@ class HodgkinHuxleyFitter:
     def evaluate_fitness(self, candidate, args):
         self.update_cell(candidate)
         v_candidate, t_candidate = iclamp(self.cell, **self.simulation_params)
-        #self.data_to_fit = [0]  # TODO !!!!
-        #self.args['candidate'] = candidate  # TODO
         vars_to_fit = [fitfun(v_candidate, t_candidate, self.simulation_params['i_inj'], self.args)
                        for fitfun in self.fitfuns]
         num_nones = 0
@@ -59,12 +47,12 @@ class HodgkinHuxleyFitter:
             else:
                 fitness += self.fitnessweights[i] * self.errfun(vars_to_fit[i], self.data_to_fit[i])
         if num_nones == len(vars_to_fit):
-            return float("inf")
+            return 100  #float("inf")
         return fitness
 
     def get_cell(self):
         cell = Cell.from_modeldir(self.model_dir)
-        insert_mechanisms(cell, self.variable_keys)
+        cell.insert_mechanisms(self.variable_keys)
         return cell
 
     def update_cell(self, candidate):
@@ -78,6 +66,32 @@ class HodgkinHuxleyFitter:
         return v_candidate, t_candidate, self.simulation_params['i_inj']
 
     def to_dict(self):
-        return {'variable_keys': self.variable_keys, 'errfun': self.errfun_names, 'fitfun': self.fitfun_names,
+        return {'variable_keys': self.variable_keys, 'errfun_name': self.errfun_names, 'fitfun_names': self.fitfun_names,
                 'fitnessweights': self.fitnessweights, 'model_dir': self.model_dir, 'mechanism_dir': self.mechanism_dir,
-                'data_dir': self.data_dir, 'simulation_params': self.init_simulation_params}  #, 'args': self.args}  # TODO
+                'data_dir': self.data_dir, 'simulation_params': self.init_simulation_params, 'args': self.args}
+
+
+class HodgkinHuxleyFitterWithFitfunList(HodgkinHuxleyFitter):
+
+    def __init__(self, variable_keys, errfun_name, fitfun_names, fitnessweights,
+                 model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
+        super(HodgkinHuxleyFitterWithFitfunList, self).__init__(variable_keys, errfun_name, fitfun_names,
+                                                                fitnessweights, model_dir, mechanism_dir, data_dir,
+                                                                simulation_params, args)
+
+    def evaluate_fitness(self):
+        evaluate_fitfuns = list()
+        for i, fitfun in enumerate(self.fitfuns):
+            evaluate_fitfuns.append(functools.partial(self.evaluate_fitfun, fitfun=fitfun,
+                                                      fitnessweight=self.fitnessweights[i],
+                                                      data_to_fit=self.data_to_fit[i]))
+        return evaluate_fitfuns
+
+    def evaluate_fitfun(self, candidate, fitfun, fitnessweight, data_to_fit):
+        self.update_cell(candidate)
+        v_candidate, t_candidate = iclamp(self.cell, **self.simulation_params)
+        var_to_fit = fitfun(v_candidate, t_candidate, self.simulation_params['i_inj'], self.args)
+        if var_to_fit is None:
+            return 100 #float("inf") TODO
+        fitness = fitnessweight * self.errfun(var_to_fit, data_to_fit)
+        return fitness

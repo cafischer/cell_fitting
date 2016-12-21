@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as pl
-
-from optimization.problem import *
+from optimization.helpers import *
 from optimization.linear_regression import linear_regression, plot_fit
 from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
 
@@ -22,7 +21,7 @@ variable_keys = [
                     [['soma', '0.5', 'na8st', 'gbar']]
                  ]
 errfun = 'rms'
-fitfun = 'get_v'
+fitfun = ['get_v']
 fitnessweights = [1]
 model_dir = '../../../model/cells/dapmodel0.json'
 mechanism_dir = '../../../model/channels/schmidthieber'

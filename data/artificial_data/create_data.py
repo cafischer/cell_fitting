@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-from statistics.analyze_APs import get_vrest
+from cell_characteristics.analyze_APs import get_v_rest
 
 __author__ = 'caro'
 
@@ -10,7 +10,7 @@ data_new_dir = './vrest.csv'
 
 data_real = pd.read_csv(data_real_dir)
 
-vrest = get_vrest(data_real.v.values, data_real.i.values)
+vrest = get_v_rest(data_real.v.values, data_real.i.values)
 
 v = np.ones(len(data_real.v.values)) * vrest
 t = data_real.t.values

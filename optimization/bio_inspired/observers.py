@@ -1,5 +1,5 @@
 from time import time
-from optimization.bio_inspired.inspyred_extension import *
+from optimization.bio_inspired import *
 
 __author__ = 'caro'
 

@@ -51,7 +51,11 @@ def convert_unit_prefix(from_prefix, x):
     :return: Converted quantity.
     :rtype: array_like
     """
-    if from_prefix == 'da':
+    if from_prefix == 'T':
+        return x * 1e12
+    elif from_prefix == 'h':
+        return x * 1e2
+    elif from_prefix == 'da':
         return x * 1e1
     elif from_prefix == 'd':
         return x * 1e-1
@@ -63,6 +67,8 @@ def convert_unit_prefix(from_prefix, x):
         return x * 1e-6
     elif from_prefix == 'n':
         return x * 1e-9
+    elif from_prefix == 'p':
+        return x * 1e-12
     else:
         raise ValueError('No valid prefix!')
 
@@ -79,16 +85,3 @@ def get_cellarea(L, diam):
     :rtype: float
     """
     return L * diam * np.pi
-
-
-def convert_units(L, diam, cm, dvdt, i_inj, currents):
-    cell_area = L * diam * np.pi * 1e-8  # cm
-    Cm = cm * cell_area  # uF
-
-    i_inj_sc = i_inj * 1e-9  # A
-    dvdt_sc = dvdt * 1e-6  # A
-    currents_sc = []
-    for i in range(len(currents)):
-        currents_sc.append(currents[i] * cell_area * 1e-3)  # A
-    return dvdt_sc, i_inj_sc, currents_sc, Cm, cell_area
-# TODO: change as in hand_tuner model

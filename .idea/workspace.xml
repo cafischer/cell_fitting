@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="Method substitute&#10;&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/.libs/INap.o" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/.libs/libnrnmech.so.0.0.0" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/.libs/libnrnmech.so.0" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/.libs/libnrnmech.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/.libs/mod_func.o" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/INap.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/INap.lo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/INap.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/INap.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/INat.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/INat.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/INat.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/cal.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/cal.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/cat.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/cat.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/hcn.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/hh_traub.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/ka.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/ka.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/kc.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/kc.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/leak.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/leak.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/libnrnmech.la" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/.libs/libnrnmech.la" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/.libs/libnrnmech.lai" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/mod_func.c" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/mod_func.lo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/i686/special" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/morphology/stellate-garden.hoc" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/model/demo/demo_cell_new.json" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/optimizer.py" afterPath="$PROJECT_DIR$/optimization/optimizer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/json_utils/__init__.py" afterPath="$PROJECT_DIR$/json_utils/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_results/cell.json" afterPath="$PROJECT_DIR$/demo/demo_results/cell.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/cell_builder.py" afterPath="$PROJECT_DIR$/model/cell_builder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_cell.json" afterPath="$PROJECT_DIR$/demo/demo_cell.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_cell2.json" afterPath="$PROJECT_DIR$/demo/demo_cell2.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_results/emoo_params.json" afterPath="$PROJECT_DIR$/demo/demo_results/emoo_params.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_results/least_error.json" afterPath="$PROJECT_DIR$/demo/demo_results/least_error.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_results/simulation_params.json" afterPath="$PROJECT_DIR$/demo/demo_results/simulation_params.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_results/variables.json" afterPath="$PROJECT_DIR$/demo/demo_results/variables.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_results/variables_new_0.json" afterPath="$PROJECT_DIR$/demo/demo_results/variables_new_0.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/demo/demo_results/variables_new_1.json" afterPath="$PROJECT_DIR$/demo/demo_results/variables_new_1.json" />
+    <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="Variables are now initial">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/general/hcn_fast.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/general/hcn_slow.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/general/ka.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/general/nap.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/optimizer/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/optimizer/optimizer_interface.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_gradientlandscape.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/integrate_hhmodel/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/simulate_candidates.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizers/scipy_optimizer.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/optimizers/inspyred_optimizer.py" afterPath="$PROJECT_DIR$/new_optimization/optimizer/inspyred_optimizer.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/optimizers/random_optimizer.py" afterPath="$PROJECT_DIR$/new_optimization/optimizer/random_optimizer.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/scripts/stellate_model.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/run_optimization.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/statistics/__init__.py" afterPath="$PROJECT_DIR$/cell_characteristics/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/statistics/analyze_APs.py" afterPath="$PROJECT_DIR$/cell_characteristics/analyze_APs.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/statistics/compute_capacitance.py" afterPath="$PROJECT_DIR$/cell_characteristics/compute_capacitance.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cell_fitting.iml" afterPath="$PROJECT_DIR$/.idea/cell_fitting.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/artificial_data/create_data.py" afterPath="$PROJECT_DIR$/data/artificial_data/create_data.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/save_traces_by_heakareader.py" afterPath="$PROJECT_DIR$/data/save_traces_by_heakareader.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/toymodels/create_data.py" afterPath="$PROJECT_DIR$/data/toymodels/create_data.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/cells/dapmodel0.json" afterPath="$PROJECT_DIR$/model/cells/dapmodel0.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/__init__.py" afterPath="$PROJECT_DIR$/new_optimization/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/fitter/__init__.py" afterPath="$PROJECT_DIR$/new_optimization/fitter/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" afterPath="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/find_local_minima.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/find_local_minima.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/test_script.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/test_script.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/bio_inspired/observers.py" afterPath="$PROJECT_DIR$/optimization/bio_inspired/observers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitfuns.py" afterPath="$PROJECT_DIR$/optimization/fitfuns.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/attraction_basins_from_gradientdescent.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/attraction_basins_from_gradientdescent.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/combine_fitnesslandscapes.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/combine_fitnesslandscapes.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_fitnesslandscape.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_fitnesslandscape.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitnesslandscape.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitnesslandscape.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/save_minima_descent.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/save_minima_descent.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/gradient_based/__init__.py" afterPath="$PROJECT_DIR$/optimization/gradient_based/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/helpers.py" afterPath="$PROJECT_DIR$/optimization/helpers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/linear_regression/__init__.py" afterPath="$PROJECT_DIR$/optimization/linear_regression/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/linear_regression/error_analysis/timestep.py" afterPath="$PROJECT_DIR$/optimization/linear_regression/error_analysis/timestep.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/linear_regression/scripts/estimate_cellsize.py" afterPath="$PROJECT_DIR$/optimization/linear_regression/scripts/estimate_cellsize.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/linear_regression/scripts/optimize_toymodel.py" afterPath="$PROJECT_DIR$/optimization/linear_regression/scripts/optimize_toymodel.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/old_optimization/evaluation.py" afterPath="$PROJECT_DIR$/optimization/old_optimization/evaluation.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/simulate.py" afterPath="$PROJECT_DIR$/optimization/simulate.py" />
     </list>
     <ignored path="cell_fitting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,20 +59,32 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/cell_fitting$singularize_data.coverage" NAME="singularize_data Coverage Results" MODIFIED="1446827710733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/cell_2013_12_13f" />
-    <SUITE FILE_PATH="coverage/cell_fitting$regtest.coverage" NAME="regtest Coverage Results" MODIFIED="1446229390963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimize_passive.coverage" NAME="optimize_passive Coverage Results" MODIFIED="1447018525057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
     <SUITE FILE_PATH="coverage/cell_fitting$optimizer.coverage" NAME="optimizer Coverage Results" MODIFIED="1447081830274" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
     <SUITE FILE_PATH="coverage/cell_fitting$cell_builder.coverage" NAME="cell_builder Coverage Results" MODIFIED="1447056310541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/cell_fitting$convert2csv.coverage" NAME="convert2csv Coverage Results" MODIFIED="1447068929011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/cell_2013_12_13f" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimize_passive_full.coverage" NAME="optimize_passive_full Coverage Results" MODIFIED="1447080248987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
+    <SUITE FILE_PATH="coverage/cell_fitting$test.coverage" NAME="test Coverage Results" MODIFIED="1469689042325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
     <SUITE FILE_PATH="coverage/cell_fitting$test_ionchannel.coverage" NAME="test_ionchannel Coverage Results" MODIFIED="1447167830451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test_channels" />
     <SUITE FILE_PATH="coverage/cell_fitting$eval_constcurrent.coverage" NAME="eval_constcurrent Coverage Results" MODIFIED="1446210645849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Studium/Master/Internship/Code&amp;Data/Project-all/Modelling/regular_spiking" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimizer2.coverage" NAME="optimizer2 Coverage Results" MODIFIED="1445343893146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/cell_fitting$visualize_results.coverage" NAME="visualize_results Coverage Results" MODIFIED="1469261839303" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/bio_inspired" />
+    <SUITE FILE_PATH="coverage/cell_fitting$evaluation__1_.coverage" NAME="evaluation (1) Coverage Results" MODIFIED="1469713201908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
     <SUITE FILE_PATH="coverage/cell_fitting$morph_hoc2morph_json.coverage" NAME="morph_hoc2morph_json Coverage Results" MODIFIED="1446285676477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model/morphology" />
+    <SUITE FILE_PATH="coverage/cell_fitting$optimize_passive_full.coverage" NAME="optimize_passive_full Coverage Results" MODIFIED="1447080248987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
+    <SUITE FILE_PATH="coverage/cell_fitting$optimize_passive.coverage" NAME="optimize_passive Coverage Results" MODIFIED="1447018525057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
+    <SUITE FILE_PATH="coverage/cell_fitting$evaluation.coverage" NAME="evaluation Coverage Results" MODIFIED="1469603568705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/bio_inspired" />
+    <SUITE FILE_PATH="coverage/cell_fitting$run_optimization.coverage" NAME="run_optimization Coverage Results" MODIFIED="1469871347788" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/scripts" />
+    <SUITE FILE_PATH="coverage/cell_fitting$optimize_toymodel__1_.coverage" NAME="optimize_toymodel (1) Coverage Results" MODIFIED="1469696445634" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/hhsolver/scripts" />
+    <SUITE FILE_PATH="coverage/cell_fitting$optimizer2.coverage" NAME="optimizer2 Coverage Results" MODIFIED="1445343893146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/cell_fitting$generators.coverage" NAME="generators Coverage Results" MODIFIED="1469884297250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/bio_inspired/inspyred_extension" />
+    <SUITE FILE_PATH="coverage/cell_fitting$handtuner2.coverage" NAME="handtuner2 Coverage Results" MODIFIED="1469692020461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/hand_tuning" />
+    <SUITE FILE_PATH="coverage/cell_fitting$singularize_data.coverage" NAME="singularize_data Coverage Results" MODIFIED="1446827710733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/cell_2013_12_13f" />
+    <SUITE FILE_PATH="coverage/cell_fitting$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1469601531563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/hand_tuning" />
+    <SUITE FILE_PATH="coverage/cell_fitting$regtest.coverage" NAME="regtest Coverage Results" MODIFIED="1446229390963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/cell_fitting$optimize_toymodel.coverage" NAME="optimize_toymodel Coverage Results" MODIFIED="1469689794157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/gradient_descent/scripts" />
+    <SUITE FILE_PATH="coverage/cell_fitting$timestep.coverage" NAME="timestep Coverage Results" MODIFIED="1469262219172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/linear_regression/error_analysis" />
+    <SUITE FILE_PATH="coverage/cell_fitting$handtuner.coverage" NAME="handtuner Coverage Results" MODIFIED="1469973156247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/hand_tuning" />
+    <SUITE FILE_PATH="coverage/cell_fitting$convert2csv.coverage" NAME="convert2csv Coverage Results" MODIFIED="1447068929011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/cell_2013_12_13f" />
     <SUITE FILE_PATH="coverage/cell_fitting$plot_data.coverage" NAME="plot_data Coverage Results" MODIFIED="1446998929955" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/cell_fitting$optimize.coverage" NAME="optimize Coverage Results" MODIFIED="1469885068642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/gradient_descent" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -82,39 +94,13 @@
     <favorites_list name="cell_fitting" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="optimize_passive_full.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/optimization/optimize_passive_full.py">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="evaluate.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="optimizer.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/optimization/optimizer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="311" column="65" selection-start-line="311" selection-start-column="65" selection-end-line="311" selection-end-column="65" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_ionchannel.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test_channels/test_ionchannel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.55128205">
-              <caret line="195" column="25" selection-start-line="195" selection-start-column="25" selection-end-line="195" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="226">
+              <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -134,41 +120,63 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/model/mechanism.py" />
-        <option value="$PROJECT_DIR$/model/section.py" />
-        <option value="$PROJECT_DIR$/model/cell.py" />
-        <option value="$PROJECT_DIR$/model/stellate_cell.py" />
-        <option value="$PROJECT_DIR$/model/te" />
-        <option value="$PROJECT_DIR$/model/__init__.py" />
-        <option value="$PROJECT_DIR$/optimizer2.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/optimizer.py" />
-        <option value="$PROJECT_DIR$/../../../Studium/Master/Internship/Code&amp;Data/Project-all/Modelling/regular_spiking/eval_constcurrent.py" />
-        <option value="$PROJECT_DIR$/test" />
-        <option value="$PROJECT_DIR$/regtest.py" />
-        <option value="$PROJECT_DIR$/json_utils/__init__.py" />
-        <option value="$PROJECT_DIR$/model/morphology/morph_hoc2morph_json.py" />
-        <option value="$PROJECT_DIR$/test_ionchannel.py" />
-        <option value="$PROJECT_DIR$/plot_data.py" />
-        <option value="$PROJECT_DIR$/optimization/optimize_passive.py" />
-        <option value="$PROJECT_DIR$/data/cell_2013_12_13f/singularize_data.py" />
-        <option value="$PROJECT_DIR$/optimization/optimize_passive_reduced.py" />
-        <option value="$PROJECT_DIR$/data/cell_2013_12_13f/data_from_model.py" />
-        <option value="$PROJECT_DIR$/optimization/optimize_passive_point.py" />
-        <option value="$PROJECT_DIR$/model/cell_builder.py" />
-        <option value="$PROJECT_DIR$/optimization/optimize_passive_full.py" />
-        <option value="$PROJECT_DIR$/data/cell_2013_12_13f/convert2csv.py" />
-        <option value="$PROJECT_DIR$/optimization/optimizer.py" />
-        <option value="$PROJECT_DIR$/test_channels/test_ionchannel.py" />
+        <option value="$PROJECT_DIR$/new_optimization/optimizer/optimizer_interface.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/simulate_candidates.py" />
+        <option value="$PROJECT_DIR$/optimization/hand_tuning/test.py" />
+        <option value="$PROJECT_DIR$/optimization/hand_tuning/view.py" />
+        <option value="$PROJECT_DIR$/optimization/linear_regression/scripts/plot_cmdvdt.py" />
+        <option value="$PROJECT_DIR$/model/channels/schmidthieber/kap.mod" />
+        <option value="$PROJECT_DIR$/model/channels/schmidthieber/Nap.mod" />
+        <option value="$PROJECT_DIR$/model/channels/schmidthieber/IKM.mod" />
+        <option value="$PROJECT_DIR$/optimization/hand_tuning/model.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/stellate_model.py" />
+        <option value="$PROJECT_DIR$/optimization/old_optimization/evaluation.py" />
+        <option value="$PROJECT_DIR$/optimization/gradient_based/CG_withHHmodel.py" />
+        <option value="$PROJECT_DIR$/optimization/gradient_based/__init__.py" />
+        <option value="$PROJECT_DIR$/optimization/linear_regression/error_analysis/timestep.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/run_optimization.py" />
+        <option value="$PROJECT_DIR$/optimization/helpers.py" />
+        <option value="$PROJECT_DIR$/model/cells/competition_model.json" />
+        <option value="$PROJECT_DIR$/data/toymodels/create_data.py" />
+        <option value="$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest/TNC/candidates.csv" />
+        <option value="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
+        <option value="$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/vtrace/TNC/candidates.csv" />
+        <option value="$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/vtrace_control/TNC/candidates.csv" />
+        <option value="$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/vtrace_control/L-BFGS-B/candidates.csv" />
+        <option value="$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest/L-BFGS-B/candidates.csv" />
+        <option value="$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest+vtrace2/L-BFGS-B/candidates.csv" />
+        <option value="$PROJECT_DIR$/optimization/hand_tuning/controller.py" />
+        <option value="$PROJECT_DIR$/model/cells/dapmodel_simpel.json" />
+        <option value="$PROJECT_DIR$/optimization/hand_tuning/handtuner.py" />
+        <option value="$PROJECT_DIR$/results/fitnesslandscapes/modellandscape/gna_gk_highresolution/fitfuns/error_to_csv.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/follow_max_gradient.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/show_jumps.py" />
+        <option value="$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitness_along_line.py" />
+        <option value="$PROJECT_DIR$/model/channels/hodgkinhuxley/na_hh.mod" />
+        <option value="$PROJECT_DIR$/model/channels/hodgkinhuxley/k_hh.mod" />
+        <option value="$PROJECT_DIR$/model/cells/hhCell.json" />
+        <option value="$PROJECT_DIR$/results/new_optimization/linearregression/test0/DEA/candidates.csv" />
+        <option value="$PROJECT_DIR$/new_optimization/fitter/linearregressionfitter.py" />
+        <option value="$PROJECT_DIR$/model/channels/general/k_hh.mod" />
+        <option value="$PROJECT_DIR$/model/channels/general/na_hh.mod" />
+        <option value="$PROJECT_DIR$/model/channels/general/nat.mod" />
+        <option value="$PROJECT_DIR$/optimization/linear_regression/__init__.py" />
+        <option value="$PROJECT_DIR$/optimization/simulate.py" />
+        <option value="$PROJECT_DIR$/../programming/nrn_wrapper/nrn_wrapper/__init__.py" />
+        <option value="$PROJECT_DIR$/model/cells/dapmodel0.json" />
+        <option value="$PROJECT_DIR$/model/channels/schmidthieber/nat.mod" />
+        <option value="$PROJECT_DIR$/optimization/linear_regression/scripts/optimize_toymodel.py" />
+        <option value="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter.py" />
+        <option value="$PROJECT_DIR$/results/new_optimization/linearregression/2015_08_26b/improve_nat/L-BFGS-B/candidates.csv" />
+        <option value="$PROJECT_DIR$/integrate_hhmodel/__init__.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" />
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
-  </component>
-  <component name="NamedScopeManager">
-    <order />
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
@@ -183,10 +191,13 @@
           <State>
             <id />
           </State>
+          <State>
+            <id>Python</id>
+          </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>Buildout</id>
+            <id>PyCompatibilityInspection</id>
           </State>
         </selected-state>
       </profile-state>
@@ -213,9 +224,12 @@
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -234,246 +248,122 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test_channels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="optimization" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_2013_12_13f" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="FullScreen" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/hodgkinhuxley_model" />
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/optimization" />
-      <recent name="$PROJECT_DIR$/model/morphology" />
+      <recent name="$PROJECT_DIR$/model/channels/schmidthieber" />
+      <recent name="$PROJECT_DIR$/model/channels/general" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/model" />
+      <recent name="$PROJECT_DIR$/model/channels" />
+      <recent name="$PROJECT_DIR$/optimization" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/sodium channels" />
+      <recent name="$PROJECT_DIR$/results/new_optimization/2015_08_26b/test/DEA" />
+      <recent name="$PROJECT_DIR$/optimization/bio_inspired" />
       <recent name="$PROJECT_DIR$/optimization" />
-      <recent name="$PROJECT_DIR$/model/morphology" />
+      <recent name="$PROJECT_DIR$/optimization/error_landscape_measures" />
+      <recent name="$PROJECT_DIR$/new_optimization/evaluation" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test_ionchannel">
-    <configuration default="false" name="cell_builder" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.evaluate">
+    <configuration default="false" name="optimize_toymodel" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/model" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/optimization/linear_regression/scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/model/cell_builder.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/optimization/linear_regression/scripts/optimize_toymodel.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="optimize_passive_full" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="run_linearregressionfitter" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/optimization" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/optimization/optimize_passive_full.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter_toymodel.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="test_ionchannel" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="run_linearregressionfitter (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/test_ionchannel.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="convert2csv" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="run" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data/cell_2013_12_13f" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hodgkinhuxley_model" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/cell_2013_12_13f/convert2csv.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/hodgkinhuxley_model/run.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="optimizer" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="evaluate" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/optimization" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/evaluation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/optimization/optimizer.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="TARGET" value="" />
-      <option name="SETTINGS_FILE" value="" />
-      <option name="CUSTOM_SETTINGS" value="false" />
-      <option name="USE_OPTIONS" value="false" />
-      <option name="OPTIONS" value="" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
-    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="ADDITIONAL_ARGS" value="" />
-      <method />
-    </configuration>
-    <configuration default="true" type="PyLettuceRunConfigurationType" factoryName="Lettuce">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="ADDITIONAL_ARGS" value="" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -494,13 +384,16 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <pass-parent-envs>true</pass-parent-envs>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
       <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Attests">
@@ -614,23 +507,25 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.cell_builder" />
-      <item index="1" class="java.lang.String" itemvalue="Python.optimize_passive_full" />
-      <item index="2" class="java.lang.String" itemvalue="Python.test_ionchannel" />
-      <item index="3" class="java.lang.String" itemvalue="Python.convert2csv" />
-      <item index="4" class="java.lang.String" itemvalue="Python.optimizer" />
+      <item index="0" class="java.lang.String" itemvalue="Python.optimize_toymodel" />
+      <item index="1" class="java.lang.String" itemvalue="Python.run_linearregressionfitter" />
+      <item index="2" class="java.lang.String" itemvalue="Python.run_linearregressionfitter (1)" />
+      <item index="3" class="java.lang.String" itemvalue="Python.run" />
+      <item index="4" class="java.lang.String" itemvalue="Python.evaluate" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.test_ionchannel" />
-        <item index="1" class="java.lang.String" itemvalue="Python.optimizer" />
-        <item index="2" class="java.lang.String" itemvalue="Python.optimize_passive_full" />
-        <item index="3" class="java.lang.String" itemvalue="Python.convert2csv" />
-        <item index="4" class="java.lang.String" itemvalue="Python.cell_builder" />
+        <item index="0" class="java.lang.String" itemvalue="Python.evaluate" />
+        <item index="1" class="java.lang.String" itemvalue="Python.run" />
+        <item index="2" class="java.lang.String" itemvalue="Python.run_linearregressionfitter (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python.optimize_toymodel" />
+        <item index="4" class="java.lang.String" itemvalue="Python.run_linearregressionfitter" />
       </list>
     </recent_temporary>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -639,166 +534,401 @@
       <changelist id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="" />
       <created>1444289885125</created>
       <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
       <updated>1444289885125</updated>
     </task>
     <task id="LOCAL-00001" summary="Added first version of cell_builder">
       <created>1444899812922</created>
       <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
       <updated>1444899812922</updated>
     </task>
     <task id="LOCAL-00002" summary="Fixed path to demo_cell in cell_builder">
       <created>1444921692078</created>
       <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
       <updated>1444921692078</updated>
     </task>
     <task id="LOCAL-00003" summary="Changed format for mechanisms in Cell.create and in demo neuron files">
       <created>1444923353572</created>
       <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
       <updated>1444923353572</updated>
     </task>
     <task id="LOCAL-00004" summary="Changed variable name filename to model_dir in class Cell()">
       <created>1445259533186</created>
       <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
       <updated>1445259533186</updated>
     </task>
     <task id="LOCAL-00005" summary="Set celsius in hoc&#10; &#10; Before celsius had no effect on runs of the cell.">
       <created>1445418808688</created>
       <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
       <updated>1445418808688</updated>
     </task>
     <task id="LOCAL-00006" summary="Changed parameters: l, ra for Section to upper case&#10;&#10;NEURON parameters need to have the same name in python in order to be applied.">
       <created>1445419797816</created>
       <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
       <updated>1445419797816</updated>
     </task>
     <task id="LOCAL-00007" summary="Changed demo directory&#10;&#10;Now demo is directly in folder cell_fitting.">
       <created>1445419942566</created>
       <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
       <updated>1445419942566</updated>
     </task>
     <task id="LOCAL-00008" summary="New function in Class Cell: get_attr()&#10;&#10;Cell.get_attr(self,keys) allows the access of an attribute of Cell by a list of keys (same as used for update_attr)">
       <created>1445425384601</created>
       <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
       <updated>1445425384601</updated>
     </task>
     <task id="LOCAL-00009" summary="Changed :type specifications to lower case for python build-in types">
       <created>1445432416556</created>
       <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
       <updated>1445432416556</updated>
     </task>
     <task id="LOCAL-00010" summary="New function in Section Class: play_current&#10;&#10;The function play_current can be used to play a vector containing the current at each time step into a cell during a simulation.">
       <created>1445522715024</created>
       <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1445522715024</updated>
     </task>
     <task id="LOCAL-00011" summary="First version of the optimizer&#10;&#10;Optimizer can be used for fitting cells with evoluationary multi-objective optimization to experimental data.">
       <created>1445523023068</created>
       <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
       <option name="project" value="LOCAL" />
       <updated>1445523023068</updated>
     </task>
     <task id="LOCAL-00012" summary="Commit .idea file from pycharm">
       <created>1445523107435</created>
       <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
       <option name="project" value="LOCAL" />
       <updated>1445523107435</updated>
     </task>
     <task id="LOCAL-00013" summary="Add demo cells and data for testing and demonstrating code">
       <created>1445523666821</created>
       <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
       <option name="project" value="LOCAL" />
       <updated>1445523666821</updated>
     </task>
     <task id="LOCAL-00014" summary="Added .gitignore">
       <created>1445523702853</created>
       <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
       <option name="project" value="LOCAL" />
       <updated>1445523702853</updated>
     </task>
     <task id="LOCAL-00015" summary="Changed init of Section&#10;&#10;Sections are now initialized with the parameter geom instead of L, diam to allow to change between the L, diam and the pt3dadd representation of the geometry.">
       <created>1446214536052</created>
       <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
       <option name="project" value="LOCAL" />
       <updated>1446214536052</updated>
     </task>
     <task id="LOCAL-00016" summary="Changed Section init and added test function test_morph&#10;&#10;Section was changed to allow the definition of morphology by either L and diam or by 3D and diam coordinates. The function test_morph plots the morphology of a cell.">
       <created>1446803136075</created>
       <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
       <option name="project" value="LOCAL" />
       <updated>1446803136076</updated>
     </task>
     <task id="LOCAL-00017" summary="Changed update_attr() method of Cell&#10;&#10;The method update_attr() is now able to add new paths to params defined by keys if they did not existed yet.">
       <created>1446819313111</created>
       <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
       <updated>1446819313111</updated>
     </task>
     <task id="LOCAL-00018" summary="Method substitute_section as method from Cell&#10;&#10;">
       <created>1447012653127</created>
       <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
       <option name="project" value="LOCAL" />
       <updated>1447012653127</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Fixed Bug generating candidate with 1 variable&#10;When bounds were given per variable but there was just one variable generator was jumping into the wrong condition and returning a nested list as a candidate. Changing order of if conditions fixed the problem.">
+      <created>1469885341711</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1469885341711</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fixed Bug &#10;Checks now whether bounds are given as float number or have len.">
+      <created>1469994796727</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1469994796727</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Fixed Bug&#10;Now bounds are first checked if length 1, then if they are iterable in which case you use the content as bounds.">
+      <created>1470041238920</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1470041238920</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Added functions to make comparable optimization for the different algorithms. Problem does now carry a cell (faster than to create on every evaluation).">
+      <created>1470308708620</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1470308708620</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Added histogram and 2d plot of performance of different parameters (to see which ones are easier to analyze)">
+      <created>1472479778122</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1472479778122</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Exchanged generator in inspired_extension and added testing suite">
+      <created>1472540316626</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1472540316626</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Made individuals_observer independent of pandas, changed candidate representation to white space separated numbers without square brackets and switched order of columns for better readability">
+      <created>1472658662068</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1472658662068</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Added sorting">
+      <created>1472743764336</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1472743764336</updated>
+    </task>
+    <task id="LOCAL-00027" summary="renaming">
+      <created>1472743940010</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1472743940010</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Abstract implementation of Problem and NormalizedProblem">
+      <created>1472763733521</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1472763733521</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Interface for the heka_reader to easily get data from heka patchmaster .dat files">
+      <created>1473705163938</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1473705163938</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Computes the capacitance of a cell from the hypTester protocol (small negative step current)">
+      <created>1473710907956</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1473710907956</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Refactored optimization mainly into optimization_settings, algorithm_settings and fitter">
+      <created>1476948249369</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1476948249369</updated>
+    </task>
+    <task id="LOCAL-00032" summary="To select and save traces from .dat files with the hekareader">
+      <created>1476948449104</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1476948449104</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Organized fitness landscape analysis">
+      <created>1477579165884</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1477579165884</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Some changes on fitnesslandscape analysis&#10;e.g. computation of minima">
+      <created>1478593567299</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1478593567299</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Some useful functions">
+      <created>1478594006017</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1478594006017</updated>
+    </task>
+    <task id="LOCAL-00036" summary="tries to find best fitness landscape by linear regression">
+      <created>1478597796754</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1478597796754</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Function to combine different fitness landscapes linearly">
+      <created>1478608202741</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1478608202741</updated>
+    </task>
+    <task id="LOCAL-00038" summary="made search for minima in 2d faster">
+      <created>1478684189890</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1478684189890</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Changed implementation of get_local_minima_2d to greatly improve speed">
+      <created>1478852890088</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1478852890088</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Changed implementation of get_local_minima_2d to greatly improve speed">
+      <created>1478852949785</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1478852949785</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Updated handtuner">
+      <created>1478971471400</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1478971471400</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Corrected get_DAP_deflection: now gives the absolute value&#10;Updated example wit units&#10;">
+      <created>1480509521502</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1480509521502</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Uses now matplotlib FigureCanvas and NavigationToolbar for plots">
+      <created>1480539377314</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1480539377314</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Variables are now initialized to their lower bound">
+      <created>1480583770654</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1480583770654</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Fixed unit conversion">
+      <created>1480583807772</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1480583807772</updated>
+    </task>
+    <task id="LOCAL-00046" summary="update handtuner">
+      <created>1481707940927</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1481707940927</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="Unittest_TestGenerators_test_randomNumberForEachLowerUpperBound - 2016.08.29 at 23h 19m 14s.xml">
+      <configuration name="Unittest TestGenerators.test_randomNumberForEachLowerUpperBound" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittest_TestGenerators_test_randomNumberForEachLowerUpperBound - 2016.08.29 at 23h 20m 30s.xml">
+      <configuration name="Unittest TestGenerators.test_randomNumberForEachLowerUpperBound" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittest_TestGenerators_test_randomNumberForEachLowerUpperBound - 2016.08.29 at 23h 20m 46s.xml">
+      <configuration name="Unittest TestGenerators.test_randomNumberForEachLowerUpperBound" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittest_TestGenerators_test_randomNumberForEachLowerUpperBound - 2016.08.29 at 23h 21m 22s.xml">
+      <configuration name="Unittest TestGenerators.test_randomNumberForEachLowerUpperBound" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittest_TestGenerators_test_randomNumbers,_test_assertLowerSmallerUpperBound - 2016.08.29 at 23h 23m 18s.xml">
+      <configuration name="Unittest TestGenerators.test_randomNumbers, test_assertLowerSmallerUpperBound" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittest_TestStringMethods_test_split - 2016.08.29 at 22h 18m 02s.xml">
+      <configuration name="Unittest TestStringMethods.test_split" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_TestGenerators - 2016.08.29 at 23h 25m 32s.xml">
+      <configuration name="Unittests in TestGenerators" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_TestGenerators - 2016.08.30 at 08h 50m 36s.xml">
+      <configuration name="Unittests in TestGenerators" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_TestGenerators - 2016.08.30 at 08h 52m 13s.xml">
+      <configuration name="Unittests in TestGenerators" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_TestGenerators_(1) - 2016.08.30 at 08h 57m 26s.xml">
+      <configuration name="Unittests in TestGenerators (1)" configurationId="tests" />
+    </history-entry>
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13681783" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26158446" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27653214" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25560537" sideWeight="0.49730977" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25560537" sideWeight="0.50269026" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32884902" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2543036" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36995155" sideWeight="0.5091633" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24512987" sideWeight="0.49721116" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23630673" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21753247" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28896105" sideWeight="0.49083665" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3538961" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39285713" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32884902" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.264574" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25560537" sideWeight="0.50269026" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13681783" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27653214" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25560537" sideWeight="0.49730977" order="2" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -812,25 +942,32 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added first version of cell_builder" />
-    <MESSAGE value="Fixed path to demo_cell in cell_builder" />
-    <MESSAGE value="Changed format for mechanisms in Cell.create and in demo neuron files" />
-    <MESSAGE value="Changed variable name filename to model_dir in class Cell()" />
-    <MESSAGE value="Set celsius in hoc&#10; &#10; Before celsius had no effect on runs of the cell." />
-    <MESSAGE value="Changed parameters: l, ra for Section to upper case&#10;&#10;NEURON parameters need to have the same name in python in order to be applied." />
-    <MESSAGE value="Changed demo directory&#10;&#10;Now demo is directly in folder cell_fitting." />
-    <MESSAGE value="New function in Class Cell: get_attr()&#10;&#10;Cell.get_attr(self,keys) allows the access of an attribute of Cell by a list of keys (same as used for update_attr)" />
-    <MESSAGE value="Changed :type specifications to lower case for python build-in types" />
-    <MESSAGE value="New function in Section Class: play_current&#10;&#10;The function play_current can be used to play a vector containing the current at each time step into a cell during a simulation." />
-    <MESSAGE value="First version of the optimizer&#10;&#10;Optimizer can be used for fitting cells with evoluationary multi-objective optimization to experimental data." />
-    <MESSAGE value="Commit .idea file from pycharm" />
-    <MESSAGE value="Add demo cells and data for testing and demonstrating code" />
-    <MESSAGE value="Added .gitignore" />
-    <MESSAGE value="Changed init of Section&#10;&#10;Sections are now initialized with the parameter geom instead of L, diam to allow to change between the L, diam and the pt3dadd representation of the geometry." />
-    <MESSAGE value="Changed Section init and added test function test_morph&#10;&#10;Section was changed to allow the definition of morphology by either L and diam or by 3D and diam coordinates. The function test_morph plots the morphology of a cell." />
-    <MESSAGE value="Changed update_attr() method of Cell&#10;&#10;The method update_attr() is now able to add new paths to params defined by keys if they did not existed yet." />
-    <MESSAGE value="Method substitute_section as method from Cell&#10;&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Method substitute_section as method from Cell&#10;&#10;" />
+    <MESSAGE value="Fixed Bug&#10;Now bounds are first checked if length 1, then if they are iterable in which case you use the content as bounds." />
+    <MESSAGE value="Added functions to make comparable optimization for the different algorithms. Problem does now carry a cell (faster than to create on every evaluation)." />
+    <MESSAGE value="Added histogram and 2d plot of performance of different parameters (to see which ones are easier to analyze)" />
+    <MESSAGE value="Exchanged generator in inspired_extension and added testing suite" />
+    <MESSAGE value="Made individuals_observer independent of pandas, changed candidate representation to white space separated numbers without square brackets and switched order of columns for better readability" />
+    <MESSAGE value="Added sorting" />
+    <MESSAGE value="renaming" />
+    <MESSAGE value="Abstract implementation of Problem and NormalizedProblem" />
+    <MESSAGE value="Interface for the heka_reader to easily get data from heka patchmaster .dat files" />
+    <MESSAGE value="Computes the capacitance of a cell from the hypTester protocol (small negative step current)" />
+    <MESSAGE value="Refactored optimization mainly into optimization_settings, algorithm_settings and fitter" />
+    <MESSAGE value="To select and save traces from .dat files with the hekareader" />
+    <MESSAGE value="Organized fitness landscape analysis" />
+    <MESSAGE value="Some changes on fitnesslandscape analysis&#10;e.g. computation of minima" />
+    <MESSAGE value="Some useful functions" />
+    <MESSAGE value="tries to find best fitness landscape by linear regression" />
+    <MESSAGE value="Function to combine different fitness landscapes linearly" />
+    <MESSAGE value="made search for minima in 2d faster" />
+    <MESSAGE value="Changed implementation of get_local_minima_2d to greatly improve speed" />
+    <MESSAGE value="Updated handtuner" />
+    <MESSAGE value="Corrected get_DAP_deflection: now gives the absolute value&#10;Updated example wit units&#10;" />
+    <MESSAGE value="Uses now matplotlib FigureCanvas and NavigationToolbar for plots" />
+    <MESSAGE value="Variables are now initialized to their lower bound" />
+    <MESSAGE value="Fixed unit conversion" />
+    <MESSAGE value="update handtuner" />
+    <option name="LAST_COMMIT_MESSAGE" value="update handtuner" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -840,7 +977,20 @@
           <line>203</line>
           <option name="timeStamp" value="153" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/optimization/fitfuns.py</url>
+          <line>339</line>
+          <option name="timeStamp" value="783" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file:///usr/local/lib/python2.7/dist-packages/scipy/optimize/_minimize.py</url>
+          <line>438</line>
+          <option name="timeStamp" value="827" />
+        </line-breakpoint>
       </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -848,431 +998,310 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="154" />
+      <option name="time" value="884" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="candidates" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/plot_data.py">
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest+vtrace4/L-BFGS-B/candidates.csv" />
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/modellandscape/gna_gk_highresolution/fitfuns/APamp/error.csv" />
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/modellandscape/gna_gk_highresolution/fitfuns/error_to_csv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest+vtrace_withweighting/L-BFGS-B/error_development_candidate0.png" />
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest+vtrace_withweighting/L-BFGS-B/error_development_candidate1.png" />
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest+vtrace_withweighting/L-BFGS-B/error_development_candidate2.png" />
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest+vtrace_withweighting2/L-BFGS-B/place_development_candidate0.png" />
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/follow_max_gradient/APamp+vrest+vtrace_withweighting2/L-BFGS-B/place_development_candidate1.png" />
+    <entry file="file://$PROJECT_DIR$/results/fitnesslandscapes/find_local_minima/combined_fitfuns/gna_gk_gpas/v_trace/Nelder-Mead/optimization_settings.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/find_local_minima.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15">
+          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/show_jumps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitness_along_line.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="53" selection-start-line="15" selection-start-column="53" selection-end-line="15" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitnesslandscape.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="114" column="4" selection-start-line="114" selection-start-column="4" selection-end-line="114" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/follow_max_gradient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="45" column="38" selection-start-line="45" selection-start-column="38" selection-end-line="45" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/inspyred_optimizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/optimization/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="34" column="28" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/optimizer_interface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/results/new_optimization/linearregression/test0/DEA/candidates.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-241">
+          <caret line="962" column="25" selection-start-line="962" selection-start-column="25" selection-end-line="962" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/results/new_optimization/linearregression/test0/L-BFGS-B/candidates.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="279" column="77" selection-start-line="279" selection-start-column="62" selection-end-line="279" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/channels/general/ka.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/general/kdr.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="-278">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/optimizer.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/general/hcn_fast.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="440" column="0" selection-start-line="440" selection-start-column="0" selection-end-line="440" selection-end-column="0" />
+        <state relative-caret-position="225">
+          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter_toymodel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="151" column="11" selection-start-line="151" selection-start-column="11" selection-end-line="151" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="225">
+          <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/optimizer.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/general/nat.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="45">
+          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
+    <entry file="file://$PROJECT_DIR$/results/new_optimization/linearregression/2015_08_26b/L-BFGS-B/cell.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="270">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/run_optimization.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="286">
+          <caret line="21" column="53" selection-start-line="21" selection-start-column="53" selection-end-line="21" selection-end-column="53" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/optimizer.py">
+    <entry file="file://$PROJECT_DIR$/optimization/linear_regression/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="135">
+          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/linearregressionfitter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="327" column="19" selection-start-line="327" selection-start-column="19" selection-end-line="327" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="720">
+          <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
+    <entry file="file://$PROJECT_DIR$/optimization/simulate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="255" column="20" selection-start-line="255" selection-start-column="20" selection-end-line="255" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="870">
+          <caret line="60" column="30" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/schmidthieber/kap.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="170" column="20" selection-start-line="170" selection-start-column="20" selection-end-line="170" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="170" column="20" selection-start-line="170" selection-start-column="20" selection-end-line="170" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="170" column="20" selection-start-line="170" selection-start-column="20" selection-end-line="170" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
+    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state relative-caret-position="123">
+          <caret line="57" column="10" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../programming/nrn_wrapper/nrn_wrapper/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="393" column="54" selection-start-line="393" selection-start-column="54" selection-end-line="393" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/channels/stellate/nap.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-180">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+    <entry file="file://$PROJECT_DIR$/results/new_optimization/linearregression/2015_08_26b/L-BFGS-B/candidates.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state relative-caret-position="692">
+          <caret line="252" column="9" selection-start-line="252" selection-start-column="5" selection-end-line="252" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/cells/dapmodel0.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/channels/stellate/nat.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-270">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
+    <entry file="file://$PROJECT_DIR$/optimization/linear_regression/scripts/optimize_toymodel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="135">
+          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/cell_fitting.iml">
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/numdifftools/core.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="135">
+          <caret line="621" column="0" selection-start-line="621" selection-start-column="0" selection-end-line="621" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/.name">
+    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="150">
+          <caret line="87" column="36" selection-start-line="87" selection-start-column="36" selection-end-line="87" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/dictionaries/caro.xml">
+    <entry file="file://$PROJECT_DIR$/integrate_hhmodel/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/model/channels/schmidthieber/nat.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="15">
+          <caret line="44" column="24" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/__init__.py">
+    <entry file="file://$PROJECT_DIR$/results/new_optimization/linearregression/2015_08_26b/improve_nat/L-BFGS-B/candidates.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="19" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
+        <state relative-caret-position="134">
+          <caret line="60" column="11" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd_exec.py">
+    <entry file="file://$PROJECT_DIR$/hodgkinhuxley_model/hh_solver.py" />
+    <entry file="file://$PROJECT_DIR$/hodgkinhuxley_model/run.py" />
+    <entry file="file://$PROJECT_DIR$/model/cells/hhCell.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08152174">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="150">
+          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib/python2.7/json/encoder.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+        <state relative-caret-position="150">
+          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/model/channels/hodgkinhuxley/na_hh.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        <state relative-caret-position="320">
+          <caret line="98" column="1" selection-start-line="98" selection-start-column="1" selection-end-line="98" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/matplotlib/axes/_axes.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/hodgkinhuxley/k_hh.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1366" column="0" selection-start-line="1366" selection-start-column="0" selection-end-line="1366" selection-end-column="0" />
+        <state relative-caret-position="470">
+          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../Studium/Master/Internship/Code&amp;Data/Project-all/Modelling/regular_spiking/eval_constcurrent.py">
+    <entry file="file://$PROJECT_DIR$/model/cells/competition_model.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61538464">
-          <caret line="64" column="24" selection-start-line="64" selection-start-column="24" selection-end-line="64" selection-end-column="24" />
+        <state relative-caret-position="7">
+          <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/lib/python2.7/json/__init__.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="289" column="0" selection-start-line="289" selection-start-column="0" selection-end-line="289" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/morphology/morph_hoc2morph_json.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6474359">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/json_utils/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/lib/python2.7/dist-packages/numpy/core/numeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="459" column="0" selection-start-line="459" selection-start-column="0" selection-end-line="459" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plot_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/optimize_passive_point.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.82051283">
-          <caret line="53" column="25" selection-start-line="53" selection-start-column="25" selection-end-line="53" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/cell_2013_12_13f/data_from_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/cell_2013_12_13f/singularize_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22435898">
-          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/cell_2013_12_13f/convert2csv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3525641">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/optimize_passive_reduced.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1777" column="0" selection-start-line="1777" selection-start-column="0" selection-end-line="1777" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/emoo/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cell_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/optimizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="311" column="65" selection-start-line="311" selection-start-column="65" selection-end-line="311" selection-end-column="65" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/optimize_passive_full.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/test_ionchannel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55128205">
-          <caret line="195" column="25" selection-start-line="195" selection-start-column="25" selection-end-line="195" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="226">
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>

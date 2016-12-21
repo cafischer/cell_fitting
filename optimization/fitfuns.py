@@ -1,6 +1,7 @@
 import numpy as np
-from statistics.analyze_APs import *
+from cell_characteristics.analyze_APs import *
 import scipy
+from optimization.errfuns import rms
 
 __author__ = 'caro'
 
@@ -310,6 +311,36 @@ def impedance(v, i_inj, dt, f_range):
     idx2 = np.argmin(np.abs(freqs-f_range[1]))
 
     return imp[idx1:idx2], freqs[idx1:idx2]
+
+
+def stefans_fun(v, t, i_inj, args):
+    threshold = args.get('threshold', -45)
+    penalty = args.get('penalty', 10)
+
+    # different behavior depending on number of APs
+    AP_onsets = get_AP_onsets(v, threshold)
+    if len(AP_onsets) == 1:
+        v_rest_data = args['v_rest']
+        APtime_data = args['APtime']
+        v_half2AP_data = args['v_half2AP']
+        dt = t[1] - t[0]
+        v_rest = get_v_rest(v, i_inj)
+        APtime = get_APtime(v, t, i_inj, args)
+        i_inj_start = np.where(i_inj > 0)[0][0]
+        time_i_inj2AP = APtime - i_inj_start
+        v_half2AP = v[(i_inj_start + time_i_inj2AP / 2) * dt]
+        return rms(v_rest, v_rest_data) / v_rest_data + rms(APtime, APtime_data) / APtime_data \
+               + rms(v_half2AP, v_half2AP_data) / v_half2AP_data
+    elif len(AP_onsets) == 0:
+        v_max_data = args['v_max']
+        v_max = np.max(v)
+        v_max /= v_max_data
+        return -v_max + penalty
+    else:
+        v_mean_data = args['v_mean']
+        v_mean = np.mean(v)
+        v_mean /= v_mean_data
+        return v_mean + penalty
 
 
 if __name__ == '__main__':

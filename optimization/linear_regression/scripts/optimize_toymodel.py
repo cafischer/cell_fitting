@@ -1,112 +1,115 @@
 import json
 import os
-
 import numpy as np
+import matplotlib.pyplot as pl
 from nrn_wrapper import Cell
-
 from optimization.simulate import currents_given_v
-from optimization.problems import CellFitProblem, get_channel_list, get_ionlist, convert_units
 from optimization.linear_regression import linear_regression, plot_fit
+from optimization.helpers import *
+from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
 
 __author__ = 'caro'
 
-# TODO
-from neuron import h
-from optimization.problems import complete_mechanismdir
-m_dir = '../../../model/channels/icgenealogy/Kchannels'
-h.nrn_load_dll(complete_mechanismdir(m_dir))
-m_dir = '../../../model/channels/icgenealogy/Nachannels'
-h.nrn_load_dll(complete_mechanismdir(m_dir))
-
 # parameter
-save_dir = '../../../results/linear_regression/dapmodelnaka/'
-n_trials = 1
+save_dir = '../../../results/linear_regression/test/'
+with_cm = False
 
-params = {
-          'name': 'CellFitProblem',
-          'maximize': False,
-          'normalize': True,
-          'model_dir': '../../../model/cells/dapmodelnaka.json',
-          'mechanism_dir': '../../../model/channels/schmidthieber',
-          'variables': [],
-          'data_dir': '../../../data/2015_08_11d/merged/step_dap_zap.csv',
-          'get_var_to_fit': 'get_v',
-          'fitnessweights': [1.0],
-          'errfun': 'rms',
-          'insert_mechanisms': True
-         }
+#variables = [
+#    [0, 1.0, [['soma', '0.5', 'na_hh', 'gnabar']]],
+#    [0, 1.0, [['soma', '0.5', 'pas', 'g']]],
+#    [0, 1.0, [['soma', '0.5', 'k_hh', 'gkbar']]]
+#]
+variables = [
+                [0, 1.0, [['soma', '0.5', 'pas', 'g']]],
+                [0, 1.0, [['soma', '0.5', 'ih_slow', 'gbar']]],
+                [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
+                [0, 1.0, [['soma', '0.5', 'kap', 'gbar']]],
+                [0, 1.0, [['soma', '0.5', 'nat', 'gbar']]],
+                [0, 1.0, [['soma', '0.5', 'na8st', 'gbar']]],
+                [0, 1.0, [['soma', '0.5', 'kdr', 'gbar']]],
+                [0, 1.0, [['soma', '0.5', 'ih_fast', 'gbar']]]
+            ]  # TODO must order be same as in channel_list!
+lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
 
-# create problem
-problem = CellFitProblem(**params)
+fitter_params = {
+                    'variable_keys': variable_keys,
+                    'errfun_name': 'rms',
+                    'fitfun_names': ['get_v'],
+                    'fitnessweights': [1],
+                    #'model_dir': '../../../model/cells/hhCell.json',
+                    #'mechanism_dir': '../../../model/channels/hodgkinhuxley',
+                    #'data_dir': '../../../data/toymodels/hhCell/ramp.csv',
+                    #'simulation_params': {'celsius': 6.3}
+                    'model_dir': '../../../model/cells/dapmodel0.json',
+                    'mechanism_dir': '../../../model/channels/schmidthieber',
+                    'data_dir': '../../../data/2015_08_26b/raw/rampIV/3.0(nA).csv',
+                    'simulation_params': {'celsius': 35}
+                }
+
+fitter = HodgkinHuxleyFitter(**fitter_params)
 
 # save all information
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
-with open(save_dir+'/problem.json', 'w') as f:
-    json.dump(params, f, indent=4)
+with open(save_dir+'/fitter.json', 'w') as f:
+    json.dump(fitter_params, f, indent=4)
 with open(save_dir+'/cell.json', 'w') as f:
-    json.dump(Cell.from_modeldir(params['model_dir']).get_dict(), f, indent=4)
+    json.dump(Cell.from_modeldir(fitter_params['model_dir']).get_dict(), f, indent=4)
 
-for trial in range(0, n_trials):
+# get current traces
+v_exp = fitter.data.v.values
+t_exp = fitter.data.t.values
+i_exp = fitter.data.i.values
+dt = t_exp[1] - t_exp[0]
+dvdt = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt]), np.diff(v_exp) / dt))
+candidate = np.ones(len(fitter.variable_keys))
+fitter.update_cell(candidate)
+channel_list = get_channel_list(fitter.cell, 'soma')
+ion_list = get_ionlist(channel_list)
+celsius = fitter.simulation_params['celsius']
 
-    # get current traces
-    v_exp = problem.data.v.values
-    t_exp = problem.data.t.values
-    i_exp = problem.data.i.values
-    dt = t_exp[1] - t_exp[0]
-    dvdt = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt]), np.diff(v_exp) / dt))
-    candidate = np.ones(len(problem.path_variables))
-    problem.update_cell(candidate)
-    channel_list = get_channel_list(problem.cell, 'soma')
-    ion_list = get_ionlist(channel_list)
-    celsius = problem.simulation_params['celsius']
+currents = currents_given_v(v_exp, t_exp, fitter.cell.soma, channel_list, ion_list, celsius)
 
-    currents = currents_given_v(v_exp, t_exp, problem.cell.soma, channel_list, ion_list, celsius)
+# convert units
+cell_area = get_cellarea(convert_unit_prefix('u', fitter.cell.soma.L),
+                         convert_unit_prefix('u', fitter.cell.soma.diam))  # m**2
+Cm = convert_unit_prefix('c', fitter.cell.soma.cm) * cell_area  # F
+i_inj = convert_unit_prefix('n', fitter.data.i.values)  # A
+currents = convert_unit_prefix('da', currents) * cell_area  # A
 
-    # convert units
-    dvdt_sc, i_inj_sc, currents_sc, Cm, cell_area = convert_units(problem.cell.soma.L, problem.cell.soma.diam,
-                                                          problem.cell.soma.cm, dvdt, i_exp,
-                                                          currents)
+# linear regression
+if with_cm:
+    weights_adjusted, weights, residual, y, X = linear_regression(dvdt, i_inj, currents, i_pas=0, Cm=None,
+                                                                  cell_area=cell_area)
+else:
+    weights, residual, y, X = linear_regression(dvdt, i_inj, currents, i_pas=0, Cm=Cm)
 
-    # linear regression
-    weights, residual, y, X = linear_regression(dvdt_sc, i_inj_sc, currents_sc, i_pas=0, Cm=Cm)
-    #weights, residual, y, X = linear_regression(dvdt_sc, i_inj_sc, currents_sc, i_pas=0, Cm=None, cell_area=cell_area)
-
-    # output
+# output
+if with_cm:
+    print 'cm: ' + str(weights_adjusted[-1])
+    print 'channels: ' + str(channel_list)
+    print 'weights: ' + str(weights_adjusted[:-1])
+else:
     print 'channels: ' + str(channel_list)
     print 'weights: ' + str(weights)
+print 'residual: ' + str(residual)
 
-    # plot fit
-    # plot in three parts
-    merge_points = [0, 22999, 26240, 550528]
-    for i in range(len(merge_points)-1):
-        y_plot = y[merge_points[i]:merge_points[i+1]]
-        X_plot = X[merge_points[i]:merge_points[i+1], :]
-        t_plot = t_exp[merge_points[i]:merge_points[i+1]]
-        plot_fit(y_plot, X_plot, weights, t_plot, channel_list, save_dir=save_dir+str(i))
+# plot fit
+plot_fit(y, X, weights, t_exp, channel_list)
 
-    # save
-    np.savetxt(save_dir+'/best_candidate_'+str(trial)+'.txt', weights)
-    np.savetxt(save_dir+'/error_'+str(trial)+'.txt', np.array([residual]))
+# save
+np.savetxt(save_dir+'/best_candidate.txt', weights)
+np.savetxt(save_dir+'/error.txt', np.array([residual]))
 
-    # simulate
-    #cm = weights[-1]
-    for i, w in enumerate(weights[:]):
-        keys = ['soma', '0.5', channel_list[i], 'gbar']
-        if channel_list[i] == 'pas':
-            keys = ['soma', '0.5', channel_list[i], 'g']
-            problem.cell.update_attr(keys, w)
-        elif 'ion' in channel_list[i]:
-            keys = None
-        else:
-            keys = ['soma', '0.5', channel_list[i], 'gbar']
-            problem.cell.update_attr(keys, w)
+# simulate
+if with_cm:
+    fitter.cell.update_attr(['soma', 'cm'], weights_adjusted[-1])
+    v, t, i = fitter.simulate_cell(weights_adjusted[:-1])
+else:
+    v, t, i = fitter.simulate_cell(weights)
 
-    from optimization.simulate import run_simulation
-    v, t = run_simulation(problem.cell, **problem.simulation_params)
 
-    import matplotlib.pyplot as pl
-    pl.figure()
-    pl.plot(t, problem.data.v, 'k')
-    pl.plot(t, v, 'r')
-    pl.show()
+pl.figure()
+pl.plot(t, fitter.data.v, 'k')
+pl.plot(t, v, 'r')
+pl.show()

@@ -4,7 +4,7 @@ import pandas as pd
 import itertools
 from optimization.fitnesslandscape import *
 
-save_dir = '../../results/fitnesslandscapes/find_local_minima/combined_fitfuns/gna_gk/v_trace_maxabs/trust-ncg/'
+save_dir = '../../results/fitnesslandscapes/follow_max_gradient/gna_gk/APamp+vrest_sum/TNC/'
 optimum = [0.12, 0.036]  #, 0.0003]
 
 candidates = pd.read_csv(save_dir + 'candidates.csv')
@@ -18,7 +18,8 @@ for index, row in candidates[candidates.generation == 0].iterrows():
     minimum = np.argmin(candidates[candidates.id == row.id].fitness)
     if minimum is np.nan:
         minimum = index
-    local_minimum_per_candidate[tuple(row.candidate)] = candidates.ix[minimum].candidate
+    if any(candidates[candidates.id == row.id].success):
+        local_minimum_per_candidate[tuple(row.candidate)] = candidates.ix[minimum].candidate
 
 distance = lambda x, y: np.abs(np.array(x) - np.array(y))
 attraction_basins = assign_candidates_to_attraction_basin(local_minimum_per_candidate, distance, delta=10 ** (-3))

@@ -1,12 +1,14 @@
 import numpy as np
 import os
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as pl
 from optimization.fitnesslandscape import *
 
-save_dir = '../../results/modellandscape/hhCell/gna_gk/'
-new_folder = 'fitfuns/APamp+v_trace+penalize_not1AP'
-folders = ['fitfuns/APamp', 'fitfuns/v_trace+penalize_not1AP']
-fitfuns = ['APamp', 'v_trace+penalize_not1AP']
+save_dir = '../../results/fitnesslandscapes/modellandscape/gna_gk_highresolution/'
+new_folder = 'fitfuns/APamp+v_trace'
+folders = ['fitfuns/APamp', 'fitfuns/v_trace']
+fitfuns = ['APamp', 'v_trace']
 order = 1
 optimum = [0.12, 0.036]
 
@@ -21,7 +23,7 @@ for folder in folders:
 p1_range = np.loadtxt(save_dir + '/p1_range.txt')
 p2_range = np.loadtxt(save_dir + '/p2_range.txt')
 
-error = np.array(map(np.add, *errors))
+error = np.array(map(np.maximum, *errors))
 
 if not os.path.exists(save_dir + '/' + new_folder + '/'):
     os.makedirs(save_dir + '/' + new_folder + '/')
@@ -30,12 +32,14 @@ with open(save_dir + '/' + new_folder + '/error.npy', 'w') as f:
 with open(save_dir + '/' + new_folder + '/has_1AP.npy', 'w') as f:
     np.save(f, has_1AP_mat)
 
-minima_xy = get_local_minima_2d(error, order)
+minima2d = get_local_minima_2d(error)
+with open(save_dir + '/' + new_folder + '/minima2d.npy', 'w') as f:
+    np.save(f, np.array(minima2d))
 
 P1, P2 = np.meshgrid(p1_range, p2_range)
 fig, ax = pl.subplots()
 im = ax.pcolormesh(P1, P2, np.ma.masked_invalid(error).T)
-for minimum in minima_xy:
+for minimum in minima2d:
     if has_1AP_mat[minimum[0], minimum[1]]:
         ax.plot(p1_range[minimum[0]], p2_range[minimum[1]], 'ow')
     else:

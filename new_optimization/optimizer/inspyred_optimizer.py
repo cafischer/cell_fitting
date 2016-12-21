@@ -1,12 +1,9 @@
-import functools
-
 import inspyred
+import functools
 import pandas as pd
-
-from new_optimization import *
+from new_optimization import create_pseudo_random_number_generator
+from new_optimization.optimizer.optimizer_interface import Optimizer
 from optimization.bio_inspired import evaluators, generators, observers
-from optimization.bio_inspired.inspyred_extension import generators
-from optimization.bio_inspired.inspyred_extension import observers
 from util import *
 
 
@@ -70,10 +67,10 @@ class InspyredOptimizer(Optimizer):
         # arguments evolve: (generator, evaluator, pop_size=100, seeds=None, maximize=True, bounder=None, **args)
 
 
-class SimulatedAnnealing(InspyredOptimizer):
+class SimulatedAnnealingOptimizer(InspyredOptimizer):
 
     def __init__(self, optimization_settings, algorithm_settings):
-        super(SimulatedAnnealing, self).__init__(optimization_settings, algorithm_settings)
+        super(SimulatedAnnealingOptimizer, self).__init__(optimization_settings, algorithm_settings)
 
         if self.algorithm_settings.normalize:
             self.algorithm.observer = observers.normalize_observer(observers.collect_observer,

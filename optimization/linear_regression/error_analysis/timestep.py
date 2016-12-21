@@ -1,9 +1,7 @@
 from time import time
 from random import Random
-
 import numpy as np
 import matplotlib.pyplot as pl
-
 from data import change_dt
 from optimization.simulate import extract_simulation_params, run_simulation
 from optimization.errfuns import rms
