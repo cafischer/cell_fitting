@@ -1,53 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="Variables are now initial">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/general/hcn_fast.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/general/hcn_slow.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/general/ka.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/general/nap.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/optimizer/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/optimizer/optimizer_interface.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_gradientlandscape.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/integrate_hhmodel/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/simulate_candidates.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizers/scipy_optimizer.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/optimizers/inspyred_optimizer.py" afterPath="$PROJECT_DIR$/new_optimization/optimizer/inspyred_optimizer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/optimizers/random_optimizer.py" afterPath="$PROJECT_DIR$/new_optimization/optimizer/random_optimizer.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/scripts/stellate_model.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/run_optimization.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/statistics/__init__.py" afterPath="$PROJECT_DIR$/cell_characteristics/__init__.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/statistics/analyze_APs.py" afterPath="$PROJECT_DIR$/cell_characteristics/analyze_APs.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/statistics/compute_capacitance.py" afterPath="$PROJECT_DIR$/cell_characteristics/compute_capacitance.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cell_fitting.iml" afterPath="$PROJECT_DIR$/.idea/cell_fitting.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/fitter/linearregressionfitter.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/scripts/follow_max_gradient.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter_toymodel.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/scripts/show_jumps.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/scripts/test_follow_max_gradient.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitness.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/optimization/linear_regression/scripts/plot_cmdvdt.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizers/__init__.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/artificial_data/create_data.py" afterPath="$PROJECT_DIR$/data/artificial_data/create_data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/save_traces_by_heakareader.py" afterPath="$PROJECT_DIR$/data/save_traces_by_heakareader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/toymodels/create_data.py" afterPath="$PROJECT_DIR$/data/toymodels/create_data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/cells/dapmodel0.json" afterPath="$PROJECT_DIR$/model/cells/dapmodel0.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/__init__.py" afterPath="$PROJECT_DIR$/new_optimization/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/fitter/__init__.py" afterPath="$PROJECT_DIR$/new_optimization/fitter/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" afterPath="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/find_local_minima.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/find_local_minima.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/test_script.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/test_script.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/bio_inspired/observers.py" afterPath="$PROJECT_DIR$/optimization/bio_inspired/observers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitfuns.py" afterPath="$PROJECT_DIR$/optimization/fitfuns.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/attraction_basins_from_gradientdescent.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/attraction_basins_from_gradientdescent.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/combine_fitnesslandscapes.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/combine_fitnesslandscapes.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_fitnesslandscape.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_fitnesslandscape.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitnesslandscape.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitnesslandscape.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/save_minima_descent.py" afterPath="$PROJECT_DIR$/optimization/fitnesslandscape/save_minima_descent.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/gradient_based/__init__.py" afterPath="$PROJECT_DIR$/optimization/gradient_based/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/helpers.py" afterPath="$PROJECT_DIR$/optimization/helpers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/linear_regression/__init__.py" afterPath="$PROJECT_DIR$/optimization/linear_regression/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/linear_regression/error_analysis/timestep.py" afterPath="$PROJECT_DIR$/optimization/linear_regression/error_analysis/timestep.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/linear_regression/scripts/estimate_cellsize.py" afterPath="$PROJECT_DIR$/optimization/linear_regression/scripts/estimate_cellsize.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/linear_regression/scripts/optimize_toymodel.py" afterPath="$PROJECT_DIR$/optimization/linear_regression/scripts/optimize_toymodel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/old_optimization/evaluation.py" afterPath="$PROJECT_DIR$/optimization/old_optimization/evaluation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/simulate.py" afterPath="$PROJECT_DIR$/optimization/simulate.py" />
     </list>
     <ignored path="cell_fitting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,8 +61,8 @@
       <file leaf-file-name="evaluate.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+            <state relative-caret-position="136">
+              <caret line="18" column="67" selection-start-line="18" selection-start-column="67" selection-end-line="18" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -248,6 +211,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="optimization" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_characteristics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -255,7 +246,7 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/hodgkinhuxley_model" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../programming/nrn_wrapper" />
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
@@ -859,7 +850,14 @@
       <option name="project" value="LOCAL" />
       <updated>1481707940927</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Updates">
+      <created>1482341042768</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1482341042768</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -942,7 +940,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed Bug&#10;Now bounds are first checked if length 1, then if they are iterable in which case you use the content as bounds." />
     <MESSAGE value="Added functions to make comparable optimization for the different algorithms. Problem does now carry a cell (faster than to create on every evaluation)." />
     <MESSAGE value="Added histogram and 2d plot of performance of different parameters (to see which ones are easier to analyze)" />
     <MESSAGE value="Exchanged generator in inspired_extension and added testing suite" />
@@ -967,7 +964,8 @@
     <MESSAGE value="Variables are now initialized to their lower bound" />
     <MESSAGE value="Fixed unit conversion" />
     <MESSAGE value="update handtuner" />
-    <option name="LAST_COMMIT_MESSAGE" value="update handtuner" />
+    <MESSAGE value="Updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1299,8 +1297,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+        <state relative-caret-position="136">
+          <caret line="18" column="67" selection-start-line="18" selection-start-column="67" selection-end-line="18" selection-end-column="67" />
           <folding />
         </state>
       </provider>
