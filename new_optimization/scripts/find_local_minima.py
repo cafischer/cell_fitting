@@ -27,7 +27,7 @@ errfun = 'rms'
 fitfun = ['get_APamp']  #['get_v', 'penalize_not1AP', 'get_APamp']
 fitnessweights = [1]
 model_dir = '../../model/cells/hhCell.json'
-mechanism_dir = '../../model/channels/hodgkinhuxley'
+mechanism_dir = '../../model/vclamp/hodgkinhuxley'
 data_dir = '../../data/toymodels/hhCell/ramp.csv'
 
 window_before = 5

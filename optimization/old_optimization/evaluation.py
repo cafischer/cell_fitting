@@ -1,5 +1,4 @@
 from __future__ import division
-
 import pandas as pd
 import numpy as np
 import re
@@ -11,9 +10,10 @@ import os
 from itertools import combinations
 import numpy.ma as ma
 
+from optimization.simulate import extract_simulation_params
 from optimization.errfuns import rms
 from optimization.helpers import get_lowerbound_upperbound_keys
-from nrn_wrapper import Cell, load_mechanism_dir
+from nrn_wrapper import *
 
 __author__ = 'caro'
 
@@ -190,6 +190,40 @@ class Evaluator:
 
         return candidate, fitness
 
+    def plot_fitness_by_generation(self, save_dir, n_params, trial, save_dir_plots):
+
+        pl.figure()
+
+        # change color cycle
+        cmap = pl.get_cmap('jet')
+        colors = cmap(np.linspace(0.1, 0.9, len(self.methods)))
+        for m, method in enumerate(methods):
+
+            # read individuals_file
+            save_dir_trial = save_dir[n_params-1] + method + '/' + 'trial' + str(trial) + '/'
+            path = save_dir_trial + 'individuals_file.csv'
+            individuals_file = pd.read_csv(path,
+                                           dtype={'generation': np.int64, 'number': np.int64, 'fitness': np.float64,
+                                                  'candidate': str})
+            # find best candidate
+            n_generations = individuals_file.generation.iloc[-1]
+            if not os.path.exists(save_dir_plots):
+                os.makedirs(save_dir_plots)
+
+            # best fitness
+            fitness_min = np.zeros(n_generations)
+            for generation in range(n_generations):
+                fitness_min[generation] = np.min(
+                    individuals_file.fitness[individuals_file.generation.isin([generation])])
+
+            # plot
+            pl.plot(range(n_generations), fitness_min, color=colors[m], label=method)
+        pl.xlabel('Generation', fontsize=16)
+        pl.ylabel('Fitness', fontsize=16)
+        pl.legend()
+        pl.savefig(save_dir_plots+'nparams'+str(n_params)+'_trial'+str(trial)+'.png')
+        pl.show()
+
     def hist_mean_error_variable_comb(self, save_dir, n_param, name_error_weights='error_weights'):
 
         if not os.path.exists(self.save_dir_statistics+'histograms/'+str(n_param)+'param/'):
@@ -290,6 +324,32 @@ class Evaluator:
         translated_variable_comb.sort()
         return tuple(translated_variable_comb)
 
+    def plot_candidate(self, n_param, trial, method):
+        with open(self.save_dirs[n_param-1]+'specification/trial'+str(trial)+'/problem.json', 'r') as f:
+            problem = json.load(f)
+        data = pd.read_csv(problem['data_dir'])
+        simulation_params = extract_simulation_params(data, **{'celsius': problem['simulation_params']['celsius']})
+
+        # create cell
+        candidate, _ = self.get_candidate_and_fitness(self.save_dirs[n_param-1]+method+'/', trial)
+        model_dir = self.save_dirs[n_param-1]+'specification/trial'+str(trial)+'/cell.json'
+        _, _, variable_keys = get_lowerbound_upperbound_keys(problem['variables'])
+        cell = Cell.from_modeldir(model_dir, mechanism_dir=problem['mechanism_dir'])
+        cell.insert_mechanisms(variable_keys)
+        for i in range(len(candidate)):
+            for path in variable_keys[i]:
+                cell.update_attr(path, candidate[i])
+
+        v_candidate, t_candidate = iclamp(cell, **simulation_params)
+
+        pl.figure()
+        pl.plot(data.t, data.v, 'k', label='data')
+        pl.plot(t_candidate, v_candidate, 'r', label='fit')
+        pl.legend(fontsize=14)
+        pl.show()
+
+        return v_candidate, t_candidate
+
 
 if __name__ == '__main__':
     # parameter
@@ -312,10 +372,17 @@ if __name__ == '__main__':
 
     evaluator = Evaluator(save_dir_statistics, save_dirs, n_trials, methods)
     #evaluator.save_error_weights_and_best_fitness()
-    evaluator.save_statistics()
+    #evaluator.save_statistics()
     #evaluator.plot_statistic('rms(param)', 'mean')
     #evaluator.plot_statistic('rms(param)', 'min')
-    evaluator.plot_statistic('rms(v)', 'mean')
+    #evaluator.plot_statistic('rms(v)', 'mean')
     #evaluator.plot_statistic('rms(v)', 'min')
     #evaluator.hist_mean_error_variable_comb(save_dirs[0], 1)
     #evaluator.plot_2d_mean_error_variable_comb()
+
+    #save_dir_fitness_by_generation = save_dir_statistics + 'fitness_by_generation/'
+    #p = 10
+    #trial = 4
+    #evaluator.plot_fitness_by_generation(save_dirs, p, trial, save_dir_fitness_by_generation)
+
+    evaluator.plot_candidate(10, 4, 'L-BFGS-B')

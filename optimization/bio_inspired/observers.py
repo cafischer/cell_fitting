@@ -16,7 +16,8 @@ def individuals_observer(population, num_generations, num_evaluations, args):
 
     population = sorted(enumerate(population), key=lambda x: x[1].fitness)
     for id, p in population:
-        individuals_file.write('{0},{1},{2},{3}\n'.format(num_generations, id, p.fitness,
+        individuals_file.write('{0},{1},{2},{3}\n'.format(num_generations, id,
+                                                str(p.fitness).replace(',', '').replace('[', '').replace(']', ''),
                                                 str(p.candidate).replace(',', '').replace('[', '').replace(']', '')))
     individuals_file.flush()
 

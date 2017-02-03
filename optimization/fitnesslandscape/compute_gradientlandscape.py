@@ -17,7 +17,7 @@ chunk_size = 100
 variable_keys = [[['soma', '0.5', 'na_hh', 'gnabar']],
                  [['soma', '0.5', 'k_hh', 'gkbar']]]
 model_dir = '../../model/cells/hhCell.json'
-mechanism_dir = '../../model/channels/hodgkinhuxley'
+mechanism_dir = '../../model/vclamp/hodgkinhuxley'
 data_dir = '../../data/toymodels/hhCell/ramp.csv'
 args = {'threshhold': -30}
 if not os.path.exists(save_dir+ fitfun_names[0]):

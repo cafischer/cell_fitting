@@ -20,7 +20,7 @@ variables = [
             #[0, 0.6, [['soma', '0.5', 'pas', 'g']]]
             ]
 model_dir = '../../model/cells/hhCell.json'
-mechanism_dir = '../../model/channels/hodgkinhuxley'
+mechanism_dir = '../../model/vclamp/hodgkinhuxley'
 data_dir = '../../data/toymodels/hhCell/ramp.csv'
 
 if not os.path.exists(save_dir):

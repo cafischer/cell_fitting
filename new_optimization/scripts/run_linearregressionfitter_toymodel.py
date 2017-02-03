@@ -25,7 +25,7 @@ lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(varia
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
 
 model_dir = '../../model/cells/hhCell.json'
-mechanism_dir = '../../model/channels/hodgkinhuxley'
+mechanism_dir = '../../model/vclamp/hodgkinhuxley'
 data_dir = '../../data/toymodels/hhCell/ramp.csv'
 fitter = LinearRegressionFitter(variable_keys, model_dir, mechanism_dir, data_dir, simulation_params={'celsius': 6.3})
 

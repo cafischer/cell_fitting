@@ -24,7 +24,7 @@ errfun = 'rms'
 fitfun = ['get_v']
 fitnessweights = [1]
 model_dir = '../../../model/cells/dapmodel0.json'
-mechanism_dir = '../../../model/channels/schmidthieber'
+mechanism_dir = '../../../model/vclamp/schmidthieber'
 data_dir = '../../../data/2015_08_26b/rampIV/3.0(nA).csv'
 
 fitter = HodgkinHuxleyFitter(variable_keys, errfun, fitfun, fitnessweights,

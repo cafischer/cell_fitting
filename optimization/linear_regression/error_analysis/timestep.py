@@ -25,7 +25,7 @@ params = {
           'maximize': False,
           'normalize': True,
           'model_dir': '../../../model/cells/toymodel1.json',
-          'mechanism_dir': '../../../model/channels/schmidthieber',
+          'mechanism_dir': '../../../model/vclamp/schmidthieber',
           'variables': variables,
           'data_dir': '../../../data/toymodels/toymodel1/ramp.csv',
           'get_var_to_fit': 'get_v',

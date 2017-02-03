@@ -60,3 +60,11 @@ def plot_fit(y, X, weights, t, channel_list, i_pas=0, save_dir=None):
     pl.tight_layout()
     if save_dir is not None: pl.savefig(save_dir+'bestfit_currents.png')
     pl.show()
+
+
+def sort_weights_by_variable_keys(channel_list, weights, variable_keys):
+    channel_names = [k[0][2] for k in variable_keys]
+    channel_dict = {channel_names[i]: i for i in range(len(channel_names))}
+    channel_list_ordered = [channel_dict[c] for c in channel_list]
+    sorted_weights = [c for (n, c) in sorted(zip(channel_list_ordered, weights))]
+    return sorted_weights

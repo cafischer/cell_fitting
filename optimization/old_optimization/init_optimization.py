@@ -65,7 +65,7 @@ for trial in range(n_trials):
               'maximize': False,
               'normalize': True,
               'model_dir': '../../model/cells/hhCell.json',
-              'mechanism_dir': '../../model/channels/hodgkinhuxley',
+              'mechanism_dir': '../../model/vclamp/hodgkinhuxley',
               'variables': variables,
               'data_dir': '../../data/toymodels/hhCell/ramp.csv',
               'get_var_to_fit': 'get_v',

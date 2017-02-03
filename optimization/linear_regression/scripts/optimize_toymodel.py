@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as pl
 from nrn_wrapper import Cell
 from optimization.simulate import currents_given_v
-from optimization.linear_regression import linear_regression, plot_fit
+from optimization.linear_regression import *
 from optimization.helpers import *
 from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
 
@@ -15,20 +15,21 @@ save_dir = '../../../results/linear_regression/test/'
 with_cm = False
 
 #variables = [
-#    [0, 1.0, [['soma', '0.5', 'na_hh', 'gnabar']]],
-#    [0, 1.0, [['soma', '0.5', 'pas', 'g']]],
-#    [0, 1.0, [['soma', '0.5', 'k_hh', 'gkbar']]]
+#    [0, 1.0, [['soma', '0.5', 'na_hh', 'gbar']]],
+#    [0, 1.0, [['soma', '0.5', 'k_hh', 'gbar']]],
+#    [0, 1.0, [['soma', '0.5', 'pas', 'g']]]
 #]
 variables = [
+                [0, 1.0, [['soma', '0.5', 'ka', 'gbar']]],
                 [0, 1.0, [['soma', '0.5', 'pas', 'g']]],
                 [0, 1.0, [['soma', '0.5', 'ih_slow', 'gbar']]],
                 [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
-                [0, 1.0, [['soma', '0.5', 'kap', 'gbar']]],
                 [0, 1.0, [['soma', '0.5', 'nat', 'gbar']]],
-                [0, 1.0, [['soma', '0.5', 'na8st', 'gbar']]],
+                #[0, 1.0, [['soma', '0.5', 'na8st', 'gbar']]],
+                [0, 1.0, [['soma', '0.5', 'narsg', 'gbar']]],
                 [0, 1.0, [['soma', '0.5', 'kdr', 'gbar']]],
                 [0, 1.0, [['soma', '0.5', 'ih_fast', 'gbar']]]
-            ]  # TODO must order be same as in channel_list!
+            ]
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
 
 fitter_params = {
@@ -40,8 +41,8 @@ fitter_params = {
                     #'mechanism_dir': '../../../model/channels/hodgkinhuxley',
                     #'data_dir': '../../../data/toymodels/hhCell/ramp.csv',
                     #'simulation_params': {'celsius': 6.3}
-                    'model_dir': '../../../model/cells/dapmodel0.json',
-                    'mechanism_dir': '../../../model/channels/schmidthieber',
+                    'model_dir': '../../../model/cells/dapmodel_simpel.json',
+                    'mechanism_dir': '../../../model/vclamp/stellate',
                     'data_dir': '../../../data/2015_08_26b/raw/rampIV/3.0(nA).csv',
                     'simulation_params': {'celsius': 35}
                 }
@@ -87,10 +88,10 @@ else:
 # output
 if with_cm:
     print 'cm: ' + str(weights_adjusted[-1])
-    print 'channels: ' + str(channel_list)
+    print 'vclamp: ' + str(channel_list)
     print 'weights: ' + str(weights_adjusted[:-1])
 else:
-    print 'channels: ' + str(channel_list)
+    print 'vclamp: ' + str(channel_list)
     print 'weights: ' + str(weights)
 print 'residual: ' + str(residual)
 
@@ -104,9 +105,11 @@ np.savetxt(save_dir+'/error.txt', np.array([residual]))
 # simulate
 if with_cm:
     fitter.cell.update_attr(['soma', 'cm'], weights_adjusted[-1])
-    v, t, i = fitter.simulate_cell(weights_adjusted[:-1])
+    candidate = sort_weights_by_variable_keys(channel_list, weights_adjusted[:-1], variable_keys)
+    v, t, i = fitter.simulate_cell(candidate)
 else:
-    v, t, i = fitter.simulate_cell(weights)
+    candidate = sort_weights_by_variable_keys(channel_list, weights, variable_keys)
+    v, t, i = fitter.simulate_cell(candidate)
 
 
 pl.figure()

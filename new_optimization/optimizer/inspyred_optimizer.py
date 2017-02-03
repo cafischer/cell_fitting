@@ -9,12 +9,13 @@ from util import *
 
 class InspyredOptimizer(Optimizer):
 
-    kind_of_algorithm = {'DEA': 'ec', 'PSO': 'swarm', 'SA': 'ec'}
+    kind_of_algorithm = {'DEA': ['ec'], 'PSO': ['swarm'], 'SA': ['ec'], 'NSGA2': ['ec', 'emo']}
 
     def __init__(self, optimization_settings, algorithm_settings):
         super(InspyredOptimizer, self).__init__(optimization_settings, algorithm_settings)
 
         self.algorithm = self.get_algorithm()
+        self.set_optimization_params()
         self.args = self.set_args()
 
         observer = observers.individuals_observer
@@ -47,7 +48,14 @@ class InspyredOptimizer(Optimizer):
         algorithm_name = self.algorithm_settings.algorithm_name
         algorithm_kind = InspyredOptimizer.kind_of_algorithm[algorithm_name]
         random = create_pseudo_random_number_generator(self.optimization_settings.seed)
-        return getattr(getattr(inspyred, algorithm_kind), algorithm_name)(random)
+        return getattr(reduce(getattr, [inspyred] + algorithm_kind), algorithm_name)(random)
+
+    def set_optimization_params(self):
+        if self.algorithm_settings.optimization_params is not None:
+            variator_names = self.algorithm_settings.optimization_params.get('variator')
+            if variator_names is not None:
+                variators = [getattr(inspyred.ec.variators, name) for name in variator_names]
+                self.algorithm.variator = variators
 
     def set_args(self):
         args = dict()

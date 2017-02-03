@@ -42,7 +42,7 @@ def currents_given_v(v, t, sec, channel_list, ion_list, celsius, plot=False):
     :type t: array_like
     :param sec: Section where to apply the voltage clamp.
     :type sec: Section
-    :param channel_list: List of ion channels that shall be measured.
+    :param channel_list: List of ion vclamp that shall be measured.
     :type channel_list: array_like
     :param ion_list: List of ions that flow to the respective ion channel in the list.
     :type ion_list: array_like

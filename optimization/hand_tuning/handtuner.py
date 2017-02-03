@@ -26,7 +26,7 @@ if __name__ == '__main__':
           'fitfun_names': ['get_v'],
           'fitnessweights': [1],
           'model_dir': '../../model/cells/dapmodel_simpel.json',
-          'mechanism_dir': '../../model/channels/stellate',
+          'mechanism_dir': '../../model/vclamp/stellate',
           'data_dir': '../../data/2015_08_26b/raw/rampIV/3.0(nA).csv',
           'simulation_params': {'celsius': 35}
          }

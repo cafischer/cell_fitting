@@ -8,7 +8,7 @@ __author__ = 'caro'
 data_real_dir = '../toymodels/hhCell/ramp2.csv'
 data_new_dir = '../toymodels/hhCell/ramp2.csv'
 model_dir = '../../model/cells/competition_model.json'
-mechanism_dir = '../../model/channels/hodgkinhuxley'
+mechanism_dir = '../../model/vclamp/hodgkinhuxley'
 
 data_real = pd.read_csv(data_real_dir)
 
