@@ -7,8 +7,9 @@ from cell_characteristics.fIcurve import *
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_26b/22_01_17_readjust1/L-BFGS-B/'
+    save_dir = '../../results/new_optimization/2015_08_26b/01_02_17_readjust_newih0/L-BFGS-B/'
     data_dir = '../../data/2015_08_26b/corrected_vrest2/IV/'
+    n_best = 0
 
     # data
     v_traces_data = list()
@@ -31,7 +32,7 @@ if __name__ == '__main__':
         data = pd.read_csv(data_dir+file_name)
         optimization_settings['fitter']['data_dir'] = data_dir+file_name
         fitter = HodgkinHuxleyFitter(**optimization_settings['fitter'])
-        candidate = get_best_candidate(save_dir, n_best=1)
+        candidate = get_best_candidate(save_dir, n_best)
         v_model, _, _ = fitter.simulate_cell(candidate)
         v_traces_model.append(v_model)
 

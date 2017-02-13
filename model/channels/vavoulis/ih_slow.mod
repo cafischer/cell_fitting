@@ -1,17 +1,17 @@
+NEURON {
+    SUFFIX hcn_slow
+    NONSPECIFIC_CURRENT i
+    RANGE i, gbar, ehcn
+    RANGE n_vh, n_vs, n_tau_min, n_tau_max, n_tau_delta
+}
 UNITS {
         (mA) = (milliamp)
         (mV) = (millivolt)
 	    (S) = (siemens)
 }
 
-NEURON {
-        SUFFIX kdr
-        USEION k READ ek WRITE ik
-        RANGE gbar, ik
-		RANGE n_vh, n_vs, n_tau_min, n_tau_max, n_tau_delta
-        }
-
 PARAMETER {
+        ehcn = -20
         gbar = 0.12 (S/cm2)
 		n_vh = 0
         n_vs = 0
@@ -26,15 +26,14 @@ STATE {
 
 ASSIGNED {
         v (mV)
-        ek (mV)
-        ik (mA/cm2)
+        i (mA/cm2)
         ninf 
-	    ntau (ms) 
+	ntau (ms) 
 }
 
 BREAKPOINT {
         SOLVE states METHOD cnexp
-	    ik = gbar*n*n*n*n*(v - ek)
+	    i = gbar*n*(v - ehcn)
 }
 
 

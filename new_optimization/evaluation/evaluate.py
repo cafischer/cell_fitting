@@ -96,8 +96,6 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
     optimization_settings['fitter']['data_dir'] = data_dir
     optimization_settings['fitter']['mechanism_dir'] = None
     fitter = HodgkinHuxleyFitter(**optimization_settings['fitter'])
-    #fitter.simulation_params['v_init'] = -59
-    #fitter.simulation_params['i_inj'] *= 1
     v_model, t, i_inj = fitter.simulate_cell(candidate)
 
     #optimization_settings['fitter']['data_dirs'][0] = data_dir
@@ -189,13 +187,15 @@ def get_channel_params(channel_name, candidate, save_dir):
     return channel_params
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_26b/01_02_17_readjust0/'
+    save_dir = '../../results/new_optimization/2015_08_26b/01_02_17_readjust_newih0/'
     method = 'L-BFGS-B'
 
     #plot_candidate(save_dir + method + '/', id=261, generation=500)
     best_candidate = plot_best_candidate(save_dir+method+'/', 0)
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
+                                 '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv')
     plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/rampIV/0.5(nA).csv')
-    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/-0.15(nA).csv')
+    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/-0.1(nA).csv')
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/0.4(nA).csv')
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/1.0(nA).csv')
     #plot_min_error_vs_generation(save_dir+method+'/')
