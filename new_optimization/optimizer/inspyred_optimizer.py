@@ -5,15 +5,18 @@ from new_optimization import create_pseudo_random_number_generator
 from new_optimization.optimizer.optimizer_interface import Optimizer
 from optimization.bio_inspired import evaluators, generators, observers
 from util import *
-from new_optimization import OptimizationSettings, AlgorithmSettings
+from new_optimization.fitter import *
 
 
-def mp_evaluator(candidate, args):
+def mp_evaluator(candidate, args):  # top-level evaluator for multiprocessing
     args['optimization_settings']['fitter_params']['mechanism_dir'] = None
-    optimization_settings = OptimizationSettings(**args['optimization_settings'])
-    algorithm_settings = AlgorithmSettings(**args['algorithm_settings'])
-    optimizer = InspyredOptimizer(optimization_settings, algorithm_settings)
-    return optimizer.evaluator(candidate, args)
+    fitter = FitterFactory().make_fitter(args['optimization_settings']['fitter_params'])
+    evaluator = evaluators.create_evaluator(fitter.evaluate_fitness)
+    if args['algorithm_settings']['normalize']:
+        evaluator = evaluators.normalize_evaluator(evaluator,
+                                                   args['optimization_settings'].bounds['lower_bounds'],
+                                                   args['optimization_settings'].bounds['upper_bounds'])
+    return evaluator(candidate, args)
 
 
 class InspyredOptimizer(Optimizer):
@@ -46,7 +49,7 @@ class InspyredOptimizer(Optimizer):
                                                             self.optimization_settings.bounds['upper_bounds'])
             self.bounder = inspyred.ec.Bounder(0, 1)
         else:
-            self.algorithm.observer = inspyred.ec.observers.file_observer # TODO observer
+            self.algorithm.observer = observer
             self.generator = generator
             self.bounder = inspyred.ec.Bounder(self.optimization_settings.bounds['lower_bounds'],
                                                self.optimization_settings.bounds['upper_bounds'])
@@ -72,15 +75,15 @@ class InspyredOptimizer(Optimizer):
         if self.optimization_settings.stop_criterion[0] == 'generation_termination':
             args['max_generations'] = self.optimization_settings.stop_criterion[1]
         args = merge_dicts(args, self.algorithm_settings.algorithm_params)
-        args['optimization_settings'] = self.optimization_settings.to_dict()
-        args['algorithm_settings'] = self.algorithm_settings.to_dict()
+        args['optimization_settings'] = self.optimization_settings.to_dict()  # for multiprocessing
+        args['algorithm_settings'] = self.algorithm_settings.to_dict()  # for multiprocessing
         return args
 
     def optimize(self):
         self.algorithm.evolve(generator=self.generator,
-                              #evaluator=self.evaluator,
-                              evaluator=inspyred.ec.evaluators.parallel_evaluation_mp,
-                              mp_evaluator=mp_evaluator,  #self.evaluator,  # must be pickable # TODO
+                              #evaluator=self.evaluator,  # if not using multiprocessing
+                              evaluator=inspyred.ec.evaluators.parallel_evaluation_mp,  # for mutliprocessing
+                              mp_evaluator=mp_evaluator,  # for mutliprocessing (must be pickable)
                               pop_size=self.optimization_settings.n_candidates,
                               maximize=self.optimization_settings.maximize,
                               bounder=self.bounder,

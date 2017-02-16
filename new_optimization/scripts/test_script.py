@@ -28,7 +28,6 @@ fitter_params = {
                     'args': {}
                 }
 
-
 algorithm_name = 'DEA'
 algorithm_params = {'num_selected': 335, 'tournament_size': 180, 'crossover_rate': 0.57,
                     'mutation_rate': 0.52, 'gaussian_mean': 0.0, 'gaussian_stdev': 0.21}

@@ -1,4 +1,4 @@
-from time import time
+import time
 from optimization.bio_inspired import *
 import os
 
@@ -11,6 +11,7 @@ def individuals_observer(population, num_generations, num_evaluations, args):
         individuals_file = args['individuals_file']
     except KeyError:
         individuals_file = open('inspyred-individuals-file-{0}.csv'.format(time.strftime('%m%d%Y-%H%M%S')), 'w')
+        args['individuals_file'] = individuals_file
 
     if num_generations == 0:
         individuals_file.write('{0},{1},{2},{3}\n'.format('generation', 'id', 'fitness', 'candidate'))
@@ -21,8 +22,6 @@ def individuals_observer(population, num_generations, num_evaluations, args):
                                                 str(p.fitness).replace(',', '').replace('[', '').replace(']', ''),
                                                 str(p.candidate).replace(',', '').replace('[', '').replace(']', '')))
     individuals_file.flush()
-    #os.fsync(individuals_file)
-    #TODO: does not work with muliprocessing
 
 
 def collect_observer(population, num_generations, num_evaluations, args):
