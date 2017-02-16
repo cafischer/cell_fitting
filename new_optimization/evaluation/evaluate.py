@@ -3,8 +3,7 @@ import numpy as np
 import pandas as pd
 import json
 from optimization.errfuns import rms
-from new_optimization.fitter.hodgkinhuxleyfitter import *
-from new_optimization.fitter.linearregressionfitter import LinearRegressionFitter
+from new_optimization.fitter import *
 
 __author__ = 'caro'
 
@@ -18,12 +17,8 @@ def plot_candidate(save_dir, id, generation):
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
 
-    fitter = HodgkinHuxleyFitter(**optimization_settings['fitter'])
-    fitter = HodgkinHuxleyFitterSeveralData(**optimization_settings['fitter'])
+    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
     v_model, t, i_inj = fitter.simulate_cell(candidate)
-
-    #fitter = LinearRegressionFitter(**optimization_settings['fitter'])
-    #v_model = fitter.get_v(candidate)
 
     pl.figure()
     pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
@@ -66,15 +61,8 @@ def plot_best_candidate(save_dir, n_best):
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
 
-    fitter = HodgkinHuxleyFitter(**optimization_settings['fitter'])
+    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
     v_model, t, i_inj = fitter.simulate_cell(best_candidate)
-
-    #fitter = HodgkinHuxleyFitterSeveralData(**optimization_settings['fitter'])
-    #v_model, t, i_inj = fitter.simulate_cell(best_candidate, fitter.simulation_params[0])
-
-    #fitter = LinearRegressionFitter(**optimization_settings['fitter'])
-    #v_model = fitter.get_v(best_candidate)
-    #print fitter.evaluate_fitness(best_candidate, None)
 
     pl.figure()
     pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
@@ -93,15 +81,10 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
 
-    optimization_settings['fitter']['data_dir'] = data_dir
-    optimization_settings['fitter']['mechanism_dir'] = None
-    fitter = HodgkinHuxleyFitter(**optimization_settings['fitter'])
-    v_model, t, i_inj = fitter.simulate_cell(candidate)
-
-    #optimization_settings['fitter']['data_dirs'][0] = data_dir
-    #optimization_settings['fitter']['mechanism_dir'] = None
-    #fitter = HodgkinHuxleyFitterSeveralData(**optimization_settings['fitter'])
-    #v_model, t, i_inj = fitter.simulate_cell(best_candidate, fitter.simulation_params[0])
+    optimization_settings['fitter_params']['data_dir'] = data_dir
+    optimization_settings['fitter_params']['mechanism_dir'] = None
+    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
+    v_model, t, i_inj = fitter.simulate_cell(best_candidate)
 
     pl.figure()
     pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
@@ -113,11 +96,9 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
 
 
 def plot_min_error_vs_generation(save_dir):
-
     candidates = pd.read_csv(save_dir + '/candidates.csv')
 
     best_fitnesses = list()
-
     for generation in range(candidates.generation.iloc[-1]+1):
         candidates_generation = candidates[candidates.generation == generation]
         best_fitnesses.append(candidates_generation.fitness[np.argmin(candidates_generation.fitness)])
@@ -140,8 +121,7 @@ def plot_best_candidate_severalfitfuns(save_dir, fitfun_id):
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
 
-    fitter = HodgkinHuxleyFitter(**optimization_settings['fitter'])
-
+    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
     v_model, t, i_inj = fitter.simulate_cell(best_candidate)
 
     pl.figure()
@@ -156,7 +136,6 @@ def plot_best_candidate_severalfitfuns(save_dir, fitfun_id):
 
 
 def plot_min_error_vs_generation_severalfitfuns(save_dir):
-
     candidates = pd.read_csv(save_dir + '/candidates.csv')
     candidates.fitness = candidates.fitness.apply(
         lambda x: [float(n) for n in x.replace(',', '').replace('[', '').replace(']', '').split()])
@@ -180,7 +159,7 @@ def get_channel_params(channel_name, candidate, save_dir):
         optimization_settings = json.load(f)
 
     channel_params = list()
-    for i, variable_keys in enumerate(optimization_settings['fitter']['variable_keys']):
+    for i, variable_keys in enumerate(optimization_settings['fitter_params']['variable_keys']):
         for variable_key in variable_keys:
             if channel_name in variable_key:
                 channel_params.append((candidate[i], variable_key))
@@ -188,10 +167,9 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 if __name__ == '__main__':
     save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/'
-    save_dir = '../../results/new_optimization/test/'
+    #save_dir = '../../results/new_optimization/test/'
     method = 'L-BFGS-B'
 
-    #plot_candidate(save_dir + method + '/', id=261, generation=500)
     best_candidate = plot_best_candidate(save_dir+method+'/', 0)
 
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv')
