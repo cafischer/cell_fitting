@@ -1,17 +1,18 @@
 import json
 from random import Random
+from new_optimization.fitter import FitterFactory
 
 
 class OptimizationSettings:
 
-    def __init__(self, maximize, n_candidates, stop_criterion, seed, generator, bounds, fitter):
+    def __init__(self, maximize, n_candidates, stop_criterion, seed, generator, bounds, fitter_params):
         self.maximize = maximize
         self.n_candidates = n_candidates
         self.stop_criterion = stop_criterion
         self.seed = seed
         self.generator = generator
         self.bounds = bounds
-        self.fitter = fitter
+        self.fitter = FitterFactory().make_fitter(fitter_params)
 
     @classmethod
     def load(cls, load_file):
@@ -20,7 +21,8 @@ class OptimizationSettings:
 
     def to_dict(self):
         return {'maximize': self.maximize, 'n_candidates': self.n_candidates, 'stop_criterion': self.stop_criterion,
-                'seed': self.seed, 'generator': self.generator, 'bounds': self.bounds, 'fitter': self.fitter.to_dict()}
+                'seed': self.seed, 'generator': self.generator, 'bounds': self.bounds,
+                'fitter_params': self.fitter.to_dict()}
 
     def save(self, save_file):
         json.dump(self.to_dict(), save_file, indent=4)

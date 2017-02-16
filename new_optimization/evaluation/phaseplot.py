@@ -1,14 +1,14 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as pl
-from matplotlib.pyplot import cm
 import json
 from new_optimization.evaluation.evaluate import *
+from new_optimization.fitter import *
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_26b/22_01_17_readjust1/L-BFGS-B/'
-    data_dir = '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv'
+    save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/L-BFGS-B/'
+    data_dir = '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv'
 
     # load data
     data = pd.read_csv(data_dir)
@@ -19,12 +19,15 @@ if __name__ == '__main__':
     dvdt_exp = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt]), np.diff(v_exp) / dt))
 
     # compute dvdt model
+    data = pd.read_csv(data_dir)
+    simulation_params = extract_simulation_params(data)
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
-    optimization_settings['fitter']['data_dir'] = data_dir
-    fitter = HodgkinHuxleyFitter(**optimization_settings['fitter'])
-    candidate = get_best_candidate(save_dir, n_best=1)
-    v_model, _, _ = fitter.simulate_cell(candidate)
+    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
+    best_candidate = get_best_candidate(save_dir, n_best=1)
+    fitter.update_cell(best_candidate)
+
+    v_model, _, _ = iclamp_handling_onset(fitter.cell, **simulation_params)
     dvdt_model = np.concatenate((np.array([(v_model[1]-v_model[0])/dt]), np.diff(v_model) / dt))
 
     # plot

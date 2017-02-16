@@ -5,8 +5,10 @@ import pandas as pd
 from scipy.optimize import minimize
 from new_optimization import *
 from new_optimization.optimizer.optimizer_interface import Optimizer
+from optimization.gradient_based import *
 from optimization.bio_inspired import generators
 from util import merge_dicts
+import multiprocessing
 
 
 class ScipyOptimizer(Optimizer):
@@ -14,6 +16,9 @@ class ScipyOptimizer(Optimizer):
     def __init__(self, optimization_settings, algorithm_settings):
         super(ScipyOptimizer, self).__init__(optimization_settings, algorithm_settings)
 
+        self.individuals_file = open(self.algorithm_settings.save_dir + 'candidates.csv', 'w')
+        self.individuals_file.write('{0},{1},{2},{3},{4},{5}\n'.format('generation', 'id', 'fitness', 'candidate',
+                                                                       'success', 'termination'))
         self.args = self.set_args()
         self.initial_candidates = self.generate_initial_candidates(self.optimization_settings.generator,
                                                                    self.optimization_settings.seed)
@@ -33,9 +38,6 @@ class ScipyOptimizer(Optimizer):
 
         self.jac = jac
         self.hess = hess
-
-        self.candidates = list()
-        self.num_generations = 0
 
     def set_args(self):
         if self.algorithm_settings.optimization_params is None:
@@ -78,36 +80,54 @@ class ScipyOptimizer(Optimizer):
             bounds_transformed.append((lb, ub))
         return bounds_transformed
 
-    def optimize(self):
-
+    def optimize(self):  # with multiprocessing
+        queue = multiprocessing.Queue()
+        processes = list()
         for id, candidate in enumerate(self.initial_candidates):
-            callback = functools.partial(self.store_candidates, id=id)
-            self.num_generations = 0
-            self.store_candidates(candidate, id)
+            p = multiprocessing.Process(target=self.optimize_single_candidate, args=(id, candidate, queue))
+            p.start()
+            processes.append(p)
 
-            result = minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
-                     hess=self.hess, bounds=self.bounds, callback=callback, **self.args)
-            self.candidates[-1][4] = result.success
-            self.candidates[-1][5] = result.message
-            self.save_candidates()
+        # saving
+        counter = 0
+        while True:
+            candidates, id, success, message = queue.get()
+            counter += 1
+            self.save_candidates(candidates, id, success, message)
+            if counter == len(self.initial_candidates):
+                break
 
-        # scipy.optimize.minimize(fun, x0, args=(), method=None, jac=None, hess=None, hessp=None, bounds=None,
-        # constraints=(), tol=None, callback=None, options=None)[source]
+        for p in processes:
+            p.join()
 
-    def store_candidates(self, candidate, id):
-        fitness = self.fun(candidate)
-        #self.candidates.append([self.num_generations, id, fitness,
-        #                        str(list(candidate)).replace(',', '').replace('[', '').replace(']', '')])
-        self.candidates.append([self.num_generations, id, fitness,
-                                str(list(candidate)).replace(',', '').replace('[', '').replace(']', ''), '', ''])
-        self.num_generations += 1
+    def optimize_single_candidate(self, id, candidate, queue):
+        candidates = list()
+        callback = functools.partial(self.store_candidates, candidates=candidates)
+        callback(candidate)  # store first candidate
 
-    def save_candidates(self):
-        individuals_data = pd.DataFrame(self.candidates, columns=['generation', 'id', 'fitness', 'candidate', 'success',
-                                                                  'termination'])
-        individuals_data = individuals_data.groupby('generation').apply(lambda x: x.sort_values(['fitness']))
-        with open(self.algorithm_settings.save_dir + 'candidates.csv', 'w') as f:
-            individuals_data.to_csv(f, header=True, index=False)
+        result = minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
+                          hess=self.hess, bounds=self.bounds, callback=callback, **self.args)
+        queue.put((candidates, id, result.success, result.message))
+        return candidates
+
+    def store_candidates(self, candidate, candidates):
+        candidates.append(list(candidate))
+
+    def save_candidates(self, candidates, id, success_end, termination_end):
+        success = ['']*len(candidates)
+        success[-1] = success_end
+        termination = ['']*len(candidates)
+        termination[-1] = termination_end
+        fitness = [self.fun(c) for c in candidates]
+        candidates = [str(l).replace('[', '').replace(']', '').replace(',', '') for l in candidates]
+
+        self.write_file(candidates, id, fitness, success, termination)
+
+    def write_file(self, candidates, id, fitness, success, termination):
+        for i in range(len(candidates)):
+            self.individuals_file.write('{0},{1},{2},{3},{4},{5}\n'.format(i, id, fitness[i], candidates[i],
+                                                                           success[i], termination[i]))
+        self.individuals_file.flush()
 
 
 class ScipyOptimizerInitBounds(ScipyOptimizer):
@@ -124,9 +144,6 @@ class ScipyOptimizerInitBounds(ScipyOptimizer):
                                         self.init_bounds['upper_bounds'], None)
                               for i in range(self.optimization_settings.n_candidates)]
         return initial_candidates
-
-
-from optimization.gradient_based import *
 
 
 class ScipyCGOptimizer(ScipyOptimizer):

@@ -3,12 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as pl
 import os
 from new_optimization.evaluation.evaluate import *
+from new_optimization.fitter import *
 from cell_characteristics.fIcurve import *
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_26b/01_02_17_readjust_newih0/L-BFGS-B/'
-    data_dir = '../../data/2015_08_26b/corrected_vrest2/IV/'
+    save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/L-BFGS-B/'
+    data_dir = '../../data/2015_08_06d/raw/IV/'
     n_best = 0
 
     # data
@@ -24,16 +25,17 @@ if __name__ == '__main__':
     # model
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
-    load_mechanism_dir(optimization_settings['fitter']['mechanism_dir'])
-    optimization_settings['fitter']['mechanism_dir'] = None
+    load_mechanism_dir(optimization_settings['fitter_params']['mechanism_dir'])
+    optimization_settings['fitter_params']['mechanism_dir'] = None
 
     v_traces_model = list()
     for file_name in os.listdir(data_dir):
         data = pd.read_csv(data_dir+file_name)
-        optimization_settings['fitter']['data_dir'] = data_dir+file_name
-        fitter = HodgkinHuxleyFitter(**optimization_settings['fitter'])
-        candidate = get_best_candidate(save_dir, n_best)
-        v_model, _, _ = fitter.simulate_cell(candidate)
+        simulation_params = extract_simulation_params(data)
+        best_candidate = get_best_candidate(save_dir, n_best)
+        fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
+        fitter.update_cell(best_candidate)
+        v_model, _, _ = iclamp_handling_onset(fitter.cell, **simulation_params)
         v_traces_model.append(v_model)
 
     amps, firing_rates_model = compute_fIcurve(v_traces_model, i_traces_data, t_trace)

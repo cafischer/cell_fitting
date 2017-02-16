@@ -1,39 +1,20 @@
 import pandas as pd
 import numpy as np
-import copy
-from nrn_wrapper import Cell, load_mechanism_dir, iclamp
+from nrn_wrapper import Cell, load_mechanism_dir
 from optimization import errfuns
 from optimization import fitfuns
-from optimization.simulate import extract_simulation_params
+from optimization.simulate import *
 import functools
 from inspyred.ec.emo import Pareto
 
 __author__ = 'caro'
 
 
-def iclamp_handling_onset(cell, **simulation_params):
-    if 'onset' in simulation_params:
-        onset = simulation_params['onset']
-        simulation_params_tmp = copy.copy(simulation_params)
-        del simulation_params_tmp['onset']
-        simulation_params_tmp['tstop'] += onset
-        len_onset_idx = int(round(onset / simulation_params_tmp['dt']))
-        simulation_params_tmp['i_inj'] = np.concatenate((np.zeros(len_onset_idx), simulation_params_tmp['i_inj']))
-
-        v_candidate, t_candidate = iclamp(cell, **simulation_params_tmp)
-
-        real_start = int(round(onset / simulation_params['dt']))
-        return v_candidate[real_start:], t_candidate[:-real_start], simulation_params['i_inj']
-    else:
-        v_candidate, t_candidate = iclamp(cell, **simulation_params)
-        return v_candidate, t_candidate, simulation_params['i_inj']
-
-
 class HodgkinHuxleyFitter(object):
 
-    def __init__(self, variable_keys, errfun_name, fitfun_names, fitnessweights,
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
-
+        self.name = name
         self.variable_keys = variable_keys
         self.errfun_names = errfun_name
         self.fitfun_names = fitfun_names
@@ -86,14 +67,14 @@ class HodgkinHuxleyFitter(object):
         return v_candidate, t_candidate, i_inj
 
     def to_dict(self):
-        return {'variable_keys': self.variable_keys, 'errfun_name': self.errfun_names, 'fitfun_names': self.fitfun_names,
+        return {'name': self.name, 'variable_keys': self.variable_keys, 'errfun_name': self.errfun_names, 'fitfun_names': self.fitfun_names,
                 'fitnessweights': self.fitnessweights, 'model_dir': self.model_dir, 'mechanism_dir': self.mechanism_dir,
                 'data_dir': self.data_dir, 'simulation_params': self.init_simulation_params, 'args': self.args}
 
 
 class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
 
-    def __init__(self, variable_keys, errfun_name, fitfun_names, fitnessweights,
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dirs, simulation_params=None, args=None):
         super(HodgkinHuxleyFitterSeveralData, self).__init__(variable_keys, errfun_name, fitfun_names,
                                                                 fitnessweights, model_dir, mechanism_dir, data_dirs[0],
@@ -143,7 +124,7 @@ class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
 
 class HodgkinHuxleyFitterPareto(HodgkinHuxleyFitter):
 
-    def __init__(self, variable_keys, errfun_name, fitfun_names, fitnessweights,
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
         super(HodgkinHuxleyFitterPareto, self).__init__(variable_keys, errfun_name, fitfun_names,
                                                                 fitnessweights, model_dir, mechanism_dir, data_dir,
@@ -166,7 +147,7 @@ class HodgkinHuxleyFitterPareto(HodgkinHuxleyFitter):
 
 class HodgkinHuxleyFitterWithFitfunList(HodgkinHuxleyFitter):
 
-    def __init__(self, variable_keys, errfun_name, fitfun_names, fitnessweights,
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
         super(HodgkinHuxleyFitterWithFitfunList, self).__init__(variable_keys, errfun_name, fitfun_names,
                                                                 fitnessweights, model_dir, mechanism_dir, data_dir,

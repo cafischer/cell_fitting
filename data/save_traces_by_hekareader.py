@@ -7,7 +7,7 @@ if __name__ == '__main__':
     cell = '2015_08_06d'
     file_dir = './'+cell+'/'+cell+'.dat'
     vrest = -59
-    correct_vrest = True
+    correct_vrest = False
 
     hekareader = HekaReader(file_dir)
     type_to_index = hekareader.get_type_to_index()
@@ -19,8 +19,8 @@ if __name__ == '__main__':
     series = protocol_to_series[protocol]
     sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series])+1)]
     print '# sweeps: ', len(sweeps)
-    sweep_idx = [0]
-    #sweep_idx = range(len(sweeps))
+    #sweep_idx = [0]
+    sweep_idx = range(len(sweeps))
     sweeps = [sweeps[index] for index in sweep_idx]
 
     indices = [type_to_index[group][series][sweep][trace] for sweep in sweeps]
@@ -45,11 +45,11 @@ if __name__ == '__main__':
         i_inj = pd.read_csv('./Protocols/' + protocol + '.csv', header=None)
         i_inj = np.array(i_inj)[:, 0]
         if protocol == 'IV':
-            amp = -0.15 + sweep_idx[i] * 0.05  # for IV
+            amp = -0.15 + sweep_idx[i] * 0.05
             amp_change = amp
         elif protocol == 'rampIV':
-            amp = sweep_idx[i] * 0.1  # for rampIV
-            amp_change = amp / 0.1  # for rampIV
+            amp = sweep_idx[i] * 0.1
+            amp_change = amp / 0.1
         elif protocol == 'hypTester':
             amp = -0.005
             amp_change = 1

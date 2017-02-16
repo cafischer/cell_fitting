@@ -1,4 +1,6 @@
 import numpy as np
+from scipy.spatial.distance import euclidean
+from fastdtw import fastdtw
 
 __author__ = 'caro'
 
@@ -18,3 +20,7 @@ def rms(a, b):
 
 def maxabs(a, b):
     return np.max(np.abs(np.array(a) - np.array(b)))
+
+def dtw(x, y):
+    distance, path = fastdtw(x, y, dist=euclidean)
+    return distance

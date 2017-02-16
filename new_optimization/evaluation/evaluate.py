@@ -187,15 +187,23 @@ def get_channel_params(channel_name, candidate, save_dir):
     return channel_params
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_26b/01_02_17_readjust_newih0/'
+    save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/'
+    save_dir = '../../results/new_optimization/test/'
     method = 'L-BFGS-B'
 
     #plot_candidate(save_dir + method + '/', id=261, generation=500)
     best_candidate = plot_best_candidate(save_dir+method+'/', 0)
-    plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
-                                 '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv')
+
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv')
+    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_06d/raw/rampIV/1.0(nA).csv')
+    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_06d/raw/IV/-0.1(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/IV/0.4(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/IV/0.8(nA).csv')
+    """
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv')
     plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/rampIV/0.5(nA).csv')
     plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/-0.1(nA).csv')
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/0.4(nA).csv')
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/1.0(nA).csv')
     #plot_min_error_vs_generation(save_dir+method+'/')
+    """

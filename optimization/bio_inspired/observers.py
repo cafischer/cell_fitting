@@ -1,5 +1,6 @@
 from time import time
 from optimization.bio_inspired import *
+import os
 
 __author__ = 'caro'
 
@@ -20,6 +21,8 @@ def individuals_observer(population, num_generations, num_evaluations, args):
                                                 str(p.fitness).replace(',', '').replace('[', '').replace(']', ''),
                                                 str(p.candidate).replace(',', '').replace('[', '').replace(']', '')))
     individuals_file.flush()
+    #os.fsync(individuals_file)
+    #TODO: does not work with muliprocessing
 
 
 def collect_observer(population, num_generations, num_evaluations, args):

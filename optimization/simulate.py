@@ -1,11 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as pl
 from nrn_wrapper import vclamp
+from optimization.helpers import *
+import copy
+from nrn_wrapper import iclamp
 
 __author__ = 'caro'
 
 
-def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, pos_v=0.5):
+def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, pos_v=0.5, onset=200):
     """
     Uses the experimental data and additional arguments to extract the simulation parameters.
 
@@ -26,11 +29,8 @@ def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, p
     dt = data.t.values[1] - data.t.values[0]
     v_init = data.v.values[0]
     i_inj = data.i.values
-    pos_i = pos_i
-    pos_v = pos_v
-    sec = sec
     return {'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i,
-                                  'pos_v': pos_v, 'sec': sec, 'celsius': celsius}
+                                  'pos_v': pos_v, 'sec': sec, 'celsius': celsius, 'onset': onset}
 
 
 def currents_given_v(v, t, sec, channel_list, ion_list, celsius, plot=False):
@@ -73,3 +73,54 @@ def currents_given_v(v, t, sec, channel_list, ion_list, celsius, plot=False):
             pl.show()
 
     return currents
+
+
+
+def simulate_currents(cell, simulation_params, plot=False):
+    channel_list = get_channel_list(cell, 'soma')
+    ion_list = get_ionlist(channel_list)
+
+    # record currents
+    currents = np.zeros(len(channel_list), dtype=object)
+    for i in range(len(channel_list)):
+        currents[i] = cell.soma.record_from(channel_list[i], 'i' + ion_list[i], pos=.5)
+
+    # apply vclamp
+    v_model, t, i_inj = iclamp_handling_onset(cell, **simulation_params)
+
+    # convert current traces to array
+    for i in range(len(channel_list)):
+        if 'onset' in simulation_params:
+            real_start = int(round(simulation_params['onset'] / simulation_params['dt']))
+            currents[i] = np.array(currents[i])[real_start:]
+        currents[i] = np.array(currents[i])
+
+    # plot current traces
+    if plot:
+        pl.figure()
+        for i in range(len(channel_list)):
+            pl.plot(t, -1 * currents[i], label=channel_list[i])
+            pl.ylabel('Current (mA/cm2)', fontsize=16)
+            pl.xlabel('Time (ms)', fontsize=16)
+            pl.legend(fontsize=16)
+        pl.show()
+
+    return currents
+
+
+def iclamp_handling_onset(cell, **simulation_params):
+    if 'onset' in simulation_params:
+        onset = simulation_params['onset']
+        simulation_params_tmp = copy.copy(simulation_params)
+        del simulation_params_tmp['onset']
+        simulation_params_tmp['tstop'] += onset
+        len_onset_idx = int(round(onset / simulation_params_tmp['dt']))
+        simulation_params_tmp['i_inj'] = np.concatenate((np.zeros(len_onset_idx), simulation_params_tmp['i_inj']))
+
+        v_candidate, t_candidate = iclamp(cell, **simulation_params_tmp)
+
+        real_start = int(round(onset / simulation_params['dt']))
+        return v_candidate[real_start:], t_candidate[:-real_start], simulation_params['i_inj']
+    else:
+        v_candidate, t_candidate = iclamp(cell, **simulation_params)
+        return v_candidate, t_candidate, simulation_params['i_inj']

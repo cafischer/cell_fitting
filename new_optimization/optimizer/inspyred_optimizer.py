@@ -5,6 +5,15 @@ from new_optimization import create_pseudo_random_number_generator
 from new_optimization.optimizer.optimizer_interface import Optimizer
 from optimization.bio_inspired import evaluators, generators, observers
 from util import *
+from new_optimization import OptimizationSettings, AlgorithmSettings
+
+
+def mp_evaluator(candidate, args):
+    args['optimization_settings']['fitter_params']['mechanism_dir'] = None
+    optimization_settings = OptimizationSettings(**args['optimization_settings'])
+    algorithm_settings = AlgorithmSettings(**args['algorithm_settings'])
+    optimizer = InspyredOptimizer(optimization_settings, algorithm_settings)
+    return optimizer.evaluator(candidate, args)
 
 
 class InspyredOptimizer(Optimizer):
@@ -37,7 +46,7 @@ class InspyredOptimizer(Optimizer):
                                                             self.optimization_settings.bounds['upper_bounds'])
             self.bounder = inspyred.ec.Bounder(0, 1)
         else:
-            self.algorithm.observer = observer
+            self.algorithm.observer = inspyred.ec.observers.file_observer # TODO observer
             self.generator = generator
             self.bounder = inspyred.ec.Bounder(self.optimization_settings.bounds['lower_bounds'],
                                                self.optimization_settings.bounds['upper_bounds'])
@@ -63,16 +72,19 @@ class InspyredOptimizer(Optimizer):
         if self.optimization_settings.stop_criterion[0] == 'generation_termination':
             args['max_generations'] = self.optimization_settings.stop_criterion[1]
         args = merge_dicts(args, self.algorithm_settings.algorithm_params)
+        args['optimization_settings'] = self.optimization_settings.to_dict()
+        args['algorithm_settings'] = self.algorithm_settings.to_dict()
         return args
 
     def optimize(self):
         self.algorithm.evolve(generator=self.generator,
-                              evaluator=self.evaluator,
+                              #evaluator=self.evaluator,
+                              evaluator=inspyred.ec.evaluators.parallel_evaluation_mp,
+                              mp_evaluator=mp_evaluator,  #self.evaluator,  # must be pickable # TODO
                               pop_size=self.optimization_settings.n_candidates,
                               maximize=self.optimization_settings.maximize,
                               bounder=self.bounder,
                               **self.args)
-        # arguments evolve: (generator, evaluator, pop_size=100, seeds=None, maximize=True, bounder=None, **args)
 
 
 class SimulatedAnnealingOptimizer(InspyredOptimizer):

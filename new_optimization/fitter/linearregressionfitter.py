@@ -13,8 +13,9 @@ __author__ = 'caro'
 
 class LinearRegressionFitter(object):
 
-    def __init__(self, variable_keys, model_dir, mechanism_dir, data_dir, simulation_params, with_cm=True):
+    def __init__(self, name, variable_keys, model_dir, mechanism_dir, data_dir, simulation_params, with_cm=True):
 
+        self.name = name
         self.variable_keys = variable_keys  # variables to fit (not gbars!)
         self.model_dir = model_dir
         self.mechanism_dir = mechanism_dir
@@ -101,5 +102,5 @@ class LinearRegressionFitter(object):
         return v_candidate, t_candidate, self.simulation_params['i_inj']
 
     def to_dict(self):
-        return {'variable_keys': self.variable_keys, 'model_dir': self.model_dir, 'mechanism_dir': self.mechanism_dir,
+        return {'name': self.name, 'variable_keys': self.variable_keys, 'model_dir': self.model_dir, 'mechanism_dir': self.mechanism_dir,
                 'data_dir': self.data_dir, 'simulation_params': self.init_simulation_params, 'with_cm': self.with_cm}
