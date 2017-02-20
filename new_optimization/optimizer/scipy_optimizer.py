@@ -82,13 +82,20 @@ class ScipyOptimizer(Optimizer):
 
     def optimize(self):  # with multiprocessing
         queue = multiprocessing.Queue()
+        work_queue = multiprocessing.Queue()
         processes = list()
+
+        # put all jobs in the queue
         for id, candidate in enumerate(self.initial_candidates):
-            p = multiprocessing.Process(target=self.optimize_single_candidate, args=(id, candidate, queue))
+            work_queue.put((id, candidate))
+
+        # start processes
+        for core in range(multiprocessing.cpu_count()):
+            p = multiprocessing.Process(target=self.work, args=(work_queue, queue))
             p.start()
             processes.append(p)
 
-        # saving
+        # save results
         counter = 0
         while True:
             candidates, id, success, message = queue.get()
@@ -96,9 +103,18 @@ class ScipyOptimizer(Optimizer):
             self.save_candidates(candidates, id, success, message)
             if counter == len(self.initial_candidates):
                 break
-
+        # stop
         for p in processes:
             p.join()
+
+    def work(self, working_queue, queue):
+        while True:
+            work_entry = working_queue.get()
+            if work_entry == None:
+                return
+            else:
+                id, candidate = work_entry
+                self.optimize_single_candidate(id, candidate, queue)
 
     def optimize_single_candidate(self, id, candidate, queue):
         candidates = list()

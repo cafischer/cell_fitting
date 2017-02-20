@@ -76,7 +76,7 @@ class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
 
     def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dirs, simulation_params=None, args=None):
-        super(HodgkinHuxleyFitterSeveralData, self).__init__(variable_keys, errfun_name, fitfun_names,
+        super(HodgkinHuxleyFitterSeveralData, self).__init__(name, variable_keys, errfun_name, fitfun_names,
                                                                 fitnessweights, model_dir, mechanism_dir, data_dirs[0],
                                                                 simulation_params, args)
         self.data_dirs = data_dirs
@@ -126,7 +126,7 @@ class HodgkinHuxleyFitterPareto(HodgkinHuxleyFitter):
 
     def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
-        super(HodgkinHuxleyFitterPareto, self).__init__(variable_keys, errfun_name, fitfun_names,
+        super(HodgkinHuxleyFitterPareto, self).__init__(name, variable_keys, errfun_name, fitfun_names,
                                                                 fitnessweights, model_dir, mechanism_dir, data_dir,
                                                                 simulation_params, args)
 
@@ -149,7 +149,7 @@ class HodgkinHuxleyFitterWithFitfunList(HodgkinHuxleyFitter):
 
     def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
-        super(HodgkinHuxleyFitterWithFitfunList, self).__init__(variable_keys, errfun_name, fitfun_names,
+        super(HodgkinHuxleyFitterWithFitfunList, self).__init__(name, variable_keys, errfun_name, fitfun_names,
                                                                 fitnessweights, model_dir, mechanism_dir, data_dir,
                                                                 simulation_params, args)
 

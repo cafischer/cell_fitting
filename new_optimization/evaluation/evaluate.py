@@ -50,6 +50,10 @@ def plot_best_candidate(save_dir, n_best):
         candidates_id = candidates[candidates.id==id]
         candidates_best = candidates_best.append(candidates_id.iloc[np.argmin(candidates_id.fitness.values)])
 
+    with open(save_dir + '/optimization_settings.json', 'r') as f:
+        optimization_settings = json.load(f)
+    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
+
     idx_best = np.argsort(candidates_best.fitness.values)[n_best]
     best_candidate = candidates_best.candidate.iloc[idx_best]
     best_candidate = np.array([float(x) for x in best_candidate.split()])
@@ -57,12 +61,12 @@ def plot_best_candidate(save_dir, n_best):
     print 'generation: ' + str(candidates_best.generation.iloc[idx_best])
     print 'fitness: ' + str(candidates_best.fitness.iloc[idx_best])
     print 'candidate: ' + str(best_candidate)
+    for k, v in zip(fitter.variable_keys, best_candidate):
+        print k, v
 
-    with open(save_dir + '/optimization_settings.json', 'r') as f:
-        optimization_settings = json.load(f)
-
-    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
     v_model, t, i_inj = fitter.simulate_cell(best_candidate)
+
+    #v_model, t, i_inj = fitter.simulate_cell(best_candidate, fitter.simulation_params[0])
 
     pl.figure()
     pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
@@ -85,6 +89,10 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
     optimization_settings['fitter_params']['mechanism_dir'] = None
     fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
     v_model, t, i_inj = fitter.simulate_cell(best_candidate)
+
+    #optimization_settings['fitter_params']['data_dirs'] = [data_dir]
+    #fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
+    #v_model, t, i_inj = fitter.simulate_cell(best_candidate, fitter.simulation_params[0])
 
     pl.figure()
     pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
@@ -166,11 +174,12 @@ def get_channel_params(channel_name, candidate, save_dir):
     return channel_params
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/'
+    #save_dir = '../../results/new_optimization/2015_08_06d/01_02_17_allparams0/'
+    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)/'
     #save_dir = '../../results/new_optimization/test/'
     method = 'L-BFGS-B'
 
-    best_candidate = plot_best_candidate(save_dir+method+'/', 0)
+    best_candidate = plot_best_candidate(save_dir+method+'/', 1)
 
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv')
     plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_06d/raw/rampIV/1.0(nA).csv')
