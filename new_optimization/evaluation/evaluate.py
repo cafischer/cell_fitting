@@ -174,12 +174,11 @@ def get_channel_params(channel_name, candidate, save_dir):
     return channel_params
 
 if __name__ == '__main__':
-    #save_dir = '../../results/new_optimization/2015_08_06d/01_02_17_allparams0/'
-    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)/'
-    #save_dir = '../../results/new_optimization/test/'
+    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)_newmodel3/'
+    #save_dir = '../../results/test_dtw/test_dtw(rms)/'
     method = 'L-BFGS-B'
 
-    best_candidate = plot_best_candidate(save_dir+method+'/', 1)
+    best_candidate = plot_best_candidate(save_dir+method+'/', 0)
 
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv')
     plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_06d/raw/rampIV/1.0(nA).csv')

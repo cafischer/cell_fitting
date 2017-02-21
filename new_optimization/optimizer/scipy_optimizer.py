@@ -3,9 +3,8 @@ import numdifftools as nd
 import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
-from new_optimization import *
+from new_optimization import create_pseudo_random_number_generator
 from new_optimization.optimizer.optimizer_interface import Optimizer
-from optimization.gradient_based import *
 from optimization.bio_inspired import generators
 from util import merge_dicts
 import multiprocessing
@@ -108,13 +107,9 @@ class ScipyOptimizer(Optimizer):
             p.join()
 
     def work(self, working_queue, queue):
-        while True:
-            work_entry = working_queue.get()
-            if work_entry == None:
-                return
-            else:
-                id, candidate = work_entry
-                self.optimize_single_candidate(id, candidate, queue)
+        while not working_queue.empty():
+            id, candidate = working_queue.get()
+            self.optimize_single_candidate(id, candidate, queue)
 
     def optimize_single_candidate(self, id, candidate, queue):
         candidates = list()
@@ -160,32 +155,3 @@ class ScipyOptimizerInitBounds(ScipyOptimizer):
                                         self.init_bounds['upper_bounds'], None)
                               for i in range(self.optimization_settings.n_candidates)]
         return initial_candidates
-
-
-class ScipyCGOptimizer(ScipyOptimizer):
-
-    def __init__(self, optimization_settings, algorithm_settings):
-        super(ScipyCGOptimizer, self).__init__(optimization_settings, algorithm_settings)
-
-    def optimize(self):
-
-        for id, candidate in enumerate(self.initial_candidates):
-            callback = functools.partial(self.store_candidates, id=id)
-            self.num_generations = 0
-
-            xs = conjugate_gradient(self.fun, self.jac, candidate, self.args['options']['maxiter'], c1=1e-4, c2=0.4)
-            for x in xs:
-                self.store_candidates(x, id)
-            self.save_candidates()
-
-    def store_candidates(self, candidate, id):
-        fitness = self.fun(candidate)
-        self.candidates.append([self.num_generations, id, fitness,
-                                str(list(candidate)).replace(',', '').replace('[', '').replace(']', '')])
-        self.num_generations += 1
-
-    def save_candidates(self):
-        individuals_data = pd.DataFrame(self.candidates, columns=['generation', 'id', 'fitness', 'candidate'])
-        individuals_data = individuals_data.groupby('generation').apply(lambda x: x.sort_values(['fitness']))
-        with open(self.algorithm_settings.save_dir + 'candidates.csv', 'w') as f:
-            individuals_data.to_csv(f, header=True, index=False)

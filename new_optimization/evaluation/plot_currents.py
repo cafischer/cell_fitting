@@ -1,18 +1,20 @@
 import json
-from new_optimization.fitter import *
-from evaluate import *
+import pandas as pd
+from new_optimization.fitter import FitterFactory
+from optimization.simulate import extract_simulation_params, simulate_currents
+from evaluate import get_best_candidate
 
 
 if __name__ == '__main__':
     #save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)/'
-    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)/'
+    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)_newmodel3/'
     method = 'L-BFGS-B'
-    n_best = 1
+    n_best = 0
     #data_dir = '../../data/2015_08_06d/raw/PP(4)/0(nA).csv'
-    #data_dir = '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv'
+    data_dir = '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv'
     #data_dir = '../../data/2015_08_06d/raw/IV/-0.15(nA).csv'
     #data_dir = '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv'
-    data_dir = '../../data/2015_08_26b/corrected_vrest2/IV/-0.15(nA).csv'
+    #data_dir = '../../data/2015_08_26b/corrected_vrest2/IV/-0.15(nA).csv'
 
     best_candidate = get_best_candidate(save_dir+method+'/', n_best)
 

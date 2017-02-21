@@ -1,6 +1,7 @@
 from inspyred_optimizer import *
 from scipy_optimizer import *
 from random_optimizer import *
+from climin_optimizer import *
 
 
 class OptimizerFactory:
@@ -24,5 +25,7 @@ class OptimizerFactory:
             return ScipyOptimizer(optimization_settings, algorithm_settings)
         elif algorithm_name == 'Random':
             return RandomOptimizer(optimization_settings, algorithm_settings)
+        elif algorithm_name == 'rmsprop' or algorithm_name == 'adam' or algorithm_name == 'adadelta':
+            return CliminOptimizer(optimization_settings, algorithm_settings)
         else:
             raise ValueError('Optimizer for ' + algorithm_name + ' does not exist!')

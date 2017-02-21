@@ -24,15 +24,16 @@ variables = [
                 [0, 1.0, [['soma', '0.5', 'pas', 'g']]],
                 [0, 1.0, [['soma', '0.5', 'ih_slow', 'gbar']]],
                 [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
-                [0, 1.0, [['soma', '0.5', 'nat', 'gbar']]],
+                #[0, 1.0, [['soma', '0.5', 'nat', 'gbar']]],
                 #[0, 1.0, [['soma', '0.5', 'na8st', 'gbar']]],
-                [0, 1.0, [['soma', '0.5', 'narsg', 'gbar']]],
-                [0, 1.0, [['soma', '0.5', 'kdr', 'gbar']]],
+                #[0, 1.0, [['soma', '0.5', 'narsg', 'gbar']]],
+                #[0, 1.0, [['soma', '0.5', 'kdr', 'gbar']]],
                 [0, 1.0, [['soma', '0.5', 'ih_fast', 'gbar']]]
             ]
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
 
 fitter_params = {
+                    'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
                     'fitfun_names': ['get_v'],
@@ -42,8 +43,8 @@ fitter_params = {
                     #'data_dir': '../../../data/toymodels/hhCell/ramp.csv',
                     #'simulation_params': {'celsius': 6.3}
                     'model_dir': '../../../model/cells/dapmodel_simpel.json',
-                    'mechanism_dir': '../../../model/vclamp/stellate',
-                    'data_dir': '../../../data/2015_08_26b/raw/rampIV/3.0(nA).csv',
+                    'mechanism_dir': '../../../model/channels/stellate',
+                    'data_dir': '../../../data/2015_08_06d/raw/IV/-0.15(nA).csv',
                     'simulation_params': {'celsius': 35}
                 }
 
