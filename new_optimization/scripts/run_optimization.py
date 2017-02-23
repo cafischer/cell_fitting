@@ -4,13 +4,13 @@ from new_optimization.optimizer import OptimizerFactory
 from optimization.helpers import get_lowerbound_upperbound_keys
 import os
 
-save_dir = '../../results/test/'
+save_dir = '../../results/test_dtw/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
 maximize = False
-n_candidates = 1
-stop_criterion = ['generation_termination', 3]
+n_candidates = 500
+stop_criterion = ['generation_termination', 500]
 seed = 1.0
 generator = 'get_random_numbers_in_bounds'
 
@@ -18,8 +18,6 @@ variables = [
                 [0.5, 2.5, [['soma', 'cm']]],
                 [0, 1.0, [['soma', '0.5', 'na_hh', 'gnabar']]],
                 [0, 1.0, [['soma', '0.5', 'k_hh', 'gkbar']]],
-    ]
-"""
                 [0, 1.0, [['soma', '0.5', 'pas', 'g']]],
                 [20, 100, [['soma', 'ena']]],
                 [-100, -20, [['soma', 'ek']]],
@@ -41,15 +39,15 @@ variables = [
                 [0, 10, [['soma', '0.5', 'k_hh', 'beta_n_f']]],
                 [0, 80, [['soma', '0.5', 'k_hh', 'beta_n_v']]],
                 [1, 90, [['soma', '0.5', 'k_hh', 'beta_n_k']]]
-                 ]
-                 """
+                ]
+
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
 
 fitter_params = {
                     'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
-                    'errfun_name': 'rms',
+                    'errfun_name': 'dtw_with_window',
                     'fitfun_names': ['get_v'],
                     'fitnessweights': [1],
                     'model_dir': '../../model/cells/hhCell.json',
@@ -70,15 +68,19 @@ fitter_params = {
 #algorithm_name = 'PSO'
 #algorithm_params = {'inertia': 0.43, 'cognitive_rate': 1.44, 'social_rate': 1.57}
 
+algorithm_name = 'L-BFGS-B'
+algorithm_params = {}
+normalize = False
+
 #algorithm_name = 'rmsprop'
 #algorithm_params = {'step_rate': 0.1, 'decay': 0.9, 'momentum': 0.2, 'step_adapt': False,
 #                    'step_rate_min': 0, 'step_rate_max': np.inf, 'args': None}
 #normalize = False
 
-algorithm_name = 'adadelta'
-algorithm_params = {'step_rate': 1, 'decay': 0.9, 'momentum': 0, 'offset': 0.0001,
-                   'args': None}
-normalize = False
+#algorithm_name = 'adadelta'
+#algorithm_params = {'step_rate': 1, 'decay': 0.9, 'momentum': 0, 'offset': 0.0001,
+#                   'args': None}
+#normalize = False
 
 #algorithm_name = 'adam'
 #algorithm_params = {'step_rate': 0.0002, 'decay': None, 'decay_mom1': 0.1, 'decay_mom2': 0.001, 'momentum': 0, 'offset': 1e-08,

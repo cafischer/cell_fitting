@@ -1,12 +1,10 @@
 import pandas as pd
 import numpy as np
-from optimization.linear_regression import *
-from nrn_wrapper import *
+from optimization.linear_regression import convert_unit_prefix, linear_regression
+from optimization.helpers import get_channel_list, get_ionlist, get_cellarea
+from nrn_wrapper import load_mechanism_dir, Cell, iclamp
 from optimization.simulate import currents_given_v
-from optimization.errfuns import *
-from optimization import fitfuns
 from optimization.simulate import extract_simulation_params
-import functools
 
 __author__ = 'caro'
 

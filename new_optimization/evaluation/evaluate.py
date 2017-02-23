@@ -174,9 +174,10 @@ def get_channel_params(channel_name, candidate, save_dir):
     return channel_params
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)_newmodel3/'
-    #save_dir = '../../results/test_dtw/test_dtw(rms)/'
+    #save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)_newmodel3/'
+    save_dir = '../../results/test_gradient_descent/'
     method = 'L-BFGS-B'
+    #method = 'adadelta'
 
     best_candidate = plot_best_candidate(save_dir+method+'/', 0)
 

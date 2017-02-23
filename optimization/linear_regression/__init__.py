@@ -2,7 +2,7 @@ import numpy as np
 from scipy.optimize import nnls
 import matplotlib.pyplot as pl
 from matplotlib.pyplot import cm as cmap
-from optimization.helpers import *
+from optimization.helpers import convert_unit_prefix
 
 __author__ = 'caro'
 

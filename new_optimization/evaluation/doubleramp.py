@@ -20,10 +20,10 @@ def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
 
 
 def double_ramp(cell):
-    delta_ramp = 1
-    ramp3_times = np.arange(delta_ramp, 10 * delta_ramp + delta_ramp, delta_ramp)
+    delta_ramp = 2
+    ramp3_times = np.arange(delta_ramp, 5 * delta_ramp + delta_ramp, delta_ramp)
     baseline_amp = -0.05
-    ramp_amp = 4.0
+    ramp_amp = 3.0
     ramp3_amp = 3.5
     step_amp = -0.1
     dt = 0.01
@@ -70,7 +70,7 @@ def double_ramp(cell):
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/L-BFGS-B/'
+    save_dir = '../../results/new_optimization/2015_08_26b/22_01_17_readjust1/L-BFGS-B/'
     n_best = 1
 
     # load model

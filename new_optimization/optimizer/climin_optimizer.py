@@ -86,7 +86,6 @@ class CliminOptimizer(Optimizer):
             candidates.append(copy.copy(optimization_algorithm.wrt))
             if info['n_iter'] >= self.optimization_settings.stop_criterion[1]:
                 break
-        print candidates
         queue.put((candidates, id))
         return candidates
 
