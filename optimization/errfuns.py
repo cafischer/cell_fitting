@@ -20,8 +20,14 @@ def rms(a, b):
     """
     return np.sqrt(np.sum((np.array(a) - np.array(b))**2) / np.size(a))
 
-def maxabs(a, b):
+
+def meanabs_error(a, b):
+    return np.sum(np.abs(np.array(a) - np.array(b)))
+
+
+def maxabs_error(a, b):
     return np.max(np.abs(np.array(a) - np.array(b)))
+
 
 #def dtw(x, y):
 #    distance, path = fastdtw(x, y, dist=euclidean)

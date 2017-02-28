@@ -47,7 +47,7 @@ bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)
 fitter_params = {
                     'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
-                    'errfun_name': 'dtw_with_window',
+                    'errfun_name': 'meanabs_error',
                     'fitfun_names': ['get_v'],
                     'fitnessweights': [1],
                     'model_dir': '../../model/cells/hhCell.json',

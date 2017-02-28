@@ -3,16 +3,18 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import curve_fit
 from data.hekareader import *
+from optimization.helpers import get_cellarea, convert_unit_prefix
 
 if __name__ == '__main__':
-    file_dir = '../data/2015_08_26b/2015_08_26b.dat'
+    file_dir = '../data/2015_08_06d/2015_08_06d.dat'
     hekareader = HekaReader(file_dir)
     protocol = 'hypTester'
     indices = get_indices_for_protocol(hekareader, protocol)
 
     v_traces = np.zeros((len(indices), len(hekareader.get_xy(indices[0])[0])))
     for i, index in enumerate(indices):
-        t, v_traces[i, :] = hekareader.get_xy(index)
+        t, v = hekareader.get_xy(index)
+        v_traces[i, :] = v - 0.016  # TODO: liquid junction correction
         t_unit, v_unit = hekareader.get_units_xy(index)
 
     # compute mean
@@ -56,3 +58,15 @@ if __name__ == '__main__':
     print 'tau: ' + str(tau * 1000) + ' ms'
     print 'R_in: ' + str(r_in) + ' MOhm'
     print 'c_m: ' + str(c_m) + ' pF'
+
+    L = 100  # um
+    diam = 50  #um
+    print 'If L=%L and diam=%diam: ' % L, diam
+    L = L * 1e-4  # cm
+    diam = diam * 1e-4  # cm
+    cell_area = get_cellarea(L, diam)  # cm2
+
+    g_pas = 1 / convert_unit_prefix('M', r_in) / cell_area  # S/cm2
+    print 'g_pas: ' + str(g_pas) + ' S/cm2'
+    c_m_per_area = c_m * 1e-6 / cell_area  # uF/cm2
+    print 'c_m: ' + str(c_m_per_area) + ' uF/cm2'

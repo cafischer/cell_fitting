@@ -53,6 +53,8 @@ def convert_unit_prefix(from_prefix, x):
     """
     if from_prefix == 'T':
         return x * 1e12
+    elif from_prefix == 'M':
+        return x * 1e6
     elif from_prefix == 'h':
         return x * 1e2
     elif from_prefix == 'da':
