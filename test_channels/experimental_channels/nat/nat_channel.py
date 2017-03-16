@@ -4,7 +4,7 @@ from test_channels.channel_characteristics import plot_activation_curves
 
 if __name__ == '__main__':
 
-    v_range = np.arange(-150, 50, 0.1)
+    v_range = np.arange(-100, 50, 0.1)
 
     # activation: Magistretti
     vh_act = -32.5

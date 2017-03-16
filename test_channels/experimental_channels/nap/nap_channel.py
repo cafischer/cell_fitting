@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as pl
-from test_channels.channel_characteristics import plot_activation_curves, rate_constant, tau
+from test_channels.channel_characteristics import plot_activation_curves, rate_constant, compute_tau
 
 
 if __name__ == '__main__':
 
-    v_range = np.arange(-100, -10, 0.1)
+    v_range = np.arange(-100, 50, 0.1)
 
     # activation: Magistretti
     vh_act = -44.4
@@ -30,11 +30,11 @@ if __name__ == '__main__':
     b = 0.447
     k = -2.63
     beta = rate_constant(v_range, a, b, k)
-    time_constant_inact = tau(alpha, beta)
+    time_constant_inact = compute_tau(alpha, beta)
 
     pl.figure()
-    pl.plot(v_range, time_constant_inact, color='b', label='inactivation')
-    pl.xlabel('V (mV)')
-    pl.ylabel('Tau (s)')
-    pl.legend()
+    pl.plot(v_range, time_constant_inact, color='b', label='Inactivation')
+    pl.xlabel('V (mV)', fontsize=16)
+    pl.ylabel('Tau (s)', fontsize=16)
+    pl.legend(fontsize=16)
     pl.show()

@@ -38,7 +38,7 @@ def voltage_steps(sec, amps, durs, v_steps, stepamp, pos, dt):
     clamp.amp1 = amps[0]
     clamp.amp2 = amps[1]
     clamp.amp3 = amps[2]
-    clamp.rs = 1e-3  # should be very small
+    clamp.rs = 1e-9  # should be very small
     i_clamp = h.Vector()
     i_clamp.record(clamp._ref_i)
 
@@ -46,12 +46,12 @@ def voltage_steps(sec, amps, durs, v_steps, stepamp, pos, dt):
     i_steps = []
     for v_step in v_steps:
         setattr(clamp, 'amp' + str(stepamp), v_step)
-        h.tstop = tstop
+        h.tstop = tstop + dt
+        h.steps_per_ms = 1.0/dt
         h.dt = dt
         h.v_init = amps[0]
-        h.init()
         h.run()
-        i_steps.append(np.array(i_clamp))
+        i_steps.append(np.array(i_clamp)[1:])  # at first point not initialized yet
 
     return i_steps, t
 
@@ -94,7 +94,7 @@ def current_subtraction(sec, channel, celsius, amps, durs, v_steps, stepamp, pos
     i_steps_blockade, t = voltage_steps(sec, amps, durs, v_steps, stepamp, pos, dt)
 
     for i, v_step in enumerate(v_steps):
-        i_steps.append(i_steps_control[i] - i_steps_blockade[i])
+        i_steps.append(i_steps_control[i]) # - i_steps_blockade[i])
 
     return i_steps, t
 

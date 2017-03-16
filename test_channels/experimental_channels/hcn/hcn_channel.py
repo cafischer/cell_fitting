@@ -1,7 +1,7 @@
 from __future__ import division
 import numpy as np
 import matplotlib.pyplot as pl
-from test_channels.channel_characteristics import boltzmann_fun, rate_constant, tau
+from test_channels.channel_characteristics import boltzmann_fun, rate_constant, compute_tau, plot_activation_curves
 
 
 if __name__ == '__main__':
@@ -14,20 +14,24 @@ if __name__ == '__main__':
     # fast
     vh_fast = -67.4
     k_fast = 12.66
+    vh_std_fast = 0
+    k_std_fast = 0
 
     # slow
     vh_slow = -57.92
     k_slow = 9.26
+    vh_std_slow = 0
+    k_std_slow = 0
 
     curve_act_fast = boltzmann_fun(v_range, vh_fast, k_fast)
     curve_act_slow = boltzmann_fun(v_range, vh_slow, k_slow)
 
     pl.figure()
-    pl.plot(v_range, curve_act_fast, color='lightblue', label='fast')
-    pl.plot(v_range, curve_act_slow, color='darkblue', label='slow')
-    pl.xlabel('V (mV)')
-    pl.ylabel('G (normalized)')
-    pl.legend()
+    pl.plot(v_range, curve_act_fast, color='g', label='fast')
+    pl.plot(v_range, curve_act_slow, color='b', label='slow')
+    pl.xlabel('V (mV)', fontsize=16)
+    pl.ylabel('G (normalized)', fontsize=16)
+    pl.legend(fontsize=16)
     #pl.show()
 
     # plot time constants
@@ -39,7 +43,7 @@ if __name__ == '__main__':
     b = -1.024
     k = -17.4
     beta = rate_constant(v_range, a, b, k)
-    time_constant_fast = tau(alpha, beta)
+    time_constant_fast = compute_tau(alpha, beta)
 
     a = -3.18 * 1e-3
     b = -0.695
@@ -49,12 +53,12 @@ if __name__ == '__main__':
     b = -1.065
     k = -14.25
     beta = rate_constant(v_range, a, b, k)
-    time_constant_slow = tau(alpha, beta)
+    time_constant_slow = compute_tau(alpha, beta)
 
     pl.figure()
-    pl.plot(v_range, time_constant_fast, color='lightblue', label='fast')
-    pl.plot(v_range, time_constant_slow, color='darkblue', label='slow')
-    pl.xlabel('V (mV)')
-    pl.ylabel('Tau (ms)')
-    pl.legend()
+    pl.plot(v_range, time_constant_fast, color='g', label='fast')
+    pl.plot(v_range, time_constant_slow, color='b', label='slow')
+    pl.xlabel('V (mV)', fontsize=16)
+    pl.ylabel('Tau (ms)', fontsize=16)
+    pl.legend(fontsize=16)
     pl.show()

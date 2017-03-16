@@ -3,7 +3,7 @@ from test_channels.channel_characteristics import plot_activation_curves
 
 if __name__ == '__main__':
 
-    v_range = np.arange(-150, 30, 0.1)
+    v_range = np.arange(-150, 50, 0.1)
 
     # activation: Eder
     vh_act = -34.7

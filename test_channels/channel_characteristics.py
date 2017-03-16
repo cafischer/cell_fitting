@@ -12,7 +12,7 @@ def rate_constant(v, a, b, k):
     return (a * v + b) / (1 - np.exp((v + b / a) / k))
 
 
-def tau(alpha, beta):
+def compute_tau(alpha, beta):
     return 1 / (alpha + beta)
 
 
@@ -47,9 +47,9 @@ def plot_activation_curves(v_range, vh_act, k_act, vh_std_act, k_std_act, vh_ina
     curve_inact_min = std_steady_state_curve(v_range, -vh_inact, k_inact, vh_std_inact, k_std_inact, kind='min')
     curve_inact_max = std_steady_state_curve(v_range, -vh_inact, k_inact, vh_std_inact, k_std_inact, kind='max')
     pl.figure()
-    pl.plot(v_range, curve_act, color='r', label='activation')
+    pl.plot(v_range, curve_act, color='r', label='Activation')
     pl.fill_between(v_range, curve_act_max, curve_act_min, color='r', alpha=0.5)
-    pl.plot(v_range, curve_inact, color='b', label='inactivation')
+    pl.plot(v_range, curve_inact, color='b', label='Inactivation')
     pl.fill_between(v_range, curve_inact_max, curve_inact_min, color='b', alpha=0.5)
     pl.xlabel('V (mV)', fontsize=16)
     pl.ylabel('G (normalized)', fontsize=16)
@@ -61,7 +61,7 @@ def fit_time_constant(v_range, a_alpha, b_alpha, k_alpha, a_beta, b_beta, k_beta
 
     alpha = rate_constant(v_range, a_alpha, b_alpha, k_alpha)
     beta = rate_constant(v_range, a_beta, b_beta, k_beta)
-    time_constant = tau(alpha, beta)
+    time_constant = compute_tau(alpha, beta)
 
     def curve_to_fit(v, tau_min, tau_max, tau_delta):
         m_inf = boltzmann_fun(v, vh, k)

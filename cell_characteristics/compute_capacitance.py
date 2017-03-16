@@ -23,7 +23,7 @@ if __name__ == '__main__':
     pl.plot(t, v_mean, 'k')
     pl.xlabel('Time (' + t_unit + ')')
     pl.ylabel('Membrane Potential (' + v_unit + ')')
-    pl.show()
+    #pl.show()
 
     # load i_inj
     i_inj = np.array(pd.read_csv('../data/Protocols/'+protocol+'.csv', header=None)[0].values)
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     pl.figure()
     pl.plot(t_expdecay, v_expdecay, 'k')
     pl.plot(t_expdecay, exponential(t_expdecay, tau), 'r')
-    pl.show()
+    #pl.show()
 
     # compute Rin
     v_rest = np.mean(v_mean[:start_i_inj - 1])
@@ -59,9 +59,15 @@ if __name__ == '__main__':
     print 'R_in: ' + str(r_in) + ' MOhm'
     print 'c_m: ' + str(c_m) + ' pF'
 
+    # estimate cell size
+    c_m_ind = 1.0 * 1e6  # pF/cm2
+    cell_area = 1.0/(c_m_ind / c_m)  # cm2
+    diam = np.sqrt(cell_area/np.pi) * 1e4  # um
+    print 'Estimated diam: ' + str(diam)
+    #
     L = 100  # um
-    diam = 50  #um
-    print 'If L=%L and diam=%diam: ' % L, diam
+    diam = 100  # um
+    print 'If L={0} and diam={1}: '.format(L, diam)
     L = L * 1e-4  # cm
     diam = diam * 1e-4  # cm
     cell_area = get_cellarea(L, diam)  # cm2
