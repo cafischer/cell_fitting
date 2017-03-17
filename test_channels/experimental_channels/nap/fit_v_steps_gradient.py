@@ -14,7 +14,7 @@ i_traces /= np.max(np.max(np.abs(i_traces)))
 
 v_steps = np.arange(-60, -34, 5)
 n_trials = 100
-seed = 562
+seed = 3
 rand_gen = np.random.RandomState(seed)
 bounds = [(-1, -0.0001), (-1, 1), (0.01, 10),
           (0.0001, 1), (-1, 1), (-10, -0.01)]
@@ -36,7 +36,23 @@ def compute_current(v, t, alpha_a_h, alpha_b_h, alpha_k_h, beta_a_h, beta_b_h, b
     beta_h = rate_constant(v, beta_a_h, beta_b_h, beta_k_h) #/ 1000  # convert to /milliseconds
     tau_h = compute_tau(alpha_h, beta_h)
     #h_inf = alpha_h / (alpha_h + beta_h)
+    return m_inf ** p * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q * (v-e_ion)
 
+
+bounds = [(0, 10000)]
+
+def compute_current2(v, t, tau_h):
+    vh_m = -44.4
+    k_m = -5.2
+    vh_h = -48.8
+    k_h = 10
+    h0 = 1
+    p = 1
+    q = 1
+    e_ion = 60
+
+    m_inf = boltzmann_fun(v, vh_m, k_m)
+    h_inf = boltzmann_fun(v, vh_h, k_h)
     return m_inf ** p * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q * (v-e_ion)
 
 
@@ -44,7 +60,7 @@ def fun_to_fit(candidate):
     t_vec = i_traces.index.values
     i_traces_fit = []
     for v_step in v_steps:
-        i_traces_fit.append(compute_current(v_step, t_vec, *candidate))
+        i_traces_fit.append(compute_current2(v_step, t_vec, *candidate))
 
     i_traces_fit = [i_trace_fit / np.max(np.abs(i_traces_fit)) for i_trace_fit in i_traces_fit]
 
@@ -73,7 +89,7 @@ i_traces_fit = []
 for v_step in v_steps:
     #x = [-2.88e-3, -4.9e-2, 4.63, 6.94e-3, 0.447, -2.63]
     #i_traces_fit.append(compute_current(v_step, t_vec, *x))
-    i_traces_fit.append(compute_current(v_step, t_vec, *results[best_fit].x))
+    i_traces_fit.append(compute_current2(v_step, t_vec, *results[best_fit].x))
 
 for v_step, i_trace_fit in zip(v_steps, i_traces_fit):
     pl.plot(t_vec, i_traces[str(v_step)], 'k')

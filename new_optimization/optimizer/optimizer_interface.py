@@ -20,7 +20,8 @@ class Optimizer:
         with open(save_dir + '/algorithm_settings.json', 'w') as f:
             self.algorithm_settings.save(f)
 
-        with open(self.optimization_settings.fitter.model_dir, 'r') as f1:
-            cell = json.load(f1)
-            with open(save_dir + '/cell.json', 'w') as f2:
-                json.dump(cell, f2, indent=4)
+        if getattr(self.optimization_settings.fitter, 'model_dir', None) is not None:
+            with open(self.optimization_settings.fitter.model_dir, 'r') as f1:
+                cell = json.load(f1)
+                with open(save_dir + '/cell.json', 'w') as f2:
+                    json.dump(cell, f2, indent=4)

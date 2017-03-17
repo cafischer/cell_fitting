@@ -16,6 +16,32 @@ def compute_tau(alpha, beta):
     return 1 / (alpha + beta)
 
 
+def compute_current(v, t, m_inf, h_inf, tau_m, tau_h, p=1, q=1, m0=0, h0=1, e_ion=60):
+    return ((m_inf - (m_inf - m0) * np.exp(-t / tau_m)) ** p
+            * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q
+            * (v - e_ion))
+
+
+def compute_current_instantaneous_m(v, t, m_inf, h_inf, tau_h, p=1, q=1, h0=1, e_ion=60):
+    return (m_inf ** p
+            * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q
+            * (v - e_ion))
+
+
+def compute_current_instantaneous_m_explicit_tau(v, t, vh_m, k_m,
+                                                alpha_a_h, alpha_b_h, alpha_k_h, beta_a_h, beta_b_h, beta_k_h,
+                                                p=1, q=1, h0=1, e_ion=60):
+
+    m_inf = boltzmann_fun(v, vh_m, k_m)
+    alpha_h = rate_constant(v, alpha_a_h, alpha_b_h, alpha_k_h)
+    beta_h = rate_constant(v, beta_a_h, beta_b_h, beta_k_h)
+    tau_h = compute_tau(alpha_h, beta_h)
+    h_inf = alpha_h / (alpha_h + beta_h)
+    return (m_inf ** p
+            * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q
+            * (v - e_ion))
+
+
 def steady_state_curve(v, vh, vs):
     return boltzmann_fun(v, -vh, vs)
 

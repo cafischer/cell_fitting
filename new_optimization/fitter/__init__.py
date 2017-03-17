@@ -1,21 +1,7 @@
-import abc
 from hodgkinhuxleyfitter import *
 from izhikevichfitter import *
 from linearregressionfitter import *
-
-class Fitter:
-    __metaclass__ = abc.ABCMeta
-
-    def __init__(self):
-        pass
-
-    @abc.abstractmethod
-    def evaluate_fitness(self, candidate):
-        pass
-
-    @abc.abstractmethod
-    def __dict__(self):
-        pass
+from channelfitter import *
 
 
 class FitterFactory:
@@ -31,5 +17,9 @@ class FitterFactory:
             return HodgkinHuxleyFitterSeveralData(**fitter_params)
         elif name == 'HodgkinHuxleyFitterPareto':
             return HodgkinHuxleyFitterPareto(**fitter_params)
+        elif name == 'ChannelFitterSingleTraces':
+            return ChannelFitterSingleTraces(**fitter_params)
+        elif name == 'ChannelFitterAllTraces':
+            return ChannelFitterAllTraces(**fitter_params)
         else:
             raise ValueError('Fitter '+name+' not available!')

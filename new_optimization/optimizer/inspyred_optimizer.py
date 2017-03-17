@@ -9,13 +9,14 @@ from new_optimization.fitter import *
 
 
 def mp_evaluator(candidate, args):  # top-level evaluator for multiprocessing
-    args['optimization_settings']['fitter_params']['mechanism_dir'] = None
+    if getattr(args['optimization_settings']['fitter_params'], 'mechanism_dir', None) is not None:
+        args['optimization_settings']['fitter_params']['mechanism_dir'] = None
     fitter = FitterFactory().make_fitter(args['optimization_settings']['fitter_params'])
     evaluator = evaluators.create_evaluator(fitter.evaluate_fitness)
     if args['algorithm_settings']['normalize']:
         evaluator = evaluators.normalize_evaluator(evaluator,
-                                                   args['optimization_settings'].bounds['lower_bounds'],
-                                                   args['optimization_settings'].bounds['upper_bounds'])
+                                                   args['optimization_settings']['bounds']['lower_bounds'],
+                                                   args['optimization_settings']['bounds']['upper_bounds'])
     return evaluator(candidate, args)
 
 
@@ -82,8 +83,8 @@ class InspyredOptimizer(Optimizer):
     def optimize(self):
         self.algorithm.evolve(generator=self.generator,
                               #evaluator=self.evaluator,  # if not using multiprocessing
-                              evaluator=inspyred.ec.evaluators.parallel_evaluation_mp,  # for mutliprocessing
-                              mp_evaluator=mp_evaluator,  # for mutliprocessing (must be pickable)
+                              evaluator=inspyred.ec.evaluators.parallel_evaluation_mp,  # for multiprocessing
+                              mp_evaluator=mp_evaluator,  # for multiprocessing (must be pickable)
                               pop_size=self.optimization_settings.n_candidates,
                               maximize=self.optimization_settings.maximize,
                               bounder=self.bounder,

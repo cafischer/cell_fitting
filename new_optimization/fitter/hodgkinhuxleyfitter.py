@@ -1,19 +1,20 @@
 import pandas as pd
-import numpy as np
 from nrn_wrapper import Cell, load_mechanism_dir
 from optimization import errfuns
 from optimization import fitfuns
-from optimization.simulate import *
+from optimization.simulate import iclamp_handling_onset, extract_simulation_params
 import functools
 from inspyred.ec.emo import Pareto
+from new_optimization.fitter.fitter_interface import Fitter
 
 __author__ = 'caro'
 
 
-class HodgkinHuxleyFitter(object):
+class HodgkinHuxleyFitter(Fitter):
 
     def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
+        super(HodgkinHuxleyFitter, self).__init__()
         self.name = name
         self.variable_keys = variable_keys
         self.errfun_names = errfun_name
