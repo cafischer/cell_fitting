@@ -1,6 +1,7 @@
 from __future__ import division
-from nrn_wrapper import *
-from test_channels.test_ionchannel import *
+from nrn_wrapper import Cell
+import numpy as np
+from test_channels.test_ionchannel import current_subtraction, plot_i_steps
 
 
 if __name__ == "__main__":

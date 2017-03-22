@@ -6,16 +6,14 @@ from test_channels.experimental_channels.build_trace_data import (load_traces, i
 
 
 vsteps = np.arange(-30, -9, 5)
-save_dir = '.'
+save_dir = './'
 filenames = ['nat'+str(i)+'trace.csv' for i in vsteps]
 
 all_traces = load_traces(save_dir, filenames, vsteps)
 
-dt = 0.1
-all_traces = interpolate_traces(all_traces, dt)
-
-all_traces = append_prepost_potential(all_traces, 0, 0, 30, 30, dt)
-
+dt = 0.01
+all_traces.iloc[0].fillna(0, inplace=True)
+all_traces = interpolate_traces(all_traces, dt, 1)
 
 pl.figure()
 for column in all_traces.columns:
@@ -24,7 +22,9 @@ for column in all_traces.columns:
 pl.ylabel('Current (pA)', fontsize=16)
 pl.xlabel('Time (ms)', fontsize=16)
 pl.legend(fontsize=16)
+pl.savefig(os.path.join(save_dir, 'traces.png'))
 pl.show()
-pl.savefig(os.path.join(save_dir+'traces.png'))
+
+#all_traces = all_traces[all_traces.columns[-1]]
 
 all_traces.to_csv(os.path.join(save_dir, 'traces.csv'))

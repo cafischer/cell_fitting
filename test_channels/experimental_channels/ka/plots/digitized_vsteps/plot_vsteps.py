@@ -6,15 +6,15 @@ from test_channels.experimental_channels.build_trace_data import (load_traces, i
 
 
 vsteps = [-30, 0, 30]
-save_dir = '.'
+save_dir = './'
 filenames = ['ka'+str(i)+'trace.csv' for i in vsteps]
 
 all_traces = load_traces(save_dir, filenames, vsteps, False)
 
 dt = 0.1
-all_traces = interpolate_traces(all_traces, dt)
+all_traces = interpolate_traces(all_traces, dt, 1)
 
-all_traces = append_prepost_potential(all_traces, 0, 0, 30, 30, dt)
+#all_traces = append_prepost_potential(all_traces, 0, 0, 30, 30, dt)
 
 
 pl.figure()
@@ -24,7 +24,7 @@ for column in all_traces.columns:
 pl.ylabel('Current (pA)', fontsize=16)
 pl.xlabel('Time (ms)', fontsize=16)
 pl.legend(fontsize=16)
-pl.show()
 pl.savefig(os.path.join(save_dir+'traces.png'))
+pl.show()
 
 all_traces.to_csv(os.path.join(save_dir, 'traces.csv'))

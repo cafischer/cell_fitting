@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
-from scipy.interpolate import CubicSpline
+from scipy.interpolate import make_interp_spline
 
 
 def load_traces(save_dir, filenames, vsteps, lower_zero=True):
@@ -23,11 +23,11 @@ def load_traces(save_dir, filenames, vsteps, lower_zero=True):
     return traces
 
 
-def interpolate_traces(traces, dt):
+def interpolate_traces(traces, dt, order_spline=3):
     traces_interpolated = pd.DataFrame(index=np.arange(traces.index[0], traces.index[-1], dt))
     for i in traces.columns:
         not_nan = np.logical_not(traces[i].isnull().values)
-        cs = CubicSpline(traces.index[not_nan], traces[i][not_nan])
+        cs = make_interp_spline(traces.index[not_nan], traces[i][not_nan], k=order_spline)
         traces_interpolated[i] = cs(traces_interpolated.index.values)
     return traces_interpolated
 

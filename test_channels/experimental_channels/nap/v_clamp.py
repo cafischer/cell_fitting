@@ -8,7 +8,7 @@ import pandas as pd
 if __name__ == "__main__":
 
     # channel to investigate
-    channel = "nap"
+    channel = "Nap_Et2"  # "nap"
     model_dir = '../../../model/cells/dapmodel_nocurrents.json'
     mechanism_dir = './mod/'
 
@@ -27,6 +27,7 @@ if __name__ == "__main__":
     cell.update_attr(['soma', '0.5', channel, 'gbar'], 1.0)
     sec_channel = getattr(cell.soma(.5), channel)
 
+    """
     # change params
     vh_m = -3.0e+01
     k_m = -4.74273046
@@ -57,12 +58,10 @@ if __name__ == "__main__":
     pl.plot(v, h_inf, 'k')
     pl.plot(v, h_inf_sig, 'r')
     pl.show()
+    """
 
     # compute response to voltage steps
     i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
-    #for i in range(len(i_steps)):
-    #    i_steps[i] /= 20
-    #plot_i_steps(i_steps, v_steps, t)
 
     # compare to experimental data
     all_traces = pd.read_csv(os.path.join('.', 'plots', 'digitized_vsteps', 'traces.csv'), index_col=0)

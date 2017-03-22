@@ -4,7 +4,7 @@ from optimization.helpers import get_lowerbound_upperbound_keys
 import os
 from time import time
 
-save_dir = '../../results/new_optimization/ion_channels/nap_tau2/'
+save_dir = '../../../results/ion_channels/nap_tau2/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 

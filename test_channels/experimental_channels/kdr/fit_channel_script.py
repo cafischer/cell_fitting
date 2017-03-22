@@ -2,38 +2,44 @@ from new_optimization.optimizer import OptimizerFactory
 from new_optimization import AlgorithmSettings, OptimizationSettings
 from optimization.helpers import get_lowerbound_upperbound_keys
 import os
-import numpy as np
 from time import time
 
-save_dir = '../../../results/new_optimization/ion_channels/nap/'
+save_dir = '../../../results/ion_channels/kdr/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
 maximize = False
-n_candidates = 100
-stop_criterion = ['generation_termination', 500]
+n_candidates = 5000
+stop_criterion = ['generation_termination', 1000]
 seed = time()
 generator = 'get_random_numbers_in_bounds'
 
 
 variables = [
-                    [0, 1, 'm_inf'],
-                    [0, 1, 'h_inf'],
-                    [0, 1000, 'tau_h']
+                    [0.0001, 1, 'alpha_a_m'],
+                    [-100, 100, 'alpha_b_m'],
+                    [-40, 0, 'alpha_k_m'],
+                    [-1, -0.001, 'beta_a_m'],
+                    [-100, 100, 'beta_b_m'],
+                    [0, 40, 'beta_k_m'],
+                    [-1, -0.001, 'alpha_a_h'],
+                    [-100, 100, 'alpha_b_h'],
+                    [0, 40, 'alpha_k_h'],
+                    [0.001, 2, 'beta_a_h'],
+                    [-100, 100, 'beta_b_h'],
+                    [-40, 0, 'beta_k_h'],
             ]
-v_steps = np.arange(-60, -34, 5)
+
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
-lower_bounds = np.ravel([lower_bounds for i in range(len(v_steps))])
-upper_bounds = np.ravel([upper_bounds for i in range(len(v_steps))])
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
 
 
 fitter_params = {
-                    'name': 'ChannelFitter',
+                    'name': 'ChannelFitterAllTraces',
                     'data_dir': 'plots/digitized_vsteps/traces.csv',
-                    'fixed_params': {'p': 1, 'q': 1, 'h0': 1, 'e_ion': 63},
-                    'n_params': 3,
-                    'compute_current_name': 'compute_current_instantaneous_m'
+                    'fixed_params': {'p': 1, 'q': 1, 'm0': 0, 'h0': 1, 'e_ion': -79},
+                    'n_params': len(variable_keys),
+                    'compute_current_name': 'compute_current_explicit_tau'
                 }
 
 algorithm_name = 'L-BFGS-B'

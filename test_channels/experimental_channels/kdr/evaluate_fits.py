@@ -43,20 +43,7 @@ def plot_candidate(save_dir, n_best):
     pl.show()
 
 
-    #for i in len(fitter.v_steps):
-    m_inf, h_inf, tau_h = best_candidate_x.reshape(len(fitter.v_steps), fitter.n_params).T
-
-    pl.figure()
-    pl.plot(fitter.v_steps, m_inf, 'r')
-    pl.plot(fitter.v_steps, h_inf, 'b')
-    pl.show()
-
-    pl.figure()
-    pl.plot(fitter.v_steps, tau_h)
-    pl.show()
-
-
 if __name__ == '__main__':
 
-    save_dir = '/media/caro/Daten/Phd/DAP-Project/cell_fitting/results/ion_channels/nat/L-BFGS-B'
+    save_dir = '/media/caro/Daten/Phd/DAP-Project/cell_fitting/results/ion_channels/kdr/L-BFGS-B'
     plot_candidate(save_dir, 0)
