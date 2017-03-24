@@ -2,37 +2,58 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_caLVA_channel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/evaluate_fits.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_ka_channel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/evaluate_fits.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/fit_channel_script.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_kdr_channel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/evaluate_fits.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/fit_channel_script.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps_interpolate.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nat/compare_nat_channel.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nat/evaluate_fits.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nat/fit_channel_script.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_v_steps.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_v_steps_gradient.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_vsteps_minf_hinf_tauh.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/__init__.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_nap_channel.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/compare_with_experiments.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/evaluate_fits.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/mod/caHVA_fit.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/v_clamp_with_new_params.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_with_experiments.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/mod/caLVA_fit.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/v_clamp_with_new_params.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_fit.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/plots/digitized_vsteps/plot_vsteps.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/plots/digitized_vsteps2/plot_vsteps.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_with_experiments.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/mod/ka_fit.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/v_clamp_with_new_params.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_with_experiments.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/mod/kdr_fit.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/v_clamp_with_new_params.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channel_script.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/nap_fit.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/nap_magistretti.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nat/v_clamp_with_new_params.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/caHVA_channel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_caLVA_channel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_ka_channel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_nap_channel.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/__init__.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/evaluate_fits.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn.mod" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_dickson.mod" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_kdr_channel.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/compare_hcn_channel.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_channel_script.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script2.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/fit_channel_script.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/nap_channel.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/experimental_data.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/compare_nat_channel.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nat/compare_with_experiments.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json" afterPath="$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/fitter/channelfitter.py" afterPath="$PROJECT_DIR$/new_optimization/fitter/channelfitter.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/channel_characteristics.py" afterPath="$PROJECT_DIR$/test_channels/channel_characteristics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/build_trace_data.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/build_trace_data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/digitized_vsteps/plot_vsteps.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/digitized_vsteps/plot_vsteps.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/plots/digitized_vsteps/plot_vsteps.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/plots/digitized_vsteps/plot_vsteps.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps/plot_vsteps.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps/plot_vsteps.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/plots/digitized_vsteps/plot_vsteps.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/plots/digitized_vsteps/plot_vsteps.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/evaluate_fits.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/evaluate_fits.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/evaluate_fits.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/evaluate_fits.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/fit_channel_script.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/ka/fit_channel_script.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/evaluate_fits.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/evaluate_fits.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/fit_channel_script.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/fit_channel_script.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/evaluate_fits.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/evaluate_fits.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script2.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script2.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps_interpolate.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps_interpolate.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp_with_new_params.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp_with_new_params.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/plots/digitized_vsteps/plot_vsteps.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nat/plots/digitized_vsteps/plot_vsteps.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/evaluate_fits.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nat/evaluate_fits.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/fit_channel_script.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nat/fit_channel_script.py" />
     </list>
     <ignored path="cell_fitting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,43 +103,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="plot_vsteps.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/digitized_vsteps/plot_vsteps.py">
+      <file leaf-file-name="evaluate_fits.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fit_channel_script.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="90">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="evaluate_fits.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/evaluate_fits.py">
+      <file leaf-file-name="optimize_stellate.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/new_optimization/scripts/optimize_stellate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="180">
+              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#68#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="inspect_data.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/inspect_data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kdr.mod" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/kdr.mod">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-601">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="compare_caLVA_channel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_caLVA_channel.py">
+      <file leaf-file-name="nap.mod" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/channels/stellate/nap.mod">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state relative-caret-position="-1155">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -139,57 +172,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_time_constants.py" />
-        <option value="$PROJECT_DIR$/cell_characteristics/compute_capacitance.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/plot_vsteps.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_time_constants.py" />
-        <option value="$PROJECT_DIR$/model/channels/vavoulis/nap.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_v_steps.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/fit_v_steps_gradient.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/plots/digitized_vsteps/nat-15trace.csv" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps/kdr20trace.csv" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps/kdr30trace.csv" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/plots/digitized_vsteps/voltage_steps.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/plots/digitized_vsteps/ka-30trace.csv" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/plots/digitized_vsteps/plot_vsteps.py" />
-        <option value="$PROJECT_DIR$/test_channels/test_ionchannel.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_v_steps_gradient.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_vsteps_minf_hinf_tauh.py" />
-        <option value="$PROJECT_DIR$/new_optimization/fitter/fitter_interface.py" />
-        <option value="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
-        <option value="$PROJECT_DIR$/new_optimization/optimizer/optimizer_interface.py" />
-        <option value="$PROJECT_DIR$/new_optimization/optimizer/inspyred_optimizer.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_v_steps2.py" />
-        <option value="$PROJECT_DIR$/new_optimization/fitter/__init__.py" />
-        <option value="$PROJECT_DIR$/new_optimization/fitter/channelfitter.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_nap_channel.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp_with_new_params.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/build_trace_data.py" />
-        <option value="$PROJECT_DIR$/test_channels/channel_characteristics.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script2.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/nap.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/mod/nat.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/plots/digitized_vsteps2/plot_vsteps.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/Nap_Et2.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps_interpolated.py" />
+        <option value="$PROJECT_DIR$/test_channels/channel_characteristics.py" />
+        <option value="$PROJECT_DIR$/new_optimization/fitter/channelfitter.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/nap_fit.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/nap_magistretti.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channels_script.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_nap_channel.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps_interpolate.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/evaluate_fits.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/evaluate_fits.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/plots/digitized_vsteps/plot_vsteps.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/fit_channel_script.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/plots/digitized_vsteps/plot_vsteps.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/compare_with_experiments.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/evaluate_fits.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/compare_nat_channel.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/v_clamp_with_new_params.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp_with_new_params.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/mod/nat.mod" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/fit_channel_script.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/evaluate_fits.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_ka_channel.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/mod/ka.mod" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/fit_channel_script.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps/plot_vsteps.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/mod/ka_fit.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/mod/kdr_fit.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/mod/caHVA_fit.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/mod/caLVA_fit.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/evaluate_fits.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/v_clamp_with_new_params.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_with_experiments.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_with_experiments.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/evaluate_fits.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_kdr_channel.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/digitized_vsteps/plot_vsteps.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/fit_channel_script.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/v_clamp_with_new_params.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/fit_channel_script.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/plots/digitized_vsteps/plot_vsteps.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_with_experiments.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/v_clamp_with_new_params.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/evaluate_fits.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/v_clamp_with_new_params.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/evaluate_fits.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/compare_with_experiments.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_fit.mod" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_dickson.mod" />
+        <option value="$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_channel_script.py" />
+        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py" />
+        <option value="$PROJECT_DIR$/test_channels/notebooks/fit_nat.ipynb" />
+        <option value="$PROJECT_DIR$/model/cells/dapmodel_simpel.json" />
+        <option value="$PROJECT_DIR$/data/inspect_data.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/optimize_stellate.py" />
       </list>
     </option>
   </component>
@@ -229,7 +262,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
@@ -247,8 +280,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -277,7 +308,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test_channels" />
+              <option name="myItemId" value="new_optimization" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -291,33 +322,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test_channels" />
+              <option name="myItemId" value="new_optimization" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="experimental_channels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test_channels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="experimental_channels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kdr" />
+              <option name="myItemId" value="scripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -331,15 +340,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test_channels" />
+              <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="experimental_channels" />
+              <option name="myItemId" value="channels" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="caLVA" />
+              <option name="myItemId" value="vavoulis" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -353,19 +362,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test_channels" />
+              <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="experimental_channels" />
+              <option name="myItemId" value="channels" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="caLVA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plots" />
+              <option name="myItemId" value="stellate" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -400,9 +405,95 @@
               <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cells" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="2015_08_06d" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="2015_08_06d" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="correct_vrest_-16mV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rampIV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="2015_08_06d" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="correct_vrest_-16mV" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -413,108 +504,108 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/caLVA" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/kdr" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/ka" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/nat" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test_channels/notebooks" />
       <recent name="$PROJECT_DIR$/test_channels/experimental_channels/caLVA" />
       <recent name="$PROJECT_DIR$/test_channels/experimental_channels/nap" />
       <recent name="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps" />
       <recent name="$PROJECT_DIR$/test_channels/experimental_channels/hcn" />
-      <recent name="$PROJECT_DIR$/new_optimization/evaluation" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/hcn" />
+      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod" />
+      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/caHVA" />
+      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/caLVA" />
+      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/kdr" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.plot_vsteps (2)">
-    <configuration default="false" name="compare_ka_channel" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.inspect_data">
+    <configuration default="false" name="evaluate_fits (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/ka" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/hcn" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_ka_channel.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="plot_vsteps" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="v_clamp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/hcn" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps/plot_vsteps.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="evaluate_fits (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="v_clamp_with_new_params (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/kdr" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/evaluate_fits.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/v_clamp_with_new_params.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="plot_vsteps (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="compute_capacitance" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/digitized_vsteps" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_characteristics" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/digitized_vsteps/plot_vsteps.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_characteristics/compute_capacitance.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="compare_kdr_channel" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="inspect_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/kdr" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_kdr_channel.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/inspect_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -660,19 +751,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.compare_ka_channel" />
-      <item index="1" class="java.lang.String" itemvalue="Python.plot_vsteps" />
-      <item index="2" class="java.lang.String" itemvalue="Python.evaluate_fits (1)" />
-      <item index="3" class="java.lang.String" itemvalue="Python.plot_vsteps (2)" />
-      <item index="4" class="java.lang.String" itemvalue="Python.compare_kdr_channel" />
+      <item index="0" class="java.lang.String" itemvalue="Python.evaluate_fits (2)" />
+      <item index="1" class="java.lang.String" itemvalue="Python.v_clamp" />
+      <item index="2" class="java.lang.String" itemvalue="Python.v_clamp_with_new_params (1)" />
+      <item index="3" class="java.lang.String" itemvalue="Python.compute_capacitance" />
+      <item index="4" class="java.lang.String" itemvalue="Python.inspect_data" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.plot_vsteps (2)" />
-        <item index="1" class="java.lang.String" itemvalue="Python.compare_kdr_channel" />
-        <item index="2" class="java.lang.String" itemvalue="Python.evaluate_fits (1)" />
-        <item index="3" class="java.lang.String" itemvalue="Python.plot_vsteps" />
-        <item index="4" class="java.lang.String" itemvalue="Python.compare_ka_channel" />
+        <item index="0" class="java.lang.String" itemvalue="Python.inspect_data" />
+        <item index="1" class="java.lang.String" itemvalue="Python.compute_capacitance" />
+        <item index="2" class="java.lang.String" itemvalue="Python.evaluate_fits (2)" />
+        <item index="3" class="java.lang.String" itemvalue="Python.v_clamp" />
+        <item index="4" class="java.lang.String" itemvalue="Python.v_clamp_with_new_params (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -689,13 +780,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1444289885125</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Commit .idea file from pycharm">
-      <created>1445523107435</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1445523107435</updated>
     </task>
     <task id="LOCAL-00013" summary="Add demo cells and data for testing and demonstrating code">
       <created>1445523666821</created>
@@ -1033,7 +1117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489742524974</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="work on ion channel fits">
+      <created>1490174719554</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1490174719555</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1085,12 +1176,12 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33766234" sideWeight="0.52190924" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33766234" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39123377" sideWeight="0.4773083" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33766234" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3262987" sideWeight="0.4773083" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23630673" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21753247" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42207792" sideWeight="0.47809076" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3051948" sideWeight="0.47809076" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1103,29 +1194,6 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22564936" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33766234" sideWeight="0.52190924" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33766234" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34253246" sideWeight="0.4773083" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21753247" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23865415" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22564936" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23630673" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42207792" sideWeight="0.47809076" order="3" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -1192,6 +1260,16 @@
           <line>203</line>
           <option name="timeStamp" value="153" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test_channels/experimental_channels/ka/v_clamp_with_new_params.py</url>
+          <line>31</line>
+          <option name="timeStamp" value="1161" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../programming/nrn_wrapper/nrn_wrapper/__init__.py</url>
+          <line>80</line>
+          <option name="timeStamp" value="1164" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -1203,311 +1281,312 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1160" />
+      <option name="time" value="1165" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1067">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-122">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/Nap_Et2.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../programming/nrn_wrapper/nrn_wrapper/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1369">
-          <caret line="354" column="11" selection-start-line="354" selection-start-column="11" selection-end-line="354" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/.traces_log.png" />
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/.traces_log_log.png" />
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/traces.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/traces_log_i.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/traces_log.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/traces_log_log.png" />
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/traces_log_log_i.png" />
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/traces_log_log_log_i.png" />
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/timeconstant_nap.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/evaluate_fits.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="55" column="13" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps_interpolate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="67" column="9" selection-start-line="67" selection-start-column="9" selection-end-line="67" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/build_trace_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nat/plots/digitized_vsteps/traces.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10">
-          <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nat/plots/digitized_vsteps/plot_vsteps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_nap_channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/channel_characteristics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/plots/digitized_vsteps/traces.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nat/evaluate_fits.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="47" column="87" selection-start-line="47" selection-start-column="87" selection-end-line="47" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nat/compare_nat_channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="44" column="47" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="47" />
+        <state relative-caret-position="90">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nat/fit_channel_script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        <state relative-caret-position="268">
+          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/stellate/ka.mod">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/mod/kdr_fit.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="86" column="22" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
+        <state relative-caret-position="105">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/schmidthieber/kap.mod">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/mod/ka_fit.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-990">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="135">
+          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/icgenealogy/Kchannels/kadist.mod">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caHVA/mod/caHVA_fit.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-765">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="135">
+          <caret line="51" column="23" selection-start-line="51" selection-start-column="23" selection-end-line="51" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/icgenealogy/Kchannels/chan_KAs.mod">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/fit_channel_script.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-450">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="300">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/icgenealogy/Kchannels/borgka.mod">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/v_clamp_with_new_params.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-540">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_ka_channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-422">
-          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+        <state relative-caret-position="210">
+          <caret line="21" column="17" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/evaluate_fits.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="34" column="15" selection-start-line="34" selection-start-column="15" selection-end-line="34" selection-end-column="15" />
-          <folding />
+        <state relative-caret-position="90">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/plots/digitized_vsteps/plot_vsteps.py">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_kdr_channel.py" />
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_with_experiments.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#30#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/ka/fit_channel_script.py">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nat/compare_with_experiments.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="56" column="32" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
-          <folding />
+        <state relative-caret-position="148">
+          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/icgenealogy/Kchannels/M_kdr.mod">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-585">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="240">
+          <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/icgenealogy/Kchannels/kdrf.mod">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_with_experiments.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-465">
-          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/schmidthieber/kdr.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="63" column="24" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/stellate/kdr.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-910">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps/plot_vsteps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#30#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/fit_channel_script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/kdr_channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="24" column="3" selection-start-line="24" selection-start-column="3" selection-end-line="24" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_kdr_channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="39" column="47" selection-start-line="39" selection-start-column="47" selection-end-line="39" selection-end-column="47" />
-          <folding />
+        <state relative-caret-position="165">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/evaluate_fits.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="75">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/digitized_vsteps/plot_vsteps.py">
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/v_clamp_with_new_params.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="17" column="87" selection-start-line="17" selection-start-column="87" selection-end-line="17" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/kdr/fit_channel_script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="89">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caHVA/compare_caHVA_channel.py" />
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_caLVA_channel.py" />
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caHVA/plots/digitized_vsteps/plot_vsteps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_with_experiments.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/evaluate_fits.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="89" selection-start-line="3" selection-start-column="89" selection-end-line="3" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caHVA/compare_with_experiments.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caHVA/evaluate_fits.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caHVA/v_clamp_with_new_params.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caHVA/fit_channel_script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/mod/caLVA_fit.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="80" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/evaluate_fits.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="37" column="28" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-230">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../programming/nrn_wrapper/nrn_wrapper/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_fit.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/cells/dapmodel_ca.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_dickson.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="112" column="37" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_channel_script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#55#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/v_clamp_with_new_params.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/fit_nap.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="-1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/fit_v_steps_notebook.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="-1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/fit_v_steps_notebook-Copy1.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="-1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/Play_with_timeconstant.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/fit_nat.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_characteristics/compute_capacitance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-480">
+          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#30#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nats.mod">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1515,43 +1594,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_caLVA_channel.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nat.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/stellate/caLVA.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1080">
+        <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/icgenealogy/Cachannels/cal.mod">
+    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/kdr.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-405">
+        <state relative-caret-position="-601">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/icgenealogy/Cachannels/caL13.mod">
+    <entry file="file://$PROJECT_DIR$/model/cells/dapmodel_simpel.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-900">
+        <state relative-caret-position="164">
+          <caret line="20" column="22" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/channels/stellate/nap.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1155">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py">
+    <entry file="file://$PROJECT_DIR$/data/inspect_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/optimize_stellate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
+          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#68#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

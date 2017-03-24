@@ -1,7 +1,6 @@
 TITLE h-current
 
 COMMENT
-
 animal: Long-Evans rats (Dickson, 2000)
 cell type: stellate cell (Dickson, 2000)
 region: Entorhinal Cortex layer 2 (Dickson, 2000)
@@ -23,7 +22,7 @@ author: Chris Burgess, Schmidt-Hieber
 ENDCOMMENT
 
 NEURON {
-    SUFFIX hcn
+    SUFFIX hcn_dickson
     NONSPECIFIC_CURRENT i
     RANGE i, i_fast, i_slow, gslow, gfast, gslowbar, gfastbar, ehcn
 }
@@ -35,11 +34,9 @@ UNITS {
 }
 
 PARAMETER {
-    q10 = 2.8
-    celsius_channel = 24 (degC)
     gfastbar = 0.0    (S/cm2)
     gslowbar = 0.0    (S/cm2)
-    ehcn    = -20        (mV) 	 : (Pastoll, 2012)
+    ehcn    = -20        (mV) 	
     vhf = -67.4
     kf = 12.66
     a_alphaf = -0.00289
@@ -61,7 +58,6 @@ PARAMETER {
 
 ASSIGNED {
     v        (mV)
-    celsius  (degC)
     gslow    (S/cm2)
     gfast    (S/cm2)
     i        (mA/cm2)
@@ -71,7 +67,6 @@ ASSIGNED {
     msinf
     mftau
     mstau
-    tadj
 }
 
 INITIAL {
@@ -107,13 +102,15 @@ PROCEDURE rates(v (mV)) {
     alphaf = (a_alphaf * v + b_alphaf) / (1 - exp((v + b_alphaf / a_alphaf) / k_alphaf))
     betaf = (a_betaf * v + b_betaf) / (1 - exp((v + b_betaf / a_betaf) / k_betaf))
 
-    mfinf = 1 / (1+exp((v - vhf)/kf))
+    :mfinf = 1 / (1+exp((v - vhf)/kf))
+    mfinf = alphaf / (alphaf + betaf)
     mftau = 1 / (alphaf + betaf)
 
     alphas = (a_alphas * v + b_alphas) / (1 - exp((v + b_alphas / a_alphas) / k_alphas))
     betas = (a_betas * v + b_betas) / (1 - exp((v + b_betas / a_betas) / k_betas))
 
-    msinf = 1 / (1+exp((v - vhs)/ks))
+    :msinf = 1 / (1+exp((v - vhs)/ks))
+    msinf = alphas / (alphas + betas)
     mstau = 1 / (alphas + betas)
 }
 

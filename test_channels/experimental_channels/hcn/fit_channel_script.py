@@ -4,26 +4,32 @@ from optimization.helpers import get_lowerbound_upperbound_keys
 import os
 from time import time
 
-save_dir = '../../../results/ion_channels/nap_tau2/'
+save_dir = '../../../results/ion_channels/hcn_new2/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
 maximize = False
-n_candidates = 1000
+n_candidates = 5000
 stop_criterion = ['generation_termination', 1000]
 seed = time()
 generator = 'get_random_numbers_in_bounds'
 
 
 variables = [
-                    [-50, -30, 'vh_m'],
-                    [-20, -0.1, 'k_m'],
-                    [-0.1, -0.00001, 'alpha_a_h'],
-                    [-1, 1, 'alpha_b_h'],
-                    [0.01, 10, 'alpha_k_h'],
-                    [0.0001, 0.1, 'beta_a_h'],
-                    [-1, 1, 'beta_b_h'],
-                    [-20, 0.01, 'beta_k_h'],
+                    [0, 100, 'g_m'],
+                    [0, 100, 'g_h'],
+                    [0.000001, 2, 'a_alpha_m'],
+                    [-100, 100, 'b_alpha_m'],
+                    [-50, 0, 'k_alpha_m'],
+                    [-2, -0.000001, 'a_beta_m'],
+                    [-100, 100, 'b_beta_m'],
+                    [0, 50, 'k_beta_m'],
+                    [-2, -0.000001, 'a_alpha_h'],
+                    [-100, 100, 'b_alpha_h'],
+                    [0, 50, 'k_alpha_h'],
+                    [0.000001, 2, 'a_beta_h'],
+                    [-100, 100, 'b_beta_h'],
+                    [-50, 0, 'k_beta_h'],
             ]
 
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
@@ -32,22 +38,17 @@ bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)
 
 fitter_params = {
                     'name': 'ChannelFitterAllTraces',
-                    'data_dir': 'plots/digitized_vsteps/traces.csv',
-                    'fixed_params': {'p': 1, 'q': 1, 'h0': 1, 'e_ion': 63},
+                    'data_dir': 'plots/digitized_vsteps2/traces.csv',
+                    'fixed_params': {'p': 1, 'q': 1, 'm0': 0, 'h0': 0, 'e_ion': 20},
+                    'variable_names': variable_keys,
                     'n_params': len(variable_keys),
-                    'compute_current_name': 'compute_current_instantaneous_m_explicit_tau'
+                    'compute_current_name': 'compute_current_sum_explicit_tau'
                 }
 
 algorithm_name = 'L-BFGS-B'
 algorithm_params = {}
 normalize = False
 optimization_params = None
-
-#algorithm_name = 'DEA'
-#algorithm_params = {'num_selected': 90, 'tournament_size': 40, 'crossover_rate': 0.5,
-#                    'mutation_rate': 0.5, 'gaussian_mean': 0.0, 'gaussian_stdev': 0.2}
-#normalize = True
-#optimization_params = None
 
 save_dir = save_dir + '/' + algorithm_name + '/'
 if not os.path.exists(save_dir):

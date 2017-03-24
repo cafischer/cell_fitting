@@ -11,10 +11,11 @@ import json
 if __name__ == "__main__":
 
     # channel to investigate
-    channel = "nap_fit"
+    channel = "ka_fit"
+    ek = -79
     model_dir = '../../../model/cells/dapmodel_nocurrents.json'
     mechanism_dir = './mod/'
-    save_dir = '/media/caro/Daten/Phd/DAP-Project/cell_fitting/results/ion_channels/nap_new/L-BFGS-B/best_candidate.json'
+    save_dir = '/media/caro/Daten/Phd/DAP-Project/cell_fitting/results/ion_channels/ka/L-BFGS-B/best_candidate.json'
     data_dir = os.path.join('.', 'plots', 'digitized_vsteps', 'traces.csv')
 
     # load data
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     # parameters
     celsius = 24
     amps = [0, 0, 0]
-    durs = [0, 480, 0]
+    durs = [0, 147, 0]
     v_steps = [float(v) for v in all_traces.columns.values]
     stepamp = 2
     pos = 0.5
@@ -32,6 +33,7 @@ if __name__ == "__main__":
 
     # create cell
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
+    cell.soma(.5).ek = ek
     cell.insert_mechanisms([[['soma', '0.5', channel, 'gbar']]])
     cell.update_attr(['soma', '0.5', channel, 'gbar'], 1.0)
     sec_channel = getattr(cell.soma(.5), channel)

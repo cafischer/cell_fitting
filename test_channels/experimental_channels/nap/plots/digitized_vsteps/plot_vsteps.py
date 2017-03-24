@@ -11,6 +11,9 @@ filenames = ['nap'+str(i)+'trace.csv' for i in vsteps]
 
 all_traces = load_traces(save_dir, filenames, vsteps)
 
+#dt = 0.1
+#all_traces = interpolate_traces(all_traces, dt, 1)
+
 
 pl.figure()
 for column in all_traces.columns:
@@ -62,4 +65,4 @@ pl.legend(fontsize=16)
 pl.savefig(os.path.join(save_dir+'traces_log_offset.png'))
 pl.show()
 
-#all_traces.to_csv(os.path.join(save_dir, 'traces.csv'))
+all_traces.to_csv(os.path.join(save_dir, 'traces.csv'))

@@ -12,7 +12,7 @@ filenames = ['nap'+str(i)+'trace.csv' for i in vsteps]
 all_traces = load_traces(save_dir, filenames, vsteps)
 
 dt = 0.1
-all_traces = interpolate_traces(all_traces, dt)
+all_traces = interpolate_traces(all_traces, dt, 3)
 
 #all_traces = append_prepost_potential(all_traces, 0, 0, 30, 30, dt)
 
@@ -24,6 +24,7 @@ for column in all_traces.columns:
 pl.ylabel('Current (pA)', fontsize=16)
 pl.xlabel('Time (ms)', fontsize=16)
 pl.legend(fontsize=16)
+pl.ylim((None, 0))
 pl.savefig(os.path.join(save_dir+'traces_i.png'))
 pl.show()
 
@@ -67,4 +68,4 @@ pl.legend(fontsize=16)
 pl.savefig(os.path.join(save_dir+'traces_log_offset_i.png'))
 pl.show()
 
-#all_traces.to_csv(os.path.join(save_dir, 'traces.csv'))
+all_traces.to_csv(os.path.join(save_dir, 'traces_interpolate_cubic.csv'))

@@ -1,19 +1,22 @@
 from __future__ import division
-from nrn_wrapper import *
-from test_channels.test_ionchannel import *
+import numpy as np
+from nrn_wrapper import Cell
+import pandas as pd
+import os
+import matplotlib.pyplot as pl
+from test_channels.test_ionchannel import voltage_steps, plot_i_steps
 
 
 if __name__ == "__main__":
 
     # channel to investigate
-    channel = "hcn"  # "ih" #
+    channel = "hcn_dickson"
     model_dir = '../../../model/cells/dapmodel_nocurrents.json'
-    mechanism_dir = './mod/'  # '../../../model/channels/schmidthieber/' #
+    mechanism_dir = './mod/'
 
     # parameters
-    celsius = 24
     amps = [0, 1, 0]
-    durs = [50, 400, 50]
+    durs = [0, 1600, 0]
     v_steps = np.linspace(-125, -55, 15)
     stepamp = 2
     pos = 0.5
@@ -29,7 +32,6 @@ if __name__ == "__main__":
 
     # compute response to voltage steps
     i_steps = []
-    h.celsius = celsius
     i_steps_control, t = voltage_steps(cell.soma, amps, durs, v_steps, stepamp, pos, dt)
     setattr(sec_channel, 'gfastbar', 0.0)
     setattr(sec_channel, 'gslowbar', 0.0)
@@ -38,4 +40,18 @@ if __name__ == "__main__":
     for i, v_step in enumerate(v_steps):
         i_steps.append(i_steps_control[i] - i_steps_blockade[i])
 
-    plot_i_steps(i_steps, v_steps, t)
+    #plot_i_steps(i_steps, v_steps, t)
+
+    # compare to experimental data
+    all_traces = pd.read_csv(os.path.join('.', 'plots', 'digitized_vsteps2', 'traces.csv'), index_col=0)
+    all_traces /= np.max(np.max(np.abs(all_traces)))
+
+    scale_fac = 1.0 / np.max(np.abs(np.matrix(i_steps)[:, 1:]))
+    pl.figure()
+    for i, column in enumerate(all_traces.columns):
+        pl.plot(all_traces.index, all_traces[column], 'k', label=column)
+        pl.plot(t[:-1], i_steps[i][1:] * scale_fac, 'r')
+    pl.ylabel('Current (pA)', fontsize=16)
+    pl.xlabel('Time (ms)', fontsize=16)
+    #pl.legend(fontsize=16)
+    pl.show()

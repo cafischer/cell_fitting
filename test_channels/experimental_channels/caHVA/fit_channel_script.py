@@ -4,7 +4,7 @@ from optimization.helpers import get_lowerbound_upperbound_keys
 import os
 from time import time
 
-save_dir = '../../../results/ion_channels/ka_new/'
+save_dir = '../../../results/ion_channels/caHVA_new/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
@@ -37,8 +37,8 @@ bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)
 fitter_params = {
                     'name': 'ChannelFitterAllTraces',
                     'data_dir': 'plots/digitized_vsteps/traces.csv',
-                    'fixed_params': {'p': 1, 'q': 1, 'm0': 0, 'h0': 1, 'e_ion': -79},
                     'variable_names': variable_keys,
+                    'fixed_params': {'p': 2, 'q': 1, 'm0': 0, 'h0': 1, 'e_ion': 59},
                     'n_params': len(variable_keys),
                     'compute_current_name': 'compute_current_explicit_tau'
                 }

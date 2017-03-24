@@ -11,10 +11,10 @@ import json
 if __name__ == "__main__":
 
     # channel to investigate
-    channel = "nap_fit"
+    channel = "nat_fit"
     model_dir = '../../../model/cells/dapmodel_nocurrents.json'
     mechanism_dir = './mod/'
-    save_dir = '/media/caro/Daten/Phd/DAP-Project/cell_fitting/results/ion_channels/nap_new/L-BFGS-B/best_candidate.json'
+    save_dir = '/media/caro/Daten/Phd/DAP-Project/cell_fitting/results/ion_channels/nat_new/L-BFGS-B/best_candidate.json'
     data_dir = os.path.join('.', 'plots', 'digitized_vsteps', 'traces.csv')
 
     # load data
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # parameters
     celsius = 24
     amps = [0, 0, 0]
-    durs = [0, 480, 0]
+    durs = [0, 30, 0]
     v_steps = [float(v) for v in all_traces.columns.values]
     stepamp = 2
     pos = 0.5
