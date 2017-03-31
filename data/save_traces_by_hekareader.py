@@ -16,7 +16,7 @@ if __name__ == '__main__':
     type_to_index = hekareader.get_type_to_index()
 
     group = 'Group1'
-    protocol = 'PP(4)'
+    protocol = 'PP(22)'
     trace = 'Trace1'
     protocol_to_series = hekareader.get_protocol(group)
     series = protocol_to_series[protocol]
@@ -74,11 +74,11 @@ if __name__ == '__main__':
         print 'Amplitude: ', amp
         i_inj *= amp_change
 
-        data = pd.DataFrame({'v': y, 't': x, 'i': i_inj})
-        save_dir = './' + cell + '/' + 'correct_vrest_-16mV' + '/' + protocol
-        if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
-        data.to_csv(save_dir + '/' + str(amp) + '(nA).csv', index=False)
+        #data = pd.DataFrame({'v': y, 't': x, 'i': i_inj})
+        #save_dir = './' + cell + '/' + 'correct_vrest_-16mV' + '/' + protocol
+        #if not os.path.exists(save_dir):
+        #    os.makedirs(save_dir)
+        #data.to_csv(save_dir + '/' + str(amp) + '(nA).csv', index=False)
     #ax.set_xlim([0, 120])
     #ax.set_ylim([-70, 55])
     pl.tight_layout()

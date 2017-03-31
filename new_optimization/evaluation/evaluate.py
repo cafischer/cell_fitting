@@ -174,18 +174,18 @@ def get_channel_params(channel_name, candidate, save_dir):
     return channel_params
 
 if __name__ == '__main__':
-    #save_dir = '../../results/new_optimization/2015_08_26b/22_01_17_readjust1/'
-    save_dir = '../../results/test_dtw/'
+    #save_dir = '../../results/new_optimization/2015_08_06d/27_03_17_readjust/'
+    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)/'
     method = 'L-BFGS-B'
     #method = 'adadelta'
 
     best_candidate = plot_best_candidate(save_dir+method+'/', 0)
 
-    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv')
-    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_06d/raw/rampIV/1.0(nA).csv')
-    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_06d/raw/IV/-0.1(nA).csv')
-    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/IV/0.4(nA).csv')
-    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/raw/IV/0.8(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv')
+    plot_candidate_on_other_data(save_dir + method+'/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/1.0(nA).csv')
+    plot_candidate_on_other_data(save_dir + method+'/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/IV/-0.1(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.4(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.8(nA).csv')
     """
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv')
     plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/rampIV/0.5(nA).csv')
@@ -193,4 +193,4 @@ if __name__ == '__main__':
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/0.4(nA).csv')
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/1.0(nA).csv')
     #plot_min_error_vs_generation(save_dir+method+'/')
-    """
+"""

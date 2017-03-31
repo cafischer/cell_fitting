@@ -68,7 +68,8 @@ class HodgkinHuxleyFitter(Fitter):
         return v_candidate, t_candidate, i_inj
 
     def to_dict(self):
-        return {'name': self.name, 'variable_keys': self.variable_keys, 'errfun_name': self.errfun_names, 'fitfun_names': self.fitfun_names,
+        return {'name': self.name, 'variable_keys': self.variable_keys, 'errfun_name': self.errfun_names,
+                'fitfun_names': self.fitfun_names,
                 'fitnessweights': self.fitnessweights, 'model_dir': self.model_dir, 'mechanism_dir': self.mechanism_dir,
                 'data_dir': self.data_dir, 'simulation_params': self.init_simulation_params, 'args': self.args}
 

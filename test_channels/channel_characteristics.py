@@ -39,7 +39,7 @@ def compute_current_explicit_tau(v, t,
             * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q
             * (v - e_ion))
 
-def compute_current_sum_explicit_tau(v, t, g_m, g_h,
+def compute_current_sum_explicit_tau(v, t, g_frac,
                                      a_alpha_m, b_alpha_m, k_alpha_m, a_beta_m, b_beta_m, k_beta_m,
                                      a_alpha_h, b_alpha_h, k_alpha_h, a_beta_h, b_beta_h, k_beta_h,
                                      p=1, q=1, m0=0, h0=1, e_ion=60):
@@ -52,8 +52,8 @@ def compute_current_sum_explicit_tau(v, t, g_m, g_h,
     beta_h = rate_constant(v, a_beta_h, b_beta_h, k_beta_h)
     tau_h = compute_tau(alpha_h, beta_h)
     h_inf = alpha_h / (alpha_h + beta_h)
-    return ((g_m * (m_inf - (m_inf - m0) * np.exp(-t / tau_m)) ** p
-            + g_h * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q)
+    return ((g_frac * (m_inf - (m_inf - m0) * np.exp(-t / tau_m)) ** p
+             + (1 - g_frac) * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q)
             * (v - e_ion))
 
 

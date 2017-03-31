@@ -1,80 +1,58 @@
-COMMENT
-17/07/2012
-(c) 2012, C. Schmidt-Hieber, University College London
-Based on an initial version by Chris Burgess 07/2011
-
-Kinetics based on:
-E. Fransen, A. A. Alonso, C. T. Dickson, J. Magistretti, M. E. Hasselmo
-Ionic mechanisms in the generation of subthreshold oscillations and
-action potential clustering in entorhinal layer II stellate neurons.
-Hippocampus 14, 368 (2004).
-
-Do not modify, do not copy and do not redistribute this code.
-
-ENDCOMMENT
-
 NEURON {
-    SUFFIX ih_slow
+    SUFFIX hcn_slow
     NONSPECIFIC_CURRENT i
-    RANGE i, gbar
-    GLOBAL ehcn
-    GLOBAL tausn, tausdo, tausdd, tausro, tausrd
-    GLOBAL miso, misd, mise
+    RANGE i, gbar, ehcn
+    RANGE n_vh, n_vs, n_tau_min, n_tau_max, n_tau_delta
 }
-
 UNITS {
-    (mV) = (millivolt)
-    (S) = (siemens)
-    (mA) = (milliamp)
+        (mA) = (milliamp)
+        (mV) = (millivolt)
+	    (S) = (siemens)
 }
 
 PARAMETER {
-    gbar = 5.3e-5    (S/cm2)
-    ehcn    = -20        (mV)
-    tausn   = 5.6        (ms)    : parameters for tau_slow
-    tausdo  = 17         (mV)
-    tausdd  = 14         (mV)
-    tausro    = 260      (mV)
-    tausrd    = 43       (mV)
-    miso    = 2.83       (mV)    : parameters for steady state m_slow
-    misd    = 15.9       (mV)
-    mise    = 58.5
-}
-
-ASSIGNED {
-    v        (mV)
-    i        (mA/cm2)
-    alphas   (/ms)        : alpha_slow
-    betas    (/ms)        : beta_slow
-}
-
-INITIAL {
-    : assume steady state
-    settables(v)
-    ms = alphas/(alphas+betas)
-}
-
-BREAKPOINT {
-    SOLVE states METHOD cnexp
-    i = gbar*ms *(v-ehcn)
+        ehcn = -20
+        gbar = 0.12 (S/cm2)
+		n_vh = 0
+        n_vs = 0
+        n_tau_min = 0
+        n_tau_max = 0
+        n_tau_delta = 0
 }
 
 STATE {
-    ms
+        n
+}
+
+ASSIGNED {
+        v (mV)
+        i (mA/cm2)
+        ninf 
+	ntau (ms) 
+}
+
+BREAKPOINT {
+        SOLVE states METHOD cnexp
+	    i = gbar*n*(v - ehcn)
+}
+
+
+INITIAL {
+	rates(v)
+	n = ninf
 }
 
 DERIVATIVE states {
-    settables(v)
-    ms' = alphas*(1-ms) - betas*ms
+        rates(v)
+        n' =  (ninf-n)/ntau
 }
 
-PROCEDURE settables(v (mV)) {
-    LOCAL mis, taus
-    TABLE alphas, betas FROM -100 TO 100 WITH 200
 
-    taus = tausn/( exp( (v-tausdo)/tausdd ) + exp( -(v+tausro)/tausrd ) )
-    mis = 1/pow( 1 + exp( (v+miso)/misd ), mise )
+PROCEDURE rates(v(mV)) {
 
-    alphas = mis/taus
-    betas = (1-mis)/taus
+UNITSOFF
+		:"n" activation system
+        ninf = 1 / (1 + exp((n_vh - v) / n_vs)) 
+	    ntau = n_tau_min + (n_tau_max - n_tau_min) * ninf * exp(n_tau_delta * (n_vh - v) / n_vs)
+UNITSON
 }

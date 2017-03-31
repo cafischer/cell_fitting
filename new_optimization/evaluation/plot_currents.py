@@ -6,12 +6,12 @@ from evaluate import get_best_candidate
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_26b/22_01_17_readjust1/'
-    #save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)_newmodel3/'
+    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)_oldmodel/'
+    #save_dir = '../../results/new_optimization/2015_08_06d/27_03_17_readjust/'
     method = 'L-BFGS-B'
     n_best = 0
     data_dir = '../../data/2015_08_06d/raw/PP(4)/0(nA).csv'
-    #data_dir = '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv'
+    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
     #data_dir = '../../data/2015_08_06d/raw/IV/-0.15(nA).csv'
     #data_dir = '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv'
     #data_dir = '../../data/2015_08_26b/corrected_vrest2/IV/-0.15(nA).csv'

@@ -9,7 +9,7 @@ import matplotlib.pyplot as pl
 if __name__ == "__main__":
 
     # channel to investigate
-    channel = "Nap_Et2"  # "nap"
+    channel = "nap_magistretti"
     model_dir = '../../../model/cells/dapmodel_nocurrents.json'
     mechanism_dir = './mod/'
 
@@ -38,9 +38,9 @@ if __name__ == "__main__":
     scale_fac = 1.0 / np.max(np.abs(np.matrix(i_steps)[:, 1:]))
     pl.figure()
     for i, column in enumerate(all_traces.columns):
-        pl.plot(all_traces.index, all_traces[column], 'k', label=column)
-        pl.plot(t[:-1], i_steps[i][1:] * scale_fac, 'r')
-    pl.ylabel('Current (pA)', fontsize=16)
+        pl.plot(all_traces.index, all_traces[column].values, 'k', label='Experiments' if i == 0 else None)
+        pl.plot(t[:-1], i_steps[i][1:] * scale_fac, 'r', label='Model Magistretti' if i == 0 else None)
+    pl.ylabel('Current (normalized)', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
-    pl.legend(fontsize=16)
+    pl.legend(fontsize=16, loc='lower right')
     pl.show()

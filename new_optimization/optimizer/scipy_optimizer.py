@@ -18,6 +18,14 @@ class ScipyOptimizer(Optimizer):
         self.individuals_file = open(self.algorithm_settings.save_dir + 'candidates.csv', 'w')
         self.individuals_file.write('{0},{1},{2},{3},{4},{5}\n'.format('generation', 'id', 'fitness', 'candidate',
                                                                        'success', 'termination'))
+
+        n_cores = algorithm_settings.optimization_params.get('n_cores', None)
+        if n_cores is None:
+            n_cores = multiprocessing.cpu_count()
+        else:
+            del algorithm_settings.optimization_params['n_cores']
+        self.n_cores = n_cores
+
         self.args = self.set_args()
         self.initial_candidates = self.generate_initial_candidates(self.optimization_settings.generator,
                                                                    self.optimization_settings.seed)
@@ -89,7 +97,7 @@ class ScipyOptimizer(Optimizer):
             work_queue.put((id, candidate))
 
         # start processes
-        for core in range(multiprocessing.cpu_count()):
+        for core in range(self.n_cores):
             p = multiprocessing.Process(target=self.work, args=(work_queue, queue))
             p.start()
             processes.append(p)

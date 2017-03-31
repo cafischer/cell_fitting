@@ -21,10 +21,10 @@ def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
 
 def double_ramp(cell):
     delta_ramp = 2
-    ramp3_times = np.arange(delta_ramp, 5 * delta_ramp + delta_ramp, delta_ramp)
+    ramp3_times = np.arange(delta_ramp, 20 * delta_ramp + delta_ramp, delta_ramp)
     baseline_amp = -0.05
-    ramp_amp = 3.0
-    ramp3_amp = 3.5
+    ramp_amp = 3.3
+    ramp3_amp = 2.0
     step_amp = -0.1
     dt = 0.01
 
@@ -51,8 +51,8 @@ def double_ramp(cell):
         i_exp[start_ramp3:end_ramp3] = get_ramp(start_ramp3, end_ramp3, 0, ramp3_amp, 0)
 
         # get simulation parameters
-        simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -59, 'tstop': t_exp[-1],
-                             'dt': dt, 'celsius': 35, 'onset': 200}
+        simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -80, 'tstop': t_exp[-1],
+                             'dt': dt, 'celsius': 35, 'onset': 300}
 
         # record v
         v[j], t, _ = iclamp_handling_onset(cell, **simulation_params)
@@ -70,8 +70,9 @@ def double_ramp(cell):
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/new_optimization/2015_08_26b/22_01_17_readjust1/L-BFGS-B/'
-    n_best = 1
+    #save_dir = '../../results/new_optimization/2015_08_26b/22_01_17_readjust1/L-BFGS-B/'
+    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)_oldmodel/L-BFGS-B/'
+    n_best = 0
 
     # load model
     with open(save_dir + '/optimization_settings.json', 'r') as f:

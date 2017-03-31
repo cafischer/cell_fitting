@@ -58,6 +58,7 @@ if __name__ == '__main__':
     pl.plot(v_range, steadystate_inact_fit, '#a6bddb', label='Inactivation (fit)', linewidth=1.5)
     pl.xlabel('V (mV)', fontsize=16)
     pl.ylabel('Steady-state curve', fontsize=16)
+    pl.xlim(-60, -35)
     pl.legend(fontsize=16)
     pl.savefig(os.path.join(save_dir, 'steadystate_comparison.png'))
     pl.show()

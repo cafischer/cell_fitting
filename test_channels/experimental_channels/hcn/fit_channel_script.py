@@ -4,7 +4,7 @@ from optimization.helpers import get_lowerbound_upperbound_keys
 import os
 from time import time
 
-save_dir = '../../../results/ion_channels/hcn_new2/'
+save_dir = '../../../results/ion_channels/hcn/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
@@ -16,8 +16,7 @@ generator = 'get_random_numbers_in_bounds'
 
 
 variables = [
-                    [0, 100, 'g_m'],
-                    [0, 100, 'g_h'],
+                    [0, 100, 'g_frac'],
                     [0.000001, 2, 'a_alpha_m'],
                     [-100, 100, 'b_alpha_m'],
                     [-50, 0, 'k_alpha_m'],
@@ -39,7 +38,7 @@ bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)
 fitter_params = {
                     'name': 'ChannelFitterAllTraces',
                     'data_dir': 'plots/digitized_vsteps2/traces.csv',
-                    'fixed_params': {'p': 1, 'q': 1, 'm0': 0, 'h0': 0, 'e_ion': 20},
+                    'fixed_params': {'p': 1, 'q': 1, 'm0': 0, 'h0': 0, 'e_ion': -20},
                     'variable_names': variable_keys,
                     'n_params': len(variable_keys),
                     'compute_current_name': 'compute_current_sum_explicit_tau'
