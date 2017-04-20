@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as pl
 from nrn_wrapper import vclamp
-from optimization.helpers import *
+from optimization.helpers import get_channel_list, get_ionlist
 import copy
 from nrn_wrapper import iclamp
 
@@ -75,7 +75,6 @@ def currents_given_v(v, t, sec, channel_list, ion_list, celsius, plot=False):
     return currents
 
 
-
 def simulate_currents(cell, simulation_params, plot=False):
     channel_list = get_channel_list(cell, 'soma')
     ion_list = get_ionlist(channel_list)
@@ -98,6 +97,7 @@ def simulate_currents(cell, simulation_params, plot=False):
     # plot current traces
     if plot:
         pl.figure()
+        print channel_list
         for i in range(len(channel_list)):
             pl.plot(t, -1 * currents[i], label=channel_list[i])
             pl.ylabel('Current (mA/cm2)', fontsize=16)
@@ -106,6 +106,43 @@ def simulate_currents(cell, simulation_params, plot=False):
         pl.show()
 
     return currents
+
+
+def simulate_gates(cell, simulation_params, plot=False):
+    channel_list = get_channel_list(cell, 'soma')
+    ion_list = get_ionlist(channel_list)
+
+    # record gates
+    gates = {}
+    for ion_channel in channel_list:
+        gate_names = []
+        for gate_name in ['m', 'n', 'h', 'l']:
+            if getattr(getattr(cell.soma(.5), ion_channel), gate_name, None) is not None:
+                gate_names.append(gate_name)
+        for gate_name in gate_names:
+            gates[ion_channel+'_'+gate_name] = cell.soma.record_from(ion_channel, gate_name)
+
+    # apply vclamp
+    v_model, t, i_inj = iclamp_handling_onset(cell, **simulation_params)
+
+    # convert current traces to array
+    for k in gates.keys():
+        if 'onset' in simulation_params:
+            real_start = int(round(simulation_params['onset'] / simulation_params['dt']))
+            gates[k] = np.array(gates[k])[real_start:]
+        gates[k] = np.array(gates[k])
+
+    # plot current traces
+    if plot:
+        pl.figure()
+        for k in gates.keys():
+            pl.plot(t, gates[k], label=k)
+            pl.ylabel('Gate', fontsize=16)
+            pl.xlabel('Time (ms)', fontsize=16)
+            pl.legend(fontsize=16)
+        pl.show()
+
+    return gates
 
 
 def iclamp_handling_onset(cell, **simulation_params):

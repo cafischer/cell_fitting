@@ -8,7 +8,7 @@ import json
 if __name__ == '__main__':
 
     save_dir = './plots/fit_vsteps'
-    data_dir = '/media/caro/Daten/Phd/DAP-Project/cell_fitting/results/ion_channels/nat_new/L-BFGS-B/best_candidate.json'
+    data_dir = '/media/caro/Daten/Phd/DAP-Project/cell_fitting/results/ion_channels/nat/L-BFGS-B/best_candidate.json'
     v_range = np.arange(-100, 50, 0.1)
 
     if not os.path.exists(save_dir):

@@ -1,10 +1,10 @@
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as pl
 import os
-from new_optimization.evaluation.evaluate import *
-from new_optimization.fitter import *
-from cell_characteristics.fIcurve import *
+import json
+from new_optimization.evaluation.evaluate import get_candidate_params, get_best_candidate
+from new_optimization.fitter import iclamp_handling_onset, load_mechanism_dir, extract_simulation_params, FitterFactory
+from cell_characteristics.fIcurve import compute_fIcurve
 
 
 if __name__ == '__main__':
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     for file_name in os.listdir(data_dir):
         data = pd.read_csv(data_dir+file_name)
         simulation_params = extract_simulation_params(data)
-        best_candidate = get_best_candidate(save_dir, n_best)
+        best_candidate = get_candidate_params(get_best_candidate(save_dir, n_best))
         fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
         fitter.update_cell(best_candidate)
         v_model, _, _ = iclamp_handling_onset(fitter.cell, **simulation_params)

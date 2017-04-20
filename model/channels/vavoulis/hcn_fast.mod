@@ -1,7 +1,7 @@
 NEURON {
     SUFFIX hcn_fast
     NONSPECIFIC_CURRENT i
-    RANGE i, gbar, ehcn
+    RANGE i, gbar, ehcn, n
     RANGE n_vh, n_vs, n_tau_min, n_tau_max, n_tau_delta
 }
 UNITS {
@@ -28,7 +28,7 @@ ASSIGNED {
         v (mV)
         i (mA/cm2)
         ninf
-	ntau (ms)
+	    ntau (ms)
 }
 
 BREAKPOINT {
@@ -47,12 +47,11 @@ DERIVATIVE states {
         n' =  (ninf-n)/ntau
 }
 
-
 PROCEDURE rates(v(mV)) {
 
 UNITSOFF
-		:"n" activation system
-        ninf = 1 / (1 + exp((n_vh - v) / n_vs))
-	    ntau = n_tau_min + (n_tau_max - n_tau_min) * ninf * exp(n_tau_delta * (n_vh - v) / n_vs)
+	:"n" inactivation system
+    ninf = 1 / (1 + exp((n_vh - v) / n_vs))
+	ntau = n_tau_min + (n_tau_max - n_tau_min) * ninf * exp(n_tau_delta * (n_vh - v) / n_vs)
 UNITSON
 }

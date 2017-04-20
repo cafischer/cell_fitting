@@ -1,6 +1,7 @@
 from __future__ import division
-from nrn_wrapper import *
-from test_ionchannel import *
+import numpy as np
+from nrn_wrapper import Cell
+from test_ionchannel import current_subtraction, plot_i_steps
 
 __author__ = 'caro'
 

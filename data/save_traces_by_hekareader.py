@@ -16,7 +16,7 @@ if __name__ == '__main__':
     type_to_index = hekareader.get_type_to_index()
 
     group = 'Group1'
-    protocol = 'PP(22)'
+    protocol = 'PP(3)'
     trace = 'Trace1'
     protocol_to_series = hekareader.get_protocol(group)
     series = protocol_to_series[protocol]
@@ -51,11 +51,14 @@ if __name__ == '__main__':
         # save data
         protocol_tmp = re.sub('\(.*\)', '', protocol)
         if protocol_tmp == 'PP':
-            i_inj = pd.read_csv('./Protocols/' + 'PP(4)' + '.csv', header=None)  # TODO: different for all PPs
-            i_inj = np.array(i_inj)[:, 0]
-        else:
-            i_inj = pd.read_csv('./Protocols/' + protocol_tmp + '.csv', header=None)
-            i_inj = np.array(i_inj)[:, 0]
+            try:
+                i_inj = pd.read_csv('./Protocols/' + protocol + '.csv', header=None)  # TODO: different for all PPs
+                i_inj = np.array(i_inj)[:, 0]
+            except IOError:
+                print 'Using different current protocol!'
+                i_inj = pd.read_csv('./Protocols/' + 'PP(4)' + '.csv', header=None)  # TODO: different for all PPs
+                i_inj = np.array(i_inj)[:, 0]
+
         if protocol == 'IV':
             amp = -0.15 + sweep_idx[i] * 0.05
             amp_change = amp
@@ -74,11 +77,15 @@ if __name__ == '__main__':
         print 'Amplitude: ', amp
         i_inj *= amp_change
 
-        #data = pd.DataFrame({'v': y, 't': x, 'i': i_inj})
-        #save_dir = './' + cell + '/' + 'correct_vrest_-16mV' + '/' + protocol
-        #if not os.path.exists(save_dir):
-        #    os.makedirs(save_dir)
-        #data.to_csv(save_dir + '/' + str(amp) + '(nA).csv', index=False)
+        data = pd.DataFrame({'v': y, 't': x, 'i': i_inj})
+        save_dir = './' + cell + '/' + 'correct_vrest_-16mV/shortened' + '/' + protocol
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        shorten = np.logical_and(470 <= x, x <= 650)
+        data = data[shorten].copy()
+        data.t -= data.t.iloc[0]
+        data.to_csv(save_dir + '/' + str(amp) + '(nA).csv', index=False)
     #ax.set_xlim([0, 120])
     #ax.set_ylim([-70, 55])
     pl.tight_layout()

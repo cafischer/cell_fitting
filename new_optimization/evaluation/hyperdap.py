@@ -1,9 +1,9 @@
 import pylab as pl
 import numpy as np
-import pandas as pd
+import json
 from matplotlib.pyplot import cm
-from new_optimization.fitter import *
-from new_optimization.evaluation.evaluate import *
+from new_optimization.fitter import iclamp_handling_onset, FitterFactory
+from new_optimization.evaluation.evaluate import get_best_candidate, get_candidate_params
 
 __author__ = 'caro'
 
@@ -22,15 +22,13 @@ def hyperpolarize_ramp(cell):
     v = np.zeros([len(hyperamps), len(t_exp)])
     for j, hyperamp in enumerate(hyperamps):
         i_exp = np.zeros(len(t_exp))
-        i_exp[hyp_st_ms / dt:hyp_end_ms / dt] = hyperamp
-        i_exp[hyp_end_ms / dt:hyp_end_ms / dt + (ramp_end_ms - hyp_end_ms) / dt / 2] = np.linspace(hyperamp, rampamp,
-                                                                                                   len(i_exp[
-                                                                                                       hyp_end_ms / dt:hyp_end_ms / dt + (
-                                                                                                                                         ramp_end_ms - hyp_end_ms) / dt / 2]))
-        i_exp[hyp_end_ms / dt + (ramp_end_ms - hyp_end_ms) / dt / 2:hyp_end_ms / dt] = np.linspace(rampamp, 0.0,
-                                                                                                   len(i_exp[
-                                                                                                       hyp_end_ms / dt + (
-                                                                                                                         ramp_end_ms - hyp_end_ms) / dt / 2:hyp_end_ms / dt]))
+        i_exp[int(round(hyp_st_ms / dt, 0)):int(round(hyp_end_ms / dt, 0))] = hyperamp
+        i_exp[int(round(hyp_end_ms / dt, 0)):int(round(hyp_end_ms / dt + (ramp_end_ms - hyp_end_ms) / dt / 2, 0))] = \
+            np.linspace(hyperamp, rampamp, len(i_exp[int(round(hyp_end_ms / dt, 0)):
+            int(round(hyp_end_ms / dt + (ramp_end_ms - hyp_end_ms) / dt / 2, 0))]))
+        i_exp[int(round(hyp_end_ms / dt + (ramp_end_ms - hyp_end_ms) / dt / 2, 0)):int(round(hyp_end_ms / dt, 0))] = \
+            np.linspace(rampamp, 0.0, len(i_exp[int(round(hyp_end_ms / dt + (ramp_end_ms - hyp_end_ms) / dt / 2, 0)):
+            int(round(hyp_end_ms / dt, 0))]))
 
         # get simulation parameters
         simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -59, 'tstop': t_exp[-1],
@@ -52,13 +50,14 @@ def hyperpolarize_ramp(cell):
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/L-BFGS-B/'
+    #save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/L-BFGS-B/'
+    save_dir = '../../results/server/2017-04-11_20:44:13/34/L-BFGS-B/'
 
     # load model
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
     fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    best_candidate = get_best_candidate(save_dir, n_best=0)
+    best_candidate = get_candidate_params(get_best_candidate(save_dir, n_best=0))
     fitter.update_cell(best_candidate)
     hyperpolarize_ramp(fitter.cell)
 

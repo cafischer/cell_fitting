@@ -1,72 +1,55 @@
-import matplotlib.pyplot as pl
 import numpy as np
 import pandas as pd
 import json
-from optimization.errfuns import rms
-from new_optimization.fitter import *
+from new_optimization.fitter import FitterFactory
+import matplotlib.pyplot as pl
 
 __author__ = 'caro'
 
 
-def plot_candidate(save_dir, id, generation):
+def get_candidate(save_dir, id, generation):
     candidates = pd.read_csv(save_dir + '/candidates.csv')
     idx_bool = np.logical_and(candidates.generation == generation, candidates.id == id)
-    candidate = candidates.candidate[idx_bool].values[0]
-    candidate = np.array([float(x) for x in candidate.split()])
-
-    with open(save_dir + '/optimization_settings.json', 'r') as f:
-        optimization_settings = json.load(f)
-
-    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    v_model, t, i_inj = fitter.simulate_cell(candidate)
-
-    pl.figure()
-    pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
-    pl.plot(fitter.data.t, v_model, 'r', label='Model')
-    pl.legend(fontsize=16)
-    pl.xlabel('Time (ms)', fontsize=16)
-    pl.ylabel('Membrane Potential (mV)', fontsize=16)
-    pl.savefig(save_dir+'candidate_'+str(id)+'_'+str(generation)+'.png')
-    pl.show()
+    candidate = candidates[idx_bool]
+    return candidate
 
 
 def get_best_candidate(save_dir, n_best):
     candidates = pd.read_csv(save_dir + '/candidates.csv')
-    candidates_best = pd.DataFrame(columns=candidates.columns)
-    for id in np.unique(candidates.id):
-        candidates_id = candidates[candidates.id==id]
-        candidates_best = candidates_best.append(candidates_id.iloc[np.argmin(candidates_id.fitness.values)])
+    if not candidates.empty:
+        candidates_best = pd.DataFrame(columns=candidates.columns)
+        for id in np.unique(candidates.id):
+            candidates_id = candidates[candidates.id==id]
+            candidates_best = candidates_best.append(candidates_id.iloc[np.argmin(candidates_id.fitness.values)])
 
-    idx_best = np.argsort(candidates_best.fitness.values)[n_best]
-    best_candidate = candidates_best.candidate.iloc[idx_best]
-    best_candidate = np.array([float(x) for x in best_candidate.split()])
-    return best_candidate
+        idx_best = np.argsort(candidates_best.fitness.values)[n_best]
+        best_candidate = candidates_best.iloc[idx_best]
+        return best_candidate
 
 
-def plot_best_candidate(save_dir, n_best):
-    candidates = pd.read_csv(save_dir + '/candidates.csv')
-    candidates_best = pd.DataFrame(columns=candidates.columns)
-    for id in np.unique(candidates.id):
-        candidates_id = candidates[candidates.id==id]
-        candidates_best = candidates_best.append(candidates_id.iloc[np.argmin(candidates_id.fitness.values)])
+def get_candidate_params(candidate):
+    candidate_params = candidate.candidate
+    candidate_params = np.array([float(x) for x in candidate_params.split()])
+    return candidate_params
+
+
+def plot_candidate(save_dir, candidate):
 
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
     fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
 
-    idx_best = np.argsort(candidates_best.fitness.values)[n_best]
-    best_candidate = candidates_best.candidate.iloc[idx_best]
-    best_candidate = np.array([float(x) for x in best_candidate.split()])
-    print 'id: ' + str(candidates_best.id.iloc[idx_best])
-    print 'generation: ' + str(candidates_best.generation.iloc[idx_best])
-    print 'fitness: ' + str(candidates_best.fitness.iloc[idx_best])
-    print 'candidate: ' + str(best_candidate)
-    for k, v in zip(fitter.variable_keys, best_candidate):
+    best_candidate_params = np.array([float(x) for x in candidate.candidate.split()])
+    print 'id: ' + str(candidate.id)
+    print 'generation: ' + str(candidate.generation)
+    print 'fitness: ' + str(candidate.fitness)
+    for k, v in zip(fitter.variable_keys, best_candidate_params):
         print k, v
 
-    v_model, t, i_inj = fitter.simulate_cell(best_candidate)
-
-    #v_model, t, i_inj = fitter.simulate_cell(best_candidate, fitter.simulation_params[0])
+    if type(fitter.simulation_params) is list:
+        v_model, t, i_inj = fitter.simulate_cell(best_candidate_params, fitter.simulation_params[0])
+    else:
+        v_model, t, i_inj = fitter.simulate_cell(best_candidate_params)
 
     pl.figure()
     pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
@@ -77,6 +60,10 @@ def plot_best_candidate(save_dir, n_best):
     pl.savefig(save_dir+'best_candidate.png')
     pl.show()
 
+
+def plot_best_candidate(save_dir, n_best):
+    best_candidate = get_best_candidate(save_dir, n_best)
+    plot_candidate(save_dir, best_candidate)
     return best_candidate
 
 
@@ -85,14 +72,16 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
 
-    optimization_settings['fitter_params']['data_dir'] = data_dir
-    optimization_settings['fitter_params']['mechanism_dir'] = None
-    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    v_model, t, i_inj = fitter.simulate_cell(best_candidate)
-
-    #optimization_settings['fitter_params']['data_dirs'] = [data_dir]
-    #fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    #v_model, t, i_inj = fitter.simulate_cell(best_candidate, fitter.simulation_params[0])
+    if optimization_settings['fitter_params']['name'] == 'HodgkinHuxleyFitterSeveralData':
+        optimization_settings['fitter_params']['data_dirs'] = [data_dir]
+        optimization_settings['fitter_params']['mechanism_dir'] = None
+        fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
+        v_model, t, i_inj = fitter.simulate_cell(get_candidate_params(candidate), fitter.simulation_params[0])
+    else:
+        optimization_settings['fitter_params']['data_dir'] = data_dir
+        optimization_settings['fitter_params']['mechanism_dir'] = None
+        fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
+        v_model, t, i_inj = fitter.simulate_cell(get_candidate_params(candidate))
 
     pl.figure()
     pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
@@ -173,14 +162,16 @@ def get_channel_params(channel_name, candidate, save_dir):
                 channel_params.append((candidate[i], variable_key))
     return channel_params
 
+
 if __name__ == '__main__':
-    #save_dir = '../../results/new_optimization/2015_08_06d/27_03_17_readjust/'
-    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)/'
+    save_dir = '../../results/server/2017-04-12_17:50:55/97/'
+    #save_dir = '../../results/new_optimization/2015_08_06d/10_04_17_readjust/'
     method = 'L-BFGS-B'
-    #method = 'adadelta'
 
     best_candidate = plot_best_candidate(save_dir+method+'/', 0)
 
+    #plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
+    #                             '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv')
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv')
     plot_candidate_on_other_data(save_dir + method+'/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/1.0(nA).csv')
     plot_candidate_on_other_data(save_dir + method+'/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/IV/-0.1(nA).csv')

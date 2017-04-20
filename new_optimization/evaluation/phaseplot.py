@@ -2,13 +2,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as pl
 import json
-from new_optimization.evaluation.evaluate import *
-from new_optimization.fitter import *
+from new_optimization.evaluation.evaluate import FitterFactory, get_best_candidate, get_candidate_params
+from optimization.simulate import iclamp_handling_onset, extract_simulation_params
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/L-BFGS-B/'
-    data_dir = '../../data/2015_08_06d/raw/rampIV/3.5(nA).csv'
+    save_dir = '../../results/new_optimization/2015_08_06d/27_03_17_readjust/L-BFGS-B/'
+    data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
+    n_best = 0
 
     # load data
     data = pd.read_csv(data_dir)
@@ -24,7 +25,7 @@ if __name__ == '__main__':
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
     fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    best_candidate = get_best_candidate(save_dir, n_best=1)
+    best_candidate = get_candidate_params(get_best_candidate(save_dir, n_best=n_best))
     fitter.update_cell(best_candidate)
 
     v_model, _, _ = iclamp_handling_onset(fitter.cell, **simulation_params)
@@ -33,7 +34,7 @@ if __name__ == '__main__':
     # plot
     fig, (ax1, ax2) = pl.subplots(1, 2)
     ax1.plot(v_exp, dvdt_exp, 'k', label='Data')
-    ax1.plot(v_exp, dvdt_model, 'r', label='Model')
+    ax1.plot(v_model, dvdt_model, 'r', label='Model')
     ax1.set_xlabel('V (mV)', fontsize=16)
     ax1.set_ylabel('dV/dt (mV/ms)', fontsize=16)
     pl.legend()

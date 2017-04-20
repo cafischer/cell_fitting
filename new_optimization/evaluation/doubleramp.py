@@ -1,10 +1,10 @@
 from __future__ import division
 import pylab as pl
 import numpy as np
-import pandas as pd
+import json
 from matplotlib.pyplot import cm
-from new_optimization.fitter import *
-from new_optimization.evaluation.evaluate import *
+from new_optimization.evaluation.evaluate import FitterFactory, get_best_candidate, get_candidate_params
+from optimization.simulate import iclamp_handling_onset
 
 __author__ = 'caro'
 
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
     fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    best_candidate = get_best_candidate(save_dir, n_best)
+    best_candidate = get_candidate_params(get_best_candidate(save_dir, n_best))
     fitter.update_cell(best_candidate)
 
     double_ramp(fitter.cell)

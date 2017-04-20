@@ -1,13 +1,12 @@
 import functools
 import numdifftools as nd
-import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
-from new_optimization import create_pseudo_random_number_generator
+from new_optimization import create_pseudo_random_number_generator, generate_initial_candidates
 from new_optimization.optimizer.optimizer_interface import Optimizer
 from optimization.bio_inspired import generators
 from util import merge_dicts
-import multiprocessing
+import os
 
 
 class ScipyOptimizer(Optimizer):
@@ -15,20 +14,16 @@ class ScipyOptimizer(Optimizer):
     def __init__(self, optimization_settings, algorithm_settings):
         super(ScipyOptimizer, self).__init__(optimization_settings, algorithm_settings)
 
-        self.individuals_file = open(self.algorithm_settings.save_dir + 'candidates.csv', 'w')
+        self.individuals_file = open(os.path.join(self.algorithm_settings.save_dir, 'candidates.csv'), 'w')
         self.individuals_file.write('{0},{1},{2},{3},{4},{5}\n'.format('generation', 'id', 'fitness', 'candidate',
                                                                        'success', 'termination'))
 
-        n_cores = algorithm_settings.optimization_params.get('n_cores', None)
-        if n_cores is None:
-            n_cores = multiprocessing.cpu_count()
-        else:
-            del algorithm_settings.optimization_params['n_cores']
-        self.n_cores = n_cores
-
         self.args = self.set_args()
-        self.initial_candidates = self.generate_initial_candidates(self.optimization_settings.generator,
-                                                                   self.optimization_settings.seed)
+        self.initial_candidates = generate_initial_candidates(self.optimization_settings.generator,
+                                                              self.optimization_settings.bounds['lower_bounds'],
+                                                              self.optimization_settings.bounds['upper_bounds'],
+                                                              self.optimization_settings.seed,
+                                                              self.optimization_settings.n_candidates)
         self.bounds = self.transform_bounds(self.optimization_settings.bounds)
         self.fun = functools.partial(self.optimization_settings.fitter.evaluate_fitness, args=None)
         self.step = self.algorithm_settings.algorithm_params.get('step', 1e-8)
@@ -73,61 +68,22 @@ class ScipyOptimizer(Optimizer):
             raise ValueError('Unknown stop criterion!')
         return args
 
-    def generate_initial_candidates(self, generator_name, seed):
-        generator = getattr(generators, generator_name)
-        random = create_pseudo_random_number_generator(seed)
-        initial_candidates = [generator(random, self.optimization_settings.bounds['lower_bounds'],
-                                        self.optimization_settings.bounds['upper_bounds'], None)
-                              for i in range(self.optimization_settings.n_candidates)]
-        return initial_candidates
-
-    def transform_bounds(self, bounds):
+    @staticmethod
+    def transform_bounds(bounds):
         bounds_transformed = list()
         for lb, ub in zip(bounds['lower_bounds'], bounds['upper_bounds']):
             bounds_transformed.append((lb, ub))
         return bounds_transformed
 
-    def optimize(self):  # with multiprocessing
-        queue = multiprocessing.Queue()
-        work_queue = multiprocessing.Queue()
-        processes = list()
-
-        # put all jobs in the queue
+    def optimize(self):
         for id, candidate in enumerate(self.initial_candidates):
-            work_queue.put((id, candidate))
+            candidates = list()
+            callback = functools.partial(self.store_candidates, candidates=candidates)
+            callback(candidate)
 
-        # start processes
-        for core in range(self.n_cores):
-            p = multiprocessing.Process(target=self.work, args=(work_queue, queue))
-            p.start()
-            processes.append(p)
-
-        # save results
-        counter = 0
-        while True:
-            candidates, id, success, message = queue.get()
-            counter += 1
-            self.save_candidates(candidates, id, success, message)
-            if counter == len(self.initial_candidates):
-                break
-        # stop
-        for p in processes:
-            p.join()
-
-    def work(self, working_queue, queue):
-        while not working_queue.empty():
-            id, candidate = working_queue.get()
-            self.optimize_single_candidate(id, candidate, queue)
-
-    def optimize_single_candidate(self, id, candidate, queue):
-        candidates = list()
-        callback = functools.partial(self.store_candidates, candidates=candidates)
-        callback(candidate)  # store first candidate
-
-        result = minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
-                          hess=self.hess, bounds=self.bounds, callback=callback, **self.args)
-        queue.put((candidates, id, result.success, result.message))
-        return candidates
+            result = minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
+                     hess=self.hess, bounds=self.bounds, callback=callback, **self.args)
+            self.save_candidates(candidates, id, result.success, result.message)
 
     def store_candidates(self, candidate, candidates):
         candidates.append(list(candidate))
@@ -152,8 +108,7 @@ class ScipyOptimizer(Optimizer):
 class ScipyOptimizerInitBounds(ScipyOptimizer):
 
     def __init__(self, optimization_settings, algorithm_settings):
-        self.init_bounds = algorithm_settings.optimization_params['init_bounds']
-        del algorithm_settings.optimization_params['init_bounds']
+        self.init_bounds = optimization_settings.extra_args.pop('init_bounds')
         super(ScipyOptimizerInitBounds, self).__init__(optimization_settings, algorithm_settings)
 
     def generate_initial_candidates(self, generator_name, seed):
@@ -163,3 +118,41 @@ class ScipyOptimizerInitBounds(ScipyOptimizer):
                                         self.init_bounds['upper_bounds'], None)
                               for i in range(self.optimization_settings.n_candidates)]
         return initial_candidates
+
+
+class ScipyOptimizerInitCandidates(ScipyOptimizer):
+    def __init__(self, optimization_settings, algorithm_settings):
+        super(ScipyOptimizerInitCandidates, self).__init__(optimization_settings, algorithm_settings)
+        self.initial_candidates = optimization_settings.extra_args.pop('init_candidates', None)
+
+
+from optimization.gradient_based import *
+
+
+class ScipyCGOptimizer(ScipyOptimizer):
+
+    def __init__(self, optimization_settings, algorithm_settings):
+        super(ScipyCGOptimizer, self).__init__(optimization_settings, algorithm_settings)
+
+    def optimize(self):
+
+        for id, candidate in enumerate(self.initial_candidates):
+            callback = functools.partial(self.store_candidates, id=id)
+            self.num_generations = 0
+
+            xs = conjugate_gradient(self.fun, self.jac, candidate, self.args['options']['maxiter'], c1=1e-4, c2=0.4)
+            for x in xs:
+                self.store_candidates(x, id)
+            self.save_candidates()
+
+    def store_candidates(self, candidate, id):
+        fitness = self.fun(candidate)
+        self.candidates.append([self.num_generations, id, fitness,
+                                str(list(candidate)).replace(',', '').replace('[', '').replace(']', '')])
+        self.num_generations += 1
+
+    def save_candidates(self):
+        individuals_data = pd.DataFrame(self.candidates, columns=['generation', 'id', 'fitness', 'candidate'])
+        individuals_data = individuals_data.groupby('generation').apply(lambda x: x.sort_values(['fitness']))
+        with open(self.algorithm_settings.save_dir + 'candidates.csv', 'w') as f:
+            individuals_data.to_csv(f, header=True, index=False)

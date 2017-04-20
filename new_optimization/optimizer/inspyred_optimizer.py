@@ -1,11 +1,12 @@
 import inspyred
+import os
 import functools
 import pandas as pd
 from new_optimization import create_pseudo_random_number_generator
 from new_optimization.optimizer.optimizer_interface import Optimizer
 from optimization.bio_inspired import evaluators, generators, observers
-from util import *
-from new_optimization.fitter import *
+from util import merge_dicts
+from new_optimization.fitter import FitterFactory
 
 
 def mp_evaluator(candidate, args):  # top-level evaluator for multiprocessing
@@ -72,7 +73,7 @@ class InspyredOptimizer(Optimizer):
 
     def set_args(self):
         args = dict()
-        args['individuals_file'] = open(self.algorithm_settings.save_dir+'candidates.csv', 'w')
+        args['individuals_file'] = open(os.path.join(self.algorithm_settings.save_dir, 'candidates.csv'), 'w')
         if self.optimization_settings.stop_criterion[0] == 'generation_termination':
             args['max_generations'] = self.optimization_settings.stop_criterion[1]
         args = merge_dicts(args, self.algorithm_settings.algorithm_params)
