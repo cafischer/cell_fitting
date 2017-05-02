@@ -1,9 +1,14 @@
+import sys
+sys.path.append("../../")
 from optimization.helpers import get_lowerbound_upperbound_keys
 from time import time
 from new_optimization.scripts import optimize_hyperparameters
+from new_optimization import generate_initial_candidates
+import os
 
-#save_dir = '../../results/new_optimization/2015_08_06d/24_03_17_rampIV/'
-save_dir = '../../results/new_optimization/test/'
+# parameters
+#save_dir = '../../results/'+sys.argv[1]+'/'
+save_dir = '../../results/test/'
 
 variables = [
             [0.7, 1.5, [['soma', 'cm']]],
@@ -58,22 +63,23 @@ lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(varia
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
 
 fitter_params = {
-                    'name': 'HodgkinHuxleyFitter',
+                    'name': 'HodgkinHuxleyFitterSeveralData',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
                     'fitfun_names': ['get_v'],
                     'fitnessweights': [1],
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
-                    'data_dir': '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv',
-                    'simulation_params': {'celsius': 35, 'onset': 100},
+                    'data_dirs': ['../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv',
+                                  '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(21)/0(nA).csv'],
+                    'simulation_params': {'celsius': 35, 'onset': 200},
                     'args': {}
                 }
 
 optimization_settings_dict = {
     'maximize': False,
     'n_candidates': 1,
-    'stop_criterion': ['generation_termination', 2],
+    'stop_criterion': ['generation_termination', 3],
     'seed': time(),
     'generator': 'get_random_numbers_in_bounds',
     'bounds': bounds,
@@ -86,7 +92,7 @@ algorithm_settings_dict = {
     'algorithm_params': {},
     'optimization_params': {},
     'normalize': False,
-    'save_dir': save_dir
+    'save_dir': os.path.join(save_dir, '0') #sys.argv[2])
 }
 
 hyperparameter_dict = {
@@ -94,7 +100,21 @@ hyperparameter_dict = {
     'lower_bounds': [1e-10, 0, 0],
     'upper_bounds': [1, 1, 1],
     'seed': time(),
-    'n_samples': 2
+    'n_samples': 1#int(sys.argv[3])
 }
 
+# generate initial candidates
+init_candidates = generate_initial_candidates(optimization_settings_dict['generator'],
+                            optimization_settings_dict['bounds']['lower_bounds'],
+                            optimization_settings_dict['bounds']['upper_bounds'],
+                            optimization_settings_dict['seed'],
+                            optimization_settings_dict['n_candidates'])
+
+# choose right candidate
+batch_size = 1
+#optimization_settings_dict['extra_args']['init_candidates'] = init_candidates[int(sys.argv[2])*batch_size:
+#                                                                             (int(sys.argv[2])+1)*batch_size]
+optimization_settings_dict['extra_args']['init_candidates'] = init_candidates[0:1]
+
+# start optimization
 optimize_hyperparameters(hyperparameter_dict, optimization_settings_dict, algorithm_settings_dict)

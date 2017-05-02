@@ -19,17 +19,13 @@ class ScipyOptimizer(Optimizer):
                                                                        'success', 'termination'))
 
         self.args = self.set_args()
-        self.initial_candidates = generate_initial_candidates(self.optimization_settings.generator,
-                                                              self.optimization_settings.bounds['lower_bounds'],
-                                                              self.optimization_settings.bounds['upper_bounds'],
-                                                              self.optimization_settings.seed,
-                                                              self.optimization_settings.n_candidates)
+        self.initial_candidates = self.generate_initial_candidates()
         self.bounds = self.transform_bounds(self.optimization_settings.bounds)
         self.fun = functools.partial(self.optimization_settings.fitter.evaluate_fitness, args=None)
         self.step = self.algorithm_settings.algorithm_params.get('step', 1e-8)
 
         def jac(candidate):
-            jac_value = nd.Jacobian(self.fun, step=self.step, method='central')(candidate)[0]
+            jac_value = np.squeeze(nd.Jacobian(self.fun, step=self.step, method='central')(candidate))
             jac_value[np.isnan(jac_value)] = 0
             return jac_value
 
@@ -47,6 +43,15 @@ class ScipyOptimizer(Optimizer):
         args = merge_dicts(self.set_stop_criterion(), self.algorithm_settings.optimization_params)
         args['options'] = merge_dicts(args['options'], self.algorithm_settings.algorithm_params)
         return args
+
+    def generate_initial_candidates(self):
+        return self.optimization_settings.extra_args.pop('init_candidates',
+                                             generate_initial_candidates(
+                                                                    self.optimization_settings.generator,
+                                                                    self.optimization_settings.bounds['lower_bounds'],
+                                                                    self.optimization_settings.bounds['upper_bounds'],
+                                                                    self.optimization_settings.seed,
+                                                                    self.optimization_settings.n_candidates))
 
     def set_stop_criterion(self):
         args = dict()
@@ -81,7 +86,7 @@ class ScipyOptimizer(Optimizer):
             callback = functools.partial(self.store_candidates, candidates=candidates)
             callback(candidate)
 
-            result = minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
+            result = minimize(fun=self.fun, x0=np.array(candidate), method=self.algorithm_settings.algorithm_name, jac=self.jac,
                      hess=self.hess, bounds=self.bounds, callback=callback, **self.args)
             self.save_candidates(candidates, id, result.success, result.message)
 
@@ -111,19 +116,13 @@ class ScipyOptimizerInitBounds(ScipyOptimizer):
         self.init_bounds = optimization_settings.extra_args.pop('init_bounds')
         super(ScipyOptimizerInitBounds, self).__init__(optimization_settings, algorithm_settings)
 
-    def generate_initial_candidates(self, generator_name, seed):
-        generator = getattr(generators, generator_name)
-        random = create_pseudo_random_number_generator(seed)
-        initial_candidates = [generator(random, self.init_bounds['lower_bounds'],
-                                        self.init_bounds['upper_bounds'], None)
-                              for i in range(self.optimization_settings.n_candidates)]
-        return initial_candidates
-
-
-class ScipyOptimizerInitCandidates(ScipyOptimizer):
-    def __init__(self, optimization_settings, algorithm_settings):
-        super(ScipyOptimizerInitCandidates, self).__init__(optimization_settings, algorithm_settings)
-        self.initial_candidates = optimization_settings.extra_args.pop('init_candidates', None)
+    def generate_initial_candidates(self):
+        return generate_initial_candidates(
+                                            self.optimization_settings.generator,
+                                            self.init_bounds['lower_bounds'],
+                                            self.init_bounds['upper_bounds'],
+                                            self.optimization_settings.seed,
+                                            self.optimization_settings.n_candidates)
 
 
 from optimization.gradient_based import *

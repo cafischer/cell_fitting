@@ -3,6 +3,7 @@ from scipy_optimizer import *
 from scipy_optimizer_multiprocessing import *
 from random_optimizer import *
 from climin_optimizer import *
+from climin_optimizer_multiprocessing import *
 
 
 class OptimizerFactory:
@@ -31,14 +32,15 @@ class OptimizerFactory:
                 if optimization_settings.extra_args is not None:
                     if 'init_bounds' in optimization_settings.extra_args.keys():
                         return ScipyOptimizerInitBounds(optimization_settings, algorithm_settings)
-                    elif 'init_candidates' in optimization_settings.extra_args.keys():
-                        return ScipyOptimizerInitCandidates(optimization_settings, algorithm_settings)
                 return ScipyOptimizer(optimization_settings, algorithm_settings)
 
         elif algorithm_name == 'Random':
             return RandomOptimizer(optimization_settings, algorithm_settings)
 
         elif algorithm_name == 'rmsprop' or algorithm_name == 'adam' or algorithm_name == 'adadelta':
+            multiprocessing = optimization_settings.extra_args.pop('multiprocessing', None)
+            if multiprocessing:
+                return CliminOptimizerMultiprocessing(optimization_settings, algorithm_settings)
             return CliminOptimizer(optimization_settings, algorithm_settings)
 
         else:

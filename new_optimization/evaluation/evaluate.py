@@ -19,7 +19,7 @@ def get_best_candidate(save_dir, n_best):
     if not candidates.empty:
         candidates_best = pd.DataFrame(columns=candidates.columns)
         for id in np.unique(candidates.id):
-            candidates_id = candidates[candidates.id==id]
+            candidates_id = candidates[candidates.id == id]
             candidates_best = candidates_best.append(candidates_id.iloc[np.argmin(candidates_id.fitness.values)])
 
         idx_best = np.argsort(candidates_best.fitness.values)[n_best]
@@ -46,19 +46,31 @@ def plot_candidate(save_dir, candidate):
     for k, v in zip(fitter.variable_keys, best_candidate_params):
         print k, v
 
+    #best_candidate_params[6] = 0 # TODO!
+    #best_candidate_params[5] = 1.9
+
     if type(fitter.simulation_params) is list:
-        v_model, t, i_inj = fitter.simulate_cell(best_candidate_params, fitter.simulation_params[0])
+        for i, sim_params in enumerate(fitter.simulation_params):
+            v_model, t, i_inj = fitter.simulate_cell(best_candidate_params, sim_params)
+            pl.figure()
+            pl.plot(fitter.datas[i].t, fitter.datas[i].v, 'k', label='Data')
+            pl.plot(fitter.datas[i].t, v_model, 'r', label='Model')
+            pl.legend(fontsize=16)
+            pl.xlabel('Time (ms)', fontsize=16)
+            pl.ylabel('Membrane Potential (mV)', fontsize=16)
+            pl.savefig(save_dir + 'best_candidate'+str(i)+'.png')
+            pl.show()
     else:
         v_model, t, i_inj = fitter.simulate_cell(best_candidate_params)
 
-    pl.figure()
-    pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
-    pl.plot(fitter.data.t, v_model, 'r', label='Model')
-    pl.legend(fontsize=16)
-    pl.xlabel('Time (ms)', fontsize=16)
-    pl.ylabel('Membrane Potential (mV)', fontsize=16)
-    pl.savefig(save_dir+'best_candidate.png')
-    pl.show()
+        pl.figure()
+        pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
+        pl.plot(fitter.data.t, v_model, 'r', label='Model')
+        pl.legend(fontsize=16)
+        pl.xlabel('Time (ms)', fontsize=16)
+        pl.ylabel('Membrane Potential (mV)', fontsize=16)
+        pl.savefig(save_dir+'best_candidate.png')
+        pl.show()
 
 
 def plot_best_candidate(save_dir, n_best):
@@ -164,7 +176,7 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-04-12_17:50:55/97/'
+    save_dir = '../../results/server/2017-05-01_11:03:22/308/'
     #save_dir = '../../results/new_optimization/2015_08_06d/10_04_17_readjust/'
     method = 'L-BFGS-B'
 

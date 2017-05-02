@@ -5,13 +5,14 @@ from new_optimization.evaluation.evaluate import get_best_candidate, plot_candid
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-04-17_19:37:55/'
+    save_dir = '../../results/server/2017-05-01_11:03:22/'
     method = 'L-BFGS-B'
-    n_trials = 44
+    n_trials = 700
     n_best = 1
 
     best_candidates = pd.DataFrame()
     for i in range(n_trials):
+        print i
         best_candidate = get_best_candidate(os.path.join(save_dir, str(i), method), n_best=0)
         if not best_candidate is None:
             best_candidate.name = i  # will be index later

@@ -6,17 +6,18 @@ from evaluate import get_best_candidate, get_candidate_params
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-04-15_19:14:42/8/'
+    save_dir = '../../results/server/2017-05-01_11:03:22/308/'
     #save_dir = '../../results/new_optimization/2015_08_06d/27_03_17_readjust/'
     method = 'L-BFGS-B'
     n_best = 0
-    data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv'
-    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
+    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv'
+    data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
     #data_dir = '../../data/2015_08_06d/raw/IV/-0.15(nA).csv'
     #data_dir = '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/-0.15(nA).csv'
 
     best_candidate_params = get_candidate_params(get_best_candidate(save_dir + method + '/', n_best))
+    #best_candidate_params[5] -= best_candidate_params[5] * 0.05
 
     # recover cell and update with best candidate
     with open(save_dir+method+'/' + '/optimization_settings.json', 'r') as f:
@@ -33,21 +34,20 @@ if __name__ == '__main__':
 
     import matplotlib.pyplot as pl
     import numpy as np
+    from itertools import combinations
+    from optimization.helpers import get_channel_list
+
+    channel_list = get_channel_list(fitter.cell, 'soma')
+    len_comb = 2
+
     pl.figure()
-    pl.plot(fitter.data.t[1:], np.diff(fitter.data.v), 'k')
-    pl.plot(fitter.data.t, (-1*np.sum(currents)) / np.max(np.abs(-1*np.sum(currents))) * np.max(np.abs(np.diff(fitter.data.v))), 'r')
-    pl.plot(fitter.data.t,
-            -1 * (currents[2] + currents[4]) / np.max(np.abs(-1 * np.sum(currents))) * np.max(np.abs(np.diff(fitter.data.v))),
-            'y', label='nat+kdr')
-    pl.plot(fitter.data.t,
-            (-1 * np.sum(currents[2:5])) / np.max(np.abs(-1 * np.sum(currents))) * np.max(
-                np.abs(np.diff(fitter.data.v))),
-            'g', label='nat+kdr+nap')
-    pl.plot(fitter.data.t,
-            (-1 * np.sum(currents[1:5])) / np.max(np.abs(-1 * np.sum(currents))) * np.max(
-                np.abs(np.diff(fitter.data.v))),
-            'b', label='hcn+nat+kdr+nap')
+    scale_fac = np.max(np.abs(-1*np.sum(currents))) / np.max(np.abs(np.diff(fitter.data.v)))
+    pl.plot(fitter.data.t[1:], np.diff(fitter.data.v) * scale_fac, 'k', label='dV/dt')
+    pl.plot(fitter.data.t, -1*np.sum(currents), 'r', label='$-\sum I_{ion}$')
+    for comb in combinations(range(len(channel_list)), len_comb):
+        pl.plot(fitter.data.t, -1 * np.sum(np.array([currents[i] for i in comb]), 0),
+                label=str([channel_list[i] for i in comb]))
     pl.ylabel('Current', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
-    pl.legend(fontsize=16)
+    pl.legend(fontsize=10)
     pl.show()

@@ -1,6 +1,6 @@
 import functools
 from scipy.optimize import minimize
-from new_optimization import create_pseudo_random_number_generator
+from new_optimization import create_pseudo_random_number_generator, generate_initial_candidates
 from optimization.bio_inspired import generators
 import multiprocessing
 from new_optimization.optimizer.scipy_optimizer import ScipyOptimizer
@@ -49,7 +49,7 @@ class ScipyOptimizerMultiprocessing(ScipyOptimizer):
         callback = functools.partial(self.store_candidates, candidates=candidates)
         callback(candidate)  # store first candidate
 
-        result = minimize(fun=self.fun, x0=candidate, method=self.algorithm_settings.algorithm_name, jac=self.jac,
+        result = minimize(fun=self.fun, x0=np.array(candidate), method=self.algorithm_settings.algorithm_name, jac=self.jac,
                           hess=self.hess, bounds=self.bounds, callback=callback, **self.args)
         queue.put((candidates, id, result.success, result.message))
         return candidates

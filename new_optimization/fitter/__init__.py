@@ -15,6 +15,8 @@ class FitterFactory:
             return HodgkinHuxleyFitter(**fitter_params)
         elif name == 'HodgkinHuxleyFitterSeveralData':
             return HodgkinHuxleyFitterSeveralData(**fitter_params)
+        elif name == 'HodgkinHuxleyFitterCurrentPenalty':
+            return  HodgkinHuxleyFitterCurrentPenalty(**fitter_params)
         elif name == 'HodgkinHuxleyFitterPareto':
             return HodgkinHuxleyFitterPareto(**fitter_params)
         elif name == 'ChannelFitterSingleTraces':

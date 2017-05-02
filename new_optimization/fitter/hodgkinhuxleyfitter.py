@@ -1,4 +1,6 @@
+from __future__ import division
 import pandas as pd
+import numpy as np
 from nrn_wrapper import Cell, load_mechanism_dir
 from optimization import errfuns
 from optimization import fitfuns
@@ -6,6 +8,7 @@ from optimization.simulate import iclamp_handling_onset, extract_simulation_para
 import functools
 from inspyred.ec.emo import Pareto
 from new_optimization.fitter.fitter_interface import Fitter
+from optimization.helpers import get_channel_list, get_ionlist
 
 __author__ = 'caro'
 
@@ -119,7 +122,8 @@ class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
         return v_candidate, t_candidate, i_inj
 
     def to_dict(self):
-        return {'variable_keys': self.variable_keys, 'errfun_name': self.errfun_names, 'fitfun_names': self.fitfun_names,
+        return {'name': self.name, 'variable_keys': self.variable_keys, 'errfun_name': self.errfun_names,
+                'fitfun_names': self.fitfun_names,
                 'fitnessweights': self.fitnessweights, 'model_dir': self.model_dir, 'mechanism_dir': self.mechanism_dir,
                 'data_dirs': self.data_dirs, 'simulation_params': self.init_simulation_params, 'args': self.args}
 
@@ -170,3 +174,43 @@ class HodgkinHuxleyFitterWithFitfunList(HodgkinHuxleyFitter):
             return 1000 #float("inf") TODO
         fitness = fitnessweight * self.errfun(var_to_fit, data_to_fit)
         return fitness
+
+
+class HodgkinHuxleyFitterCurrentPenalty(HodgkinHuxleyFitter):
+
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
+                     model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
+        super(HodgkinHuxleyFitterCurrentPenalty, self).__init__(name, variable_keys, errfun_name, fitfun_names,
+                                                                 fitnessweights, model_dir, mechanism_dir, data_dir,
+                                                                 simulation_params, args)
+
+    def evaluate_fitness(self, candidate, args):
+
+        v_candidate, t_candidate, currents = self.simulate_cell_with_currents(candidate)
+        vars_to_fit = [fitfun(v_candidate, t_candidate, self.simulation_params['i_inj'], self.args)
+                       for fitfun in self.fitfuns]
+        num_nones = 0
+        fitness = 0
+        for i in range(len(vars_to_fit)):
+            if vars_to_fit[i] is None:
+                num_nones += 1
+            else:
+                fitness += self.fitnessweights[i] * self.errfun(vars_to_fit[i], self.data_to_fit[i])
+        if num_nones == len(vars_to_fit):
+            return 1000  #float("inf")
+        current_penalty = np.sum(np.sum(np.abs(currents))) / np.size(currents)
+        fitness += current_penalty
+        return fitness
+
+    def simulate_cell_with_currents(self, candidate):
+        channel_list = get_channel_list(self.cell, 'soma')
+        ion_list = get_ionlist(channel_list)
+
+        # record currents
+        currents = np.zeros(len(channel_list), dtype=object)
+        for i in range(len(channel_list)):
+            currents[i] = self.cell.soma.record_from(channel_list[i], 'i' + ion_list[i], pos=.5)
+
+        v_candidate, t_candidate, _ = self.simulate_cell(candidate)
+        currents = [np.array(c) for c in currents]
+        return v_candidate, t_candidate, currents
