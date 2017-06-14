@@ -13,7 +13,7 @@ NEURON {
 
 PARAMETER {
         gbar = 0.12 (S/cm2)
-	m_vh = 10
+		m_vh = 10
         m_vs = 15
 }
 

@@ -13,7 +13,7 @@ NEURON {
 
 PARAMETER {
         gbar = 0.12 (S/cm2)
-		n_vh = 0
+	n_vh = 0
         n_vs = 0
         n_tau_min = 0
         n_tau_max = 0
@@ -29,12 +29,12 @@ ASSIGNED {
         ek (mV)
         ik (mA/cm2)
         ninf 
-	    ntau (ms) 
+	ntau (ms) 
 }
 
 BREAKPOINT {
         SOLVE states METHOD cnexp
-	    ik = gbar*n*n*n*n*(v - ek)
+	ik = gbar*n*n*n*n*(v - ek)
 }
 
 
@@ -45,15 +45,14 @@ INITIAL {
 
 DERIVATIVE states {
         rates(v)
-        n' =  (ninf-n)/ntau
+        n' = (ninf-n)/ntau
 }
 
 
 PROCEDURE rates(v(mV)) {
 
 UNITSOFF
-		:"n" activation system
         ninf = 1 / (1 + exp((n_vh - v) / n_vs)) 
-	    ntau = n_tau_min + (n_tau_max - n_tau_min) * ninf * exp(n_tau_delta * (n_vh - v) / n_vs)
+	ntau = n_tau_min + (n_tau_max - n_tau_min) * ninf * exp(n_tau_delta * (n_vh - v) / n_vs)
 UNITSON
 }

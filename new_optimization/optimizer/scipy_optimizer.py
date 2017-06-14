@@ -97,7 +97,7 @@ class ScipyOptimizer(Optimizer):
         success = ['']*len(candidates)
         success[-1] = success_end
         termination = ['']*len(candidates)
-        termination[-1] = termination_end
+        termination[-1] = termination_end.replace(',', '')
         fitness = [self.fun(c) for c in candidates]
         candidates = [str(l).replace('[', '').replace(']', '').replace(',', '') for l in candidates]
 

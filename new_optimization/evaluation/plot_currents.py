@@ -6,14 +6,15 @@ from evaluate import get_best_candidate, get_candidate_params
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-05-01_11:03:22/308/'
-    #save_dir = '../../results/new_optimization/2015_08_06d/27_03_17_readjust/'
+    #save_dir = '../../results/server/2017-06-13_17:08:57/19/'
+    save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1/'
     method = 'L-BFGS-B'
     n_best = 0
+    data_dir = '../../data/2015_08_26b/raw/rampIV/3.0(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv'
-    data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
-    #data_dir = '../../data/2015_08_06d/raw/IV/-0.15(nA).csv'
-    #data_dir = '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv'
+    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/PP(4)/0(nA).csv'
+    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
+    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.7(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/-0.15(nA).csv'
 
     best_candidate_params = get_candidate_params(get_best_candidate(save_dir + method + '/', n_best))
@@ -31,7 +32,7 @@ if __name__ == '__main__':
 
     # plot currents
     currents = simulate_currents(fitter.cell, simulation_params, plot=True)
-
+"""
     import matplotlib.pyplot as pl
     import numpy as np
     from itertools import combinations
@@ -51,3 +52,4 @@ if __name__ == '__main__':
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(fontsize=10)
     pl.show()
+"""

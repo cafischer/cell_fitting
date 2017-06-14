@@ -4,7 +4,8 @@ import numpy as np
 from nrn_wrapper import Cell, load_mechanism_dir
 from optimization import errfuns
 from optimization import fitfuns
-from optimization.simulate import iclamp_handling_onset, extract_simulation_params
+from optimization.simulate import iclamp_handling_onset, iclamp_adaptive_handling_onset, extract_simulation_params
+from util import merge_dicts
 import functools
 from inspyred.ec.emo import Pareto
 from new_optimization.fitter.fitter_interface import Fitter
@@ -77,13 +78,27 @@ class HodgkinHuxleyFitter(Fitter):
                 'data_dir': self.data_dir, 'simulation_params': self.init_simulation_params, 'args': self.args}
 
 
+class HodgkinHuxleyFitterAdaptive(HodgkinHuxleyFitter):
+
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
+                 model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
+        super(HodgkinHuxleyFitterAdaptive, self).__init__(name, variable_keys, errfun_name, fitfun_names,
+                                                          fitnessweights, model_dir, mechanism_dir, data_dir,
+                                                          simulation_params, args)
+
+    def simulate_cell(self, candidate):
+        self.update_cell(candidate)
+        v_candidate, t_candidate, i_inj = iclamp_adaptive_handling_onset(self.cell, **self.simulation_params)
+        return v_candidate, t_candidate, i_inj
+
+
 class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
 
     def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                  model_dir, mechanism_dir, data_dirs, simulation_params=None, args=None):
         super(HodgkinHuxleyFitterSeveralData, self).__init__(name, variable_keys, errfun_name, fitfun_names,
-                                                                fitnessweights, model_dir, mechanism_dir, data_dirs[0],
-                                                                simulation_params, args)
+                                                             fitnessweights, model_dir, mechanism_dir, data_dirs[0],
+                                                             {}, args)
         self.data_dirs = data_dirs
         self.datas = list()
         for dir in data_dirs:
@@ -91,10 +106,14 @@ class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
         self.init_simulation_params = simulation_params
         if simulation_params is None:
             simulation_params = {}
+        if type(simulation_params) is dict:
+            simulation_params = [simulation_params] * len(self.datas)
+
         self.simulation_params = list()
         self.datas_to_fit = list()
-        for data in self.datas:
-            self.simulation_params.append(extract_simulation_params(data, **simulation_params))
+        for i, data in enumerate(self.datas):
+            extracted_params = extract_simulation_params(data)
+            self.simulation_params.append(merge_dicts(extracted_params, simulation_params[i]))
             self.datas_to_fit.append([fitfun(data.v.values, data.t.values, data.i.values, self.args)
                                     for fitfun in self.fitfuns])
 
@@ -111,6 +130,7 @@ class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
                     num_nones += 1
                 else:
                     fitness += self.fitnessweights[i] * self.errfun(vars_to_fit[i], self.datas_to_fit[s][i])
+
             if num_nones == len(vars_to_fit):
                 fitness = 1000  # float("inf")
             fitness_total += fitness
@@ -126,6 +146,20 @@ class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
                 'fitfun_names': self.fitfun_names,
                 'fitnessweights': self.fitnessweights, 'model_dir': self.model_dir, 'mechanism_dir': self.mechanism_dir,
                 'data_dirs': self.data_dirs, 'simulation_params': self.init_simulation_params, 'args': self.args}
+
+
+class HodgkinHuxleyFitterSeveralDataAdaptive(HodgkinHuxleyFitterSeveralData):
+
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
+                 model_dir, mechanism_dir, data_dirs, simulation_params=None, args=None):
+        super(HodgkinHuxleyFitterSeveralDataAdaptive, self).__init__(name, variable_keys, errfun_name, fitfun_names,
+                                                             fitnessweights, model_dir, mechanism_dir, data_dirs,
+                                                             simulation_params, args)
+
+    def simulate_cell(self, candidate, simulation_params):
+        self.update_cell(candidate)
+        v_candidate, t_candidate, i_inj = iclamp_adaptive_handling_onset(self.cell, **simulation_params)
+        return v_candidate, t_candidate, i_inj
 
 
 class HodgkinHuxleyFitterPareto(HodgkinHuxleyFitter):
@@ -181,8 +215,8 @@ class HodgkinHuxleyFitterCurrentPenalty(HodgkinHuxleyFitter):
     def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
                      model_dir, mechanism_dir, data_dir, simulation_params=None, args=None):
         super(HodgkinHuxleyFitterCurrentPenalty, self).__init__(name, variable_keys, errfun_name, fitfun_names,
-                                                                 fitnessweights, model_dir, mechanism_dir, data_dir,
-                                                                 simulation_params, args)
+                                                                fitnessweights, model_dir, mechanism_dir, data_dir,
+                                                                simulation_params, args)
 
     def evaluate_fitness(self, candidate, args):
 

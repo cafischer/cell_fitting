@@ -5,10 +5,11 @@ from new_optimization.evaluation.evaluate import get_best_candidate, plot_candid
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-05-01_11:03:22/'
+    save_dir = '../../results/server/2017-06-13_17:08:57/'
+    #save_dir = '../scripts/test_s1a/'
     method = 'L-BFGS-B'
-    n_trials = 700
-    n_best = 1
+    n_trials = 28
+    n_best = 0
 
     best_candidates = pd.DataFrame()
     for i in range(n_trials):
@@ -18,9 +19,9 @@ if __name__ == '__main__':
             best_candidate.name = i  # will be index later
             best_candidates = best_candidates.append(best_candidate)
     idx_best = np.argsort(best_candidates.fitness.values)[n_best]
-    print len(best_candidates)
     best_candidate_from_all = best_candidates.iloc[idx_best]
 
-    print 'Trial: ', best_candidate_from_all.name
+    best_ten = best_candidates.iloc[np.argsort(best_candidates.fitness.values)[:10]]
+    print 'Best Trials: ', [c.name for i, c in best_ten.iterrows()] #best_candidate_from_all.name
     best_candidate = plot_candidate(os.path.join(save_dir, str(best_candidate_from_all.name), method),
                                          best_candidate_from_all)

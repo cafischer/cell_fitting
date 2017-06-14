@@ -2,7 +2,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import pandas as pd
 from scipy.optimize import curve_fit
-from data.hekareader import *
+from heka_reader import HekaReader, get_indices_for_protocol
 from optimization.helpers import get_cellarea, convert_unit_prefix
 
 if __name__ == '__main__':

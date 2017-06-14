@@ -7,8 +7,8 @@ from new_optimization import generate_initial_candidates
 import os
 
 # parameters
-#save_dir = '../../results/'+sys.argv[1]+'/'
-save_dir = '../../results/test/'
+save_dir = sys.argv[1]
+#save_dir = '../../results/test/'
 
 variables = [
             [0.7, 1.5, [['soma', 'cm']]],
@@ -79,7 +79,7 @@ fitter_params = {
 optimization_settings_dict = {
     'maximize': False,
     'n_candidates': 1,
-    'stop_criterion': ['generation_termination', 3],
+    'stop_criterion': ['generation_termination', 500],
     'seed': time(),
     'generator': 'get_random_numbers_in_bounds',
     'bounds': bounds,
@@ -92,7 +92,7 @@ algorithm_settings_dict = {
     'algorithm_params': {},
     'optimization_params': {},
     'normalize': False,
-    'save_dir': os.path.join(save_dir, '0') #sys.argv[2])
+    'save_dir': os.path.join(save_dir, sys.argv[2])
 }
 
 hyperparameter_dict = {
@@ -100,7 +100,7 @@ hyperparameter_dict = {
     'lower_bounds': [1e-10, 0, 0],
     'upper_bounds': [1, 1, 1],
     'seed': time(),
-    'n_samples': 1#int(sys.argv[3])
+    'n_samples': int(sys.argv[3])
 }
 
 # generate initial candidates
@@ -112,9 +112,9 @@ init_candidates = generate_initial_candidates(optimization_settings_dict['genera
 
 # choose right candidate
 batch_size = 1
-#optimization_settings_dict['extra_args']['init_candidates'] = init_candidates[int(sys.argv[2])*batch_size:
-#                                                                             (int(sys.argv[2])+1)*batch_size]
-optimization_settings_dict['extra_args']['init_candidates'] = init_candidates[0:1]
+optimization_settings_dict['extra_args']['init_candidates'] = init_candidates[int(sys.argv[2])*batch_size:
+                                                                             (int(sys.argv[2])+1)*batch_size]
+#optimization_settings_dict['extra_args']['init_candidates'] = init_candidates[0:1]
 
 # start optimization
 optimize_hyperparameters(hyperparameter_dict, optimization_settings_dict, algorithm_settings_dict)

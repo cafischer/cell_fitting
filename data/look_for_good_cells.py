@@ -31,7 +31,7 @@ if __name__ == '__main__':
             and protocol_to_series.get('rampIV') is not None \
             and protocol_to_series.get('Zap20') is not None \
             and protocol_to_series.get('hypTester') is not None \
-                and protocol_to_series.get('PP_tester') is not None:
+            and protocol_to_series.get('PP_tester') is not None:
 
             # check vrest does not change so much and noise in trace
             v_rest = list()

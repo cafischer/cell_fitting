@@ -1,9 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as pl
-from nrn_wrapper import vclamp
 from optimization.helpers import get_channel_list, get_ionlist
 import copy
-from nrn_wrapper import iclamp
+from nrn_wrapper import iclamp, iclamp_adaptive, vclamp
 
 __author__ = 'caro'
 
@@ -12,11 +11,11 @@ def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, p
     """
     Uses the experimental data and additional arguments to extract the simulation parameters.
 
-    :param data: Dataframe containing the columns: v (membrane potential), t (Time), i (injected current).
+    :param data: Dataframe containing the columns: v (membrane potential), t (time), i (injected current).
     :type data: pandas.DataFrame
     :param sec: Section to stimulate and record from. First argument name, second argument index (None for no index).
     :type sec: tuple
-    :param celsius: Temperatur during simulation (affects ion channel kinetics).
+    :param celsius: Temperature during simulation (affects ion channel kinetics).
     :type celsius: float
     :param pos_i: Position of the stimulating electrode (value between 0 and 1).
     :type pos_i: float
@@ -100,9 +99,10 @@ def simulate_currents(cell, simulation_params, plot=False):
         print channel_list
         for i in range(len(channel_list)):
             pl.plot(t, -1 * currents[i], label=channel_list[i])
-            pl.ylabel('Current (mA/cm2)', fontsize=16)
+            pl.ylabel('Current (mA/cm$^2$)', fontsize=16)
             pl.xlabel('Time (ms)', fontsize=16)
-            pl.legend(fontsize=16)
+        pl.legend(fontsize=16)
+        pl.tight_layout()
         pl.show()
 
     return currents
@@ -152,7 +152,8 @@ def iclamp_handling_onset(cell, **simulation_params):
         del simulation_params_tmp['onset']
         simulation_params_tmp['tstop'] += onset
         len_onset_idx = int(round(onset / simulation_params_tmp['dt']))
-        simulation_params_tmp['i_inj'] = np.concatenate((np.zeros(len_onset_idx), simulation_params_tmp['i_inj']))
+        simulation_params_tmp['i_inj'] = np.concatenate((np.ones(len_onset_idx) *  simulation_params_tmp['i_inj'][0],
+                                                         simulation_params_tmp['i_inj']))
 
         v_candidate, t_candidate = iclamp(cell, **simulation_params_tmp)
 
@@ -160,4 +161,23 @@ def iclamp_handling_onset(cell, **simulation_params):
         return v_candidate[real_start:], t_candidate[:-real_start], simulation_params['i_inj']
     else:
         v_candidate, t_candidate = iclamp(cell, **simulation_params)
+        return v_candidate, t_candidate, simulation_params['i_inj']
+
+
+def iclamp_adaptive_handling_onset(cell, **simulation_params):
+    if 'onset' in simulation_params:
+        onset = simulation_params['onset']
+        simulation_params_tmp = copy.copy(simulation_params)
+        del simulation_params_tmp['onset']
+        simulation_params_tmp['tstop'] += onset
+        len_onset_idx = int(round(onset / simulation_params_tmp['dt']))
+        simulation_params_tmp['i_inj'] = np.concatenate((np.ones(len_onset_idx) * simulation_params_tmp['i_inj'][0],
+                                                         simulation_params_tmp['i_inj']))
+
+        v_candidate, t_candidate = iclamp_adaptive(cell, **simulation_params_tmp)
+
+        real_start = int(round(onset / simulation_params['dt']))
+        return v_candidate[real_start:], t_candidate[:-real_start], simulation_params['i_inj']
+    else:
+        v_candidate, t_candidate = iclamp_adaptive(cell, **simulation_params)
         return v_candidate, t_candidate, simulation_params['i_inj']

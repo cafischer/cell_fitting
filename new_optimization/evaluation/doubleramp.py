@@ -20,11 +20,24 @@ def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
 
 
 def double_ramp(cell):
+    """
+    original values
     delta_ramp = 2
-    ramp3_times = np.arange(delta_ramp, 20 * delta_ramp + delta_ramp, delta_ramp)
+    delta_first = 3
+    ramp3_times = np.arange(delta_first, 12 * delta_ramp + delta_ramp, delta_ramp)
     baseline_amp = -0.05
-    ramp_amp = 3.3
-    ramp3_amp = 2.0
+    ramp_amp = 4.0
+    ramp3_amp = 1.8
+    step_amp = 0  # or -0.1 or 0.1
+    dt = 0.01
+    """
+
+    delta_ramp = 2
+    delta_first = 3
+    ramp3_times = np.arange(delta_first, 12 * delta_ramp + delta_ramp, delta_ramp)
+    baseline_amp = 0.0 #-0.05
+    ramp_amp = 4.0
+    ramp3_amp = 1.8
     step_amp = -0.1
     dt = 0.01
 
@@ -61,17 +74,22 @@ def double_ramp(cell):
     pl.figure()
     color = iter(cm.gist_rainbow(np.linspace(0, 1, len(ramp3_times))))
     for j, ramp3_time in enumerate(ramp3_times):
-        pl.plot(t, v[j], c=next(color), label='time: '+str(ramp3_time))
+        pl.plot(t, v[j], label='Model' if j==0 else '', c='r')  # label='time: '+str(ramp3_time), c=next(color))
+    #pl.plot(t, v[-1])
     pl.xlabel('Time (ms)', fontsize=16)
     pl.ylabel('Membrane potential (mV)', fontsize=16)
     #pl.legend(loc='upper right', fontsize=16)
+    pl.xlim(485, 560)
+    pl.tight_layout()
+    pl.legend(fontsize=16)
     pl.show()
 
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/new_optimization/2015_08_26b/22_01_17_readjust1/L-BFGS-B/'
-    save_dir = '../../results/new_optimization/2015_08_06d/16_02_17_PP(4)_oldmodel/L-BFGS-B/'
+    #save_dir = '../../results/optimization_vavoulis_channels/2015_08_06d/10_04_17_readjust/L-BFGS-B/'
+    save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1/L-BFGS-B/'
+    #save_dir = '../../results/server/2017-05-22_10:47:38/371/L-BFGS-B'
     n_best = 0
 
     # load model

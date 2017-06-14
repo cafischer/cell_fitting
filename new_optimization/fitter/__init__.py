@@ -13,8 +13,12 @@ class FitterFactory:
         name = fitter_params['name']
         if name == 'HodgkinHuxleyFitter':
             return HodgkinHuxleyFitter(**fitter_params)
+        elif name == 'HodgkinHuxleyFitterAdaptive':
+            return HodgkinHuxleyFitterAdaptive(**fitter_params)
         elif name == 'HodgkinHuxleyFitterSeveralData':
             return HodgkinHuxleyFitterSeveralData(**fitter_params)
+        elif name == 'HodgkinHuxleyFitterSeveralDataAdaptive':
+            return HodgkinHuxleyFitterSeveralDataAdaptive(**fitter_params)
         elif name == 'HodgkinHuxleyFitterCurrentPenalty':
             return  HodgkinHuxleyFitterCurrentPenalty(**fitter_params)
         elif name == 'HodgkinHuxleyFitterPareto':

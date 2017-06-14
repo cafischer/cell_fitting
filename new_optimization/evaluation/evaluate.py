@@ -3,6 +3,7 @@ import pandas as pd
 import json
 from new_optimization.fitter import FitterFactory
 import matplotlib.pyplot as pl
+import os
 
 __author__ = 'caro'
 
@@ -15,6 +16,8 @@ def get_candidate(save_dir, id, generation):
 
 
 def get_best_candidate(save_dir, n_best):
+    if os.stat(save_dir + '/candidates.csv').st_size == 0:  # checks if file is completely empty e.g. when error during optimization occured
+        return None
     candidates = pd.read_csv(save_dir + '/candidates.csv')
     if not candidates.empty:
         candidates_best = pd.DataFrame(columns=candidates.columns)
@@ -39,36 +42,38 @@ def plot_candidate(save_dir, candidate):
         optimization_settings = json.load(f)
     fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
 
-    best_candidate_params = np.array([float(x) for x in candidate.candidate.split()])
+    best_candidate_params = get_candidate_params(candidate)
     print 'id: ' + str(candidate.id)
     print 'generation: ' + str(candidate.generation)
     print 'fitness: ' + str(candidate.fitness)
     for k, v in zip(fitter.variable_keys, best_candidate_params):
         print k, v
 
-    #best_candidate_params[6] = 0 # TODO!
-    #best_candidate_params[5] = 1.9
+    #best_candidate_params[5] = 1e-3  # TODO!
+    #best_candidate_params[1] = -85
 
     if type(fitter.simulation_params) is list:
         for i, sim_params in enumerate(fitter.simulation_params):
             v_model, t, i_inj = fitter.simulate_cell(best_candidate_params, sim_params)
             pl.figure()
-            pl.plot(fitter.datas[i].t, fitter.datas[i].v, 'k', label='Data')
+            pl.plot(fitter.datas[i].t, fitter.datas[i].v, 'k', label='Exp. Data')
             pl.plot(fitter.datas[i].t, v_model, 'r', label='Model')
             pl.legend(fontsize=16)
             pl.xlabel('Time (ms)', fontsize=16)
             pl.ylabel('Membrane Potential (mV)', fontsize=16)
+            pl.tight_layout()
             pl.savefig(save_dir + 'best_candidate'+str(i)+'.png')
             pl.show()
     else:
         v_model, t, i_inj = fitter.simulate_cell(best_candidate_params)
 
         pl.figure()
-        pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
+        pl.plot(fitter.data.t, fitter.data.v, 'k', label='Exp. Data')
         pl.plot(fitter.data.t, v_model, 'r', label='Model')
         pl.legend(fontsize=16)
         pl.xlabel('Time (ms)', fontsize=16)
         pl.ylabel('Membrane Potential (mV)', fontsize=16)
+        pl.tight_layout()
         pl.savefig(save_dir+'best_candidate.png')
         pl.show()
 
@@ -84,7 +89,8 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
 
-    if optimization_settings['fitter_params']['name'] == 'HodgkinHuxleyFitterSeveralData':
+    if (optimization_settings['fitter_params']['name'] == 'HodgkinHuxleyFitterSeveralData' or
+        optimization_settings['fitter_params']['name'] == 'HodgkinHuxleyFitterSeveralDataAdaptive'):
         optimization_settings['fitter_params']['data_dirs'] = [data_dir]
         optimization_settings['fitter_params']['mechanism_dir'] = None
         fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
@@ -93,14 +99,19 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
         optimization_settings['fitter_params']['data_dir'] = data_dir
         optimization_settings['fitter_params']['mechanism_dir'] = None
         fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-        v_model, t, i_inj = fitter.simulate_cell(get_candidate_params(candidate))
+        #fitter.simulation_params['v_init'] = -70  # TODO
+        candidate_params = get_candidate_params(candidate)
+        #candidate_params[5] = 1e-4  # TODO!
+        #candidate_params[1] = -85
+        v_model, t, i_inj = fitter.simulate_cell(candidate_params)
 
     pl.figure()
-    pl.plot(fitter.data.t, fitter.data.v, 'k', label='Data')
+    pl.plot(fitter.data.t, fitter.data.v, 'k', label='Exp. Data')
     pl.plot(fitter.data.t, v_model, 'r', label='Model')
     pl.legend(fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
     pl.ylabel('Membrane Potential (mV)', fontsize=16)
+    pl.tight_layout()
     pl.show()
 
 
@@ -116,6 +127,7 @@ def plot_min_error_vs_generation(save_dir):
     pl.plot(range(candidates.generation.iloc[-1]+1), best_fitnesses, 'k')
     pl.xlabel('Generation')
     pl.ylabel('Error')
+    pl.tight_layout()
     pl.savefig(save_dir+'error_development.png')
     pl.show()
 
@@ -134,12 +146,13 @@ def plot_best_candidate_severalfitfuns(save_dir, fitfun_id):
     v_model, t, i_inj = fitter.simulate_cell(best_candidate)
 
     pl.figure()
-    pl.plot(t, fitter.data.v, 'k', label='Data')
+    pl.plot(t, fitter.data.v, 'k', label='Exp. Data')
     pl.plot(t, v_model, 'r', label='Model')
     pl.legend(fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
     pl.ylabel('Membrane Potential (mV)', fontsize=16)
     pl.title(fitter.fitfun_names[fitfun_id])
+    pl.tight_layout()
     pl.savefig(save_dir + 'best_candidate_'+fitter.fitfun_names[fitfun_id]+'.png')
     pl.show()
 
@@ -159,6 +172,7 @@ def plot_min_error_vs_generation_severalfitfuns(save_dir):
     pl.plot(range(candidates.generation.iloc[-1] + 1), best_fitnesses, 'k')
     pl.xlabel('Generation')
     pl.ylabel('Error')
+    pl.tight_layout()
     pl.savefig(save_dir + 'error_development.png')
     pl.show()
 
@@ -176,24 +190,34 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-05-01_11:03:22/308/'
-    #save_dir = '../../results/new_optimization/2015_08_06d/10_04_17_readjust/'
+    #save_dir = '../../results/server/2017-06-13_17:08:57/19/'   # 2017-06-12_09:56:28/362/  [19, 6, 1, 15, 26, 7, 25, 16, 13, 9]
+    save_dir = '../../results/optimization_vavoulis_channels/2015_08_06d/10_04_17_readjust/'
+    #save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1/'
     method = 'L-BFGS-B'
 
     best_candidate = plot_best_candidate(save_dir+method+'/', 0)
 
-    #plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
-    #                             '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv')
+    """
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
+                                 '../../data/2015_08_06d/correct_vrest_-16mV/PP(4)/0(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
+                                 '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
+                                 '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(21)/0(nA).csv')
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv')
     plot_candidate_on_other_data(save_dir + method+'/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/1.0(nA).csv')
     plot_candidate_on_other_data(save_dir + method+'/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/IV/-0.1(nA).csv')
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.4(nA).csv')
-    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.8(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.7(nA).csv')
     """
-    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/rampIV/3.0(nA).csv')
-    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/rampIV/0.5(nA).csv')
-    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/-0.1(nA).csv')
-    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/0.4(nA).csv')
-    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/corrected_vrest2/IV/1.0(nA).csv')
+
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/raw/rampIV/3.0(nA).csv')
+    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/raw/rampIV/0.5(nA).csv')
+    plot_candidate_on_other_data(save_dir+method+'/', best_candidate, '../../data/2015_08_26b/raw/IV/-0.1(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/raw/IV/0.4(nA).csv')
+    plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_26b/raw/IV/1.0(nA).csv')
     #plot_min_error_vs_generation(save_dir+method+'/')
-"""
+
+
+
+# TODO: load saved cell in result folder, the other might have changed
