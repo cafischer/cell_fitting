@@ -11,25 +11,28 @@ import os
 save_dir = sys.argv[1]
 
 variables = [
-            [0.7, 2, [['soma', 'cm']]],
-            [-80, -60, [['soma', '0.5', 'pas', 'e']]],
+            [0.5, 2, [['soma', 'cm']]],
+            [-95, -70, [['soma', '0.5', 'pas', 'e']]],
 
             [0, 0.5, [['soma', '0.5', 'pas', 'g']]],
             [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
             [0, 0.5, [['soma', '0.5', 'kdr', 'gbar']]],
             [0, 0.5, [['soma', '0.5', 'nap', 'gbar']]],
+            [0, 0.5, [['soma', '0.5', 'nap_act', 'gbar']]],
 
             [-100, 0, [['soma', '0.5', 'nat', 'm_vh']]],
             [-100, 0, [['soma', '0.5', 'nat', 'h_vh']]],
             [-100, 0, [['soma', '0.5', 'kdr', 'n_vh']]],
             [-100, 0, [['soma', '0.5', 'nap', 'm_vh']]],
             [-100, 0, [['soma', '0.5', 'nap', 'h_vh']]],
+            [-100, 0, [['soma', '0.5', 'nap_act', 'm_vh']]],
 
             [1, 30, [['soma', '0.5', 'nat', 'm_vs']]],
             [-30, -1, [['soma', '0.5', 'nat', 'h_vs']]],
             [1, 30, [['soma', '0.5', 'kdr', 'n_vs']]],
             [1, 30, [['soma', '0.5', 'nap', 'm_vs']]],
             [-30, -1, [['soma', '0.5', 'nap', 'h_vs']]],
+            [1, 30, [['soma', '0.5', 'nap_act', 'm_vs']]],
 
             [0, 50, [['soma', '0.5', 'nat', 'm_tau_min']]],
             [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
@@ -51,43 +54,46 @@ variables = [
             ]
 
 variables_init = [
-            [0.9, 1.1, [['soma', 'cm']]],
-            [-75, -60, [['soma', '0.5', 'pas', 'e']]],
+            [0.65, 0.75, [['soma', 'cm']]],
+            [-87, -86, [['soma', '0.5', 'pas', 'e']]],
 
-            [0.002, 0.005, [['soma', '0.5', 'pas', 'g']]],
-            [0.06, 0.11, [['soma', '0.5', 'nat', 'gbar']]],
-            [0.01, 0.04, [['soma', '0.5', 'kdr', 'gbar']]],
-            [0.3, 0.45, [['soma', '0.5', 'nap', 'gbar']]],
+            [0.004, 0.006, [['soma', '0.5', 'pas', 'g']]],
+            [0.08, 0.1, [['soma', '0.5', 'nat', 'gbar']]],
+            [0.03, 0.05, [['soma', '0.5', 'kdr', 'gbar']]],
+            [0.3, 0.5, [['soma', '0.5', 'nap', 'gbar']]],
+            [0, 0.0001, [['soma', '0.5', 'nap_act', 'gbar']]],
 
-            [-40, -34, [['soma', '0.5', 'nat', 'm_vh']]],
-            [-68, -61, [['soma', '0.5', 'nat', 'h_vh']]],
-            [-55, -49, [['soma', '0.5', 'kdr', 'n_vh']]],
-            [-18, -12, [['soma', '0.5', 'nap', 'm_vh']]],
-            [-60, -54, [['soma', '0.5', 'nap', 'h_vh']]],
+            [-56, -54, [['soma', '0.5', 'nat', 'm_vh']]],
+            [-82, -80, [['soma', '0.5', 'nat', 'h_vh']]],
+            [-67, -65, [['soma', '0.5', 'kdr', 'n_vh']]],
+            [-34, -32, [['soma', '0.5', 'nap', 'm_vh']]],
+            [-72, -70, [['soma', '0.5', 'nap', 'h_vh']]],
+            [-70, -30, [['soma', '0.5', 'nap_act', 'm_vh']]],
 
-            [14, 18, [['soma', '0.5', 'nat', 'm_vs']]],
-            [-24, -20, [['soma', '0.5', 'nat', 'h_vs']]],
-            [14, 19, [['soma', '0.5', 'kdr', 'n_vs']]],
-            [17, 21, [['soma', '0.5', 'nap', 'm_vs']]],
-            [-15, -11, [['soma', '0.5', 'nap', 'h_vs']]],
+            [16, 18, [['soma', '0.5', 'nat', 'm_vs']]],
+            [-24, -22, [['soma', '0.5', 'nat', 'h_vs']]],
+            [18, 20, [['soma', '0.5', 'kdr', 'n_vs']]],
+            [17, 19, [['soma', '0.5', 'nap', 'm_vs']]],
+            [-14, -12, [['soma', '0.5', 'nap', 'h_vs']]],
+            [1, 20, [['soma', '0.5', 'nap_act', 'm_vs']]],
 
-            [0, 1, [['soma', '0.5', 'nat', 'm_tau_min']]],
-            [0, 1, [['soma', '0.5', 'nat', 'h_tau_min']]],
-            [0, 1, [['soma', '0.5', 'kdr', 'n_tau_min']]],
-            [0, 0.001, [['soma', '0.5', 'nap', 'm_tau_min']]],
-            [0, 0.2, [['soma', '0.5', 'nap', 'h_tau_min']]],
+            [0, 0.1, [['soma', '0.5', 'nat', 'm_tau_min']]],
+            [0.4, 0.6, [['soma', '0.5', 'nat', 'h_tau_min']]],
+            [0.5, 0.7, [['soma', '0.5', 'kdr', 'n_tau_min']]],
+            [0, 0.00001, [['soma', '0.5', 'nap', 'm_tau_min']]],
+            [0.1, 0.3, [['soma', '0.5', 'nap', 'h_tau_min']]],
 
-            [14, 19, [['soma', '0.5', 'nat', 'm_tau_max']]],
-            [19, 23, [['soma', '0.5', 'nat', 'h_tau_max']]],
-            [17, 22, [['soma', '0.5', 'kdr', 'n_tau_max']]],
-            [0.01, 1, [['soma', '0.5', 'nap', 'm_tau_max']]],
-            [8, 13, [['soma', '0.5', 'nap', 'h_tau_max']]],
+            [17, 19, [['soma', '0.5', 'nat', 'm_tau_max']]],
+            [18, 21, [['soma', '0.5', 'nat', 'h_tau_max']]],
+            [19, 22, [['soma', '0.5', 'kdr', 'n_tau_max']]],
+            [0.1, 0.4, [['soma', '0.5', 'nap', 'm_tau_max']]],
+            [8, 11, [['soma', '0.5', 'nap', 'h_tau_max']]],
 
-            [0.2, 0.7, [['soma', '0.5', 'nat', 'm_tau_delta']]],
-            [0.2, 0.7, [['soma', '0.5', 'nat', 'h_tau_delta']]],
-            [0.3, 0.8, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
-            [0.05, 0.3, [['soma', '0.5', 'nap', 'm_tau_delta']]],
-            [0.1, 0.5, [['soma', '0.5', 'nap', 'h_tau_delta']]],
+            [0.3, 0.5, [['soma', '0.5', 'nat', 'm_tau_delta']]],
+            [0.6, 0.8, [['soma', '0.5', 'nat', 'h_tau_delta']]],
+            [0.4, 0.6, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
+            [0.01, 0.2, [['soma', '0.5', 'nap', 'm_tau_delta']]],
+            [0, 0.2, [['soma', '0.5', 'nap', 'h_tau_delta']]],
             ]
 
 
@@ -95,6 +101,12 @@ lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(varia
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
 lower_bounds_init, upper_bounds_init, variable_keys_init = get_lowerbound_upperbound_keys(variables_init)
 bounds_init = {'lower_bounds': list(lower_bounds_init), 'upper_bounds': list(upper_bounds_init)}
+
+# discontinuities for IV
+dt = 0.05
+start_step = int(round(250 / dt))
+end_step = int(round(750 / dt))
+discontinuities_IV = [start_step, end_step]
 
 fitter_params = {
                     'name': 'HodgkinHuxleyFitterAdaptive',
@@ -104,9 +116,9 @@ fitter_params = {
                     'fitnessweights': [1],
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
-                    'data_dir': '../../data/2015_08_06d/vrest-60/rampIV/3.5(nA).csv',
-                    'simulation_params': {'celsius': 35, 'onset': 200, 'atol': 1e-8, 'continuous': True,
-                                          'discontinuities': None, 'interpolate': True},
+                    'data_dir': '../../data/2015_08_26b/vrest-75/IV/0.4(nA).csv',
+                    'simulation_params': {'celsius': 35, 'onset': 200, 'atol': 1e-6, 'continuous': True,
+                                          'discontinuities': discontinuities_IV, 'interpolate': True},
                     'args': {}
                 }
 

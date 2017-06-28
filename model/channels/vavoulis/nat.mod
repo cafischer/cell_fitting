@@ -13,7 +13,7 @@ NEURON {
 
 PARAMETER {
         gbar = 0.12 (S/cm2)
-	m_vh = 0
+	    m_vh = 0
         h_vh = 0
         m_vs = 0
         h_vs = 0
@@ -40,8 +40,8 @@ ASSIGNED {
 }
 
 BREAKPOINT {
-        SOLVE states METHOD cnexp
-	ina = gbar*m*m*m*h*(v - ena)
+    SOLVE states METHOD cnexp
+	ina = gbar * m * m * m * h * (v - ena)
 }
 
 
@@ -53,18 +53,18 @@ INITIAL {
 
 DERIVATIVE states {
         rates(v)
-        m' =  (minf-m)/mtau
-        h' = (hinf-h)/htau
+        m' = (minf - m) / mtau
+        h' = (hinf - h) / htau
 }
 
 
 PROCEDURE rates(v(mV)) {
 
 UNITSOFF
-        minf = 1 / (1 + exp((m_vh - v) / m_vs))
+    minf = 1 / (1 + exp((m_vh - v) / m_vs))
 	mtau = m_tau_min + (m_tau_max - m_tau_min) * minf * exp(m_tau_delta * (m_vh - v) / m_vs)
 
-        hinf = 1 / (1 + exp((h_vh - v) / h_vs))
+    hinf = 1 / (1 + exp((h_vh - v) / h_vs))
 	htau = h_tau_min + (h_tau_max - h_tau_min) * hinf * exp(h_tau_delta * (h_vh - v) / h_vs)
 UNITSON
 }

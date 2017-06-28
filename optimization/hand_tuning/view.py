@@ -12,7 +12,7 @@ __author__ = 'caro'
 class ViewHandTuner(QWidget):
 
     def __init__(self, name_variables, precision_slds, lower_bounds, upper_bounds, slider_fun,
-                 button_names, button_funs):
+                 button_names, button_funs, init_vals=None):
         super(ViewHandTuner, self).__init__()
 
         # initialize window
@@ -20,11 +20,13 @@ class ViewHandTuner(QWidget):
         self.setWindowTitle('HandTuner')
 
         # create left-hand side (slider and buttons)
+        if init_vals is None:
+            init_vals = lower_bounds
         layout_left = QVBoxLayout()
         self.slds = list()
         for i in range(len(name_variables)):
             layout_sld, sld = self.create_slider(name_variables[i], i, precision_slds[i],
-                                            lower_bounds[i], upper_bounds[i], slider_fun)
+                                            lower_bounds[i], upper_bounds[i], slider_fun, init_vals[i])
             self.slds.append(sld)
             layout_left.addLayout(layout_sld)
         layout_left.addSpacing(50)
@@ -54,7 +56,7 @@ class ViewHandTuner(QWidget):
         # start GUI
         self.show()
 
-    def create_slider(self, label, idx, precision_sld, lower_bound, upper_bound, slider_fun):
+    def create_slider(self, label, idx, precision_sld, lower_bound, upper_bound, slider_fun, init_val=None):
         # create slider
         sld = QSlider(QtCore.Qt.Horizontal, self)
         sld.id = idx
@@ -67,7 +69,12 @@ class ViewHandTuner(QWidget):
         layout_disp.addWidget(sld.label)
 
         # display of current value
-        sld.value = QLabel('Value: 0')
+        sld.setRange(int(round(lower_bound/precision_sld)),
+                     int(round(upper_bound/precision_sld)))
+        if init_val is None:
+            init_val = lower_bound
+        sld.setValue(int(round(init_val / sld.precision)))
+        sld.value = QLabel('Value: ' + str(init_val))
         sld.value.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
         layout_disp.addWidget(sld.value)
 
@@ -79,8 +86,6 @@ class ViewHandTuner(QWidget):
         # settings
         sld.setFocusPolicy(QtCore.Qt.NoFocus)
         sld.valueChanged.connect(slider_fun)
-        sld.setRange(int(np.round(lower_bound/precision_sld, 0)),
-                     int(np.round(upper_bound/precision_sld, 0)))
         return layout_sld, sld
 
     def create_button(self, label, button_fun):
@@ -100,7 +105,7 @@ class ViewHandTuner(QWidget):
         ax.set_ylabel(ylabel)
         ax.set_title(title)
         if label is not None:
-            ax.legend()
+            ax.legend(loc='upper right')
 
     def plot_img(self, img_id):
         self.imgs[img_id]['fig'].canvas.draw()

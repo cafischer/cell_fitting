@@ -36,8 +36,8 @@ ASSIGNED {
 }
 
 BREAKPOINT {
-        SOLVE states METHOD cnexp
-	    ina = gbar*minf*h*(v - ena)
+    SOLVE states METHOD cnexp
+	ina = gbar * minf * h * (v - ena)
 }
 
 
@@ -55,10 +55,8 @@ DERIVATIVE states {
 PROCEDURE rates(v(mV)) {
 
 UNITSOFF
-	:"m" sodium activation system
 	minf = 1 / (1 + exp((m_vh - v) / m_vs))
 
-	:"h" sodium inactivation system
     hinf = 1 / (1 + exp((h_vh - v) / h_vs))
 	htau = h_tau_min + (h_tau_max - h_tau_min) * hinf * exp(h_tau_delta * (h_vh - v) / h_vs)
 UNITSON

@@ -1,6 +1,5 @@
 import json
 import os
-
 from optimization.hand_tuning.model import Model
 from optimization.hand_tuning.view import ViewHandTuner
 
@@ -9,7 +8,7 @@ __author__ = 'caro'
 
 class HandTuner:
 
-    def __init__(self, save_dir, fitter_params, precision_slds, lower_bounds, upper_bounds):
+    def __init__(self, save_dir, fitter_params, precision_slds, lower_bounds, upper_bounds, init_vals=None):
 
         self.save_dir = save_dir
 
@@ -24,11 +23,11 @@ class HandTuner:
         button_names = ['Reset Traces', 'Save Cell']
         button_funs = [self.reset_all_imgs, self.save_cell]
         self.view = ViewHandTuner(name_variables, precision_slds, lower_bounds, upper_bounds, slider_fun,
-                                  button_names, button_funs)
+                                  button_names, button_funs, init_vals)
         self.reset_img(0)
         self.reset_img(1)
         for i in range(len(name_variables)):
-            self.model.update_var(i, lower_bounds[i])
+            self.model.update_var(i, init_vals[i])
 
     def save_cell(self):
         # create folders

@@ -5,7 +5,7 @@ UNITS {
 }
 
 NEURON {
-        SUFFIX kdr
+        SUFFIX kdr2
         USEION k READ ek WRITE ik
         RANGE gbar, ik, n
 		RANGE n_vh, n_vs, n_tau_min, n_tau_max, n_tau_delta

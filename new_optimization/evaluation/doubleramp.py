@@ -4,7 +4,7 @@ import numpy as np
 import json
 from matplotlib.pyplot import cm
 from new_optimization.evaluation.evaluate import FitterFactory, get_best_candidate, get_candidate_params
-from optimization.simulate import iclamp_handling_onset
+from optimization.simulate import iclamp_handling_onset, simulate_currents
 
 __author__ = 'caro'
 
@@ -34,10 +34,10 @@ def double_ramp(cell):
 
     delta_ramp = 2
     delta_first = 3
-    ramp3_times = np.arange(delta_first, 12 * delta_ramp + delta_ramp, delta_ramp)
-    baseline_amp = 0.0 #-0.05
+    ramp3_times = np.arange(delta_first, 10 * delta_ramp + delta_ramp, delta_ramp)
+    baseline_amp = 0.0  #-0.05
     ramp_amp = 4.0
-    ramp3_amp = 1.8
+    ramp3_amp = 1.8  #1.8
     step_amp = -0.1
     dt = 0.01
 
@@ -54,7 +54,7 @@ def double_ramp(cell):
     v = np.zeros([len(ramp3_times), len(t_exp)])
 
     for j, ramp3_time in enumerate(ramp3_times):
-        start_ramp3 = end_ramp2 + int(round(ramp3_time / dt))
+        start_ramp3 = start_ramp2 + int(round(ramp3_time / dt))
         end_ramp3 = start_ramp3 + int(round(len_ramp / dt))
 
         i_exp = np.ones(len(t_exp)) * baseline_amp
@@ -64,11 +64,14 @@ def double_ramp(cell):
         i_exp[start_ramp3:end_ramp3] = get_ramp(start_ramp3, end_ramp3, 0, ramp3_amp, 0)
 
         # get simulation parameters
-        simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -80, 'tstop': t_exp[-1],
+        simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': t_exp[-1],
                              'dt': dt, 'celsius': 35, 'onset': 300}
 
         # record v
         v[j], t, _ = iclamp_handling_onset(cell, **simulation_params)
+
+        # record currents
+        #currents = simulate_currents(fitter.cell, simulation_params, plot=True)
 
     # plot
     pl.figure()
@@ -87,9 +90,9 @@ def double_ramp(cell):
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/optimization_vavoulis_channels/2015_08_06d/10_04_17_readjust/L-BFGS-B/'
-    save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1/L-BFGS-B/'
-    #save_dir = '../../results/server/2017-05-22_10:47:38/371/L-BFGS-B'
+    save_dir = '../../results/server/2017-06-23_08:31:00/115/L-BFGS-B'
+    #save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1_adaptive/L-BFGS-B/'
+    #save_dir = '../../results/server/2017-06-19_13:12:49/189/L-BFGS-B'
     n_best = 0
 
     # load model

@@ -3,16 +3,16 @@ import pandas as pd
 from new_optimization.fitter import FitterFactory
 from optimization.simulate import extract_simulation_params, simulate_currents
 from evaluate import get_best_candidate, get_candidate_params
+from util import merge_dicts
 
 
 if __name__ == '__main__':
-    #save_dir = '../../results/server/2017-06-13_17:08:57/19/'
-    save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1/'
+    save_dir = '../../results/server/2017-06-19_13:12:49/189/'
+    #save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1/'
     method = 'L-BFGS-B'
     n_best = 0
-    data_dir = '../../data/2015_08_26b/raw/rampIV/3.0(nA).csv'
-    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv'
-    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/PP(4)/0(nA).csv'
+    #data_dir = '../../data/2015_08_26b/vrest-60/rampIV/3.0(nA).csv'
+    data_dir = '../../data/2015_08_06d/vrest-75/PP(3)/0(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.7(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/-0.15(nA).csv'
@@ -28,7 +28,8 @@ if __name__ == '__main__':
 
     # get simulation_params
     data = pd.read_csv(data_dir)
-    simulation_params = extract_simulation_params(data)
+    sim_params = {'onset': 300, 'v_init': -80}
+    simulation_params = merge_dicts(extract_simulation_params(data), sim_params)
 
     # plot currents
     currents = simulate_currents(fitter.cell, simulation_params, plot=True)

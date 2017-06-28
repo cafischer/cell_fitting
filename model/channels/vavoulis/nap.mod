@@ -1,19 +1,19 @@
 UNITS {
         (mA) = (milliamp)
         (mV) = (millivolt)
-	    (S) = (siemens)
+	(S) = (siemens)
 }
 
 NEURON {
         SUFFIX nap
         USEION na READ ena WRITE ina
         RANGE gbar, ina, m, h
-		RANGE m_vh, h_vh, m_vs, h_vs, m_tau_min, h_tau_min, m_tau_max, h_tau_max, m_tau_delta, h_tau_delta, m0, h0
+	RANGE m_vh, h_vh, m_vs, h_vs, m_tau_min, h_tau_min, m_tau_max, h_tau_max, m_tau_delta, h_tau_delta
         }
 
 PARAMETER {
         gbar = 0.12 (S/cm2)
-	    m_vh = 0
+	m_vh = 0
         h_vh = 0
         m_vs = 0
         h_vs = 0
@@ -26,7 +26,8 @@ PARAMETER {
 }
 
 STATE {
-        m h
+    m
+    h
 }
 
 ASSIGNED {
@@ -35,13 +36,13 @@ ASSIGNED {
         ina (mA/cm2)
         minf
         hinf
-	mtau (ms)
+	    mtau (ms)
         htau (ms)
 }
 
 BREAKPOINT {
-        SOLVE states METHOD cnexp
-	ina = gbar*m*m*m*h*(v - ena)
+	SOLVE states METHOD cnexp
+	ina = gbar * m * m * m * h * (v - ena)
 }
 
 
@@ -52,9 +53,9 @@ INITIAL {
 }
 
 DERIVATIVE states {
-        rates(v)
-        m' = (minf-m)/mtau
-        h' = (hinf-h)/htau
+    rates(v)
+    m' = (minf - m) / mtau
+    h' = (hinf - h) / htau
 }
 
 

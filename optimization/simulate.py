@@ -102,6 +102,8 @@ def simulate_currents(cell, simulation_params, plot=False):
             pl.ylabel('Current (mA/cm$^2$)', fontsize=16)
             pl.xlabel('Time (ms)', fontsize=16)
         pl.legend(fontsize=16)
+        pl.ylim(-0.75, 1.5)  # TODO
+        pl.xlim(485, 560)  # TODO
         pl.tight_layout()
         pl.show()
 

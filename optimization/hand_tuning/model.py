@@ -1,7 +1,7 @@
-from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
+#from new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
+from new_optimization.fitter import FitterFactory
 from optimization.helpers import *
-from optimization.simulate import currents_given_v
-from nrn_wrapper import iclamp
+from optimization.simulate import currents_given_v, iclamp_handling_onset, iclamp_adaptive_handling_onset
 
 __author__ = 'caro'
 
@@ -10,7 +10,7 @@ class Model:
 
     def __init__(self, fitter_params):
 
-        self.fitter = HodgkinHuxleyFitter(**fitter_params)
+        self.fitter = FitterFactory().make_fitter(fitter_params)  #HodgkinHuxleyFitter(**fitter_params)
         self.lhsHH = self.get_lhsHH()
         self.channel_list = get_channel_list(self.fitter.cell, 'soma')
         self.ion_list = get_ionlist(self.channel_list)
@@ -44,7 +44,11 @@ class Model:
         return currents
 
     def simulate(self):
-        return iclamp(self.fitter.cell, **self.fitter.simulation_params)
+        if 'continuous' in self.fitter.simulation_params:  # TODO
+            v, t, i_inj = iclamp_adaptive_handling_onset(self.fitter.cell, **self.fitter.simulation_params)
+        else:
+            v, t, i_inj = iclamp_handling_onset(self.fitter.cell, **self.fitter.simulation_params)
+        return v, t
 
     def update_var(self, id, value):
         for path in self.fitter.variable_keys[id]:

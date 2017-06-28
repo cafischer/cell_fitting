@@ -33,10 +33,8 @@ class HodgkinHuxleyFitter(Fitter):
             load_mechanism_dir(mechanism_dir)
         self.data_dir = data_dir
         self.data = pd.read_csv(data_dir)
-        self.init_simulation_params = simulation_params
-        if simulation_params is None:
-            simulation_params = {}
-        self.simulation_params = extract_simulation_params(self.data, **simulation_params)
+        self.init_simulation_params = simulation_params if not None else {}
+        self.simulation_params = merge_dicts(extract_simulation_params(self.data), self.init_simulation_params)
         self.data_to_fit = [fitfun(self.data.v.values, self.data.t.values, self.data.i.values, self.args)
                             for fitfun in self.fitfuns]
         self.cell = self.get_cell()
