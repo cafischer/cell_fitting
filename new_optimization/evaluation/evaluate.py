@@ -119,11 +119,6 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
         #print 'epas', fitter.cell.soma.e_pas
         #candidate_params[1] = -85
 
-        #with open('../../model/cells/test.json', 'w') as f:
-        #    fitter.update_cell(candidate_params)
-        #    cell = fitter.cell.get_dict()
-        #    json.dump(cell, f, indent=4)
-
         v_model, t, i_inj = fitter.simulate_cell(candidate_params)
 
     pl.figure()
@@ -135,6 +130,19 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir):
     pl.tight_layout()
     pl.show()
 
+
+def save_cell(save_dir, candidate):
+    with open(save_dir + '/optimization_settings.json', 'r') as f:
+        optimization_settings = json.load(f)
+    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
+    fitter.cell = Cell.from_modeldir(os.path.join(save_dir, 'cell.json'))  # use saved cell
+    fitter.cell.insert_mechanisms(fitter.variable_keys)
+    candidate_params = get_candidate_params(candidate)
+
+    with open(os.path.join(save_dir, '/best_cell.json'), 'w') as f:
+        fitter.update_cell(candidate_params)
+        cell = fitter.cell.get_dict()
+        json.dump(cell, f, indent=4)
 
 def plot_min_error_vs_generation(save_dir):
     candidates = pd.read_csv(save_dir + '/candidates.csv')
