@@ -3,14 +3,13 @@ from new_optimization.optimizer import OptimizerFactory
 import os
 from time import time
 import json
-from memory_profiler import memory_usage
 from util import merge_dicts
 from optimization.bio_inspired.generators import get_random_numbers_in_bounds
 from new_optimization import create_pseudo_random_number_generator
 from nrn_wrapper import load_mechanism_dir
 
 
-def optimize(optimization_settings_dict, algorithm_settings_dict, save_memory_usage=False):
+def optimize(optimization_settings_dict, algorithm_settings_dict):
     algorithm_settings_dict['save_dir'] = os.path.join(algorithm_settings_dict['save_dir'],
                                                        algorithm_settings_dict['algorithm_name'])
     optimization_settings = OptimizationSettings(**optimization_settings_dict)
@@ -20,12 +19,7 @@ def optimize(optimization_settings_dict, algorithm_settings_dict, save_memory_us
     optimizer.save(algorithm_settings_dict['save_dir'])
 
     start_time = time()
-    if save_memory_usage:
-        mem_usage = memory_usage(optimizer.optimize())
-        with open(os.path.join(algorithm_settings_dict['save_dir'], 'memory_usage.txt'), 'w') as f:
-            f.write(str(max(mem_usage)))
-    else:
-        optimizer.optimize()
+    optimizer.optimize()
     end_time = time()
     duration = end_time - start_time
     with open(os.path.join(algorithm_settings_dict['save_dir'], 'duration.txt'), 'w') as f:

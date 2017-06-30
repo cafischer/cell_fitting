@@ -81,8 +81,8 @@ fitter_params = {
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
                     'data_dirs': [
-                                '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv',
-                                '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(21)/0(nA).csv'
+                                '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(3)/0(nA).csv',
+                                '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(21)/0(nA).csv'
                                 ],
                     'simulation_params': {'celsius': 35, 'onset': 300},
                     'args': {}

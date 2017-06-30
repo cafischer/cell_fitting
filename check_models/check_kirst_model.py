@@ -22,7 +22,7 @@ pl.plot(t, v, 'r')
 #pl.show()
 
 # load data
-data = pd.read_csv('../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv')
+data = pd.read_csv('../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(3)/0(nA).csv')
 sim_params = extract_simulation_params(data)
 
 # simulate

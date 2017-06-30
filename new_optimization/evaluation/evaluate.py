@@ -211,19 +211,19 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    #save_dir = '../../results/server/2017-06-23_08:31:00/114/'
-    save_dir = '../../results/server/2017-06-19_13:12:49/189/'
+    save_dir = '../../results/server/2017-06-26_12:45:34/405/'
+    #save_dir = '../../results/server/2017-06-19_13:12:49/189/'
     #save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1_adaptive/'
     method = 'L-BFGS-B'
 
     best_candidate = plot_best_candidate(save_dir+method+'/', 0)
 
     #plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
-    #                             '../../data/2015_08_06d/correct_vrest_-16mV/PP(4)/0(nA).csv')
+    #                             '../../data/2015_08_06d/correct_vrest_-16mV/PP(0)(4)/0(nA).csv')
     #plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
-    #                             '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv')
+    #                             '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(3)/0(nA).csv')
     #plot_candidate_on_other_data(save_dir + method + '/', best_candidate,
-    #                             '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(21)/0(nA).csv')
+    #                             '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(21)/0(nA).csv')
     """
     plot_candidate_on_other_data(save_dir + method + '/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv')
     plot_candidate_on_other_data(save_dir + method +'/', best_candidate, '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/1.0(nA).csv')

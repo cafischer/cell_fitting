@@ -12,7 +12,7 @@ if __name__ == '__main__':
     method = 'L-BFGS-B'
     n_best = 0
     #data_dir = '../../data/2015_08_26b/vrest-60/rampIV/3.0(nA).csv'
-    data_dir = '../../data/2015_08_06d/vrest-75/PP(3)/0(nA).csv'
+    data_dir = '../../data/2015_08_06d/vrest-75/PP(0)(3)/0(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.7(nA).csv'
     #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/-0.15(nA).csv'

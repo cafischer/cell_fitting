@@ -26,7 +26,7 @@ if __name__ == '__main__':
         group = 'Group1'
         protocol_to_series = hekareader.get_protocol(group)
 
-        if protocol_to_series.get('PP') is not None \
+        if protocol_to_series.get('PP(0)') is not None \
             and protocol_to_series.get('IV') is not None \
             and protocol_to_series.get('rampIV') is not None \
             and protocol_to_series.get('Zap20') is not None \

@@ -189,7 +189,7 @@ fitter_params = {
                     'fitnessweights': [1],
                     'model_dir': '../../model/cells/nowacki_model2.json',
                     'mechanism_dir': '../../model/channels/nowacki',
-                    'data_dirs': ['../../data/2015_08_06d/vrest-81/PP(4)/0(nA).csv',
+                    'data_dirs': ['../../data/2015_08_06d/vrest-81/PP(0)(4)/0(nA).csv',
                                   '../../data/2015_08_06d/vrest-81/IV/-0.1(nA).csv'],
                     'simulation_params': [
                                           {'celsius': 35, 'onset': 200},

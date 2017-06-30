@@ -25,15 +25,15 @@ STATE {
 }
 
 ASSIGNED {
-        v (mV)
-        i (mA/cm2)
-        ninf 
+    v (mV)
+    i (mA/cm2)
+    ninf
 	ntau (ms) 
 }
 
 BREAKPOINT {
-        SOLVE states METHOD cnexp
-	    i = gbar*n*(v - ehcn)
+    SOLVE states METHOD cnexp
+	i = gbar * n * (v - ehcn)
 }
 
 
@@ -43,16 +43,14 @@ INITIAL {
 }
 
 DERIVATIVE states {
-        rates(v)
-        n' =  (ninf-n)/ntau
+    rates(v)
+    n' =  (ninf - n) / ntau
 }
 
 
 PROCEDURE rates(v(mV)) {
-
 UNITSOFF
-		:"n" activation system
-        ninf = 1 / (1 + exp((n_vh - v) / n_vs)) 
-	    ntau = n_tau_min + (n_tau_max - n_tau_min) * ninf * exp(n_tau_delta * (n_vh - v) / n_vs)
+    ninf = 1 / (1 + exp((n_vh - v) / n_vs))
+	ntau = n_tau_min + (n_tau_max - n_tau_min) * ninf * exp(n_tau_delta * (n_vh - v) / n_vs)
 UNITSON
 }

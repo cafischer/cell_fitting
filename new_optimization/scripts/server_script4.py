@@ -65,7 +65,7 @@ fitter_params = {
                     'fitnessweights': [1],
                     'model_dir': '../../model/cells/nowacki_model.json',
                     'mechanism_dir': '../../model/channels/nowacki',
-                    'data_dir': '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv',
+                    'data_dir': '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(3)/0(nA).csv',
                     'simulation_params': {'celsius': 35, 'onset': 200},
                     'args': {}
                 }

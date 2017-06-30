@@ -8,12 +8,12 @@ NEURON {
         SUFFIX nat
         USEION na READ ena WRITE ina
         RANGE gbar, ina, m, h
-		RANGE m_vh, h_vh, m_vs, h_vs, m_tau_min, h_tau_min, m_tau_max, h_tau_max, m_tau_delta, h_tau_delta
+	RANGE m_vh, h_vh, m_vs, h_vs, m_tau_min, h_tau_min, m_tau_max, h_tau_max, m_tau_delta, h_tau_delta
         }
 
 PARAMETER {
         gbar = 0.12 (S/cm2)
-	    m_vh = 0
+	m_vh = 0
         h_vh = 0
         m_vs = 0
         h_vs = 0

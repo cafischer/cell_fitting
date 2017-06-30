@@ -5,6 +5,7 @@ import json
 from matplotlib.pyplot import cm
 from new_optimization.evaluation.evaluate import FitterFactory, get_best_candidate, get_candidate_params
 from optimization.simulate import iclamp_handling_onset, simulate_currents
+import os
 
 __author__ = 'caro'
 
@@ -19,26 +20,28 @@ def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
     return i_exp
 
 
-def double_ramp(cell):
+def double_ramp(cell, ramp3_amp, step_amp):
     """
     original values
     delta_ramp = 2
     delta_first = 3
-    ramp3_times = np.arange(delta_first, 12 * delta_ramp + delta_ramp, delta_ramp)
+    ramp3_times = np.arange(delta_first, 10 * delta_ramp + delta_ramp, delta_ramp)
     baseline_amp = -0.05
     ramp_amp = 4.0
     ramp3_amp = 1.8
     step_amp = 0  # or -0.1 or 0.1
     dt = 0.01
+
+    amplitude of second ramp goes up by 0.05 nA after each sequence
     """
 
     delta_ramp = 2
     delta_first = 3
     ramp3_times = np.arange(delta_first, 10 * delta_ramp + delta_ramp, delta_ramp)
-    baseline_amp = 0.0  #-0.05
+    baseline_amp = -0.05
     ramp_amp = 4.0
-    ramp3_amp = 1.8  #1.8
-    step_amp = -0.1
+    #ramp3_amp = 2.3  #1.8
+    #step_amp = 0  #-0.1
     dt = 0.01
 
     # construct current traces
@@ -75,6 +78,7 @@ def double_ramp(cell):
 
     # plot
     pl.figure()
+    pl.title('1st Ramp = 4 nA, 2nd Ramp = ' + str(ramp3_amp) + ' nA')
     color = iter(cm.gist_rainbow(np.linspace(0, 1, len(ramp3_times))))
     for j, ramp3_time in enumerate(ramp3_times):
         pl.plot(t, v[j], label='Model' if j==0 else '', c='r')  # label='time: '+str(ramp3_time), c=next(color))
@@ -85,14 +89,15 @@ def double_ramp(cell):
     pl.xlim(485, 560)
     pl.tight_layout()
     pl.legend(fontsize=16)
-    pl.show()
+    pl.savefig(save_dir_img)
+    #pl.show()
 
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/server/2017-06-23_08:31:00/115/L-BFGS-B'
+    #save_dir = '../../results/server/2017-06-23_08:31:00/115/L-BFGS-B'
     #save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1_adaptive/L-BFGS-B/'
-    #save_dir = '../../results/server/2017-06-19_13:12:49/189/L-BFGS-B'
+    save_dir = '../../results/server/2017-06-19_13:12:49/189/L-BFGS-B'
     n_best = 0
 
     # load model
@@ -102,4 +107,10 @@ if __name__ == '__main__':
     best_candidate = get_candidate_params(get_best_candidate(save_dir, n_best))
     fitter.update_cell(best_candidate)
 
-    double_ramp(fitter.cell)
+    step_amp = -0.1  #-0.1
+    for seq in range(20):
+        save_dir_img = os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp), 'PP'+str(seq)+'.png')
+        if not os.path.exists(os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp))):
+            os.makedirs(os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp)))
+        ramp3_amp = 1.8 + seq * 0.05
+        double_ramp(fitter.cell, ramp3_amp, step_amp)

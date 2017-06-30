@@ -10,7 +10,7 @@ __author__ = 'caro'
 if __name__ == "__main__":
 
     # parameter
-    data_dir = '../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv'
+    data_dir = '../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(3)/0(nA).csv'
     channel = 'nap_act'
     ion = 'na'
     model_dir = '../model/cells/dapmodel_simpel.json'

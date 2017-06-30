@@ -13,14 +13,14 @@ if __name__ == '__main__':
     #file_dir = os.path.join('/home/caro/Downloads/rawData', cell)
     vrest = -75
     v_rest_change = None #-16
-    correct_vrest = False
+    correct_vrest = True
 
     hekareader = HekaReader(file_dir)
     type_to_index = hekareader.get_type_to_index()
 
-    for w in range(600, 1500):
+    for w in range(1, 2):
         group = 'Group1'
-        protocol = 'PP('+str(w)+')'
+        protocol = 'PP'  #'PP('+str(w)+')'
         trace = 'Trace1'
         protocol_to_series = hekareader.get_protocol(group)
         series = protocol_to_series[protocol]
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
             # save data
             protocol_tmp = re.sub('\(.*\)', '', protocol)
-            #if protocol_tmp == 'PP':
+            #if protocol_tmp == 'PP(0)':
             try:
                 i_inj = pd.read_csv('./Protocols/' + protocol + '.csv', header=None)  # TODO: different for all PPs
                 i_inj = np.array(i_inj)[:, 0]

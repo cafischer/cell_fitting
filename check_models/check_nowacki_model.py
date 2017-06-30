@@ -59,11 +59,11 @@ i_inj = np.zeros(int(round(1000/dt, 0)))
 i_inj[int(round(210/dt, 0)):int(round(710/dt, 0))] = 0.1
 #run_on('../data/2015_08_06d/correct_vrest_-16mV/IV/0.1(nA).csv', dt, v_init, i_inj, plot=True)
 
-# PP(3)
-run_on('../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv', v_init=v_init, plot=True)
+# PP(0)(3)
+run_on('../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(3)/0(nA).csv', v_init=v_init, plot=True)
 
 # visualize currents
-data = pd.read_csv('../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(3)/0(nA).csv')
+data = pd.read_csv('../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(3)/0(nA).csv')
 sim_params = extract_simulation_params(data)
 sim_params['v_init'] = -75.33
 
@@ -74,8 +74,8 @@ pl.plot(data.t[1:], np.diff(data.v) / np.max(np.diff(data.v)), 'k')
 pl.plot(data.t, -1*np.sum(currents) / np.max(-1*np.sum(currents)), 'r')
 pl.show()
 
-# PP(21)
-run_on('../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(21)/0(nA).csv', v_init=v_init, plot=True)
+# PP(0)(21)
+run_on('../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(21)/0(nA).csv', v_init=v_init, plot=True)
 
 # IV
 run_on('../data/2015_08_06d/correct_vrest_-16mV/IV/-0.1(nA).csv', v_init=v_init, plot=True)
