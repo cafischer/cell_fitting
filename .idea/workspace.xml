@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/vavoulis/cav.mod" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/compare_with_experiments.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp_with_new_params.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/boltzmann_from_traces.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/compare_hcn_channel.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/ih_fast.mod" afterPath="$PROJECT_DIR$/model/channels/vavoulis/hcn_fast.mod" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/ih_slow.mod" afterPath="$PROJECT_DIR$/model/channels/vavoulis/hcn_slow.mod" />
+    <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="added save_PP.py for saving all PP files and rampIV for plotting reponse for different amplitudes">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/investigate_synaptic_noise/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/investigate_synaptic_noise/minimal_example_synaptic_input.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/investigate_synaptic_noise/noise_patch_clamp.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/investigate_synaptic_noise/synaptic_input_stellate.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/model/channels/vavoulis/nap2.mod" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/evaluation/fIcurve_with_noise.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/evaluation/input_resistance.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script12_adaptive.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script3.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script4.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script5.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script5_adaptive.py" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/play_round_cell.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/blocking_experiment.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/rampIV.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/increase_rampIV.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script13_adaptive.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/server_script13.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cell_fitting.iml" afterPath="$PROJECT_DIR$/.idea/cell_fitting.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/save_traces_by_hekareader.py" afterPath="$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json" afterPath="$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap.mod" afterPath="$PROJECT_DIR$/model/channels/vavoulis/nap.mod" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/phaseplot.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/phaseplot.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/phaseplots.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/phaseplots.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" afterPath="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" afterPath="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/channel_characteristics.py" afterPath="$PROJECT_DIR$/test_channels/channel_characteristics.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_channel_script.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_channel_script.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py" afterPath="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/plot_gates.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/plot_gates.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script11_adaptive.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/server_script11_adaptive.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script14_adaptive.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/server_script14_adaptive.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/hand_tuning/handtuner.py" afterPath="$PROJECT_DIR$/optimization/hand_tuning/handtuner.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/optimization/simulate.py" afterPath="$PROJECT_DIR$/optimization/simulate.py" />
     </list>
     <ignored path="cell_fitting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,21 +84,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="optimize_stellate.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/new_optimization/scripts/optimize_stellate.py">
+      <file leaf-file-name="handtuner.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/optimization/hand_tuning/handtuner.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="109" column="7" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="save_traces_by_hekareader.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data/save_traces_by_hekareader.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+            <state relative-caret-position="188">
+              <caret line="89" column="34" lean-forward="true" selection-start-line="89" selection-start-column="34" selection-end-line="89" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -101,63 +103,70 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>ka2</find>
+      <find>save_dir_img</find>
+      <find>mechanism_dir</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/v_clamp_with_new_params.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp_with_new_params.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/nat/mod/nat.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/fit_channel_script.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/mod/ka.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/fit_channel_script.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/mod/ka_fit.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/mod/kdr_fit.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/mod/caHVA_fit.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/mod/caLVA_fit.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/evaluate_fits.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/v_clamp_with_new_params.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_with_experiments.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_with_experiments.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/evaluate_fits.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/kdr/v_clamp_with_new_params.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/fit_channel_script.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/plots/digitized_vsteps/plot_vsteps.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_with_experiments.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/v_clamp_with_new_params.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/evaluate_fits.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/v_clamp_with_new_params.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/evaluate_fits.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/compare_with_experiments.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_fit.mod" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp.py" />
-        <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_dickson.mod" />
-        <option value="$PROJECT_DIR$/test_channels/notebooks/fit_nat.ipynb" />
-        <option value="$PROJECT_DIR$/model/cells/dapmodel_simpel.json" />
-        <option value="$PROJECT_DIR$/data/inspect_data.py" />
-        <option value="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
-        <option value="$PROJECT_DIR$/../programming/nrn_wrapper/nrn_wrapper/__init__.py" />
         <option value="$PROJECT_DIR$/test_channels/channel_characteristics.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_channel_script.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/compare_with_experiments.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp_with_new_params.py" />
         <option value="$PROJECT_DIR$/new_optimization/scripts/optimize_stellate_readjust.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" />
-        <option value="$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
         <option value="$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py" />
         <option value="$PROJECT_DIR$/model/channels/vavoulis/ca.mod" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
         <option value="$PROJECT_DIR$/new_optimization/scripts/optimize_stellate.py" />
         <option value="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/boltzmann_from_traces.py" />
+        <option value="$PROJECT_DIR$/model/channels/vavoulis/hcn_slow.mod" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/__init__.py" />
+        <option value="$PROJECT_DIR$/model/channels/vavoulis/ka.mod" />
+        <option value="$PROJECT_DIR$/model/channels/vavoulis/ka2.mod" />
+        <option value="$PROJECT_DIR$/data/plot_PP.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/rampIV.py" />
+        <option value="$PROJECT_DIR$/data/save_PP.py" />
+        <option value="$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script11_adaptive.py" />
+        <option value="$PROJECT_DIR$/model/channels/vavoulis/nap.mod" />
+        <option value="$PROJECT_DIR$/model/channels/vavoulis/nap2.mod" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script14_adaptive.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script13_adaptive.py" />
+        <option value="$PROJECT_DIR$/generate_synaptic_input/test_synaptic_input.py" />
+        <option value="$PROJECT_DIR$/generate_synaptic_input/synaptic_input.py" />
+        <option value="$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/fIcurve.py" />
+        <option value="$PROJECT_DIR$/generate_synaptic_input/minimal_example_synaptic_input.py" />
+        <option value="$PROJECT_DIR$/optimization/simulate.py" />
+        <option value="$PROJECT_DIR$/../bac_project/bac_project/connectivity/synapse.py" />
+        <option value="$PROJECT_DIR$/../bac_project/bac_project/connectivity/stimuli.py" />
+        <option value="$PROJECT_DIR$/generate_synaptic_input/synaptic_input_stellate.py" />
+        <option value="$PROJECT_DIR$/../bac_project/bac_project/connectivity/connection.py" />
+        <option value="$PROJECT_DIR$/investigate_synaptic_noise/noise_patch_clamp.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
+        <option value="$PROJECT_DIR$/optimization/hand_tuning/handtuner.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script13.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/fIcurve_with_noise.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/input_resistance.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/phaseplot.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/phaseplots.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/plot_gates.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/increase_rampIV.py" />
       </list>
     </option>
   </component>
@@ -166,10 +175,9 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="24" />
-    <option name="width" value="1301" />
-    <option name="height" value="744" />
+    <option name="y" value="28" />
+    <option name="width" value="1920" />
+    <option name="height" value="1052" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -191,14 +199,7 @@
     </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <OptionsSetting value="true" id="Add" />
-    <OptionsSetting value="true" id="Remove" />
-    <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
-    <OptionsSetting value="true" id="Status" />
-    <OptionsSetting value="true" id="Edit" />
     <ConfirmationsSetting value="2" id="Add" />
-    <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -215,7 +216,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -223,6 +223,10 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="cell_fitting" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -232,6 +236,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="optimization" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -281,50 +289,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="optimizer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cell_fitting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="2015_08_06d" />
+              <option name="myItemId" value="evaluation" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/OptimizationExercises" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../analyze_intracellular" />
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
@@ -337,102 +313,119 @@
       <recent name="$PROJECT_DIR$/test_channels/experimental_channels/hcn" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/generate_synaptic_input" />
+      <recent name="$PROJECT_DIR$/new_optimization/evaluation" />
       <recent name="$PROJECT_DIR$/model/channels/vavoulis" />
+      <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/test_channels/experimental_channels/hcn" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/caHVA" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/caLVA" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.save_traces_by_hekareader">
-    <configuration default="false" name="optimize_stellate" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.increase_rampIV">
+    <configuration default="false" name="phaseplots" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/scripts" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/evaluation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/scripts/optimize_stellate.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/phaseplots.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="boltzmann_from_traces" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="play_round_cell" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/nap" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/evaluation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/nap/boltzmann_from_traces.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/blocking_experiment.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="experimental_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="plot_currents" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/nap" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/evaluation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/nap/experimental_data.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="compare_with_experiments" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="plot_gates" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_channels/experimental_channels/nap" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/evaluation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/plot_gates.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="save_traces_by_hekareader" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="increase_rampIV" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/evaluation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/increase_rampIV.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -451,6 +444,7 @@
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="Tox" factoryName="Tox">
@@ -463,26 +457,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <method />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Attests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -516,15 +490,10 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
@@ -538,19 +507,45 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;.&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Python.phaseplots" />
+      <item index="1" class="java.lang.String" itemvalue="Python.play_round_cell" />
+      <item index="2" class="java.lang.String" itemvalue="Python.plot_currents" />
+      <item index="3" class="java.lang.String" itemvalue="Python.plot_gates" />
+      <item index="4" class="java.lang.String" itemvalue="Python.increase_rampIV" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.increase_rampIV" />
+        <item index="1" class="java.lang.String" itemvalue="Python.plot_gates" />
+        <item index="2" class="java.lang.String" itemvalue="Python.plot_currents" />
+        <item index="3" class="java.lang.String" itemvalue="Python.play_round_cell" />
+        <item index="4" class="java.lang.String" itemvalue="Python.phaseplots" />
+      </list>
+    </recent_temporary>
+    <configuration default="true" type="tests" factoryName="Attests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -568,29 +563,8 @@
       <option name="TEST_TYPE" value="TEST_SCRIPT" />
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
-      <option name="testToRun" value="" />
-      <option name="keywords" value="" />
-      <option name="params" value="" />
-      <option name="USE_PARAM" value="false" />
-      <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.optimize_stellate" />
-      <item index="1" class="java.lang.String" itemvalue="Python.boltzmann_from_traces" />
-      <item index="2" class="java.lang.String" itemvalue="Python.experimental_data" />
-      <item index="3" class="java.lang.String" itemvalue="Python.compare_with_experiments" />
-      <item index="4" class="java.lang.String" itemvalue="Python.save_traces_by_hekareader" />
-    </list>
-    <recent_temporary>
-      <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.save_traces_by_hekareader" />
-        <item index="1" class="java.lang.String" itemvalue="Python.boltzmann_from_traces" />
-        <item index="2" class="java.lang.String" itemvalue="Python.compare_with_experiments" />
-        <item index="3" class="java.lang.String" itemvalue="Python.experimental_data" />
-        <item index="4" class="java.lang.String" itemvalue="Python.optimize_stellate" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -605,48 +579,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1444289885125</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Added .gitignore">
-      <created>1445523702853</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1445523702853</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Changed init of Section&#10;&#10;Sections are now initialized with the parameter geom instead of L, diam to allow to change between the L, diam and the pt3dadd representation of the geometry.">
-      <created>1446214536052</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1446214536052</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Changed Section init and added test function test_morph&#10;&#10;Section was changed to allow the definition of morphology by either L and diam or by 3D and diam coordinates. The function test_morph plots the morphology of a cell.">
-      <created>1446803136075</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1446803136076</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Changed update_attr() method of Cell&#10;&#10;The method update_attr() is now able to add new paths to params defined by keys if they did not existed yet.">
-      <created>1446819313111</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1446819313111</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Method substitute_section as method from Cell&#10;&#10;">
-      <created>1447012653127</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1447012653127</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Fixed Bug generating candidate with 1 variable&#10;When bounds were given per variable but there was just one variable generator was jumping into the wrong condition and returning a nested list as a candidate. Changing order of if conditions fixed the problem.">
-      <created>1469885341711</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1469885341711</updated>
     </task>
     <task id="LOCAL-00020" summary="Fixed Bug &#10;Checks now whether bounds are given as float number or have len.">
       <created>1469994796727</created>
@@ -949,39 +881,81 @@
       <option name="project" value="LOCAL" />
       <updated>1490347212509</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="add izhikevich optimization">
+      <created>1498759663039</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1498759663040</updated>
+    </task>
+    <task id="LOCAL-00064" summary="update cell models">
+      <created>1498759750516</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1498759750516</updated>
+    </task>
+    <task id="LOCAL-00065" summary="update cell models">
+      <created>1498759774986</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1498759774986</updated>
+    </task>
+    <task id="LOCAL-00066" summary="plot PP for different steps and amplitudes">
+      <created>1498818869037</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1498818869038</updated>
+    </task>
+    <task id="LOCAL-00067" summary="made hyperdap.py conform to the experiments">
+      <created>1498826705472</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1498826705472</updated>
+    </task>
+    <task id="LOCAL-00068" summary="added save_PP.py for saving all PP files and rampIV for plotting reponse for different amplitudes">
+      <created>1498831939464</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1498831939465</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittest_TestGenerators_test_randomNumberForEachLowerUpperBound - 2016.08.29 at 23h 19m 14s.xml">
-      <configuration name="Unittest TestGenerators.test_randomNumberForEachLowerUpperBound" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 09m 39s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_TestGenerators_test_randomNumberForEachLowerUpperBound - 2016.08.29 at 23h 20m 30s.xml">
-      <configuration name="Unittest TestGenerators.test_randomNumberForEachLowerUpperBound" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 24m 47s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_TestGenerators_test_randomNumberForEachLowerUpperBound - 2016.08.29 at 23h 20m 46s.xml">
-      <configuration name="Unittest TestGenerators.test_randomNumberForEachLowerUpperBound" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 25m 19s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_TestGenerators_test_randomNumberForEachLowerUpperBound - 2016.08.29 at 23h 21m 22s.xml">
-      <configuration name="Unittest TestGenerators.test_randomNumberForEachLowerUpperBound" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 34m 05s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_TestGenerators_test_randomNumbers,_test_assertLowerSmallerUpperBound - 2016.08.29 at 23h 23m 18s.xml">
-      <configuration name="Unittest TestGenerators.test_randomNumbers, test_assertLowerSmallerUpperBound" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 38m 56s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittest_TestStringMethods_test_split - 2016.08.29 at 22h 18m 02s.xml">
-      <configuration name="Unittest TestStringMethods.test_split" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 44m 18s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestGenerators - 2016.08.29 at 23h 25m 32s.xml">
-      <configuration name="Unittests in TestGenerators" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 45m 15s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestGenerators - 2016.08.30 at 08h 50m 36s.xml">
-      <configuration name="Unittests in TestGenerators" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 45m 33s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestGenerators - 2016.08.30 at 08h 52m 13s.xml">
-      <configuration name="Unittests in TestGenerators" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 49m 15s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_TestGenerators_(1) - 2016.08.30 at 08h 57m 26s.xml">
-      <configuration name="Unittests in TestGenerators (1)" configurationId="tests" />
+    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 54m 31s.xml">
+      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -994,30 +968,31 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <frame x="0" y="28" width="1920" height="1052" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21283256" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18996799" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33766234" sideWeight="0.52190924" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46346784" sideWeight="0.52454644" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3402399" sideWeight="0.4754536" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33766234" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32142857" sideWeight="0.4773083" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23630673" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21753247" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33587787" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.114727855" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2628135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.304253" sideWeight="0.47809076" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3051948" sideWeight="0.47809076" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22564936" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22464558" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1050,11 +1025,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Organized fitness landscape analysis" />
-    <MESSAGE value="Some changes on fitnesslandscape analysis&#10;e.g. computation of minima" />
-    <MESSAGE value="Some useful functions" />
-    <MESSAGE value="tries to find best fitness landscape by linear regression" />
-    <MESSAGE value="Function to combine different fitness landscapes linearly" />
     <MESSAGE value="made search for minima in 2d faster" />
     <MESSAGE value="Changed implementation of get_local_minima_2d to greatly improve speed" />
     <MESSAGE value="Updated handtuner" />
@@ -1075,7 +1045,12 @@
     <MESSAGE value="Added look_for_good_cells that goes through the data set and returns the cells with good characteristics" />
     <MESSAGE value="Added visualizations of experimental channels (activation function, time constants, etc.)" />
     <MESSAGE value="work on ion channel fits" />
-    <option name="LAST_COMMIT_MESSAGE" value="work on ion channel fits" />
+    <MESSAGE value="add izhikevich optimization" />
+    <MESSAGE value="update cell models" />
+    <MESSAGE value="plot PP for different steps and amplitudes" />
+    <MESSAGE value="made hyperdap.py conform to the experiments" />
+    <MESSAGE value="added save_PP.py for saving all PP files and rampIV for plotting reponse for different amplitudes" />
+    <option name="LAST_COMMIT_MESSAGE" value="added save_PP.py for saving all PP files and rampIV for plotting reponse for different amplitudes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1090,6 +1065,11 @@
           <line>31</line>
           <option name="timeStamp" value="1161" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/investigate_synaptic_noise/noise_patch_clamp.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="1200" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -1101,390 +1081,393 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1171" />
+      <option name="time" value="1202" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/caLVA/v_clamp_with_new_params.py">
+    <entry file="file://$PROJECT_DIR$/data/2015_08_06d/PP_no_inj/img/step0nA/PP11.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/2015_08_06d/PP_no_inj/PP(0)/0(nA).csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state relative-caret-position="90">
+          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/fit_nap.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="-1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/fit_v_steps_notebook.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="-1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/fit_v_steps_notebook-Copy1.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="-1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/Play_with_timeconstant.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/notebooks/fit_nat.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_characteristics/compute_capacitance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-480">
-          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nats.mod">
+    <entry file="file://$PROJECT_DIR$/data/2015_08_06d/PP_no_inj/PP(1)/0(nA).csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nat.mod">
+    <entry file="file://$PROJECT_DIR$/data/2015_08_06d/PP_no_inj/img/step0nA/PP3.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/save_PP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="239">
+          <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/stellate/nap.mod">
+    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1155">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="-105">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/inspect_data.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        <state relative-caret-position="54">
+          <caret line="11" column="4" lean-forward="false" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/compare_hcn_channel.py" />
-    <entry file="file://$PROJECT_DIR$/../programming/nrn_wrapper/nrn_wrapper/__init__.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script11_adaptive.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="79" column="75" selection-start-line="79" selection-start-column="75" selection-end-line="79" selection-end-column="75" />
+        <state relative-caret-position="340">
+          <caret line="156" column="0" lean-forward="false" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/stellate/hcn_fast.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="40" selection-end-column="64" />
+        <state relative-caret-position="288">
+          <caret line="16" column="18" lean-forward="false" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_fit.mod">
+    <entry file="file://$PROJECT_DIR$/model/channels/stellate/hcn_slow.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
+        <state relative-caret-position="1074">
+          <caret line="66" column="16" lean-forward="true" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_dickson.mod">
+    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/hcn_slow.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="112" column="37" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
+        <state relative-caret-position="90">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_channel_script.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nap2.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="59" column="65" selection-start-line="59" selection-start-column="65" selection-end-line="59" selection-end-column="65" />
+        <state relative-caret-position="180">
+          <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py">
+    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nap.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="960">
-          <caret line="71" column="16" selection-start-line="71" selection-start-column="16" selection-end-line="71" selection-end-column="16" />
+        <state relative-caret-position="175">
+          <caret line="39" column="4" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/plot_PP.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="29" column="50" lean-forward="false" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script14_adaptive.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2376">
+          <caret line="132" column="87" lean-forward="false" selection-start-line="132" selection-start-column="87" selection-end-line="132" selection-end-column="87" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/cells/dapmodel_simpel.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+        <state relative-caret-position="72">
+          <caret line="4" column="24" lean-forward="true" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py">
+    <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/fIcurve.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="288">
+          <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/compare_with_experiments.py">
+    <entry file="file://$PROJECT_DIR$/generate_synaptic_input/synaptic_input.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_synaptic_noise/minimal_example_synaptic_input.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="82" column="13" selection-start-line="82" selection-start-column="13" selection-end-line="82" selection-end-column="13" />
+        <state relative-caret-position="-337">
+          <caret line="21" column="13" lean-forward="true" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp_with_new_params.py">
+    <entry file="file://$PROJECT_DIR$/optimization/simulate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
+        <state relative-caret-position="373">
+          <caret line="179" column="39" lean-forward="false" selection-start-line="179" selection-start-column="39" selection-end-line="179" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py">
+    <entry file="file://$PROJECT_DIR$/../bac_project/bac_project/connectivity/synapse.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="34" column="37" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
+        <state relative-caret-position="734">
+          <caret line="95" column="19" lean-forward="false" selection-start-line="95" selection-start-column="17" selection-end-line="95" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/evaluate_fits.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="62" column="8" lean-forward="true" selection-start-line="62" selection-start-column="8" selection-end-line="64" selection-end-column="57" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channel_script.py">
+    <entry file="file://$PROJECT_DIR$/model/cells/2017-06-19_13:12:49_189.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="144">
+          <caret line="8" column="24" lean-forward="true" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json">
+    <entry file="file://$PROJECT_DIR$/../../packages/nrn_wrapper/nrn_wrapper/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+        <state relative-caret-position="142">
+          <caret line="359" column="14" lean-forward="false" selection-start-line="359" selection-start-column="14" selection-end-line="359" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/nap_magistretti.mod">
+    <entry file="file://$PROJECT_DIR$/../bac_project/bac_project/connectivity/stimuli.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="349">
+          <caret line="86" column="32" lean-forward="false" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/traces_log_lin.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/fit_vsteps_cubic/timeconstant_comparison.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py">
+    <entry file="file://$PROJECT_DIR$/../bac_project/bac_project/connectivity/connection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#30#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="425">
+          <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp_with_new_params.py">
+    <entry file="file://$PROJECT_DIR$/data/save_traces_by_hekareader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+        <state relative-caret-position="108">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/look_for_good_cells.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investigate_synaptic_noise/synaptic_input_stellate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1692">
+          <caret line="101" column="0" lean-forward="false" selection-start-line="101" selection-start-column="0" selection-end-line="117" selection-end-column="39" />
           <folding>
             <element signature="e#0#31#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/ka.mod">
+    <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="90">
+          <caret line="7" column="4" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/kdr.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/data/2013_02_06b/analyses/ISI_hist.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/hcn_fast.mod">
+    <entry file="file://$PROJECT_DIR$/investigate_synaptic_noise/noise_patch_clamp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/hcn_fast.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120">
-          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/cav.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/optimize_stellate_readjust.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="177" column="73" selection-start-line="177" selection-start-column="73" selection-end-line="177" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-149">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-59">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#33#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="123" column="82" selection-start-line="123" selection-start-column="82" selection-end-line="123" selection-end-column="82" />
-          <folding>
-            <element signature="e#0#16#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-180">
-          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#11#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="12" column="49" selection-start-line="12" selection-start-column="49" selection-end-line="12" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/experimental_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-199">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="91" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/channel_characteristics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/boltzmann_from_traces.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
+        <state relative-caret-position="414">
+          <caret line="35" column="21" lean-forward="true" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py">
+    <entry file="file://$PROJECT_DIR$/optimization/hand_tuning/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="34" column="67" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="67" />
+        <state relative-caret-position="-270">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/optimization/hand_tuning/view.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1612">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/optimization/hand_tuning/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="7" column="37" lean-forward="false" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/optimize_stellate.py">
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="109" column="7" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
+        <state relative-caret-position="3942">
+          <caret line="225" column="14" lean-forward="false" selection-start-line="225" selection-start-column="14" selection-end-line="225" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/save_traces_by_hekareader.py">
+    <entry file="file://$PROJECT_DIR$/optimization/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+        <state relative-caret-position="246">
+          <caret line="77" column="4" lean-forward="false" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script13.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="26" column="56" lean-forward="true" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/fIcurve_with_noise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-208">
+          <caret line="45" column="43" lean-forward="true" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="42" column="38" lean-forward="false" selection-start-line="42" selection-start-column="38" selection-end-line="42" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#19#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/input_resistance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="34" column="14" lean-forward="false" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="66" column="0" lean-forward="false" selection-start-line="66" selection-start-column="0" selection-end-line="68" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#726#941#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="92" column="0" lean-forward="false" selection-start-line="92" selection-start-column="0" selection-end-line="99" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/phaseplots.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="62" column="25" lean-forward="true" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/blocking_experiment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="30" column="46" lean-forward="true" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/plot_gates.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/phaseplot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="18" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/increase_rampIV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="63" column="16" lean-forward="false" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="22" lean-forward="false" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/optimization/hand_tuning/handtuner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="89" column="34" lean-forward="true" selection-start-line="89" selection-start-column="34" selection-end-line="89" selection-end-column="34" />
           <folding />
         </state>
       </provider>

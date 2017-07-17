@@ -1,10 +1,9 @@
 from __future__ import division
 import pylab as pl
 import numpy as np
-import json
 from matplotlib.pyplot import cm
-from new_optimization.evaluation.evaluate import FitterFactory, get_best_candidate, get_candidate_params
-from optimization.simulate import iclamp_handling_onset, simulate_currents
+from nrn_wrapper import Cell
+from optimization.simulate import iclamp_handling_onset
 import os
 
 __author__ = 'caro'
@@ -40,8 +39,6 @@ def double_ramp(cell, ramp3_amp, step_amp):
     ramp3_times = np.arange(delta_first, 10 * delta_ramp + delta_ramp, delta_ramp)
     baseline_amp = -0.05
     ramp_amp = 4.0
-    #ramp3_amp = 2.3  #1.8
-    #step_amp = 0  #-0.1
     dt = 0.01
 
     # construct current traces
@@ -81,36 +78,31 @@ def double_ramp(cell, ramp3_amp, step_amp):
     pl.title('1st Ramp = 4 nA, 2nd Ramp = ' + str(ramp3_amp) + ' nA')
     color = iter(cm.gist_rainbow(np.linspace(0, 1, len(ramp3_times))))
     for j, ramp3_time in enumerate(ramp3_times):
-        pl.plot(t, v[j], label='Model' if j==0 else '', c='r')  # label='time: '+str(ramp3_time), c=next(color))
-    #pl.plot(t, v[-1])
+        pl.plot(t, v[j], label='Model' if j == 0 else '', c='r')
     pl.xlabel('Time (ms)', fontsize=16)
     pl.ylabel('Membrane potential (mV)', fontsize=16)
-    #pl.legend(loc='upper right', fontsize=16)
     pl.xlim(485, 560)
     pl.tight_layout()
     pl.legend(fontsize=16)
     pl.savefig(save_dir_img)
-    #pl.show()
+    pl.show()
 
 
 if __name__ == '__main__':
+
     # parameters
-    #save_dir = '../../results/server/2017-06-23_08:31:00/115/L-BFGS-B'
-    #save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1_adaptive/L-BFGS-B/'
-    save_dir = '../../results/server/2017-06-19_13:12:49/189/L-BFGS-B'
-    n_best = 0
+    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
+    #model_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'
+    mechanism_dir = '../../model/channels/vavoulis'
 
     # load model
-    with open(save_dir + '/optimization_settings.json', 'r') as f:
-        optimization_settings = json.load(f)
-    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    best_candidate = get_candidate_params(get_best_candidate(save_dir, n_best))
-    fitter.update_cell(best_candidate)
+    cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
-    step_amp = -0.1  #-0.1
+    step_amp = -0.1
     for seq in range(20):
         save_dir_img = os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp), 'PP'+str(seq)+'.png')
         if not os.path.exists(os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp))):
             os.makedirs(os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp)))
-        ramp3_amp = 1.8 + seq * 0.05
-        double_ramp(fitter.cell, ramp3_amp, step_amp)
+        ramp3_amp = 0.5 + seq * 0.1  # TODO 1.8 + seq * 0.05
+        double_ramp(cell, ramp3_amp, step_amp)

@@ -102,8 +102,6 @@ def simulate_currents(cell, simulation_params, plot=False):
             pl.ylabel('Current (mA/cm$^2$)', fontsize=16)
             pl.xlabel('Time (ms)', fontsize=16)
         pl.legend(fontsize=16)
-        pl.ylim(-0.75, 1.5)  # TODO
-        pl.xlim(485, 560)  # TODO
         pl.tight_layout()
         pl.show()
 
@@ -134,7 +132,7 @@ def simulate_gates(cell, simulation_params, plot=False):
             gates[k] = np.array(gates[k])[real_start:]
         gates[k] = np.array(gates[k])
 
-    # plot current traces
+    # plot gate traces
     if plot:
         pl.figure()
         for k in gates.keys():
@@ -160,7 +158,10 @@ def iclamp_handling_onset(cell, **simulation_params):
         v_candidate, t_candidate = iclamp(cell, **simulation_params_tmp)
 
         real_start = int(round(onset / simulation_params['dt']))
-        return v_candidate[real_start:], t_candidate[:-real_start], simulation_params['i_inj']
+        if onset == 0:  # indexing does not work for onset = 0, therefore this extra branch
+            return v_candidate, t_candidate, simulation_params['i_inj']
+        else:
+            return v_candidate[real_start:], t_candidate[:-real_start], simulation_params['i_inj']
     else:
         v_candidate, t_candidate = iclamp(cell, **simulation_params)
         return v_candidate, t_candidate, simulation_params['i_inj']
@@ -178,8 +179,8 @@ def iclamp_adaptive_handling_onset(cell, **simulation_params):
 
         v_candidate, t_candidate = iclamp_adaptive(cell, **simulation_params_tmp)
 
-        real_start = int(round(onset / simulation_params['dt']))
-        return v_candidate[real_start:], t_candidate[:-real_start], simulation_params['i_inj']
+        real_start = np.where(t_candidate >= onset)[0][0]
+        return v_candidate[real_start:], t_candidate[real_start:] - onset, simulation_params['i_inj']
     else:
         v_candidate, t_candidate = iclamp_adaptive(cell, **simulation_params)
         return v_candidate, t_candidate, simulation_params['i_inj']

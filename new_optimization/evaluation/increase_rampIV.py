@@ -1,8 +1,8 @@
 import pylab as pl
 import numpy as np
-import json
-from new_optimization.fitter import iclamp_handling_onset, FitterFactory
-from new_optimization.evaluation.evaluate import get_best_candidate, get_candidate_params
+import os
+from new_optimization.fitter import iclamp_handling_onset
+from nrn_wrapper import Cell
 
 __author__ = 'caro'
 
@@ -56,14 +56,14 @@ def rampIV(cell, ramp_amp, v_init=-75):
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/L-BFGS-B/'
-    save_dir = '../../results/server/2017-06-19_13:12:49/189/L-BFGS-B'
-    ramp_amp = 2.8
+    data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
+    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
+    #model_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'
+    mechanism_dir = '../../model/channels/vavoulis'
+    ramp_amp = 3
 
     # load model
-    with open(save_dir + '/optimization_settings.json', 'r') as f:
-        optimization_settings = json.load(f)
-    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    best_candidate = get_candidate_params(get_best_candidate(save_dir, n_best=0))
-    fitter.update_cell(best_candidate)
-    rampIV(fitter.cell, ramp_amp, v_init=-75)
+    cell = Cell.from_modeldir(model_dir, mechanism_dir)
+
+    rampIV(cell, ramp_amp, v_init=-75)

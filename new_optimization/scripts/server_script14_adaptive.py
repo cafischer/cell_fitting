@@ -13,6 +13,7 @@ save_dir = sys.argv[1]
 variables = [
             [0.5, 2, [['soma', 'cm']]],
             [-95, -70, [['soma', '0.5', 'pas', 'e']]],
+            [-30, -10, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
 
             [0, 0.5, [['soma', '0.5', 'pas', 'g']]],
             [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
@@ -46,7 +47,7 @@ variables = [
             [0, 100, [['soma', '0.5', 'kdr', 'n_tau_max']]],
             [0, 100, [['soma', '0.5', 'nap', 'm_tau_max']]],
             [0, 100, [['soma', '0.5', 'nap', 'h_tau_max']]],
-            [0, 100, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
+            [0, 500, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
 
             [0, 10, [['soma', '0.5', 'nat', 'm_tau_delta']]],
             [0, 10, [['soma', '0.5', 'nat', 'h_tau_delta']]],
@@ -57,49 +58,50 @@ variables = [
             ]
 
 variables_init = [
-            [0.65, 0.75, [['soma', 'cm']]],
-            [-87, -86, [['soma', '0.5', 'pas', 'e']]],
+            [0.65, 0.72, [['soma', 'cm']]],
+            [-90, -86, [['soma', '0.5', 'pas', 'e']]],
+            [-30, -26, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
 
-            [0.004, 0.006, [['soma', '0.5', 'pas', 'g']]],
-            [0.08, 0.1, [['soma', '0.5', 'nat', 'gbar']]],
-            [0.03, 0.05, [['soma', '0.5', 'kdr', 'gbar']]],
-            [0.3, 0.5, [['soma', '0.5', 'nap', 'gbar']]],
-            [0, 0.001, [['soma', '0.5', 'hcn_slow', 'gbar']]],
+            [0.0007, 0.001, [['soma', '0.5', 'pas', 'g']]],
+            [0.008, 0.02, [['soma', '0.5', 'nat', 'gbar']]],
+            [0.0025, 0.006, [['soma', '0.5', 'kdr', 'gbar']]],
+            [0.07, 0.12, [['soma', '0.5', 'nap', 'gbar']]],
+            [0.0001, 0.0004, [['soma', '0.5', 'hcn_slow', 'gbar']]],
 
             [-56, -54, [['soma', '0.5', 'nat', 'm_vh']]],
-            [-82, -80, [['soma', '0.5', 'nat', 'h_vh']]],
-            [-67, -65, [['soma', '0.5', 'kdr', 'n_vh']]],
-            [-34, -32, [['soma', '0.5', 'nap', 'm_vh']]],
-            [-72, -70, [['soma', '0.5', 'nap', 'h_vh']]],
-            [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
+            [-80, -78, [['soma', '0.5', 'nat', 'h_vh']]],
+            [-69, -67, [['soma', '0.5', 'kdr', 'n_vh']]],
+            [-36, -32, [['soma', '0.5', 'nap', 'm_vh']]],
+            [-74, -70, [['soma', '0.5', 'nap', 'h_vh']]],
+            [-85, -83, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
 
-            [16, 18, [['soma', '0.5', 'nat', 'm_vs']]],
-            [-24, -22, [['soma', '0.5', 'nat', 'h_vs']]],
+            [15, 17, [['soma', '0.5', 'nat', 'm_vs']]],
+            [-22, -20, [['soma', '0.5', 'nat', 'h_vs']]],
             [18, 20, [['soma', '0.5', 'kdr', 'n_vs']]],
-            [17, 19, [['soma', '0.5', 'nap', 'm_vs']]],
-            [-14, -12, [['soma', '0.5', 'nap', 'h_vs']]],
-            [1, 30, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
+            [14, 18, [['soma', '0.5', 'nap', 'm_vs']]],
+            [-15, -11, [['soma', '0.5', 'nap', 'h_vs']]],
+            [-21, -19, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
 
-            [0, 0.1, [['soma', '0.5', 'nat', 'm_tau_min']]],
+            [0.01, 0.03, [['soma', '0.5', 'nat', 'm_tau_min']]],
             [0.4, 0.6, [['soma', '0.5', 'nat', 'h_tau_min']]],
-            [0.5, 0.7, [['soma', '0.5', 'kdr', 'n_tau_min']]],
-            [0, 0.00001, [['soma', '0.5', 'nap', 'm_tau_min']]],
-            [0.1, 0.3, [['soma', '0.5', 'nap', 'h_tau_min']]],
-            [0, 50, [['soma', '0.5', 'hcn_slow', 'n_tau_min']]],
+            [0.5, 0.8, [['soma', '0.5', 'kdr', 'n_tau_min']]],
+            [0, 0.01, [['soma', '0.5', 'nap', 'm_tau_min']]],
+            [0, 0.1, [['soma', '0.5', 'nap', 'h_tau_min']]],
+            [3, 5, [['soma', '0.5', 'hcn_slow', 'n_tau_min']]],
 
             [17, 19, [['soma', '0.5', 'nat', 'm_tau_max']]],
-            [18, 21, [['soma', '0.5', 'nat', 'h_tau_max']]],
-            [19, 22, [['soma', '0.5', 'kdr', 'n_tau_max']]],
-            [0.1, 0.4, [['soma', '0.5', 'nap', 'm_tau_max']]],
-            [8, 11, [['soma', '0.5', 'nap', 'h_tau_max']]],
-            [1, 300, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
+            [17, 19, [['soma', '0.5', 'nat', 'h_tau_max']]],
+            [20, 22, [['soma', '0.5', 'kdr', 'n_tau_max']]],
+            [0.2, 0.4, [['soma', '0.5', 'nap', 'm_tau_max']]],
+            [7, 9, [['soma', '0.5', 'nap', 'h_tau_max']]],
+            [90, 150, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
 
             [0.3, 0.5, [['soma', '0.5', 'nat', 'm_tau_delta']]],
             [0.6, 0.8, [['soma', '0.5', 'nat', 'h_tau_delta']]],
-            [0.4, 0.6, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
-            [0.01, 0.2, [['soma', '0.5', 'nap', 'm_tau_delta']]],
-            [0, 0.2, [['soma', '0.5', 'nap', 'h_tau_delta']]],
-            [0, 1.0, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]],
+            [0.6, 0.8, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
+            [0.1, 0.3, [['soma', '0.5', 'nap', 'm_tau_delta']]],
+            [0.3, 0.4, [['soma', '0.5', 'nap', 'h_tau_delta']]],
+            [0.2, 0.4, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]],
             ]
 
 
@@ -119,17 +121,17 @@ fitter_params = {
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
                     'fitfun_names': ['get_v'],
-                    'fitnessweights': [1, 1],
+                    'fitnessweights': [150, 1],
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
                     'data_dirs': [
                                   '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
-                                  '../../data/2015_08_26b/vrest-75/IV/-0.1(nA).csv',
+                                  '../../data/2015_08_26b/vrest-75/IV/0.3(nA).csv'
                                   ],
                     'simulation_params': [
-                                         {'celsius': 35, 'onset': 200, 'atol': 1e-6, 'continuous': True,
+                                         {'celsius': 35, 'onset': 200, 'atol': 1e-5, 'continuous': True,
                                          'discontinuities': None, 'interpolate': True},
-                                         {'celsius': 35, 'onset': 200, 'atol': 1e-6, 'continuous': True,
+                                         {'celsius': 35, 'onset': 200, 'atol': 1e-5, 'continuous': True,
                                          'discontinuities': discontinuities_IV, 'interpolate': True}
                                          ],
                     'args': {}

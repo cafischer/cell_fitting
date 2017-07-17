@@ -1,9 +1,9 @@
 import pylab as pl
 import numpy as np
-import json
+import os
 from matplotlib.pyplot import cm
-from new_optimization.fitter import iclamp_handling_onset, FitterFactory
-from new_optimization.evaluation.evaluate import get_best_candidate, get_candidate_params
+from nrn_wrapper import Cell
+from optimization.simulate import simulate_currents, iclamp_handling_onset
 
 __author__ = 'caro'
 
@@ -21,8 +21,19 @@ def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
 
 
 def hyperpolarize_ramp(cell):
-
+    """
+    params:
     hyperamps = np.arange(-0.25, 0.26, 0.05)  # nA
+    ramp_amp = 8  # nA
+    dt = 0.01
+    hyp_st_ms = 200  # ms
+    hyp_end_ms = 600  # ms
+    ramp_end_ms = 602  # ms
+    tstop = 1000  # ms
+    """
+
+    hyperamps = np.arange(-0.25, 0.26, 0.05)  # nA  #TODO
+    #hyperamps = np.arange(-0.1, 0.26, 0.05)
     ramp_amp = 8  # nA
     dt = 0.01
     hyp_st_ms = 200  # ms
@@ -37,6 +48,7 @@ def hyperpolarize_ramp(cell):
     t_exp = np.arange(0, tstop + dt, dt)
 
     v = np.zeros([len(hyperamps), len(t_exp)])
+    currents = []
     for j, hyper_amp in enumerate(hyperamps):
         i_exp = np.zeros(len(t_exp))
         i_exp[hyp_st:hyp_end] = hyper_amp
@@ -49,12 +61,13 @@ def hyperpolarize_ramp(cell):
         # record v
         v[j], t, _ = iclamp_handling_onset(cell, **simulation_params)
 
-        # test i_exp
-        #pl.figure()
-        #pl.plot(t, i_exp)
-        #pl.show()
+        currents.append(simulate_currents(cell, simulation_params, plot=False))
 
     # plot
+    save_dir_img = os.path.join(save_dir, 'img', 'hyperdap')
+    if not os.path.exists(save_dir_img):
+        os.makedirs(save_dir_img)
+
     pl.figure()
     color = iter(cm.gist_rainbow(np.linspace(0, 1, len(hyperamps))))
     for j, hyper_amp in enumerate(hyperamps):
@@ -62,18 +75,43 @@ def hyperpolarize_ramp(cell):
     pl.xlabel('Time $(ms)$', fontsize=16)
     pl.ylabel('Membrane potential $(mV)$', fontsize=16)
     pl.legend(loc='upper right', fontsize=16)
+    pl.savefig(os.path.join(save_dir_img, 'hyperDAP.png'))
     pl.show()
+
+    pl.figure()
+    color = iter(cm.gist_rainbow(np.linspace(0, 1, len(hyperamps))))
+    for j, hyper_amp in enumerate(hyperamps):
+        pl.plot(t, v[j], c=next(color), label=str(np.round(hyper_amp, 2)) + ' nA')
+    pl.xlabel('Time $(ms)$', fontsize=16)
+    pl.ylabel('Membrane potential $(mV)$', fontsize=16)
+    pl.legend(loc='upper right', fontsize=16)
+    pl.xlim(595, 645)
+    pl.ylim(-85, -40)
+    pl.savefig(os.path.join(save_dir_img, 'hyperDAP_zoom.png'))
+    pl.show()
+
+    # plot currents
+    pl.figure()
+    color = cm.gist_rainbow(np.linspace(0, 1, len(currents[0])))
+    for j, hyper_amp in enumerate(hyperamps):
+        for k, current in enumerate(currents[j]):
+            pl.plot(t, -1*current, c=color[k])
+    pl.xlabel('Time $(ms)$', fontsize=16)
+    pl.ylabel('Current $(mA/cm^2)$', fontsize=16)
+    pl.xlim(595, 645)
+    pl.show()
+
 
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/new_optimization/2015_08_06d/15_02_17_PP(4)/L-BFGS-B/'
-    save_dir = '../../results/server/2017-06-19_13:12:49/189/L-BFGS-B'
+    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
+    #model_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'
+    mechanism_dir = '../../model/channels/vavoulis'
 
     # load model
-    with open(save_dir + '/optimization_settings.json', 'r') as f:
-        optimization_settings = json.load(f)
-    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    best_candidate = get_candidate_params(get_best_candidate(save_dir, n_best=0))
-    fitter.update_cell(best_candidate)
-    hyperpolarize_ramp(fitter.cell)
+    cell = Cell.from_modeldir(model_dir, mechanism_dir)
+
+    # start hyperdap
+    hyperpolarize_ramp(cell)

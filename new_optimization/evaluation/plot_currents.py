@@ -1,30 +1,20 @@
-import json
+import os
 import pandas as pd
-from new_optimization.fitter import FitterFactory
+from nrn_wrapper import Cell
 from optimization.simulate import extract_simulation_params, simulate_currents
-from evaluate import get_best_candidate, get_candidate_params
 from util import merge_dicts
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-06-19_13:12:49/189/'
-    #save_dir = '../../results/optimization_vavoulis_channels/2015_08_26b/22_01_17_readjust1/'
-    method = 'L-BFGS-B'
-    n_best = 0
-    #data_dir = '../../data/2015_08_26b/vrest-60/rampIV/3.0(nA).csv'
-    data_dir = '../../data/2015_08_06d/vrest-75/PP(0)(3)/0(nA).csv'
-    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
-    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/0.7(nA).csv'
-    #data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/IV/-0.15(nA).csv'
+    # parameters
+    data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
+    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
+    #model_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'
+    mechanism_dir = '../../model/channels/vavoulis'
 
-    best_candidate_params = get_candidate_params(get_best_candidate(save_dir + method + '/', n_best))
-    #best_candidate_params[5] -= best_candidate_params[5] * 0.05
-
-    # recover cell and update with best candidate
-    with open(save_dir+method+'/' + '/optimization_settings.json', 'r') as f:
-        optimization_settings = json.load(f)
-    fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
-    fitter.update_cell(best_candidate_params)
+    # load model
+    cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # get simulation_params
     data = pd.read_csv(data_dir)
@@ -32,8 +22,9 @@ if __name__ == '__main__':
     simulation_params = merge_dicts(extract_simulation_params(data), sim_params)
 
     # plot currents
-    currents = simulate_currents(fitter.cell, simulation_params, plot=True)
-"""
+    currents = simulate_currents(cell, simulation_params, plot=True)
+
+    """
     import matplotlib.pyplot as pl
     import numpy as np
     from itertools import combinations
@@ -53,4 +44,4 @@ if __name__ == '__main__':
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(fontsize=10)
     pl.show()
-"""
+    """

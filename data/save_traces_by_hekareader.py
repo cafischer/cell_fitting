@@ -8,18 +8,19 @@ import numpy as np
 
 if __name__ == '__main__':
 
-    cell = '2015_08_06d'
+    cell = '2013_02_12b'
     file_dir = './'+cell+'/'+cell +'.dat'
     #file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/rawData', cell)
-    vrest = -75
-    v_rest_change = None #-16
+    folder_name = 'raw'
+    vrest = None
+    v_rest_change = -16
     correct_vrest = True
 
     hekareader = HekaReader(file_dir)
     type_to_index = hekareader.get_type_to_index()
 
     group = 'Group1'
-    protocol = 'PP'
+    protocol = 'Noise2'
     trace = 'Trace1'
     protocol_to_series = hekareader.get_protocol(group)
     series = protocol_to_series[protocol]
@@ -47,20 +48,18 @@ if __name__ == '__main__':
         x_unit, y_unit = hekareader.get_units_xy(index)
 
         ax.plot(x, y)
-        ax.set_xlabel('Time (ms)', fontsize=18)
-        ax.set_ylabel('Membrane Potential (mV)', fontsize=18)
+        ax.set_xlabel('Time (ms)', fontsize=16)
+        ax.set_ylabel('Membrane Potential (mV)', fontsize=16)
         ax.tick_params(labelsize=15)
 
         # save data
         protocol_tmp = re.sub('\(.*\)', '', protocol)
-        #if protocol_tmp == 'PP(0)':
         try:
             i_inj = pd.read_csv('./Protocols/' + protocol + '.csv', header=None)  # TODO: different for all PPs
             i_inj = np.array(i_inj)[:, 0]
         except IOError:
             print 'Using different current protocol!'
-            i_inj = pd.read_csv('./Protocols/' + 'PP(3)' + '.csv', header=None)  # TODO: different for all PPs
-            i_inj = np.array(i_inj)[:, 0]
+            i_inj = np.zeros(len(x))
 
         if protocol == 'IV':
             amp = -0.15 + sweep_idx[i] * 0.05
@@ -81,7 +80,7 @@ if __name__ == '__main__':
         i_inj *= amp_change
 
         data = pd.DataFrame({'v': y, 't': x}) #, 'i': i_inj})
-        save_dir = os.path.join('./', cell, 'vrest', protocol)
+        save_dir = os.path.join('./', cell, folder_name, protocol)
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
@@ -89,8 +88,9 @@ if __name__ == '__main__':
         #data = data[shorten].copy()
         #data.t -= data.t.iloc[0]
 
-        data.to_csv(save_dir + '/' + str(amp) + '(nA).csv', index=False)
-        #ax.set_xlim([0, 120])
-        #ax.set_ylim([-70, 55])
-        #pl.tight_layout()
-        #pl.show()
+        data.to_csv(os.path.join(save_dir, str(amp) + '(nA).csv'), index=False)
+
+    #ax.set_xlim([0, 120])
+    #ax.set_ylim([-70, 55])
+    pl.tight_layout()
+    pl.show()
