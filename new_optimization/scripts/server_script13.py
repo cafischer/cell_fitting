@@ -111,25 +111,24 @@ lower_bounds_init, upper_bounds_init, variable_keys_init = get_lowerbound_upperb
 bounds_init = {'lower_bounds': list(lower_bounds_init), 'upper_bounds': list(upper_bounds_init)}
 
 fitter_params = {
-                    'name': 'HodgkinHuxleyFitterSeveralData',
+                    'name': 'HodgkinHuxleyFitterSeveralDataSeveralFitfuns',
                     #'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
-                    'fitfun_names': ['get_v'],
+                    'fitfun_names': [['get_v', 'get_DAP'], ['get_v'], ['get_v'], ['get_n_spikes']],
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
-                    #'fitnessweights': [1],
-                    #'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
-                    #'simulation_params': {'celsius': 35, 'onset': 200},
-                    'fitnessweights': [10000, 1],
+                    # 'fitnessweights': [1, 1000],
+                    # 'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
+                    # 'simulation_params': {'celsius': 35, 'onset': 200},
+                    'fitnessweights': [[7, 7], [1], [1], [25000]],
                     'data_dirs': [
                                   '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
-                                  '../../data/2015_08_26b/vrest-75/IV/0.3(nA).csv'
+                                  '../../data/2015_08_26b/vrest-75/IV/-0.1(nA).csv',
+                                  '../../data/2015_08_26b/vrest-75/IV/0.2(nA).csv',
+                                  '../../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
                                   ],
-                    'simulation_params': [
-                                         {'celsius': 35, 'onset': 200},
-                                         {'celsius': 35, 'onset': 200}
-                                         ],
+                    'simulation_params': {'celsius': 35, 'onset': 200},
                     'args': {}
                 }
 

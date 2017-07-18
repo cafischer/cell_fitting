@@ -107,7 +107,8 @@ if __name__ == '__main__':
     # parameters
     save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
-    #model_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'
+    #save_dir = '../../results/hand_tuning/cell434_1/'
+    #model_dir = '../../results/hand_tuning/cell434_1/cell.json'
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model

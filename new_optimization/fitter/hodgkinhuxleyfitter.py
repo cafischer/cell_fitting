@@ -146,6 +146,58 @@ class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
                 'data_dirs': self.data_dirs, 'simulation_params': self.init_simulation_params, 'args': self.args}
 
 
+class HodgkinHuxleyFitterSeveralDataSeveralFitfuns(HodgkinHuxleyFitterSeveralData):
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,
+                 model_dir, mechanism_dir, data_dirs, simulation_params=None, args=None):
+        super(HodgkinHuxleyFitterSeveralDataSeveralFitfuns, self).__init__(name, variable_keys, errfun_name,
+                                                                           fitfun_names[0], fitnessweights[0],
+                                                                           model_dir, mechanism_dir, [data_dirs[0]],
+                                                                           {}, args)
+        self.data_dirs = data_dirs
+        self.datas = list()
+        for dir in data_dirs:
+            self.datas.append(pd.read_csv(dir))
+
+        self.fitfun_names = fitfun_names
+        self.fitfuns = [[getattr(fitfuns, fitfun_name)
+                         for fitfun_name in fitfun_name_set]
+                        for fitfun_name_set in fitfun_names]
+        self.fitnessweights = fitnessweights
+
+        self.init_simulation_params = simulation_params
+        if simulation_params is None:
+            simulation_params = {}
+        if type(simulation_params) is dict:
+            simulation_params = [simulation_params] * len(self.datas)
+
+        self.simulation_params = list()
+        self.datas_to_fit = list()
+        for i, data in enumerate(self.datas):
+            extracted_params = extract_simulation_params(data)
+            self.simulation_params.append(merge_dicts(extracted_params, simulation_params[i]))
+            self.datas_to_fit.append([fitfun(data.v.values, data.t.values, data.i.values, self.args)
+                                      for fitfun in self.fitfuns[i]])
+
+    def evaluate_fitness(self, candidate, args):
+        fitness_total = 0
+        for s, simulation_params in enumerate(self.simulation_params):
+            v_candidate, t_candidate, _ = self.simulate_cell(candidate, simulation_params)
+            vars_to_fit = [fitfun(v_candidate, t_candidate, simulation_params['i_inj'], self.args)
+                           for fitfun in self.fitfuns[s]]
+            num_nones = 0
+            fitness = 0
+            for i in range(len(vars_to_fit)):
+                if vars_to_fit[i] is None:
+                    num_nones += 1
+                else:
+                    fitness += self.fitnessweights[s][i] * self.errfun(vars_to_fit[i], self.datas_to_fit[s][i])
+
+            if num_nones == len(vars_to_fit):
+                fitness = 10000  # float("inf")
+            fitness_total += fitness
+        return fitness_total
+
+
 class HodgkinHuxleyFitterSeveralDataAdaptive(HodgkinHuxleyFitterSeveralData):
 
     def __init__(self, name, variable_keys, errfun_name, fitfun_names, fitnessweights,

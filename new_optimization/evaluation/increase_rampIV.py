@@ -57,11 +57,12 @@ def rampIV(cell, ramp_amp, v_init=-75):
 if __name__ == '__main__':
     # parameters
     data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
-    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
-    model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
-    #model_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'
+    #save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    #model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
+    save_dir = '../../results/hand_tuning/cell434_1/'
+    model_dir = '../../results/hand_tuning/cell434_1/cell.json'
     mechanism_dir = '../../model/channels/vavoulis'
-    ramp_amp = 3
+    ramp_amp = 3.0
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)

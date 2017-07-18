@@ -1,6 +1,7 @@
 import numpy as np
 from cell_characteristics.analyze_APs import *
 import scipy
+import matplotlib.pyplot as pl
 from optimization.errfuns import rms
 
 __author__ = 'caro'
@@ -10,8 +11,21 @@ def get_v(v, t, i_inj, args):
     return v
 
 
-def phase_hist(v, t, i_inj, args):
+def get_DAP(v, t, i_inj, args):
+    dt = t[1] - t[0]
+    DAP_start = int(round(13.5 / dt))
+    DAP_end = int(round(160.0 / dt))
+    v_DAP = v[DAP_start:DAP_end]
+    return v_DAP
 
+
+def get_n_spikes(v, t, i_inj, args):
+    threshold = args.get('threshold', -10)
+    AP_onsets = get_AP_onsets(v, threshold)
+    return len(AP_onsets)
+
+
+def phase_hist(v, t, i_inj, args):
     v_min = args['v_min']
     v_max = args['v_max']
     dvdt_min = args['dvdt_min']

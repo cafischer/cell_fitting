@@ -13,9 +13,10 @@ if __name__ == '__main__':
 
     # parameters
     data_dir = '../../data/2015_08_26b/vrest-75/IV/'
-    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
-    model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
-    #model_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'
+    save_dir = '../../results/server/2017-07-17_17:05:19/54/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    #save_dir = '../../results/hand_tuning/cell434_5/'
+    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model
@@ -41,6 +42,7 @@ if __name__ == '__main__':
     # fI-curve for model
     sim_params = {'celsius': 35, 'onset': 200, 'atol': 1e-6, 'continuous': True, 'discontinuities': discontinuities_IV,
                   'interpolate': True}
+    sim_params = {'celsius': 35, 'onset': 200}
     v_traces_model = list()
     for file_name in os.listdir(data_dir):
         data = pd.read_csv(data_dir+file_name)

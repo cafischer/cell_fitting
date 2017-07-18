@@ -141,7 +141,7 @@ def save_cell(save_dir, candidate):
 
     if not os.path.exists(os.path.join(save_dir, 'model')):
         os.makedirs(os.path.join(save_dir, 'model'))
-    with open(os.path.join(save_dir, 'model', 'best_cell.json'), 'w') as f:
+    with open(os.path.join(save_dir, 'model', 'cell.json'), 'w') as f:
         fitter.update_cell(candidate_params)
         cell = fitter.cell.get_dict()
         json.dump(cell, f, indent=4)
@@ -221,9 +221,8 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-07-14_09:28:54/30/'
+    save_dir = '../../results/server/2017-07-17_17:05:19/49/'
     #save_dir = '../../results/server/2017-07-06_13:50:52/434/'
-    #save_dir = '../../results/server/2017-06-19_13:12:49/189/'
 
     method = 'L-BFGS-B'
     save_dir = os.path.join(save_dir, method)
