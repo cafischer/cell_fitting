@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/evaluation/sine_stimulus.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/scripts/server_script12.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DAP_population/get_AP_windows.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DAP_population/find_DAP_types.py" afterPath="$PROJECT_DIR$/DAP_population/find_DAP_types.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/channels/vavoulis/ka.mod" afterPath="$PROJECT_DIR$/model/channels/vavoulis/ka.mod" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
     </list>
     <ignored path="cell_fitting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,11 +57,31 @@
       <file leaf-file-name="find_DAP_types.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DAP_population/find_DAP_types.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="120" column="13" lean-forward="true" selection-start-line="120" selection-start-column="13" selection-end-line="120" selection-end-column="13" />
+            <state relative-caret-position="273">
+              <caret line="95" column="13" lean-forward="true" selection-start-line="95" selection-start-column="13" selection-end-line="95" selection-end-column="13" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../analyze_intracellular/analyze_intracellular/spike_sorting/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="444">
+              <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="analyze_APs.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="160" column="33" lean-forward="false" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,8 +114,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/model/channels/vavoulis/ca.mod" />
-        <option value="$PROJECT_DIR$/new_optimization/scripts/optimize_stellate.py" />
         <option value="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py" />
         <option value="$PROJECT_DIR$/test_channels/experimental_channels/nap/boltzmann_from_traces.py" />
@@ -148,6 +162,8 @@
         <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
         <option value="$PROJECT_DIR$/model/channels/vavoulis/ka.mod" />
         <option value="$PROJECT_DIR$/new_optimization/scripts/server_script12.py" />
+        <option value="$PROJECT_DIR$/DAP_population/get_AP_windows.py" />
+        <option value="$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py" />
         <option value="$PROJECT_DIR$/DAP_population/find_DAP_types.py" />
       </list>
     </option>
@@ -208,6 +224,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DAP_population" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cell_fitting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DAP_population" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="results" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="get_AP_windows" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -289,25 +341,6 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="sine_stimulus" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/evaluation" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/sine_stimulus.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <method />
-    </configuration>
     <configuration default="false" name="evaluate" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -342,6 +375,25 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/scripts/server_script12.py" />
       <option name="PARAMETERS" value="test 0 1" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="get_AP_windows" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DAP_population" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DAP_population/get_AP_windows.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <method />
@@ -450,17 +502,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.evaluate_server" />
       <item index="1" class="java.lang.String" itemvalue="Python.find_DAP_types" />
-      <item index="2" class="java.lang.String" itemvalue="Python.sine_stimulus" />
-      <item index="3" class="java.lang.String" itemvalue="Python.evaluate" />
-      <item index="4" class="java.lang.String" itemvalue="Python.server_script12" />
+      <item index="2" class="java.lang.String" itemvalue="Python.evaluate" />
+      <item index="3" class="java.lang.String" itemvalue="Python.server_script12" />
+      <item index="4" class="java.lang.String" itemvalue="Python.get_AP_windows" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.find_DAP_types" />
-        <item index="1" class="java.lang.String" itemvalue="Python.server_script12" />
-        <item index="2" class="java.lang.String" itemvalue="Python.evaluate" />
-        <item index="3" class="java.lang.String" itemvalue="Python.evaluate_server" />
-        <item index="4" class="java.lang.String" itemvalue="Python.sine_stimulus" />
+        <item index="1" class="java.lang.String" itemvalue="Python.get_AP_windows" />
+        <item index="2" class="java.lang.String" itemvalue="Python.server_script12" />
+        <item index="3" class="java.lang.String" itemvalue="Python.evaluate" />
+        <item index="4" class="java.lang.String" itemvalue="Python.evaluate_server" />
       </list>
     </recent_temporary>
     <configuration default="true" type="tests" factoryName="Attests">
@@ -497,13 +549,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1444289885125</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Added functions to make comparable optimization for the different algorithms. Problem does now carry a cell (faster than to create on every evaluation).">
-      <created>1470308708620</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1470308708620</updated>
     </task>
     <task id="LOCAL-00023" summary="Added histogram and 2d plot of performance of different parameters (to see which ones are easier to analyze)">
       <created>1472479778122</created>
@@ -841,7 +886,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500382903071</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="added clustering to find_DAP_types">
+      <created>1500461950906</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1500461950908</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -943,7 +995,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated handtuner" />
     <MESSAGE value="Corrected get_DAP_deflection: now gives the absolute value&#10;Updated example wit units&#10;" />
     <MESSAGE value="Uses now matplotlib FigureCanvas and NavigationToolbar for plots" />
     <MESSAGE value="Variables are now initialized to their lower bound" />
@@ -968,7 +1019,8 @@
     <MESSAGE value="added save_PP.py for saving all PP files and rampIV for plotting reponse for different amplitudes" />
     <MESSAGE value="updated evaluate methods, to make cell from model_dir instead of searching through optimization results" />
     <MESSAGE value="DAP_population: package for finding spikes in rampIV and later investigating DAPs" />
-    <option name="LAST_COMMIT_MESSAGE" value="DAP_population: package for finding spikes in rampIV and later investigating DAPs" />
+    <MESSAGE value="added clustering to find_DAP_types" />
+    <option name="LAST_COMMIT_MESSAGE" value="added clustering to find_DAP_types" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1004,25 +1056,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1219" />
+      <option name="time" value="1232" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script14_adaptive.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2376">
-          <caret line="132" column="87" lean-forward="false" selection-start-line="132" selection-start-column="87" selection-end-line="132" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/cells/dapmodel_simpel.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="24" lean-forward="true" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/fIcurve.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -1292,13 +1330,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="756">
@@ -1355,10 +1386,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DAP_population/get_AP_windows.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="55" column="17" lean-forward="true" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="160" column="33" lean-forward="false" selection-start-line="160" selection-start-column="33" selection-end-line="160" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../analyze_intracellular/analyze_intracellular/spike_sorting/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DAP_population/find_DAP_types.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="120" column="13" lean-forward="true" selection-start-line="120" selection-start-column="13" selection-end-line="120" selection-end-column="13" />
+        <state relative-caret-position="273">
+          <caret line="95" column="13" lean-forward="true" selection-start-line="95" selection-start-column="13" selection-end-line="95" selection-end-column="13" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>

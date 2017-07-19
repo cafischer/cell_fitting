@@ -3,120 +3,95 @@ from heka_reader import HekaReader
 import os
 import matplotlib.pyplot as pl
 import numpy as np
-from cell_characteristics.analyze_APs import get_AP_onsets, get_AP_max
 from analyze_intracellular.spike_sorting import pca_tranform, k_means_clustering
-
-
-def correct_baseline(y, vrest=None, v_rest_change=None):
-    if vrest is not None:
-        y = y - (y[0] - vrest)
-    if v_rest_change is not None:
-        y += v_rest_change
-    return y
-
-
-def get_AP_peak(vm, window_before, window_after, threshold, AP_interval):
-    AP_peak = None
-    AP_onsets = get_AP_onsets(vm, threshold)
-    if len(AP_onsets) == 1:
-        onset = AP_onsets[0]
-        if window_before < onset < len(vm) - window_after:
-            AP_peak = get_AP_max(vm, onset, len(vm), interval=AP_interval)
-    return AP_peak
-
-
-def get_AP_matrix(data_dir, cells, protocol, correct_vrest, v_rest, window_before, window_after, AP_interval,
-                  threshold, dt):
-    AP_peak_per_cell = []
-    cells_with_AP = []
-    vm_with_AP = []
-    for cell in cells:
-        hekareader = HekaReader(os.path.join(data_dir, cell))
-        type_to_index = hekareader.get_type_to_index()
-        group = 'Group1'
-        trace = 'Trace1'
-        protocol_to_series = hekareader.get_protocol(group)
-        if not protocol in protocol_to_series.keys():
-            continue
-        series = protocol_to_series[protocol]
-        sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series]) + 1)]
-        sweep_idx = range(len(sweeps))
-        sweeps = [sweeps[index] for index in sweep_idx]
-        indices = [type_to_index[group][series][sweep][trace] for sweep in sweeps]
-
-        for index in indices:
-            # take next sweep
-            t, vm = hekareader.get_xy(index)
-            t *= 1000  # ms
-            assert dt == t[1] - t[0]  # ms
-            vm *= 1000  # mV
-            if correct_vrest:
-                vm = correct_baseline(vm, v_rest)
-
-            # get AP peak
-            AP_peak = get_AP_peak(vm, window_before, window_after, threshold, AP_interval)
-            if AP_peak is not None:
-                cells_with_AP.append(cell)
-                AP_peak_per_cell.append(AP_peak)
-                vm_with_AP.append(vm)
-                break
-    AP_matrix = np.zeros((len(cells_with_AP), window_before + window_after))
-    for i, AP_peak in enumerate(AP_peak_per_cell):
-        # pl.figure()
-        # pl.plot(t[AP_peak - window_before:AP_peak + window_after], vm_with_AP[i][AP_peak - window_before:AP_peak + window_after])
-        # pl.plot(AP_peak*dt, vm_with_AP[i][AP_peak], 'or')
-        # pl.show()
-        AP_matrix[i, :] = vm_with_AP[i][AP_peak - window_before:AP_peak + window_after]
-    return AP_matrix, cells_with_AP
+from cell_characteristics.analyze_APs import get_AP_amp, get_AP_width, get_fAHP_min, get_DAP_max, get_DAP_amp, get_DAP_width
 
 
 if __name__ == '__main__':
 
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/rawData'
-    protocol = 'rampIV'
-    v_rest = -75
-    correct_vrest = True
-    dt = 0.01
-    threshold = 20
-    window_before_t = 3
-    window_after_t = 50
-    window_before = int(round(window_before_t / dt))
-    window_after = int(round(window_after_t / dt))
-    AP_interval = 1 / dt
+    # save AP_matrix and cells
+    AP_matrix = np.load('./results/get_AP_windows/AP_matrix.npy')
+    t_window = np.load('./results/get_AP_windows/t_window.npy')
+    AP_max = np.load('./results/get_AP_windows/window_before.npy')
+    v_rest = np.load('./results/get_AP_windows/v_rest.npy')
+    dt = t_window[1] - t_window[0]
+    AP_interval = int(round(2/dt))
 
-    # get matrix with window around spikes
-    cells = os.listdir(data_dir)
-    AP_matrix, cells_with_AP = get_AP_matrix(data_dir, cells, protocol, correct_vrest, v_rest, window_before,
-                                             window_after, AP_interval, threshold, dt)
-    t_window = np.arange(0, (window_before+window_after)*dt, dt)
+    # compute characteristics: AP_max, AP_width, DAP_amp, DAP_width
+    AP_amp = np.zeros(len(AP_matrix))
+    AP_width = np.zeros(len(AP_matrix))
+    fAHP_min = np.zeros(len(AP_matrix))
+    DAP_max = np.zeros(len(AP_matrix))
+    DAP_amp = np.zeros(len(AP_matrix))
+    DAP_width = np.zeros(len(AP_matrix))
+    for i, AP_window in enumerate(AP_matrix):
+        #i = 45
+        #AP_window = AP_matrix[45]
+        print i
+        AP_amp[i] = get_AP_amp(AP_window, AP_max, v_rest)
+        AP_width[i] = get_AP_width(AP_window, t_window, 0, AP_max, AP_max+AP_interval, v_rest)
+        fAHP_min[i] = get_fAHP_min(AP_window, AP_max, len(t_window), interval=AP_interval)
+        if np.isnan(fAHP_min[i]):
+            DAP_max[i] = None
+            DAP_amp[i] = None
+            DAP_width[i] = None
+            continue
+        DAP_max[i] = get_DAP_max(AP_window, int(fAHP_min[i]), len(t_window), interval=AP_interval)
+        if np.isnan(DAP_max[i]):
+            DAP_amp[i] = None
+            DAP_width[i] = None
+            continue
+        DAP_amp[i] = get_DAP_amp(AP_window, int(DAP_max[i]), v_rest)
+        DAP_width[i] = get_DAP_width(AP_window, t_window, int(fAHP_min[i]), int(DAP_max[i]), len(t_window), v_rest)
 
-    # plot
-    pl.figure()
-    for i in range(len(cells_with_AP)):
-        pl.plot(t_window, AP_matrix[i, :])
-    pl.show()
+
+    # for i, AP_window in enumerate(AP_matrix):
+    #     print 'AP_amp (mV): ', AP_amp[i]
+    #     print 'AP_width (ms): ', AP_width[i]
+    #     if not np.isnan(fAHP_min[i]):
+    #         print 'fAHP_min: (mV): ', AP_window[int(fAHP_min[i])]
+    #         if not np.isnan(DAP_max[i]):
+    #             print 'DAP_amp: (mV): ', DAP_amp[i]
+    #             print 'DAP_width: (ms): ', DAP_width[i]
+        # pl.figure()
+        # pl.plot(t_window, AP_window)
+        # pl.plot(t_window[AP_max], AP_window[AP_max], 'or')
+        # if not np.isnan(fAHP_min[i]):
+        #     pl.plot(t_window[int(fAHP_min[i])], AP_window[int(fAHP_min[i])], 'or')
+        # pl.show()
+
+    AP_matrix_reduced_PCspace = np.vstack((AP_amp, AP_width, DAP_amp, DAP_width)).T
+    not_nan = np.logical_not(np.any(np.isnan(AP_matrix_reduced_PCspace), 1))
+    AP_matrix_reduced_PCspace = AP_matrix_reduced_PCspace[not_nan, :]
+    AP_matrix = AP_matrix[not_nan, :]
+    n_components = 4
 
     # PCA on APs
-    n_components = 4
-    AP_matrix_reduced_PCspace, AP_matrix_reduced, pca = pca_tranform(AP_matrix, n_components)
-    print 'Explained variance: ', np.sum(pca.explained_variance_ratio_)
+    # n_components = 4
+    # AP_matrix_reduced_PCspace, AP_matrix_reduced, pca = pca_tranform(AP_matrix, n_components)
+    # print 'Explained variance: ', np.sum(pca.explained_variance_ratio_)
 
-    pl.figure()
-    pl.title('APs projected back using '+str(n_components)+' components')
-    for AP in AP_matrix_reduced:
-        pl.plot(t_window, AP)
-    pl.xlabel('Time (ms)')
-    #pl.savefig(os.path.join(folder, 'spike_sorting', 'dim_reduced_APs.png'))
-    pl.show()
+    # pl.figure()
+    # pl.title('APs projected back using '+str(n_components)+' components')
+    # for AP in AP_matrix_reduced:
+    #     pl.plot(t_window, AP)
+    # pl.xlabel('Time (ms)')
+    # #pl.savefig(os.path.join(folder, 'spike_sorting', 'dim_reduced_APs.png'))
+    # pl.show()
 
     # clustering
-    n_clusters = 3
+    n_dim = n_components
+    n_clusters = 10
     labels = k_means_clustering(AP_matrix_reduced_PCspace, n_clusters)
 
-    pl.figure()
+    # plot clustering
+    fig, ax = pl.subplots(n_dim, n_dim)
     pl.title('Cluster in 2d')
-    for i, x in enumerate(AP_matrix_reduced_PCspace):
-        pl.plot(x[0], x[1], 'o', color=str(labels[i]/n_clusters))
+    for i in range(n_dim):
+        for j in range(n_dim):
+            for l, x in enumerate(AP_matrix_reduced_PCspace):
+                ax[i][j].plot(x[i], x[j], 'o', color=str(labels[l]/n_clusters))
+                ax[i][j].set_title('component: '+str(i) + ', component: '+str(j))
     #pl.savefig(os.path.join(folder, 'spike_sorting', 'cluster_2d.png'))
     pl.show()
 
@@ -127,3 +102,7 @@ if __name__ == '__main__':
     pl.xlabel('Time (ms)')
     #pl.savefig(os.path.join(folder, 'spike_sorting', 'mean_AP_per_cluster.png'))
     pl.show()
+
+
+# TODO: plot all individuals belonging to a cluster
+# TODO: cubic spline fit for fAHP_min
