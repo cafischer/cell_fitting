@@ -92,6 +92,7 @@ def plot_candidate_on_other_data(save_dir, candidate, data_dir, plot_dir):
         optimization_settings = json.load(f)
 
     if (optimization_settings['fitter_params']['name'] == 'HodgkinHuxleyFitterSeveralData' or
+        optimization_settings['fitter_params']['name'] == 'HodgkinHuxleyFitterSeveralDataSeveralFitfuns' or
         optimization_settings['fitter_params']['name'] == 'HodgkinHuxleyFitterSeveralDataAdaptive'):
         optimization_settings['fitter_params']['data_dirs'] = [data_dir]
         optimization_settings['fitter_params']['mechanism_dir'] = None
@@ -221,13 +222,14 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-07-17_17:05:19/49/'
+    save_dir = '../../results/server/2017-07-18_11:14:25/17/'
     #save_dir = '../../results/server/2017-07-06_13:50:52/434/'
 
     method = 'L-BFGS-B'
     save_dir = os.path.join(save_dir, method)
 
     best_candidate = plot_best_candidate(save_dir, 0)
+    #best_candidate = get_best_candidate(save_dir, 0)
 
     save_cell(save_dir, best_candidate)
 

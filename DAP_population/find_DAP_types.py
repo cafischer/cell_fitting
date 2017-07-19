@@ -4,6 +4,7 @@ import os
 import matplotlib.pyplot as pl
 import numpy as np
 from cell_characteristics.analyze_APs import get_AP_onsets, get_AP_max
+from analyze_intracellular.spike_sorting import pca_tranform, k_means_clustering
 
 
 def correct_baseline(y, vrest=None, v_rest_change=None):
@@ -24,25 +25,11 @@ def get_AP_peak(vm, window_before, window_after, threshold, AP_interval):
     return AP_peak
 
 
-if __name__ == '__main__':
-
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/rawData'
-    protocol = 'rampIV'
-    v_rest = -75
-    correct_vrest = True
-    dt = 0.01
-    threshold = 20
-    window_before_t = 3
-    window_after_t = 50
-    window_before = int(round(window_before_t / dt))
-    window_after = int(round(window_after_t / dt))
-    AP_interval = 1 / dt
-
-    cells = os.listdir(data_dir)
+def get_AP_matrix(data_dir, cells, protocol, correct_vrest, v_rest, window_before, window_after, AP_interval,
+                  threshold, dt):
     AP_peak_per_cell = []
     cells_with_AP = []
     vm_with_AP = []
-
     for cell in cells:
         hekareader = HekaReader(os.path.join(data_dir, cell))
         type_to_index = hekareader.get_type_to_index()
@@ -52,12 +39,11 @@ if __name__ == '__main__':
         if not protocol in protocol_to_series.keys():
             continue
         series = protocol_to_series[protocol]
-        sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series])+1)]
+        sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series]) + 1)]
         sweep_idx = range(len(sweeps))
         sweeps = [sweeps[index] for index in sweep_idx]
         indices = [type_to_index[group][series][sweep][trace] for sweep in sweeps]
 
-        AP_peak = []
         for index in indices:
             # take next sweep
             t, vm = hekareader.get_xy(index)
@@ -74,7 +60,6 @@ if __name__ == '__main__':
                 AP_peak_per_cell.append(AP_peak)
                 vm_with_AP.append(vm)
                 break
-
     AP_matrix = np.zeros((len(cells_with_AP), window_before + window_after))
     for i, AP_peak in enumerate(AP_peak_per_cell):
         # pl.figure()
@@ -82,9 +67,63 @@ if __name__ == '__main__':
         # pl.plot(AP_peak*dt, vm_with_AP[i][AP_peak], 'or')
         # pl.show()
         AP_matrix[i, :] = vm_with_AP[i][AP_peak - window_before:AP_peak + window_after]
+    return AP_matrix, cells_with_AP
+
+
+if __name__ == '__main__':
+
+    data_dir = '/home/cf/Phd/DAP-Project/cell_data/rawData'
+    protocol = 'rampIV'
+    v_rest = -75
+    correct_vrest = True
+    dt = 0.01
+    threshold = 20
+    window_before_t = 3
+    window_after_t = 50
+    window_before = int(round(window_before_t / dt))
+    window_after = int(round(window_after_t / dt))
+    AP_interval = 1 / dt
+
+    # get matrix with window around spikes
+    cells = os.listdir(data_dir)
+    AP_matrix, cells_with_AP = get_AP_matrix(data_dir, cells, protocol, correct_vrest, v_rest, window_before,
+                                             window_after, AP_interval, threshold, dt)
+    t_window = np.arange(0, (window_before+window_after)*dt, dt)
 
     # plot
     pl.figure()
     for i in range(len(cells_with_AP)):
-        pl.plot(np.arange(0, (window_before+window_after)*dt, dt), AP_matrix[i, :])
+        pl.plot(t_window, AP_matrix[i, :])
+    pl.show()
+
+    # PCA on APs
+    n_components = 4
+    AP_matrix_reduced_PCspace, AP_matrix_reduced, pca = pca_tranform(AP_matrix, n_components)
+    print 'Explained variance: ', np.sum(pca.explained_variance_ratio_)
+
+    pl.figure()
+    pl.title('APs projected back using '+str(n_components)+' components')
+    for AP in AP_matrix_reduced:
+        pl.plot(t_window, AP)
+    pl.xlabel('Time (ms)')
+    #pl.savefig(os.path.join(folder, 'spike_sorting', 'dim_reduced_APs.png'))
+    pl.show()
+
+    # clustering
+    n_clusters = 3
+    labels = k_means_clustering(AP_matrix_reduced_PCspace, n_clusters)
+
+    pl.figure()
+    pl.title('Cluster in 2d')
+    for i, x in enumerate(AP_matrix_reduced_PCspace):
+        pl.plot(x[0], x[1], 'o', color=str(labels[i]/n_clusters))
+    #pl.savefig(os.path.join(folder, 'spike_sorting', 'cluster_2d.png'))
+    pl.show()
+
+    pl.figure()
+    pl.title('Mean AP per cluster')
+    for c in range(n_clusters):
+        pl.plot(t_window, np.mean(AP_matrix[labels == c, :], 0), color=str(c/n_clusters), linewidth=2)
+    pl.xlabel('Time (ms)')
+    #pl.savefig(os.path.join(folder, 'spike_sorting', 'mean_AP_per_cluster.png'))
     pl.show()

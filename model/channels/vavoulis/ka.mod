@@ -5,24 +5,24 @@ UNITS {
 }
 
 NEURON {
-        SUFFIX ka
-        USEION k READ ek WRITE ik
-        RANGE gbar, ik, n, l
+    SUFFIX ka
+	USEION k READ ek WRITE ik
+    RANGE gbar, ik, n, l
 	RANGE n_vh, n_vs, n_tau_min, n_tau_max, n_tau_delta, l_vh, l_vs, l_tau_min, l_tau_max, l_tau_delta
         }
 
 PARAMETER {
-        gbar = 0.12 (S/cm2)
+    gbar = 0.12 (S/cm2)
 	n_vh = 0
-        n_vs = 0
-        n_tau_min = 0
-        n_tau_max = 0
-        n_tau_delta = 0
+    n_vs = 0
+    n_tau_min = 0
+    n_tau_max = 0
+    n_tau_delta = 0
 	l_vh = 0
-        l_vs = 0
-        l_tau_min = 0
-        l_tau_max = 0
-        l_tau_delta = 0
+    l_vs = 0
+    l_tau_min = 0
+    l_tau_max = 0
+    l_tau_delta = 0
 }
 
 STATE {
