@@ -1,9 +1,6 @@
 from heka_reader import HekaReader
 import pandas as pd
 import os
-import re
-import matplotlib.pyplot as pl
-import numpy as np
 
 
 if __name__ == '__main__':

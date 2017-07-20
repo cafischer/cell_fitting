@@ -4,23 +4,24 @@ import os
 import re
 import matplotlib.pyplot as pl
 import numpy as np
+from data import correct_baseline
 
 
 if __name__ == '__main__':
 
-    cell = '2013_02_12b'
-    file_dir = './'+cell+'/'+cell +'.dat'
-    #file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/rawData', cell)
-    folder_name = 'raw'
-    vrest = None
-    v_rest_change = -16
+    cell = '2015_05_28c'
+    #file_dir = './'+cell+'/'+cell +'.dat'
+    file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/rawData', cell +'.dat')
+    folder_name = 'vrest-80'
+    v_rest = -80
+    v_rest_change = None #-16
     correct_vrest = True
+    protocol = 'IV'
 
     hekareader = HekaReader(file_dir)
     type_to_index = hekareader.get_type_to_index()
 
     group = 'Group1'
-    protocol = 'Noise2'
     trace = 'Trace1'
     protocol_to_series = hekareader.get_protocol(group)
     series = protocol_to_series[protocol]
@@ -41,10 +42,7 @@ if __name__ == '__main__':
         x *= 1000
         y *= 1000
         if correct_vrest:
-            if vrest is not None:
-                y = y - (y[0] - vrest)
-            if v_rest_change is not None:
-                y += v_rest_change
+            y = correct_baseline(y, v_rest, v_rest_change)
         x_unit, y_unit = hekareader.get_units_xy(index)
 
         ax.plot(x, y)
@@ -79,7 +77,7 @@ if __name__ == '__main__':
         print 'Amplitude: ', amp
         i_inj *= amp_change
 
-        data = pd.DataFrame({'v': y, 't': x}) #, 'i': i_inj})
+        data = pd.DataFrame({'v': y, 't': x, 'i': i_inj})
         save_dir = os.path.join('./', cell, folder_name, protocol)
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)

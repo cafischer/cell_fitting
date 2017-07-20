@@ -4,6 +4,14 @@ import numpy as np
 __author__ = 'caro'
 
 
+def correct_baseline(y, vrest=None, v_rest_change=None):
+    if vrest is not None:
+        y = y - (y[0] - vrest)
+    if v_rest_change is not None:
+        y += v_rest_change
+    return y
+
+
 def power_of_2(n):
     power_of_2 = 1
     while power_of_2 <= n:

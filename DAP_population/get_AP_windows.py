@@ -4,14 +4,7 @@ import os
 import matplotlib.pyplot as pl
 import numpy as np
 from cell_characteristics.analyze_APs import get_AP_onsets, get_AP_max
-
-
-def correct_baseline(y, vrest=None, v_rest_change=None):
-    if vrest is not None:
-        y = y - (y[0] - vrest)
-    if v_rest_change is not None:
-        y += v_rest_change
-    return y
+from data import correct_baseline
 
 
 def get_AP_peak(vm, window_before, window_after, threshold, AP_interval):
@@ -78,7 +71,7 @@ if __name__ == '__main__':
     correct_vrest = True
     dt = 0.01
     threshold = 20
-    window_before_t = 3
+    window_before_t = 5
     window_after_t = 50
     window_before = int(round(window_before_t / dt))
     window_after = int(round(window_after_t / dt))
