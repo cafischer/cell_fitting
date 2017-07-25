@@ -1,5 +1,6 @@
 import pylab as pl
 import numpy as np
+import pandas as pd
 import os
 from new_optimization.fitter import iclamp_handling_onset
 from nrn_wrapper import Cell
@@ -40,31 +41,32 @@ def rampIV(cell, ramp_amp, v_init=-75):
     # record v
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
 
-    # test i_exp
-    #pl.figure()
-    #pl.plot(t, i_exp)
-    #pl.show()
-
-    # plot
-    pl.figure()
-    pl.plot(t, v, 'r', label=str(np.round(ramp_amp, 2)) + ' nA')
-    pl.xlabel('Time $(ms)$', fontsize=16)
-    pl.ylabel('Membrane potential $(mV)$', fontsize=16)
-    pl.legend(loc='upper right', fontsize=16)
-    pl.show()
+    return v, t
 
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
     #save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
     #model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
     save_dir = '../../results/hand_tuning/cell434_1/'
     model_dir = '../../results/hand_tuning/cell434_1/cell.json'
     mechanism_dir = '../../model/channels/vavoulis'
-    ramp_amp = 3.0
+    ramp_amp = 3.3
+    data_dir = '../../data/2015_08_26b/vrest-75/rampIV/'+str(ramp_amp)+'(nA).csv'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
-    rampIV(cell, ramp_amp, v_init=-75)
+    v, t = rampIV(cell, ramp_amp, v_init=-75)
+
+    data = pd.read_csv(data_dir)
+
+    # plot
+    pl.figure()
+    pl.title(str(np.round(ramp_amp, 2)) + ' nA')
+    pl.plot(data.t, data.v, 'k', label='Exp. Data')
+    pl.plot(t, v, 'r', label='Model')
+    pl.xlabel('Time $(ms)$', fontsize=16)
+    pl.ylabel('Membrane potential $(mV)$', fontsize=16)
+    pl.legend(loc='upper right', fontsize=16)
+    pl.show()

@@ -4,7 +4,7 @@ import os
 
 for seq in range(20):
 
-    step = 2
+    step = 1
     if step == 0:
         step_str = 'step0nA'
     elif step == 1:
@@ -12,7 +12,7 @@ for seq in range(20):
     elif step == 2:
         step_str = 'step0.1nA'
 
-    save_dir = os.path.join('2015_08_06d/PP_no_inj/img/', step_str)
+    save_dir = os.path.join('2014_03_18e/PP_no_inj/img/', step_str)
 
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)

@@ -5,9 +5,9 @@ import os
 
 if __name__ == '__main__':
 
-    cell = '2015_08_06d'
-    file_dir = './'+cell+'/'+cell +'.dat'
-    #file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/rawData', cell)
+    cell = '2014_03_18e'  #'2015_08_11f'  # 2015_08_04d  #2015_08_06d
+    #file_dir = './'+cell+'/'+cell +'.dat'
+    file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/rawData', cell+'.dat')
     vrest = -75
     v_rest_change = None
     correct_vrest = True

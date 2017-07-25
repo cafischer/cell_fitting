@@ -8,21 +8,23 @@ NEURON {
         SUFFIX nat
         USEION na READ ena WRITE ina
         RANGE gbar, ina, m, h
-	RANGE m_vh, h_vh, m_vs, h_vs, m_tau_min, h_tau_min, m_tau_max, h_tau_max, m_tau_delta, h_tau_delta
-        }
+	RANGE m_vh, h_vh, m_vs, h_vs, m_tau_min, h_tau_min, m_tau_max, h_tau_max, m_tau_delta, h_tau_delta, m_pow, h_pow
+}
 
 PARAMETER {
-        gbar = 0.12 (S/cm2)
+	gbar = 0.12 (S/cm2)
+	m_pow = 3
+	h_pow = 1
 	m_vh = 0
-        h_vh = 0
-        m_vs = 0
-        h_vs = 0
-        m_tau_min = 0
-        h_tau_min = 0
-        m_tau_max = 0
-        h_tau_max = 0
-        m_tau_delta = 0
-        h_tau_delta = 0
+	h_vh = 0
+	m_vs = 0
+	h_vs = 0
+	m_tau_min = 0
+	h_tau_min = 0
+	m_tau_max = 0
+	h_tau_max = 0
+	m_tau_delta = 0
+	h_tau_delta = 0
 }
 
 STATE {
@@ -35,13 +37,13 @@ ASSIGNED {
         ina (mA/cm2)
         minf
         hinf
-	mtau (ms)
+	    mtau (ms)
         htau (ms)
 }
 
 BREAKPOINT {
     SOLVE states METHOD cnexp
-	ina = gbar * m * m * m * h * (v - ena)
+	ina = gbar * pow(m, m_pow) * pow(h, h_pow) * (v - ena)
 }
 
 

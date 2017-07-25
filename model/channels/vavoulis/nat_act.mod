@@ -1,40 +1,41 @@
 UNITS {
-        (mA) = (milliamp)
-        (mV) = (millivolt)
-	    (S) = (siemens)
+	(mA) = (milliamp)
+	(mV) = (millivolt)
+	(S) = (siemens)
 }
 
 NEURON {
-        SUFFIX nat_act
-        USEION na READ ena WRITE ina
-        RANGE gbar, ina, m
-		RANGE m_vh, m_vs, m_tau_min, m_tau_max, m_tau_delta
-        }
+	SUFFIX nat_act
+	USEION na READ ena WRITE ina
+	RANGE gbar, ina, m
+	RANGE m_vh, m_vs, m_tau_min, m_tau_max, m_tau_delta, m_pow
+}
 
 PARAMETER {
-        gbar = 0.12 (S/cm2)
-		m_vh = 0
-        m_vs = 0
-        m_tau_min = 0
-        m_tau_max = 0
-        m_tau_delta = 0
+	gbar = 0.12 (S/cm2)
+	m_pow = 3
+	m_vh = 0
+	m_vs = 0
+	m_tau_min = 0
+	m_tau_max = 0
+	m_tau_delta = 0
 }
 
 STATE {
-        m
+	m
 }
 
 ASSIGNED {
-        v (mV)
-        ena (mV)
-        ina (mA/cm2)
-        minf
-	    mtau (ms)
+	v (mV)
+	ena (mV)
+	ina (mA/cm2)
+	minf
+	mtau (ms)
 }
 
 BREAKPOINT {
-        SOLVE states METHOD cnexp
-	    ina = gbar*m*m*m*(v - ena)
+	SOLVE states METHOD cnexp
+	ina = gbar * pow(m, m_pow) * (v - ena)
 }
 
 
@@ -44,15 +45,13 @@ INITIAL {
 }
 
 DERIVATIVE states {
-        rates(v)
-        m' =  (minf-m)/mtau
+	rates(v)
+	m' =  (minf-m)/mtau
 }
 
 PROCEDURE rates(v(mV)) {
-
 UNITSOFF
-		:"m" sodium activation system
-        minf = 1 / (1 + exp((m_vh - v) / m_vs))
-	    mtau = m_tau_min + (m_tau_max - m_tau_min) * minf * exp(m_tau_delta * (m_vh - v) / m_vs)
+	minf = 1 / (1 + exp((m_vh - v) / m_vs))
+	mtau = m_tau_min + (m_tau_max - m_tau_min) * minf * exp(m_tau_delta * (m_vh - v) / m_vs)
 UNITSON
 }

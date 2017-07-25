@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as pl
 from optimization.helpers import get_channel_list, get_ionlist
 import copy
+import re
 from nrn_wrapper import iclamp, iclamp_adaptive, vclamp
 
 __author__ = 'caro'
@@ -140,6 +141,18 @@ def simulate_gates(cell, simulation_params, plot=False):
             pl.ylabel('Gate', fontsize=16)
             pl.xlabel('Time (ms)', fontsize=16)
             pl.legend(fontsize=16)
+        pl.show()
+
+        pl.figure()
+        gates_keys = gates.keys()
+        for ion_channel in channel_list:
+            channel_gates = np.ones(len(t))
+            regexp = re.compile(ion_channel + '_.+')
+            for key in gates_keys:
+                if re.match(regexp, key):
+                    channel_gates *= gates[key]  # TODO: power is missing
+            pl.plot(t, channel_gates, label=ion_channel)
+        pl.legend()
         pl.show()
 
     return gates

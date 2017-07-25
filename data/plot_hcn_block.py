@@ -20,28 +20,30 @@ def get_indices(group, sweep_idx):
 
 if __name__ == '__main__':
 
+    save_dir = 'plots/hcn_block'
     cells = ['2015_08_20e.dat', '2015_08_21a.dat', '2015_08_21b.dat', '2015_08_21e.dat', '2015_08_21f.dat',
              '2015_08_26f.dat']  # there are probably more: see labbooks
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/rawData'
     v_rest = None
     correct_vrest = True
-    protocol_base = 'IV'
+    protocol_base = 'rampIV' #IV  #Zap20
     protocol = protocol_base
-    dt = 0.05
-    reg_exp_protocol = re.compile(protocol_base+'\([0-9]+\)')
+    reg_exp_protocol = re.compile(protocol_base+'(\([0-9]+\))?')
+    save_dir = os.path.join(save_dir, protocol)
 
     for cell in cells:
         hekareader = HekaReader(os.path.join(data_dir, cell))
         group = 'Group1'
         protocol_to_series = hekareader.get_protocol(group)
-        n_protocols = sum([1 if reg_exp_protocol.match(p) else 0 for p in protocol_to_series])
+        n_protocols = sum([1 if reg_exp_protocol.match(p) else 0 for p in protocol_to_series.keys()])
         vms = []
-        for i in [0, n_protocols-1]:
+        for i in range(n_protocols):
             if i == 0:
                 protocol = protocol_base
             else:
                 protocol = protocol_base+'('+str(i)+')'
-            sweep_idx = [0]
+            # TODO sweep_idx = [0]
+            sweep_idx = [-1]
             indices = get_indices(group, sweep_idx)
             if indices is None:
                 continue
@@ -50,13 +52,21 @@ if __name__ == '__main__':
             t, vm = hekareader.get_xy(index)
             t *= 1000  # ms
             vm *= 1000  # mV
-            assert dt == t[1] - t[0]  # ms
             if correct_vrest:
                 vm = correct_baseline(vm, v_rest)
             vms.append(vm)
 
-        pl.figure()
-        pl.title(cell)
-        pl.plot(t, vms[0], 'k', label='before ZD')
-        pl.plot(t, vms[1], 'b', label='ZD')
-        pl.show()
+        # plot
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        if len(vms) >= 2:
+            pl.figure()
+            pl.title(cell, fontsize=16)
+            pl.plot(t, vms[0], 'k', label='before ZD')
+            pl.plot(t, vms[-1], 'b', label='after ZD')
+            pl.xlabel('Time (ms)', fontsize=16)
+            pl.ylabel('Membrane potential (mV)', fontsize=16)
+            pl.legend(loc='lower right', fontsize=16)
+            pl.savefig(os.path.join(save_dir, cell[:-3]+'png'))
+            pl.show()

@@ -3,7 +3,7 @@ from heka_reader import HekaReader
 import os
 import matplotlib.pyplot as pl
 import numpy as np
-from cell_characteristics.analyze_APs import get_AP_onsets, get_AP_max
+from cell_characteristics.analyze_APs import get_AP_onsets, get_AP_max_idx
 from data import correct_baseline
 
 
@@ -13,7 +13,7 @@ def get_AP_peak(vm, window_before, window_after, threshold, AP_interval):
     if len(AP_onsets) == 1:
         onset = AP_onsets[0]
         if window_before < onset < len(vm) - window_after:
-            AP_peak = get_AP_max(vm, onset, len(vm), interval=AP_interval)
+            AP_peak = get_AP_max_idx(vm, onset, len(vm), interval=AP_interval)
     return AP_peak
 
 

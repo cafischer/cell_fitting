@@ -19,8 +19,6 @@ if __name__ == '__main__':
             else:
                 cells_by_protocol[protocol] = [file_name]
 
-    # search for protocol
-    for protocol in cells_by_protocol:
-        if 'zd' in protocol.lower():
-            # show cells for protocol
-            print cells_by_protocol[protocol]
+
+    # show cells for protocol
+    print cells_by_protocol['Zap']

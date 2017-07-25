@@ -1,18 +1,19 @@
 UNITS {
-        (mA) = (milliamp)
-        (mV) = (millivolt)
-	    (S) = (siemens)
+	(mA) = (milliamp)
+	(mV) = (millivolt)
+	(S) = (siemens)
 }
 
 NEURON {
-        SUFFIX kdr
-        USEION k READ ek WRITE ik
-        RANGE gbar, ik, n
-		RANGE n_vh, n_vs, n_tau_min, n_tau_max, n_tau_delta
-        }
+	SUFFIX kdr
+	USEION k READ ek WRITE ik
+	RANGE gbar, ik, n
+	RANGE n_vh, n_vs, n_tau_min, n_tau_max, n_tau_delta
+}
 
 PARAMETER {
     gbar = 0.12 (S/cm2)
+	n_pow = 4
 	n_vh = 0
     n_vs = 0
     n_tau_min = 0
@@ -34,7 +35,7 @@ ASSIGNED {
 
 BREAKPOINT {
     SOLVE states METHOD cnexp
-	ik = gbar*n*n*n*n*(v - ek)
+	ik = gbar * pow(n, n_pow) * (v - ek)
 }
 
 

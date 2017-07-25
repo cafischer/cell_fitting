@@ -10,7 +10,7 @@ import os
 load_mechanism_dir("/home/cf/Phd/programming/projects/bac_project/bac_project/connectivity/vecstim")
 
 save_dir = os.path.join('../results/server/2017-07-06_13:50:52/434/L-BFGS-B', 'img', 'ISI_hist')
-model_dir = '../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'
+model_dir = '../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/cell.json'
 mechanism_dir = '../model/channels/vavoulis'
 
 if not os.path.exists(save_dir):
