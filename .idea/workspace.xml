@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/new_optimization/scripts/server_script15.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/DAP_population/exp.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DAP_population/find_DAP_types.py" afterPath="$PROJECT_DIR$/DAP_population/find_DAP_types.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/channels/vavoulis/kdr.mod" afterPath="$PROJECT_DIR$/model/channels/vavoulis/kdr.mod" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script14.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/server_script14.py" />
     </list>
     <ignored path="cell_fitting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -605,13 +598,6 @@
       <option name="presentableId" value="Default" />
       <updated>1444289885125</updated>
     </task>
-    <task id="LOCAL-00027" summary="renaming">
-      <created>1472743940010</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1472743940010</updated>
-    </task>
     <task id="LOCAL-00028" summary="Abstract implementation of Problem and NormalizedProblem">
       <created>1472763733521</created>
       <option name="number" value="00028" />
@@ -948,7 +934,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500996794580</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="added wavelets to find_DAP_types.py">
+      <created>1501082280218</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1501082280218</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1050,7 +1043,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update handtuner" />
     <MESSAGE value="Updates" />
     <MESSAGE value="More evaluation scripts (fIcurve, hyperdap, phaseplot)" />
     <MESSAGE value="Update evaluation scripts (fIcurve, hyperdap, phaseplot)" />
@@ -1075,7 +1067,8 @@
     <MESSAGE value="new scripts for fitting different cells" />
     <MESSAGE value="improved plotting of characteristics" />
     <MESSAGE value="added some features to find_DAP_types.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="added some features to find_DAP_types.py" />
+    <MESSAGE value="added wavelets to find_DAP_types.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="added wavelets to find_DAP_types.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
