@@ -6,9 +6,9 @@ from new_optimization.evaluation.evaluate import get_best_candidate, plot_candid
 
 if __name__ == '__main__':
     #save_dir = '../scripts/test/'
-    save_dir = '../../results/server/2017-07-20_22:44:44'
+    save_dir = '../../results/server/2017-07-23_14:48:10'
     method = 'L-BFGS-B'
-    n_trials = 100
+    n_trials = 37
     n_best = 0
 
     best_candidates = pd.DataFrame()
