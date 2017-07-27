@@ -3,112 +3,95 @@ sys.path.append("../../")
 from optimization.helpers import get_lowerbound_upperbound_keys
 from time import time
 from new_optimization.scripts import optimize
-import sys
 from new_optimization import generate_initial_candidates
 import os
 
 
 # parameters
 save_dir = sys.argv[1]
-#save_dir = '../../results/test/'
 
 variables = [
-            [0.7, 1.5, [['soma', 'cm']]],
-            [-100, -50, [['soma', '0.5', 'pas', 'e']]],
+            [0.4, 2, [['soma', 'cm']]],
+            [-95, -70, [['soma', '0.5', 'pas', 'e']]],
+            [-30, -10, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
 
-            [0, 0.001, [['soma', '0.5', 'pas', 'g']]],
-            [0, 2, [['soma', '0.5', 'nap_act', 'gbar']]],
-            [0, 2, [['soma', '0.5', 'nat', 'gbar']]],
-            [0, 2, [['soma', '0.5', 'kdr', 'gbar']]],
-            [0, 2, [['soma', '0.5', 'ka', 'gbar']]],
-            [0, 0.1, [['soma', '0.5', 'hcn_fast', 'gbar']]],
+            [0, 0.5, [['soma', '0.5', 'pas', 'g']]],
+            [0, 0.5, [['soma', '0.5', 'kdr', 'gbar']]],
+            [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
+            [0, 0.5, [['soma', '0.5', 'hcn_slow', 'gbar']]],
 
-            [-40, 20, [['soma', '0.5', 'nap_act', 'm_vh']]],
-            [-100, 20, [['soma', '0.5', 'nat', 'm_vh']]],
-            [-100, -10, [['soma', '0.5', 'nat', 'h_vh']]],
-            [-100, -10, [['soma', '0.5', 'kdr', 'n_vh']]],
-            [-100, -10, [['soma', '0.5', 'ka', 'n_vh']]],
-            [-100, -10, [['soma', '0.5', 'ka', 'l_vh']]],
-            [-100, -10, [['soma', '0.5', 'hcn_fast', 'n_vh']]],
+            [0, 6, [['soma', '0.5', 'kdr', 'n_pow']]],
+            [0, 6, [['soma', '0.5', 'nap', 'm_pow']]],
+            [0, 6, [['soma', '0.5', 'nap', 'h_pow']]],
+            [0, 6, [['soma', '0.5', 'hcn_slow', 'n_pow']]],
 
-            [1, 30, [['soma', '0.5', 'nap_act', 'm_vs']]],
-            [1, 30, [['soma', '0.5', 'nat', 'm_vs']]],
-            [-30, -1, [['soma', '0.5', 'nat', 'h_vs']]],
+            [-100, 0, [['soma', '0.5', 'kdr', 'n_vh']]],
+            [-100, 0, [['soma', '0.5', 'nap', 'm_vh']]],
+            [-100, 0, [['soma', '0.5', 'nap', 'h_vh']]],
+            [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
+
             [1, 30, [['soma', '0.5', 'kdr', 'n_vs']]],
-            [1, 30, [['soma', '0.5', 'ka', 'n_vs']]],
-            [1, 30, [['soma', '0.5', 'ka', 'l_vs']]],
-            [-30, -1, [['soma', '0.5', 'hcn_fast', 'n_vs']]],
+            [1, 30, [['soma', '0.5', 'nap', 'm_vs']]],
+            [-30, -1, [['soma', '0.5', 'nap', 'h_vs']]],
+            [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
 
-            [0, 50, [['soma', '0.5', 'nat', 'm_tau_min']]],
-            [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
             [0, 50, [['soma', '0.5', 'kdr', 'n_tau_min']]],
-            [0, 50, [['soma', '0.5', 'ka', 'n_tau_min']]],
-            [0, 50, [['soma', '0.5', 'ka', 'l_tau_min']]],
-            [0, 50, [['soma', '0.5', 'hcn_fast', 'n_tau_min']]],
+            [0, 50, [['soma', '0.5', 'nap', 'm_tau_min']]],
+            [0, 50, [['soma', '0.5', 'nap', 'h_tau_min']]],
+            [0, 50, [['soma', '0.5', 'hcn_slow', 'n_tau_min']]],
 
-            [0.001, 50, [['soma', '0.5', 'nat', 'm_tau_max']]],
-            [0.001, 50, [['soma', '0.5', 'nat', 'h_tau_max']]],
-            [0.001, 50, [['soma', '0.5', 'kdr', 'n_tau_max']]],
-            [0.001, 50, [['soma', '0.5', 'ka', 'n_tau_max']]],
-            [0.001, 50, [['soma', '0.5', 'ka', 'l_tau_max']]],
-            [10, 500, [['soma', '0.5', 'hcn_fast', 'n_tau_max']]],
+            [0, 100, [['soma', '0.5', 'kdr', 'n_tau_max']]],
+            [0, 100, [['soma', '0.5', 'nap', 'm_tau_max']]],
+            [0, 100, [['soma', '0.5', 'nap', 'h_tau_max']]],
+            [0, 500, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
 
-            [0, 5, [['soma', '0.5', 'nat', 'm_tau_delta']]],
-            [0, 5, [['soma', '0.5', 'nat', 'h_tau_delta']]],
-            [0, 5, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
-            [0, 5, [['soma', '0.5', 'ka', 'n_tau_delta']]],
-            [0, 5, [['soma', '0.5', 'ka', 'l_tau_delta']]],
-            [0, 5, [['soma', '0.5', 'hcn_fast', 'n_tau_delta']]]
+            [0, 10, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
+            [0, 10, [['soma', '0.5', 'nap', 'm_tau_delta']]],
+            [0, 10, [['soma', '0.5', 'nap', 'h_tau_delta']]],
+            [0, 10, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]],
             ]
 
 variables_init = [
-            [1.0, 1.3, [['soma', 'cm']]],
-            [-85, -75, [['soma', '0.5', 'pas', 'e']]],
+            [0.5, 0.8, [['soma', 'cm']]],
+            [-89, -84, [['soma', '0.5', 'pas', 'e']]],
+            [-30, -24, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
 
-            [0.00001, 0.0002, [['soma', '0.5', 'pas', 'g']]],
-            [0.004, 0.055, [['soma', '0.5', 'nap_act', 'gbar']]],
-            [0, 1e-5, [['soma', '0.5', 'nat', 'gbar']]],
-            [1.9, 2, [['soma', '0.5', 'kdr', 'gbar']]],
-            [0, 0, [['soma', '0.5', 'ka', 'gbar']]],
-            [0.9, 1.1, [['soma', '0.5', 'hcn_fast', 'gbar']]],
+            [0.0005, 0.0015, [['soma', '0.5', 'pas', 'g']]],
+            [0.001, 0.015, [['soma', '0.5', 'kdr', 'gbar']]],
+            [0.07, 0.25, [['soma', '0.5', 'nap', 'gbar']]],
+            [0.00004, 0.0003, [['soma', '0.5', 'hcn_slow', 'gbar']]],
 
-            [-75, -65, [['soma', '0.5', 'nap_act', 'm_vh']]],
-            [-35, -30, [['soma', '0.5', 'nat', 'm_vh']]],
-            [-100, -10, [['soma', '0.5', 'nat', 'h_vh']]],
-            [-50, -45, [['soma', '0.5', 'kdr', 'n_vh']]],
-            [-100, -10, [['soma', '0.5', 'ka', 'n_vh']]],
-            [-100, -10, [['soma', '0.5', 'ka', 'l_vh']]],
-            [-85, -82, [['soma', '0.5', 'hcn_fast', 'n_vh']]],
+            [3.9, 4.1, [['soma', '0.5', 'kdr', 'n_pow']]],
+            [2.9, 3.1, [['soma', '0.5', 'nap', 'm_pow']]],
+            [0.9, 1.1, [['soma', '0.5', 'nap', 'h_pow']]],
+            [0.9, 1.1, [['soma', '0.5', 'hcn_slow', 'n_pow']]],
 
-            [2, 3, [['soma', '0.5', 'nap_act', 'm_vs']]],
-            [4, 5, [['soma', '0.5', 'nat', 'm_vs']]],
-            [-30, -1, [['soma', '0.5', 'nat', 'h_vs']]],
-            [22, 24, [['soma', '0.5', 'kdr', 'n_vs']]],
-            [1, 30, [['soma', '0.5', 'ka', 'n_vs']]],
-            [1, 30, [['soma', '0.5', 'ka', 'l_vs']]],
-            [-2, -1, [['soma', '0.5', 'hcn_fast', 'n_vs']]],
+            [-70, -65, [['soma', '0.5', 'kdr', 'n_vh']]],
+            [-35, -30, [['soma', '0.5', 'nap', 'm_vh']]],
+            [-75, -58, [['soma', '0.5', 'nap', 'h_vh']]],
+            [-87, -77, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
 
-            [2, 3, [['soma', '0.5', 'nat', 'm_tau_min']]],
-            [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
-            [0, 1, [['soma', '0.5', 'kdr', 'n_tau_min']]],
-            [0, 50, [['soma', '0.5', 'ka', 'n_tau_min']]],
-            [0, 50, [['soma', '0.5', 'ka', 'l_tau_min']]],
-            [6, 7, [['soma', '0.5', 'hcn_fast', 'n_tau_min']]],
+            [17, 21, [['soma', '0.5', 'kdr', 'n_vs']]],
+            [11, 19, [['soma', '0.5', 'nap', 'm_vs']]],
+            [-16, -12, [['soma', '0.5', 'nap', 'h_vs']]],
+            [-21, -17, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
 
-            [36, 38, [['soma', '0.5', 'nat', 'm_tau_max']]],
-            [0.001, 50, [['soma', '0.5', 'nat', 'h_tau_max']]],
-            [11, 13, [['soma', '0.5', 'kdr', 'n_tau_max']]],
-            [0.001, 50, [['soma', '0.5', 'ka', 'n_tau_max']]],
-            [0.001, 50, [['soma', '0.5', 'ka', 'l_tau_max']]],
-            [57, 59, [['soma', '0.5', 'hcn_fast', 'n_tau_max']]],
+            [0.2, 0.7, [['soma', '0.5', 'kdr', 'n_tau_min']]],
+            [0, 0.001, [['soma', '0.5', 'nap', 'm_tau_min']]],
+            [0, 0.2, [['soma', '0.5', 'nap', 'h_tau_min']]],
+            [2, 7, [['soma', '0.5', 'hcn_slow', 'n_tau_min']]],
 
-            [1.6, 1.8, [['soma', '0.5', 'nat', 'm_tau_delta']]],
-            [0, 5, [['soma', '0.5', 'nat', 'h_tau_delta']]],
-            [0.1, 0.3, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
-            [0, 5, [['soma', '0.5', 'ka', 'n_tau_delta']]],
-            [0, 5, [['soma', '0.5', 'ka', 'l_tau_delta']]],
-            [0, 0.1, [['soma', '0.5', 'hcn_fast', 'n_tau_delta']]]
+            [19, 23, [['soma', '0.5', 'kdr', 'n_tau_max']]],
+            [0.1, 0.5, [['soma', '0.5', 'nap', 'm_tau_max']]],
+            [6, 11, [['soma', '0.5', 'nap', 'h_tau_max']]],
+            [125, 141, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
+
+            [0.5, 0.95, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
+            [0, 0.4, [['soma', '0.5', 'nap', 'm_tau_delta']]],
+            [0.1, 0.5, [['soma', '0.5', 'nap', 'h_tau_delta']]],
+            [0, 0.4, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]],
             ]
+
 
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
@@ -116,15 +99,23 @@ lower_bounds_init, upper_bounds_init, variable_keys_init = get_lowerbound_upperb
 bounds_init = {'lower_bounds': list(lower_bounds_init), 'upper_bounds': list(upper_bounds_init)}
 
 fitter_params = {
-                    'name': 'HodgkinHuxleyFitterSeveralData',
+                    'name': 'HodgkinHuxleyFitterSeveralDataSeveralFitfuns',
+                    #'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
-                    'fitfun_names': ['get_v'],
-                    'fitnessweights': [1],
+                    'fitfun_names': [['get_v', 'get_DAP'], ['get_v'], ['get_v'], ['get_n_spikes']],
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
-                    'data_dirs': ['../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(3)/0(nA).csv',
-                                  '../../data/2015_08_06d/correct_vrest_-16mV/shortened/PP(0)(21)/0(nA).csv'],
+                    # 'fitnessweights': [1, 1000],
+                    # 'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
+                    # 'simulation_params': {'celsius': 35, 'onset': 200},
+                    'fitnessweights': [[100, 10], [1], [1], [11]],
+                    'data_dirs': [
+                                  '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
+                                  '../../data/2015_08_26b/vrest-75/IV/-0.1(nA).csv',
+                                  '../../data/2015_08_26b/vrest-75/IV/0.2(nA).csv',
+                                  '../../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
+                                  ],
                     'simulation_params': {'celsius': 35, 'onset': 200},
                     'args': {}
                 }

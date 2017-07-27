@@ -105,12 +105,12 @@ def hyperpolarize_ramp(cell):
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/server/2017-07-17_17:05:19/54/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    save_dir = '../../results/server/2017-07-24_13:59:54/21/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'cell.json')
     #save_dir = '../../results/hand_tuning/cell434_1/'
     #model_dir = '../../results/hand_tuning/cell434_1/cell.json'
-    save_dir = '../../results/hand_tuning/test0/'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    #save_dir = '../../results/hand_tuning/test0/'
+    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model

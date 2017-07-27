@@ -50,17 +50,17 @@ def apply_zap_stimulus(cell, amp, freq0=1, freq1=20, onset_dur=2000, offset_dur=
     ax2.set_xticklabels(map(freqs_out, ax1.get_xticks()))
     ax2.set_xlabel('Frequency $(Hz)$', fontsize=16)
     ax1.set_xlabel('Time $(ms)$', fontsize=16)
-    ax1.ylabel('Membrane potential $(mV)$', fontsize=16)
+    ax1.set_ylabel('Membrane potential $(mV)$', fontsize=16)
     pl.savefig(os.path.join(save_dir_img, 'zap.png'))
     pl.show()
 
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
-    model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/cell434_5/'
-    #model_dir = os.path.join(save_dir, 'cell.json')
+    #save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
+    model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model

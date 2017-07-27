@@ -111,10 +111,10 @@ def simulate_currents(cell, simulation_params, plot=False):
 
 def simulate_gates(cell, simulation_params, plot=False):
     channel_list = get_channel_list(cell, 'soma')
-    ion_list = get_ionlist(channel_list)
 
     # record gates
     gates = {}
+    power_gates = {}
     for ion_channel in channel_list:
         gate_names = []
         for gate_name in ['m', 'n', 'h', 'l']:
@@ -122,6 +122,7 @@ def simulate_gates(cell, simulation_params, plot=False):
                 gate_names.append(gate_name)
         for gate_name in gate_names:
             gates[ion_channel+'_'+gate_name] = cell.soma.record_from(ion_channel, gate_name)
+            power_gates[ion_channel+'_'+gate_name] = cell.get_attr(['soma', '0.5', ion_channel, gate_name+'_pow'])
 
     # apply vclamp
     v_model, t, i_inj = iclamp_handling_onset(cell, **simulation_params)
@@ -137,7 +138,7 @@ def simulate_gates(cell, simulation_params, plot=False):
     if plot:
         pl.figure()
         for k in gates.keys():
-            pl.plot(t, gates[k], label=k)
+            pl.plot(t, gates[k] ** power_gates[k], label=k)
             pl.ylabel('Gate', fontsize=16)
             pl.xlabel('Time (ms)', fontsize=16)
             pl.legend(fontsize=16)
@@ -150,12 +151,12 @@ def simulate_gates(cell, simulation_params, plot=False):
             regexp = re.compile(ion_channel + '_.+')
             for key in gates_keys:
                 if re.match(regexp, key):
-                    channel_gates *= gates[key]  # TODO: power is missing
+                    channel_gates *= gates[key] ** power_gates[key]
             pl.plot(t, channel_gates, label=ion_channel)
         pl.legend()
         pl.show()
 
-    return gates
+    return gates, power_gates
 
 
 def iclamp_handling_onset(cell, **simulation_params):

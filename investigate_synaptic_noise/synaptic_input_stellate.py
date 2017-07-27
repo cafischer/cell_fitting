@@ -19,7 +19,7 @@ if not os.path.exists(save_dir):
 # synaptic input
 pos = 0.5
 onset = 200
-tstop = 59800  # 60 sec
+tstop = 5800  # 60 sec
 dt = 0.01
 freq = {'AMPA': 1000, 'NMDA': 100, 'GABA': 8000}
 seeds_stim = {'AMPA': 1, 'NMDA': 1, 'GABA': 1}
@@ -104,7 +104,7 @@ bins = np.arange(0, 1000+10, 10)
 ISIs = np.diff(AP_onsets * dt)
 pl.figure()
 pl.hist(ISIs, bins=bins)
-pl.savefig(os.path.join(save_dir, 'ISI_hist.png'))
+#pl.savefig(os.path.join(save_dir, 'ISI_hist.png'))
 pl.show()
 
 # percent doublet (ISI < 50 ms) and theta (170 ms <= ISI < 330 ms)

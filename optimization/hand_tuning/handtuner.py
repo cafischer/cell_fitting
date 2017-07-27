@@ -21,22 +21,16 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     # fitter parameter
-    # variables = [
-    #         [-100, -60, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
-    #         [50, 200, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
-    #         [0, 0.01, [['soma', '0.5', 'pas', 'g']]],
-    #         ]
-
     variables = [
          [0.3, 2, [['soma', 'cm']]],
          [-95, -70, [['soma', '0.5', 'pas', 'e']]],
         # [-30, -10, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
         #
-        # [-0.1, 0.5, [['soma', '0.5', 'pas', 'g']]],
-        # [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
-        # [-0.01, 0.1, [['soma', '0.5', 'kdr', 'gbar']]],
-        [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
-        # [0, 0.5, [['soma', '0.5', 'hcn_slow', 'gbar']]],
+         [-0.1, 0.5, [['soma', '0.5', 'pas', 'g']]],
+         [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
+         [-0.01, 0.1, [['soma', '0.5', 'kdr', 'gbar']]],
+         [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
+         [0, 0.5, [['soma', '0.5', 'hcn_slow', 'gbar']]],
         #
          [-100, 0, [['soma', '0.5', 'nat', 'm_vh']]],
          [-100, 0, [['soma', '0.5', 'nat', 'h_vh']]],
@@ -49,8 +43,8 @@ if __name__ == '__main__':
          [-30, -1, [['soma', '0.5', 'nat', 'h_vs']]],
          [1, 30, [['soma', '0.5', 'kdr', 'n_vs']]],
          [1, 30, [['soma', '0.5', 'nap', 'm_vs']]],
-         [-30, -1, [['soma', '0.5', 'nap', 'h_vs']]],
-         [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
+        # [-30, -1, [['soma', '0.5', 'nap', 'h_vs']]],
+        # [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
         #
         #  [0, 50, [['soma', '0.5', 'nat', 'm_tau_min']]],
         #  [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
@@ -75,9 +69,9 @@ if __name__ == '__main__':
     ]
 
     lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
-    model_dir = '/home/cf/Phd/programming/projects/cell_fitting/results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/cell.json'
-    #model_dir = '/home/cf/Phd/programming/projects/cell_fitting/results/server/2017-07-19_10:41:59/171/L-BFGS-B/model/cell.json'
-    #model_dir = '../../results/hand_tuning/test0/cell.json'
+    #model_dir = '/home/cf/Phd/programming/projects/cell_fitting/results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/cell.json'
+    #model_dir = '../../results/server/2017-07-24_13:59:54/21/L-BFGS-B/model/cell.json'
+    model_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0/cell.json'
     mechanism_dir = '../../model/channels/vavoulis'
     init_var = get_init_var_from_model(model_dir, mechanism_dir, variables, variable_keys)
 
@@ -98,6 +92,6 @@ if __name__ == '__main__':
 
     # create widget
     precision_slds = [1e-5, 1e-6] + [1e-5] * (len(variables) - 2)
-    save_dir = '../../results/hand_tuning/cell171_1/'
+    save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_1'
     ex = HandTuner(save_dir, fitter_params, precision_slds, lower_bounds, upper_bounds, init_var)
     sys.exit(app.exec_())
