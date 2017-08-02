@@ -8,7 +8,9 @@ def cluster(X, method, args):
         n_clusters = args.get('n_cluster')
         labels = k_means_clustering(X, n_clusters)
     elif method == 'dbscan':
-        db = DBSCAN(eps=80.0, min_samples=5).fit(X)
+        eps = args.get('eps')
+        min_samples = args.get('min_samples')
+        db = DBSCAN(eps=eps, min_samples=min_samples).fit(X)
         labels = db.labels_
     elif method == 'agglomerative':
         n_clusters = args.get('n_cluster')

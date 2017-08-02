@@ -6,7 +6,7 @@ from optimization.simulate import iclamp_handling_onset
 from nrn_wrapper import Cell
 
 
-def get_sine_stimulus(amp1, amp2, sine1_dur, freq2, dt):
+def get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt):
     """
     im Laborbuch: amp1, amp2, freq2, stim_dur
     :param amp1: amplitude of underlying sine in nA
@@ -16,8 +16,6 @@ def get_sine_stimulus(amp1, amp2, sine1_dur, freq2, dt):
     :return: sine stimulus
     """
     freq2 = freq2 / 1000  # per ms
-    onset_dur = 500
-    offset_dur = 500
     freq1 = 1 / (sine1_dur) / 2  # per ms
     onset = np.zeros(int(round(onset_dur/dt)))
     offset = np.zeros(int(round(offset_dur/dt)))
@@ -29,9 +27,9 @@ def get_sine_stimulus(amp1, amp2, sine1_dur, freq2, dt):
     return sine_stim
 
 
-def apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, dt):
+def apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt):
 
-    i_exp = get_sine_stimulus(amp1, amp2, sine1_dur, freq2, dt)
+    i_exp = get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
 
     # get simulation parameters
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': sine1_dur+1000,
@@ -67,9 +65,11 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # apply stim
-    amp1 = 0.6
-    amp2 = 0.2
-    sine1_dur = 5000
-    freq2 = 5
+    amp1 = 0.3
+    amp2 = 0.05
+    sine1_dur = 1000
+    freq2 = 6
+    onset_dur = 500
+    offset_dur = 500
     dt = 0.01
-    apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, dt)
+    apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)

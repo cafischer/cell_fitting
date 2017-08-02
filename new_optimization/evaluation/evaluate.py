@@ -222,7 +222,7 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server/2017-07-24_13:59:54/21/'
+    save_dir = '../../results/server/2017-07-31_12:42:45/41/'
     #save_dir = '../../results/server/2017-07-06_13:50:52/434/'
 
     method = 'L-BFGS-B'

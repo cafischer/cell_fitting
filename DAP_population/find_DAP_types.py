@@ -22,7 +22,6 @@ def load(save_dir):
 
 
 # def check_measures():
-#     global i, AP_window, exp_fit
 #     for i, AP_window in enumerate(AP_matrix):
 #         print cells_with_AP[i]
 #         print 'AP_amp (mV): ', AP_amp[i]
@@ -225,10 +224,15 @@ if __name__ == '__main__':
     AP_matrix = AP_matrix[not_nan, :]
 
     # clustering
-    method = 'agglomerative'
-    args = {'n_cluster': 5, 'linkage': 'complete'}
+    #method = 'agglomerative'
+    #args = {'n_cluster': 10, 'linkage': 'complete'}
+    method = 'dbscan'
+    args = {'eps': 160, 'min_samples': 3}   # nice cluster: {'eps': 100, 'min_samples': 5}  # standard DAP: {'eps': 100, 'min_samples': 10}
     labels = cluster(AP_matrix_clustering, method, args)
     n_cluster = len(np.unique(labels))
+    print ('Number of cluster: ', n_cluster)
+    print('Number of unassgined APs: ', np.sum(labels==-1))
+    print('Number of assigned APs', np.shape(AP_matrix_clustering)[0] - np.sum(labels==-1))
 
     # plot clustering
     # n_components = np.shape(AP_matrix_clustering)[1]
@@ -246,11 +250,18 @@ if __name__ == '__main__':
 
     pl.figure()
     pl.title('Mean AP per cluster')
-    for c in range(n_cluster):
+    for c in np.unique(labels):
         pl.plot(t_window, np.mean(AP_matrix[labels == c, :], 0), color=str(c/n_cluster), linewidth=2)
     pl.xlabel('Time (ms)')
     #pl.savefig(os.path.join(folder, 'spike_sorting', 'mean_AP_per_cluster.png'))
     pl.show()
+
+    for c in np.unique(labels):
+        pl.figure()
+        for i, AP_window in enumerate(AP_matrix[labels == c]):
+            pl.plot(t_window, AP_window)
+            pl.ylim(-80, 65)
+        pl.show()
 
     fig, ax = pl.subplots(1, n_cluster)
     for i, AP_window in enumerate(AP_matrix):

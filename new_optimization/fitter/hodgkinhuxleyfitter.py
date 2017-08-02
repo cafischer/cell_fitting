@@ -43,15 +43,13 @@ class HodgkinHuxleyFitter(Fitter):
         v_candidate, t_candidate, _ = self.simulate_cell(candidate)
         vars_to_fit = [fitfun(v_candidate, t_candidate, self.simulation_params['i_inj'], self.args)
                        for fitfun in self.fitfuns]
-        num_nones = 0
         fitness = 0
         for i in range(len(vars_to_fit)):
             if vars_to_fit[i] is None:
-                num_nones += 1
+                fitness = 10000
+                break
             else:
                 fitness += self.fitnessweights[i] * self.errfun(vars_to_fit[i], self.data_to_fit[i])
-        if num_nones == len(vars_to_fit):
-            return 1000  #float("inf")
         return fitness
 
     def get_cell(self):
@@ -116,23 +114,19 @@ class HodgkinHuxleyFitterSeveralData(HodgkinHuxleyFitter):
                                     for fitfun in self.fitfuns])
 
     def evaluate_fitness(self, candidate, args):
-        fitness_total = 0
+        fitness = 0
         for s, simulation_params in enumerate(self.simulation_params):
             v_candidate, t_candidate, _ = self.simulate_cell(candidate, simulation_params)
             vars_to_fit = [fitfun(v_candidate, t_candidate, simulation_params['i_inj'], self.args)
                            for fitfun in self.fitfuns]
-            num_nones = 0
-            fitness = 0
             for i in range(len(vars_to_fit)):
                 if vars_to_fit[i] is None:
-                    num_nones += 1
+                    fitness = 10000
+                    break
                 else:
                     fitness += self.fitnessweights[i] * self.errfun(vars_to_fit[i], self.datas_to_fit[s][i])
-
-            if num_nones == len(vars_to_fit):
-                fitness = 1000  # float("inf")
-            fitness_total += fitness
-        return fitness_total
+            fitness += fitness
+        return fitness
 
     def simulate_cell(self, candidate, simulation_params):
         self.update_cell(candidate)
@@ -179,23 +173,20 @@ class HodgkinHuxleyFitterSeveralDataSeveralFitfuns(HodgkinHuxleyFitterSeveralDat
                                       for fitfun in self.fitfuns[i]])
 
     def evaluate_fitness(self, candidate, args):
-        fitness_total = 0
+        fitness = 0
+
         for s, simulation_params in enumerate(self.simulation_params):
             v_candidate, t_candidate, _ = self.simulate_cell(candidate, simulation_params)
             vars_to_fit = [fitfun(v_candidate, t_candidate, simulation_params['i_inj'], self.args)
                            for fitfun in self.fitfuns[s]]
-            num_nones = 0
-            fitness = 0
+
             for i in range(len(vars_to_fit)):
                 if vars_to_fit[i] is None:
-                    num_nones += 1
+                    fitness = 100000
+                    break
                 else:
                     fitness += self.fitnessweights[s][i] * self.errfun(vars_to_fit[i], self.datas_to_fit[s][i])
-
-            if num_nones == len(vars_to_fit):
-                fitness = 10000  # float("inf")
-            fitness_total += fitness
-        return fitness_total
+        return fitness
 
 
 class HodgkinHuxleyFitterSeveralDataAdaptive(HodgkinHuxleyFitterSeveralData):
@@ -273,15 +264,13 @@ class HodgkinHuxleyFitterCurrentPenalty(HodgkinHuxleyFitter):
         v_candidate, t_candidate, currents = self.simulate_cell_with_currents(candidate)
         vars_to_fit = [fitfun(v_candidate, t_candidate, self.simulation_params['i_inj'], self.args)
                        for fitfun in self.fitfuns]
-        num_nones = 0
         fitness = 0
         for i in range(len(vars_to_fit)):
             if vars_to_fit[i] is None:
-                num_nones += 1
+                fitness = 10000
+                break
             else:
                 fitness += self.fitnessweights[i] * self.errfun(vars_to_fit[i], self.data_to_fit[i])
-        if num_nones == len(vars_to_fit):
-            return 1000  #float("inf")
         current_penalty = np.sum(np.sum(np.abs(currents))) / np.size(currents)
         fitness += current_penalty
         return fitness
