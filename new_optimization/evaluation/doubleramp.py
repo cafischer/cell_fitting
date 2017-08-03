@@ -91,16 +91,16 @@ def double_ramp(cell, ramp3_amp, step_amp):
 if __name__ == '__main__':
 
     # parameters
-    #save_dir = save_dir = '../../results/server/2017-07-24_13:59:54/16/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
+    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
-    step_amp = 0
+    step_amp = 0.1
     for seq in range(20):
         save_dir_img = os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp), 'PP'+str(seq)+'.png')
         if not os.path.exists(os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp))):

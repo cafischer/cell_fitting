@@ -1,7 +1,9 @@
+from __future__ import division
 import matplotlib.pyplot as pl
 import numpy as np
 import os
 import copy
+import json
 from scipy.signal import firwin, freqz, kaiserord
 
 
@@ -22,10 +24,12 @@ if __name__ == '__main__':
     save_dir_data = './results/test0/APs_removed'
 
     # parameters
-    dt_new_max = 0.1  # ms (=10 kHz)
+    dt_new_max = 0.2  # ms
     cutoff_freq = 5000  # Hz
-    width = 5.0  # Hz
+    transition_width = 5.0  # Hz
     ripple_attenuation = 60.0  # db
+    params = {'dt_new_max': dt_new_max, 'cutoff_freq': cutoff_freq, 'transition_width': transition_width,
+              'ripple_attenuation': ripple_attenuation}
 
     # load
     v = np.load(os.path.join(save_dir_data, 'v.npy'))
@@ -36,7 +40,7 @@ if __name__ == '__main__':
     dt_sec = dt / 1000
     sample_rate = 1.0 / dt_sec
     nyq_rate = sample_rate / 2.0
-    N, beta = kaiserord(ripple_attenuation, width / nyq_rate)
+    N, beta = kaiserord(ripple_attenuation, transition_width / nyq_rate)
     assert N < len(v)  # filter not bigger than data to filter
     filter_downsample = firwin(N+1, cutoff_freq / nyq_rate, window=('kaiser', beta), pass_zero=True)  # pass_zeros True
                                                                                                       # for low-pass
@@ -46,10 +50,10 @@ if __name__ == '__main__':
     t_antialiased = np.arange(0, len(v_antialiased) * dt, dt)
 
     downsample_rate = 2
-    n = np.floor(np.log(dt_new_max / dt) / np.log(downsample_rate))
+    n = int(np.floor(np.log(dt_new_max / dt) / np.log(downsample_rate)))
     v_downsampled = copy.copy(v_antialiased)
     t_downsampled = copy.copy(t_antialiased)
-    for i in range(3):
+    for i in range(n):
         v_downsampled = v_downsampled[::downsample_rate]
         t_downsampled = t_downsampled[::downsample_rate]
 
@@ -59,6 +63,9 @@ if __name__ == '__main__':
 
     np.save(os.path.join(save_dir, 'v.npy'), v_downsampled)
     np.save(os.path.join(save_dir, 't.npy'), t_downsampled)
+
+    with open(os.path.join(save_dir, 'params'), 'w') as f:
+        json.dump(params, f)
 
     pl.figure()
     pl.plot(t, v, 'b', label='$V_{APs\ removed}$')

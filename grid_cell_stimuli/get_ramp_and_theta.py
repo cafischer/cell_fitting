@@ -1,6 +1,8 @@
+from __future__ import division
 import matplotlib.pyplot as pl
 import numpy as np
 import os
+import json
 from scipy.signal import firwin, freqz, kaiserord
 
 
@@ -25,8 +27,11 @@ if __name__ == '__main__':
     cutoff_ramp = 3  # Hz
     cutoff_theta_low = 5  # Hz
     cutoff_theta_high = 11  # Hz
-    width = 1  # Hz
+    transition_width = 1  # Hz
     ripple_attenuation = 60.0  # db
+    params = {'cutoff_ramp': cutoff_ramp, 'cutoff_theta_low': cutoff_theta_low,
+              'cut_off_theta_high': cutoff_theta_high, 'transition_width': transition_width,
+              'ripple_attenuation': ripple_attenuation}
 
     # load
     v = np.load(os.path.join(save_dir_data, 'v.npy'))
@@ -37,7 +42,7 @@ if __name__ == '__main__':
     dt_sec = dt / 1000
     sample_rate = 1.0 / dt_sec
     nyq_rate = sample_rate / 2.0
-    N, beta = kaiserord(ripple_attenuation, width / nyq_rate)
+    N, beta = kaiserord(ripple_attenuation, transition_width / nyq_rate)
     assert N < len(v)  # filter not bigger than data to filter
     filter_ramp = firwin(N+1, cutoff_ramp / nyq_rate, window=('kaiser', beta), pass_zero=True)
     filter_theta = firwin(N+1, [cutoff_theta_low / nyq_rate, cutoff_theta_high / nyq_rate], window=('kaiser', beta),
@@ -56,6 +61,9 @@ if __name__ == '__main__':
     np.save(os.path.join(save_dir, 'theta.npy'), theta)
     np.save(os.path.join(save_dir, 't.npy'), t_filtered)
 
+    with open(os.path.join(save_dir, 'params'), 'w') as f:
+        json.dump(params, f)
+
     pl.figure()
     w, h = freqz(filter_ramp, worN=int(round(nyq_rate / 0.01)))
     pl.plot((w / np.pi) * nyq_rate, np.absolute(h), label='Ramp')
@@ -66,6 +74,7 @@ if __name__ == '__main__':
     pl.ylim(-0.05, 1.05)
     pl.xlim(0, 20)
     pl.legend(fontsize=16)
+    pl.savefig(os.path.join(save_dir, 'gain_filter.png'))
     pl.show()
 
     pl.figure()
@@ -78,12 +87,13 @@ if __name__ == '__main__':
     pl.xlabel('Frequency', fontsize=16)
     pl.ylabel('Power', fontsize=16)
     pl.xlim(0, 50)
-    pl.ylim(0, 1e9)
+    pl.ylim(0, 1e10)
     pl.legend(fontsize=16)
+    pl.savefig(os.path.join(save_dir, 'power_spectrum.png'))
     pl.show()
 
     pl.figure()
-    pl.plot(t, v, 'k')
+    pl.plot(t, v, 'k', label='Membrane potential')
     pl.plot(t_filtered + t[idx_cut], ramp, 'g', linewidth=2, label='Ramp')
     pl.plot(t_filtered + t[idx_cut], theta - 75, 'b', linewidth=2, label='Theta')
     pl.xlabel('t')
@@ -91,4 +101,5 @@ if __name__ == '__main__':
     pl.ylabel('Voltage (mV)', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(fontsize=16)
+    pl.savefig(os.path.join(save_dir, 'ramp_and_theta.png'))
     pl.show()

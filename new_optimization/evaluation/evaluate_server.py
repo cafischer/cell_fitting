@@ -8,7 +8,7 @@ if __name__ == '__main__':
     #save_dir = '../scripts/test/'
     save_dir = '../../results/server/2017-07-31_12:42:45'
     method = 'L-BFGS-B'
-    n_trials = 388
+    n_trials = 500
     n_best = 0
 
     best_candidates = pd.DataFrame()
