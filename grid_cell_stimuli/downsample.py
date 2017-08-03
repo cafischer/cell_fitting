@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     v_antialiased = np.convolve(v, filter_downsample, mode='valid')
     idx_cut = int(np.ceil((len(t) - len(v_antialiased)) / 2.0))
-    t_antialiased = np.round(t[idx_cut: -idx_cut] - t[idx_cut], 5)
+    t_antialiased = np.arange(0, len(v_antialiased) * dt, dt)
 
     downsample_rate = 2
     n = np.floor(np.log(dt_new_max / dt) / np.log(downsample_rate))

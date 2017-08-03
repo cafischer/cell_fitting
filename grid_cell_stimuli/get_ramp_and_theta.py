@@ -24,7 +24,7 @@ if __name__ == '__main__':
     # parameters
     cutoff_ramp = 3  # Hz
     cutoff_theta_low = 5  # Hz
-    cutoff_theta_high = 12  # Hz
+    cutoff_theta_high = 11  # Hz
     width = 1  # Hz
     ripple_attenuation = 60.0  # db
 
@@ -46,13 +46,15 @@ if __name__ == '__main__':
     ramp = np.convolve(v, filter_ramp, mode='valid')
     theta = np.convolve(v, filter_theta, mode='valid')
     idx_cut = int(np.ceil((len(t) - len(ramp)) / 2.0))
-    t_filter = t[idx_cut: -idx_cut]
-    if len(t_filter) < len(ramp):
-        t_filter = np.concatenate((t_filter, np.array([t[-idx_cut]])))
+    t_filtered = np.arange(0, len(ramp) * dt, dt)
 
     # save and plot
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
+
+    np.save(os.path.join(save_dir, 'ramp.npy'), ramp)
+    np.save(os.path.join(save_dir, 'theta.npy'), theta)
+    np.save(os.path.join(save_dir, 't.npy'), t_filtered)
 
     pl.figure()
     w, h = freqz(filter_ramp, worN=int(round(nyq_rate / 0.01)))
@@ -82,11 +84,11 @@ if __name__ == '__main__':
 
     pl.figure()
     pl.plot(t, v, 'k')
-    pl.plot(t_filter, ramp, 'g', linewidth=2, label='Ramp')
-    pl.plot(t_filter, theta - 75, 'b', linewidth=2, label='Theta')
+    pl.plot(t_filtered + t[idx_cut], ramp, 'g', linewidth=2, label='Ramp')
+    pl.plot(t_filtered + t[idx_cut], theta - 75, 'b', linewidth=2, label='Theta')
     pl.xlabel('t')
-    pl.xlim(t_filter[0], t_filter[-1])
-    pl.ylabel('Membrane potential (mV)', fontsize=16)
+    pl.xlim(t_filtered[0] + t[idx_cut], t_filtered[-1] + t[idx_cut])
+    pl.ylabel('Voltage (mV)', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(fontsize=16)
     pl.show()
