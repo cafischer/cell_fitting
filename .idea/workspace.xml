@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="added saving of params, runs and evaluation of those">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grid_cell_stimuli/doublets.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/grid_cell_stimuli/in_out_field_diff.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grid_cell_stimuli/downsample.py" afterPath="$PROJECT_DIR$/grid_cell_stimuli/downsample.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grid_cell_stimuli/find_in_out_fields.py" afterPath="$PROJECT_DIR$/grid_cell_stimuli/find_in_out_fields.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grid_cell_stimuli/get_ramp_and_theta.py" afterPath="$PROJECT_DIR$/grid_cell_stimuli/get_ramp_and_theta.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grid_cell_stimuli/remove_APs.py" afterPath="$PROJECT_DIR$/grid_cell_stimuli/remove_APs.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grid_cell_stimuli/sine_with_noise.py" afterPath="$PROJECT_DIR$/grid_cell_stimuli/sine_with_noise.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grid_cell_stimuli/theta_envelope.py" afterPath="$PROJECT_DIR$/grid_cell_stimuli/theta_envelope.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script3.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/server_script3.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script4.py" afterPath="$PROJECT_DIR$/new_optimization/scripts/server_script4.py" />
     </list>
     <ignored path="cell_fitting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,20 +60,42 @@
       <file leaf-file-name="sine_with_noise.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/sine_with_noise.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+            <state relative-caret-position="102">
+              <caret line="56" column="38" lean-forward="false" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="find_in_out_fields.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/find_in_out_fields.py">
+      <file leaf-file-name="get_ramp_and_theta.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/get_ramp_and_theta.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="40" column="6" lean-forward="false" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+            <state relative-caret-position="138">
+              <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="57" selection-end-column="29" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="theta_envelope.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/theta_envelope.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="11" column="53" lean-forward="true" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="doublets.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/doublets.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,10 +112,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ka2</find>
-      <find>save_dir_img</find>
-      <find>mechanism_dir</find>
-      <find>best_cell</find>
       <find>onsets</find>
       <find>self.fitfuns</find>
       <find>sine1_dur</find>
@@ -124,6 +138,10 @@
       <find>seeds</find>
       <find>AMPA</find>
       <find>TODO</find>
+      <find>random</find>
+      <find>dur_run</find>
+      <find>t_run</find>
+      <find>field_intervals</find>
     </findStrings>
     <replaceStrings>
       <replace>DAP_max</replace>
@@ -148,10 +166,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py" />
-        <option value="$PROJECT_DIR$/DAP_population/get_AP_windows.py" />
-        <option value="$PROJECT_DIR$/data/plot_sine_stimulus.py" />
-        <option value="$PROJECT_DIR$/data/save_PP.py" />
         <option value="$PROJECT_DIR$/data/plot_PP.py" />
         <option value="$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py" />
         <option value="$PROJECT_DIR$/new_optimization/evaluation/plot_gates.py" />
@@ -180,7 +194,6 @@
         <option value="$PROJECT_DIR$/model/channels/markov/kdr.mod" />
         <option value="$PROJECT_DIR$/model/channels/markov/hcn.mod" />
         <option value="$PROJECT_DIR$/model/channels/markov/nat.mod" />
-        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script4.py" />
         <option value="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
         <option value="$PROJECT_DIR$/new_optimization/scripts/test/0/L-BFGS-B/candidates.csv" />
         <option value="$PROJECT_DIR$/new_optimization/evaluation/sine_stimulus.py" />
@@ -191,14 +204,19 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" />
         <option value="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-        <option value="$PROJECT_DIR$/grid_cell_stimuli/remove_APs.py" />
         <option value="$PROJECT_DIR$/grid_cell_stimuli/downsample.py" />
         <option value="$PROJECT_DIR$/grid_cell_stimuli/theta_envelope.py" />
         <option value="$PROJECT_DIR$/grid_cell_stimuli/get_ramp_and_theta.py" />
-        <option value="$PROJECT_DIR$/grid_cell_stimuli/sine_with_noise.py" />
+        <option value="$PROJECT_DIR$/grid_cell_stimuli/test.py" />
+        <option value="$PROJECT_DIR$/grid_cell_stimuli/remove_APs.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script3.py" />
+        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script4.py" />
         <option value="$PROJECT_DIR$/grid_cell_stimuli/find_in_out_fields.py" />
+        <option value="$PROJECT_DIR$/grid_cell_stimuli/in_out_field_diff.py" />
+        <option value="$PROJECT_DIR$/grid_cell_stimuli/sine_with_noise.py" />
+        <option value="$PROJECT_DIR$/grid_cell_stimuli/doublets.py" />
       </list>
     </option>
   </component>
@@ -249,7 +267,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -268,10 +285,23 @@
               <item name="grid_cell_stimuli" type="462c0819:PsiDirectoryNode" />
               <item name="results" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="grid_cell_stimuli" type="462c0819:PsiDirectoryNode" />
+              <item name="results" type="462c0819:PsiDirectoryNode" />
+              <item name="test0" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="investigate_synaptic_noise" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -308,7 +338,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.find_in_out_fields">
+  <component name="RunManager" selected="Python.doublets">
     <configuration default="true" type="tests" factoryName="Doctests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -428,6 +458,24 @@
       <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
+    <configuration name="doublets" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/grid_cell_stimuli" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/grid_cell_stimuli/doublets.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="downsample" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -500,37 +548,19 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="theta_envelope" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/grid_cell_stimuli" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/grid_cell_stimuli/theta_envelope.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.remove_APs" />
-      <item index="1" class="java.lang.String" itemvalue="Python.downsample" />
-      <item index="2" class="java.lang.String" itemvalue="Python.get_ramp_and_theta" />
-      <item index="3" class="java.lang.String" itemvalue="Python.theta_envelope" />
-      <item index="4" class="java.lang.String" itemvalue="Python.find_in_out_fields" />
+      <item index="0" class="java.lang.String" itemvalue="Python.find_in_out_fields" />
+      <item index="1" class="java.lang.String" itemvalue="Python.remove_APs" />
+      <item index="2" class="java.lang.String" itemvalue="Python.downsample" />
+      <item index="3" class="java.lang.String" itemvalue="Python.get_ramp_and_theta" />
+      <item index="4" class="java.lang.String" itemvalue="Python.doublets" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.find_in_out_fields" />
-        <item index="1" class="java.lang.String" itemvalue="Python.theta_envelope" />
-        <item index="2" class="java.lang.String" itemvalue="Python.get_ramp_and_theta" />
-        <item index="3" class="java.lang.String" itemvalue="Python.downsample" />
+        <item index="0" class="java.lang.String" itemvalue="Python.doublets" />
+        <item index="1" class="java.lang.String" itemvalue="Python.get_ramp_and_theta" />
+        <item index="2" class="java.lang.String" itemvalue="Python.downsample" />
+        <item index="3" class="java.lang.String" itemvalue="Python.find_in_out_fields" />
         <item index="4" class="java.lang.String" itemvalue="Python.remove_APs" />
       </list>
     </recent_temporary>
@@ -548,34 +578,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1444289885125</updated>
-    </task>
-    <task id="LOCAL-00032" summary="To select and save traces from .dat files with the hekareader">
-      <created>1476948449104</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1476948449104</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Organized fitness landscape analysis">
-      <created>1477579165884</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1477579165884</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Some changes on fitnesslandscape analysis&#10;e.g. computation of minima">
-      <created>1478593567299</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1478593567299</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Some useful functions">
-      <created>1478594006017</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1478594006017</updated>
     </task>
     <task id="LOCAL-00036" summary="tries to find best fitness landscape by linear regression">
       <created>1478597796754</created>
@@ -892,7 +894,35 @@
       <option name="project" value="LOCAL" />
       <updated>1501769206797</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="added saving of params, runs and evaluation of those">
+      <created>1501792162886</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1501792162887</updated>
+    </task>
+    <task id="LOCAL-00082" summary="improved plots">
+      <created>1501836839823</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1501836839824</updated>
+    </task>
+    <task id="LOCAL-00083" summary="added simulation of speed and position and computation of firing fields based on field positions">
+      <created>1502113794146</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1502113794148</updated>
+    </task>
+    <task id="LOCAL-00084" summary="added saving of speed params">
+      <created>1502116245664</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1502116245664</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -938,14 +968,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="28" width="1920" height="1052" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1814301" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18569905" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46346784" sideWeight="0.52454644" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22464558" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26148796" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31619257" sideWeight="0.4754536" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20131291" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31619257" sideWeight="0.4754536" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.114727855" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4525627" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1001,9 +1032,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added FitterFactory and Fitter now have to know their name, Update evaluate as well" />
-    <MESSAGE value="Fixed observer problem for inspyred optimizer with multiprocessing" />
-    <MESSAGE value="Functions to plot vclamp steps of ion channel and activation curves, time constant curves" />
     <MESSAGE value="Changed scipy multiprocessing to only start as many processes as there are cores" />
     <MESSAGE value="Added climin optimizer and fixed multiprocessing bug in scipy_optimizer &#10;Processes did not stop because working_queue.get() never returned None, now it checks for working_queue.empty()" />
     <MESSAGE value="Added look_for_good_cells that goes through the data set and returns the cells with good characteristics" />
@@ -1026,7 +1054,10 @@
     <MESSAGE value="added package for analysis of grid cell stimuli" />
     <MESSAGE value="implemented in- and out-field definition" />
     <MESSAGE value="added saving of params, runs and evaluation of those" />
-    <option name="LAST_COMMIT_MESSAGE" value="added saving of params, runs and evaluation of those" />
+    <MESSAGE value="improved plots" />
+    <MESSAGE value="added simulation of speed and position and computation of firing fields based on field positions" />
+    <MESSAGE value="added saving of speed params" />
+    <option name="LAST_COMMIT_MESSAGE" value="added saving of speed params" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1057,51 +1088,16 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1300" />
+      <option name="time" value="1329" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/optimization/hand_tuning/handtuner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="73" column="16" lean-forward="false" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="18" column="46" lean-forward="false" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="903">
-          <caret line="131" column="47" lean-forward="false" selection-start-line="131" selection-start-column="47" selection-end-line="131" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="142" column="78" lean-forward="false" selection-start-line="142" selection-start-column="78" selection-end-line="142" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/investigate_synaptic_noise/noise_patch_clamp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="25" column="40" lean-forward="false" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/simulate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="157" column="0" lean-forward="false" selection-start-line="157" selection-start-column="0" selection-end-line="157" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1203,13 +1199,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1008">
-          <caret line="77" column="30" lean-forward="false" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../packages/nrn_wrapper/nrn_wrapper/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="387">
@@ -1252,20 +1241,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script4.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="77" column="21" lean-forward="true" selection-start-line="77" selection-start-column="21" selection-end-line="77" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/sine_stimulus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="21" column="23" lean-forward="true" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../bac_project/bac_project/connectivity/stimuli.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1277,13 +1252,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="20" lean-forward="true" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_synaptic_noise/synaptic_input_stellate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1320,20 +1288,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="232" column="0" lean-forward="true" selection-start-line="232" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="8" column="37" lean-forward="true" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
@@ -1345,7 +1299,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="100" column="55" lean-forward="true" selection-start-line="100" selection-start-column="55" selection-end-line="100" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1353,7 +1306,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1361,40 +1313,98 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/results/test0/data/params" />
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/results/test0/data/v.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/test.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/sine_stimulus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="224" column="56" lean-forward="false" selection-start-line="224" selection-start-column="56" selection-end-line="224" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="19" column="16" lean-forward="false" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/results/test0/data/params.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/optimization/simulate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2988">
+          <caret line="171" column="0" lean-forward="false" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/results/test0/data/params">
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="18">
+          <caret line="22" column="54" lean-forward="true" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1026">
+          <caret line="9" column="12" lean-forward="true" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/remove_APs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="9" lean-forward="true" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+        <state relative-caret-position="234">
+          <caret line="31" column="31" lean-forward="true" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/theta_envelope.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="18" column="19" lean-forward="false" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/downsample.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="75" column="18" lean-forward="false" selection-start-line="75" selection-start-column="18" selection-end-line="75" selection-end-column="18" />
+        <state relative-caret-position="264">
+          <caret line="64" column="49" lean-forward="false" selection-start-line="64" selection-start-column="49" selection-end-line="64" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/find_in_out_fields.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="133" column="0" lean-forward="false" selection-start-line="133" selection-start-column="0" selection-end-line="134" selection-end-column="63" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investigate_synaptic_noise/synaptic_input_stellate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1446">
+          <caret line="11" column="46" lean-forward="false" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
           <folding>
             <element signature="e#0#31#0" expanded="false" />
           </folding>
@@ -1403,33 +1413,46 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/get_ramp_and_theta.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="92" column="13" lean-forward="true" selection-start-line="92" selection-start-column="13" selection-end-line="92" selection-end-column="13" />
+        <state relative-caret-position="138">
+          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="57" selection-end-column="29" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/results/test0/data/v.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/sine_with_noise.py">
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/in_out_field_diff.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
-          <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+          <caret line="17" column="34" lean-forward="false" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/theta_envelope.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="11" column="53" lean-forward="true" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/find_in_out_fields.py">
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/sine_with_noise.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="40" column="6" lean-forward="false" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+        <state relative-caret-position="102">
+          <caret line="56" column="38" lean-forward="false" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/doublets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="30" column="43" lean-forward="true" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>

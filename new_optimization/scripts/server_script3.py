@@ -11,43 +11,56 @@ import os
 save_dir = sys.argv[1]
 
 variables = [
-            [0.3, 2, [['soma', 'cm']]],
+            [0.5, 2, [['soma', 'cm']]],
             [-95, -70, [['soma', '0.5', 'pas', 'e']]],
             [-30, -10, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
 
-            [0, 0.1, [['soma', '0.5', 'pas', 'g']]],
+            [0, 0.01, [['soma', '0.5', 'pas', 'g']]],
             [0, 0.1, [['soma', '0.5', 'kdr', 'gbar']]],
             [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
-            [0, 0.1, [['soma', '0.5', 'hcn_slow', 'gbar']]],
+            [0, 0.5, [['soma', '0.5', 'nap', 'gbar']]],
+            [0, 0.01, [['soma', '0.5', 'hcn_slow', 'gbar']]],
 
             [0, 5, [['soma', '0.5', 'kdr', 'n_pow']]],
             [0, 5, [['soma', '0.5', 'nat', 'm_pow']]],
             [0, 5, [['soma', '0.5', 'nat', 'h_pow']]],
+            [0, 5, [['soma', '0.5', 'nap', 'm_pow']]],
+            [0, 5, [['soma', '0.5', 'nap', 'h_pow']]],
             [0, 5, [['soma', '0.5', 'hcn_slow', 'n_pow']]],
 
             [-100, 0, [['soma', '0.5', 'kdr', 'n_vh']]],
-            [-100, 10, [['soma', '0.5', 'nat', 'm_vh']]],
-            [-100, 10, [['soma', '0.5', 'nat', 'h_vh']]],
+            [-100, 20, [['soma', '0.5', 'nat', 'm_vh']]],
+            [-100, 0, [['soma', '0.5', 'nat', 'h_vh']]],
+            [-100, 20, [['soma', '0.5', 'nap', 'm_vh']]],
+            [-100, 0, [['soma', '0.5', 'nap', 'h_vh']]],
             [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
 
             [1, 30, [['soma', '0.5', 'kdr', 'n_vs']]],
             [1, 30, [['soma', '0.5', 'nat', 'm_vs']]],
             [-30, -1, [['soma', '0.5', 'nat', 'h_vs']]],
+            [1, 30, [['soma', '0.5', 'nap', 'm_vs']]],
+            [-30, -1, [['soma', '0.5', 'nap', 'h_vs']]],
             [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
 
             [0, 50, [['soma', '0.5', 'kdr', 'n_tau_min']]],
             [0, 10, [['soma', '0.5', 'nat', 'm_tau_min']]],
             [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
+            [0, 10, [['soma', '0.5', 'nap', 'm_tau_min']]],
+            [0, 50, [['soma', '0.5', 'nap', 'h_tau_min']]],
             [0, 50, [['soma', '0.5', 'hcn_slow', 'n_tau_min']]],
 
             [0, 100, [['soma', '0.5', 'kdr', 'n_tau_max']]],
             [0, 100, [['soma', '0.5', 'nat', 'm_tau_max']]],
             [0, 100, [['soma', '0.5', 'nat', 'h_tau_max']]],
+            [0, 100, [['soma', '0.5', 'nap', 'm_tau_max']]],
+            [0, 100, [['soma', '0.5', 'nap', 'h_tau_max']]],
             [0, 500, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
 
             [0, 5, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
             [0, 5, [['soma', '0.5', 'nat', 'm_tau_delta']]],
             [0, 5, [['soma', '0.5', 'nat', 'h_tau_delta']]],
+            [0, 5, [['soma', '0.5', 'nap', 'm_tau_delta']]],
+            [0, 5, [['soma', '0.5', 'nap', 'h_tau_delta']]],
             [0, 5, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]],
             ]
 
@@ -59,13 +72,13 @@ fitter_params = {
                     #'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
-                    'fitfun_names': [['get_v', 'get_DAP'], ['get_v'], ['get_n_spikes']],
+                    'fitfun_names': [['get_v', 'get_DAP'], ['get_v'], ['get_v', 'get_n_spikes']],
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
                     # 'fitnessweights': [1, 1000],
                     # 'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
                     # 'simulation_params': {'celsius': 35, 'onset': 200},
-                    'fitnessweights': [[100, 10], [1], [10]],
+                    'fitnessweights': [[100, 1], [1], [0.01, 5]],
                     'data_dirs': [
                                   '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
                                   '../../data/2015_08_26b/vrest-75/IV/-0.1(nA).csv',

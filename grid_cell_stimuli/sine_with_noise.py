@@ -54,7 +54,7 @@ def synaptic_noise_input():
     return syn_params, AMPA_stimulation, NMDA_stimulation, GABA_stimulation
 
 
-def get_sines(random_generator, pos_fields, position, time):
+def get_sines(random_generator, field_pos, position, time):
     amp1 = 0.45
     amp2 = 0.12
     freq2 = 8
@@ -62,17 +62,17 @@ def get_sines(random_generator, pos_fields, position, time):
     sine1_dur_sig = 400  # ms
 
     # intervals between fields
-    times_field = [time[np.argmin(np.abs(position-p))] for p in pos_fields]
-    field_intervals_t = np.concatenate((np.array([times_field[0]]), np.diff(times_field),
-                                        np.array([time[-1]-times_field[-1]])))
+    field_pos_t = [time[np.argmin(np.abs(position-p))] for p in field_pos]
+    field_intervals_t = np.concatenate((np.array([field_pos_t[0]]), np.diff(field_pos_t),
+                                        np.array([time[-1]-field_pos_t[-1]])))
 
     # draw sine durations
-    sine1_durs = draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, len(pos_fields))
+    sine1_durs = draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, len(field_pos))
     sine1_intervals_dur = np.array([sine1_durs[0]/2]
                                 +[(d1+d2)/2 for d1,d2 in zip(sine1_durs[:-1], sine1_durs[1:])]
                                 +[sine1_durs[-1]/2])
     while(not np.all(sine1_intervals_dur < field_intervals_t)):
-        sine1_durs = draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, len(pos_fields))
+        sine1_durs = draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, len(field_pos))
         sine1_intervals_dur = np.array([sine1_durs[0] / 2]
                                     + [(d1 + d2) / 2 for d1, d2 in zip(sine1_durs[:-1], sine1_durs[1:])]
                                     + [sine1_durs[-1] / 2])
@@ -143,7 +143,7 @@ if __name__ == '__main__':
     track_len = 400  # cm
     n_fields = 4
     speed_type = 'constant'
-    pos_fields = np.cumsum([track_len/n_fields] * n_fields) - (track_len/n_fields) / 2
+    field_pos = np.cumsum([track_len / n_fields] * n_fields) - (track_len / n_fields) / 2
     seed = time()
     params = {'model_dir': model_dir, 'mechanism_dir': mechanism_dir, 'onset': onset, 'dt': dt, 'celsius': celsius,
               'v_init': v_init, 'n_runs': n_runs, 'n_fields': n_fields, 'track_len': track_len, 'seed': seed}
@@ -182,7 +182,7 @@ if __name__ == '__main__':
     # input
     sine_stims = [0] * n_runs
     for i_run in range(n_runs):
-        sine_params, sine_stims[i_run] = get_sines(random_generator, pos_fields, positions[i_run], times[i_run])
+        sine_params, sine_stims[i_run] = get_sines(random_generator, field_pos, positions[i_run], times[i_run])
     sine_stimulus = np.concatenate(sine_stims)
     tstop = (len(np.concatenate(positions))-1) * dt
     syn_params, AMPA_stimulation, NMDA_stimulation, GABA_stimulation = synaptic_noise_input()
@@ -223,3 +223,5 @@ if __name__ == '__main__':
     pl.ylabel('Position (cm)', fontsize=16)
     pl.savefig(os.path.join(save_dir, 'position.png'))
     pl.show()
+
+    # TODO: define sine variation as function of space
