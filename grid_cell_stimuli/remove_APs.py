@@ -29,7 +29,7 @@ if __name__ == '__main__':
     idx_after = int(round(t_after / dt))
     v_APs_removed = copy.copy(v)
     for onset in AP_onsets:
-        slope = (v[onset-idx_before] - v[onset+idx_after]) / dur_AP
+        slope = (v[onset+idx_after] - v[onset-idx_before]) / dur_AP
         v_APs_removed[onset-idx_before:onset+idx_after+1] = slope \
                                                             * np.arange(0, dur_AP + dt, dt) + v[onset - idx_before]
 

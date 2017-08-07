@@ -22,6 +22,11 @@ def get_firing_rate_per_bin(APs, t, position, bins):
         firing_rate_per_run[i_run, np.unique(pos_binned)] = AP_count_per_bin / seconds_per_bin
 
         # for testing: print AP_max_idx[0] in np.where(pos_binned == AP_count_per_bin.index[AP_count_per_bin > 0][0])[0]
+    # pl.figure()
+    # for i_run in range(len(t_runs)):
+    #     pl.plot(firing_rate_per_run[i_run, :])
+    # pl.show()
+
     firing_rate = np.mean(firing_rate_per_run, 0)
     return firing_rate, firing_rate_per_run
 
@@ -44,6 +49,16 @@ def shuffle_APs(APs, n_shuffles, seed):
     return APs_shuffles
 
 
+def get_start_end_ones(x):
+    start = np.where(np.diff(x) == 1)[0] + 1
+    end = np.where(np.diff(x) == -1)[0]
+    if x[0] == 1:
+        start = np.concatenate((np.array([0]), start))
+    if x[-1] == 1:
+        end = np.concatenate((end, np.array([len(x) - 1])))
+    return start, end
+
+
 if __name__ == '__main__':
     save_dir = './results/test0/in_out_fields'
     save_dir_data = './results/test0/data'
@@ -57,9 +72,8 @@ if __name__ == '__main__':
     # load
     v = np.load(os.path.join(save_dir_data, 'v.npy'))
     t = np.load(os.path.join(save_dir_data, 't.npy'))
+    position = np.load(os.path.join(save_dir_data, 'position.npy'))
     dt = t[1] - t[0]
-    with open(os.path.join(save_dir_data, 'params'), 'r') as f:
-        dur_run = json.load(f)['t_run']
 
     # compute spike train
     AP_onsets = get_AP_onsets(v, threshold=-20)
@@ -73,9 +87,6 @@ if __name__ == '__main__':
     APs_shuffles = shuffle_APs(APs, n_shuffles, seed)
 
     # bin according to position (bin=5cm) and compute firing rate
-    v_animal = 40  # cm/sec
-    v_animal /= 1000  # sm/ms
-    position = (t % dur_run) * v_animal
     bins = np.arange(bin_size, np.max(position) + bin_size, bin_size)
 
     firing_rate_real, firing_rate_per_run = get_firing_rate_per_bin(APs, t, position, bins)
@@ -131,19 +142,15 @@ if __name__ == '__main__':
     pl.figure()
     pl.plot(firing_rate_real, 'k', label='Real')
     pl.plot(np.mean(firing_rate_shuffled, 0), 'r', label='Shuffled mean')
-    for i in range(3):
-        pl.plot(firing_rate_shuffled[i, :])
     pl.xticks(np.arange(0, len(bins)+1, len(bins)/4), np.arange(0, bins[-1]+bins[-1]/4, bins[-1]/4))
     pl.xlabel('Position (cm)', fontsize=16)
     pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
     pl.legend(fontsize=16)
     pl.savefig(os.path.join(save_dir, 'firing_rate_binned.png'))
-    #pl.show()
+    pl.show()
 
-    start_out = np.where(np.diff(out_field) == 1)[0]
-    end_out = np.where(np.diff(out_field) == -1)[0]
-    start_in = np.where(np.diff(in_field) == 1)[0]
-    end_in = np.where(np.diff(in_field) == -1)[0]
+    start_out, end_out = get_start_end_ones(out_field)
+    start_in, end_in = get_start_end_ones(in_field)
 
     pl.figure()
     pl.plot(1 - p_value, 'g', label='1 - P value')
@@ -189,8 +196,3 @@ if __name__ == '__main__':
     pl.legend(fontsize=16)
     pl.savefig(os.path.join(save_dir, 'v_and_fields.png'))
     pl.show()
-
-    # Note: Method works only if runs have different length as otherwise ramps will always fall on top of each other
-    # for each run (but will be shifted)
-    # the baseline level for the 1 - p-value is then 0.5 because when f_real is low and the shift is uniform roughly
-    # half of f_shuffles will be lower or equal than f_real

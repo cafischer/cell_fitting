@@ -9,6 +9,7 @@ from new_optimization.evaluation.sine_stimulus import get_sine_stimulus
 from bac_project.connectivity.connection import synaptic_input
 from optimization.simulate import iclamp_handling_onset
 from time import time
+import random
 
 
 def synaptic_noise_input():
@@ -53,23 +54,57 @@ def synaptic_noise_input():
     return syn_params, AMPA_stimulation, NMDA_stimulation, GABA_stimulation
 
 
-def sine_input():
+def get_sines(seed, pos_fields, position, time):
+    random_generator = random.Random()
+    random_generator.seed(seed)
+
     amp1 = 0.45
     amp2 = 0.12
-    sine1_dur = 1000
     freq2 = 8
-    onset_dur = sine1_dur
-    offset_dur = 0
-    i_sine = get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
-    sine_params = {'amp1': amp1, 'amp2': amp2, 'sine1_dur': sine1_dur, 'freq2': freq2,
-                   'onset_dur': onset_dur, 'offset_dur': offset_dur}
-    return sine_params, i_sine
+    sine1_dur_mu = 1000  # ms
+    sine1_dur_sig = 400  # ms
 
-def get_sines(n_sines):
-    sines = [sine_input()[1] for i in range(n_sines)]
-    sine_stim = np.concatenate(sines)
-    sine_params, _ = sine_input()
-    return sine_params, sine_stim
+    # intervals between fields
+    times_field = [time[np.argmin(np.abs(position-p))] for p in pos_fields]
+    field_intervals_t = np.concatenate((np.array([times_field[0]]), np.diff(times_field),
+                                        np.array([time[-1]-times_field[-1]])))
+
+    # draw sine durations
+    sine1_durs = draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, len(pos_fields))
+    sine1_intervals_dur = np.array([sine1_durs[0]/2]
+                                +[(d1+d2)/2 for d1,d2 in zip(sine1_durs[:-1], sine1_durs[1:])]
+                                +[sine1_durs[-1]/2])
+    while(not np.all(sine1_intervals_dur < field_intervals_t)):
+        sine1_durs = draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, len(pos_fields))
+        sine1_intervals_dur = np.array([sine1_durs[0] / 2]
+                                    + [(d1 + d2) / 2 for d1, d2 in zip(sine1_durs[:-1], sine1_durs[1:])]
+                                    + [sine1_durs[-1] / 2])
+
+    # compute onset times
+    onset_durs = field_intervals_t - sine1_intervals_dur
+
+    # compute current traces
+    i_sines = [0] * len(sine1_durs)
+    for i, (sine1_dur, onset_dur) in enumerate(zip(sine1_durs, onset_durs)):
+        if i == len(sine1_durs)-1:
+            i_sines[i] = get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, onset_durs[i+1], dt)
+        else:
+            i_sines[i] = get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, 0, dt)
+    run_stim = np.concatenate(i_sines)
+    sine_params = {'amp1': amp1, 'amp2': amp2,
+                   'sine1_dur_mu': sine1_dur_mu, 'sine1_dur_sig': sine1_dur_sig,
+                   'freq2': freq2}
+    return sine_params, run_stim
+
+
+def draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, n_sines):
+    sine1_durs = np.zeros(n_sines)
+    for i in range(n_sines):
+        sine1_dur = random_generator.gauss(sine1_dur_mu, sine1_dur_sig)
+        while (sine1_dur <= 0):
+            sine1_dur = random_generator.gauss(sine1_dur_mu, sine1_dur_sig)
+        sine1_durs[i] = sine1_dur
+    return sine1_durs
 
 
 if __name__ == '__main__':
@@ -86,21 +121,66 @@ if __name__ == '__main__':
     celsius = 35
     v_init = -75
     n_runs = 14
-    sines_per_run = 4
-    dur_run = sines_per_run * 2000
+    track_len = 400  # cm
+    n_fields = 4
+    pos_fields = np.cumsum([track_len/n_fields] * n_fields) - (track_len/n_fields) / 2
+
+    # # jiggle field positions
+    # field_sig = 1  # cm
+    # pos_fields_tmp = pos_fields + np.array([random_generator.gauss(0, field_sig) for i in range(n_fields)])
+    # while pos_fields_tmp[0] <= 0 and pos_fields_tmp[-1] >= track_len and np.any(pos_fields_tmp != np.sort(pos_fields_tmp)):
+    #     pos_fields_tmp = pos_fields + np.array([random_generator.gauss(0, field_sig) for i in range(n_fields)])
+    # pos_fields = pos_fields_tmp
+
+    seed = time()
     params = {'model_dir': model_dir, 'mechanism_dir': mechanism_dir, 'onset': onset, 'dt': dt, 'celsius': celsius,
-              'v_init': v_init, 'n_runs': n_runs, 'sines_per_run': sines_per_run, 'dur_run': dur_run}
+              'v_init': v_init, 'n_runs': n_runs, 'n_fields': n_fields, 'track_len': track_len, 'seed': seed}
 
     # create cell
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
+    # simulate animal position
+    ar_model = lambda x, a, b, sig: b + a*x + np.random.normal(0, sig)
+    a = 1
+    b = 0
+    sig = 0.00001  # ms
+    speed_offset = 0.04  # cm/ms
+
+    positions = [0] * n_runs
+    speeds = [0] * n_runs
+    times = [0] * n_runs
+    for i_run in range(n_runs):
+        position = [0]
+        speed = [0]
+        n_s = np.random.uniform(-0.02, 0.02)
+        while position[-1] <= track_len:
+            # new_speed = ar_model(speed[-1], a, b, sig)
+            # while new_speed+speed_offset <= 0:  # no backward running
+            #     new_speed = ar_model(speed[-1], a, b, sig)
+            new_speed = n_s  # constant running speed
+            speed.append(new_speed)
+            position.append(position[-1]+(new_speed+speed_offset)*dt)
+        positions[i_run] = np.array(position)
+        speeds[i_run] = np.array(speed) + speed_offset
+        times[i_run] = np.arange(0, len(position)) * dt
+        # pl.figure()
+        # pl.plot(time[i_run], position[i_run], 'k')
+        # pl.plot(time[i_run], speed[i_run], 'r')
+        # pl.xlabel('Time (ms)', fontsize=16)
+        # pl.ylabel('Position (cm)', fontsize=16)
+        # pl.show()
+
+
     # input
-    tstop = n_runs * dur_run
-    sine_params, i_sine = get_sines(sines_per_run * n_runs)
+    sine_stims = [0] * n_runs
+    for i_run in range(n_runs):
+        sine_params, sine_stims[i_run] = get_sines(seed, pos_fields, positions[i_run], times[i_run])
+    sine_stimulus = np.concatenate(sine_stims)
+    tstop = (len(np.concatenate(positions))-1) * dt
     syn_params, AMPA_stimulation, NMDA_stimulation, GABA_stimulation = synaptic_noise_input()
 
     # simulate
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_sine, 'v_init': v_init, 'tstop': tstop,
+    simulation_params = {'sec': ('soma', None), 'i_inj': sine_stimulus, 'v_init': v_init, 'tstop': tstop,
                          'dt': dt, 'celsius': celsius, 'onset': onset}
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
 
@@ -110,6 +190,8 @@ if __name__ == '__main__':
 
     np.save(os.path.join(save_dir, 'v.npy'), v)
     np.save(os.path.join(save_dir, 't.npy'), t)
+    np.save(os.path.join(save_dir, 'position.npy'), np.concatenate(positions))
+    np.save(os.path.join(save_dir, 'speed.npy'), np.concatenate(speeds))
 
     with open(os.path.join(save_dir, 'params.json'), 'w') as f:
         json.dump(params, f)
@@ -124,3 +206,5 @@ if __name__ == '__main__':
     pl.xlabel('Time (ms)', fontsize=16)
     pl.savefig(os.path.join(save_dir, 'v.png'))
     pl.show()
+
+    # TODO: gauss seed save
