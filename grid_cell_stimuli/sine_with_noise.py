@@ -54,10 +54,7 @@ def synaptic_noise_input():
     return syn_params, AMPA_stimulation, NMDA_stimulation, GABA_stimulation
 
 
-def get_sines(seed, pos_fields, position, time):
-    random_generator = random.Random()
-    random_generator.seed(seed)
-
+def get_sines(random_generator, pos_fields, position, time):
     amp1 = 0.45
     amp2 = 0.12
     freq2 = 8
@@ -107,6 +104,28 @@ def draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, n_sines):
     return sine1_durs
 
 
+def speed_ar_model(random_generator, dt):
+    ar_model = lambda x, a, b, sig: b + a * x + random_generator.gauss(0, sig)
+    a = 1
+    b = 0
+    sig = 0.00001  # ms
+    speed_offset = 0.04  # cm/ms
+    speed_params = {'speed_type': 'ar', 'a': a, 'b': b, 'sig': sig, 'speed_offset': speed_offset}
+
+    position = [0]
+    speed = [0]
+    while position[-1] <= track_len:
+        new_speed = ar_model(speed[-1], a, b, sig)
+        while new_speed + speed_offset <= 0:  # no backward running
+            new_speed = ar_model(speed[-1], a, b, sig)
+        speed.append(new_speed)
+        position.append(position[-1] + (new_speed + speed_offset) * dt)
+    position = np.array(position)
+    speed = np.array(speed) + speed_offset
+    time = np.arange(0, len(position)) * dt
+    return speed, position, time, speed_params
+
+
 if __name__ == '__main__':
     load_mechanism_dir("/home/cf/Phd/programming/projects/bac_project/bac_project/connectivity/vecstim")
 
@@ -123,7 +142,12 @@ if __name__ == '__main__':
     n_runs = 14
     track_len = 400  # cm
     n_fields = 4
+    speed_type = 'constant'
     pos_fields = np.cumsum([track_len/n_fields] * n_fields) - (track_len/n_fields) / 2
+    seed = time()
+    params = {'model_dir': model_dir, 'mechanism_dir': mechanism_dir, 'onset': onset, 'dt': dt, 'celsius': celsius,
+              'v_init': v_init, 'n_runs': n_runs, 'n_fields': n_fields, 'track_len': track_len, 'seed': seed}
+
 
     # # jiggle field positions
     # field_sig = 1  # cm
@@ -132,49 +156,33 @@ if __name__ == '__main__':
     #     pos_fields_tmp = pos_fields + np.array([random_generator.gauss(0, field_sig) for i in range(n_fields)])
     # pos_fields = pos_fields_tmp
 
-    seed = time()
-    params = {'model_dir': model_dir, 'mechanism_dir': mechanism_dir, 'onset': onset, 'dt': dt, 'celsius': celsius,
-              'v_init': v_init, 'n_runs': n_runs, 'n_fields': n_fields, 'track_len': track_len, 'seed': seed}
+    # random generator
+    random_generator = random.Random()
+    random_generator.seed(seed)
 
     # create cell
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # simulate animal position
-    ar_model = lambda x, a, b, sig: b + a*x + np.random.normal(0, sig)
-    a = 1
-    b = 0
-    sig = 0.00001  # ms
-    speed_offset = 0.04  # cm/ms
-
     positions = [0] * n_runs
     speeds = [0] * n_runs
     times = [0] * n_runs
     for i_run in range(n_runs):
-        position = [0]
-        speed = [0]
-        n_s = np.random.uniform(-0.02, 0.02)
-        while position[-1] <= track_len:
-            # new_speed = ar_model(speed[-1], a, b, sig)
-            # while new_speed+speed_offset <= 0:  # no backward running
-            #     new_speed = ar_model(speed[-1], a, b, sig)
-            new_speed = n_s  # constant running speed
-            speed.append(new_speed)
-            position.append(position[-1]+(new_speed+speed_offset)*dt)
-        positions[i_run] = np.array(position)
-        speeds[i_run] = np.array(speed) + speed_offset
-        times[i_run] = np.arange(0, len(position)) * dt
-        # pl.figure()
-        # pl.plot(time[i_run], position[i_run], 'k')
-        # pl.plot(time[i_run], speed[i_run], 'r')
-        # pl.xlabel('Time (ms)', fontsize=16)
-        # pl.ylabel('Position (cm)', fontsize=16)
-        # pl.show()
-
+        if speed_type == 'constant':
+            lower_bound = 0.01
+            upper_bound = 0.07
+            speed = random_generator.uniform(lower_bound, upper_bound)
+            positions[i_run] = np.arange(0, track_len+speed*dt, speed*dt)
+            speeds[i_run] = np.ones(len(positions[i_run])) * speed
+            times[i_run] = np.arange(0, len(positions[i_run])) * dt
+            speed_params = {'speed_type': speed_type, 'lower_bound': lower_bound, 'upper_bound': upper_bound}
+        elif speed_type == 'ar':
+            speeds[i_run], positions[i_run], times[i_run], speed_params = speed_ar_model(random_generator, dt)
 
     # input
     sine_stims = [0] * n_runs
     for i_run in range(n_runs):
-        sine_params, sine_stims[i_run] = get_sines(seed, pos_fields, positions[i_run], times[i_run])
+        sine_params, sine_stims[i_run] = get_sines(random_generator, pos_fields, positions[i_run], times[i_run])
     sine_stimulus = np.concatenate(sine_stims)
     tstop = (len(np.concatenate(positions))-1) * dt
     syn_params, AMPA_stimulation, NMDA_stimulation, GABA_stimulation = synaptic_noise_input()
@@ -199,6 +207,8 @@ if __name__ == '__main__':
         json.dump(syn_params, f)
     with open(os.path.join(save_dir, 'sine_params.json'), 'w') as f:
         json.dump(sine_params, f)
+    with open(os.path.join(save_dir, 'speed_params.json'), 'w') as f:
+        json.dump(sine_params, f)
 
     pl.figure()
     pl.plot(t, v, 'k')
@@ -207,4 +217,9 @@ if __name__ == '__main__':
     pl.savefig(os.path.join(save_dir, 'v.png'))
     pl.show()
 
-    # TODO: gauss seed save
+    pl.figure()
+    pl.plot(t, np.concatenate(positions), 'k')
+    pl.xlabel('Time (ms)', fontsize=16)
+    pl.ylabel('Position (cm)', fontsize=16)
+    pl.savefig(os.path.join(save_dir, 'position.png'))
+    pl.show()

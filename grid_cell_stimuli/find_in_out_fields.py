@@ -155,9 +155,9 @@ if __name__ == '__main__':
     pl.figure()
     pl.plot(1 - p_value, 'g', label='1 - P value')
     for i, (s, e) in enumerate(zip(start_out, end_out)):
-        pl.hlines(-0.01, s, e, 'b', label='Out field' if i==0 else None)
+        pl.hlines(-0.01, s, e, 'b', label='Out field' if i==0 else None, linewidth=3)
     for i, (s, e) in enumerate(zip(start_in, end_in)):
-        pl.hlines(-0.01, s, e, 'r', label='In field' if i==0 else None)
+        pl.hlines(-0.01, s, e, 'r', label='In field' if i==0 else None, linewidth=3)
     pl.xticks(np.arange(0, len(bins)+1, len(bins)/4), np.arange(0, bins[-1]+bins[-1]/4, bins[-1]/4))
     pl.xlabel('Position (cm)', fontsize=16)
     pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
@@ -168,9 +168,9 @@ if __name__ == '__main__':
     pl.figure()
     pl.plot(firing_rate_real, 'k', label='Firing rate')
     for i, (s, e) in enumerate(zip(start_out, end_out)):
-        pl.hlines(-0.01, s, e, 'b', label='Out field' if i==0 else None)
+        pl.hlines(-1, s, e, 'b', label='Out field' if i==0 else None, linewidth=3)
     for i, (s, e) in enumerate(zip(start_in, end_in)):
-        pl.hlines(-0.01, s, e, 'r', label='In field' if i==0 else None)
+        pl.hlines(-1, s, e, 'r', label='In field' if i==0 else None, linewidth=3)
     pl.xticks(np.arange(0, len(bins)+1, len(bins)/4), np.arange(0, bins[-1]+bins[-1]/4, bins[-1]/4))
     pl.xlabel('Position (cm)', fontsize=16)
     pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
@@ -186,11 +186,11 @@ if __name__ == '__main__':
     end_in = end_in / len(bins) * t_per_run[i_run][-1]
 
     pl.figure()
-    pl.plot(t_per_run[i_run], v_per_run[i_run], 'k', label='Membrane potential', linewidth=2)
+    pl.plot(t_per_run[i_run], v_per_run[i_run], 'k', label='Membrane potential')
     for i, (s, e) in enumerate(zip(start_out, end_out)):
-        pl.hlines(np.min(v_per_run[i_run])-1, s, e, 'b', label='Out field' if i==0 else None)
+        pl.hlines(np.min(v_per_run[i_run])-1, s, e, 'b', label='Out field' if i==0 else None, linewidth=3)
     for i, (s, e) in enumerate(zip(start_in, end_in)):
-        pl.hlines(np.min(v_per_run[i_run])-1, s, e, 'r', label='In field' if i==0 else None)
+        pl.hlines(np.min(v_per_run[i_run])-1, s, e, 'r', label='In field' if i==0 else None, linewidth=3)
     pl.xlabel('Time (ms)', fontsize=16)
     pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
     pl.legend(fontsize=16)
