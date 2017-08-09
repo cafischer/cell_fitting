@@ -214,14 +214,14 @@ if __name__ == '__main__':
     pl.plot(t, v, 'k')
     pl.ylabel('Membrane potential (mV)', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'v.png'))
+    pl.savefig(os.path.join(save_dir, 'v.svg'))
     pl.show()
 
     pl.figure()
     pl.plot(t, np.concatenate(positions), 'k')
     pl.xlabel('Time (ms)', fontsize=16)
     pl.ylabel('Position (cm)', fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'position.png'))
+    pl.savefig(os.path.join(save_dir, 'position.svg'))
     pl.show()
 
     # TODO: define sine variation as function of space

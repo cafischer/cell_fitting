@@ -48,8 +48,8 @@ if __name__ == '__main__':
     filter_theta = firwin(N+1, [cutoff_theta_low / nyq_rate, cutoff_theta_high / nyq_rate], window=('kaiser', beta),
                           pass_zero=False)  # pass_zero seems to flip from bandpass to bandstop
 
-    ramp = np.convolve(v, filter_ramp, mode='valid')
-    theta = np.convolve(v, filter_theta, mode='valid')
+    ramp = np.convolve(v, filter_ramp, mode='same')
+    theta = np.convolve(v, filter_theta, mode='same')
     idx_cut = int(np.ceil((len(t) - len(ramp)) / 2.0))
     t_filtered = np.arange(0, len(ramp) * dt, dt)
 
@@ -66,15 +66,15 @@ if __name__ == '__main__':
 
     pl.figure()
     w, h = freqz(filter_ramp, worN=int(round(nyq_rate / 0.01)))
-    pl.plot((w / np.pi) * nyq_rate, np.absolute(h), label='Ramp')
+    pl.plot((w / np.pi) * nyq_rate, np.absolute(h), 'g', label='Ramp')
     w, h = freqz(filter_theta, worN=int(round(nyq_rate / 0.01)))
-    pl.plot((w / np.pi) * nyq_rate, np.absolute(h), label='Theta')
+    pl.plot((w / np.pi) * nyq_rate, np.absolute(h), 'b', label='Theta')
     pl.xlabel('Frequency (Hz)', fontsize=16)
     pl.ylabel('Gain', fontsize=16)
     pl.ylim(-0.05, 1.05)
     pl.xlim(0, 20)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'gain_filter.png'))
+    pl.savefig(os.path.join(save_dir, 'gain_filter.svg'))
     pl.show()
 
     pl.figure()
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     pl.xlim(0, 50)
     pl.ylim(0, 1e10)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'power_spectrum.png'))
+    pl.savefig(os.path.join(save_dir, 'power_spectrum.svg'))
     pl.show()
 
     pl.figure()
@@ -101,5 +101,5 @@ if __name__ == '__main__':
     pl.ylabel('Voltage (mV)', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'ramp_and_theta.png'))
+    pl.savefig(os.path.join(save_dir, 'ramp_and_theta.svg'))
     pl.show()

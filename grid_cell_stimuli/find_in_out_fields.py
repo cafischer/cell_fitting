@@ -9,17 +9,21 @@ from cell_characteristics.analyze_APs import get_AP_onsets, get_AP_max_idx
 
 
 def get_firing_rate_per_bin(APs, t, position, bins):
-    run_start_idx = np.where(np.diff(position) < 0)[0]
+    run_start_idx = np.where(np.diff(position) < 0)[0] + 1  # +1 because diff shifts one to front
     APs_runs = np.split(APs, run_start_idx)
     pos_runs = np.split(position, run_start_idx)
     t_runs = np.split(t, run_start_idx)
-    firing_rate_per_run = np.zeros((len(run_start_idx) + 1, len(bins)))
+    n_bins = len(bins) - 1  # -1 for last edge
+
+    firing_rate_per_run = np.zeros((len(run_start_idx) + 1, n_bins))
+    firing_rate_per_run[:] = np.nan
     max_diff = lambda x: np.max(x) - np.min(x)
     for i_run, (APs_run, pos_run, t_run) in enumerate(zip(APs_runs, pos_runs, t_runs)):
-        pos_binned = np.digitize(pos_run, bins)
+        pos_binned = np.digitize(pos_run, bins) - 1
         AP_count_per_bin = pd.Series(APs_run).groupby(pos_binned).sum()
         seconds_per_bin = pd.Series(t_run).groupby(pos_binned).apply(max_diff) / 1000
-        firing_rate_per_run[i_run, np.unique(pos_binned)] = AP_count_per_bin / seconds_per_bin
+        pos_in_track = np.unique(pos_binned)[np.unique(pos_binned) <= n_bins-1]  # to ignore data higher than track_len
+        firing_rate_per_run[i_run, pos_in_track] = AP_count_per_bin[pos_in_track] / seconds_per_bin[pos_in_track]
 
         # for testing: print AP_max_idx[0] in np.where(pos_binned == AP_count_per_bin.index[AP_count_per_bin > 0][0])[0]
     # pl.figure()
@@ -27,7 +31,7 @@ def get_firing_rate_per_bin(APs, t, position, bins):
     #     pl.plot(firing_rate_per_run[i_run, :])
     # pl.show()
 
-    firing_rate = np.mean(firing_rate_per_run, 0)
+    firing_rate = np.nanmean(firing_rate_per_run, 0)
     return firing_rate, firing_rate_per_run
 
 
@@ -74,6 +78,9 @@ if __name__ == '__main__':
     t = np.load(os.path.join(save_dir_data, 't.npy'))
     position = np.load(os.path.join(save_dir_data, 'position.npy'))
     dt = t[1] - t[0]
+    with open(os.path.join(save_dir_data, 'params.json'), 'r') as f:
+        params_data = json.load(f)
+    track_len = params_data['track_len']
 
     # compute spike train
     AP_onsets = get_AP_onsets(v, threshold=-20)
@@ -86,20 +93,21 @@ if __name__ == '__main__':
     # shuffle
     APs_shuffles = shuffle_APs(APs, n_shuffles, seed)
 
-    # bin according to position (bin=5cm) and compute firing rate
-    bins = np.arange(bin_size, np.max(position) + bin_size, bin_size)
+    # bin according to position and compute firing rate
+    bins = np.arange(0, track_len + bin_size, bin_size)
+    n_bins = len(bins) - 1  # -1 for last edge
 
     firing_rate_real, firing_rate_per_run = get_firing_rate_per_bin(APs, t, position, bins)
-    firing_rate_shuffled = np.zeros((n_shuffles, len(bins)))
+    firing_rate_shuffled = np.zeros((n_shuffles, n_bins))
     for i, APs_shuffled in enumerate(APs_shuffles):
         firing_rate_shuffled[i, :], _ = get_firing_rate_per_bin(APs_shuffled, t, position, bins)
 
     # compute P-value: percent of shuffled firing rates that were higher than the cells real firing rate
     p_value = np.array([np.sum(firing_rate_shuffled[:, i] > firing_rate_real[i]) / n_shuffles
-                        for i in range(len(bins))])
+                        for i in range(n_bins)])
 
     # get in-field and out-fields
-    out_field = np.zeros(len(bins))
+    out_field = np.zeros(n_bins)
     out_field[1 - p_value <= 0.05] = 1  # 1 - P value <= 0.05
     idx1 = np.where(out_field)[0]
     groups = np.split(idx1, np.where(np.diff(idx1) > 1)[0]+1)
@@ -107,23 +115,23 @@ if __name__ == '__main__':
         if len(g) <= 2:  # more than 2 adjacent bins
             out_field[g] = 0
 
-    in_field = np.zeros(len(bins))
+    in_field = np.zeros(n_bins)
     in_field[1 - p_value >= 0.85] = 1  # 1 - P value >= 0.85
     idx1 = np.where(in_field)[0]
     groups = np.split(idx1, np.where(np.diff(idx1) > 1)[0]+1)
     for g in groups:
         if len(g) <= 3:  # more than 3 adjacent bins
             in_field[g] = 0
-        else:  # extend by 1 bin left and right if: 1 - P value >= 0.70
+        else:
             n_runs = np.shape(firing_rate_per_run)[0]
             spiked_per_run = [np.sum(firing_rate_per_run[i, g]) > 0 for i in range(n_runs)]
             if np.sum(spiked_per_run) / n_runs < 0.2:  # spikes on at least 20 % of all runs
                 in_field[g] = 0
                 continue
-            if g[0] - 1 > 0:
+            if g[0] - 1 > 0:  # extend by 1 bin left and right if: 1 - P value >= 0.70
                 if 1 - p_value[g[0]-1] >= 0.7:
                     in_field[g[0]-1] = 1
-            if g[-1] + 1 < len(bins):
+            if g[-1] + 1 < n_bins:
                 if 1 - p_value[g[-1]+1] >= 0.7:
                     in_field[g[-1]+1] = 1
 
@@ -142,11 +150,11 @@ if __name__ == '__main__':
     pl.figure()
     pl.plot(firing_rate_real, 'k', label='Real')
     pl.plot(np.mean(firing_rate_shuffled, 0), 'r', label='Shuffled mean')
-    pl.xticks(np.arange(0, len(bins)+1, len(bins)/4), np.arange(0, bins[-1]+bins[-1]/4, bins[-1]/4))
+    pl.xticks(np.arange(0, n_bins+n_bins/4, n_bins/4), np.arange(0, track_len+track_len/4, track_len/4))
     pl.xlabel('Position (cm)', fontsize=16)
     pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'firing_rate_binned.png'))
+    pl.savefig(os.path.join(save_dir, 'firing_rate_binned.svg'))
     pl.show()
 
     start_out, end_out = get_start_end_ones(out_field)
@@ -158,11 +166,11 @@ if __name__ == '__main__':
         pl.hlines(-0.01, s, e, 'b', label='Out field' if i==0 else None, linewidth=3)
     for i, (s, e) in enumerate(zip(start_in, end_in)):
         pl.hlines(-0.01, s, e, 'r', label='In field' if i==0 else None, linewidth=3)
-    pl.xticks(np.arange(0, len(bins)+1, len(bins)/4), np.arange(0, bins[-1]+bins[-1]/4, bins[-1]/4))
+    pl.xticks(np.arange(0, n_bins + n_bins / 4, n_bins / 4), np.arange(0, track_len + track_len / 4, track_len / 4))
     pl.xlabel('Position (cm)', fontsize=16)
     pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'p_value.png'))
+    pl.savefig(os.path.join(save_dir, 'p_value.svg'))
     pl.show()
 
     pl.figure()
@@ -171,19 +179,19 @@ if __name__ == '__main__':
         pl.hlines(-1, s, e, 'b', label='Out field' if i==0 else None, linewidth=3)
     for i, (s, e) in enumerate(zip(start_in, end_in)):
         pl.hlines(-1, s, e, 'r', label='In field' if i==0 else None, linewidth=3)
-    pl.xticks(np.arange(0, len(bins)+1, len(bins)/4), np.arange(0, bins[-1]+bins[-1]/4, bins[-1]/4))
+    pl.xticks(np.arange(0, n_bins + n_bins / 4, n_bins / 4), np.arange(0, track_len + track_len / 4, track_len / 4))
     pl.xlabel('Position (cm)', fontsize=16)
     pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'firing_rate_and_fields.png'))
+    pl.savefig(os.path.join(save_dir, 'firing_rate_and_fields.svg'))
     pl.show()
 
     v_per_run, t_per_run = get_v_per_run(v, t, position)
     i_run = 0
-    start_out = start_out / len(bins) * t_per_run[i_run][-1]
-    end_out = end_out / len(bins) * t_per_run[i_run][-1]
-    start_in = start_in / len(bins) * t_per_run[i_run][-1]
-    end_in = end_in / len(bins) * t_per_run[i_run][-1]
+    start_out = start_out / (n_bins-1) * t_per_run[i_run][-1]
+    end_out = end_out / (n_bins-1) * t_per_run[i_run][-1]
+    start_in = start_in / (n_bins-1) * t_per_run[i_run][-1]
+    end_in = end_in / (n_bins-1) * t_per_run[i_run][-1]
 
     pl.figure()
     pl.plot(t_per_run[i_run], v_per_run[i_run], 'k', label='Membrane potential')
@@ -194,5 +202,5 @@ if __name__ == '__main__':
     pl.xlabel('Time (ms)', fontsize=16)
     pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'v_and_fields.png'))
+    pl.savefig(os.path.join(save_dir, 'v_and_fields.svg'))
     pl.show()

@@ -24,8 +24,8 @@ if __name__ == '__main__':
     save_dir_data = './results/test0/APs_removed'
 
     # parameters
-    dt_new_max = 0.2  # ms
-    cutoff_freq = 5000  # Hz
+    dt_new_max = 0.0005  # ms
+    cutoff_freq = 2000  # Hz
     transition_width = 5.0  # Hz
     ripple_attenuation = 60.0  # db
     params = {'dt_new_max': dt_new_max, 'cutoff_freq': cutoff_freq, 'transition_width': transition_width,
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     filter_downsample = firwin(N+1, cutoff_freq / nyq_rate, window=('kaiser', beta), pass_zero=True)  # pass_zeros True
                                                                                                       # for low-pass
 
-    v_antialiased = np.convolve(v, filter_downsample, mode='valid')
+    v_antialiased = np.convolve(v, filter_downsample, mode='same')
     idx_cut = int(np.ceil((len(t) - len(v_antialiased)) / 2.0))
     t_antialiased = np.arange(0, len(v_antialiased) * dt, dt)
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     pl.ylabel('Membrane potential (mV)', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'v_downsampled.png'))
+    pl.savefig(os.path.join(save_dir, 'v_downsampled.svg'))
     pl.show()
 
     pl.figure()
@@ -83,5 +83,5 @@ if __name__ == '__main__':
     pl.ylabel('Gain', fontsize=16)
     pl.ylim(-0.05, 1.05)
     pl.xlim(0, 10000)
-    pl.savefig(os.path.join(save_dir, 'gain_filter.png'))
+    pl.savefig(os.path.join(save_dir, 'gain_filter.svg'))
     pl.show()

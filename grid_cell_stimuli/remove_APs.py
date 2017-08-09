@@ -49,5 +49,5 @@ if __name__ == '__main__':
     pl.ylabel('Membrane potential (mV)', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'v_APs_removed.png'))
+    pl.savefig(os.path.join(save_dir, 'v_APs_removed.svg'))
     pl.show()

@@ -27,5 +27,5 @@ if __name__ == '__main__':
     pl.plot(t, theta_envelope, 'r', label='Theta')
     pl.ylabel('Voltage (mV)', fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
-    pl.savefig(os.path.join(save_dir, 'theta_envelope.png'))
+    pl.savefig(os.path.join(save_dir, 'theta_envelope.svg'))
     pl.show()
