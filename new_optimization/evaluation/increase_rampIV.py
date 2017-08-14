@@ -1,4 +1,4 @@
-import pylab as pl
+import matplotlib.pyplot as pl
 import numpy as np
 import pandas as pd
 import os
@@ -46,10 +46,10 @@ def rampIV(cell, ramp_amp, v_init=-75):
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
-    save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    #save_dir = '../../results/hand_tuning/test0/'
+    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     ramp_amp = 3.0
     data_dir = '../../data/2015_08_26b/vrest-75/rampIV/'+str(ramp_amp)+'(nA).csv'
@@ -62,6 +62,10 @@ if __name__ == '__main__':
     data = pd.read_csv(data_dir)
 
     # plot
+    save_img = os.path.join(save_dir, 'img', 'rampIV')
+    if not os.path.exists(save_img):
+        os.makedirs(save_img)
+
     pl.figure()
     pl.title(str(np.round(ramp_amp, 2)) + ' nA')
     pl.plot(data.t, data.v, 'k', label='Exp. Data')
@@ -69,4 +73,5 @@ if __name__ == '__main__':
     pl.xlabel('Time $(ms)$', fontsize=16)
     pl.ylabel('Membrane potential $(mV)$', fontsize=16)
     pl.legend(loc='upper right', fontsize=16)
+    pl.savefig(os.path.join(save_img, 'rampIV' + str(np.round(ramp_amp, 2)) + 'nA'+'.svg'))
     pl.show()

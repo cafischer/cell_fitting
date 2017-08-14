@@ -1,8 +1,6 @@
 import numpy as np
 from cell_characteristics.analyze_APs import *
 import scipy
-import matplotlib.pyplot as pl
-from optimization.errfuns import rms
 
 __author__ = 'caro'
 
@@ -21,7 +19,7 @@ def get_DAP(v, t, i_inj, args):
 
 def get_n_spikes(v, t, i_inj, args):
     threshold = args.get('threshold', -10)
-    AP_onsets = get_AP_onsets(v, threshold)
+    AP_onsets = get_AP_onset_idxs(v, threshold)
     return len(AP_onsets)
 
 
@@ -48,7 +46,7 @@ def get_APamp(v, t, i_inj, args):
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
         return None
-    AP_max = get_AP_max(v, AP_onset, AP_end, interval=1/dt)
+    AP_max = get_AP_max_idx(v, AP_onset, AP_end, interval=1/dt)
     if AP_max is None:
         return None
     AP_amp = get_AP_amp(v, AP_max, vrest)
@@ -64,7 +62,7 @@ def get_APwidth(v, t, i_inj, args):
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
         return None
-    AP_max = get_AP_max(v, AP_onset, AP_end, interval=1/dt)
+    AP_max = get_AP_max_idx(v, AP_onset, AP_end, interval=1/dt)
     if AP_max is None:
         return None
     AP_width = get_AP_width(v, t, AP_onset, AP_max, AP_end, vrest)
@@ -79,7 +77,7 @@ def get_APtime(v, t, i_inj, args):
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
         return None
-    AP_max = get_AP_max(v, AP_onset, AP_end, interval=1/dt)
+    AP_max = get_AP_max_idx(v, AP_onset, AP_end, interval=1/dt)
     if AP_max is None:
         return None
     return AP_max * dt
@@ -89,30 +87,13 @@ def penalize_not1AP(v, t, i_inj, args):
     threshold = args.get('threshold', -45)
     penalty = args.get('penalty', 100)
     dt = t[1] - t[0]
-    AP_onsets = get_AP_onsets(v, threshold)
+    AP_onsets = get_AP_onset_idxs(v, threshold)
     if len(AP_onsets) == 1:
         return 0
     return penalty
 
 
 def shifted_AP(v, t, i_inj, args):
-    """
-
-    :param v:
-    :type v:
-    :param t:
-    :type t:
-    :param i_inj:
-    :type i_inj:
-    :param APtime_data:
-    :type APtime_data:
-    :param shift: in ms
-    :type shift:
-    :param window_size: in ms
-    :type window_size:
-    :return:
-    :rtype:
-    """
     dt = t[1] - t[0]
     APtime_data = args['APtime'] / dt
     shift = args['shift'] / dt
@@ -138,22 +119,6 @@ def shifted_AP(v, t, i_inj, args):
 
 
 def shifted_max(v, t, i_inj, args):
-    """
-    :param v:
-    :type v:
-    :param t:
-    :type t:
-    :param i_inj:
-    :type i_inj:
-    :param APtime_data:
-    :type APtime_data:
-    :param shift: in ms
-    :type shift:
-    :param window_size: in ms
-    :type window_size:
-    :return:
-    :rtype:
-    """
     dt = t[1] - t[0]
     APtime_data = args['APtime'] / dt
     shift = args['shift'] / dt
@@ -207,10 +172,10 @@ def get_fAHPamp(v, t, i_inj, args):
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
         return None
-    AP_max = get_AP_max(v, AP_onset, AP_end, interval=1/dt)
+    AP_max = get_AP_max_idx(v, AP_onset, AP_end, interval=1/dt)
     if AP_max is None:
         return None
-    fAHP_min = get_fAHP_min(v, AP_max, AP_end, interval=5/dt)
+    fAHP_min = get_fAHP_min_idx(v, AP_max, AP_end, interval=5/dt)
     fAHP_amp = v[fAHP_min]-vrest
     return fAHP_amp
 
@@ -222,13 +187,13 @@ def get_DAPamp(v, t, i_inj, args):
     AP_onset, AP_end = get_AP_start_end(v, threshold)
     if AP_onset is None or AP_end is None:
         return None
-    AP_max = get_AP_max(v, AP_onset, AP_end, interval=1/dt)
+    AP_max = get_AP_max_idx(v, AP_onset, AP_end, interval=1/dt)
     if AP_max is None:
         return None
-    fAHP_min = get_fAHP_min(v, AP_max, AP_end, interval=5/dt)
+    fAHP_min = get_fAHP_min_idx(v, AP_max, AP_end, interval=5/dt)
     if fAHP_min is None:
         return None
-    DAP_max = get_DAP_max(v, fAHP_min, AP_end, interval=10/dt)
+    DAP_max = get_DAP_max_idx(v, fAHP_min, AP_end, interval=10/dt)
     if DAP_max is None:
         return None
     DAP_amp = get_DAP_amp(v, DAP_max, vrest)

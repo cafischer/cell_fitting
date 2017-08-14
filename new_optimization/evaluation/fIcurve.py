@@ -12,12 +12,12 @@ from nrn_wrapper import Cell
 if __name__ == '__main__':
 
     # parameters
-    data_dir = '../../data/2015_08_26b/vrest-75/IV/'
-    #save_dir = '../../results/server/2017-07-17_17:05:19/54/L-BFGS-B/'
+    #save_dir =  '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
     #model_dir = os.path.join(save_dir, 'model', 'cell.json')
     save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
+    data_dir = '../../data/2015_08_26b/vrest-75/IV/'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
@@ -60,16 +60,18 @@ if __name__ == '__main__':
     firing_rates_model = firing_rates_model[idx_sort]
     firing_rates_data_last_ISI = firing_rates_data_last_ISI[idx_sort]
     firing_rates_model_last_ISI = firing_rates_model_last_ISI[idx_sort]
+    v_traces_data = np.array(v_traces_data)[idx_sort]
     v_traces_model = np.array(v_traces_model)[idx_sort]
 
     # only take amps >= 0
-    amps_greater0 = amps >= 0
-    amps = amps[amps_greater0]
-    firing_rates_data = firing_rates_data[amps_greater0]
-    firing_rates_model = firing_rates_model[amps_greater0]
-    firing_rates_data_last_ISI = firing_rates_data_last_ISI[amps_greater0]
-    firing_rates_model_last_ISI = firing_rates_model_last_ISI[amps_greater0]
-    v_traces_model = v_traces_model[amps_greater0]
+    amps_greater0_idx = amps >= 0
+    amps_greater0 = amps[amps_greater0_idx]
+    firing_rates_data = firing_rates_data[amps_greater0_idx]
+    firing_rates_model = firing_rates_model[amps_greater0_idx]
+    firing_rates_data_last_ISI = firing_rates_data_last_ISI[amps_greater0_idx]
+    firing_rates_model_last_ISI = firing_rates_model_last_ISI[amps_greater0_idx]
+    #v_traces_data = v_traces_data[amps_greater0]
+    #v_traces_model = v_traces_model[amps_greater0]
 
     # plot
     save_dir_fig = os.path.join(save_dir, 'img/IV')
@@ -77,24 +79,29 @@ if __name__ == '__main__':
         os.makedirs(save_dir_fig)
 
     pl.figure()
-    pl.plot(amps, firing_rates_data, 'k', label='Exp. Data')
-    pl.plot(amps, firing_rates_model, 'r', label='Model')
+    pl.plot(amps_greater0, firing_rates_data, 'k', label='Exp. Data')
+    pl.plot(amps_greater0, firing_rates_model, 'r', label='Model')
     pl.xlabel('Current (nA)', fontsize=16)
     pl.ylabel('Firing rate (APs/ms)', fontsize=16)
     pl.legend(loc='lower right', fontsize=16)
     pl.savefig(os.path.join(save_dir_fig, 'fIcurve.png'))
-    pl.show()
+    #pl.show()
 
     pl.figure()
-    pl.plot(amps, firing_rates_data_last_ISI, 'k', label='Exp. Data')
-    pl.plot(amps, firing_rates_model_last_ISI, 'r', label='Model')
+    pl.plot(amps_greater0, firing_rates_data_last_ISI, 'k', label='Exp. Data')
+    pl.plot(amps_greater0, firing_rates_model_last_ISI, 'r', label='Model')
     pl.xlabel('Current (nA)', fontsize=16)
     pl.ylabel('last ISI (ms)', fontsize=16)
-    pl.legend(loc='lower right', fontsize=16)
+    pl.legend(loc='upper right', fontsize=16)
     pl.savefig(os.path.join(save_dir_fig, 'fIcurve_last_ISI.png'))
-    pl.show()
+    #pl.show()
 
-    for v_trace in v_traces_model:
+    for amp, v_trace_data, v_trace_model in zip(amps, v_traces_data, v_traces_model):
         pl.figure()
-        pl.plot(t_model, v_trace)
-        pl.show()
+        pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+        pl.plot(t_model, v_trace_model, 'r', label='Model')
+        pl.xlabel('Time (ms)', fontsize=16)
+        pl.ylabel('Membrane Potential (mV)', fontsize=16)
+        pl.legend(fontsize=16, loc='upper right')
+        pl.savefig(os.path.join(save_dir_fig, 'IV'+str(amp)+'.png'))
+        #pl.show()

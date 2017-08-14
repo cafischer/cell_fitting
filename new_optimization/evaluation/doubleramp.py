@@ -91,9 +91,9 @@ def double_ramp(cell, ramp3_amp, step_amp):
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
+    save_dir = '../../results/server/2017-07-18_11:14:25/17/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
+    #save_dir = '../../results/hand_tuning/test0/'
     #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
@@ -105,5 +105,5 @@ if __name__ == '__main__':
         save_dir_img = os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp), 'PP'+str(seq)+'.png')
         if not os.path.exists(os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp))):
             os.makedirs(os.path.join(save_dir, 'img', 'PP', 'step'+str(step_amp)))
-        ramp3_amp = 1.0 + seq * 0.1  # TODO 1.8 + seq * 0.05
+        ramp3_amp = 0.3 + seq * 0.1  # TODO 1.8 + seq * 0.05
         double_ramp(cell, ramp3_amp, step_amp)

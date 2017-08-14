@@ -75,7 +75,7 @@ def hyperpolarize_ramp(cell):
     pl.xlabel('Time $(ms)$', fontsize=16)
     pl.ylabel('Membrane potential $(mV)$', fontsize=16)
     pl.legend(loc='upper right', fontsize=16)
-    pl.savefig(os.path.join(save_dir_img, 'hyperDAP.png'))
+    pl.savefig(os.path.join(save_dir_img, 'hyperDAP.svg'))
     pl.show()
 
     pl.figure()
@@ -87,7 +87,7 @@ def hyperpolarize_ramp(cell):
     pl.legend(loc='upper right', fontsize=16)
     pl.xlim(595, 645)
     pl.ylim(-85, -40)
-    pl.savefig(os.path.join(save_dir_img, 'hyperDAP_zoom.png'))
+    pl.savefig(os.path.join(save_dir_img, 'hyperDAP_zoom.svg'))
     pl.show()
 
     # plot currents
@@ -105,9 +105,9 @@ def hyperpolarize_ramp(cell):
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
+    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
+    #save_dir = '../../results/hand_tuning/test0/'
     #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 

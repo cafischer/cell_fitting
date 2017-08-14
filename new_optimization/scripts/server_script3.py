@@ -68,23 +68,24 @@ lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(varia
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
 
 fitter_params = {
-                    'name': 'HodgkinHuxleyFitterSeveralDataSeveralFitfuns',
-                    #'name': 'HodgkinHuxleyFitter',
+                    #'name': 'HodgkinHuxleyFitterSeveralDataSeveralFitfuns',
+                    'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
-                    'fitfun_names': [['get_v', 'get_DAP'], ['get_v'], ['get_v', 'get_n_spikes']],
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
-                    # 'fitnessweights': [1, 1000],
-                    # 'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
-                    # 'simulation_params': {'celsius': 35, 'onset': 200},
-                    'fitnessweights': [[100, 1], [1], [0.01, 5]],
-                    'data_dirs': [
-                                  '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
-                                  '../../data/2015_08_26b/vrest-75/IV/-0.1(nA).csv',
-                                  '../../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
-                                  ],
+                    'fitfun_names': ['get_v'],
+                    'fitnessweights': [1],
+                    'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
                     'simulation_params': {'celsius': 35, 'onset': 200},
+                    # 'fitfun_names': [['get_v', 'get_DAP'], ['get_v'], ['get_v', 'get_n_spikes']],
+                    # 'fitnessweights': [[100, 1], [1], [0.01, 5]],
+                    # 'data_dirs': [
+                    #               '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
+                    #               '../../data/2015_08_26b/vrest-75/IV/-0.1(nA).csv',
+                    #               '../../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
+                    #               ],
+                    # 'simulation_params': {'celsius': 35, 'onset': 200},
                     'args': {}
                 }
 
