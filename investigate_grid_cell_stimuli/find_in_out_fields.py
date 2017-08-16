@@ -64,8 +64,9 @@ def get_start_end_ones(x):
 
 
 if __name__ == '__main__':
-    save_dir = './results/test0/in_out_fields'
-    save_dir_data = './results/test0/data'
+    folder = 'test0'
+    save_dir = './results/' + folder + '/in_out_fields'
+    save_dir_data = './results/' + folder + '/data'
 
     # parameters
     seed = 1

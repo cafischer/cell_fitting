@@ -7,9 +7,9 @@ import pandas as pd
 
 
 if __name__ == '__main__':
-
-    save_dir = './results/test0/in_out_field_diff'
-    save_dir_data = './results/test0/data'
+    folder = 'test0'
+    save_dir = './results/' + folder + '/in_out_field_diff'
+    save_dir_data = './results/' + folder + '/data'
     save_dir_ramp_and_theta = './results/test0/ramp_and_theta'
     save_dir_in_out_fields = './results/test0/in_out_fields'
 

@@ -6,9 +6,9 @@ from grid_cell_stimuli.ramp_and_theta import get_ramp_and_theta, plot_filter, pl
 
 
 if __name__ == '__main__':
-
-    save_dir = './results/test0/ramp_and_theta'
-    save_dir_data = './results/test0/downsampled'
+    folder = 'test0'
+    save_dir = './results/' + folder + '/ramp_and_theta'
+    save_dir_data = './results/' + folder + '/downsampled'
     # save_dir_data = './results/test0/APs_removed'
 
     # parameters

@@ -6,9 +6,10 @@ from grid_cell_stimuli import get_phase_and_amplitude_fft
 
 
 if __name__ == '__main__':
-    save_dir = './results/test0/spike_theta_phase'
-    save_dir_data = './results/test0/data'
-    save_dir_theta = './results/test0/ramp_and_theta'
+    folder = 'test0'
+    save_dir = './results/' + folder + '/spike_theta_phase'
+    save_dir_data = './results/' + folder + '/data'
+    save_dir_theta = './results/' + folder + '/ramp_and_theta'
 
     # params
     freq = 8
