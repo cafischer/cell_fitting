@@ -56,8 +56,8 @@ def get_i_inj(protocol, sweep_idxs):
 
 
 if __name__ == '__main__':
-
-    cell = '2015_05_28c'
+    cell_ids = ["2015_08_25b", "2015_08_25h", "2015_08_27d", "2015_08_26b", "2015_08_26f"]
+    cell = '2015_08_26f'
     file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/raw_data', cell +'.dat')
     folder_name = 'vrest-80'
     v_rest = -80
@@ -70,9 +70,10 @@ if __name__ == '__main__':
     v_set = set_v_rest(v, np.array([v[:, 0]]).T, np.ones((np.shape(v)[0], 1))*v_rest)
     v_shifted = shift_v_rest(v, v_rest_shift)
 
-    fig, ax = pl.subplots(2, 1)
-    ax[0].plot(t[2, :], v[2, :])
-    ax[0].plot(t[2, :], v_set[2, :])
-    ax[0].plot(t[2, :], v_shifted[2, :])
-    ax[1].plot(t[2, :], i_inj[2, :])
-    pl.show()
+    for i in range(np.shape(v)[0]):
+        fig, ax = pl.subplots(2, 1)
+        ax[0].plot(t[i, :], v[i, :])
+        #ax[0].plot(t[i, :], v_set[i, :])
+        #ax[0].plot(t[i, :], v_shifted[i, :])
+        ax[1].plot(t[i, :], i_inj[i, :])
+        pl.show()
