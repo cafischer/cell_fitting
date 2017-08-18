@@ -4,91 +4,77 @@ import os
 import re
 import matplotlib.pyplot as pl
 import numpy as np
-from data import correct_baseline
+from data import shift_v_rest, set_v_rest
+from optimization.helpers import convert_to_unit
+
+
+def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None, return_sweep_idxs=False):
+    hekareader = HekaReader(file_dir)
+    type_to_index = hekareader.get_type_to_index()
+    protocol_to_series = hekareader.get_protocol(group)
+    series = protocol_to_series[protocol]
+    sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series]) + 1)]
+    # print '# sweeps: ', len(sweeps)
+    if sweep_idxs is None:
+        sweep_idxs = range(len(sweeps))
+    sweeps = [sweeps[index] for index in sweep_idxs]
+    indices = [type_to_index[group][series][sweep][trace] for sweep in sweeps]
+
+    v = [0] * len(indices)
+    t = [0] * len(indices)
+    for i, index in enumerate(indices):
+        t[i], v[i] = hekareader.get_xy(index)
+        x_unit, y_unit = hekareader.get_units_xy(index)
+        assert x_unit == 's'
+        assert y_unit == 'V'
+        t[i] = convert_to_unit('m', t[i])  # ms
+        v[i] = convert_to_unit('m', v[i])  # mV
+        t[i] = list(t[i])
+        v[i] = list(v[i])
+
+    if return_sweep_idxs:
+        return np.array(v), np.array(t), sweep_idxs
+    return np.array(v), np.array(t)
+
+
+def get_i_inj(protocol, sweep_idxs):
+    try:
+        i_inj_base = pd.read_csv('./Protocols/' + protocol + '.csv', header=None).values[:, 0]
+    except IOError:
+        raise ValueError('I_inj does not exist for the given protocol')
+
+    i_inj = [0] * len(sweep_idxs)
+    for i, sweep_idx in enumerate(sweep_idxs):
+        if protocol == 'IV':
+            amp_change = -0.15 + sweep_idx * 0.05
+        elif protocol == 'rampIV':
+            amp_change = sweep_idx * 0.1
+        else:
+            amp_change = 1
+        i_inj[i] = list(i_inj_base * amp_change)
+    return np.array(i_inj)
 
 
 if __name__ == '__main__':
 
     cell = '2015_05_28c'
     #file_dir = './'+cell+'/'+cell +'.dat'
-    file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/rawData', cell +'.dat')
+    file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/raw_data', cell +'.dat')
     folder_name = 'vrest-80'
     v_rest = -80
-    v_rest_change = None #-16
+    v_rest_shift = -16 #-16
     correct_vrest = True
     protocol = 'IV'
 
-    hekareader = HekaReader(file_dir)
-    type_to_index = hekareader.get_type_to_index()
+    v, t, sweep_idxs = get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None,
+                                 return_sweep_idxs=True)
+    i_inj = get_i_inj(protocol, sweep_idxs)  # re.sub('\(.*\)', '', protocol)
+    v_set = set_v_rest(v, np.array([v[:, 0]]).T, np.ones((np.shape(v)[0], 1))*v_rest)
+    v_shifted = shift_v_rest(v, v_rest_shift)
 
-    group = 'Group1'
-    trace = 'Trace1'
-    protocol_to_series = hekareader.get_protocol(group)
-    series = protocol_to_series[protocol]
-    sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series])+1)]
-    print '# sweeps: ', len(sweeps)
-    #sweep_idx = [0]
-    sweep_idx = range(len(sweeps))
-    #sweep_idx = [range(len(sweeps))[-1]]
-    sweeps = [sweeps[index] for index in sweep_idx]
-
-    indices = [type_to_index[group][series][sweep][trace] for sweep in sweeps]
-
-    fig = pl.figure()
-    ax = fig.add_subplot(111)
-    for i, index in enumerate(indices):
-        # plot
-        x, y = hekareader.get_xy(index)
-        x *= 1000
-        y *= 1000
-        if correct_vrest:
-            y = correct_baseline(y, v_rest, v_rest_change)
-        x_unit, y_unit = hekareader.get_units_xy(index)
-
-        ax.plot(x, y)
-        ax.set_xlabel('Time (ms)', fontsize=16)
-        ax.set_ylabel('Membrane Potential (mV)', fontsize=16)
-        ax.tick_params(labelsize=15)
-
-        # save data
-        protocol_tmp = re.sub('\(.*\)', '', protocol)
-        try:
-            i_inj = pd.read_csv('./Protocols/' + protocol + '.csv', header=None)  # TODO: different for all PPs
-            i_inj = np.array(i_inj)[:, 0]
-        except IOError:
-            print 'Using different current protocol!'
-            i_inj = np.zeros(len(x))
-
-        if protocol == 'IV':
-            amp = -0.15 + sweep_idx[i] * 0.05
-            amp_change = amp
-        elif protocol == 'rampIV':
-            amp = sweep_idx[i] * 0.1
-            amp_change = amp / 0.1
-        elif protocol == 'hypTester':
-            amp = -0.005
-            amp_change = 1
-        elif protocol == 'Zap20':
-            amp = 0.1
-            amp_change = 1
-        else:
-            amp = 0
-            amp_change = 1
-        print 'Amplitude: ', amp
-        i_inj *= amp_change
-
-        data = pd.DataFrame({'v': y, 't': x, 'i': i_inj})
-        save_dir = os.path.join('./', cell, folder_name, protocol)
-        if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
-
-        #shorten = np.logical_and(470 <= x, x <= 650)  TODO
-        #data = data[shorten].copy()
-        #data.t -= data.t.iloc[0]
-
-        data.to_csv(os.path.join(save_dir, str(amp) + '(nA).csv'), index=False)
-
-    #ax.set_xlim([0, 120])
-    #ax.set_ylim([-70, 55])
-    pl.tight_layout()
+    fig, ax = pl.subplots(2, 1)
+    ax[0].plot(t[2, :], v[2, :])
+    ax[0].plot(t[2, :], v_set[2, :])
+    ax[0].plot(t[2, :], v_shifted[2, :])
+    ax[1].plot(t[2, :], i_inj[2, :])
     pl.show()

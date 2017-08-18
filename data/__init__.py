@@ -4,12 +4,12 @@ import numpy as np
 __author__ = 'caro'
 
 
-def correct_baseline(y, vrest=None, v_rest_change=None):
-    if vrest is not None:
-        y = y - (y[0] - vrest)
-    if v_rest_change is not None:
-        y += v_rest_change
-    return y
+def set_v_rest(v, v_rest_old, vrest_new):
+    return v - (v_rest_old - vrest_new)
+
+
+def shift_v_rest(v, v_rest_shift):
+    return v + v_rest_shift
 
 
 def power_of_2(n):

@@ -4,11 +4,11 @@ import os
 import matplotlib.pyplot as pl
 import re
 import numpy as np
-from data import correct_baseline
+from data import shift_v_rest
 
 
 if __name__ == '__main__':
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/rawData'
+    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     protocol_base = 'Stimulus'
     v_rest = -75
     correct_vrest = True
@@ -63,7 +63,7 @@ if __name__ == '__main__':
                 assert dt == t[1] - t[0]  # ms
                 vm *= 1000  # mV
                 if correct_vrest:
-                    vm = correct_baseline(vm, v_rest)
+                    vm = shift_v_rest(vm, v_rest)
                 vms.append(vm)
                 ts.append(t)
             vms_per_protocol.append(vms)

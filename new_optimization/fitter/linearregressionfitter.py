@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from optimization.linear_regression import convert_unit_prefix, linear_regression
+from optimization.linear_regression import convert_from_unit, linear_regression
 from optimization.helpers import get_channel_list, get_ionlist, get_cellarea
 from nrn_wrapper import load_mechanism_dir, Cell, iclamp
 from optimization.simulate import currents_given_v
@@ -37,11 +37,11 @@ class LinearRegressionFitter(object):
         self.dvdt = np.concatenate((np.array([(self.v_exp[1] - self.v_exp[0]) / dt]), np.diff(self.v_exp) / dt))  #V/s
 
         # compute cell areas
-        self.cell_area = get_cellarea(convert_unit_prefix('u', self.cell.soma.L),
-                                 convert_unit_prefix('u', self.cell.soma.diam))  # m**2
+        self.cell_area = get_cellarea(convert_from_unit('u', self.cell.soma.L),
+                                      convert_from_unit('u', self.cell.soma.diam))  # m**2
 
         # compute injected current
-        self.i_inj = convert_unit_prefix('n', self.data.i.values)  # A
+        self.i_inj = convert_from_unit('n', self.data.i.values)  # A
 
     def evaluate_fitness(self, candidate, args):
         self.update_cell(candidate)
@@ -70,7 +70,7 @@ class LinearRegressionFitter(object):
     def get_currents(self):
         currents = currents_given_v(self.v_exp, self.t_exp, self.cell.soma, self.channel_list, self.ion_list,
                                     self.simulation_params['celsius'])
-        currents = convert_unit_prefix('da', currents) * self.cell_area  # A
+        currents = convert_from_unit('da', currents) * self.cell_area  # A
         return currents
 
     def do_linear_regression(self, currents):
@@ -78,7 +78,7 @@ class LinearRegressionFitter(object):
             weights, _, residual, y, X = linear_regression(self.dvdt, self.i_inj, currents, i_pas=0,
                                                            Cm=None, cell_area=self.cell_area)
         else:
-            Cm = convert_unit_prefix('c', self.cell.soma.cm) * self.cell_area  # F
+            Cm = convert_from_unit('c', self.cell.soma.cm) * self.cell_area  # F
             weights, residual, y, X = linear_regression(self.dvdt, self.i_inj, currents, i_pas=0, Cm=Cm)
 
         return weights, residual

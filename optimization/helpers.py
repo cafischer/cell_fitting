@@ -41,36 +41,70 @@ def get_ionlist(channel_list):
     return ion_list
 
 
-def convert_unit_prefix(from_prefix, x):
+def convert_from_unit(prefix, x):
     """
     Converts x from unit prefix to base unit.
-    :param from_prefix: Prefix (implemented are 'da', 'd', 'c', 'm', 'u', 'n').
-    :type from_prefix:str
+    :param prefix: Prefix (implemented are 'T', 'M', da', 'd', 'c', 'm', 'u', 'n', 'p').
+    :type prefix:str
     :param x: Quantity to convert.
     :type x: array_like
     :return: Converted quantity.
     :rtype: array_like
     """
-    if from_prefix == 'T':
+    if prefix == 'T':
         return x * 1e12
-    elif from_prefix == 'M':
+    elif prefix == 'M':
         return x * 1e6
-    elif from_prefix == 'h':
+    elif prefix == 'h':
         return x * 1e2
-    elif from_prefix == 'da':
+    elif prefix == 'da':
         return x * 1e1
-    elif from_prefix == 'd':
+    elif prefix == 'd':
         return x * 1e-1
-    elif from_prefix == 'c':
+    elif prefix == 'c':
         return x * 1e-2
-    elif from_prefix == 'm':
+    elif prefix == 'm':
         return x * 1e-3
-    elif from_prefix == 'u':
+    elif prefix == 'u':
         return x * 1e-6
-    elif from_prefix == 'n':
+    elif prefix == 'n':
         return x * 1e-9
-    elif from_prefix == 'p':
+    elif prefix == 'p':
         return x * 1e-12
+    else:
+        raise ValueError('No valid prefix!')
+
+
+def convert_to_unit(prefix, x):
+    """
+    Converts x from base unit to unit prefix.
+    :param prefix: Prefix (implemented are 'T', 'M', da', 'd', 'c', 'm', 'u', 'n', 'p').
+    :type prefix:str
+    :param x: Quantity to convert.
+    :type x: array_like
+    :return: Converted quantity.
+    :rtype: array_like
+    """
+    if prefix == 'T':
+        return x * 1e-12
+    elif prefix == 'M':
+        return x * 1e-6
+    elif prefix == 'h':
+        return x * 1e-2
+    elif prefix == 'da':
+        return x * 1e-1
+    elif prefix == 'd':
+        return x * 1e1
+    elif prefix == 'c':
+        return x * 1e2
+    elif prefix == 'm':
+        return x * 1e3
+    elif prefix == 'u':
+        return x * 1e6
+    elif prefix == 'n':
+        return x * 1e9
+    elif prefix == 'p':
+        return x * 1e12
     else:
         raise ValueError('No valid prefix!')
 

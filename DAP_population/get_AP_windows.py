@@ -4,7 +4,7 @@ import os
 import matplotlib.pyplot as pl
 import numpy as np
 from cell_characteristics.analyze_APs import get_AP_onsets, get_AP_max_idx
-from data import correct_baseline
+from data import shift_v_rest
 
 
 def get_AP_peak(vm, window_before, window_after, threshold, AP_interval):
@@ -43,7 +43,7 @@ def get_AP_matrix(data_dir, cells, protocol, correct_vrest, v_rest, window_befor
             assert dt == t[1] - t[0]  # ms
             vm *= 1000  # mV
             if correct_vrest:
-                vm = correct_baseline(vm, v_rest)
+                vm = shift_v_rest(vm, v_rest)
 
             # get AP peak
             AP_peak = get_AP_peak(vm, window_before, window_after, threshold, AP_interval)

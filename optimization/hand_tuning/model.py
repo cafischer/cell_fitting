@@ -21,10 +21,10 @@ class Model:
         dvdt = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt]), np.diff(v_exp) / dt))  # V/m
 
         # convert units
-        cell_area = get_cellarea(convert_unit_prefix('u', self.fitter.cell.soma.L),
-                                 convert_unit_prefix('u', self.fitter.cell.soma.diam))  # m**2
-        Cm = convert_unit_prefix('c', self.fitter.cell.soma.cm) * cell_area  # F
-        i_inj = convert_unit_prefix('n', self.fitter.data.i.values)  # A
+        cell_area = get_cellarea(convert_from_unit('u', self.fitter.cell.soma.L),
+                                 convert_from_unit('u', self.fitter.cell.soma.diam))  # m**2
+        Cm = convert_from_unit('c', self.fitter.cell.soma.cm) * cell_area  # F
+        i_inj = convert_from_unit('n', self.fitter.data.i.values)  # A
 
         return dvdt * Cm - i_inj  # A
 
@@ -37,9 +37,9 @@ class Model:
                                     self.channel_list, self.ion_list, self.fitter.simulation_params['celsius'])  # mA/cm**2
 
         # convert units
-        cell_area = get_cellarea(convert_unit_prefix('u', self.fitter.cell.soma.L),
-                                 convert_unit_prefix('u', self.fitter.cell.soma.diam))  # m**2
-        currents = convert_unit_prefix('da', currents) * cell_area  # A
+        cell_area = get_cellarea(convert_from_unit('u', self.fitter.cell.soma.L),
+                                 convert_from_unit('u', self.fitter.cell.soma.diam))  # m**2
+        currents = convert_from_unit('da', currents) * cell_area  # A
 
         return currents
 

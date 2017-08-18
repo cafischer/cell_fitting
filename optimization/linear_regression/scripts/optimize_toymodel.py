@@ -73,11 +73,11 @@ celsius = fitter.simulation_params['celsius']
 currents = currents_given_v(v_exp, t_exp, fitter.cell.soma, channel_list, ion_list, celsius)
 
 # convert units
-cell_area = get_cellarea(convert_unit_prefix('u', fitter.cell.soma.L),
-                         convert_unit_prefix('u', fitter.cell.soma.diam))  # m**2
-Cm = convert_unit_prefix('c', fitter.cell.soma.cm) * cell_area  # F
-i_inj = convert_unit_prefix('n', fitter.data.i.values)  # A
-currents = convert_unit_prefix('da', currents) * cell_area  # A
+cell_area = get_cellarea(convert_from_unit('u', fitter.cell.soma.L),
+                         convert_from_unit('u', fitter.cell.soma.diam))  # m**2
+Cm = convert_from_unit('c', fitter.cell.soma.cm) * cell_area  # F
+i_inj = convert_from_unit('n', fitter.data.i.values)  # A
+currents = convert_from_unit('da', currents) * cell_area  # A
 
 # linear regression
 if with_cm:

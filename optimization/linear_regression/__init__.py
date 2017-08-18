@@ -2,7 +2,7 @@ import numpy as np
 from scipy.optimize import nnls
 import matplotlib.pyplot as pl
 from matplotlib.pyplot import cm as cmap
-from optimization.helpers import convert_unit_prefix
+from optimization.helpers import convert_from_unit
 
 __author__ = 'caro'
 
@@ -18,7 +18,7 @@ def linear_regression(dvdt, i_inj, currents, i_pas=0, Cm=None, cell_area=None):
         weights, residual = nnls(X, y)
         Cm = 1/weights[-1]
         weights_adjusted = weights * Cm
-        weights_adjusted[-1] = convert_unit_prefix('h', Cm / cell_area)  # uF/cm**2
+        weights_adjusted[-1] = convert_from_unit('h', Cm / cell_area)  # uF/cm**2
 
         return weights_adjusted, weights, residual, y, X
     else:

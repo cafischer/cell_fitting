@@ -2,12 +2,12 @@ from __future__ import division
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as pl
-from cell_characteristics.analyze_APs import get_AP_onsets
+from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from analyze_intracellular.load_files import read_channel_data
 
 
 data_patch = pd.read_csv('../data/2015_08_26b/vrest-75/IV/0.4(nA).csv')
-AP_onsets = get_AP_onsets(data_patch.v, threshold=-55)
+AP_onsets = get_AP_onset_idxs(data_patch.v, threshold=-55)
 AP_onset = AP_onsets[3]
 AP_end = AP_onsets[4]
 v_spike = data_patch.v[AP_onset]
@@ -27,7 +27,7 @@ threshold_pos = 750
 i_on_pos = np.nonzero(np.diff(np.sign(i_sharp - threshold_pos)) == 2)[0]
 i_off_pos = np.nonzero(np.diff(np.sign(threshold_pos - i_sharp)) == 2)[0]
 i_idx = 2
-AP_onsets = get_AP_onsets(v_sharp[i_on_pos[i_idx]:i_off_pos[i_idx]], threshold=-33.5)
+AP_onsets = get_AP_onset_idxs(v_sharp[i_on_pos[i_idx]:i_off_pos[i_idx]], threshold=-33.5)
 AP_onset = AP_onsets[1] + i_on_pos[i_idx]
 AP_end = AP_onsets[2] + i_on_pos[i_idx]
 

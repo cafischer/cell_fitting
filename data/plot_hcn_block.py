@@ -1,7 +1,7 @@
 from heka_reader import HekaReader
 import os
 import matplotlib.pyplot as pl
-from data import correct_baseline
+from data import shift_v_rest
 import re
 
 
@@ -53,7 +53,7 @@ if __name__ == '__main__':
             t *= 1000  # ms
             vm *= 1000  # mV
             if correct_vrest:
-                vm = correct_baseline(vm, v_rest)
+                vm = shift_v_rest(vm, v_rest)
             vms.append(vm)
 
         # plot
