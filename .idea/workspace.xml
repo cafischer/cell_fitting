@@ -2,16 +2,350 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/DAP_population/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/DAP_population/clustering.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/DAP_population/find_DAP_types.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/DAP_population/get_AP_windows.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/README.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/check_models/check_kirst_model.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/check_models/check_nowacki_model.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/artificial_data/create_data.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/cells_by_protocol.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/dap2csv.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/look_for_good_cells.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/plot_PP.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/plot_hcn_block.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/plot_sine_stimulus.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/save_PP.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/save_traces_by_hekareader.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/stepcurrent2csv.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/toymodels/create_data.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/zapcurrent2csv.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/downsample.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/find_in_out_fields.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/in_out_field_diff.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/ramp_and_theta.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/remove_APs.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/sine_with_noise.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase_with_fft.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/theta_envelope.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_synaptic_noise/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_synaptic_noise/minimal_example_synaptic_input.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_synaptic_noise/noise_patch_clamp.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/investigate_synaptic_noise/synaptic_input_stellate.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/comparison.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/evaluate.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/fitfuns.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/izhi_to_hh.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/optimize.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/optimize_vector.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/IV_rampIV/-0.15(nA)_1.0(nA)/individuals_file.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/IV_rampIV/-0.15(nA)_1.0(nA)/method_args.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/IV_rampIV/-0.15(nA)_1.0(nA)/seed.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(1)/individuals_file.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(1)/method_args.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(1)/seed.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(3)/individuals_file.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(3)/method_args.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(3)/seed.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(4)/individuals_file.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(4)/method_args.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(4)/seed.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(5)/individuals_file.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(5)/method_args.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/izhikevichStellateCell/results/PSO/2015_08_26b/rampIV/DAP(5)/seed.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/2017-06-19_13:12:49_189.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/best_dap.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/competition_model.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/dapmodel_ca.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/dapmodel_nocurrents.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/dapmodel_simpel.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/hhCell.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/kirst_model.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/nowacki_model.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/cells/nowacki_model2.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/general/hcn_fast.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/general/hcn_slow.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/general/ka.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/general/nap.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/kirst/ka.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/kirst/kdr.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/kirst/km.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/kirst/nat.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/markov/hcn.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/markov/kdr.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/markov/nat.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/cah2.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/hcn.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/hcn2.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/hcn3.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/ka.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/kdr_v.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/nap_v.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/nat2.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki/nat_v.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/cah.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/cat.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/cah.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/cat.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/hcn.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/kdr.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/km.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/libnrnmech.la" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/libnrnmech.lai" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/libnrnmech.so" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/libnrnmech.so.0" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/libnrnmech.so.0.0.0" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/mod_func.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/nap.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/nat.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/.libs/nat2.o" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/cah.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/cah.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/cah.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/cat.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/cat.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/cat.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/hcn.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/hcn.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/hcn.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/kdr.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/kdr.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/kdr.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/km.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/km.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/km.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/libnrnmech.la" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/mod_func.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/mod_func.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nap.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nap.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nap.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nat.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nat.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nat.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nat2.c" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nat2.lo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/nat2.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/i686/special" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/kdr.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/km.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/nap.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/nowacki_pur/nat.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/stellate/hcn_fast.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/stellate/hcn_slow.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/cav.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/hcn_fast.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/hcn_slow.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/ka.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/ka2.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/kdr.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/kdr2.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/kdri.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap2.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap_act.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap_act2.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap_act_fast.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap_act_slow.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap_inact.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nap_markov.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nat.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nat_act.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/model/channels/vavoulis/nats.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/blocking_experiment.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/fIcurve_with_noise.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/hcn_block.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/increase_rampIV.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/input_resistance.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/phaseplot.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/phaseplots.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/plot_currents.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/plot_gates.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/sine_stimulus.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/evaluation/zap.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/fitter/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/fitter/channelfitter.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/fitter/fitter_interface.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/fitter/izhikevichfitter.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/fitter/linearregressionfitter.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizer/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizer/climin_optimizer.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizer/climin_optimizer_multiprocessing.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizer/inspyred_optimizer.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizer/optimizer_interface.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizer/random_optimizer.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer_multiprocessing.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/optimize_hyperparameter_stellate.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/optimize_stellate_data2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/run_linearregressionfitter_toymodel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/run_optimization.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script1.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script14_adaptive.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script3.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script4.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script5.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script_2014_01_07b.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script_2014_12_03m.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script_2015_03_30e.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script_2015_04_02n.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script_2015_05_28c.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/server_script_2015_08_25b.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/new_optimization/scripts/test_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/3dplot_evolution.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/1/cell.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/1/data.npy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/1/labels.npy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/1/problem.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/1/seed.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/2/cell.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/2/data.npy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/2/labels.npy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/2/model.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/2/model_weights.h5" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/2/problem.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/2/seed.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/3/cell.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/3/data.npy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/3/labels.npy" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/3/model.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/3/model_weights.h5" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/3/problem.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/data/toymodel1/na8st/3/seed.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/generate_data.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/test2.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/test3.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/test4.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/test5.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/LSTM/test6.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/bio_inspired/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/bio_inspired/evaluators.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/bio_inspired/generators.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/bio_inspired/observers.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/errfuns.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitfuns.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/attraction_basins_from_gradientdescent.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/combine_fitnesslandscapes.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_fitnesslandscape.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_gradientlandscape.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/compute_modellandscape.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitness.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/plot_fitnesslandscape.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/plot_modellandscape.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/fitnesslandscape/save_minima_descent.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/gradient_based/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/hand_tuning/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/hand_tuning/controller.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/hand_tuning/handtuner.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/hand_tuning/model.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/hand_tuning/view.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/helpers.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/hhsolver/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/hhsolver/scripts/optimize_toymodel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/linear_regression/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/linear_regression/error_analysis/timestep.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/linear_regression/scripts/estimate_cellsize.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/linear_regression/scripts/optimize_toymodel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/linear_regression/scripts/plot_cmdvdt.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/old_optimization/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/old_optimization/evaluate_selected_trials.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/old_optimization/evaluation.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/old_optimization/init_optimization.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/old_optimization/run_optimization.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/optimization/simulate.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/schmidt_hieber_plot/plot.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/channel_characteristics.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/channel_given_v.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/build_trace_data.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/compare_with_experiments.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/evaluate_fits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/fit_channel_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/mod/caHVA_fit.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/plots/digitized_vsteps/plot_vsteps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caHVA/v_clamp_with_new_params.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/caLVA_channel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/compare_with_experiments.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/evaluate_fits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/fit_channel_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/mod/caLVA_fit.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/plots/digitized_vsteps/plot_vsteps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/caLVA/v_clamp_with_new_params.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/evaluate_fits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/compare_with_experiments.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/evaluate_fits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_channel_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/fit_time_constants.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/hcn_channel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_dickson.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/mod/hcn_fit.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/plots/digitized_vsteps/plot_vsteps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/plots/digitized_vsteps2/plot_vsteps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/hcn/v_clamp_with_new_params.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/compare_with_experiments.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/evaluate_fits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/fit_channel_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/ka_channel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/mod/ka_fit.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/plots/digitized_vsteps/plot_vsteps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/ka/v_clamp_with_new_params.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/compare_with_experiments.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/evaluate_fits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/fit_channel_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/kdr_channel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/mod/kdr_fit.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/plots/digitized_vsteps/plot_vsteps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/kdr/v_clamp_with_new_params.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/boltzmann_from_traces.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/compare_with_experiments.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/evaluate_fits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/experimental_data.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_channel_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/fit_time_constants.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/nap_fit.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/mod/nap_magistretti.mod" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps/plot_vsteps_interpolate.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nap/v_clamp_with_new_params.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/compare_with_experiments.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/evaluate_fits.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/fit_channel_script.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/nat_channel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/plots/digitized_vsteps/plot_vsteps.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/experimental_channels/nat/v_clamp_with_new_params.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/test_ionchannel.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test_channels/test_kdr.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/util/__init__.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cell_fitting.iml" afterPath="$PROJECT_DIR$/.idea/cell_fitting.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py" afterPath="$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/find_in_out_fields.py" afterPath="$PROJECT_DIR$/investigate_grid_cell_stimuli/find_in_out_fields.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/in_out_field_diff.py" afterPath="$PROJECT_DIR$/investigate_grid_cell_stimuli/in_out_field_diff.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/ramp_and_theta.py" afterPath="$PROJECT_DIR$/investigate_grid_cell_stimuli/ramp_and_theta.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase.py" afterPath="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase_with_fft.py" afterPath="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase_with_fft.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/investigate_grid_cell_stimuli/theta_envelope.py" afterPath="$PROJECT_DIR$/investigate_grid_cell_stimuli/theta_envelope.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" afterPath="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
     </list>
     <ignored path="cell_fitting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,7 +393,20 @@
     </favorites_list>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="65" column="0" lean-forward="true" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#34#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -129,18 +476,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/model/channels/markov/hcn.mod" />
-        <option value="$PROJECT_DIR$/model/channels/markov/nat.mod" />
-        <option value="$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
-        <option value="$PROJECT_DIR$/new_optimization/scripts/test/0/L-BFGS-B/candidates.csv" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/sine_stimulus.py" />
-        <option value="$PROJECT_DIR$/../bac_project/bac_project/connectivity/stimuli.py" />
-        <option value="$PROJECT_DIR$/../bac_project/bac_project/connectivity/connection.py" />
         <option value="$PROJECT_DIR$/investigate_synaptic_noise/synaptic_input_stellate.py" />
         <option value="$PROJECT_DIR$/new_optimization/evaluation/sine_with_noise.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/new_optimization/scripts/server_script4.py" />
-        <option value="$PROJECT_DIR$/schmidt_hieber_plot/plot.py" />
         <option value="$PROJECT_DIR$/grid_cell_stimuli/doublets.py" />
         <option value="$PROJECT_DIR$/grid_cell_stimuli/downsample.py" />
         <option value="$PROJECT_DIR$/grid_cell_stimuli/sine_with_noise.py" />
@@ -169,7 +508,6 @@
         <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/sine_with_noise.py" />
         <option value="$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/downsample/__init__.py" />
         <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/downsample.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
         <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
         <option value="$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/ISI_hist/__init__.py" />
         <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py" />
@@ -180,6 +518,15 @@
         <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/ramp_and_theta.py" />
         <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/theta_envelope.py" />
         <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase_with_fft.py" />
+        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
+        <option value="$PROJECT_DIR$/schmidt_hieber_plot/plot.py" />
+        <option value="$PROJECT_DIR$/data/plot_sine_stimulus.py" />
+        <option value="$PROJECT_DIR$/optimization/helpers.py" />
+        <option value="$PROJECT_DIR$/data/__init__.py" />
+        <option value="$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/save_traces_by_hekareader.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
       </list>
     </option>
   </component>
@@ -229,8 +576,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -241,12 +586,14 @@
             <path>
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="investigate_grid_cell_stimuli" type="462c0819:PsiDirectoryNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -283,21 +630,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.spike_theta_phase">
-    <configuration name="ISI_hist (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.__init__">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/investigate_grid_cell_stimuli" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/read_heka" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -421,42 +768,6 @@
       <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
-    <configuration name="downsample" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/investigate_grid_cell_stimuli" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/investigate_grid_cell_stimuli/downsample.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="evaluate" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/new_optimization/evaluation" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
     <configuration name="evaluate_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -471,6 +782,42 @@
       <module name="cell_fitting" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/schmidt_hieber_plot" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/schmidt_hieber_plot/plot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="save_traces_by_hekareader" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -495,18 +842,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.evaluate_server" />
-      <item index="1" class="java.lang.String" itemvalue="Python.downsample" />
-      <item index="2" class="java.lang.String" itemvalue="Python.evaluate" />
-      <item index="3" class="java.lang.String" itemvalue="Python.ISI_hist (1)" />
-      <item index="4" class="java.lang.String" itemvalue="Python.spike_theta_phase" />
+      <item index="1" class="java.lang.String" itemvalue="Python.spike_theta_phase" />
+      <item index="2" class="java.lang.String" itemvalue="Python.plot" />
+      <item index="3" class="java.lang.String" itemvalue="Python.save_traces_by_hekareader" />
+      <item index="4" class="java.lang.String" itemvalue="Python.__init__" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.spike_theta_phase" />
-        <item index="1" class="java.lang.String" itemvalue="Python.ISI_hist (1)" />
-        <item index="2" class="java.lang.String" itemvalue="Python.evaluate" />
+        <item index="0" class="java.lang.String" itemvalue="Python.__init__" />
+        <item index="1" class="java.lang.String" itemvalue="Python.save_traces_by_hekareader" />
+        <item index="2" class="java.lang.String" itemvalue="Python.plot" />
         <item index="3" class="java.lang.String" itemvalue="Python.evaluate_server" />
-        <item index="4" class="java.lang.String" itemvalue="Python.downsample" />
+        <item index="4" class="java.lang.String" itemvalue="Python.spike_theta_phase" />
       </list>
     </recent_temporary>
   </component>
@@ -523,20 +870,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1444289885125</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Updated handtuner">
-      <created>1478971471400</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1478971471400</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Corrected get_DAP_deflection: now gives the absolute value&#10;Updated example wit units&#10;">
-      <created>1480509521502</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1480509521502</updated>
     </task>
     <task id="LOCAL-00043" summary="Uses now matplotlib FigureCanvas and NavigationToolbar for plots">
       <created>1480539377314</created>
@@ -867,7 +1200,21 @@
       <option name="project" value="LOCAL" />
       <updated>1502727770518</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="moved functions to grid_cell_stimuli package">
+      <created>1502902083886</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1502902083887</updated>
+    </task>
+    <task id="LOCAL-00091" summary="better access of heka data">
+      <created>1503047839409</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1503047839422</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -914,14 +1261,16 @@
   <component name="ToolWindowManager">
     <frame x="0" y="28" width="1920" height="1052" extended-state="6" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19370331" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2022412" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46346784" sideWeight="0.52454644" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.46346784" sideWeight="0.52454644" order="8" side_tool="true" content_ui="tabs" x="187" y="526" width="1545" height="73" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17724289" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38020247" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26771653" sideWeight="0.4754536" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.114727855" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4525627" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35433072" sideWeight="0.47809076" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -929,13 +1278,11 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3633296" sideWeight="0.4754536" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22464558" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35433072" sideWeight="0.47809076" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -976,8 +1323,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add izhikevich optimization" />
-    <MESSAGE value="update cell models" />
     <MESSAGE value="plot PP for different steps and amplitudes" />
     <MESSAGE value="made hyperdap.py conform to the experiments" />
     <MESSAGE value="added save_PP.py for saving all PP files and rampIV for plotting reponse for different amplitudes" />
@@ -1001,7 +1346,9 @@
     <MESSAGE value="plot comparing patch, sharp recording in vivo and vitro when pos. current step is applied" />
     <MESSAGE value="added phase analysis of APs" />
     <MESSAGE value="refactored investigate_grid_cel_stimuli" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactored investigate_grid_cel_stimuli" />
+    <MESSAGE value="moved functions to grid_cell_stimuli package" />
+    <MESSAGE value="better access of heka data" />
+    <option name="LAST_COMMIT_MESSAGE" value="better access of heka data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1032,88 +1379,17 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1390" />
+      <option name="time" value="1401" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="61" column="17" lean-forward="true" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/results/test0/data/sine_params" />
-    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/results/test0/data/syn_params" />
-    <entry file="file://$PROJECT_DIR$/grid_cell_stimuli/results/test0/data/params" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/data/v.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/sine_stimulus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/data/params.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/simulate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2988">
-          <caret line="171" column="0" lean-forward="false" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_synaptic_noise/synaptic_input_stellate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1446">
-          <caret line="11" column="46" lean-forward="false" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/ramp_and_theta/gain_filter.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/ramp_and_theta/power_spectrum.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/ramp_and_theta/theta_envelope.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/ramp_and_theta/ramp_and_theta.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schmidt_hieber_plot/plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="25" column="19" lean-forward="true" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="37" column="23" lean-forward="false" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/investigate_synaptic_noise/synaptic_input_stellate.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/ramp_and_theta/gain_filter.png" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/ramp_and_theta/power_spectrum.png" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/ramp_and_theta/theta_envelope.png" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/results/test0/ramp_and_theta/ramp_and_theta.png" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/test.py" />
     <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1121,140 +1397,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="111" column="25" lean-forward="true" selection-start-line="111" selection-start-column="25" selection-end-line="111" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="102" column="16" lean-forward="true" selection-start-line="102" selection-start-column="16" selection-end-line="102" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" />
     <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/IV.py" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/blocking_experiment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="19" column="32" lean-forward="false" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/increase_rampIV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="76" column="13" lean-forward="true" selection-start-line="47" selection-start-column="4" selection-end-line="76" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/hcn_block.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="35" column="15" lean-forward="true" selection-start-line="35" selection-start-column="15" selection-end-line="35" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/results/hand_tuning/test0/cell.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-109">
-          <caret line="57" column="25" lean-forward="false" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script4.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="26" column="59" lean-forward="true" selection-start-line="26" selection-start-column="59" selection-end-line="26" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nap_markov.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="44" lean-forward="false" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2305">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/test/0/SA/candidates.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script5.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="105" column="64" lean-forward="true" selection-start-line="105" selection-start-column="64" selection-end-line="105" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="21" lean-forward="true" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="73" column="25" lean-forward="true" selection-start-line="73" selection-start-column="25" selection-end-line="73" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/inspyred_optimizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1853">
-          <caret line="119" column="0" lean-forward="true" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/optimization/fitfuns.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1962">
-          <caret line="120" column="31" lean-forward="true" selection-start-line="120" selection-start-column="31" selection-end-line="120" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="4" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/blocking_experiment.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/increase_rampIV.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/hcn_block.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/results/hand_tuning/test0/cell.json" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script4.py" />
+    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nap_markov.mod" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/test/0/SA/candidates.csv" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script5.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script1.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script3.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/inspyred_optimizer.py" />
+    <entry file="file://$PROJECT_DIR$/optimization/fitfuns.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/__init__.py" />
     <entry file="file://$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/downsample/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -1262,20 +1424,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="8" column="37" lean-forward="false" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="225" column="30" lean-forward="true" selection-start-line="225" selection-start-column="30" selection-end-line="225" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
     <entry file="file://$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/ISI_hist/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -1287,88 +1436,48 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="97">
           <caret line="38" column="55" lean-forward="false" selection-start-line="38" selection-start-column="55" selection-end-line="38" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/in_out_field_diff.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/remove_APs.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/ramp_and_theta.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/find_in_out_fields.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/downsample.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/theta_envelope.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase_with_fft.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase.py" />
+    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
+    <entry file="file://$PROJECT_DIR$/schmidt_hieber_plot/plot.py" />
+    <entry file="file://$PROJECT_DIR$/optimization/helpers.py" />
+    <entry file="file://$PROJECT_DIR$/data/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/data/plot_sine_stimulus.py" />
+    <entry file="file://$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
+    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/sine_with_noise.py" />
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/save_traces_by_hekareader.py" />
+    <entry file="file://$PROJECT_DIR$/cell_fitting/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="40" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/in_out_field_diff.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="9" column="20" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/sine_with_noise.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="139" column="13" lean-forward="true" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/remove_APs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/ramp_and_theta.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="10" column="45" lean-forward="false" selection-start-line="10" selection-start-column="45" selection-end-line="10" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/find_in_out_fields.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="60" column="18" lean-forward="true" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/downsample.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/theta_envelope.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase_with_fft.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="11" column="46" lean-forward="false" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="10" column="26" lean-forward="false" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="40" />
+        <state relative-caret-position="510">
+          <caret line="65" column="0" lean-forward="true" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
