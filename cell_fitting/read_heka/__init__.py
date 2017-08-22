@@ -28,12 +28,12 @@ def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sw
         assert y_unit == 'V'
         t[i] = convert_to_unit('m', t[i])  # ms
         v[i] = convert_to_unit('m', v[i])  # mV
-        t[i] = list(t[i])
-        v[i] = list(v[i])
+        t[i] = t[i].tolist()
+        v[i] = v[i].tolist()
 
     if return_sweep_idxs:
         return np.array(v), np.array(t), sweep_idxs
-    return np.array(v), np.array(t)
+    return np.array(v), np.array(t)  # not matrix if v[i]s have different length
 
 
 def get_i_inj(protocol, sweep_idxs):
@@ -53,6 +53,27 @@ def get_i_inj(protocol, sweep_idxs):
             amp_change = 1
         i_inj[i] = list(i_inj_base * amp_change)
     return np.array(i_inj)
+
+
+def get_cells_by_protocol(data_dir):
+    cells_by_protocol = dict()
+
+
+    for file_name in os.listdir(data_dir):
+        hekareader = HekaReader(os.path.join(data_dir, file_name))
+        group = 'Group1'
+        protocol_to_series = hekareader.get_protocol(group)
+        for protocol in protocol_to_series.keys():
+            if protocol in cells_by_protocol:
+                cells_by_protocol[protocol].append(file_name)
+            else:
+                cells_by_protocol[protocol] = [file_name]
+    return cells_by_protocol
+
+
+def get_cells_for_protocol(data_dir, protocol):
+    cells_by_protocol = get_cells_by_protocol(data_dir)
+    return cells_by_protocol[protocol]
 
 
 if __name__ == '__main__':

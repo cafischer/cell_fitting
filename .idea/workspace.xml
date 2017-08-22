@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="">
+    <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_fI_curve.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/reduction_kepler/__init__.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dictionaries/caro.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/cell_fitting.iml" afterPath="$PROJECT_DIR$/.idea/cell_fitting.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
     </list>
-    <ignored path="cell_fitting.iws" />
-    <ignored path=".idea/workspace.xml" />
-    <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,63 +19,38 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/cell_fitting$optimizer.coverage" NAME="optimizer Coverage Results" MODIFIED="1447081830274" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
-    <SUITE FILE_PATH="coverage/cell_fitting$cell_builder.coverage" NAME="cell_builder Coverage Results" MODIFIED="1447056310541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
-    <SUITE FILE_PATH="coverage/cell_fitting$test.coverage" NAME="test Coverage Results" MODIFIED="1469689042325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
-    <SUITE FILE_PATH="coverage/cell_fitting$test_ionchannel.coverage" NAME="test_ionchannel Coverage Results" MODIFIED="1447167830451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test_channels" />
-    <SUITE FILE_PATH="coverage/cell_fitting$eval_constcurrent.coverage" NAME="eval_constcurrent Coverage Results" MODIFIED="1446210645849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../../../Studium/Master/Internship/Code&amp;Data/Project-all/Modelling/regular_spiking" />
-    <SUITE FILE_PATH="coverage/cell_fitting$visualize_results.coverage" NAME="visualize_results Coverage Results" MODIFIED="1469261839303" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/bio_inspired" />
-    <SUITE FILE_PATH="coverage/cell_fitting$evaluation__1_.coverage" NAME="evaluation (1) Coverage Results" MODIFIED="1469713201908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
-    <SUITE FILE_PATH="coverage/cell_fitting$morph_hoc2morph_json.coverage" NAME="morph_hoc2morph_json Coverage Results" MODIFIED="1446285676477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model/morphology" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimize_passive_full.coverage" NAME="optimize_passive_full Coverage Results" MODIFIED="1447080248987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimize_passive.coverage" NAME="optimize_passive Coverage Results" MODIFIED="1447018525057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization" />
-    <SUITE FILE_PATH="coverage/cell_fitting$evaluation.coverage" NAME="evaluation Coverage Results" MODIFIED="1469603568705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/bio_inspired" />
-    <SUITE FILE_PATH="coverage/cell_fitting$run_optimization.coverage" NAME="run_optimization Coverage Results" MODIFIED="1469871347788" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/scripts" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimize_toymodel__1_.coverage" NAME="optimize_toymodel (1) Coverage Results" MODIFIED="1469696445634" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/hhsolver/scripts" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimizer2.coverage" NAME="optimizer2 Coverage Results" MODIFIED="1445343893146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/cell_fitting$generators.coverage" NAME="generators Coverage Results" MODIFIED="1469884297250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/bio_inspired/inspyred_extension" />
-    <SUITE FILE_PATH="coverage/cell_fitting$handtuner2.coverage" NAME="handtuner2 Coverage Results" MODIFIED="1469692020461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/hand_tuning" />
-    <SUITE FILE_PATH="coverage/cell_fitting$singularize_data.coverage" NAME="singularize_data Coverage Results" MODIFIED="1446827710733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/cell_2013_12_13f" />
-    <SUITE FILE_PATH="coverage/cell_fitting$__init__.coverage" NAME="__init__ Coverage Results" MODIFIED="1469601531563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/hand_tuning" />
-    <SUITE FILE_PATH="coverage/cell_fitting$regtest.coverage" NAME="regtest Coverage Results" MODIFIED="1446229390963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimize_toymodel.coverage" NAME="optimize_toymodel Coverage Results" MODIFIED="1469689794157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/gradient_descent/scripts" />
-    <SUITE FILE_PATH="coverage/cell_fitting$timestep.coverage" NAME="timestep Coverage Results" MODIFIED="1469262219172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/linear_regression/error_analysis" />
-    <SUITE FILE_PATH="coverage/cell_fitting$handtuner.coverage" NAME="handtuner Coverage Results" MODIFIED="1469973156247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/hand_tuning" />
-    <SUITE FILE_PATH="coverage/cell_fitting$convert2csv.coverage" NAME="convert2csv Coverage Results" MODIFIED="1447068929011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data/cell_2013_12_13f" />
-    <SUITE FILE_PATH="coverage/cell_fitting$plot_data.coverage" NAME="plot_data Coverage Results" MODIFIED="1446998929955" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/cell_fitting$optimize.coverage" NAME="optimize Coverage Results" MODIFIED="1469885068642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/optimization/gradient_descent" />
-  </component>
-  <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value="" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="cell_fitting">
-      <favorite_root url="file://$PROJECT_DIR$/test_channels/experimental_channels/hcn/__init__.py" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
-    </favorites_list>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="find_DAP_types.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/DAP_population/find_DAP_types.py">
+      <file leaf-file-name="plot_PP.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_PP.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="668">
-              <caret line="84" column="38" lean-forward="true" selection-start-line="84" selection-start-column="38" selection-end-line="84" selection-end-column="38" />
+            <state relative-caret-position="436">
+              <caret line="38" column="34" lean-forward="false" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
               <folding>
-                <element signature="e#0#31#0" expanded="true" />
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/DAP_population/__init__.py">
+      <file leaf-file-name="plot_fI_curve.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_fI_curve.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="88" column="0" lean-forward="true" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+            <state relative-caret-position="354">
+              <caret line="25" column="38" lean-forward="true" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
               <folding>
-                <element signature="e#0#31#0" expanded="true" />
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fIcurve.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/fIcurve.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -86,59 +66,13 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>n_dim</find>
-      <find>dist_to_max</find>
-      <find>order</find>
-      <find>nap</find>
-      <find>vS</find>
-      <find>HodgkinHuxleyFitterSeveralDataSeveralFitfuns</find>
-      <find>numpy</find>
-      <find>pylab</find>
-      <find>fft</find>
-      <find>h</find>
-      <find>dt</find>
-      <find>seeds</find>
-      <find>AMPA</find>
-      <find>random</find>
-      <find>dur_run</find>
-      <find>t_run</find>
-      <find>field_intervals</find>
-      <find>TODO</find>
-      <find>.png</find>
-      <find>firing_rate_per_run</find>
-      <find>len(bins)</find>
-      <find>len(bins</find>
-      <find>n_bins</find>
-      <find>get_firing_rate_per_bin</find>
-      <find>freq_idx</find>
-      <find>nat</find>
-      <find>get_fft</find>
-      <find>get_fAHP_min_idx_using_splines</find>
-      <find>cells_with_AP</find>
-      <find>v_rest</find>
+      <find>m</find>
+      <find>m_</find>
+      <find>discontinuities_IV</find>
     </findStrings>
     <replaceStrings>
-      <replace>DAP_max</replace>
-      <replace>fAHP_min</replace>
-      <replace>nap_act</replace>
-      <replace>nap</replace>
-      <replace>n_components</replace>
-      <replace>nat</replace>
-      <replace>vm</replace>
-      <replace>np</replace>
-      <replace>pl</replace>
-      <replace>NMDA</replace>
-      <replace>GABA</replace>
-      <replace>.svg</replace>
-      <replace>freq2_idx</replace>
-      <replace>freq3_idx</replace>
-      <replace>nap_markov</replace>
-      <replace>v_rest[i]</replace>
+      <replace>h_</replace>
     </replaceStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$/grid_cell_stimuli</dir>
-      <dir>$PROJECT_DIR$</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -146,90 +80,34 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/hyperdap.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/doubleramp.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/fIcurve.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/increase_rampIV.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/hcn_block.py" />
-        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script3.py" />
-        <option value="$PROJECT_DIR$/model/channels/vavoulis/nap_markov.mod" />
-        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script5.py" />
-        <option value="$PROJECT_DIR$/new_optimization/scripts/server_script1.py" />
-        <option value="$PROJECT_DIR$/optimization/fitfuns.py" />
-        <option value="$PROJECT_DIR$/grid_cell_stimuli/ISI_hist.py" />
-        <option value="$PROJECT_DIR$/grid_cell_stimuli/get_ramp_and_theta.py" />
-        <option value="$PROJECT_DIR$/grid_cell_stimuli/ramp_and_theta.py" />
-        <option value="$PROJECT_DIR$/grid_cell_stimuli/remove_APs.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/remove_APs.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/sine_with_noise.py" />
-        <option value="$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/downsample/__init__.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/downsample.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-        <option value="$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/ISI_hist/__init__.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py" />
-        <option value="$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/spike_phase/__init__.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/find_in_out_fields.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/in_out_field_diff.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/ramp_and_theta.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/theta_envelope.py" />
-        <option value="$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase_with_fft.py" />
-        <option value="$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
-        <option value="$PROJECT_DIR$/schmidt_hieber_plot/plot.py" />
-        <option value="$PROJECT_DIR$/data/plot_sine_stimulus.py" />
-        <option value="$PROJECT_DIR$/optimization/helpers.py" />
-        <option value="$PROJECT_DIR$/data/__init__.py" />
-        <option value="$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/data/save_traces_by_hekareader.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/fitter/hodgkinhuxleyfitter.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/simulate.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/fitter/izhikevichfitter.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/fitter/linearregressionfitter.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/fitter/channelfitter.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/bio_inspired/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/bio_inspired/generators.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/evaluate.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_currents.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/increase_rampIV.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/scripts/server_script5.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/evaluate_server.py" />
-        <option value="$PROJECT_DIR$/../analyze_intracellular/analyze_intracellular/spike_sorting/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/DAP_population/find_DAP_types.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/DAP_population/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/evaluate.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/hand_tuning/controller.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/hand_tuning/model.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/zap.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/hand_tuning/handtuner.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_gates.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/simulate.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/model/channels/vavoulis/nat_ep.mod" />
+        <option value="$PROJECT_DIR$/cell_fitting/reduction_kepler/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/model/channels/vavoulis/nat.mod" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/cells_by_protocol.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/save_PP.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fIcurve.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/plot_fI_curve.py" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="28" />
-    <option name="width" value="1920" />
-    <option name="height" value="1052" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Python</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>PyCompatibilityInspection</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
-  </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
+    <option name="x" value="-40" />
+    <option name="y" value="331" />
+    <option name="width" value="1910" />
+    <option name="height" value="789" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -246,6 +124,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -262,37 +141,33 @@
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="DAP_population" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="plots" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="plots" type="462c0819:PsiDirectoryNode" />
+              <item name="PP_no_i_inj" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="recentsLimit" value="5" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/grid_cell_stimuli" />
-      <recent name="$PROJECT_DIR$/test_channels/notebooks" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/caLVA" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/nap" />
-      <recent name="$PROJECT_DIR$/test_channels/experimental_channels/nap/plots/digitized_vsteps" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/model/channels/vavoulis" />
-      <recent name="$PROJECT_DIR$/new_optimization/scripts" />
-      <recent name="$PROJECT_DIR$/new_optimization/evaluation" />
-      <recent name="$PROJECT_DIR$/generate_synaptic_input" />
-      <recent name="$PROJECT_DIR$/data" />
-    </key>
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -306,7 +181,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.find_DAP_types">
+  <component name="RunManager" selected="Python.plot_fI_curve">
     <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -314,982 +189,473 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/read_heka" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/reduction_kepler" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/reduction_kepler/__init__.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration default="true" type="tests" factoryName="Doctests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="cells_by_protocol" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/cells_by_protocol.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <method />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Nosetests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="_new_regexPattern" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;.&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;.&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="py.test">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;.&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Attests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <method />
-    </configuration>
-    <configuration name="evaluate_server (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="plot_PP" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/evaluate_server.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="find_DAP_types" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="plot_fI_curve" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/DAP_population" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/DAP_population/find_DAP_types.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_fI_curve.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="save_PP" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/schmidt_hieber_plot" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/schmidt_hieber_plot/plot.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="save_traces_by_hekareader" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/save_PP.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.plot" />
-      <item index="1" class="java.lang.String" itemvalue="Python.save_traces_by_hekareader" />
-      <item index="2" class="java.lang.String" itemvalue="Python.__init__" />
-      <item index="3" class="java.lang.String" itemvalue="Python.evaluate_server (1)" />
-      <item index="4" class="java.lang.String" itemvalue="Python.find_DAP_types" />
+      <item index="0" class="java.lang.String" itemvalue="Python.__init__" />
+      <item index="1" class="java.lang.String" itemvalue="Python.plot_PP" />
+      <item index="2" class="java.lang.String" itemvalue="Python.save_PP" />
+      <item index="3" class="java.lang.String" itemvalue="Python.cells_by_protocol" />
+      <item index="4" class="java.lang.String" itemvalue="Python.plot_fI_curve" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.find_DAP_types" />
-        <item index="1" class="java.lang.String" itemvalue="Python.evaluate_server (1)" />
-        <item index="2" class="java.lang.String" itemvalue="Python.__init__" />
-        <item index="3" class="java.lang.String" itemvalue="Python.save_traces_by_hekareader" />
-        <item index="4" class="java.lang.String" itemvalue="Python.plot" />
+        <item index="0" class="java.lang.String" itemvalue="Python.plot_fI_curve" />
+        <item index="1" class="java.lang.String" itemvalue="Python.plot_PP" />
+        <item index="2" class="java.lang.String" itemvalue="Python.save_PP" />
+        <item index="3" class="java.lang.String" itemvalue="Python.cells_by_protocol" />
+        <item index="4" class="java.lang.String" itemvalue="Python.__init__" />
       </list>
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b3762d89-80e1-4234-b9ce-d9f097279cbd" name="Default" comment="" />
-      <created>1444289885125</created>
+      <changelist id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="" />
+      <created>1503167081855</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1444289885125</updated>
+      <updated>1503167081855</updated>
     </task>
-    <task id="LOCAL-00044" summary="Variables are now initialized to their lower bound">
-      <created>1480583770654</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1480583770654</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Fixed unit conversion">
-      <created>1480583807772</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1480583807772</updated>
-    </task>
-    <task id="LOCAL-00046" summary="update handtuner">
-      <created>1481707940927</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1481707940927</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Updates">
-      <created>1482341042768</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1482341042768</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Updates">
-      <created>1482342119542</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1482342119542</updated>
-    </task>
-    <task id="LOCAL-00049" summary="More evaluation scripts (fIcurve, hyperdap, phaseplot)">
-      <created>1486124153520</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1486124153521</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Update evaluation scripts (fIcurve, hyperdap, phaseplot)">
-      <created>1487002509026</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1487002509027</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Added FitterFactory and Fitter now have to know their name, Update evaluation scripts (fIcurve, hyperdap, phaseplot) correspondingly">
-      <created>1487247474401</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1487247474405</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Added FitterFactory and Fitter now have to know their name, Update evaluate as well">
-      <created>1487248004419</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1487248004419</updated>
-    </task>
-    <task id="LOCAL-00053" summary="Fixed observer problem for inspyred optimizer with multiprocessing">
-      <created>1487251338840</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1487251338840</updated>
-    </task>
-    <task id="LOCAL-00054" summary="Functions to plot vclamp steps of ion channel and activation curves, time constant curves">
-      <created>1487586425116</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1487586425117</updated>
-    </task>
-    <task id="LOCAL-00055" summary="Changed scipy multiprocessing to only start as many processes as there are cores">
-      <created>1487586479019</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1487586479019</updated>
-    </task>
-    <task id="LOCAL-00056" summary="Added climin optimizer and fixed multiprocessing bug in scipy_optimizer &#10;Processes did not stop because working_queue.get() never returned None, now it checks for working_queue.empty()">
-      <created>1487680528221</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1487680528222</updated>
-    </task>
-    <task id="LOCAL-00057" summary="Added look_for_good_cells that goes through the data set and returns the cells with good characteristics">
-      <created>1487852306197</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1487852306198</updated>
-    </task>
-    <task id="LOCAL-00058" summary="Added visualizations of experimental channels (activation function, time constants, etc.)">
-      <created>1488274161391</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1488274161392</updated>
-    </task>
-    <task id="LOCAL-00059" summary="work on ion channel fits">
-      <created>1489653798126</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1489653798127</updated>
-    </task>
-    <task id="LOCAL-00060" summary="work on ion channel fits">
-      <created>1489742524971</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1489742524974</updated>
-    </task>
-    <task id="LOCAL-00061" summary="work on ion channel fits">
-      <created>1490174719554</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1490174719555</updated>
-    </task>
-    <task id="LOCAL-00062" summary="work on ion channel fits">
-      <created>1490347212507</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1490347212509</updated>
-    </task>
-    <task id="LOCAL-00063" summary="add izhikevich optimization">
-      <created>1498759663039</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1498759663040</updated>
-    </task>
-    <task id="LOCAL-00064" summary="update cell models">
-      <created>1498759750516</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1498759750516</updated>
-    </task>
-    <task id="LOCAL-00065" summary="update cell models">
-      <created>1498759774986</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1498759774986</updated>
-    </task>
-    <task id="LOCAL-00066" summary="plot PP for different steps and amplitudes">
-      <created>1498818869037</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1498818869038</updated>
-    </task>
-    <task id="LOCAL-00067" summary="made hyperdap.py conform to the experiments">
-      <created>1498826705472</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1498826705472</updated>
-    </task>
-    <task id="LOCAL-00068" summary="added save_PP.py for saving all PP files and rampIV for plotting reponse for different amplitudes">
-      <created>1498831939464</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1498831939465</updated>
-    </task>
-    <task id="LOCAL-00069" summary="updated evaluate methods, to make cell from model_dir instead of searching through optimization results">
-      <created>1500279362865</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1500279362865</updated>
-    </task>
-    <task id="LOCAL-00070" summary="DAP_population: package for finding spikes in rampIV and later investigating DAPs">
-      <created>1500382903070</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1500382903071</updated>
-    </task>
-    <task id="LOCAL-00071" summary="added clustering to find_DAP_types">
-      <created>1500461950906</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1500461950908</updated>
-    </task>
-    <task id="LOCAL-00072" summary="added DAP characteristics to clustering">
-      <created>1500471648429</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1500471648429</updated>
-    </task>
-    <task id="LOCAL-00073" summary="new scripts for fitting different cells">
-      <created>1500557675351</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1500557675353</updated>
-    </task>
-    <task id="LOCAL-00074" summary="improved plotting of characteristics">
-      <created>1500563211619</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1500563211619</updated>
-    </task>
-    <task id="LOCAL-00075" summary="added some features to find_DAP_types.py">
-      <created>1500996794577</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1500996794580</updated>
-    </task>
-    <task id="LOCAL-00076" summary="added wavelets to find_DAP_types.py">
-      <created>1501082280218</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1501082280218</updated>
-    </task>
-    <task id="LOCAL-00077" summary="added wavelets to find_DAP_types.py">
-      <created>1501082296895</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1501082296895</updated>
-    </task>
-    <task id="LOCAL-00078" summary="cleaned up find_DAP_types.py">
-      <created>1501170716921</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1501170716921</updated>
-    </task>
-    <task id="LOCAL-00079" summary="added package for analysis of grid cell stimuli">
-      <created>1501701126412</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1501701126415</updated>
-    </task>
-    <task id="LOCAL-00080" summary="implemented in- and out-field definition">
-      <created>1501769206796</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1501769206797</updated>
-    </task>
-    <task id="LOCAL-00081" summary="added saving of params, runs and evaluation of those">
-      <created>1501792162886</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1501792162887</updated>
-    </task>
-    <task id="LOCAL-00082" summary="improved plots">
-      <created>1501836839823</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1501836839824</updated>
-    </task>
-    <task id="LOCAL-00083" summary="added simulation of speed and position and computation of firing fields based on field positions">
-      <created>1502113794146</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1502113794148</updated>
-    </task>
-    <task id="LOCAL-00084" summary="added saving of speed params">
-      <created>1502116245664</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1502116245664</updated>
-    </task>
-    <task id="LOCAL-00085" summary="ISI_hist in doublets.py">
-      <created>1502128517485</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1502128517485</updated>
-    </task>
-    <task id="LOCAL-00086" summary="fixed indexing issues in find_in_out_fields.py">
-      <created>1502269872104</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1502269872106</updated>
-    </task>
-    <task id="LOCAL-00087" summary="plot comparing patch, sharp recording in vivo and vitro when pos. current step is applied">
-      <created>1502269917335</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1502269917335</updated>
-    </task>
-    <task id="LOCAL-00088" summary="added phase analysis of APs">
-      <created>1502302364172</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1502302364174</updated>
-    </task>
-    <task id="LOCAL-00089" summary="refactored investigate_grid_cel_stimuli">
-      <created>1502727770517</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1502727770518</updated>
-    </task>
-    <task id="LOCAL-00090" summary="moved functions to grid_cell_stimuli package">
-      <created>1502902083886</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1502902083887</updated>
-    </task>
-    <task id="LOCAL-00091" summary="better access of heka data">
-      <created>1503047839409</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1503047839422</updated>
-    </task>
-    <task id="LOCAL-00092" summary="made cell_fitting a package">
-      <created>1503052699447</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1503052699447</updated>
-    </task>
-    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="Unittests_in_test_py - 2017.07.25 at 14h 17m 30s.xml">
-      <configuration name="Unittests in test.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 24m 47s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 25m 19s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 34m 05s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 38m 56s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 44m 18s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 45m 15s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 45m 33s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 49m 15s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_test_synaptic_input_py - 2017.07.11 at 09h 54m 31s.xml">
-      <configuration name="Unittests in test_synaptic_input.py" configurationId="tests" />
-    </history-entry>
-  </component>
-  <component name="TodoView" selected-index="4">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="28" width="1920" height="1052" extended-state="6" />
+    <frame x="-40" y="331" width="1920" height="1052" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2022412" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.46346784" sideWeight="0.52454644" order="8" side_tool="true" content_ui="tabs" x="187" y="526" width="1545" height="73" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22464558" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38020247" sideWeight="0.48748043" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26771653" sideWeight="0.4754536" order="2" side_tool="false" content_ui="tabs" x="65" y="290" width="1301" height="348" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.114727855" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4525627" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26040554" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26771653" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29021373" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35433072" sideWeight="0.47809076" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39932507" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USER_GROUPS">
-      <collection />
-    </option>
-    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-      <collection />
-    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="made hyperdap.py conform to the experiments" />
-    <MESSAGE value="added save_PP.py for saving all PP files and rampIV for plotting reponse for different amplitudes" />
-    <MESSAGE value="updated evaluate methods, to make cell from model_dir instead of searching through optimization results" />
-    <MESSAGE value="DAP_population: package for finding spikes in rampIV and later investigating DAPs" />
-    <MESSAGE value="added clustering to find_DAP_types" />
-    <MESSAGE value="added DAP characteristics to clustering" />
-    <MESSAGE value="new scripts for fitting different cells" />
-    <MESSAGE value="improved plotting of characteristics" />
-    <MESSAGE value="added some features to find_DAP_types.py" />
-    <MESSAGE value="added wavelets to find_DAP_types.py" />
-    <MESSAGE value="cleaned up find_DAP_types.py" />
-    <MESSAGE value="added package for analysis of grid cell stimuli" />
-    <MESSAGE value="implemented in- and out-field definition" />
-    <MESSAGE value="added saving of params, runs and evaluation of those" />
-    <MESSAGE value="improved plots" />
-    <MESSAGE value="added simulation of speed and position and computation of firing fields based on field positions" />
-    <MESSAGE value="added saving of speed params" />
-    <MESSAGE value="ISI_hist in doublets.py" />
-    <MESSAGE value="fixed indexing issues in find_in_out_fields.py" />
-    <MESSAGE value="plot comparing patch, sharp recording in vivo and vitro when pos. current step is applied" />
-    <MESSAGE value="added phase analysis of APs" />
-    <MESSAGE value="refactored investigate_grid_cel_stimuli" />
-    <MESSAGE value="moved functions to grid_cell_stimuli package" />
-    <MESSAGE value="better access of heka data" />
-    <MESSAGE value="made cell_fitting a package" />
-    <option name="LAST_COMMIT_MESSAGE" value="made cell_fitting a package" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/optimization/optimizer.py</url>
-          <line>203</line>
-          <option name="timeStamp" value="153" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_channels/experimental_channels/ka/v_clamp_with_new_params.py</url>
-          <line>31</line>
-          <option name="timeStamp" value="1161" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/investigate_synaptic_noise/noise_patch_clamp.py</url>
-          <line>61</line>
-          <option name="timeStamp" value="1200" />
-        </line-breakpoint>
-      </breakpoints>
-      <breakpoints-dialog>
-        <breakpoints-dialog />
-      </breakpoints-dialog>
-      <default-breakpoints>
-        <breakpoint type="python-exception">
-          <properties notifyOnTerminate="true" exception="BaseException">
-            <option name="notifyOnTerminate" value="true" />
-          </properties>
-        </breakpoint>
-      </default-breakpoints>
-      <option name="time" value="1401" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/results/hand_tuning/test0/cell.json" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script4.py" />
-    <entry file="file://$PROJECT_DIR$/model/channels/vavoulis/nap_markov.mod" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/scipy_optimizer.py" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/test/0/SA/candidates.csv" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script5.py" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script1.py" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/scripts/server_script3.py" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/optimizer/inspyred_optimizer.py" />
-    <entry file="file://$PROJECT_DIR$/optimization/fitfuns.py" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/fitter/hodgkinhuxleyfitter.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/downsample/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state relative-caret-position="242">
+          <caret line="22" column="45" lean-forward="false" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate.py" />
-    <entry file="file://$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/ISI_hist/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/hand_tuning/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        <state relative-caret-position="234">
+          <caret line="13" column="2" lean-forward="false" selection-start-line="13" selection-start-column="2" selection-end-line="13" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/spike_phase/__init__.py">
+    <entry file="file://$PROJECT_DIR$/../../packages/nrn_wrapper/nrn_wrapper/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="38" column="55" lean-forward="false" selection-start-line="38" selection-start-column="55" selection-end-line="38" selection-end-column="55" />
+        <state relative-caret-position="2970">
+          <caret line="306" column="0" lean-forward="false" selection-start-line="306" selection-start-column="0" selection-end-line="306" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#31#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/ISI_hist.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/in_out_field_diff.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/remove_APs.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/ramp_and_theta.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/find_in_out_fields.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/downsample.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/theta_envelope.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase_with_fft.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/spike_theta_phase.py" />
-    <entry file="file://$PROJECT_DIR$/new_optimization/evaluation/evaluate_server.py" />
-    <entry file="file://$PROJECT_DIR$/schmidt_hieber_plot/plot.py" />
-    <entry file="file://$PROJECT_DIR$/optimization/helpers.py" />
-    <entry file="file://$PROJECT_DIR$/data/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/data/plot_sine_stimulus.py" />
-    <entry file="file://$PROJECT_DIR$/data/save_traces_by_hekareader.py" />
-    <entry file="file://$PROJECT_DIR$/investigate_grid_cell_stimuli/sine_with_noise.py" />
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/save_traces_by_hekareader.py" />
-    <entry file="file://$PROJECT_DIR$/cell_fitting/README.md">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/hand_tuning/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="144">
+          <caret line="8" column="5" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/hand_tuning/handtuner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="92" column="19" lean-forward="true" selection-start-line="92" selection-start-column="19" selection-end-line="92" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/zap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_gates.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="16" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/sklearn/utils/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="180" column="0" lean-forward="false" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/vavoulis/nap.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-591">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/simulate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-609">
+          <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="149" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2017.2/system/python_stubs/-1247972723/nrn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="100" column="0" lean-forward="true" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/vavoulis/nat_ep.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="363">
+          <caret line="75" column="43" lean-forward="false" selection-start-line="75" selection-start-column="43" selection-end-line="75" selection-end-column="43" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/reduction_kepler/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="128" column="13" lean-forward="true" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/vavoulis/nat.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/cells_by_protocol.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_inj/2015_08_11d.dat/step0nA/PP0.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_inj/2015_08_11d.dat/step0.1nA/PP0.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="69" column="15" lean-forward="false" selection-start-line="69" selection-start-column="15" selection-end-line="69" selection-end-column="15" />
+        <state relative-caret-position="192">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1926">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
-        </state>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_11d.dat/step0nA/PP_no_i_inj/2015_08_11d.dat/step0nA/PP1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/bio_inspired/generators.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_06d.dat/step0nA/PP1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05b.dat/step0nA/PP1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05b.dat/step0nA/PP4.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05b.dat/step0nA/PP6.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05b.dat/step0nA/PP7.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05b.dat/step0nA/PP9.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05b.dat/step0nA/PP0.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_06d.dat/step0nA/PP4.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_06d.dat/step0nA/PP3.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05b.dat/step0nA/PP2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_06d.dat/step0nA/PP2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_10a.dat/step0nA/PP0.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_10a.dat/step0nA/PP1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_10a.dat/step0nA/PP2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_11d.dat/step0nA/PP0.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_21f.dat/step0nA/PP1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/save_PP.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
+        <state relative-caret-position="486">
+          <caret line="27" column="16" lean-forward="false" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/bio_inspired/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="18" lean-forward="false" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_21f.dat/step0nA/PP3.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/fitter/channelfitter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="20" lean-forward="false" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_21f.dat/step0nA/PP2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="2" lean-forward="false" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
-        </state>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_21f.dat/step0nA/PP0.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/fitter/linearregressionfitter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#19#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/fitter/izhikevichfitter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="18" lean-forward="false" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/simulate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/fitter/hodgkinhuxleyfitter.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fIcurve.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="11" column="18" lean-forward="false" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_PP.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="38" column="34" lean-forward="false" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_06d.dat/step0nA/PP0_no_zoom.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05a.dat/step0nA/PP0_no_zoom.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05a.dat/step0nA/PP3_no_zoom.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_05a.dat/step0nA/PP1_no_zoom.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_06d.dat/step0nA/PP15_no_zoom.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_06d.dat/step0nA/PP17_no_zoom.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/PP_no_i_inj/2015_08_11d.dat/step0nA/PP0_no_zoom.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/fIcurve.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_fI_curve.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        <state relative-caret-position="354">
+          <caret line="25" column="38" lean-forward="true" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
           <folding>
-            <element signature="e#0#11#0" expanded="false" />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/evaluate_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../analyze_intracellular/analyze_intracellular/spike_sorting/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/DAP_population/get_AP_windows.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16">
-          <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/DAP_population/find_DAP_types.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="668">
-          <caret line="84" column="38" lean-forward="true" selection-start-line="84" selection-start-column="38" selection-end-line="84" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/DAP_population/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="88" column="0" lean-forward="true" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
