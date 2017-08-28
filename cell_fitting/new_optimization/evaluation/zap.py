@@ -14,10 +14,16 @@ def get_zap(amp, freq0=1, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000
     t = np.arange(0, tstop-onset_dur-offset_dur+dt, dt)
     freqs = np.linspace(freq0, freq1, len(t)) / 1000
     zap = amp * np.sin(2 * np.pi * freqs * t)
+    zap_franzi = amp * np.sin(2 * np.pi * ((freq1 - freq0) / 1000 * t / (2 * t[-1]) + freq0/1000) * t)  # warum 2 * dur und nicht dur?
     onset = np.zeros(int(round(onset_dur/dt)))
     offset = np.zeros(int(round(offset_dur/dt)))
     zap_stim = np.concatenate((onset, zap, offset))
-    freqs = np.concatenate((onset, freqs, offset))
+    #freqs = np.concatenate((onset, freqs, offset))
+
+    pl.figure()
+    pl.plot(t, freqs * 1000, 'b')
+    pl.plot(t, (freq1 - freq0) * t / (2 * t[-1]) + freq0, 'g')
+    pl.show()
     return zap_stim
 
 
@@ -98,4 +104,4 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # apply stim
-    apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=10, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.01)  # freq0=0 or 1???  freq1=10 oder 20???
+    apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=10, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.1)  # freq0=0 or 1???  freq1=10 oder 20???

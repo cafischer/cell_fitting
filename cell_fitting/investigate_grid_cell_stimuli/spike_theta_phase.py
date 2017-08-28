@@ -42,4 +42,4 @@ if __name__ == '__main__':
     plot_phase_hist(phases, save_dir)
     run_start_idx = np.where(np.diff(position) < 0)[0]
     run_start_idx = np.concatenate((np.array([0]), run_start_idx))
-    plot_phase_vs_position_per_run(phases, phases_pos, AP_onsets, position, track_len, run_start_idx, save_dir)
+    plot_phase_vs_position_per_run(phases, phases_pos, AP_onsets, track_len, run_start_idx, save_dir)

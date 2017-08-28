@@ -4,7 +4,7 @@ import os
 import matplotlib.pyplot as pl
 import re
 import numpy as np
-from data import shift_v_rest
+from cell_fitting.data import shift_v_rest
 
 
 if __name__ == '__main__':

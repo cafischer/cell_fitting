@@ -2,7 +2,8 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as pl
 import os
-from optimization.simulate import iclamp_handling_onset
+import json
+from cell_fitting.optimization.simulate import iclamp_handling_onset
 from nrn_wrapper import Cell
 
 
@@ -29,6 +30,8 @@ def get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt):
 
 def apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt):
 
+    sine_params = {'amp1': amp1, 'amp2':amp2, 'sine1_dur': sine1_dur, 'freq2': freq2, 'onset_dur': onset_dur,
+                   'offset_dur': offset_dur, 'dt': dt}
     i_exp = get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
 
     # get simulation parameters
@@ -42,6 +45,12 @@ def apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_du
     save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus')
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
+
+    np.save(os.path.join(save_dir_img, 'v.npy'), v)
+    np.save(os.path.join(save_dir_img, 't.npy'), t)
+    np.save(os.path.join(save_dir_img, 'i_inj.npy'), i_exp)
+    with open(os.path.join(save_dir_img, 'sine_params.json'), 'w') as f:
+        json.dump(sine_params, f)
 
     pl.figure()
     pl.title('amp1: ' + str(amp1) + ', amp2: ' + str(amp2) + ', sine1dur: ' + str(sine1_dur) + ', freq2: ' + str(freq2))
@@ -65,10 +74,10 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # apply stim
-    amp1 = 0.3
-    amp2 = 0.05
-    sine1_dur = 1000
-    freq2 = 6
+    amp1 = 0.5
+    amp2 = 0.2
+    sine1_dur = 5000  # 1000 # 2000  # 5000  # 10000
+    freq2 = 5  # 5  # 20
     onset_dur = 500
     offset_dur = 500
     dt = 0.01

@@ -114,19 +114,19 @@ if __name__ == '__main__':
 
     # slow ramps
     step_st_ms = 200  # ms
-    step_end_ms = 3800  # ms
-    tstop = 4000  # ms
+    step_end_ms = 2800  # ms
+    tstop = 3000  # ms
     dt = 0.001
 
     save_img = os.path.join(save_dir, 'img', 'IV', 'slow_ramp')
     if not os.path.exists(save_img):
         os.makedirs(save_img)
 
-    step_amp_down = 0.3
+    step_amp_down = 0.4
     v_down, t_down, i_inj_down = get_IV(cell, step_amp_down, get_slow_ramp_reverse, step_st_ms, step_end_ms, tstop,
                                         v_init=-75, dt=dt)
 
-    step_amp_up = 0.7
+    step_amp_up = 0.6
     v_up, t_up, i_inj_up = get_IV(cell, step_amp_up, get_slow_ramp, step_st_ms, step_end_ms, tstop,
                                         v_init=-75, dt=dt)
 
@@ -162,5 +162,5 @@ if __name__ == '__main__':
     ax12.set_xlabel('Amplitude $(nA)$', fontsize=16)
 
     pl.tight_layout()
-    #pl.savefig(os.path.join(save_img, 'slow_ramp.png'))
+    pl.savefig(os.path.join(save_img, 'slow_ramp.png'))
     pl.show()
