@@ -2,6 +2,32 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/DAP_population/results" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2013_02_06b" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2013_02_07g" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2013_02_11d" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2013_02_11g" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2013_02_12b" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2013_12_13f" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2014_01_07b" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2014_03_18e" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2014_12_03m" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_03_30e" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_04_02n" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_05_28c" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_08_06d" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_08_11d" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_08_25b" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_08_25h" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_08_26b" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_08_26f" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_08_27d" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/Protocols" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/artificial_data" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/plots" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/investigate_grid_cell_stimuli/results" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/investigate_synaptic_noise/results" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/izhikevichStellateCell/results" />
       <excludeFolder url="file://$MODULE_DIR$/cell_fitting/results" />
     </content>
     <orderEntry type="inheritedJdk" />

@@ -65,9 +65,9 @@ def get_cells_by_protocol(data_dir):
         protocol_to_series = hekareader.get_protocol(group)
         for protocol in protocol_to_series.keys():
             if protocol in cells_by_protocol:
-                cells_by_protocol[protocol].append(file_name)
+                cells_by_protocol[protocol].append(file_name[:-4])
             else:
-                cells_by_protocol[protocol] = [file_name]
+                cells_by_protocol[protocol] = [file_name[:-4]]
     return cells_by_protocol
 
 

@@ -15,7 +15,7 @@ for cell in cells:
     if not '2015' in cell:
         continue
     print cell
-    file_dir = os.path.join(data_dir, cell)
+    file_dir = os.path.join(data_dir, cell+'.dat')
 
     for seq in range(20):
 
@@ -33,7 +33,7 @@ for cell in cells:
             os.makedirs(save_dir_cell)
         try:
             pl.figure()
-            pl.title('1st Ramp = 4 nA, 2nd Ramp = '+str(seq*0.05+1.8)+' nA')
+            # pl.title('1st Ramp = 4 nA, 2nd Ramp = '+str(seq*0.05+1.8)+' nA')
             for i in range((seq * 30) + step_flag, (((seq+1) * 30)-2) + step_flag, 3):  # 10 for one run through  # 0-27+1, 30-57+1, 60-87+1  (+30 next range)
                 v_mat, t_mat = get_v_and_t_from_heka(file_dir, protocol if i == 0 else protocol+'('+str(i)+')')
                 t = np.array(t_mat[0])

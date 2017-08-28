@@ -117,4 +117,4 @@ def zap_current2csv(cell_dir):
         writer.writerows(data)
 
 if __name__ == "__main__":
-    zap_current2csv('./new_cells/2015_08_11d')
+    zap_current2csv('./2015_08_11d')

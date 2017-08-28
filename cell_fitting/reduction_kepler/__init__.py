@@ -10,8 +10,9 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
-    save_dir = '../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    #data_dir = '../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
+    data_dir = '../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
+    save_dir = '../results/server/2017-08-23_08:41:41/270/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'cell.json')
     mechanism_dir = '../model/channels/vavoulis'
 
@@ -42,29 +43,62 @@ if __name__ == '__main__':
     #     pl.legend(fontsize=16)
     # pl.show()
 
-    # # find best linear fits between equivalent potentials
-    # for gate in gates.keys():
-    #     for other_gate in gates.keys():
-    #         reg = linear_model.LinearRegression()
-    #         reg.fit(np.array([gates[other_gate]]).T, np.array([gates[gate]]).T)
-    #
-    #         print gate+' = a * '+other_gate+ ' + b'
-    #         print('Coefficients: \n', reg.coef_)
-    #         print('Intercept: \n', reg.intercept_)
-    #         gate_pred = reg.predict(np.array([gates[other_gate]]).T)
-    #         #print("Mean squared error %.5f: "
-    #         #      % mean_squared_error(gates[gate], gate_pred))
-    #         print("Variance score %.2f: " % r2_score(gates[gate], gate_pred))  # 1 is perfect prediction
-    #
-    #         pl.figure()
-    #         pl.plot(t, gates[gate], 'k')
-    #         pl.plot(t, gate_pred, 'r')
-    #         pl.show()
-    #
-    #         pl.figure()
-    #         pl.plot(gates[other_gate], gates[gate], 'k')
-    #         pl.plot(gates[other_gate], reg.coef_[0] * gates[other_gate] + reg.intercept_[0], 'r')
-    #         pl.show()
+    # find best linear fits between equivalent potentials
+    regression_models = np.zeros((len(gates.keys()), len(gates.keys())), dtype=object)
+    for i, gate in enumerate(gates.keys()):
+        for j, other_gate in enumerate(gates.keys()):
+            regression_model = linear_model.LinearRegression(fit_intercept=True)
+            #weight = np.insert(np.diff([gates[gate]]), 0, 0)
+            #weight *= 100
+            #weight[weight < 1e-5] = 0
+            regression_model.fit(np.array([gates[other_gate]]).T, np.array([gates[gate]]).T)
+            regression_models[i, j] = regression_model
+
+            print gate+' = a * '+other_gate+ ' + b'
+            print('Coefficients: \n', regression_model.coef_)
+            print('Intercept: \n', regression_model.intercept_)
+            gate_pred = regression_model.predict(np.array([gates[other_gate]]).T)
+            #print("Mean squared error %.5f: "
+            #      % mean_squared_error(gates[gate], gate_pred))
+            print("Variance score %.2f: " % r2_score(gates[gate], gate_pred))  # 1 is perfect prediction
+
+            # pl.figure()
+            # pl.plot(np.array([gates[other_gate]]).T, np.array([gates[gate]]).T, 'ok')
+            # pl.plot(np.array([gates[other_gate]]).T,
+            #         regression_model.coef_ * np.array([gates[other_gate]]).T + regression_model.intercept_, 'or')
+            # pl.show()
+
+    # plots
+    fig, ax = pl.subplots(len(gates.keys()), len(gates.keys()))
+    for i, gate in enumerate(gates.keys()):
+        for j, other_gate in enumerate(gates.keys()):
+            gate_pred = regression_models[i, j].predict(np.array([gates[other_gate]]).T)
+            ax[i, j].plot(t, gates[gate], 'k')
+            ax[i, j].plot(t, gate_pred, 'r')
+
+    #pl.tight_layout()
+    # row and column labels
+    for ax_i, col in zip(ax[0], gates.keys()):
+        ax_i.set_title(col)
+    for ax_i, row in zip(ax[:, 0], gates.keys()):
+        ax_i.set_ylabel(row, rotation=0, size='large')
+    pl.show()
+
+    fig, ax = pl.subplots(len(gates.keys()), len(gates.keys()))
+    for i, gate in enumerate(gates.keys()):
+        for j, other_gate in enumerate(gates.keys()):
+            gate_pred = regression_models[i, j].predict(np.array([gates[other_gate]]).T)
+            ax[i, j].plot(gates[other_gate], gates[gate], 'k')
+            ax[i, j].plot(gates[other_gate],
+                          regression_models[i, j].coef_[0] * gates[other_gate]
+                          + regression_models[i, j].intercept_[0], 'r')
+    # row and column labels
+    for ax_i, col in zip(ax[0], gates.keys()):
+        ax_i.set_title(col)
+    for ax_i, row in zip(ax[:, 0], gates.keys()):
+        ax_i.set_ylabel(row, rotation=0, size='large')
+    #pl.tight_layout()
+    pl.show()
 
     # replace gate
     v_b, t_b, i_inj = iclamp_handling_onset(cell, **simulation_params)

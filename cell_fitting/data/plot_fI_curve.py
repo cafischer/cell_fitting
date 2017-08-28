@@ -15,8 +15,12 @@ if __name__ == '__main__':
     cells = get_cells_for_protocol(data_dir, protocol)
 
     for cell in cells:
+        if not '2015' in cell:
+            continue
+
         # fI-curve for data
-        v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell), protocol, return_sweep_idxs=True)
+        v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell+'.dat'), protocol,
+                                                         return_sweep_idxs=True)
         i_inj_mat = get_i_inj(protocol, sweep_idxs)
         t = t_mat[0, :]
 
@@ -37,7 +41,7 @@ if __name__ == '__main__':
         firing_rates_data_last_ISI = firing_rates_data_last_ISI[amps_greater0_idx]
 
         # plot
-        save_dir_fig = os.path.join(save_dir, 'img/IV')
+        save_dir_fig = os.path.join(save_dir, cell)
         if not os.path.exists(save_dir_fig):
             os.makedirs(save_dir_fig)
 
@@ -47,7 +51,7 @@ if __name__ == '__main__':
         pl.ylabel('Firing rate (APs/ms)', fontsize=16)
         pl.legend(loc='lower right', fontsize=16)
         pl.savefig(os.path.join(save_dir_fig, 'fIcurve.png'))
-        pl.show()
+        #pl.show()
 
         pl.figure()
         pl.plot(amps_greater0, firing_rates_data_last_ISI, '-ok', label='Exp. Data')
@@ -55,13 +59,13 @@ if __name__ == '__main__':
         pl.ylabel('last ISI (ms)', fontsize=16)
         pl.legend(loc='upper right', fontsize=16)
         pl.savefig(os.path.join(save_dir_fig, 'fIcurve_last_ISI.png'))
-        pl.show()
+        #pl.show()
 
-        # for amp, v_trace_data in zip(amps, v_mat):
-        #     pl.figure()
-        #     pl.plot(t, v_trace_data, 'k', label='Exp. Data')
-        #     pl.xlabel('Time (ms)', fontsize=16)
-        #     pl.ylabel('Membrane Potential (mV)', fontsize=16)
-        #     pl.legend(fontsize=16, loc='upper right')
-        #     pl.savefig(os.path.join(save_dir_fig, 'IV'+str(amp)+'.png'))
+        for amp, v_trace_data in zip(amps, v_mat):
+            pl.figure()
+            pl.plot(t, v_trace_data, 'k', label='Exp. Data')
+            pl.xlabel('Time (ms)', fontsize=16)
+            pl.ylabel('Membrane Potential (mV)', fontsize=16)
+            pl.legend(fontsize=16, loc='upper right')
+            pl.savefig(os.path.join(save_dir_fig, 'IV_'+str(amp)+'.png'))
         #     pl.show()
