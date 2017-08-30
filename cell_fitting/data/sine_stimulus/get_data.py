@@ -5,16 +5,26 @@ import os
 import matplotlib.pyplot as pl
 import re
 import numpy as np
-import re
+import pandas as pd
+import json
 
 
 if __name__ == '__main__':
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    sine_params_dir = '/home/cf/Phd/DAP-Project/cell_data/sine_params.csv'
     protocol_base = 'Stimulus'
+    dur1 = 5000  # ms
+    freq2 = 5  # Hz
     v_rest_shift = -16
     correct_vrest = True
     dt = 0.05
     reg_exp_protocol = re.compile(protocol_base+'\([0-9]+\)')
+
+    sine_params = pd.read_csv(sine_params_dir)
+    sine_params['cell'].ffill(inplace=True)
+    sine_params['onset_dur'].ffill(inplace=True)
+    sine_params['offset_dur'].ffill(inplace=True)
+    sine_params['dt'].ffill(inplace=True)
 
     cells = ['2015_08_10g.dat', '2015_08_25b.dat', '2015_05_29h.dat', '2015_05_29f.dat', '2015_08_26b.dat',
              '2015_08_20i.dat', '2015_08_20d.dat', '2015_05_22r.dat', '2015_08_10e.dat', '2015_08_11d.dat',
@@ -32,22 +42,30 @@ if __name__ == '__main__':
              '2015_08_20e.dat', '2015_08_05c.dat', '2015_08_04c.dat', '2015_05_22t.dat', '2015_08_21c.dat',
              '2015_05_26b.dat', '2015_08_11f.dat']
 
-    cells = ['2015_08_20a.dat']  # 11d seems not to be same as labbook
-
     for cell in cells:
-        protocols = get_protocols_same_base(os.path.join(data_dir, cell), protocol_base)
-        print protocols
-        vms_per_protocol = []
-        ts_per_protocol = []
-        for protocol in protocols:
+        sine_params_cell = sine_params[sine_params['cell'] == cell[:-4]]
+        protocol_idx = np.where(np.logical_and(sine_params_cell['sine1_dur'] == dur1, sine_params_cell['freq2'] == freq2))[0]
+        if len(protocol_idx) > 0:
+            protocol = protocol_base+'('+str(protocol_idx[0])+')' if protocol_idx[0] > 0 else protocol_base
             v_mat, t_mat = get_v_and_t_from_heka(os.path.join(data_dir, cell), protocol)
             t = np.array(t_mat[0])
             v = np.array(v_mat[0])
             v = shift_v_rest(v, v_rest_shift)
-            vms_per_protocol.append(v)
-            ts_per_protocol.append(t)
+            sine_params_cell = sine_params_cell.iloc[protocol_idx[0]].to_dict()
+
+            save_dir_cell = os.path.join('./results', str(dur1)+'_'+str(freq2), cell[:-4])
+            if not os.path.exists(save_dir_cell):
+                os.makedirs(save_dir_cell)
+            np.save(os.path.join(save_dir_cell, 'v.npy'), v)
+            np.save(os.path.join(save_dir_cell, 't.npy'), t)
+            with open(os.path.join(save_dir_cell, 'sine_params.json'), 'w') as f:
+                json.dump(sine_params_cell, f)
 
             pl.figure()
-            pl.title(protocol)
-            pl.plot(t, v)
-            pl.show()
+            pl.title(cell)
+            pl.plot(t, v, 'k', label='Exp. Data')
+            pl.ylabel('Membrane Potential (mV)', fontsize=16)
+            pl.xlabel('Time (ms)', fontsize=16)
+            pl.legend(fontsize=16, loc='upper right')
+            pl.savefig(os.path.join(save_dir_cell, 'v.svg'))
+            #pl.show()

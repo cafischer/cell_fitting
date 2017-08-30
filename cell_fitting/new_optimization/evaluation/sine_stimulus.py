@@ -42,7 +42,8 @@ def apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_du
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
 
     # plot
-    save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus')
+    save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus',
+                                str(amp1)+'_'+str(amp2)+'_'+str(sine1_dur)+'_'+str(freq2))
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
@@ -58,16 +59,16 @@ def apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_du
     #pl.plot(t, i_exp)
     pl.xlabel('Time $(ms)$', fontsize=16)
     pl.ylabel('Membrane potential $(mV)$', fontsize=16)
-    pl.savefig(os.path.join(save_dir_img, 'sine'+str(amp1)+'_'+str(amp2)+'_'+str(sine1_dur)+'_'+str(freq2)+'_'+'.png'))
+    pl.savefig(os.path.join(save_dir_img, 'v.png'))
     pl.show()
 
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
-    model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/cell434_5/'
-    #model_dir = os.path.join(save_dir, 'cell.json')
+    #save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
+    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    save_dir = '../../results/hand_tuning/test0'
+    model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model

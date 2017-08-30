@@ -5,6 +5,26 @@ import matplotlib.pyplot as pl
 import numpy as np
 from cell_fitting.data import shift_v_rest, set_v_rest
 from cell_fitting.optimization.helpers import convert_to_unit
+import re
+
+
+def get_protocols_same_base(file_dir, protocol_base, group='Group1'):
+    reg_exp_protocol = re.compile(protocol_base + '(\([0-9]+\))?')
+    hekareader = HekaReader(file_dir)
+    type_to_index = hekareader.get_type_to_index()
+    protocol_to_series = hekareader.get_protocol(group)
+    protocols = protocol_to_series.keys()
+    protocols_match = []
+    for p in protocols:
+        if reg_exp_protocol.match(p):
+            protocols_match.append(p)
+
+    # sort protocols
+    numbers_str = [re.findall(r'\d+', p) for p in protocols_match]
+    numbers = [int(n[0]) if len(n) > 0 else 0 for n in numbers_str]
+    sort_idx = np.argsort(numbers)
+    protocols_match = np.array(protocols_match)[sort_idx]
+    return protocols_match
 
 
 def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None, return_sweep_idxs=False):

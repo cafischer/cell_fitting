@@ -84,6 +84,13 @@ for i, model_dir in enumerate(model_dirs):
 # plot
 cmap = matplotlib.cm.get_cmap('gnuplot')
 colors = [cmap(x) for x in np.linspace(0, 1, len(model_dirs))]
+
+# pl.figure()
+# for i, c in enumerate(colors):
+#     pl.plot(i, 0, color=c, marker='o', label='model '+str(i+1))
+# pl.legend(fontsize=16)
+# pl.show()
+
 n_params_half = int(np.ceil(n_params / 2))
 fig, ax = pl.subplots(2, n_params_half)
 for i, m in enumerate(model_dirs):
