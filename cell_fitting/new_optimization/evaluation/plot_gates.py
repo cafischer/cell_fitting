@@ -7,7 +7,7 @@ from nrn_wrapper import Cell
 if __name__ == '__main__':
     # parameters
     data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
-    save_dir = '../../results/server/2017-08-23_08:41:41/270/L-BFGS-B/'
+    save_dir = '../../results/server/2017-08-30_09:50:28/194/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 

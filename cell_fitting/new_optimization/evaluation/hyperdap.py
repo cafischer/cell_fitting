@@ -105,7 +105,7 @@ def hyperpolarize_ramp(cell):
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/server/2017-08-23_08:41:41/270/L-BFGS-B/'
+    save_dir = '../../results/server/2017-08-30_09:50:28/194/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'cell.json')
     #save_dir = '../../results/hand_tuning/test0/'
     #model_dir = os.path.join(save_dir, 'cell.json')

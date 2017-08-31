@@ -1,6 +1,7 @@
 from __future__ import division
 import numpy as np
 import matplotlib.pyplot as pl
+pl.style.use('paper')
 import os
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from nrn_wrapper import Cell
@@ -8,22 +9,21 @@ from cell_fitting.read_heka import get_v_and_t_from_heka
 from cell_fitting.data import set_v_rest
 
 
-def get_zap(amp, freq0=1, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.01):
+def get_zap(amp, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.01):
     """
     """
     t = np.arange(0, tstop-onset_dur-offset_dur+dt, dt)
-    freqs = np.linspace(freq0, freq1, len(t)) / 1000
-    zap = amp * np.sin(2 * np.pi * freqs * t)
+    #freqs = np.linspace(freq0, freq1, len(t)) / 1000
+    #zap = amp * np.sin(2 * np.pi * freqs * t)
     zap_franzi = amp * np.sin(2 * np.pi * ((freq1 - freq0) / 1000 * t / (2 * t[-1]) + freq0/1000) * t)  # warum 2 * dur und nicht dur?
     onset = np.zeros(int(round(onset_dur/dt)))
     offset = np.zeros(int(round(offset_dur/dt)))
-    zap_stim = np.concatenate((onset, zap, offset))
-    #freqs = np.concatenate((onset, freqs, offset))
+    zap_stim = np.concatenate((onset, zap_franzi, offset))
 
-    pl.figure()
-    pl.plot(t, freqs * 1000, 'b')
-    pl.plot(t, (freq1 - freq0) * t / (2 * t[-1]) + freq0, 'g')
-    pl.show()
+    # pl.figure()
+    # pl.plot(t, freqs * 1000, 'b')
+    # pl.plot(t, (freq1 - freq0) * t / (2 * t[-1]) + freq0, 'g')
+    # pl.show()
     return zap_stim
 
 
@@ -56,38 +56,38 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=1, freq1=20, onset_dur=2000, offset_
     v_exp = set_v_rest(v_exp, v_exp[0], -75)
 
     # plot
+    fig, ax1 = pl.subplots()
+    ax2 = ax1.twiny()
+    ax1.plot(t_exp, v_exp, 'k', label='Exp. Data')
+    ax1.plot(t, v, 'r', label='Model')
+    ax1.set_xlim(0, t[-1])
+    ax2.set_xlim(ax1.get_xlim())
+    ax2.set_xticks(ax1.get_xticks())
+    ax2.set_xticklabels(map(freqs_out, ax1.get_xticks()))
+    ax2.set_xlabel('Frequency (Hz)')
+    ax1.set_xlabel('Time (ms)')
+    ax1.set_ylabel('Membrane potential (mV)')
+    ax1.legend()
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'v.png'))
+    pl.show()
+
+    # plot
+    # import pandas as pd
+    # i_exp2 = pd.read_csv('../../data/Protocols/Zap20.csv')
     # fig, ax1 = pl.subplots()
     # ax2 = ax1.twiny()
-    # ax1.plot(t_exp, v_exp, 'k', label='Exp. Data')
-    # ax1.plot(t, v, 'r', label='Model')
-    # ax1.set_xlim(0, t[-1])
-    # ax2.set_xlim(ax1.get_xlim())
-    # #ax2.set_ylim(-80, -67)
+    # print (t_exp[1]-t_exp[0])
+    # pl.plot(np.arange(len(i_exp2))*(t_exp[1]-t_exp[0])*2, i_exp2)
+    # #pl.plot(np.arange(len(i_exp2)) * (0.019), i_exp2)
+    # pl.plot(t[:-int(round((onset_dur+offset_dur)/dt))], i_exp[int(round(onset_dur/dt)):-int(round(offset_dur/dt))])
     # ax2.set_xticks(ax1.get_xticks())
     # ax2.set_xticklabels(map(freqs_out, ax1.get_xticks()))
     # ax2.set_xlabel('Frequency $(Hz)$', fontsize=16)
     # ax1.set_xlabel('Time $(ms)$', fontsize=16)
-    # ax1.set_ylabel('Membrane potential $(mV)$', fontsize=16)
+    # ax1.set_ylabel('Current $(nA)$', fontsize=16)
     # pl.legend(fontsize=16)
-    # pl.savefig(os.path.join(save_dir_img, 'zap_amp.png'))
     # pl.show()
-
-    # plot
-    import pandas as pd
-    i_exp2 = pd.read_csv('../../data/Protocols/Zap20.csv')
-    fig, ax1 = pl.subplots()
-    ax2 = ax1.twiny()
-    print (t_exp[1]-t_exp[0])
-    pl.plot(np.arange(len(i_exp2))*(t_exp[1]-t_exp[0])*2, i_exp2)
-    #pl.plot(np.arange(len(i_exp2)) * (0.019), i_exp2)
-    pl.plot(t[:-int(round((onset_dur+offset_dur)/dt))], i_exp[int(round(onset_dur/dt)):-int(round(offset_dur/dt))])
-    ax2.set_xticks(ax1.get_xticks())
-    ax2.set_xticklabels(map(freqs_out, ax1.get_xticks()))
-    ax2.set_xlabel('Frequency $(Hz)$', fontsize=16)
-    ax1.set_xlabel('Time $(ms)$', fontsize=16)
-    ax1.set_ylabel('Current $(nA)$', fontsize=16)
-    pl.legend(fontsize=16)
-    pl.show()
 
 
 if __name__ == '__main__':
@@ -104,4 +104,4 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # apply stim
-    apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=10, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.1)  # freq0=0 or 1???  freq1=10 oder 20???
+    apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.1)  # freq0=0 or 1???  freq1=10 oder 20???
