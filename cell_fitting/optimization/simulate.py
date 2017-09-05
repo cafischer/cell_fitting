@@ -106,7 +106,7 @@ def simulate_currents(cell, simulation_params, plot=False):
         pl.tight_layout()
         pl.show()
 
-    return currents
+    return currents, channel_list
 
 
 def simulate_gates(cell, simulation_params, return_vh_vs=False, plot=False):

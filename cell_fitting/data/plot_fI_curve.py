@@ -3,6 +3,7 @@ import numpy as np
 import os
 from cell_characteristics.fIcurve import compute_fIcurve, compute_fIcurve_last_ISI
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
@@ -47,25 +48,25 @@ if __name__ == '__main__':
 
         pl.figure()
         pl.plot(amps_greater0, firing_rates_data, '-ok', label='Exp. Data')
-        pl.xlabel('Current (nA)', fontsize=16)
-        pl.ylabel('Firing rate (APs/ms)', fontsize=16)
-        pl.legend(loc='lower right', fontsize=16)
-        pl.savefig(os.path.join(save_dir_fig, 'fIcurve.png'))
+        pl.xlabel('Current (nA)')
+        pl.ylabel('Firing rate (APs/ms)')
+        pl.legend(loc='lower right')
+        #pl.savefig(os.path.join(save_dir_fig, 'fIcurve.png'))
         #pl.show()
 
         pl.figure()
         pl.plot(amps_greater0, firing_rates_data_last_ISI, '-ok', label='Exp. Data')
-        pl.xlabel('Current (nA)', fontsize=16)
-        pl.ylabel('last ISI (ms)', fontsize=16)
-        pl.legend(loc='upper right', fontsize=16)
-        pl.savefig(os.path.join(save_dir_fig, 'fIcurve_last_ISI.png'))
+        pl.xlabel('Current (nA)')
+        pl.ylabel('last ISI (ms)')
+        pl.legend(loc='upper right')
+        #pl.savefig(os.path.join(save_dir_fig, 'fIcurve_last_ISI.png'))
         #pl.show()
 
         for amp, v_trace_data in zip(amps, v_mat):
             pl.figure()
             pl.plot(t, v_trace_data, 'k', label='Exp. Data')
-            pl.xlabel('Time (ms)', fontsize=16)
-            pl.ylabel('Membrane Potential (mV)', fontsize=16)
+            pl.xlabel('Time (ms)')
+            pl.ylabel('Membrane Potential (mV)')
             pl.legend(fontsize=16, loc='upper right')
-            pl.savefig(os.path.join(save_dir_fig, 'IV_'+str(amp)+'.png'))
-        #     pl.show()
+            #pl.savefig(os.path.join(save_dir_fig, 'IV_'+str(amp)+'.png'))
+            pl.show()

@@ -1,9 +1,9 @@
 import pylab as pl
 import numpy as np
 import os
-from matplotlib.pyplot import cm
 from nrn_wrapper import Cell
 from cell_fitting.optimization.simulate import simulate_currents, iclamp_handling_onset
+pl.style.use('paper')
 
 __author__ = 'caro'
 
@@ -32,8 +32,8 @@ def hyperpolarize_ramp(cell):
     tstop = 1000  # ms
     """
 
-    hyperamps = np.arange(-0.25, 0.26, 0.05)  # nA  #TODO
-    #hyperamps = np.arange(-0.1, 0.26, 0.05)
+    #hyperamps = np.arange(-0.25, 0.26, 0.05)  # nA  #TODO
+    hyperamps = np.arange(-0.2, 0.21, 0.05)
     ramp_amp = 8  # nA
     dt = 0.01
     hyp_st_ms = 200  # ms
@@ -68,46 +68,51 @@ def hyperpolarize_ramp(cell):
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
-    pl.figure()
-    color = iter(cm.gist_rainbow(np.linspace(0, 1, len(hyperamps))))
+    c_map = pl.cm.get_cmap('plasma')
+    colors = c_map(np.linspace(0, 1, len(hyperamps)))
+
+    pl.figure(figsize=(8, 6))
     for j, hyper_amp in enumerate(hyperamps):
-        pl.plot(t, v[j], c=next(color), label=str(np.round(hyper_amp, 2)) + ' nA')
-    pl.xlabel('Time $(ms)$', fontsize=16)
-    pl.ylabel('Membrane potential $(mV)$', fontsize=16)
-    pl.legend(loc='upper right', fontsize=16)
-    pl.savefig(os.path.join(save_dir_img, 'hyperDAP.svg'))
+        pl.plot(t, v[j], c=colors[j], label=str(np.round(hyper_amp, 2)) + ' nA')
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane potential (mV)')
+    pl.legend(loc='upper right')
+    pl.tight_layout()
+    pl.xlim(0, t[-1])
+    pl.savefig(os.path.join(save_dir_img, 'hyperDAP.png'))
     pl.show()
 
-    pl.figure()
-    color = iter(cm.gist_rainbow(np.linspace(0, 1, len(hyperamps))))
+    pl.figure(figsize=(8, 6))
     for j, hyper_amp in enumerate(hyperamps):
-        pl.plot(t, v[j], c=next(color), label=str(np.round(hyper_amp, 2)) + ' nA')
-    pl.xlabel('Time $(ms)$', fontsize=16)
-    pl.ylabel('Membrane potential $(mV)$', fontsize=16)
-    pl.legend(loc='upper right', fontsize=16)
+        pl.plot(t, v[j], c=colors[j], label=str(np.round(hyper_amp, 2)) + ' nA')
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane potential (mV)')
+    pl.legend()
     pl.xlim(595, 645)
-    pl.ylim(-85, -40)
-    pl.savefig(os.path.join(save_dir_img, 'hyperDAP_zoom.svg'))
+    pl.ylim(-95, -40)
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'hyperDAP_zoom.png'))
     pl.show()
 
-    # plot currents
-    pl.figure()
-    color = cm.gist_rainbow(np.linspace(0, 1, len(currents[0])))
-    for j, hyper_amp in enumerate(hyperamps):
-        for k, current in enumerate(currents[j]):
-            pl.plot(t, -1*current, c=color[k])
-    pl.xlabel('Time $(ms)$', fontsize=16)
-    pl.ylabel('Current $(mA/cm^2)$', fontsize=16)
-    pl.xlim(595, 645)
-    pl.show()
+    # # plot currents
+    # pl.figure()
+    # colors = c_map(np.linspace(0, 1, len(currents[0])))
+    # for j, hyper_amp in enumerate(hyperamps):
+    #     for k, current in enumerate(currents[j]):
+    #         pl.plot(t, -1*current, c=colors[k])
+    # pl.xlabel('Time (ms)')
+    # pl.ylabel('Current (mA/cm$^2$)')
+    # pl.xlim(595, 645)
+    # pl.tight_layout()
+    # pl.show()
 
 
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/server/2017-08-30_09:50:28/194/L-BFGS-B/'
+    save_dir = '../../results/server/2017-07-18_11:14:25/17/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/test0/'
+    #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0/'
     #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 

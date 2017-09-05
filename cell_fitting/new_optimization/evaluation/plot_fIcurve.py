@@ -8,15 +8,16 @@ from cell_characteristics.fIcurve import compute_fIcurve, compute_fIcurve_last_I
 from cell_fitting.util import merge_dicts
 from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
 from nrn_wrapper import Cell
+from cell_characteristics.analyze_APs import get_AP_max_idx, get_AP_start_end
 
 
 if __name__ == '__main__':
 
     # parameters
-    #save_dir =  '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    save_dir =  '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    #save_dir = '../../results/hand_tuning/test0'
+    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     data_dir = '../../data/2015_08_26b/vrest-75/IV/'
 
@@ -82,9 +83,11 @@ if __name__ == '__main__':
     pl.figure()
     pl.plot(amps_greater0, firing_rates_data, '-ok', label='Exp. Data')
     pl.plot(amps_greater0, firing_rates_model, '-or', label='Model')
+    pl.ylim([0, 0.09])
     pl.xlabel('Current (nA)')
     pl.ylabel('Firing rate (APs/ms)')
     pl.legend(loc='lower right')
+    pl.tight_layout()
     pl.savefig(os.path.join(save_dir_fig, 'fIcurve.png'))
     #pl.show()
 
@@ -94,15 +97,30 @@ if __name__ == '__main__':
     pl.xlabel('Current (nA)')
     pl.ylabel('last ISI (ms)')
     pl.legend(loc='upper right')
+    pl.tight_layout()
     pl.savefig(os.path.join(save_dir_fig, 'fIcurve_last_ISI.png'))
     #pl.show()
 
     for amp, v_trace_data, v_trace_model in zip(amps, v_traces_data, v_traces_model):
+        AP_start_model, AP_end_model = get_AP_start_end(v_trace_model, threshold=-30, n=0)
+        AP_start_data, AP_end_data = get_AP_start_end(v_trace_data, threshold=-30, n=0)
+
         pl.figure()
-        pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
-        pl.plot(t_model, v_trace_model, 'r', label='Model')
+        if AP_start_model is not None and AP_start_data is not None:
+            AP_peak_model = v_trace_model[get_AP_max_idx(v_trace_model, AP_start_model, AP_end_model)]
+            AP_peak_data = v_trace_data[get_AP_max_idx(v_trace_data, AP_start_data, AP_end_data)]
+            if AP_peak_model > AP_peak_data:
+                pl.plot(t_model, v_trace_model, 'r', label='Model')
+                pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+            else:
+                pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+                pl.plot(t_model, v_trace_model, 'r', label='Model')
+        else:
+            pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+            pl.plot(t_model, v_trace_model, 'r', label='Model')
         pl.xlabel('Time (ms)')
         pl.ylabel('Membrane Potential (mV)')
         pl.legend()
+        pl.tight_layout()
         pl.savefig(os.path.join(save_dir_fig, 'IV'+str(amp)+'.png'))
         #pl.show()

@@ -5,6 +5,7 @@ import os
 from nrn_wrapper import Cell, load_mechanism_dir
 import matplotlib
 from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
+pl.style.use('paper')
 
 
 model_dirs = [
@@ -98,11 +99,15 @@ for i, m in enumerate(model_dirs):
     for j, p in enumerate(variable_keys):
         if j >= n_params_half:
             idx = 1
-        ax[idx, j%n_params_half].set_title(p[0][-2]+'\n'+p[0][-1])
-        ax[idx, j%n_params_half].plot(0, params[i, j], color=colors[i], marker='o')
-        ax[idx, j%n_params_half].set_xticks([])
-        ax[idx, j%n_params_half].set_ylim(lower_bounds[j], upper_bounds[j])
+        #ax[idx, j%n_params_half].set_xlabel(p[0][-2]+'\n'+p[0][-1])
+        ax[idx, j % n_params_half].plot(0, params[i, j], color=colors[i], marker='o')
+        ax[idx, j % n_params_half].set_xticks([0])
+        ax[idx, j % n_params_half].set_xticklabels([p[0][-2] + '\n' + p[0][-1]])
+        ax[idx, j % n_params_half].set_ylim(lower_bounds[j], upper_bounds[j])
+        for label in ax[idx, j % n_params_half].get_xticklabels():
+            label.set_rotation(90)
         # print p, params[i, j]
         assert lower_bounds[j] <= params[i, j] <= upper_bounds[j]
-pl.subplots_adjust(wspace=5, left=0.04, right=0.96)
+pl.subplots_adjust(wspace=5, left=0.05, right=0.95, top=0.95, bottom=0.15, hspace=0.35)
+#pl.tight_layout()
 pl.show()

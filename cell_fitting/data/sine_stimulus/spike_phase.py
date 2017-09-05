@@ -4,7 +4,7 @@ import json
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from grid_cell_stimuli.spike_phase import get_spike_phases, plot_phase_hist, plot_phase_vs_position_per_run, \
     compute_phase_precession, plot_phase_precession
-import matplotlib.pyplot as pl
+from scipy.stats import circmean
 
 
 if __name__ == '__main__':
@@ -47,7 +47,8 @@ if __name__ == '__main__':
         not_nan = np.logical_not(np.isnan(phases))
         phases = phases[not_nan]
         AP_onsets = AP_onsets[not_nan]
-        plot_phase_hist(phases, save_dir_img)
+        mean_phase = circmean(phases, 360, 0)
+        plot_phase_hist(phases, save_dir_img, mean_phase=mean_phase)
 
         # phase precession
         position = t * speed

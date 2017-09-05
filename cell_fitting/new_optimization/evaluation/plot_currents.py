@@ -7,12 +7,14 @@ import matplotlib.pyplot as pl
 from cell_fitting.optimization.helpers import get_channel_list
 import numpy as np
 import copy
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
-    save_dir = '../../results/server/2017-08-30_09:50:28/194/L-BFGS-B/'
+    #data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
+    data_dir = '../../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
+    save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 

@@ -4,6 +4,7 @@ import pandas as pd
 import os
 from cell_fitting.new_optimization.fitter import iclamp_handling_onset
 from nrn_wrapper import Cell
+pl.style.use('paper')
 
 __author__ = 'caro'
 
@@ -67,11 +68,12 @@ if __name__ == '__main__':
         os.makedirs(save_img)
 
     pl.figure()
-    pl.title(str(np.round(ramp_amp, 2)) + ' nA')
+    #pl.title(str(np.round(ramp_amp, 2)) + ' nA')
     pl.plot(data.t, data.v, 'k', label='Exp. Data')
     pl.plot(t, v, 'r', label='Model')
-    pl.xlabel('Time $(ms)$', fontsize=16)
-    pl.ylabel('Membrane potential $(mV)$', fontsize=16)
-    pl.legend(loc='upper right', fontsize=16)
-    pl.savefig(os.path.join(save_img, 'rampIV' + str(np.round(ramp_amp, 2)) + 'nA'+'.svg'))
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane potential (mV)')
+    pl.legend(loc='upper right')
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_img, 'rampIV' + str(np.round(ramp_amp, 2)) + 'nA'+'.png'))
     pl.show()

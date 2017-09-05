@@ -7,14 +7,15 @@ import re
 import numpy as np
 import pandas as pd
 import json
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     sine_params_dir = '/home/cf/Phd/DAP-Project/cell_data/sine_params.csv'
     protocol_base = 'Stimulus'
-    dur1 = 5000  # ms
-    freq2 = 5  # Hz
+    dur1 = 1000  # ms
+    freq2 = 20  # Hz
     v_rest_shift = -16
     correct_vrest = True
     dt = 0.05
@@ -67,5 +68,5 @@ if __name__ == '__main__':
             pl.ylabel('Membrane Potential (mV)', fontsize=16)
             pl.xlabel('Time (ms)', fontsize=16)
             pl.legend(fontsize=16, loc='upper right')
-            pl.savefig(os.path.join(save_dir_cell, 'v.svg'))
-            #pl.show()
+            #pl.savefig(os.path.join(save_dir_cell, 'v.svg'))
+            pl.show()

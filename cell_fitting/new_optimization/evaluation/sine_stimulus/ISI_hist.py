@@ -6,14 +6,15 @@ from grid_cell_stimuli.ISI_hist import get_ISI_hist, get_ISI_hists_into_outof_fi
     plot_ISI_hist_into_outof_field
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 import matplotlib.pyplot as pl
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
-    save_dir = '../../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    save_dir = '../../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
     #save_dir = '../../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
 
     # load
-    save_dir = os.path.join(save_dir, 'img', 'sine_stimulus', '0.5_0.2_5000_5')
+    save_dir = os.path.join(save_dir, 'img', 'sine_stimulus', '0.7_0.5_5000_5')
     v = np.load(os.path.join(save_dir, 'v.npy'))
     t = np.load(os.path.join(save_dir, 't.npy'))
     dt = t[1] - t[0]
@@ -85,7 +86,8 @@ if __name__ == '__main__':
 
     pl.figure()
     pl.plot(range(1, len(ups_start)+1), n_APs_per_up, 'ok')
-    pl.ylabel('Count APs', fontsize=16)
-    pl.xlabel('Number of Period', fontsize=16)
+    pl.ylabel('Count APs')
+    pl.xlabel('Number of Period')
+    pl.tight_layout()
     pl.savefig(os.path.join(save_dir, 'n_APs_per_up.svg'))
     pl.show()

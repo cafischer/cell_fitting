@@ -4,14 +4,15 @@ import json
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from grid_cell_stimuli.spike_phase import get_spike_phases, plot_phase_hist, plot_phase_vs_position_per_run, \
     compute_phase_precession, plot_phase_precession
+from scipy.stats import circmean
 
 
 if __name__ == '__main__':
-    #save_dir = '../../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
+    #save_dir = '../../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
     save_dir = '../../../results/hand_tuning/test0'
 
     # load
-    save_dir = os.path.join(save_dir, 'img', 'sine_stimulus', '0.5_0.2_5000_5')
+    save_dir = os.path.join(save_dir, 'img', 'sine_stimulus', '0.4_0.2_5000_5')
     v = np.load(os.path.join(save_dir, 'v.npy'))
     t = np.load(os.path.join(save_dir, 't.npy'))
     dt = t[1] - t[0]
@@ -38,7 +39,8 @@ if __name__ == '__main__':
     not_nan = np.logical_not(np.isnan(phases))
     phases = phases[not_nan]
     AP_onsets = AP_onsets[not_nan]
-    plot_phase_hist(phases, save_dir)
+    mean_phase = circmean(phases, 360, 0)
+    plot_phase_hist(phases, save_dir, mean_phase=mean_phase)
 
     # phase precession
     position = t * speed

@@ -9,7 +9,7 @@ import re
 
 
 def get_protocols_same_base(file_dir, protocol_base, group='Group1'):
-    reg_exp_protocol = re.compile(protocol_base + '(\([0-9]+\))?')
+    reg_exp_protocol = re.compile('^'+protocol_base + '(\([0-9]+\))?'+'$')
     hekareader = HekaReader(file_dir)
     type_to_index = hekareader.get_type_to_index()
     protocol_to_series = hekareader.get_protocol(group)
@@ -97,24 +97,34 @@ def get_cells_for_protocol(data_dir, protocol):
 
 
 if __name__ == '__main__':
-    cell_ids = ["2015_08_25b", "2015_08_25h", "2015_08_27d", "2015_08_26b", "2015_08_26f"]
-    cell = '2015_08_26f'
-    file_dir = os.path.join('/home/cf/Phd/DAP-Project/cell_data/raw_data', cell +'.dat')
-    folder_name = 'vrest-80'
-    v_rest = -80
-    v_rest_shift = -16
-    protocol = 'IV'
 
-    v, t, sweep_idxs = get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None,
-                                 return_sweep_idxs=True)
-    i_inj = get_i_inj(protocol, sweep_idxs)  # re.sub('\(.*\)', '', protocol)
-    v_set = set_v_rest(v, np.array([v[:, 0]]).T, np.ones((np.shape(v)[0], 1))*v_rest)
-    v_shifted = shift_v_rest(v, v_rest_shift)
+    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    cells_by_protocol = get_cells_by_protocol(data_dir)
+    #for p in cells_by_protocol.keys():
+    #    if not '(' in p:
+    #        print p
+    #print cells_by_protocol.keys()
+    #print cells_by_protocol['hyperRampTester']
+    print cells_by_protocol['HyperDepoRamp']
 
-    for i in range(np.shape(v)[0]):
-        fig, ax = pl.subplots(2, 1)
-        ax[0].plot(t[i, :], v[i, :])
-        #ax[0].plot(t[i, :], v_set[i, :])
-        #ax[0].plot(t[i, :], v_shifted[i, :])
-        ax[1].plot(t[i, :], i_inj[i, :])
-        pl.show()
+    # cell_ids = ["2015_08_25b", "2015_08_25h", "2015_08_27d", "2015_08_26b", "2015_08_26f"]
+    # cell = '2015_08_26f'
+    # file_dir = os.path.join(data_dir, cell +'.dat')
+    # folder_name = 'vrest-80'
+    # v_rest = -80
+    # v_rest_shift = -16
+    # protocol = 'IV'
+    #
+    # v, t, sweep_idxs = get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None,
+    #                              return_sweep_idxs=True)
+    # i_inj = get_i_inj(protocol, sweep_idxs)  # re.sub('\(.*\)', '', protocol)
+    # v_set = set_v_rest(v, np.array([v[:, 0]]).T, np.ones((np.shape(v)[0], 1))*v_rest)
+    # v_shifted = shift_v_rest(v, v_rest_shift)
+    #
+    # for i in range(np.shape(v)[0]):
+    #     fig, ax = pl.subplots(2, 1)
+    #     ax[0].plot(t[i, :], v[i, :])
+    #     #ax[0].plot(t[i, :], v_set[i, :])
+    #     #ax[0].plot(t[i, :], v_shifted[i, :])
+    #     ax[1].plot(t[i, :], i_inj[i, :])
+    #     pl.show()

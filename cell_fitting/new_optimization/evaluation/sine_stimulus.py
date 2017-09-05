@@ -5,6 +5,7 @@ import os
 import json
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from nrn_wrapper import Cell
+pl.style.use('paper')
 
 
 def get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt):
@@ -54,29 +55,29 @@ def apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_du
         json.dump(sine_params, f)
 
     pl.figure()
-    pl.title('amp1: ' + str(amp1) + ', amp2: ' + str(amp2) + ', sine1dur: ' + str(sine1_dur) + ', freq2: ' + str(freq2))
+    #pl.title('amp1: ' + str(amp1) + ', amp2: ' + str(amp2) + ', sine1dur: ' + str(sine1_dur) + ', freq2: ' + str(freq2))
     pl.plot(t, v, 'r')
-    #pl.plot(t, i_exp)
-    pl.xlabel('Time $(ms)$', fontsize=16)
-    pl.ylabel('Membrane potential $(mV)$', fontsize=16)
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane \npotential (mV)')
+    pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'v.png'))
     pl.show()
 
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    save_dir = '../../results/hand_tuning/test0'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
+    model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
+    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # apply stim
-    amp1 = 0.5
-    amp2 = 0.2
+    amp1 = 0.7  # 0.5
+    amp2 = 0.5  # 0.2
     sine1_dur = 5000  # 1000 # 2000  # 5000  # 10000
     freq2 = 5  # 5  # 20
     onset_dur = 500

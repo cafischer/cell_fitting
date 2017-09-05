@@ -1,8 +1,8 @@
 import matplotlib.pyplot as pl
-import numpy as np
 import os
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
@@ -36,8 +36,9 @@ if __name__ == '__main__':
 
         pl.figure()
         pl.plot(t, v, 'k', label='Exp. Data')
-        pl.xlabel('Time (ms)', fontsize=16)
-        pl.ylabel('Membrane Potential (mV)', fontsize=16)
-        pl.legend(loc='lower right', fontsize=16)
+        pl.xlabel('Time (ms)')
+        pl.ylabel('Membrane Potential (mV)')
+        pl.legend(loc='lower right')
+        pl.tight_layout()
         pl.savefig(os.path.join(save_dir_fig, 'rampIV.png'))
         #pl.show()
