@@ -14,8 +14,8 @@ if __name__ == '__main__':
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     sine_params_dir = '/home/cf/Phd/DAP-Project/cell_data/sine_params.csv'
     protocol_base = 'Stimulus'
-    dur1 = 1000  # ms
-    freq2 = 20  # Hz
+    dur1 = 5000  # ms
+    freq2 = 5  # Hz
     v_rest_shift = -16
     correct_vrest = True
     dt = 0.05
@@ -54,7 +54,7 @@ if __name__ == '__main__':
             v = shift_v_rest(v, v_rest_shift)
             sine_params_cell = sine_params_cell.iloc[protocol_idx[0]].to_dict()
 
-            save_dir_cell = os.path.join('./results', str(dur1)+'_'+str(freq2), cell[:-4])
+            save_dir_cell = os.path.join('../plots/sine_stimulus', str(dur1)+'_'+str(freq2), cell[:-4])
             if not os.path.exists(save_dir_cell):
                 os.makedirs(save_dir_cell)
             np.save(os.path.join(save_dir_cell, 'v.npy'), v)
@@ -69,4 +69,4 @@ if __name__ == '__main__':
             pl.xlabel('Time (ms)', fontsize=16)
             pl.legend(fontsize=16, loc='upper right')
             #pl.savefig(os.path.join(save_dir_cell, 'v.svg'))
-            pl.show()
+            #pl.show()

@@ -44,8 +44,7 @@ if __name__ == '__main__':
     if not os.path.exists(save_img):
         os.makedirs(save_img)
 
-    cmap = matplotlib.cm.get_cmap('Reds')
-    colors = [cmap(x) for x in np.linspace(0.2, 1.0, len(vs))]
+    colors = pl.cm.get_cmap('Reds')(np.linspace(0.2, 1.0, len(vs)))
     pl.figure()
     for i, v in enumerate(vs):
         pl.plot(t, v, color=colors[i], label='Model' if i == 0 else None)

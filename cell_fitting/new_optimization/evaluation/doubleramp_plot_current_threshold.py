@@ -12,7 +12,7 @@ __author__ = 'caro'
 
 
 
-def double_ramp(cell, ramp3_amp, ramp3times, step_amp, t_exp, save_dir):
+def double_ramp(cell, ramp3_amp, ramp3_times, step_amp, t_exp):
     """
     original values
     delta_ramp = 2
@@ -63,27 +63,72 @@ def double_ramp(cell, ramp3_amp, ramp3times, step_amp, t_exp, save_dir):
     return vs, start_ramp2
 
 
-def get_current_threshold(ramp3times):
-    # simulate
+def simulate_and_get_current_threshold():
+
     dt = 0.01
     t = np.arange(0, 800, dt)
-    v_mat = np.zeros((len(seqs), len(ramp3_times), len(t)))
-    ramp3_amps = np.zeros(len(seqs))
-    for i, seq in enumerate(seqs):
-        ramp3_amps[i] = 0 + seq * 0.05
-        v_mat[i, :, :], start_ramp2 = double_ramp(cell, ramp3_amps[i], ramp3_times, step_amp, t, save_dir)
+    ramp3_amps = np.arange(31) * 0.05
+    delta_ramp = 2
+    delta_first = 3
+    ramp3_times = np.arange(delta_first, 10 * delta_ramp + delta_ramp, delta_ramp)
 
-    # find current thresholds
-    current_threshold = np.zeros(len(ramp3_times))
-    current_threshold[:] = np.nan
-    for j in range(len(ramp3_times)):
-        for i in range(len(seqs)):
+    v_mat = np.zeros((len(ramp3_amps), len(ramp3_times), len(t)))
+    for i, seq in enumerate(ramp3_amps):
+        v_mat[i, :, :], start_ramp2 = double_ramp(cell, ramp3_amps[i], ramp3_times, step_amp, t)
+
+    current_thresholds = get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2, AP_threshold)
+
+    return current_thresholds, ramp3_times
+
+
+def get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2, AP_threshold=None):
+
+    current_thresholds = np.zeros(len(ramp3_times))
+    current_thresholds[:] = np.nan
+
+    for j in range(len(ramp3_times)):  # order of for loops important (find lowest amp that produces spike)
+        for i in range(len(ramp3_amps)):
             onsets = get_AP_onset_idxs(v_mat[i, j, :], AP_threshold)
             onsets = onsets[onsets > start_ramp2]
             if len(onsets) > 1:  # 1st spike is mandatory, 2nd would be on the DAP
-                current_threshold[j] = ramp3_amps[i]
+                current_thresholds[j] = ramp3_amps[i]
                 break
-    return current_threshold, ramp3_times
+    return current_thresholds
+
+
+def plot_current_threshold(current_thresholds, ramp3_times, step_amps, save_dir_img):
+
+    if not os.path.exists(save_dir_img):
+        os.makedirs(save_dir_img)
+
+    colors_dict = {-0.1: 'b', 0.0: 'k', 0.1: 'r'}
+    colors = [colors_dict[amp] for amp in step_amps]
+
+    pl.figure()
+    for i, current_threshold in enumerate(current_thresholds):
+        pl.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Step Amp.: '+str(step_amps[i]))
+    pl.xlabel('$ISI_{Ramp}$ (ms)')
+    pl.ylabel('Current threshold (mA/$cm^2$)')
+    pl.xticks(ramp3_times)
+    pl.xlim(0, ramp3_times[-1]+2)
+    pl.ylim(0, 4.5)
+    pl.legend(loc='upper left')
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'current_threshold.png'))
+    #pl.show()
+
+    pl.figure()
+    for i, current_threshold in enumerate(current_thresholds):
+        pl.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Step Amp.: '+str(step_amps[i]))
+    pl.xlabel('$ISI_{Ramp}$ (ms)')
+    pl.ylabel('Current threshold (mA/$cm^2$)')
+    pl.xticks(ramp3_times)
+    pl.xlim(0, ramp3_times[-1]+2)
+    #pl.ylim(0, 4.5)
+    pl.legend(loc='upper left')
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'current_threshold_zoom.png'))
+    #pl.show()
 
 
 if __name__ == '__main__':
@@ -94,40 +139,17 @@ if __name__ == '__main__':
     #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0/'
     #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
-    seqs = range(31)
     AP_threshold = -30
     step_amps = [-0.1, 0, 0.1]
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
-    # simulation params
-    delta_ramp = 2
-    delta_first = 3
-    ramp3_times = np.arange(delta_first, 10 * delta_ramp + delta_ramp, delta_ramp)
-
     # simulation
     current_thresholds = [0] * len(step_amps)
     for i, step_amp in enumerate(step_amps):
-        current_thresholds[i], ramp3_times = get_current_threshold(ramp3_times)
-
-    # saving
-    save_dir_img = os.path.join(save_dir, 'img', 'PP')
-    if not os.path.exists(save_dir_img):
-        os.makedirs(save_dir_img)
+        current_thresholds[i], ramp3_times = simulate_and_get_current_threshold()
 
     # plot
-    colors = ['b', 'k', 'r']
-    pl.figure()
-    for i, current_threshold in enumerate(current_thresholds):
-        pl.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Step Amp.: '+str(step_amps[i]))
-    pl.xlabel('$ISI_{Ramp}$ (ms)')
-    pl.ylabel('Current threshold (mA/$cm^2$)')
-    pl.xlim(0, ramp3_times[-1]+2)
-    pl.ylim(0, 3.0)
-    pl.legend()
-    pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'current_vs_ISI.png'))
-    pl.show()
-
-# TODO: Latex same look as python standard
+    save_dir_img = os.path.join(save_dir, 'img', 'PP')
+    plot_current_threshold(current_thresholds, ramp3_times, step_amps, save_dir_img)

@@ -92,3 +92,25 @@ if __name__ == '__main__':
     pl.tight_layout()
     pl.savefig(os.path.join(save_img, 'slow_ramp.png'))
     pl.show()
+
+
+    # plot stimulus
+    fig, ax = pl.subplots(2, 1, figsize=(10.667, 8))
+
+    # v
+    ax[0].plot(t_down, i_inj_down, 'r')
+    ax[1].plot(t_up, i_inj_up, 'r')
+
+    # labels
+    ax[0].set_ylabel('Current (nA)')
+    ax[0].set_xlabel('Time (ms)')
+    ax[0].set_xlim(t_down[-1], 0)
+
+    ax[1].set_ylabel('Current (nA)')
+    ax[1].set_xlabel('Time (ms)')
+    ax[1].set_xlim(0, t_down[-1])
+    ax[1].set_ylim(ax[0].get_ylim()[0], ax[0].get_ylim()[1])
+
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_img, 'slow_ramp_i_inj.png'))
+    pl.show()

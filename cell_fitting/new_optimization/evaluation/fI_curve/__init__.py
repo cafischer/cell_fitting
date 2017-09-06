@@ -5,8 +5,9 @@ from cell_characteristics.analyze_APs import get_AP_onset_idxs
 
 def get_slow_ramp(start_idx, end_idx, len_idx, step_amp):
     i_exp = np.zeros(len_idx)
-    i_exp[start_idx:end_idx] = np.linspace(0, step_amp, end_idx-start_idx)
+    i_exp[start_idx:end_idx] = np.linspace(0, step_amp, end_idx - start_idx)
     return i_exp
+
 
 def get_slow_ramp_reverse(start_idx, end_idx, len_idx, step_amp):
     i_exp = np.zeros(len_idx)
@@ -21,7 +22,7 @@ def get_step(start_idx, end_idx, len_idx, step_amp):
 
 
 def get_IV(cell, step_amp, step_fun, step_st_ms, step_end_ms, tstop, v_init=-75, dt=0.001):
-    i_exp = step_fun(int(round(step_st_ms/dt)), int(round(step_end_ms/dt)), int(round(tstop/dt)), step_amp)
+    i_exp = step_fun(int(round(step_st_ms/dt)), int(round(step_end_ms/dt)), int(round(tstop/dt))+1, step_amp)
 
     # get simulation parameters
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': v_init, 'tstop': tstop,

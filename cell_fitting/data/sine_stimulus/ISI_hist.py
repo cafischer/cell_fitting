@@ -6,12 +6,13 @@ from grid_cell_stimuli.ISI_hist import get_ISI_hist, get_ISI_hists_into_outof_fi
     plot_ISI_hist_into_outof_field
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 import matplotlib.pyplot as pl
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
     dur1 = 5000
     freq2 = 5
-    save_dir = os.path.join('./results/', str(dur1)+'_'+str(freq2))
+    save_dir = os.path.join('../plots/sine_stimulus', str(dur1)+'_'+str(freq2))
     cells = [os.path.split(d)[-1] for d in os.listdir(save_dir)]
 
     for cell in cells:
@@ -72,9 +73,9 @@ if __name__ == '__main__':
         period_fourth = int(round(period / 4))
         onset_idx = int(round(sine_params['onset_dur']/sine_params['dt']))
         offset_idx = int(round(sine_params['onset_dur'] / sine_params['dt']))
-        ups_start = range(len(t))[onset_idx - period_fourth:-offset_idx:period]
-        ups_end = range(len(t))[onset_idx + period_half+period_fourth:-offset_idx:period]
-        ups_start = ups_start[:len(ups_end)]
+        period_starts = range(len(t))[onset_idx - period_fourth:-offset_idx:period]
+        period_ends = range(len(t))[onset_idx + period_half + period_fourth:-offset_idx:period]
+        period_starts = period_starts[:len(period_ends)]
 
         # pl.figure()
         # pl.plot(t, theta)
@@ -83,13 +84,37 @@ if __name__ == '__main__':
         # pl.show()
 
         AP_onsets = get_AP_onset_idxs(v, AP_threshold)
-        n_APs_per_up = np.zeros(len(ups_start))
-        for i, (s, e) in enumerate(zip(ups_start, ups_end)):
-            n_APs_per_up[i] = np.sum(np.logical_and(s < AP_onsets, AP_onsets < e))
+        n_APs_per_period = np.zeros(len(period_starts))
+        for i, (s, e) in enumerate(zip(period_starts, period_ends)):
+            n_APs_per_period[i] = np.sum(np.logical_and(s < AP_onsets, AP_onsets < e))
 
         pl.figure()
-        pl.plot(range(1, len(ups_start)+1), n_APs_per_up, 'ok')
-        pl.ylabel('Count APs', fontsize=16)
-        pl.xlabel('Number of Period', fontsize=16)
-        pl.savefig(os.path.join(save_dir_img, 'n_APs_per_up.svg'))
+        pl.plot(range(1, len(period_starts) + 1), n_APs_per_period, 'ok')
+        pl.ylabel('Count APs')
+        pl.xlabel('Number of Period')
+        pl.savefig(os.path.join(save_dir_img, 'n_APs_per_up.png'))
         #pl.show()
+
+        # plot periods one under another
+        colors = pl.cm.get_cmap('Greys')(np.linspace(0.2, 1.0, len(period_starts)))
+        pl.figure()
+        for i, (s, e) in enumerate(zip(period_starts, period_ends)):
+            pl.plot(t[:e - s], v[s:e] + i * -10.0, c=colors[i], label=i)
+        pl.yticks([])
+        pl.xlabel('Time (ms)')
+        pl.ylabel('Membrane Potential (mV)')
+        pl.xlim(0, 200)
+        pl.ylim(-325, -45)
+        pl.legend(fontsize=6, title='Period')
+        pl.tight_layout()
+        pl.savefig(os.path.join(save_dir_img, 'periods.png'))
+        #pl.show()
+
+        # see how many spikes on each side
+        n_periods = len(period_starts) if len(period_starts) % 2 == 0 else len(period_starts) - 1
+        half_periods_idx = int(n_periods / 2)
+        n_AP_in_out_str = '# APs into: %i \n' % np.sum(n_APs_per_period[:half_periods_idx]) \
+                          + '# APs out of: %i' % np.sum(n_APs_per_period[-half_periods_idx:])
+        print n_AP_in_out_str
+        with open(os.path.join(save_dir_img, 'n_APs_in_out.txt'), 'w') as f:
+            f.write(n_AP_in_out_str)

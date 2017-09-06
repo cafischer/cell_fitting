@@ -10,11 +10,11 @@ pl.style.use('paper')
 
 
 if __name__ == '__main__':
-    save_dir = '../../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
-    #save_dir = '../../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
+    #save_dir = '../../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    save_dir = '../../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
 
     # load
-    save_dir = os.path.join(save_dir, 'img', 'sine_stimulus', '0.7_0.5_5000_5')
+    save_dir = os.path.join(save_dir, 'img', 'sine_stimulus', '0.6_0.3_5000_5')
     v = np.load(os.path.join(save_dir, 'v.npy'))
     t = np.load(os.path.join(save_dir, 't.npy'))
     dt = t[1] - t[0]
@@ -69,25 +69,49 @@ if __name__ == '__main__':
     period_fourth = int(round(period / 4))
     onset_idx = int(round(sine_params['onset_dur']/sine_params['dt']))
     offset_idx = int(round(sine_params['onset_dur'] / sine_params['dt']))
-    ups_start = range(len(t))[onset_idx - period_fourth:-offset_idx:period]
-    ups_end = range(len(t))[onset_idx + period_half+period_fourth:-offset_idx:period]
-    ups_start = ups_start[:len(ups_end)]
+    period_starts = range(len(t))[onset_idx - period_fourth:-offset_idx:period]
+    period_ends = range(len(t))[onset_idx + period_half + period_fourth:-offset_idx:period]
+    period_starts = period_starts[:len(period_ends)]
 
     # pl.figure()
     # pl.plot(t, theta)
-    # pl.plot(t[ups_start], theta[ups_start], 'og')
-    # pl.plot(t[ups_end], theta[ups_end], 'or')
+    # pl.plot(t[period_starts], theta[period_starts], 'og')
+    # pl.plot(t[period_ends], theta[period_ends], 'or')
     # pl.show()
 
     AP_onsets = get_AP_onset_idxs(v, AP_threshold)
-    n_APs_per_up = np.zeros(len(ups_start))
-    for i, (s, e) in enumerate(zip(ups_start, ups_end)):
-        n_APs_per_up[i] = np.sum(np.logical_and(s < AP_onsets, AP_onsets < e))
+    n_APs_per_period = np.zeros(len(period_starts))
+    for i, (s, e) in enumerate(zip(period_starts, period_ends)):
+        n_APs_per_period[i] = np.sum(np.logical_and(s < AP_onsets, AP_onsets < e))
 
     pl.figure()
-    pl.plot(range(1, len(ups_start)+1), n_APs_per_up, 'ok')
+    pl.plot(range(1, len(period_starts) + 1), n_APs_per_period, 'ok')
     pl.ylabel('Count APs')
     pl.xlabel('Number of Period')
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir, 'n_APs_per_up.svg'))
-    pl.show()
+    pl.savefig(os.path.join(save_dir, 'n_APs_per_period.png'))
+    #pl.show()
+
+    # plot periods one under another
+    colors = pl.cm.get_cmap('Reds')(np.linspace(0.2, 1.0, len(period_starts)))
+    pl.figure()
+    for i, (s, e) in enumerate(zip(period_starts, period_ends)):
+        pl.plot(t[:e-s], v[s:e] + i * -10.0, c=colors[i], label=i)
+    pl.yticks([])
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane Potential (mV)')
+    pl.xlim(0, 200)
+    pl.ylim(-325, -45)
+    pl.legend(fontsize=6, title='Period')
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir, 'periods.png'))
+    #pl.show()
+
+    # see how many spikes on each side
+    n_periods = len(period_starts) if len(period_starts) % 2 == 0 else len(period_starts) - 1
+    half_periods_idx = int(n_periods/2)
+    n_AP_in_out_str = '# APs into: %i \n' % np.sum(n_APs_per_period[:half_periods_idx]) \
+                      + '# APs out of: %i' % np.sum(n_APs_per_period[-half_periods_idx:])
+    print n_AP_in_out_str
+    with open(os.path.join(save_dir, 'n_APs_in_out.txt'), 'w') as f:
+        f.write(n_AP_in_out_str)
