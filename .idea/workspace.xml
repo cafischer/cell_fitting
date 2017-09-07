@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/big_sine_stimulus.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/doubleramp_plot_current_vs_ISI.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/doubleramp_plot_current_threshold.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/big_sine_stimulus.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/bistability_ramp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/sine_stimulus/ISI_hist.py" afterPath="$PROJECT_DIR$/cell_fitting/data/sine_stimulus/ISI_hist.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/sine_stimulus/get_data.py" afterPath="$PROJECT_DIR$/cell_fitting/data/sine_stimulus/get_data.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fI_curve/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fI_curve/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fI_curve/fIcurve_high_res.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fI_curve/fIcurve_high_res.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fI_curve/slow_ramp.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fI_curve/slow_ramp.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/ISI_hist.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/ISI_hist.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/__init__.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,8 +17,8 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state relative-caret-position="342">
+              <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -40,8 +29,8 @@
       <file leaf-file-name="sine_stimulus.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state relative-caret-position="398">
+              <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="50" selection-end-column="42" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -49,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="big_sine_stimulus.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/big_sine_stimulus.py">
+      <file leaf-file-name="bistability_ramp.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/bistability_ramp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="58" column="25" lean-forward="true" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+            <state relative-caret-position="414">
+              <caret line="23" column="46" lean-forward="false" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -106,7 +95,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/scripts/server_script6.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/scripts/server_script2.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/spike_theta_phase.py" />
@@ -157,6 +145,7 @@
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/big_sine_stimulus.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/bistability_ramp.py" />
       </list>
     </option>
   </component>
@@ -338,7 +327,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/big_sine_stimulus.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/bistability_ramp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -503,7 +492,14 @@
       <option name="project" value="LOCAL" />
       <updated>1504629062388</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="more sine stimulus plots">
+      <created>1504715191107</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1504715191107</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -560,7 +556,8 @@
     <MESSAGE value="evaluate sine_stimulus also on data" />
     <MESSAGE value="new package to evaluate fI_curves more rigorously" />
     <MESSAGE value="improved plot_PP" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved plot_PP" />
+    <MESSAGE value="more sine stimulus plots" />
+    <option name="LAST_COMMIT_MESSAGE" value="more sine stimulus plots" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -894,26 +891,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/ISI_hist.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -932,10 +909,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/big_sine_stimulus.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="58" column="25" lean-forward="true" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+        <state relative-caret-position="342">
+          <caret line="19" column="31" lean-forward="true" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="50" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus/bistability_ramp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="23" column="46" lean-forward="false" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
