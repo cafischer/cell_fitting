@@ -5,11 +5,7 @@ import scipy.optimize
 from cell_characteristics.analyze_APs import get_AP_max_idx, get_AP_amp, get_AP_width, get_DAP_amp, get_DAP_width, \
     get_fAHP_min_idx_using_splines, get_DAP_max_idx_using_splines, get_DAP_deflection, \
     get_AP_width_idxs, get_DAP_width_idx
-
-def init_nan(shape):
-    x = np.zeros(shape)
-    x[:] = np.nan
-    return x
+from cell_fitting.util import init_nan
 
 
 def get_spike_characteristics(AP_matrix, t_window, AP_interval, std_idxs, DAP_interval, v_rest,

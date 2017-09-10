@@ -47,10 +47,10 @@ def rampIV(cell, ramp_amp, v_init=-75):
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/server/2017-08-16_09:41:34/148/L-BFGS-B/'
-    model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/test0/'
-    #model_dir = os.path.join(save_dir, 'cell.json')
+    #save_dir = '../../results/server/2017-08-16_09:41:34/148/L-BFGS-B/'
+    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    save_dir = '../../results/hand_tuning/test0/'
+    model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     ramp_amp = 3.0
     data_dir = '../../data/2015_08_26b/vrest-75/rampIV/'+str(ramp_amp)+'(nA).csv'

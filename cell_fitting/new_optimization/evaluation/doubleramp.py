@@ -19,7 +19,7 @@ def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
     return i_exp
 
 
-def double_ramp(cell, ramp3_amp, step_amp, save_dir):
+def double_ramp(cell, ramp3_amp, step_amp):
     """
     original values
     delta_ramp = 2
@@ -39,7 +39,7 @@ def double_ramp(cell, ramp3_amp, step_amp, save_dir):
     ramp3_times = np.arange(delta_first, 10 * delta_ramp + delta_ramp, delta_ramp)
     baseline_amp = -0.05
     ramp_amp = 4.0
-    dt = 0.01
+    dt = 0.001
 
     # construct current traces
     len_ramp = 3
@@ -52,6 +52,7 @@ def double_ramp(cell, ramp3_amp, step_amp, save_dir):
 
     t_exp = np.arange(0, 800, dt)
     v = np.zeros([len(ramp3_times), len(t_exp)])
+    i_inj = np.zeros([len(ramp3_times), len(t_exp)])
     currents = [0] * len(ramp3_times)
 
     for j, ramp3_time in enumerate(ramp3_times):
@@ -69,16 +70,15 @@ def double_ramp(cell, ramp3_amp, step_amp, save_dir):
                              'dt': dt, 'celsius': 35, 'onset': 300}
 
         # record v
-        v[j], t, _ = iclamp_handling_onset(cell, **simulation_params)
+        v[j], t, i_inj[j] = iclamp_handling_onset(cell, **simulation_params)
 
         # record currents
         currents[j], channel_list = simulate_currents(cell, simulation_params)
 
-    save_dir_img = os.path.join(save_dir, 'img', 'PP', 'step' + str(step_amp))
-    if not os.path.exists(save_dir_img):
-        os.makedirs(save_dir_img)
+    return t, v, i_inj, ramp3_times, currents, channel_list
 
-    # plot
+
+def plot_double_ramp(t, v, ramp3_times, save_dir_img):
     pl.figure()
     #pl.title('1st Ramp = 4 nA, 2nd Ramp = ' + str(ramp3_amp) + ' nA')
     for j, ramp3_time in enumerate(ramp3_times):
@@ -88,10 +88,11 @@ def double_ramp(cell, ramp3_amp, step_amp, save_dir):
     pl.xlim(485, 560)
     pl.legend()
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'PP'+str(ramp3_amp)+'.png'))
+    #pl.savefig(os.path.join(save_dir_img, 'PP'+str(ramp3_amp)+'.png'))
     pl.show()
 
-    # plot currents
+
+def plot_double_ramp_currents(t, v, currents, ramp3_times, channel_list, save_dir_img):
     fig, ax1 = pl.subplots()
     #ax1.set_title('1st Ramp = 4 nA, 2nd Ramp = ' + str(ramp3_amp) + ' nA')
     ax2 = ax1.twinx()
@@ -109,15 +110,77 @@ def double_ramp(cell, ramp3_amp, step_amp, save_dir):
     ax1.legend(h1 + h2, l1 + l2)
     pl.xlim(485, 560)
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'PP_currents'+str(ramp3_amp)+'.png'))
+    #pl.savefig(os.path.join(save_dir_img, 'PP_currents'+str(ramp3_amp)+'.png'))
+    pl.show()
+
+
+def plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, save_dir_img):
+    idx_ramp2 = np.argmin(np.abs(t - 493.5))
+    idx_ramp3 = np.argmin(np.abs(t - 495.5))
+
+    fig, ax1 = pl.subplots()
+    colors = pl.cm.plasma(np.linspace(0, 1, len(currents[0])))
+    for i in range(len(currents[0])):
+        ax1.plot(0, -1 * currents[1][i][idx_ramp2] - -1 * currents[2][i][idx_ramp3],
+                 label=channel_list[i], c=colors[i], marker='o')
+    ax1.set_ylabel('$Current_{Ramp2} - Current_{Ramp3}$ (mA/cm$^2$)')
+    ax1.legend()
+    pl.tight_layout()
+    # pl.savefig(os.path.join(save_dir_img, 'PP_currents'+str(ramp3_amp)+'.png'))
+    pl.show()
+
+    fig, ax1 = pl.subplots()
+    ax2 = ax1.twinx()
+    colors = pl.cm.plasma(np.linspace(0, 1, len(currents[0])))
+    for j in [1, 2]:  # plot ramp 1 and 2
+        ax2.plot(t, v[j], 'k', label='Mem. Pot.' if j == 1 else '')
+    for i in range(len(currents[0])):
+        ax1.plot([t[idx_ramp2], t[idx_ramp3]], [-1 * currents[1][i][idx_ramp2], -1 * currents[2][i][idx_ramp3]],
+                 label=channel_list[i], c=colors[i])
+    ax1.set_ylim(-0.3, 1.0)
+    pl.xlim(485, 560)
+    ax1.axvline(493.5, c='0.5')
+    ax1.axvline(495.5, c='0.5')
+    ax1.set_xlabel('Time (ms)')
+    ax1.set_ylabel('Current (mA/cm$^2$)')
+    ax2.set_ylabel('Membrane Potential (mV)')
+    ax2.spines['right'].set_visible(True)
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2)
+    pl.tight_layout()
+    # pl.savefig(os.path.join(save_dir_img, 'PP_currents'+str(ramp3_amp)+'.png'))
+    pl.show()
+
+    fig, ax1 = pl.subplots()
+    ax2 = ax1.twinx()
+    colors = pl.cm.plasma(np.linspace(0, 1, len(currents[0])))
+    for j in [1, 2]:  # plot ramp 1 and 2
+        ax2.plot(t, v[j], 'k', label='Mem. Pot.' if j == 1 else '')
+        for i, current in enumerate(currents[j]):
+            ax1.plot(t, -1 * current, label=channel_list[i] if j == 1 else '', c=colors[i])
+    ax1.axvline(493.5, c='0.5')
+    ax1.axvline(495.5, c='0.5')
+    ax1.set_xlabel('Time (ms)')
+    ax1.set_ylabel('Current (mA/cm$^2$)')
+    ax2.set_ylabel('Membrane Potential (mV)')
+    ax2.spines['right'].set_visible(True)
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2)
+    pl.xlim(485, 560)
+    pl.tight_layout()
+    # pl.savefig(os.path.join(save_dir_img, 'PP_currents'+str(ramp3_amp)+'.png'))
     pl.show()
 
 
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
-    model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    model_dir = os.path.join(save_dir, 'cell.json')
+    #save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
+    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
     #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0/'
     #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
@@ -125,7 +188,15 @@ if __name__ == '__main__':
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
-    step_amp = 0.1
+    step_amp = 0
     for seq in range(20):
-        ramp3_amp = 0 + seq * 0.1  # TODO 1.8 + seq * 0.05
-        double_ramp(cell, ramp3_amp, step_amp, save_dir)
+        ramp3_amp = 1.0 + seq * 0.1
+        t, v, i_inj, ramp3_times, currents, channel_list = double_ramp(cell, ramp3_amp, step_amp)
+
+        save_dir_img = os.path.join(save_dir, 'img', 'PP', 'step' + str(step_amp))
+        if not os.path.exists(save_dir_img):
+            os.makedirs(save_dir_img)
+
+        plot_double_ramp(t, v, ramp3_times, save_dir_img)
+        plot_double_ramp_currents(t, v, currents, ramp3_times, channel_list, save_dir_img)
+        #plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, save_dir_img)

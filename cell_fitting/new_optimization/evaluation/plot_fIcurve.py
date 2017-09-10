@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as pl
-pl.style.use('paper')
 import numpy as np
 import os
 from cell_fitting.new_optimization.fitter import extract_simulation_params
@@ -9,6 +8,7 @@ from cell_fitting.util import merge_dicts
 from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
 from nrn_wrapper import Cell
 from cell_characteristics.analyze_APs import get_AP_max_idx, get_AP_start_end
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
@@ -76,9 +76,9 @@ if __name__ == '__main__':
     #v_traces_model = v_traces_model[amps_greater0]
 
     # plot
-    save_dir_fig = os.path.join(save_dir, 'img/IV')
-    if not os.path.exists(save_dir_fig):
-        os.makedirs(save_dir_fig)
+    save_dir_img = os.path.join(save_dir, 'img', 'IV')
+    if not os.path.exists(save_dir_img):
+        os.makedirs(save_dir_img)
 
     pl.figure()
     pl.plot(amps_greater0, firing_rates_data, '-ok', label='Exp. Data')
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     pl.ylabel('Firing rate (APs/ms)')
     pl.legend(loc='lower right')
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_fig, 'fIcurve.png'))
+    pl.savefig(os.path.join(save_dir_img, 'fIcurve.png'))
     #pl.show()
 
     pl.figure()
@@ -98,7 +98,7 @@ if __name__ == '__main__':
     pl.ylabel('last ISI (ms)')
     pl.legend(loc='upper right')
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_fig, 'fIcurve_last_ISI.png'))
+    pl.savefig(os.path.join(save_dir_img, 'fIcurve_last_ISI.png'))
     #pl.show()
 
     for amp, v_trace_data, v_trace_model in zip(amps, v_traces_data, v_traces_model):
@@ -122,5 +122,5 @@ if __name__ == '__main__':
         pl.ylabel('Membrane Potential (mV)')
         pl.legend()
         pl.tight_layout()
-        pl.savefig(os.path.join(save_dir_fig, 'IV'+str(amp)+'.png'))
-        #pl.show()
+        pl.savefig(os.path.join(save_dir_img, 'IV' + str(amp) + '.png'))
+        pl.show()

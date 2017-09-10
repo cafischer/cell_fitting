@@ -1,3 +1,10 @@
+import numpy as np
+
+
+def init_nan(shape):
+    x = np.zeros(shape)
+    x[:] = np.nan
+    return x
 
 
 def merge_dicts(dict1, dict2):

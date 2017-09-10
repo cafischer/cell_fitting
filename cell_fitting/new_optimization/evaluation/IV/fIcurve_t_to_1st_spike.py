@@ -5,7 +5,6 @@ from nrn_wrapper import Cell
 from cell_fitting.new_optimization.evaluation.fI_curve import get_step, get_IV, compute_time_to_1st_spike
 import matplotlib
 import matplotlib.pyplot as pl
-
 pl.style.use('paper')
 
 
