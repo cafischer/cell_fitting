@@ -1,11 +1,11 @@
 import functools
 import numdifftools as nd
 import pandas as pd
+import numpy as np
 from scipy.optimize import minimize
-from new_optimization import create_pseudo_random_number_generator, generate_initial_candidates
-from new_optimization.optimizer.optimizer_interface import Optimizer
-from optimization.bio_inspired import generators
-from util import merge_dicts
+from cell_fitting.new_optimization import generate_initial_candidates
+from cell_fitting.new_optimization.optimizer.optimizer_interface import Optimizer
+from cell_fitting.util import merge_dicts
 import os
 
 
@@ -43,15 +43,6 @@ class ScipyOptimizer(Optimizer):
         args = merge_dicts(self.set_stop_criterion(), self.algorithm_settings.optimization_params)
         args['options'] = merge_dicts(args['options'], self.algorithm_settings.algorithm_params)
         return args
-
-    def generate_initial_candidates(self):
-        return self.optimization_settings.extra_args.pop('init_candidates',
-                                             generate_initial_candidates(
-                                                                    self.optimization_settings.generator,
-                                                                    self.optimization_settings.bounds['lower_bounds'],
-                                                                    self.optimization_settings.bounds['upper_bounds'],
-                                                                    self.optimization_settings.seed,
-                                                                    self.optimization_settings.n_candidates))
 
     def set_stop_criterion(self):
         args = dict()
@@ -125,7 +116,7 @@ class ScipyOptimizerInitBounds(ScipyOptimizer):
                                             self.optimization_settings.n_candidates)
 
 
-from optimization.gradient_based import *
+from cell_fitting.optimization.gradient_based import *
 
 
 class ScipyCGOptimizer(ScipyOptimizer):

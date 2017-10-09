@@ -1,6 +1,5 @@
 import time
-from optimization.bio_inspired import *
-import os
+from cell_fitting.optimization.bio_inspired import *
 
 __author__ = 'caro'
 

@@ -4,6 +4,7 @@ import pandas as pd
 import os
 from cell_fitting.new_optimization.fitter import iclamp_handling_onset
 from nrn_wrapper import Cell
+import time
 pl.style.use('paper')
 
 __author__ = 'caro'
@@ -58,7 +59,10 @@ if __name__ == '__main__':
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
+    start_time = time.time()
     v, t = rampIV(cell, ramp_amp, v_init=-75)
+    end_time = time.time()
+    print 'Runtime (sec): ', end_time - start_time
 
     data = pd.read_csv(data_dir)
 
@@ -66,6 +70,15 @@ if __name__ == '__main__':
     save_img = os.path.join(save_dir, 'img', 'rampIV')
     if not os.path.exists(save_img):
         os.makedirs(save_img)
+
+    # with open('./v.npy', 'w') as f:
+    #     np.save(f, v)
+    #
+    # start_time = time.time()
+    # with open('./v.npy', 'r') as f:
+    #     v = np.load(f)
+    # end_time = time.time()
+    # print 'Runtime (sec): ', end_time - start_time
 
     pl.figure()
     #pl.title(str(np.round(ramp_amp, 2)) + ' nA')

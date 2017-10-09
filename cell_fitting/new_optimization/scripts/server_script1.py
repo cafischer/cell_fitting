@@ -9,6 +9,8 @@ import os
 
 # parameters
 save_dir = sys.argv[1]
+process_number = int(sys.argv[2])
+batch_size = int(sys.argv[3])
 
 variables = [
             [0.3, 2, [['soma', 'cm']]],
@@ -99,29 +101,29 @@ lower_bounds_init, upper_bounds_init, variable_keys_init = get_lowerbound_upperb
 bounds_init = {'lower_bounds': list(lower_bounds_init), 'upper_bounds': list(upper_bounds_init)}
 
 fitter_params = {
-                    'name': 'HodgkinHuxleyFitterSeveralDataSeveralFitfuns',
-                    #'name': 'HodgkinHuxleyFitter',
+                    #'name': 'HodgkinHuxleyFitterSeveralDataSeveralFitfuns',
+                    'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
-                    # 'fitfun_names': ['get_v'],
-                    # 'fitnessweights': [1],
-                    # 'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
-                    # 'simulation_params': {'celsius': 35, 'onset': 200},
-                    'fitfun_names': [['get_v'], ['get_v']],
-                    'fitnessweights': [[1], [1]],
-                    'data_dirs': [
-                                  '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
-                                  '../../data/2015_08_26b/vrest-75/IV/0.3(nA).csv'
-                                  ],
+                    'fitfun_names': ['get_v'],
+                    'fitnessweights': [1],
+                    'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
                     'simulation_params': {'celsius': 35, 'onset': 200},
+                    # 'fitfun_names': [['get_v'], ['get_v']],
+                    # 'fitnessweights': [[1], [1]],
+                    # 'data_dirs': [
+                    #               '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
+                    #               '../../data/2015_08_26b/vrest-75/IV/0.3(nA).csv'
+                    #               ],
+                    # 'simulation_params': {'celsius': 35, 'onset': 200},
                     'args': {}
                 }
 
 optimization_settings_dict = {
     'maximize': False,
-    'n_candidates': 100000,
+    'n_candidates': batch_size,
     'stop_criterion': ['generation_termination', 1000],
     'seed': time(),
     'generator': 'get_random_numbers_in_bounds',
@@ -142,14 +144,11 @@ algorithm_settings_dict = {
 init_candidates = generate_initial_candidates(optimization_settings_dict['generator'],
                             bounds_init['lower_bounds'],
                             bounds_init['upper_bounds'],
-                            optimization_settings_dict['seed'],
+                            optimization_settings_dict['seed'] * process_number,
                             optimization_settings_dict['n_candidates'])
 
 # choose right candidate
-batch_size = sys.argv[3]
-optimization_settings_dict['extra_args']['init_candidates'] = init_candidates[int(sys.argv[2])*int(batch_size):
-                                                               (int(sys.argv[2])+1)*int(batch_size)]
-#optimization_settings_dict['extra_args']['init_candidates'] = init_candidates[0:1]
+optimization_settings_dict['extra_args']['init_candidates'] = init_candidates
 
 # start optimization
 optimize(optimization_settings_dict, algorithm_settings_dict)

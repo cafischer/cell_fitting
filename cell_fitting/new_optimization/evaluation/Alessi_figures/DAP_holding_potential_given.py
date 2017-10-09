@@ -20,60 +20,19 @@ if __name__ == '__main__':
     #save_dir = '../../../results/hand_tuning/test0'
     #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
+    save_img = os.path.join(save_dir, 'img', 'DAP_at_different_holding_potentials')
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
-    # different holding potentials
-    hold_potentials = [-87, -82, -72, -67]
+    # load holding potentials and amplitudes
     dt = 0.001
     step_st_ms = 50  # ms
     step_end_ms = step_st_ms + 1  # ms
     tstop = 240  # ms
-    tstop_hold = 100
-    test_hold_amps = np.arange(-2, 1, 0.001)
-    step_amps = np.arange(2.0, 8.0, 0.1)
-    AP_threshold = -20
-
-    # find right holding current
-    hold_amp_last = hold_potentials[0]
-    hold_amps = np.zeros(len(hold_potentials))
-    hold_amps[:] = np.nan
-    for i, hold_potential in enumerate(hold_potentials):
-        for hold_amp in test_hold_amps[test_hold_amps > hold_amp_last]:
-            print hold_amp
-            v, t, i_inj = get_IV(cell, hold_amp, get_step, 0, tstop_hold, tstop_hold, v_init=hold_potential, dt=dt)
-            if np.round(np.mean(v), 1) == hold_potential:
-                hold_amps[i] = hold_amp
-                hold_amp_last = hold_amp
-                # pl.figure()
-                # pl.plot(t, v)
-                # pl.show()
-                break
-
-    print 'Holding amplitudes: ', hold_amps
-
-    # find right AP current
-    for step_amp in step_amps:
-        i_step = get_step(int(round(step_st_ms/dt)), int(round(step_end_ms/dt)), int(round(tstop/dt))+1, step_amp)
-        i_hold = get_step(0, int(round(tstop/dt)) + 1, int(round(tstop/dt))+1, hold_amps[0])
-        i_exp = i_hold + i_step
-
-        simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': hold_potentials[0],
-                             'tstop': tstop, 'dt': dt, 'celsius': 35, 'onset': 200}
-        v, t, _ = iclamp_handling_onset(cell, **simulation_params)
-
-        # pl.figure()
-        # pl.plot(t, v)
-        # pl.show()
-
-        if len(get_AP_onset_idxs(v, AP_threshold)) > 0:
-            step_amp_spike = step_amp
-            print 'Step current amplitude: %.2f' % step_amp
-            # pl.figure()
-            # pl.plot(t, v)
-            # pl.show()
-            break
+    step_amp_spike = np.load(os.path.join(save_img, 'step_amp_spike.npy'))
+    hold_potentials = np.load(os.path.join(save_img, 'hold_potentials.npy'))
+    hold_amps = np.load(os.path.join(save_img, 'hold_amps.npy'))
 
     # simulate different holding potentials with step current
     vs = []

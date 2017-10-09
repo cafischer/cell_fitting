@@ -1,5 +1,6 @@
 import abc
 import json
+from cell_fitting.new_optimization import generate_initial_candidates
 
 
 class Optimizer:
@@ -25,3 +26,12 @@ class Optimizer:
                 cell = json.load(f1)
                 with open(save_dir + '/cell.json', 'w') as f2:
                     json.dump(cell, f2, indent=4)
+
+    def generate_initial_candidates(self):
+        return self.optimization_settings.extra_args.pop('init_candidates',
+                                             generate_initial_candidates(
+                                                                    self.optimization_settings.generator,
+                                                                    self.optimization_settings.bounds['lower_bounds'],
+                                                                    self.optimization_settings.bounds['upper_bounds'],
+                                                                    self.optimization_settings.seed,
+                                                                    self.optimization_settings.n_candidates))

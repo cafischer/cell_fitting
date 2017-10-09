@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QApplication
 import sys
 from cell_fitting.optimization.hand_tuning.controller import HandTuner
 from cell_fitting.optimization.helpers import *
+import os
 
 __author__ = 'caro'
 
@@ -22,46 +23,46 @@ if __name__ == '__main__':
 
     # fitter parameter
     variables = [
-         [0.3, 2, [['soma', 'cm']]],
-         [-95, -70, [['soma', '0.5', 'pas', 'e']]],
-         [-30, -10, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
+        [0.3, 2, [['soma', 'cm']]],
+        [-95, -70, [['soma', '0.5', 'pas', 'e']]],
+        # [-30, -10, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
         #
-         [-0.1, 0.5, [['soma', '0.5', 'pas', 'g']]],
-         [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
-         [-0.01, 0.1, [['soma', '0.5', 'kdr', 'gbar']]],
-         #[0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
-         [0, 0.5, [['soma', '0.5', 'hcn_slow', 'gbar']]],
+        [-0.1, 0.5, [['soma', '0.5', 'pas', 'g']]],
+        # [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
+        # [-0.01, 0.1, [['soma', '0.5', 'kdr', 'gbar']]],
+        # [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
+        # [0, 0.5, [['soma', '0.5', 'hcn_slow', 'gbar']]],
         #
-         [-100, 0, [['soma', '0.5', 'nat', 'm_vh']]],
-         [-100, 0, [['soma', '0.5', 'nat', 'h_vh']]],
-         [-100, 0, [['soma', '0.5', 'kdr', 'n_vh']]],
-         # [-100, 0, [['soma', '0.5', 'nap', 'm_vh']]],
-         # [-100, 0, [['soma', '0.5', 'nap', 'h_vh']]],
-         [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
+        [-100, 0, [['soma', '0.5', 'nat', 'm_vh']]],
+        [-100, 0, [['soma', '0.5', 'nat', 'h_vh']]],
+        # [-100, 0, [['soma', '0.5', 'kdr', 'n_vh']]],
+        # [-100, 0, [['soma', '0.5', 'nap', 'm_vh']]],
+        # [-100, 0, [['soma', '0.5', 'nap', 'h_vh']]],
+        # [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
         #
-         [1, 30, [['soma', '0.5', 'nat', 'm_vs']]],
-         [-30, -1, [['soma', '0.5', 'nat', 'h_vs']]],
-         [1, 30, [['soma', '0.5', 'kdr', 'n_vs']]],
-         # [1, 30, [['soma', '0.5', 'nap', 'm_vs']]],
-         # [-30, -1, [['soma', '0.5', 'nap', 'h_vs']]],
-         [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
+        [1, 30, [['soma', '0.5', 'nat', 'm_vs']]],
+        [-30, -1, [['soma', '0.5', 'nat', 'h_vs']]],
+        # [1, 30, [['soma', '0.5', 'kdr', 'n_vs']]],
+        # [1, 30, [['soma', '0.5', 'nap', 'm_vs']]],
+        # [-30, -1, [['soma', '0.5', 'nap', 'h_vs']]],
+        # [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
         #
-        #  [0, 50, [['soma', '0.5', 'nat', 'm_tau_min']]],
-        #  [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
-        #  [0, 50, [['soma', '0.5', 'kdr', 'n_tau_min']]],
+        [0, 50, [['soma', '0.5', 'nat', 'm_tau_min']]],
+        [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
+        # [0, 50, [['soma', '0.5', 'kdr', 'n_tau_min']]],
         # [0, 50, [['soma', '0.5', 'nap', 'm_tau_min']]],
         # [0, 50, [['soma', '0.5', 'nap', 'h_tau_min']]],
         # [0, 50, [['soma', '0.5', 'hcn_slow', 'n_tau_min']]],
 
-        # [0, 100, [['soma', '0.5', 'nat', 'm_tau_max']]],
-        # [0, 100, [['soma', '0.5', 'nat', 'h_tau_max']]],
+        [0, 100, [['soma', '0.5', 'nat', 'm_tau_max']]],
+        [0, 100, [['soma', '0.5', 'nat', 'h_tau_max']]],
         # [0, 100, [['soma', '0.5', 'kdr', 'n_tau_max']]],
         # [0, 100, [['soma', '0.5', 'nap', 'm_tau_max']]],
         # [0, 100, [['soma', '0.5', 'nap', 'h_tau_max']]],
         # [0, 500, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
         #
-        # [0, 10, [['soma', '0.5', 'nat', 'm_tau_delta']]],
-        # [0, 10, [['soma', '0.5', 'nat', 'h_tau_delta']]],
+        [0, 10, [['soma', '0.5', 'nat', 'm_tau_delta']]],
+        [0, 10, [['soma', '0.5', 'nat', 'h_tau_delta']]],
         # [0, 10, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
         # [0, 10, [['soma', '0.5', 'nap', 'm_tau_delta']]],
         # [0, 10, [['soma', '0.5', 'nap', 'h_tau_delta']]],
@@ -69,7 +70,8 @@ if __name__ == '__main__':
     ]
 
     lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
-    model_dir = '../../results/server/2017-08-23_08:41:41/267/L-BFGS-B/model/cell.json'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    model_dir = os.path.join(save_dir, 'cell.json')
     #model_dir = '../../results/server/2017-07-24_13:59:54/21/L-BFGS-B/model/cell.json'
     #model_dir = '../../results/hand_tuning/test0/cell.json'
     mechanism_dir = '../../model/channels/vavoulis'
@@ -84,8 +86,8 @@ if __name__ == '__main__':
         'fitnessweights': [1],
         'model_dir': model_dir,
         'mechanism_dir': None,
-        'data_dir': '../../data/2015_08_26b/vrest-75/IV/0.7(nA).csv',
-        #'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
+        #'data_dir': '../../data/2015_08_26b/vrest-75/IV/0.7(nA).csv',
+        'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
         'simulation_params': {'celsius': 35, 'onset': 200},
         'args': {}
     }

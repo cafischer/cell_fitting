@@ -1,8 +1,8 @@
 import functools
 import numdifftools as nd
 import numpy as np
-from new_optimization.optimizer.optimizer_interface import Optimizer
-from new_optimization import generate_initial_candidates
+from cell_fitting.new_optimization.optimizer.optimizer_interface import Optimizer
+from cell_fitting.new_optimization import generate_initial_candidates
 import climin
 import copy
 import os
@@ -29,15 +29,6 @@ class CliminOptimizer(Optimizer):
             jac_value[np.isnan(jac_value)] = 0
             return jac_value
         self.jac = jac
-
-    def generate_initial_candidates(self):
-        return self.optimization_settings.extra_args.pop('init_candidates',
-                                                         generate_initial_candidates(
-                                                             self.optimization_settings.generator,
-                                                             self.optimization_settings.bounds['lower_bounds'],
-                                                             self.optimization_settings.bounds['upper_bounds'],
-                                                             self.optimization_settings.seed,
-                                                             self.optimization_settings.n_candidates))
 
     @staticmethod
     def transform_bounds(bounds):

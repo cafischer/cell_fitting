@@ -2,11 +2,11 @@ import inspyred
 import os
 import functools
 import pandas as pd
-from new_optimization import create_pseudo_random_number_generator
-from new_optimization.optimizer.optimizer_interface import Optimizer
-from optimization.bio_inspired import evaluators, generators, observers
-from util import merge_dicts
-from new_optimization.fitter import FitterFactory
+from cell_fitting.new_optimization import create_pseudo_random_number_generator
+from cell_fitting.new_optimization.optimizer.optimizer_interface import Optimizer
+from cell_fitting.optimization.bio_inspired import evaluators, generators, observers
+from cell_fitting.util import merge_dicts
+from cell_fitting.new_optimization.fitter import FitterFactory
 
 
 def mp_evaluator(candidate, args):  # top-level evaluator for multiprocessing

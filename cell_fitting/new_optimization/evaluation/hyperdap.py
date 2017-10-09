@@ -61,7 +61,8 @@ def hyperpolarize_ramp(cell):
         # record v
         v[j], t, _ = iclamp_handling_onset(cell, **simulation_params)
 
-        currents.append(simulate_currents(cell, simulation_params, plot=False))
+        currents_tmp, channel_list = simulate_currents(cell, simulation_params, plot=False)
+        currents.append(currents_tmp)
 
     # plot
     save_dir_img = os.path.join(save_dir, 'img', 'hyperdap')
@@ -95,29 +96,35 @@ def hyperpolarize_ramp(cell):
     pl.show()
 
     # # plot currents
-    # pl.figure()
-    # colors = c_map(np.linspace(0, 1, len(currents[0])))
-    # for j, hyper_amp in enumerate(hyperamps):
-    #     for k, current in enumerate(currents[j]):
-    #         pl.plot(t, -1*current, c=colors[k])
-    # pl.xlabel('Time (ms)')
-    # pl.ylabel('Current (mA/cm$^2$)')
-    # pl.xlim(595, 645)
-    # pl.tight_layout()
-    # pl.show()
+    pl.figure()
+    colors = c_map(np.linspace(0, 1, len(currents[0])))
+    for j, hyper_amp in enumerate(hyperamps):
+        for k, current in enumerate(currents[j]):
+            pl.plot(t, -1*current, c=colors[k], label=channel_list[k])
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Current (mA/cm$^2$)')
+    pl.xlim(595, 645)
+    pl.tight_layout()
+    pl.show()
 
 
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '../../results/server/2017-07-18_11:14:25/17/L-BFGS-B/'
-    model_dir = os.path.join(save_dir, 'model', 'cell.json')
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    model_dir = os.path.join(save_dir, 'cell.json')
+    # save_dir = '../../results/server/2017-07-18_11:14:25/17/L-BFGS-B/'
+    # model_dir = os.path.join(save_dir, 'model', 'cell.json')
     #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0/'
     #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
+
+    print cell.soma(.5).nat.h_vs
+    cell.soma(.5).nat.h_vs = -15.14
+
 
     # start hyperdap
     hyperpolarize_ramp(cell)

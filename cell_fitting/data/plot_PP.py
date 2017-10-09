@@ -16,8 +16,8 @@ protocol_idx = 0
 
 #cells_short = ['2015_08_04d', '2015_08_05a']  # offset_short = [2, 0]
 cells = ['2015_08_05b', '2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11d',
-         '2015_08_11e', '2015_08_11f'][5:]
-offset = [2, 0, 0, 10, 10, 62, 0][5:]  # 11e 10 und 62 offset
+         '2015_08_11e', '2015_08_11f']
+offset = [2, 0, 0, 10, 10, 62, 0]  # 11e 10 und 62 offset
 step_flags = [0, 1, 2]
 len_ramp3_times = 10
 len_t = 69200  #46900  #93200  #69200
@@ -81,3 +81,4 @@ for c_idx, cell in enumerate(cells):
             #pl.show()
 
         np.save(os.path.join(save_dir_cell, 'v_mat.npy'), v_mat)
+        np.save(os.path.join(save_dir_cell, 't.npy'), t)

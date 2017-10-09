@@ -1,11 +1,11 @@
-from new_optimization import OptimizationSettings, AlgorithmSettings
-from new_optimization.optimizer import OptimizerFactory
+from cell_fitting.new_optimization import OptimizationSettings, AlgorithmSettings
+from cell_fitting.new_optimization.optimizer import OptimizerFactory
 import os
 from time import time
 import json
-from util import merge_dicts
-from optimization.bio_inspired.generators import get_random_numbers_in_bounds
-from new_optimization import create_pseudo_random_number_generator
+from cell_fitting.util import merge_dicts
+from cell_fitting.optimization.bio_inspired.generators import get_random_numbers_in_bounds
+from cell_fitting.new_optimization import create_pseudo_random_number_generator
 from nrn_wrapper import load_mechanism_dir
 
 

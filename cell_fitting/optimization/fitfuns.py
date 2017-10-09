@@ -200,6 +200,65 @@ def get_DAPamp(v, t, i_inj, args):
     return DAP_amp
 
 
+def get_DAPdeflection(v, t, i_inj, args):
+    threshold = args.get('threshold', -45)
+    dt = t[1] - t[0]
+    AP_onset, AP_end = get_AP_start_end(v, threshold)
+    if AP_onset is None or AP_end is None:
+        return None
+    AP_max = get_AP_max_idx(v, AP_onset, AP_end, interval=1/dt)
+    if AP_max is None:
+        return None
+    fAHP_min = get_fAHP_min_idx(v, AP_max, AP_end, interval=5/dt)
+    if fAHP_min is None:
+        return None
+    DAP_max = get_DAP_max_idx(v, fAHP_min, AP_end, interval=10/dt)
+    if DAP_max is None:
+        return None
+    DAP_deflection = get_DAP_deflection(v, fAHP_min, DAP_max)
+    return DAP_deflection
+
+
+def get_DAPwidth(v, t, i_inj, args):
+    threshold = args.get('threshold', -45)
+    dt = t[1] - t[0]
+    vrest = get_v_rest(v, i_inj)
+    AP_onset, AP_end = get_AP_start_end(v, threshold)
+    if AP_onset is None or AP_end is None:
+        return None
+    AP_max = get_AP_max_idx(v, AP_onset, AP_end, interval=1/dt)
+    if AP_max is None:
+        return None
+    fAHP_min = get_fAHP_min_idx(v, AP_max, AP_end, interval=5/dt)
+    if fAHP_min is None:
+        return None
+    DAP_max = get_DAP_max_idx(v, fAHP_min, AP_end, interval=10/dt)
+    if DAP_max is None:
+        return None
+    DAP_width = get_DAP_width(v, t, fAHP_min, DAP_max, AP_end, vrest)
+    return DAP_width
+
+
+def get_DAPtime(v, t, i_inj, args):
+    threshold = args.get('threshold', -45)
+    dt = t[1] - t[0]
+    vrest = get_v_rest(v, i_inj)
+    AP_onset, AP_end = get_AP_start_end(v, threshold)
+    if AP_onset is None or AP_end is None:
+        return None
+    AP_max = get_AP_max_idx(v, AP_onset, AP_end, interval=1/dt)
+    if AP_max is None:
+        return None
+    fAHP_min = get_fAHP_min_idx(v, AP_max, AP_end, interval=5/dt)
+    if fAHP_min is None:
+        return None
+    DAP_max = get_DAP_max_idx(v, fAHP_min, AP_end, interval=10/dt)
+    if DAP_max is None:
+        return None
+    DAP_time_from_AP = t[DAP_max] - t[AP_max]
+    return DAP_time_from_AP
+
+
 def impedance(v, i_inj, dt, f_range):
     """
     Computes the impedance (impedance = fft(v) / fft(i)) for a given range of frequencies.

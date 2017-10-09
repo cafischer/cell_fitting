@@ -1,9 +1,10 @@
 import functools
+import numpy as np
 from scipy.optimize import minimize
-from new_optimization import create_pseudo_random_number_generator, generate_initial_candidates
-from optimization.bio_inspired import generators
+from cell_fitting.new_optimization import create_pseudo_random_number_generator, generate_initial_candidates
+from cell_fitting.optimization.bio_inspired import generators
 import multiprocessing
-from new_optimization.optimizer.scipy_optimizer import ScipyOptimizer
+from cell_fitting.new_optimization.optimizer.scipy_optimizer import ScipyOptimizer
 
 
 class ScipyOptimizerMultiprocessing(ScipyOptimizer):

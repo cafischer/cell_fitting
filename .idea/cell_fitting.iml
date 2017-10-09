@@ -24,6 +24,7 @@
       <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/2015_08_27d" />
       <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/Protocols" />
       <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/artificial_data" />
+      <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/data_sinus_mat/Sinus_mat_files" />
       <excludeFolder url="file://$MODULE_DIR$/cell_fitting/data/plots" />
       <excludeFolder url="file://$MODULE_DIR$/cell_fitting/investigate_grid_cell_stimuli/results" />
       <excludeFolder url="file://$MODULE_DIR$/cell_fitting/investigate_synaptic_noise/results" />

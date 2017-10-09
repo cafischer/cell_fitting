@@ -4,7 +4,7 @@ pl.style.use('paper')
 import os
 from nrn_wrapper import Cell
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
-from cell_fitting.new_optimization.evaluation.fI_curve import get_IV, get_slow_ramp, get_slow_ramp_reverse
+from cell_fitting.new_optimization.evaluation.IV import get_IV, get_slow_ramp, get_slow_ramp_reverse
 
 __author__ = 'caro'
 

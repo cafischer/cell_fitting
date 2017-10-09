@@ -21,9 +21,10 @@ holding_potentials = np.load(os.path.join(save_img, 'hold_potentials.npy'))
 DAP_amps = np.zeros(len(holding_potentials))
 DAP_deflections = np.zeros(len(holding_potentials))
 for i, v in enumerate(v_mat):
-    DAP_amps[i], DAP_deflections[i] = get_spike_characteristics(v, t, return_characteristics, holding_potentials[i], AP_interval=4,
-                                                std_idx_times=(0, 50), k_splines=5, s_splines=0, order_fAHP_min=None,
-                                                DAP_interval=40, order_DAP_max=None, min_dist_to_DAP_max=0, check=True)
+    DAP_amps[i], DAP_deflections[i] = get_spike_characteristics(v, t, return_characteristics, holding_potentials[i],
+                                                                AP_interval=4, std_idx_times=(0, 50), k_splines=5,
+                                                                s_splines=0, order_fAHP_min=None, DAP_interval=40,
+                                                                order_DAP_max=None, min_dist_to_DAP_max=0, check=True)
     print DAP_amps[i], DAP_deflections[i]
 
 # plot

@@ -30,9 +30,9 @@ if __name__ == '__main__':
                 continue
 
         # plot
-        save_dir_fig = os.path.join(save_dir, cell)
-        if not os.path.exists(save_dir_fig):
-            os.makedirs(save_dir_fig)
+        save_dir_img = os.path.join(save_dir, cell)
+        if not os.path.exists(save_dir_img):
+            os.makedirs(save_dir_img)
 
         pl.figure()
         pl.plot(t, v, 'k', label='Exp. Data')
@@ -40,5 +40,5 @@ if __name__ == '__main__':
         pl.ylabel('Membrane Potential (mV)')
         pl.legend(loc='lower right')
         pl.tight_layout()
-        pl.savefig(os.path.join(save_dir_fig, 'rampIV.png'))
+        pl.savefig(os.path.join(save_dir_img, 'rampIV.png'))
         #pl.show()

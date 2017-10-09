@@ -13,17 +13,17 @@ def get_zap(amp, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000
     """
     """
     t = np.arange(0, tstop-onset_dur-offset_dur+dt, dt)
-    #freqs = np.linspace(freq0, freq1, len(t)) / 1000
-    #zap = amp * np.sin(2 * np.pi * freqs * t)
-    zap_franzi = amp * np.sin(2 * np.pi * ((freq1 - freq0) / 1000 * t / (2 * t[-1]) + freq0/1000) * t)  # warum 2 * dur und nicht dur?
+    zap = amp * np.sin(2 * np.pi * ((freq1 - freq0) / 1000 * t / (2 * t[-1]) + freq0/1000) * t)
     onset = np.zeros(int(round(onset_dur/dt)))
     offset = np.zeros(int(round(offset_dur/dt)))
-    zap_stim = np.concatenate((onset, zap_franzi, offset))
+    zap_stim = np.concatenate((onset, zap, offset))
 
-    # pl.figure()
-    # pl.plot(t, freqs * 1000, 'b')
-    # pl.plot(t, (freq1 - freq0) * t / (2 * t[-1]) + freq0, 'g')
-    # pl.show()
+    pl.figure()
+    pl.plot(t, zap, 'k')
+    pl.ylabel('Current (nA)')
+    pl.xlabel('Time (ms)')
+    pl.tight_layout()
+    pl.show()
     return zap_stim
 
 
