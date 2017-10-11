@@ -4,6 +4,8 @@ import numpy as np
 from scipy.stats import pearsonr
 from itertools import product
 from cell_fitting.util import init_nan
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as pl
 pl.style.use('paper')
 
@@ -16,7 +18,7 @@ def get_divisors(x):
 
 
 # save dir
-dates = ['2017-10-06_09:04:12', '2017-10-06_09:49:29']
+dates = ['2017-10-10_13:16:54']
 save_dirs = [os.path.join('../results/sensitivity_analysis/', date) for date in dates]
 save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_1')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots')

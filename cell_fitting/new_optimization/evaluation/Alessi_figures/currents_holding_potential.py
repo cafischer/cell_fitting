@@ -16,7 +16,7 @@ if __name__ == '__main__':
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    save_img = os.path.join(save_dir, 'img', 'DAP_at_different_holding_potentials')
+    save_dir_amps = os.path.join(save_dir, 'img', 'DAP_at_different_holding_potentials')
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
@@ -32,16 +32,14 @@ if __name__ == '__main__':
     AP_threshold = -20
 
     # load membrane potentials
-    v_mat = np.load(os.path.join(save_img, 'v_mat.npy'))
-    t = np.load(os.path.join(save_img, 't.npy'))
-    hold_potentials = np.load(os.path.join(save_img, 'hold_potentials.npy'))
+    hold_potentials = np.load(os.path.join(save_dir_amps, 'hold_potentials.npy'))
     hold_potentials = np.insert(hold_potentials, 2, -75)
-    hold_amps = np.load(os.path.join(save_img, 'hold_amps.npy'))
+    hold_amps = np.load(os.path.join(save_dir_amps, 'hold_amps.npy'))
     hold_amps = np.insert(hold_amps, 2, 0)
-    step_amp_spike = np.load(os.path.join(save_img, 'step_amp_spike.npy'))
+    step_amp_spike = np.load(os.path.join(save_dir_amps, 'step_amp_spike.npy'))
 
     # simulate different holding potentials with step current
-    vs = []
+    v_mat = []
     currents = []
     for i, hold_amp in enumerate(hold_amps):
         i_step = get_step(int(round(step_st_ms / dt)), int(round(step_end_ms / dt)), int(round(tstop / dt)) + 1,
@@ -53,21 +51,22 @@ if __name__ == '__main__':
                              'tstop': tstop, 'dt': dt, 'celsius': 35, 'onset': 200}
         v, t, _ = iclamp_handling_onset(cell, **simulation_params)
 
-        # extra: simulate currents
+        # simulate currents
         current, channel_list = simulate_currents(cell, simulation_params, False)
 
-        vs.append(v)
+        v_mat.append(v)
         currents.append(current)
 
     # plot
-    save_img = os.path.join(save_dir, 'img', 'DAP_at_different_holding_potentials')
-    if not os.path.exists(save_img):
-        os.makedirs(save_img)
+    save_dir_img = os.path.join(save_dir, 'img', 'currents_at_different_holding_potentials')
+    if not os.path.exists(save_dir_img):
+        os.makedirs(save_dir_img)
 
-    np.save(os.path.join(save_img, 'v_mat.npy'), vs)
-    np.save(os.path.join(save_img, 't.npy'), t)
-    #np.save(os.path.join(save_img, 'hold_potentials.npy'), hold_potentials)
-    #np.save(os.path.join(save_img, 'hold_amps.npy'), hold_amps)
+    # np.save(os.path.join(save_dir_img, 'v_mat.npy'), v_mat)
+    # np.save(os.path.join(save_dir_img, 'currents.npy'), currents)
+    # np.save(os.path.join(save_dir_img, 't.npy'), t)
+    # np.save(os.path.join(save_dir_img, 'hold_potentials.npy'), hold_potentials)
+    # np.save(os.path.join(save_dir_img, 'hold_amps.npy'), hold_amps)
 
     cmap = pl.cm.get_cmap('Reds')
     colors = cmap(np.arange(len(currents[0])) / len(currents[0]))
@@ -77,10 +76,9 @@ if __name__ == '__main__':
         pl.title(channel_list[j])
         for i, hold_potential in enumerate(hold_potentials):
             pl.plot(t, currents[i][j], color=colors_h[i], label=str(hold_potential))
-        #pl.plot(t, v, color=colors[i], label='Model' if i == 0 else None)
         pl.xlabel('Time (ms)')
         pl.ylabel('Current (mA/$cm^2$)')
         pl.legend()
         pl.tight_layout()
-        pl.savefig(os.path.join(save_img, 'v.png'))
+        pl.savefig(os.path.join(save_dir_img, 'currents.png'))
         pl.show()
