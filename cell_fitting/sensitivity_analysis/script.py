@@ -6,7 +6,7 @@ from cell_fitting.sensitivity_analysis import simulate_random_candidates
 
 # parameters
 save_dir = os.path.join('../results/sensitivity_analysis/', time.strftime('%Y-%m-%d_%H:%M:%S'))
-n_candidates = int(1e5)
+n_candidates = int(500)
 seed = time.time()
 
 model_dir = '../model/cells/dapmodel_simpel.json'

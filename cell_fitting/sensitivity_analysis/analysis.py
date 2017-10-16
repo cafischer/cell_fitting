@@ -8,9 +8,9 @@ pl.style.use('paper')
 
 
 # save dir
-dates = ['2017-10-10_13:16:54']
+dates = ['2017-10-10_14:00:01']
 save_dirs = [os.path.join('../results/sensitivity_analysis/', date) for date in dates]
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_1')
+save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2')
 return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_deflection', 'DAP_width', 'DAP_time',
                           'DAP_lin_slope', 'DAP_exp_slope']
 characteristics_valid_ranges = [(80, 150), (0.1, 3.0), (0, 80), (1, 80), (0, 20), (5, 50), (2, 30),
@@ -40,9 +40,6 @@ for i_dir, save_dir in enumerate(save_dirs):
         candidate_dir = os.path.join(save_dir, str(i_candidate))
         with open(os.path.join(candidate_dir, 'candidate.npy'), 'r') as f:
             candidate = np.load(f)
-
-            #for i, var in enumerate(params['variables']):
-            #    print str(var[2]) + ': ' + str(candidate[i])
 
         # load voltage
         with open(os.path.join(candidate_dir, 'v.npy'), 'r') as f:
@@ -78,11 +75,3 @@ for i_dir, save_dir in enumerate(save_dirs):
             os.makedirs(candidate_dir_analysis)
         with open(os.path.join(candidate_dir_analysis, 'characteristics.npy'), 'w') as f:
             np.save(f, characteristics)
-
-        # pl.figure()
-        # pl.plot(t, v)
-        # pl.show()
-        #
-        # pl.figure()
-        # pl.plot(t, i_inj)
-        # pl.show()

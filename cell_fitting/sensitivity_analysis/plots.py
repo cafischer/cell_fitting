@@ -18,7 +18,7 @@ def get_divisors(x):
 
 
 # save dir
-dates = ['2017-10-10_13:16:54']
+dates = ['2017-10-13_08:56:01']
 save_dirs = [os.path.join('../results/sensitivity_analysis/', date) for date in dates]
 save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_1')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots')

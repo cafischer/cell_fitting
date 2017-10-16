@@ -15,14 +15,18 @@ def find_hold_amps(cell, hold_potentials, test_hold_amps, tstop, dt, plot=False)
     for i, hold_potential in enumerate(hold_potentials):
         for hold_amp in test_hold_amps[test_hold_amps > hold_amp_last]:
             v, t, i_inj = get_IV(cell, hold_amp, get_step, 0, tstop, tstop, v_init=hold_potential, dt=dt)
-            if np.round(np.mean(v), 1) == hold_potential:
-                hold_amps[i] = hold_amp
-                hold_amp_last = hold_amp
-                if plot:
-                    pl.figure()
-                    pl.plot(t, v)
-                    pl.show()
-                break
+            if np.round(np.mean(v), 1) >= np.round(hold_potential, 1):
+                if np.round(np.mean(v), 1) > np.round(hold_potential, 1):
+                    print np.mean(v)  # TODO
+                if np.round(np.mean(v), 1) == np.round(hold_potential, 1):
+                    hold_amps[i] = hold_amp
+                    hold_amp_last = hold_amp
+                    if plot:
+                        pl.figure()
+                        pl.plot(t, v)
+                        pl.show()
+                    break
+        print hold_amp
     return hold_amps
 
 

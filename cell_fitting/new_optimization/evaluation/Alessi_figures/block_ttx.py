@@ -14,15 +14,16 @@ __author__ = 'caro'
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    percent_block = 0.2
+    percent_block = 0.1
     use_same_hold_amps = False
+    use_given_hold_amps_block = True
     if use_same_hold_amps:
-        save_dir_img = os.path.join(save_dir, 'img', 'TTX', 'same_amps', 'percent_block' + str(percent_block))
+        save_dir_img = os.path.join(save_dir, 'img', 'TTX', 'block', 'same_amps', 'percent_block' + str(percent_block))
     else:
-        save_dir_img = os.path.join(save_dir, 'img', 'TTX', 'new_amps', 'percent_block'+str(percent_block))
+        save_dir_img = os.path.join(save_dir, 'img', 'TTX', 'block', 'new_amps', 'percent_block'+str(percent_block))
     save_dir_hold = os.path.join(save_dir, 'img', 'DAP_at_different_holding_potentials')
 
     # load model
@@ -46,6 +47,8 @@ if __name__ == '__main__':
     # find hold_amps
     if use_same_hold_amps:
         hold_amps_block = hold_amps
+    elif use_given_hold_amps_block:
+        hold_amps_block = np.load(os.path.join(save_dir_img, 'hold_amps_block.npy'))
     else:
         hold_amps_block = find_hold_amps(cell, hold_potentials, test_hold_amps, tstop, dt, plot=False)
         print 'Holding amplitudes: ' + str(hold_amps_block)
@@ -69,7 +72,7 @@ if __name__ == '__main__':
     for i, hold_potential in enumerate(hold_potentials):
         pl.figure()
         pl.plot(t, v_mat[i], 'r', label='without block')
-        pl.plot(t, v_mat_block[i], 'o', label='with ' + str(percent_block*100) + '% block of Na$^+$')
+        pl.plot(t, v_mat_block[i], 'orange', label='with ' + str(percent_block*100) + '% block of Na$^+$')
         pl.xlabel('Time (ms)')
         pl.ylabel('Membrane potential (mV)')
         pl.legend()
