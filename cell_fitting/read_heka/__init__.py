@@ -11,7 +11,6 @@ import re
 def get_protocols_same_base(file_dir, protocol_base, group='Group1'):
     reg_exp_protocol = re.compile('^'+protocol_base + '(\([0-9]+\))?'+'$')
     hekareader = HekaReader(file_dir)
-    type_to_index = hekareader.get_type_to_index()
     protocol_to_series = hekareader.get_protocol(group)
     protocols = protocol_to_series.keys()
     protocols_match = []
@@ -68,7 +67,7 @@ def get_i_inj(protocol, sweep_idxs):
         if protocol == 'IV':
             amp_change = -0.15 + sweep_idx * 0.05
         elif protocol == 'rampIV':
-            amp_change = sweep_idx * 0.1
+            amp_change = 0.1 + sweep_idx * 0.1
         else:
             amp_change = 1
         i_inj[i] = list(i_inj_base * amp_change)

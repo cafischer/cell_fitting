@@ -1,11 +1,12 @@
 from __future__ import division
+import matplotlib
+#matplotlib.use('Agg')
 import numpy as np
 import os
 from nrn_wrapper import Cell
 from cell_fitting.new_optimization.evaluation.Alessi_figures import find_hold_amps, \
     simulate_with_step_and_holding_current
-import matplotlib
-matplotlib.use('Agg')
+from cell_characteristics import to_idx
 import matplotlib.pyplot as pl
 pl.style.use('paper')
 
@@ -14,7 +15,7 @@ __author__ = 'caro'
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     percent_block = 0.1
@@ -70,6 +71,12 @@ if __name__ == '__main__':
     np.save(os.path.join(save_dir_img, 'step_amp_spike.npy'), step_amp_spike)
 
     for i, hold_potential in enumerate(hold_potentials):
+        v20 = v_mat[i, to_idx(step_st_ms+20, dt)]
+        v20_block = v_mat_block[i][to_idx(step_st_ms+20, dt)]
+        diff_v20 = v20 - v20_block
+        print 'V_hold: '+str(hold_potential)
+        print 'V20: '+str(diff_v20)
+
         pl.figure()
         pl.plot(t, v_mat[i], 'r', label='without block')
         pl.plot(t, v_mat_block[i], 'orange', label='with ' + str(percent_block*100) + '% block of Na$^+$')

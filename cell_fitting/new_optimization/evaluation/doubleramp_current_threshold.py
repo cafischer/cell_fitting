@@ -6,6 +6,7 @@ from cell_fitting.optimization.simulate import iclamp_handling_onset
 import os
 from cell_characteristics.analyze_APs import get_AP_onset_idxs, to_idx
 from cell_fitting.new_optimization.evaluation.doubleramp import get_ramp
+from cell_fitting.util import init_nan
 pl.style.use('paper')
 
 __author__ = 'caro'
@@ -86,18 +87,20 @@ def simulate_and_get_current_threshold():
     return current_thresholds, ramp3_times, ramp3_amps, v_dap, t_dap
 
 
-def get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2, AP_threshold=None):
+def get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2_idx, AP_threshold=None):
 
-    current_thresholds = np.zeros(len(ramp3_times))
-    current_thresholds[:] = np.nan
-
+    current_thresholds = init_nan(len(ramp3_times))
+    pl.figure()
     for j in range(len(ramp3_times)):  # order of for loops important (find lowest amp that produces spike)
+        pl.plot(v_mat[0, j, :], label=str(ramp3_times[j]))
         for i in range(len(ramp3_amps)):
             onsets = get_AP_onset_idxs(v_mat[i, j, :], AP_threshold)
-            onsets = onsets[onsets > start_ramp2]
+            onsets = onsets[onsets > start_ramp2_idx]
             if len(onsets) > 1:  # 1st spike is mandatory, 2nd would be on the DAP
                 current_thresholds[j] = ramp3_amps[i]
                 break
+    pl.legend()
+    pl.show()
     return current_thresholds
 
 

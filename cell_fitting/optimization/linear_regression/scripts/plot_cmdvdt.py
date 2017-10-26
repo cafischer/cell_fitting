@@ -1,5 +1,5 @@
 import matplotlib.pyplot as pl
-from optimization.helpers import *
+from cell_fitting.optimization.helpers import *
 import pandas as pd
 
 data_dir = '../../../data/2015_08_26b/raw/rampIV/3.0(nA).csv'
