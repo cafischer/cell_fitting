@@ -5,18 +5,17 @@ import numpy as np
 from cell_fitting.sensitivity_analysis.plot_correlation import compute_and_plot_correlations
 
 # save dir
-date = '2017-10-26_14:13:11'
-save_dir_params = os.path.join('../results/sensitivity_analysis/', date)
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_test')
+save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10_new')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'cross_validation')
 
-n_chunks = 2
+n_chunks = 100
 correlation_types = ['kendalltau', 'spearman', 'pearson']
 sig1 = 0.01
 sig2 = 0.001
 
+
 # load
-with open(os.path.join(save_dir_params, 'params.json'), 'r') as f:
+with open(os.path.join(save_dir_analysis, 'params.json'), 'r') as f:
     params = json.load(f)
 variable_names = [p[2][0][-2] + ' ' + p[2][0][-1] for p in params['variables']]
 return_characteristics = np.load(os.path.join(save_dir_analysis, 'return_characteristics.npy'))
@@ -35,4 +34,6 @@ for chunk_idx in range(n_chunks):
 
     compute_and_plot_correlations(candidate_mat_chunk, characteristics_mat_chunk, correlation_types, sig1, sig2,
                                   variable_names, return_characteristics, save_dir_chunk)
+
+# TODO: schuffle charcteristics bzw. candidate_mat and compare both populations
 

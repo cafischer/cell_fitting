@@ -14,10 +14,8 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    save_dir =  '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
-    model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/test0'
-    #model_dir = os.path.join(save_dir, 'cell.json')
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     data_dir = '../../data/2015_08_26b/vrest-75/IV/'
 
@@ -81,12 +79,12 @@ if __name__ == '__main__':
         os.makedirs(save_dir_img)
 
     pl.figure()
-    pl.plot(amps_greater0, firing_rates_data, '-ok', label='Exp. Data')
+    #pl.plot(amps_greater0, firing_rates_data, '-ok', label='Exp. Data')
     pl.plot(amps_greater0, firing_rates_model, '-or', label='Model')
     pl.ylim([0, 0.09])
     pl.xlabel('Current (nA)')
     pl.ylabel('Firing rate (APs/ms)')
-    pl.legend(loc='lower right')
+    #pl.legend(loc='lower right')
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'fIcurve.png'))
     #pl.show()
@@ -111,16 +109,18 @@ if __name__ == '__main__':
             AP_peak_data = v_trace_data[get_AP_max_idx(v_trace_data, AP_start_data, AP_end_data)]
             if AP_peak_model > AP_peak_data:
                 pl.plot(t_model, v_trace_model, 'r', label='Model')
-                pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+                #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
             else:
-                pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+                #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
                 pl.plot(t_model, v_trace_model, 'r', label='Model')
         else:
-            pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+            #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
             pl.plot(t_model, v_trace_model, 'r', label='Model')
         pl.xlabel('Time (ms)')
         pl.ylabel('Membrane Potential (mV)')
-        pl.legend()
+        if amp == -0.1:
+            pl.ylim(-80, -60)
+        #pl.legend()
         pl.tight_layout()
         pl.savefig(os.path.join(save_dir_img, 'IV' + str(amp) + '.png'))
-        pl.show()
+        #pl.show()

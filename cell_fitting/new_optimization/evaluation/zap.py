@@ -18,12 +18,12 @@ def get_zap(amp, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000
     offset = np.zeros(int(round(offset_dur/dt)))
     zap_stim = np.concatenate((onset, zap, offset))
 
-    pl.figure()
-    pl.plot(t, zap, 'k')
-    pl.ylabel('Current (nA)')
-    pl.xlabel('Time (ms)')
-    pl.tight_layout()
-    pl.show()
+    # pl.figure()
+    # pl.plot(t, zap, 'k')
+    # pl.ylabel('Current (nA)')
+    # pl.xlabel('Time (ms)')
+    # pl.tight_layout()
+    # pl.show()
     return zap_stim
 
 
@@ -58,16 +58,17 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=1, freq1=20, onset_dur=2000, offset_
     # plot
     fig, ax1 = pl.subplots()
     ax2 = ax1.twiny()
-    ax1.plot(t_exp, v_exp, 'k', label='Exp. Data')
+    #ax1.plot(t_exp, v_exp, 'k', label='Exp. Data')
     ax1.plot(t, v, 'r', label='Model')
     ax1.set_xlim(0, t[-1])
     ax2.set_xlim(ax1.get_xlim())
     ax2.set_xticks(ax1.get_xticks())
     ax2.set_xticklabels(map(freqs_out, ax1.get_xticks()))
+    ax2.spines['top'].set_visible(True)
     ax2.set_xlabel('Frequency (Hz)')
     ax1.set_xlabel('Time (ms)')
     ax1.set_ylabel('Membrane potential (mV)')
-    ax1.legend()
+    #ax1.legend()
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'v.png'))
     pl.show()
@@ -92,9 +93,7 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=1, freq1=20, onset_dur=2000, offset_
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/server/2017-07-17_17:05:19/54/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/4'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'

@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as pl
+from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 import os
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_protocols_same_base, get_i_inj, shift_v_rest
 from cell_characteristics.analyze_APs import get_spike_characteristics, get_AP_onset_idxs
@@ -7,11 +7,12 @@ from cell_characteristics.analyze_APs import get_spike_characteristics, get_AP_o
 
 if __name__ == '__main__':
 
-    save_dir = '../plots/spike_characteristics/distributions'
+    save_dir = '../plots/spike_characteristics/distributions/rat'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     file_names = os.listdir(data_dir)
     cell_ids = [f_n[:-4] for f_n in file_names][0:]
     protocol = 'rampIV'
+    animal = 'rat'
 
     v_rest_shift = -16
     dt = 0.01
@@ -32,6 +33,10 @@ if __name__ == '__main__':
     v_list = []
     count_cells_rampIV = 0
     for cell_id in cell_ids:
+        # check right animal
+        if not check_rat_or_gerbil(cell_id) == animal:
+            continue
+
         # find trace with AP
         try:
             v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
@@ -77,16 +82,3 @@ if __name__ == '__main__':
     np.save(os.path.join(save_dir, 'AP_mat.npy'), AP_matrix)
     np.save(os.path.join(save_dir, 't.npy'), t)
     np.save(os.path.join(save_dir, 'cell_ids.npy'), cell_id_list)
-
-    # # plot AP_matrix
-    # pl.figure()
-    # for spike in AP_matrix:
-    #     pl.plot(np.arange(0, len(spike)) * dt, spike)
-    # pl.show()
-
-    # # plot distributions
-    # for i in range(np.shape(characteristics_mat)[1]-2):
-    #     pl.figure()
-    #     pl.title(return_characteristics[i])
-    #     pl.hist(characteristics_mat[~np.isnan(characteristics_mat[:, i]), i])
-    #     pl.show()

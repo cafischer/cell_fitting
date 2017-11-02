@@ -15,15 +15,15 @@ protocol_idx = 14
 
 #cells = get_cells_for_protocol(data_dir, protocol)
 #offset = np.zeros(len(cells))
-cells = ['2014_03_14i']
-offset = [116]  # 2014_03_18b: 43; 2014_03_18f: 47; 2014_03_14i: 116
+cells = ['2014_07_08e']
+offset = [0]  # 2014_03_18b: 43; 2014_03_18f: 47; 2014_03_14i: 116
 
 #cells_short = ['2015_08_04d', '2015_08_05a']  # offset_short = [2, 0]
 #cells = ['2015_08_05b', '2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11d',
 #         '2015_08_11e', '2015_08_11f']
 #offset = [2, 0, 0, 10, 10, 62, 0]  # 11e 10 und 62 offset
 step_flags = [0, 1, 2]
-len_ramp3_times = 12  # TODO: 10 for 2015  # 12 for early 2014
+len_ramp3_times = 10  # TODO: 10 for 2015  # 12 for early 2014
 len_t = 93200  #46900  #93200  #69200
 
 for c_idx, cell in enumerate(cells):
@@ -62,10 +62,10 @@ for c_idx, cell in enumerate(cells):
                 v = shift_v_rest(v, v_rest_shift)
                 v_mat[ramp3_amp_idx, ramp3time_idx, :] = v
 
-                pl.figure()
-                pl.plot(t, v)
-                pl.xlim(700, 800)
-                pl.show()
+                # pl.figure()
+                # pl.plot(t, v)
+                # pl.xlim(700, 800)
+                # pl.show()
 
             pl.figure()
             for ramp3time_idx in range(len(ramp3_time_protocols)):
@@ -91,7 +91,7 @@ for c_idx, cell in enumerate(cells):
             pl.legend()
             pl.tight_layout()
             #pl.savefig(os.path.join(save_dir_cell, 'PP' + str(ramp3_amp_idx) + '_zoom.png'))
-            #pl.show()
+            pl.show()
 
         np.save(os.path.join(save_dir_cell, 'v_mat.npy'), v_mat)
         np.save(os.path.join(save_dir_cell, 't.npy'), t)

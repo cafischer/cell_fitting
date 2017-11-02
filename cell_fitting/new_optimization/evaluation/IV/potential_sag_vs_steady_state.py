@@ -92,12 +92,19 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
+    max_amp = 0.15
+    amps_subtheshold = np.array(amps_subtheshold)
+    amps_subtheshold_range = np.array(amps_subtheshold) < max_amp + 0.05
+
     pl.figure()
-    pl.plot(amps_subtheshold, v_steady_states, linestyle='-', marker='o', c='0.0', label='Steady State')
-    pl.plot(amps_subtheshold, v_sags, linestyle='-', marker='o', c='0.5', label='Sag')
+    pl.plot(amps_subtheshold[amps_subtheshold_range], np.array(v_steady_states)[amps_subtheshold_range], linestyle='-',
+            marker='o', c='0.0', label='Steady State')
+    pl.plot(amps_subtheshold[amps_subtheshold_range], np.array(v_sags)[amps_subtheshold_range], linestyle='-',
+            marker='o', c='0.5', label='Sag')
     pl.xlabel('Current (nA)')
     pl.ylabel('Membrane Potential (mV)')
     pl.legend(loc='upper left')
+    pl.xticks(np.arange(-0.15, max_amp+0.05, 0.05))
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'sag_steady_state.png'))
     pl.show()

@@ -3,6 +3,8 @@ import numpy as np
 import os
 from nrn_wrapper import Cell
 from cell_fitting.optimization.simulate import simulate_currents, iclamp_handling_onset
+from cell_characteristics.analyze_APs import get_spike_characteristics
+from cell_characteristics import to_idx
 pl.style.use('paper')
 
 __author__ = 'caro'
@@ -41,6 +43,16 @@ def hyperpolarize_ramp(cell):
     ramp_end_ms = 602  # ms
     tstop = 1000  # ms
 
+    AP_threshold = -30  # mV
+    AP_interval = 2.5  # ms (also used as interval for fAHP)
+    AP_width_before_onset = 2  # ms
+    DAP_interval = 10  # ms
+    order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
+    order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
+    min_dist_to_DAP_max = 0.5  # ms
+    k_splines = 3
+    s_splines = None
+
     hyp_st = int(round(hyp_st_ms / dt))
     hyp_end = int(round(hyp_end_ms / dt))
     ramp_end = int(round(ramp_end_ms / dt)) + 1
@@ -49,6 +61,8 @@ def hyperpolarize_ramp(cell):
 
     v = np.zeros([len(hyperamps), len(t_exp)])
     currents = []
+    DAP_amps = []
+    DAP_deflections = []
     for j, hyper_amp in enumerate(hyperamps):
         i_exp = np.zeros(len(t_exp))
         i_exp[hyp_st:hyp_end] = hyper_amp
@@ -63,6 +77,17 @@ def hyperpolarize_ramp(cell):
 
         currents_tmp, channel_list = simulate_currents(cell, simulation_params, plot=False)
         currents.append(currents_tmp)
+
+        # get DAP amp and deflection
+        v_rest = np.mean(v[0:to_idx(100, t[1] - t[0])])
+        std_idx_times = (0, 100)
+        DAP_amp, DAP_deflection = get_spike_characteristics(v, t, ['DAP_amp', 'DAP_deflection'],
+                                                            v_rest, AP_threshold,
+                                                            AP_interval, AP_width_before_onset, std_idx_times,
+                                                            k_splines, s_splines, order_fAHP_min, DAP_interval,
+                                                            order_DAP_max, min_dist_to_DAP_max, check=False)
+        DAP_amps.append(DAP_amp)
+        DAP_deflections.append(DAP_deflection)
 
     # plot
     save_dir_img = os.path.join(save_dir, 'img', 'hyperdap')
@@ -95,7 +120,27 @@ def hyperpolarize_ramp(cell):
     pl.savefig(os.path.join(save_dir_img, 'hyperDAP_zoom.png'))
     pl.show()
 
-    # # plot currents
+    not_nan = ~np.isnan(DAP_amps)
+    pl.figure()
+    pl.plot(np.array(amps)[not_nan], np.array(DAP_amps)[not_nan], 'ok')
+    pl.xlabel('Current Amplitude (nA)')
+    pl.ylabel('DAP Amplitude (mV)')
+    pl.xticks(amps_test)
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_fig, 'DAP_amp.png'))
+    # pl.show()
+
+    not_nan = ~np.isnan(DAP_deflections)
+    pl.figure()
+    pl.plot(np.array(amps)[not_nan], np.array(DAP_deflections)[not_nan], 'ok')
+    pl.xlabel('Current Amplitude (nA)')
+    pl.ylabel('DAP Deflection (mV)')
+    pl.xticks(amps_test)
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_fig, 'DAP_deflection.png'))
+    # pl.show()
+
+    # plot currents
     pl.figure()
     colors = c_map(np.linspace(0, 1, len(currents[0])))
     for j, hyper_amp in enumerate(hyperamps):
@@ -105,18 +150,14 @@ def hyperpolarize_ramp(cell):
     pl.ylabel('Current (mA/cm$^2$)')
     pl.xlim(595, 645)
     pl.tight_layout()
-    pl.show()
+    #pl.show()
 
 
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
     model_dir = os.path.join(save_dir, 'cell.json')
-    # save_dir = '../../results/server/2017-07-18_11:14:25/17/L-BFGS-B/'
-    # model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0/'
-    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model

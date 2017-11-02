@@ -3,6 +3,7 @@ import numpy as np
 import os
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj, get_cells_for_protocol
 from cell_fitting.new_optimization.evaluation.IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
+from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 pl.style.use('paper')
 
 
@@ -11,18 +12,22 @@ if __name__ == '__main__':
     # parameters
     mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir = os.path.join('../plots/', 'IV', 'sag_vs_steady_state')
     AP_threshold = -30
     v_shift = -16
+    animal = 'rat'
+    save_dir = os.path.join('../plots/', 'IV', 'sag_vs_steady_state', animal)
 
     cells = get_cells_for_protocol(data_dir, 'IV')
+    cells = ['2015_05_26d', '2015_06_08a', '2015_06_09f', '2015_06_19i', '2015_08_10g', '2015_08_26b']
 
-    for cell in cells:
-        if not '2015' in cell:
+    for cell_id in cells:
+        if not '2015' in cell_id:
+            continue
+        if not check_rat_or_gerbil(cell_id) == animal:
             continue
 
         # read data
-        v_mat_data, t_mat_data, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell+'.dat'), 'IV',
+        v_mat_data, t_mat_data, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), 'IV',
                                                                    return_sweep_idxs=True)
         i_inj_mat = get_i_inj('IV', sweep_idxs)
 
@@ -35,16 +40,23 @@ if __name__ == '__main__':
                                                                                    start_step, end_step)
 
         # plot
-        save_dir_img = os.path.join(save_dir, cell)
+        save_dir_img = os.path.join(save_dir, cell_id)
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
 
+        max_amp = 0.15
+        amps_subtheshold = np.array(amps_subtheshold)
+        amps_subtheshold_range = amps_subtheshold < max_amp + 0.05
+
         pl.figure()
-        pl.plot(amps_subtheshold, v_steady_states, linestyle='-', marker='o', c='0.0', label='Steady State')
-        pl.plot(amps_subtheshold, v_sags, linestyle='-', marker='o', c='0.5', label='Sag')
+        pl.plot(amps_subtheshold[amps_subtheshold_range], np.array(v_steady_states)[amps_subtheshold_range], linestyle='-',
+                marker='o', c='0.0', label='Steady State')
+        pl.plot(amps_subtheshold[amps_subtheshold_range], np.array(v_sags)[amps_subtheshold_range], linestyle='-',
+                marker='o', c='0.5', label='Sag')
         pl.xlabel('Current (nA)')
         pl.ylabel('Membrane Potential (mV)')
         pl.legend(loc='upper left')
+        pl.xticks(np.arange(-0.15, max_amp+0.05, 0.05))
         pl.tight_layout()
         pl.savefig(os.path.join(save_dir_img, 'sag_steady_state.png'))
-        #pl.show()
+        pl.show()

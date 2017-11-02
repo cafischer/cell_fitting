@@ -103,9 +103,7 @@ def compute_and_plot_correlations(candidate_mat, characteristics_mat, correlatio
 
 if __name__ == '__main__':
     # save dir
-    date = '2017-10-26_14:13:11'
-    save_dir_params = os.path.join('../results/sensitivity_analysis/', date)
-    save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_test')
+    save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10_new')
     save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'all')
 
     correlation_types = ['kendalltau', 'spearman', 'pearson']  # 'spearman  # 'kendalltau  # 'pearson'
@@ -113,7 +111,7 @@ if __name__ == '__main__':
     sig2 = 0.001
 
     # load
-    with open(os.path.join(save_dir_params, 'params.json'), 'r') as f:
+    with open(os.path.join(save_dir_analysis, 'params.json'), 'r') as f:
         params = json.load(f)
     variable_names = [p[2][0][-2] + ' ' + p[2][0][-1] for p in params['variables']]
     return_characteristics = np.load(os.path.join(save_dir_analysis, 'return_characteristics.npy'))

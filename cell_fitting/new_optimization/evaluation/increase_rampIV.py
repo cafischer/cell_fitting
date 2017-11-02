@@ -48,9 +48,7 @@ def rampIV(cell, ramp_amp, v_init=-75):
 
 if __name__ == '__main__':
     # parameters
-    #save_dir = '../../results/server/2017-08-16_09:41:34/148/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    save_dir = '../../results/hand_tuning/test0/'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     ramp_amp = 3.0
@@ -82,11 +80,11 @@ if __name__ == '__main__':
 
     pl.figure()
     #pl.title(str(np.round(ramp_amp, 2)) + ' nA')
-    pl.plot(data.t, data.v, 'k', label='Exp. Data')
+    #pl.plot(data.t, data.v, 'k', label='Exp. Data')
     pl.plot(t, v, 'r', label='Model')
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane potential (mV)')
-    pl.legend(loc='upper right')
+    #pl.legend(loc='upper right')
     pl.tight_layout()
     pl.savefig(os.path.join(save_img, 'rampIV' + str(np.round(ramp_amp, 2)) + 'nA'+'.png'))
     pl.show()
