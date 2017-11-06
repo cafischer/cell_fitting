@@ -10,7 +10,7 @@ from scipy.stats import circmean
 if __name__ == '__main__':
     dur1 = 5000
     freq2 = 5
-    save_dir = os.path.join('./results/', str(dur1)+'_'+str(freq2))
+    save_dir = os.path.join('../plots/sine_stimulus', str(dur1)+'_'+str(freq2))
     cells = [os.path.split(d)[-1] for d in os.listdir(save_dir)]
 
     for cell in cells:

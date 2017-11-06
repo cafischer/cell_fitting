@@ -7,7 +7,7 @@ pl.style.use('paper')
 
 
 # save dir
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10_new')
+save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'distributions')
 
 if not os.path.exists(save_dir_plots):
@@ -21,17 +21,17 @@ for i, characteristic in enumerate(return_characteristics):
     min_val = np.nanmin(characteristics_mat[:, i])
     max_val = np.nanmax(characteristics_mat[:, i])
     bins = np.linspace(min_val, max_val, 100)
-    if return_characteristics[i] == 'AP_width':
-        bins = np.arange(min_val, max_val, 0.05)
+    #if return_characteristics[i] == 'AP_width':
+    #    bins = np.arange(min_val, max_val, 0.05)
 
     hist_v, bins = np.histogram(characteristics_mat[~np.isnan(characteristics_mat[:, i]), i], bins=bins)
     hist, bins = np.histogram(characteristics_mat[~np.isnan(characteristics_mat[:, i]), i], bins=bins)
 
-    ylim = 200
-    dylim = 5
-    if return_characteristics[i] == 'AP_width':
-        ylim = int(np.ceil(np.max(hist_v))) + 5
-        dylim = 10
+    # ylim = 200
+    # dylim = 5
+    # if return_characteristics[i] == 'AP_width':
+    #     ylim = int(np.ceil(np.max(hist_v))) + 5
+    #     dylim = 10
     character_name_dict = {'AP_amp': 'AP amplitude (mV)', 'AP_width': 'AP width (ms)',
                            'fAHP_amp': 'fAHP amplitude (mV)',
                            'DAP_amp': 'DAP amplitude (mV)', 'DAP_deflection': 'DAP deflection (mV)',

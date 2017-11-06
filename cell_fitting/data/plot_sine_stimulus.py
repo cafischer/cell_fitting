@@ -3,7 +3,6 @@ from cell_fitting.read_heka import get_v_and_t_from_heka, get_protocols_same_bas
 from cell_fitting.data import shift_v_rest
 import os
 import matplotlib.pyplot as pl
-import re
 import numpy as np
 import re
 

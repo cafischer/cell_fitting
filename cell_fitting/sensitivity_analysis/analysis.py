@@ -3,6 +3,7 @@ import json
 import numpy as np
 from cell_characteristics.analyze_APs import get_v_rest, get_spike_characteristics, get_AP_onset_idxs
 from cell_fitting.util import init_nan
+from cell_characteristics import to_idx
 
 
 # save dir
@@ -60,8 +61,11 @@ for i_dir, save_dir in enumerate(save_dirs):
         dt = t[1] - t[0]
         v_rest = get_v_rest(v, i_inj)
         onsets = get_AP_onset_idxs(v, AP_threshold)
+        stim_on = 10
+        time_to_AP = 3
 
-        if v_rest_valid_range[0] <= v_rest <= v_rest_valid_range[1] and len(onsets) == 1:
+        if v_rest_valid_range[0] <= v_rest <= v_rest_valid_range[1] and len(onsets) == 1 \
+                and to_idx(stim_on, dt) < onsets[0] < to_idx(stim_on + time_to_AP, dt):
             nonzero = np.nonzero(i_inj)[0]
             if len(nonzero) == 0:
                 to_current = -1

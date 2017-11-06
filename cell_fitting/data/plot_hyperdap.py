@@ -6,6 +6,7 @@ from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol
 from cell_characteristics.analyze_APs import get_spike_characteristics
 from cell_characteristics import to_idx
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
+from cell_fitting.util import init_nan
 pl.style.use('paper')
 
 
@@ -42,7 +43,7 @@ if __name__ == '__main__':
     k_splines = 3
     s_splines = None
 
-    DAP_amps_all_cells = np.zeros((len(cells), 8))
+    DAP_amps_all_cells = init_nan((len(cells), 8))
     DAP_deflections_all_cells = np.zeros((len(cells), 8))
 
     for cell_idx, cell in enumerate(cells):
@@ -65,6 +66,7 @@ if __name__ == '__main__':
             vs.append(v)
             ts.append(t)
             amps.append(-0.05 + i * -0.05)
+            print -0.05 + i * -0.05
 
             v_rest = np.mean(v[0:to_idx(100, t[1] - t[0])])
             std_idx_times = (0, 100)
@@ -91,6 +93,7 @@ if __name__ == '__main__':
             vs.append(v)
             ts.append(t)
             amps.append(0.05 + i * 0.05)
+            print 0.05 + i * 0.05
 
             v_rest = np.mean(v[0:to_idx(100, t[1] - t[0])])
             std_idx_times = (0, 100)

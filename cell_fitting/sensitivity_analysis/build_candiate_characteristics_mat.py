@@ -45,4 +45,4 @@ np.save(os.path.join(save_dir_analysis, 'candidate_mat.npy'), candidate_mat)
 np.save(os.path.join(save_dir_analysis, 'candidate_idxs.npy'), candidate_idxs)
 np.savetxt(os.path.join(save_dir_analysis, 'n_candidates_not_nan.txt'), np.array([np.shape(candidate_mat)[0]]))
 with open(os.path.join(save_dir_analysis, 'params.json'), 'w') as f:
-    json.dump(f, params)
+    json.dump(params, f, indent=4)
