@@ -14,13 +14,13 @@ if __name__ == '__main__':
     protocol = 'rampIV'
     v_rest_shift = -16
     AP_threshold = -30
-    cells = get_cells_for_protocol(data_dir, protocol)
-    #cells = ['2015_08_26b']
+    #cells = get_cells_for_protocol(data_dir, protocol)
+    cells = ['2014_07_02a']
     animal = 'rat'
 
     for cell_id in cells:
-        if not '2015' in cell_id:
-            continue
+        #if not '2015' in cell_id:
+        #    continue
         if not check_rat_or_gerbil(cell_id) == animal:
             continue
 
@@ -47,4 +47,4 @@ if __name__ == '__main__':
         pl.tight_layout()
         pl.savefig(os.path.join(save_dir_img, 'rampIV.png'))
         pl.savefig(os.path.join(save_dir_img, 'rampIV.svg'))
-        #pl.show()
+        pl.show()

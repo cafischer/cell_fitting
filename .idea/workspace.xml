@@ -2,26 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/compare_dorsal_ventral/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_std_correlation.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cell_fitting/data/zapcurrent2csv.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_cross_validation_on_correlation.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/zap.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_zap.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_PP2.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/plot_hyperdap.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_hyperdap.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/plot_hyperdap_summary.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_hyperdap_summary.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/plot_sine_stimulus.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_sine_stimulus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/plot_zap.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_zap.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/sine_stimulus/spike_phase.py" afterPath="$PROJECT_DIR$/cell_fitting/data/sine_stimulus/spike_phase.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/hyperdap.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/hyperdap.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/increase_rampIV.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/increase_rampIV.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_fIcurve.py" afterPath="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_fIcurve.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/analysis.py" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/analysis.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/build_candiate_characteristics_mat.py" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/build_candiate_characteristics_mat.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_candidates.py" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_candidates.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_correlation.py" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_correlation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_distributions.py" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_distributions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,7 +17,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="plot_PP_current_threshold.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="438">
+              <caret line="37" column="41" lean-forward="true" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plot_PP2.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_PP2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -91,8 +100,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures/DAP_holding_potential_analysis.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures/DAP_holding_currents.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures/block_ttx_new_holding_current.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures/DAP_holding_potential.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures/DAP_spike_threshold.py" />
@@ -106,11 +113,9 @@
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures/block_ttx_reconstruct_AP.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_PP_linear.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/doubleramp_current_threshold.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_toymodel.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/plot_cmdvdt.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/sine_stimulus.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_currents.py" />
         <option value="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plots.py" />
         <option value="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/cross_validation.py" />
@@ -118,7 +123,6 @@
         <option value="$PROJECT_DIR$/cell_fitting/data/divide_rat_gerbil_cells.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/plot_spike_characteristics.py" />
         <option value="$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_fI_curve.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/IV/potential_sag_vs_steady_state.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/IV/potential_sag_vs_steady_state.py" />
@@ -128,7 +132,6 @@
         <option value="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/shuffle_distribution_correlation.py" />
         <option value="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/analysis.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/compare_dorsal_ventral/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_hyperdap.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_hyperdap_summary.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_fIcurve.py" />
@@ -142,6 +145,12 @@
         <option value="$PROJECT_DIR$/cell_fitting/data/zapcurrent2csv.py" />
         <option value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/zap.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_zap.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" />
+        <option value="$PROJECT_DIR$/../../packages/heka_reader/heka_reader/custom_hekareader.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/plot_PP2.py" />
       </list>
     </option>
   </component>
@@ -201,6 +210,12 @@
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -212,17 +227,17 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.language" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/cell_fitting/sensitivity_analysis" />
-      <recent name="$PROJECT_DIR$/cell_fitting/data" />
-      <recent name="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures" />
-      <recent name="$PROJECT_DIR$/cell_fitting/data/IV" />
-      <recent name="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/fI_curve" />
       <recent name="$PROJECT_DIR$/cell_fitting/results/hand_tuning/cell_2017-07-24_13:59:54_21_0" />
       <recent name="$PROJECT_DIR$/cell_fitting/results/hand_tuning/cell_2017-07-24_13:59:54_21_0/model" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cell_fitting/data" />
+      <recent name="$PROJECT_DIR$/cell_fitting/sensitivity_analysis" />
+      <recent name="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures" />
+      <recent name="$PROJECT_DIR$/cell_fitting/data/IV" />
+      <recent name="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -237,37 +252,71 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.zap">
-    <configuration name="increase_rampIV" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.plot_PP_current_threshold">
+    <configuration name="plot_PP" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/increase_rampIV.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_PP.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="plot_correlation" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="plot_PP2" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/sensitivity_analysis" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_correlation.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_PP2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="plot_PP_current_threshold" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="plot_rampIV" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -289,54 +338,20 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="zap" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/plot_zap.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
-    <configuration name="zapcurrent2csv" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/zapcurrent2csv.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-    </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.increase_rampIV" />
-      <item index="1" class="java.lang.String" itemvalue="Python.plot_correlation" />
-      <item index="2" class="java.lang.String" itemvalue="Python.zapcurrent2csv" />
-      <item index="3" class="java.lang.String" itemvalue="Python.plot_zap" />
-      <item index="4" class="java.lang.String" itemvalue="Python.zap" />
+      <item index="0" class="java.lang.String" itemvalue="Python.plot_zap" />
+      <item index="1" class="java.lang.String" itemvalue="Python.plot_PP" />
+      <item index="2" class="java.lang.String" itemvalue="Python.plot_PP2" />
+      <item index="3" class="java.lang.String" itemvalue="Python.plot_PP_current_threshold" />
+      <item index="4" class="java.lang.String" itemvalue="Python.plot_rampIV" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.plot_zap" />
-        <item index="1" class="java.lang.String" itemvalue="Python.zap" />
-        <item index="2" class="java.lang.String" itemvalue="Python.zapcurrent2csv" />
-        <item index="3" class="java.lang.String" itemvalue="Python.plot_correlation" />
-        <item index="4" class="java.lang.String" itemvalue="Python.increase_rampIV" />
+        <item index="0" class="java.lang.String" itemvalue="Python.plot_PP_current_threshold" />
+        <item index="1" class="java.lang.String" itemvalue="Python.plot_rampIV" />
+        <item index="2" class="java.lang.String" itemvalue="Python.plot_PP2" />
+        <item index="3" class="java.lang.String" itemvalue="Python.plot_PP" />
+        <item index="4" class="java.lang.String" itemvalue="Python.plot_zap" />
       </list>
     </recent_temporary>
   </component>
@@ -505,7 +520,14 @@
       <option name="project" value="LOCAL" />
       <updated>1509624107384</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="nice ZAP plots">
+      <created>1509981060164</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1509981060164</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TodoView">
@@ -519,8 +541,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="28" width="1920" height="1052" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23959444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23959444" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295838" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26771653" sideWeight="0.5085379" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295838" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -568,7 +591,8 @@
     <MESSAGE value="updated Alessi_figures" />
     <MESSAGE value="refactored sensitivity_analysis" />
     <MESSAGE value="changed plots" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed plots" />
+    <MESSAGE value="nice ZAP plots" />
+    <option name="LAST_COMMIT_MESSAGE" value="nice ZAP plots" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -577,6 +601,11 @@
           <url>file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/doubleramp_current_threshold.py</url>
           <line>103</line>
           <option name="timeStamp" value="249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py</url>
+          <line>45</line>
+          <option name="timeStamp" value="398" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -589,43 +618,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="375" />
+      <option name="time" value="399" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/hyperdap/2013_12_11f/DAP_amp.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/hyperdap/2013_12_11b/DAP_amp.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/hyperdap/2013_12_11c/DAP_amp.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/hyperdap/2013_12_11e/DAP_amp.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plots/hyperdap/2013_12_11a/DAP_amp.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_hcn_block.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="38" column="40" lean-forward="true" selection-start-line="38" selection-start-column="40" selection-end-line="38" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/IV/potential_sag_vs_steady_state.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -731,13 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="738">
-          <caret line="86" column="28" lean-forward="false" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/results/sensitivity_analysis/analysis_2017-10-10_new/params.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -756,13 +746,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" column="29" lean-forward="true" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_PP.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="24" column="21" lean-forward="false" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -897,16 +880,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="12" column="15" lean-forward="false" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#30#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/data/zapcurrent2csv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -930,7 +903,7 @@
         <state relative-caret-position="-3235">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -940,7 +913,7 @@
         <state relative-caret-position="124">
           <caret line="256" column="10" lean-forward="true" selection-start-line="256" selection-start-column="10" selection-end-line="256" selection-end-column="10" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -950,7 +923,7 @@
         <state relative-caret-position="365">
           <caret line="68" column="47" lean-forward="true" selection-start-line="68" selection-start-column="47" selection-end-line="68" selection-end-column="47" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -959,6 +932,84 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="383">
           <caret line="165" column="0" lean-forward="true" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/doubleramp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="190" column="14" lean-forward="true" selection-start-line="190" selection-start-column="14" selection-end-line="190" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#31#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_PP.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="56" column="42" lean-forward="true" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../packages/heka_reader/heka_reader/custom_hekareader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="32" column="32" lean-forward="true" selection-start-line="32" selection-start-column="32" selection-end-line="32" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/lib/python2.7/site-packages/matplotlib/artist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="735" column="0" lean-forward="false" selection-start-line="735" selection-start-column="0" selection-end-line="735" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216">
+          <caret line="12" column="27" lean-forward="false" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/doubleramp_current_threshold.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_PP_current_threshold.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="37" column="41" lean-forward="true" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_PP2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
           <folding />
         </state>
       </provider>

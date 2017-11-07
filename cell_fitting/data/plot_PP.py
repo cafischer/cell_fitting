@@ -22,10 +22,10 @@ protocol_idx = 14
 #cells = ['2015_08_05b', '2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11d',
 #         '2015_08_11e', '2015_08_11f']
 #offset = [2, 0, 0, 10, 10, 62, 0]  # 11e 10 und 62 offset
-cells = ['2015_08_11e']
-offset = [1]
+cells = ['2014_07_02a']  # 18, 130
+offset = [0]
 step_flags = [0, 1, 2]
-len_ramp3_times = 10  # TODO: 10 for 2015  # 12 for early 2014
+len_ramp3_times = 8  # TODO: 10 for 2015  # 12 for early 2014
 len_t = 69200  #46900  #93200  #69200
 
 for c_idx, cell in enumerate(cells):
@@ -57,8 +57,9 @@ for c_idx, cell in enumerate(cells):
             ramp3_time_protocols = range(start, end, 3)
 
             for ramp3time_idx, ramp3_time_protocol in enumerate(ramp3_time_protocols):
-                v_tmp, t_tmp = get_v_and_t_from_heka(file_dir, protocol if ramp3_time_protocol == 0
-                                                     else protocol + '(' + str(ramp3_time_protocol) + ')')
+                v_tmp, t_tmp, series = get_v_and_t_from_heka(file_dir, protocol if ramp3_time_protocol == 0
+                                                     else protocol + '(' + str(ramp3_time_protocol) + ')',
+                                                                 return_series=True)
                 t = np.array(t_tmp[0])[:len_t]
                 v = np.array(v_tmp[0])[:len_t]
                 v = shift_v_rest(v, v_rest_shift)
@@ -76,7 +77,7 @@ for c_idx, cell in enumerate(cells):
             pl.xlabel('Time (ms)')
             pl.legend()
             pl.tight_layout()
-            #pl.savefig(os.path.join(save_dir_cell, 'PP' + str(ramp3_amp_idx) + '.png'))
+            pl.savefig(os.path.join(save_dir_cell, 'PP' + str(ramp3_amp_idx) + '.png'))
             #pl.show()
 
             pl.figure()
@@ -86,14 +87,18 @@ for c_idx, cell in enumerate(cells):
             pl.xlabel('Time (ms)')
             if cell in ['2015_08_04d', '2015_08_05a']:
                 pl.xlim(265, 300)
-            elif '2014' in cell:
-                pl.xlim(725, 760)
+            #elif '2014' in cell:
+            #    pl.xlim(725, 760)
             else:
                 pl.xlim(485, 560)
             pl.legend()
             pl.tight_layout()
-            #pl.savefig(os.path.join(save_dir_cell, 'PP' + str(ramp3_amp_idx) + '_zoom.png'))
-            pl.show()
+            pl.savefig(os.path.join(save_dir_cell, 'PP' + str(ramp3_amp_idx) + '_zoom.png'))
+            #pl.show()
 
         #np.save(os.path.join(save_dir_cell, 'v_mat.npy'), v_mat)
         #np.save(os.path.join(save_dir_cell, 't.npy'), t)
+
+
+    # TODO:
+            # Series number = 2nd number in Igor (sweep number 3rd) = current number Franzi writes down???

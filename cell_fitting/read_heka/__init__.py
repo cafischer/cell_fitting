@@ -1,16 +1,15 @@
 from heka_reader import HekaReader
 import pandas as pd
 import os
-import matplotlib.pyplot as pl
 import numpy as np
-from cell_fitting.data import shift_v_rest, set_v_rest
 from cell_fitting.optimization.helpers import convert_to_unit
 import re
 
 
-def get_protocols_same_base(file_dir, protocol_base, group='Group1'):
+def get_protocols_same_base(file_dir, protocol_base, group='Group1', return_heka=False):
     reg_exp_protocol = re.compile('^'+protocol_base + '(\([0-9]+\))?'+'$')
     hekareader = HekaReader(file_dir)
+    type_to_index = hekareader.get_type_to_index()
     protocol_to_series = hekareader.get_protocol(group)
     protocols = protocol_to_series.keys()
     protocols_match = []
@@ -23,13 +22,23 @@ def get_protocols_same_base(file_dir, protocol_base, group='Group1'):
     numbers = [int(n[0]) if len(n) > 0 else 0 for n in numbers_str]
     sort_idx = np.argsort(numbers)
     protocols_match = np.array(protocols_match)[sort_idx]
+
+    if return_heka:
+        heka_dict = {'hekareader': hekareader, 'type_to_index': type_to_index, 'protocol_to_series': protocol_to_series}
+        return protocols_match, heka_dict
     return protocols_match
 
 
-def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None, return_sweep_idxs=False):
-    hekareader = HekaReader(file_dir)
-    type_to_index = hekareader.get_type_to_index()
-    protocol_to_series = hekareader.get_protocol(group)
+def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None, return_series=False,
+                          return_sweep_idxs=False, heka_dict=None):
+    if heka_dict is None:
+        hekareader = HekaReader(file_dir)
+        type_to_index = hekareader.get_type_to_index()
+        protocol_to_series = hekareader.get_protocol(group)
+    else:
+        hekareader = heka_dict['hekareader']
+        type_to_index = heka_dict['type_to_index']
+        protocol_to_series = heka_dict['protocol_to_series']
     series = protocol_to_series[protocol]
     sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series]) + 1)]
     # print '# sweeps: ', len(sweeps)
@@ -50,9 +59,8 @@ def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sw
         t[i] = t[i].tolist()
         v[i] = v[i].tolist()
 
-    if return_sweep_idxs:
-        return np.array(v), np.array(t), sweep_idxs
-    return np.array(v), np.array(t)  # not matrix if v[i]s have different length
+    return_idxs = [True, True, return_series, return_sweep_idxs]
+    return np.array([np.array(v), np.array(t), series, sweep_idxs])[return_idxs]  # not matrix if v[i]s have different length
 
 
 def get_i_inj(protocol, sweep_idxs):
