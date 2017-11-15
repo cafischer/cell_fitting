@@ -4,6 +4,7 @@ import numpy as np
 from nrn_wrapper import Cell
 from cell_fitting.optimization.simulate import iclamp_handling_onset, simulate_currents
 import os
+from cell_characteristics import to_idx
 pl.style.use('paper')
 
 __author__ = 'caro'
@@ -18,8 +19,11 @@ def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
     i_exp[half_diff_up:] = np.linspace(ramp_amp, amp_after, half_diff_down+1)[1:]
     return i_exp
 
+def get_ramp3_times(delta_first=3, delta_ramp=2, n_times=10):
+    return np.arange(delta_first, n_times * delta_ramp + delta_ramp, delta_ramp)
 
-def double_ramp(cell, ramp3_amp, step_amp):
+
+def double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp, len_step, dt, tstop):
     """
     original values
     delta_ramp = 2
@@ -29,28 +33,28 @@ def double_ramp(cell, ramp3_amp, step_amp):
     ramp_amp = 4.0
     ramp3_amp = 1.8
     step_amp = 0  # or -0.1 or 0.1
+    dur_step = 250
     dt = 0.01
+    len_step2ramp = 15
+    tstop = 800
+    len_ramp = 3
 
     amplitude of second ramp goes up by 0.05 nA after each sequence
     """
 
-    delta_ramp = 2
-    delta_first = 3
-    ramp3_times = np.arange(delta_first, 10 * delta_ramp + delta_ramp, delta_ramp)
     baseline_amp = -0.05
-    ramp_amp = 4.0
-    dt = 0.001
+    len_step2ramp = 15
+    len_ramp = 2
 
     # construct current traces
-    len_ramp = 3
-    start_ramp1 = int(round(20 / dt))
-    end_ramp1 = start_ramp1 + int(round(len_ramp / dt))
-    start_step = int(round(222 / dt))
-    end_step = start_step + int(round(250 / dt))
-    start_ramp2 = end_step + int(round(15 / dt))
-    end_ramp2 = start_ramp2 + int(round(len_ramp / dt))
+    start_ramp1 = to_idx(20, dt)
+    end_ramp1 = start_ramp1 + to_idx(len_ramp, dt)
+    start_step = to_idx(222, dt)
+    end_step = start_step + to_idx(len_step, dt)
+    start_ramp2 = end_step + to_idx(len_step2ramp, dt)
+    end_ramp2 = start_ramp2 + to_idx(len_ramp, dt)
 
-    t_exp = np.arange(0, 800, dt)
+    t_exp = np.arange(0, tstop+dt, dt)
     v = np.zeros([len(ramp3_times), len(t_exp)])
     i_inj = np.zeros([len(ramp3_times), len(t_exp)])
     currents = [0] * len(ramp3_times)
@@ -75,7 +79,7 @@ def double_ramp(cell, ramp3_amp, step_amp):
         # record currents
         currents[j], channel_list = simulate_currents(cell, simulation_params)
 
-    return t, v, i_inj, ramp3_times, currents, channel_list
+    return t, v, i_inj, ramp3_times, currents, channel_list, start_ramp2
 
 
 def plot_double_ramp(t, v, ramp3_times, save_dir_img):
@@ -85,11 +89,12 @@ def plot_double_ramp(t, v, ramp3_times, save_dir_img):
         pl.plot(t, v[j], label='Model' if j == 0 else '', c='r')
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane potential (mV)')
-    pl.xlim(485, 560)
+    #pl.xlim(485, 560)
+    pl.xlim(360, 400)
     pl.legend()
     pl.tight_layout()
-    #pl.savefig(os.path.join(save_dir_img, 'PP'+str(ramp3_amp)+'.png'))
-    pl.show()
+    pl.savefig(os.path.join(save_dir_img, 'PP'+str(ramp3_amp)+'.png'))
+    #pl.show()
 
 
 def plot_double_ramp_currents(t, v, currents, ramp3_times, channel_list, save_dir_img):
@@ -109,7 +114,7 @@ def plot_double_ramp_currents(t, v, currents, ramp3_times, channel_list, save_di
     h2, l2 = ax2.get_legend_handles_labels()
     ax1.legend(h1 + h2, l1 + l2)
     pl.xlim(485, 560)
-    pl.tight_layout()
+    pl.tight_layout(360, 400)
     #pl.savefig(os.path.join(save_dir_img, 'PP_currents'+str(ramp3_amp)+'.png'))
     pl.show()
 
@@ -177,26 +182,27 @@ def plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, sav
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
-    #save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0/'
-    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
-    step_amp = 0
-    for seq in range(20):
-        ramp3_amp = 1.0 + seq * 0.1
-        t, v, i_inj, ramp3_times, currents, channel_list = double_ramp(cell, ramp3_amp, step_amp)
+    dt = 0.01
+    tstop = 500
+    step_amp = 0  # 0, -0.1, 0.1
+    len_step = 125
+    ramp_amp = 2.9
+    ramp3_times = get_ramp3_times(3, 2, 10)
+    for ramp3_amp in np.arange(0, 3.55, 0.05):
+        t, v, i_inj, ramp3_times, currents, channel_list, _ = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times,
+                                                                       step_amp, len_step, dt, tstop)
 
-        save_dir_img = os.path.join(save_dir, 'img', 'PP', 'step' + str(step_amp))
+        save_dir_img = os.path.join(save_dir, 'img', 'PP', '125', 'step' + str(step_amp))
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
 
         plot_double_ramp(t, v, ramp3_times, save_dir_img)
-        plot_double_ramp_currents(t, v, currents, ramp3_times, channel_list, save_dir_img)
+        #plot_double_ramp_currents(t, v, currents, ramp3_times, channel_list, save_dir_img)
         #plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, save_dir_img)

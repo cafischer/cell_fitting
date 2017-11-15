@@ -31,7 +31,7 @@ if __name__ == '__main__':
              '2015_08_20e.dat', '2015_08_05c.dat', '2015_08_04c.dat', '2015_05_22t.dat', '2015_08_21c.dat',
              '2015_05_26b.dat', '2015_08_11f.dat']
 
-    cells = ['2015_08_20f.dat']  # 11d seems not to be same as labbook
+    cells = ['2015_08_26e.dat']  # 11d seems not to be same as labbook
 
     for cell in cells:
         protocols = get_protocols_same_base(os.path.join(data_dir, cell), protocol_base)

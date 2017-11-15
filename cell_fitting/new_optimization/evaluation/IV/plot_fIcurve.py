@@ -7,18 +7,17 @@ from cell_characteristics.fIcurve import compute_fIcurve, compute_fIcurve_last_I
 from cell_fitting.util import merge_dicts
 from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
 from nrn_wrapper import Cell
-from cell_characteristics.analyze_APs import get_AP_max_idx, get_AP_start_end
 pl.style.use('paper')
 
 
 if __name__ == '__main__':
 
     # parameters
-    #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/3519'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/3519'
     model_dir = os.path.join(save_dir, 'cell.json')
-    mechanism_dir = '../../model/channels/vavoulis'
-    data_dir = '../../data/2015_08_26b/vrest-75/IV/'
+    mechanism_dir = '../../../model/channels/vavoulis'
+    data_dir = '../../../data/2015_08_26b/vrest-75/IV/'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
@@ -90,6 +89,9 @@ if __name__ == '__main__':
     pl.savefig(os.path.join(save_dir_img, 'fIcurve.png'))
     #pl.show()
 
+    np.save(os.path.join(save_dir_img, 'amps_greater0.npy'), amps_greater0)
+    np.save(os.path.join(save_dir_img, 'firing_rates.npy'), firing_rates_model)
+
     pl.figure()
     pl.plot(amps_greater0, firing_rates_data_last_ISI, '-ok', label='Exp. Data')
     pl.plot(amps_greater0, firing_rates_model_last_ISI, '-or', label='Model')
@@ -100,28 +102,44 @@ if __name__ == '__main__':
     pl.savefig(os.path.join(save_dir_img, 'fIcurve_last_ISI.png'))
     #pl.show()
 
-    for amp, v_trace_data, v_trace_model in zip(amps, v_traces_data, v_traces_model):
-        AP_start_model, AP_end_model = get_AP_start_end(v_trace_model, threshold=-30, n=0)
-        AP_start_data, AP_end_data = get_AP_start_end(v_trace_data, threshold=-30, n=0)
+    # # plot single traces
+    # for amp, v_trace_data, v_trace_model in zip(amps, v_traces_data, v_traces_model):
+    #     AP_start_model, AP_end_model = get_AP_start_end(v_trace_model, threshold=-30, n=0)
+    #     AP_start_data, AP_end_data = get_AP_start_end(v_trace_data, threshold=-30, n=0)
+    #
+    #     pl.figure()
+    #     if AP_start_model is not None and AP_start_data is not None:
+    #         AP_peak_model = v_trace_model[get_AP_max_idx(v_trace_model, AP_start_model, AP_end_model)]
+    #         AP_peak_data = v_trace_data[get_AP_max_idx(v_trace_data, AP_start_data, AP_end_data)]
+    #         if AP_peak_model > AP_peak_data:
+    #             pl.plot(t_model, v_trace_model, 'r', label='Model')
+    #             #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+    #         else:
+    #             #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+    #             pl.plot(t_model, v_trace_model, 'r', label='Model')
+    #     else:
+    #         #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+    #         pl.plot(t_model, v_trace_model, 'r', label='Model')
+    #     pl.xlabel('Time (ms)')
+    #     pl.ylabel('Membrane Potential (mV)')
+    #     if amp == -0.1:
+    #         pl.ylim(-80, -60)
+    #     #pl.legend()
+    #     pl.tight_layout()
+    #     pl.savefig(os.path.join(save_dir_img, 'IV' + str(amp) + '.png'))
+    #     pl.show()
 
-        pl.figure()
-        if AP_start_model is not None and AP_start_data is not None:
-            AP_peak_model = v_trace_model[get_AP_max_idx(v_trace_model, AP_start_model, AP_end_model)]
-            AP_peak_data = v_trace_data[get_AP_max_idx(v_trace_data, AP_start_data, AP_end_data)]
-            if AP_peak_model > AP_peak_data:
-                pl.plot(t_model, v_trace_model, 'r', label='Model')
-                #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
-            else:
-                #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
-                pl.plot(t_model, v_trace_model, 'r', label='Model')
-        else:
-            #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
-            pl.plot(t_model, v_trace_model, 'r', label='Model')
-        pl.xlabel('Time (ms)')
-        pl.ylabel('Membrane Potential (mV)')
-        if amp == -0.1:
-            pl.ylim(-80, -60)
-        #pl.legend()
-        pl.tight_layout()
-        pl.savefig(os.path.join(save_dir_img, 'IV' + str(amp) + '.png'))
-        pl.show()
+    # plot all under another with subfigures
+    #fig, ax = pl.subplots(sum(amps_greater0_idx), 1, sharex=True)
+    fig, ax = pl.subplots(20, 1, sharex=True, figsize=(21, 29.7))
+    for i, (amp, v_trace_model) in enumerate(zip(amps[amps_greater0_idx][1:21], v_traces_model[amps_greater0_idx][1:21])):
+        ax[i].plot(t_model, v_trace_model, 'r', label='$i_{amp}: $ %.2f' % amp)
+        ax[i].set_ylim(-80, 60)
+        ax[i].set_xlim(200, 850)
+        ax[i].legend(fontsize=14)
+    #pl.tight_layout()
+    fig.text(0.06, 0.5, 'Membrane Potential (mV)', va='center', rotation='vertical', fontsize=14)
+    fig.text(0.5, 0.06, 'Time (ms)', ha='center', fontsize=14)
+    pl.savefig(os.path.join(save_dir_img, 'IV_subplots.png'))
+    pl.savefig(os.path.join(save_dir_img, 'IV_subplots.pdf'))
+    pl.show()

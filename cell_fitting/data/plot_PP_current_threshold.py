@@ -16,11 +16,11 @@ protocol_idx = 0
 
 #cells = ['2015_08_05b', '2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11d',
 #         '2015_08_11e', '2015_08_11f']  # 05b, 11f only 10 amp increase, 05c, 06d 20
-cell_id = '2014_07_02a'
-run_idx = 3
+cell_id = '2014_07_09f'
+run_idx = 1
 
 step_amps = [-0.1, 0, 0.1]
-AP_threshold = 0
+AP_threshold = -20
 PP_params = pd.read_csv(PP_params_dir)
 PP_params['cell_id'].ffill(inplace=True)
 PP_params_cell = PP_params[PP_params['cell_id'] == cell_id].iloc[run_idx]
@@ -38,13 +38,13 @@ for i, step_amp in enumerate(step_amps):
     step_str = 'step_%.1f(nA)' % step_amp
 
     v_mat = np.load(os.path.join(save_dir_cell, step_str, 'v_mat.npy'))
+    t = np.load(os.path.join(save_dir_cell, step_str, 't.npy'))
+    dt = t[1] - t[0]
     start_amp = PP_params_cell['ramp3_amp']
     ramp3_amps = start_amp + np.arange(len(v_mat[:, 0, 0])) * 0.05
 
-    current_thresholds[i] = get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2_idx, AP_threshold)
+    current_thresholds[i] = get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2_idx, dt, AP_threshold)
 
-t = np.load(os.path.join(save_dir_cell, step_str, 't.npy'))
-dt = t[1] - t[0]
 print dt
 start_ramp1 = to_idx(20, dt)
 v_dap = v_mat[0, 0, start_ramp1:start_ramp1+to_idx(ramp3_times[-1]+ramp3_times[0], dt)]
@@ -55,3 +55,5 @@ plot_current_threshold(current_thresholds, ramp3_times, step_amps, ramp3_amps[0]
 
 
 # TODO: plot current threshold with y as percentage of ramp_amp or threshold in rampIV
+
+#

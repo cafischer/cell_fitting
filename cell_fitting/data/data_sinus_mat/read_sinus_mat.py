@@ -21,21 +21,25 @@ def get_sinus_data_from_mat(save_dir):
 
 if __name__ == '__main__':
     save_dir = './sinus_mat_files'
-    cell = '2015-05-22r'
+    cell = '2015-08-26e'
     file_name = cell + '_Sinus_variables.mat'
     repetition = 0
 
     save_dir = os.path.join(save_dir, file_name)
     v, t, i_inj, t_i_inj, amp1, amp2, freq1, freq2 = get_sinus_data_from_mat(save_dir)
 
+    print amp2
+
     for i in range(len(amp1)):
 
         pl.figure()
-        pl.plot(t[0, i][:, repetition], v[0, i][:, repetition])
+        pl.title('amp1: ' + str(amp1[i]) + ' ' + 'amp2: ' + str(amp2[i]) + ' ' +
+                 'freq1: ' + str(freq1[i]) + ' ' + 'freq2: ' + str(freq2[i]) + ' ')
+        pl.plot(t[0, i][:, repetition], v[0, i][:, repetition], 'k', linewidth=1.0)
         pl.show()
 
-        pl.figure()
-        pl.title('amp1: '+str(amp1[i])+' '+'amp2: '+str(amp2[i])+' '+
-                 'freq1: '+str(freq1[i])+' '+'freq2: '+str(freq2[i])+' ')
-        pl.plot(t_i_inj[0, i][0, :], i_inj[0, i][0, :])
-        pl.show()
+        # pl.figure()
+        # pl.title('amp1: '+str(amp1[i])+' '+'amp2: '+str(amp2[i])+' '+
+        #          'freq1: '+str(freq1[i])+' '+'freq2: '+str(freq2[i])+' ')
+        # pl.plot(t_i_inj[0, i][0, :], i_inj[0, i][0, :])
+        # pl.show()
