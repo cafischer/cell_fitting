@@ -3,7 +3,7 @@ import numpy as np
 import os
 from scipy.optimize import curve_fit
 from cell_characteristics.fIcurve import compute_fIcurve, compute_fIcurve_last_ISI
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj_from_function
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 pl.style.use('paper')
 
@@ -14,7 +14,6 @@ if __name__ == '__main__':
     save_dir = './plots/fI_curve/rat'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'IV'
-    v_rest_shift = -16
     cells = get_cells_for_protocol(data_dir, protocol)
     #cells = ['2015_05_26d', '2015_06_08a', '2015_06_09f', '2015_06_19i', '2015_08_10g', '2015_08_26b']
     animal = 'rat'
@@ -28,8 +27,8 @@ if __name__ == '__main__':
         # fI-curve for data
         v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                          return_sweep_idxs=True)
-        i_inj_mat = get_i_inj(protocol, sweep_idxs)
         t = t_mat[0, :]
+        i_inj_mat = get_i_inj_from_function(protocol, sweep_idxs, t[-1], t[1]-t[0])
 
         amps, firing_rates_data = compute_fIcurve(v_mat, i_inj_mat, t)
         _, firing_rates_data_last_ISI = compute_fIcurve_last_ISI(v_mat, i_inj_mat, t)

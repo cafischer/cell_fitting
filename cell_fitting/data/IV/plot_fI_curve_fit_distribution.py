@@ -4,7 +4,7 @@ import numpy as np
 import os
 from scipy.optimize import curve_fit
 from cell_characteristics.fIcurve import compute_fIcurve
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj_from_function
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 import seaborn as sns
 import pandas as pd
@@ -38,8 +38,8 @@ if __name__ == '__main__':
         # fI-curve for data
         v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                          return_sweep_idxs=True)
-        i_inj_mat = get_i_inj(protocol, sweep_idxs)
         t = t_mat[0, :]
+        i_inj_mat = get_i_inj_from_function(protocol, sweep_idxs, t[-1], t[1]-t[0])
 
         try:
             amps, firing_rates_data = compute_fIcurve(v_mat, i_inj_mat, t)

@@ -4,7 +4,7 @@ import os
 from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
 from nrn_wrapper import Cell
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
 pl.style.use('paper')
 
 
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
     # read data
     v_mat_data, t_mat_data, sweep_idxs = get_v_and_t_from_heka(data_dir, 'IV', return_sweep_idxs=True)
-    i_inj_mat = get_i_inj('IV', sweep_idxs)
+    i_inj_mat = get_i_inj_from_function('IV', sweep_idxs, t_mat_data[0][-1], t_mat_data[0][1]-t_mat_data[0][0])
 
     # VI for model
     simulation_params = {'sec': ('soma', None), 'celsius': 35, 'onset': 200, 'atol': 1e-6, 'continuous': True,

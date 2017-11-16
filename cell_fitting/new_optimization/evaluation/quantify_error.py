@@ -2,7 +2,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import pandas as pd
 import os
-from cell_fitting.new_optimization.evaluation.increase_rampIV import rampIV
+from cell_fitting.new_optimization.evaluation.plot_rampIV import rampIV
 from nrn_wrapper import Cell
 from cell_fitting.optimization.errfuns import rms
 from cell_characteristics.analyze_APs import get_AP_max_idx, get_fAHP_min_idx_using_splines, get_DAP_max_idx

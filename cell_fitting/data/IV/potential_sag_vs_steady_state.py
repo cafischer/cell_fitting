@@ -1,7 +1,7 @@
 import matplotlib.pyplot as pl
 import numpy as np
 import os
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj, get_cells_for_protocol
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function, get_cells_for_protocol
 from cell_fitting.new_optimization.evaluation.IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 pl.style.use('paper')
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         # read data
         v_mat_data, t_mat_data, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), 'IV',
                                                                    return_sweep_idxs=True)
-        i_inj_mat = get_i_inj('IV', sweep_idxs)
+        i_inj_mat = get_i_inj_from_function('IV', sweep_idxs, t_mat_data[0][-1], t_mat_data[0][1]-t_mat_data[0][0])
 
         # compute amplitudes
         start_step = np.nonzero(i_inj_mat[0])[0][0]

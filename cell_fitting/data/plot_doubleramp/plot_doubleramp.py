@@ -116,6 +116,4 @@ for step_flag in step_flags:
     np.save(os.path.join(save_dir_cell, 'v_mat.npy'), v_mat)
     np.save(os.path.join(save_dir_cell, 't.npy'), t)
 
-    # Series number = 2nd number in Igor (sweep number 3rd) = current number Franzi writes down
-
-    # TODO: warum rutscht 2nd ramp nach vorne?
+    # Series number = 2nd number in Igor (sweep number is 3rd) = current number Franzi writes down

@@ -10,29 +10,14 @@ from cell_fitting.data import set_v_rest
 from cell_characteristics import to_idx
 import statsmodels.api as sm
 from cell_fitting.optimization.fitfuns import impedance
+from cell_fitting.read_heka.i_inj_functions import get_zap
 
 
-def get_zap(amp, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.01):
-    """
-    """
-    t = np.arange(0, tstop-onset_dur-offset_dur+dt, dt)
-    zap = amp * np.sin(2 * np.pi * ((freq1 - freq0) / 1000 * t / (2 * t[-1]) + freq0/1000) * t)
-    onset = np.zeros(to_idx(onset_dur, dt, 3))
-    offset = np.zeros(to_idx(offset_dur, dt, 3))
-    zap_stim = np.concatenate((onset, zap, offset))
 
-    # pl.figure()
-    # pl.plot(np.arange(0, tstop+dt, dt), zap_stim, 'k')
-    # pl.ylabel('Current (nA)')
-    # pl.xlabel('Time (ms)')
-    # pl.tight_layout()
-    # pl.show()
-    return zap_stim
+def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, zap_dur=30000,
+                       tstop=34000, dt=0.01):
 
-
-def apply_zap_stimulus(cell, amp=0.1, freq0=1, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.01):
-
-    i_exp = get_zap(amp, freq0, freq1, onset_dur, offset_dur, tstop, dt)
+    i_exp = get_zap(amp, freq0, freq1, onset_dur, offset_dur, zap_dur, tstop, dt)
 
     # get simulation parameters
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': tstop,
@@ -168,4 +153,5 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # apply stim
-    apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, tstop=34000, dt=0.1)
+    apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, zap_dur=30000, tstop=34000,
+                       dt=0.1)

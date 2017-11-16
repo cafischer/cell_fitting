@@ -9,7 +9,7 @@ from cell_characteristics import to_idx
 from cell_characteristics.analyze_APs import get_spike_characteristics
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_fitting.new_optimization.evaluation.IV import get_step
-from cell_fitting.new_optimization.evaluation.increase_rampIV import get_ramp
+from cell_fitting.new_optimization.evaluation.plot_rampIV import get_ramp
 from cell_fitting.util import init_nan
 import matplotlib.pyplot as pl
 pl.style.use('paper')

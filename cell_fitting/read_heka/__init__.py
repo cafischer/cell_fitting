@@ -1,7 +1,7 @@
 from heka_reader import HekaReader
-import pandas as pd
 import os
 import numpy as np
+from cell_fitting.read_heka.i_inj_functions import *
 from cell_fitting.optimization.helpers import convert_to_unit
 import re
 
@@ -63,28 +63,44 @@ def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sw
     return np.array([np.array(v), np.array(t), series, sweep_idxs])[return_idxs]  # not matrix if v[i]s have different length
 
 
-def get_i_inj(protocol, sweep_idxs):
-    protocol_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/Protocols'
-    try:
-        i_inj_base = pd.read_csv(os.path.join(protocol_dir, protocol + '.csv'), header=None).values[:, 0]
-    except IOError:
-        raise ValueError('i_inj does not exist for the given protocol!')
-
+def get_i_inj_from_function(protocol, sweep_idxs, tstop, dt, return_discontinuities=False):
     i_inj = [0] * len(sweep_idxs)
+    discontinuities = []
     for i, sweep_idx in enumerate(sweep_idxs):
         if protocol == 'IV':
-            amp_change = -0.15 + sweep_idx * 0.05
+            step_amp = np.round(-0.15 + sweep_idx * 0.05, 2)
+            start_step = 250  # ms
+            end_step = 750  # ms
+            discontinuities = [start_step, end_step]
+            i_inj[i] = get_i_inj_step(start_step, end_step, step_amp, tstop, dt)
+        elif protocol == 'hypTester':
+            step_amp = -0.005
+            start_step = 200  # ms
+            end_step = 600  # ms
+            discontinuities = [start_step, end_step]
+            i_inj[i] = get_i_inj_step(start_step, end_step, step_amp, tstop, dt)
         elif protocol == 'rampIV':
-            amp_change = 0.1 + sweep_idx * 0.1
+            ramp_amp = np.round(0.1 + sweep_idx * 0.1, 2)
+            ramp_start = 10.0  # ms
+            ramp_peak = 10.8  # ms
+            ramp_end = 12.0  # ms
+            amp_before = -0.05
+            amp_after = -0.05
+            discontinuities = [ramp_start, ramp_peak, ramp_end]
+            i_inj[i] = get_i_inj_rampIV(ramp_start, ramp_peak, ramp_end, amp_before, ramp_amp, amp_after, tstop, dt)
+        elif protocol == 'Zap20':
+            i_inj[i] = get_zap(amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000-dt, zap_dur=30000,
+                               tstop=tstop, dt=dt)
+            discontinuities = np.arange(to_idx(tstop, dt, 4)+1)
         else:
-            amp_change = 1
-        i_inj[i] = list(i_inj_base * amp_change)
-    return np.array(i_inj)
+            raise ValueError('No function saved for this protocol!')
+    if return_discontinuities:
+        return i_inj, discontinuities
+    return i_inj
 
 
 def get_cells_by_protocol(data_dir):
     cells_by_protocol = dict()
-
 
     for file_name in os.listdir(data_dir):
         hekareader = HekaReader(os.path.join(data_dir, file_name))

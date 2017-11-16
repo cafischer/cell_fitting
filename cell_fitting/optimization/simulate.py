@@ -30,7 +30,7 @@ def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, p
     v_init = data.v.values[0]
     i_inj = data.i.values
     return {'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i,
-                                  'pos_v': pos_v, 'sec': sec, 'celsius': celsius, 'onset': onset}
+            'pos_v': pos_v, 'sec': sec, 'celsius': celsius, 'onset': onset}
 
 
 def currents_given_v(v, t, sec, channel_list, ion_list, celsius, plot=False):

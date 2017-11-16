@@ -1,7 +1,7 @@
 import matplotlib.pyplot as pl
 import os
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj_from_function
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 pl.style.use('paper')
 
@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
         v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                          return_sweep_idxs=True)
-        i_inj_mat = get_i_inj(protocol, sweep_idxs)
+        i_inj_mat = get_i_inj_from_function(protocol, sweep_idxs, t_mat[0][-1], t_mat[0][1]-t_mat[0][0])
         t = t_mat[0, :]
 
         for v in v_mat:

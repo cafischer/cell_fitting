@@ -53,7 +53,6 @@ for cell in cells:
             #pl.xlim(485, 560)
             pl.legend(fontsize=16)
             pl.tight_layout()
-            #pl.savefig(os.path.join(save_dir_cell, 'PP' + str(seq) + '_no_zoom.png'))
             pl.show()
         except KeyError:
             break

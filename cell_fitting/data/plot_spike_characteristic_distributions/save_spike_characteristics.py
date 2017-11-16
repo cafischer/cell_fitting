@@ -1,8 +1,9 @@
 import numpy as np
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 import os
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_protocols_same_base, get_i_inj, shift_v_rest
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
 from cell_characteristics.analyze_APs import get_spike_characteristics, get_AP_onset_idxs
+from cell_fitting.data import shift_v_rest
 
 
 if __name__ == '__main__':
@@ -47,7 +48,7 @@ if __name__ == '__main__':
                 if len(onset_idxs) == 1 and onset_idxs * dt < 12.5 and len(v_mat[i, :]) == 16200:
                     v = shift_v_rest(v_mat[i, :], v_rest_shift)
                     t = t_mat[i, :]
-                    i_inj = get_i_inj(protocol, sweep_idxs)[i, :]
+                    i_inj = get_i_inj_from_function(protocol, sweep_idxs, t[-1], t[1]-t[0])[i, :]
                     dt_d = t[1] - t[0]
                     assert dt == dt_d
                     start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
