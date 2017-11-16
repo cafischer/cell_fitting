@@ -2,7 +2,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import os
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function, get_cells_for_protocol
-from cell_fitting.new_optimization.evaluation.IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
+from cell_fitting.optimization.evaluation.IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 pl.style.use('paper')
 

@@ -1,8 +1,10 @@
-from PyQt5.QtWidgets import QApplication
+import os
 import sys
+
+from PyQt5.QtWidgets import QApplication
+
 from cell_fitting.optimization.hand_tuning.controller import HandTuner
 from cell_fitting.optimization.helpers import *
-import os
 
 __author__ = 'caro'
 

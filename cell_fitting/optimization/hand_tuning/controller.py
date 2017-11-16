@@ -1,6 +1,8 @@
 import json
 import os
+
 from cell_fitting.optimization.hand_tuning.model import Model
+
 from cell_fitting.optimization.hand_tuning.view import ViewHandTuner
 
 __author__ = 'caro'

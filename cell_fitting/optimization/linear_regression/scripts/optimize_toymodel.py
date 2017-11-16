@@ -1,12 +1,12 @@
 import json
 import os
-import numpy as np
-import matplotlib.pyplot as pl
+
 from nrn_wrapper import Cell
-from cell_fitting.optimization.simulate import currents_given_v
-from cell_fitting.optimization.linear_regression import *
+
+from cell_fitting.optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
 from cell_fitting.optimization.helpers import *
-from cell_fitting.new_optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFitter
+from cell_fitting.optimization.linear_regression import *
+from cell_fitting.optimization.simulate import currents_given_v
 
 __author__ = 'caro'
 

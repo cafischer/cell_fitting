@@ -1,19 +1,50 @@
-import numpy as np
-import matplotlib.pyplot as pl
-from cell_fitting.optimization.helpers import get_channel_list, get_ionlist
 import copy
 import re
+
+import matplotlib.pyplot as pl
+import numpy as np
 from nrn_wrapper import iclamp, iclamp_adaptive, vclamp
+
+from cell_fitting.optimization.helpers import get_channel_list, get_ionlist
 
 __author__ = 'caro'
 
 
-def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, pos_v=0.5, onset=200):
+# def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, pos_v=0.5, onset=200):
+#     """
+#     Uses the experimental data and additional arguments to extract the simulation parameters.
+#
+#     :param data: Dataframe containing the columns: v (membrane potential), t (time), i (injected current).
+#     :type data: pandas.DataFrame
+#     :param sec: Section to stimulate and record from. First argument name, second argument index (None for no index).
+#     :type sec: tuple
+#     :param celsius: Temperature during simulation (affects ion channel kinetics).
+#     :type celsius: float
+#     :param pos_i: Position of the stimulating electrode (value between 0 and 1).
+#     :type pos_i: float
+#     :param pos_v: Position of the recording electrode (value between 0 and 1).
+#     :type pos_v: float
+#     :return: Simulation parameter
+#     :rtype: dict
+#     """
+#     tstop = data.t.values[-1]
+#     dt = data.t.values[1] - data.t.values[0]
+#     v_init = data.v.values[0]
+#     i_inj = data.i.values
+#     return {'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i,
+#             'pos_v': pos_v, 'sec': sec, 'celsius': celsius, 'onset': onset}
+
+
+def extract_simulation_params(v, t, i_inj, sec=('soma', None), celsius=35, pos_i=0.5, pos_v=0.5, onset=200):
     """
     Uses the experimental data and additional arguments to extract the simulation parameters.
 
-    :param data: Dataframe containing the columns: v (membrane potential), t (time), i (injected current).
-    :type data: pandas.DataFrame
+    :param v: Membrane potential.
+    :type v: numpy.array
+    :param t: Time.
+    :type t: numpy.array
+    :param i_inj: Injected current.
+    :type i_inj: numpy.array
     :param sec: Section to stimulate and record from. First argument name, second argument index (None for no index).
     :type sec: tuple
     :param celsius: Temperature during simulation (affects ion channel kinetics).
@@ -25,10 +56,9 @@ def extract_simulation_params(data, sec=('soma', None), celsius=35, pos_i=0.5, p
     :return: Simulation parameter
     :rtype: dict
     """
-    tstop = data.t.values[-1]
-    dt = data.t.values[1] - data.t.values[0]
-    v_init = data.v.values[0]
-    i_inj = data.i.values
+    tstop = t[-1]
+    dt = t[1] - t[0]
+    v_init = v[0]
     return {'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop, 'dt': dt, 'pos_i': pos_i,
             'pos_v': pos_v, 'sec': sec, 'celsius': celsius, 'onset': onset}
 

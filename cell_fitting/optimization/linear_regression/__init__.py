@@ -1,7 +1,8 @@
-import numpy as np
-from scipy.optimize import nnls
 import matplotlib.pyplot as pl
+import numpy as np
 from matplotlib.pyplot import cm as cmap
+from scipy.optimize import nnls
+
 from cell_fitting.optimization.helpers import convert_from_unit
 
 __author__ = 'caro'

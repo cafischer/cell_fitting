@@ -1,12 +1,14 @@
+import os
+
+import numpy as np
+import pandas as pd
+from nrn_wrapper import Cell
+
+from cell_fitting.optimization import create_pseudo_random_number_generator
+from cell_fitting.optimization.bio_inspired import get_random_numbers_in_bounds
 from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
-from cell_fitting.new_optimization import create_pseudo_random_number_generator
-from cell_fitting.optimization.bio_inspired.generators import get_random_numbers_in_bounds
 from cell_fitting.optimization.simulate import iclamp_handling_onset, extract_simulation_params
 from cell_fitting.util import merge_dicts
-import os
-import numpy as np
-from nrn_wrapper import Cell
-import pandas as pd
 
 
 def get_cell(model_dir, mechanism_dir, variable_keys):

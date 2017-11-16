@@ -2,7 +2,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import os
 import pandas as pd
-from cell_fitting.new_optimization.evaluation.doubleramp_current_threshold import get_current_threshold, plot_current_threshold
+from cell_fitting.optimization.evaluation.doubleramp_current_threshold import get_current_threshold, plot_current_threshold
 from cell_characteristics import to_idx
 pl.style.use('paper')
 

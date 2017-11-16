@@ -1,8 +1,11 @@
 import os
+
+import matplotlib.pyplot as pl
 import numpy as np
+
 from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
 from cell_fitting.sensitivity_analysis import update_cell
-import matplotlib.pyplot as pl
+
 pl.style.use('paper')
 
 

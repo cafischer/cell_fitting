@@ -1,7 +1,0 @@
-{
-    "normalize": false, 
-    "algorithm_name": "L-BFGS-B", 
-    "save_dir": "test/0/L-BFGS-B", 
-    "algorithm_params": {}, 
-    "optimization_params": {}
-}

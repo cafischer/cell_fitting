@@ -1,12 +1,13 @@
-import pandas as pd
 import os
-import numpy as np
+
 import matplotlib.pyplot as pl
-from cell_fitting.optimization.simulate import extract_simulation_params, simulate_gates, iclamp_handling_onset
+import numpy as np
+import pandas as pd
 from nrn_wrapper import Cell
 from sklearn import linear_model
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import r2_score
 
+from cell_fitting.optimization.simulate import extract_simulation_params, simulate_gates
 
 if __name__ == '__main__':
     # parameters

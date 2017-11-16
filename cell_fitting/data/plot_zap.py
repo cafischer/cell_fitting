@@ -1,13 +1,16 @@
 import os
+
 import matplotlib.pyplot as pl
 import numpy as np
-from cell_fitting.data import shift_v_rest, set_v_rest
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol
-from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
-from cell_fitting.new_optimization.evaluation.plot_zap import get_zap
 import statsmodels.api as sm
-from cell_fitting.optimization.fitfuns import impedance
 from cell_characteristics import to_idx
+
+from cell_fitting.data import shift_v_rest, set_v_rest
+from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
+from cell_fitting.optimization.evaluation.plot_zap import get_zap
+from cell_fitting.optimization.fitfuns import impedance
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol
+
 pl.style.use('paper')
 
 
