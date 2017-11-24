@@ -1,17 +1,12 @@
 import os
-
-from cell_fitting.optimization import OptimizationSettings, AlgorithmSettings
+import sys
+from cell_fitting.optimization.scripts import optimize
 from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
 
-save_dir = '../../results/test/'
-if not os.path.exists(save_dir):
-    os.makedirs(save_dir)
-
-maximize = False
-n_candidates = 3
-stop_criterion = ['generation_termination', 2]
-seed = 1.0
-generator = 'get_random_numbers_in_bounds'
+# parameters
+save_dir = './test'
+process_number = 0
+batch_size = 2
 
 variables = [
                 [0.5, 2.5, [['soma', 'cm']]],
@@ -55,35 +50,61 @@ fitter_params = {
                     'args': {}
                 }
 
-#algorithm_name = 'DEA'
-#algorithm_params = {'num_selected': 335, 'tournament_size': 180, 'crossover_rate': 0.57,
-#                    'mutation_rate': 0.52, 'gaussian_mean': 0.0, 'gaussian_stdev': 0.21}
-#normalize = False
+optimization_settings_dict = {
+    'maximize': False,
+    'n_candidates': 10,
+    'stop_criterion': ['generation_termination', 2],
+    'seed': 1,
+    'generator': 'get_random_numbers_in_bounds',
+    'bounds': bounds,
+    'fitter_params': fitter_params,
+    'extra_args': {}
+}
 
-#algorithm_name = 'SA'
-#algorithm_params = {'temperature': 524.25, 'cooling_rate': 0.51, 'mutation_rate': 0.68,
-#                    'gaussian_mean': 0.0, 'gaussian_stdev': 0.20}
-#algorithm_name = 'PSO'
-#algorithm_params = {'inertia': 0.43, 'cognitive_rate': 1.44, 'social_rate': 1.57}
+algorithm_settings_dict = {
+    'algorithm_name': 'L-BFGS-B',
+    'algorithm_params': {},
+    'optimization_params': {},
+    'normalize': False,
+    'save_dir': os.path.join(save_dir, sys.argv[2])
+}
 
-algorithm_name = 'L-BFGS-B'
-algorithm_params = {}
-normalize = False
+# algorithm_settings_dict = {
+#     'algorithm_name': 'DEA',
+#     'algorithm_params': {'num_selected': 335, 'tournament_size': 180, 'crossover_rate': 0.57,
+#                          'mutation_rate': 0.52, 'gaussian_mean': 0.0, 'gaussian_stdev': 0.21},
+#     'optimization_params': {},
+#     'normalize': True,
+#     'save_dir': os.path.join(save_dir, sys.argv[2])
+# }
+# algorithm_settings_dict = {
+#     'algorithm_name': 'PSO',
+#     'algorithm_params': {'inertia': 0.4, 'cognitive_rate': 1.4, 'social_rate': 1.6},
+#     'optimization_params': {},
+#     'normalize': True,
+#     'save_dir': os.path.join(save_dir, sys.argv[2])
+# }
+# algorithm_settings_dict = {
+#     'algorithm_name': 'SA',
+#     'algorithm_params': {'temperature': 524.0, 'cooling_rate': 0.5, 'mutation_rate': 0.7,
+#                          'gaussian_mean': 0.0, 'gaussian_stdev': 0.20},
+#     'optimization_params': {},
+#     'normalize': True,
+#     'save_dir': os.path.join(save_dir, sys.argv[2])
+# }
+# algorithm_settings_dict = {
+#     'algorithm_name': 'Nelder-Mead',
+#     'algorithm_params': {},
+#     'optimization_params': {},
+#     'normalize': False,
+#     'save_dir': os.path.join(save_dir, sys.argv[2])
+# }
+# algorithm_settings_dict = {
+#     'algorithm_name': 'Random',
+#     'algorithm_params': {},
+#     'optimization_params': {},
+#     'normalize': False,
+#     'save_dir': os.path.join(save_dir, sys.argv[2])
+# }
 
-#algorithm_name = 'Nelder-Mead'
-#algorithm_params = {}
-#normalize = False
-
-#algorithm_name = 'Random'
-#algorithm_params = {}
-#normalize = False
-
-optimization_params = None
-save_dir = save_dir + '/' + algorithm_name + '/'
-if not os.path.exists(save_dir):
-    os.makedirs(save_dir)
-
-optimization_settings = OptimizationSettings(maximize, n_candidates, stop_criterion, seed, generator, bounds,
-                                             fitter_params)
-algorithm_settings = AlgorithmSettings(algorithm_name, algorithm_params, optimization_params, normalize, save_dir)
 optimize(optimization_settings_dict, algorithm_settings_dict)

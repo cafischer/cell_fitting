@@ -9,9 +9,9 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    save_dir = './plots/rampIV/rat'
+    save_dir = './plots/simulate_rampIV/rat'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    protocol = 'rampIV'
+    protocol = 'simulate_rampIV'
     v_rest_shift = -16
     AP_threshold = -30
     #cells = get_cells_for_protocol(data_dir, protocol)
@@ -45,6 +45,6 @@ if __name__ == '__main__':
         pl.ylabel('Membrane Potential (mV)')
         #pl.legend()
         pl.tight_layout()
-        pl.savefig(os.path.join(save_dir_img, 'rampIV.png'))
-        pl.savefig(os.path.join(save_dir_img, 'rampIV.svg'))
+        pl.savefig(os.path.join(save_dir_img, 'simulate_rampIV.png'))
+        pl.savefig(os.path.join(save_dir_img, 'simulate_rampIV.svg'))
         pl.show()

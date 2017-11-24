@@ -1,60 +1,46 @@
 import os
-
 import matplotlib.pyplot as pl
 import numpy as np
-import pandas as pd
 from cell_characteristics.fIcurve import compute_fIcurve, compute_fIcurve_last_ISI
 from nrn_wrapper import Cell
-
 from cell_fitting.optimization.fitter import extract_simulation_params
-from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
+from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_fitting.util import merge_dicts
-
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
 pl.style.use('paper')
 
 
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/3519'
+    #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:42/76805'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    data_dir = '../../../data/2015_08_26b/vrest-75/IV/'
+    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    cell_id = '2015_08_26b'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # fI-curve for data
-    v_traces_data = list()
-    i_traces_data = list()
-    for file_name in os.listdir(data_dir):
-        data = pd.read_csv(data_dir+file_name)
-        v_traces_data.append(data.v.values)
-        i_traces_data.append(data.i.values)
-    t_trace = data.t.values
-    amps, firing_rates_data = compute_fIcurve(v_traces_data, i_traces_data, t_trace)
-    _, firing_rates_data_last_ISI  = compute_fIcurve_last_ISI(v_traces_data, i_traces_data, t_trace)
-
-    # discontinuities for IV
-    dt = 0.05
-    start_step = int(round(250 / dt))
-    end_step = int(round(750 / dt))
-    discontinuities_IV = [start_step, end_step]
+    protocol = 'IV'
+    v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
+                                                     sweep_idxs=None, return_sweep_idxs=True)
+    i_inj_mat = get_i_inj_from_function(protocol, sweep_idxs, t_mat[0][-1], t_mat[0][1] - t_mat[0][0])
+    amps, firing_rates_data = compute_fIcurve(v_mat, i_inj_mat, t_mat[0])
+    _, firing_rates_data_last_ISI = compute_fIcurve_last_ISI(v_mat, i_inj_mat, t_mat[0])
 
     # fI-curve for model
-    sim_params = {'celsius': 35, 'onset': 200, 'atol': 1e-6, 'continuous': True, 'discontinuities': discontinuities_IV,
-                  'interpolate': True}
-    sim_params = {'celsius': 35, 'onset': 200}
-    v_traces_model = list()
-    for file_name in os.listdir(data_dir):
-        data = pd.read_csv(data_dir+file_name)
-        simulation_params = merge_dicts(extract_simulation_params(data), sim_params)
-        v_model, t_model, _ = iclamp_adaptive_handling_onset(cell, **simulation_params)
-        v_traces_model.append(v_model)
+    v_mat_model = list()
+    for i in range(len(sweep_idxs)):
+        sim_params = {'celsius': 35, 'onset': 200}
+        simulation_params = merge_dicts(extract_simulation_params(v_mat[i], t_mat[i], i_inj_mat[i]), sim_params)
+        v_model, t_model, _ = iclamp_handling_onset(cell, **simulation_params)
+        v_mat_model.append(v_model)
 
-    amps, firing_rates_model = compute_fIcurve(v_traces_model, i_traces_data, t_trace)
-    _, firing_rates_model_last_ISI = compute_fIcurve_last_ISI(v_traces_model, i_traces_data, t_trace)
+    amps, firing_rates_model = compute_fIcurve(v_mat_model, i_inj_mat, t_mat[0])
+    _, firing_rates_model_last_ISI = compute_fIcurve_last_ISI(v_mat_model, i_inj_mat, t_mat[0])
 
     # sort according to amplitudes
     idx_sort = np.argsort(amps)
@@ -63,8 +49,8 @@ if __name__ == '__main__':
     firing_rates_model = firing_rates_model[idx_sort]
     firing_rates_data_last_ISI = firing_rates_data_last_ISI[idx_sort]
     firing_rates_model_last_ISI = firing_rates_model_last_ISI[idx_sort]
-    v_traces_data = np.array(v_traces_data)[idx_sort]
-    v_traces_model = np.array(v_traces_model)[idx_sort]
+    v_traces_data = np.array(v_mat)[idx_sort]
+    v_mat_model = np.array(v_mat_model)[idx_sort]
 
     # only take amps >= 0
     amps_greater0_idx = amps >= 0
@@ -135,7 +121,7 @@ if __name__ == '__main__':
     # plot all under another with subfigures
     #fig, ax = pl.subplots(sum(amps_greater0_idx), 1, sharex=True)
     fig, ax = pl.subplots(20, 1, sharex=True, figsize=(21, 29.7))
-    for i, (amp, v_trace_model) in enumerate(zip(amps[amps_greater0_idx][1:21], v_traces_model[amps_greater0_idx][1:21])):
+    for i, (amp, v_trace_model) in enumerate(zip(amps[amps_greater0_idx][1:21], v_mat_model[amps_greater0_idx][1:21])):
         ax[i].plot(t_model, v_trace_model, 'r', label='$i_{amp}: $ %.2f' % amp)
         ax[i].set_ylim(-80, 60)
         ax[i].set_xlim(200, 850)

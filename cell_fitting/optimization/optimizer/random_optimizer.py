@@ -1,5 +1,5 @@
 import pandas as pd
-
+import os
 from cell_fitting.optimization.optimizer.optimizer_interface import Optimizer
 
 
@@ -29,5 +29,5 @@ class RandomOptimizer(Optimizer):
     def save_candidates(self):
         individuals_data = pd.DataFrame(self.candidates, columns=['generation', 'id', 'fitness', 'candidate'])
         individuals_data = individuals_data.groupby('generation').apply(lambda x: x.sort_values(['fitness']))
-        with open(self.algorithm_settings.save_dir + 'candidates.csv', 'w') as f:
+        with open(os.path.join(self.algorithm_settings.save_dir, 'candidates.csv'), 'w') as f:
             individuals_data.to_csv(f, header=True, index=False)

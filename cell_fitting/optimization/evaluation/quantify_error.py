@@ -7,7 +7,7 @@ from cell_characteristics.analyze_APs import get_AP_max_idx, get_fAHP_min_idx_us
 from nrn_wrapper import Cell
 
 from cell_fitting.optimization.errfuns import rms
-from cell_fitting.optimization.evaluation.plot_rampIV import rampIV
+from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
 
 pl.style.use('paper')
 
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     ramp_amp = 3.0
-    data_dir = '../../data/2015_08_26b/vrest-75/rampIV/'+str(ramp_amp)+'(nA).csv'
+    data_dir = '../../data/2015_08_26b/vrest-75/simulate_rampIV/'+str(ramp_amp)+'(nA).csv'
 
     AP_threshold = -30
 
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # simulate
-    v, t = rampIV(cell, ramp_amp, v_init=-75)
+    v, t = simulate_rampIV(cell, ramp_amp, v_init=-75)
     data = pd.read_csv(data_dir)
     v_data = data.v.values
     t_data = data.t.values

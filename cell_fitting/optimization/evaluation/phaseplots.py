@@ -8,7 +8,7 @@ from optimization.simulate import iclamp_handling_onset, extract_simulation_para
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
+    data_dir = '../../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv'
     save_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'best_cell.json')
     #model_dir = '../../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/best_cell.json'

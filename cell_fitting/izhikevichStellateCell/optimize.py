@@ -1,12 +1,10 @@
 from time import time
 import json
 import os
-
-from optimization.problems import get_lowerbound_upperbound_keys
-from optimization.problems.abstract_problems import *
-from optimization.problems.fit_izhikevich_model import *
-from optimization.bio_inspired.optimize import optimize_bio_inspired
-from optimization.errfuns import rms
+from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
+from cell_fitting.optimization.problems.abstract_problems import *
+from cell_fitting.optimization.problems.fit_izhikevich_model import *
+from cell_fitting.optimization.errfuns import rms
 from fitfuns import *
 
 pop_size = 200
@@ -33,7 +31,7 @@ fitter_specification = {
     'given_variables': given_variables,
     'fitfuns': [get_v, get_v],
     'errfun': rms,
-    'data_dirs': ['../data/'+cell+'/IV/-0.15(nA).csv', '../data/'+cell+'/rampIV/1.0(nA).csv']
+    'data_dirs': ['../data/'+cell+'/IV/-0.15(nA).csv', '../data/'+cell+'/simulate_rampIV/1.0(nA).csv']
 }
 izhikevich_fitter = IzhikevichFitter(**fitter_specification)
 

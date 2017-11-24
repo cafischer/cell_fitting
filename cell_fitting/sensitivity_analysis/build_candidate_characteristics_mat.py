@@ -4,13 +4,15 @@ import numpy as np
 
 
 # save dir
-dates = ['2017-10-26_14:13:11']
-save_dirs = [os.path.join('../results/sensitivity_analysis/', date) for date in dates]
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_test')
+folder = '/home/cfischer/results/sensitivity_analysis/mean_std_6models'
+save_dir_analysis = os.path.join(folder, 'analysis')
+dates = filter(lambda x: os.path.isdir(os.path.join(save_dir_analysis, x)), os.listdir(save_dir_analysis))
+print dates
+save_dirs = [os.path.join(folder, date) for date in dates]
 save_dir_plots = os.path.join(save_dir_analysis, 'plots')
 
 # load
-with open(os.path.join(save_dirs[0], 'params.json'), 'r') as f:
+with open(os.path.join(folder, 'params.json'), 'r') as f:
     params = json.load(f)
 i_inj = np.load(os.path.join(save_dirs[0], 'i_inj.npy'))
 return_characteristics = np.load(os.path.join(save_dir_analysis, 'return_characteristics.npy'))

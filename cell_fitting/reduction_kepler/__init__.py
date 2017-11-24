@@ -11,7 +11,7 @@ from cell_fitting.optimization.simulate import extract_simulation_params, simula
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
+    data_dir = '../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv'
     #data_dir = '../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
     save_dir = '../results/server/2017-08-30_09:50:28/194/L-BFGS-B/'
     model_dir = os.path.join(save_dir, 'model', 'cell.json')

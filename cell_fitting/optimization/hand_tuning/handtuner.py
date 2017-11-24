@@ -89,7 +89,7 @@ if __name__ == '__main__':
         'model_dir': model_dir,
         'mechanism_dir': None,
         #'data_dir': '../../data/2015_08_26b/vrest-75/IV/0.7(nA).csv',
-        'data_dir': '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
+        'data_dir': '../../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv',
         'simulation_params': {'celsius': 35, 'onset': 200},
         'args': {}
     }

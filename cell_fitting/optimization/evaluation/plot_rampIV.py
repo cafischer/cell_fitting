@@ -5,45 +5,26 @@ import os
 from cell_fitting.optimization.fitter import iclamp_handling_onset
 from nrn_wrapper import Cell
 import time
+from cell_fitting.read_heka import get_i_inj_from_function, get_sweep_index_for_amp
 pl.style.use('paper')
 
 __author__ = 'caro'
 
 
-def get_ramp(start_idx, peak_idx, end_idx, amp_before, ramp_amp, amp_after):
-    diff_idx = end_idx - start_idx
-    half_diff_up = peak_idx - start_idx + 1
-    half_diff_down = end_idx - peak_idx - 1
-    i_exp = np.zeros(diff_idx)
-    i_exp[:half_diff_up] = np.linspace(amp_before, ramp_amp, half_diff_up)
-    i_exp[half_diff_up:] = np.linspace(ramp_amp, amp_after, half_diff_down+1)[1:]
-    return i_exp
-
-
-def rampIV(cell, ramp_amp, v_init=-75):
-
+def simulate_rampIV(cell, ramp_amp, v_init=-75):
+    protocol = 'rampIV'
     dt = 0.01
-    ramp_st_ms = 10  # ms
-    ramp_peak_ms = 10.8  # ms
-    ramp_end_ms = 12  # ms
     tstop = 161.99  # ms
-
-    ramp_st = int(round(ramp_st_ms / dt))
-    ramp_peak = int(round(ramp_peak_ms / dt))
-    ramp_end = int(round(ramp_end_ms / dt)) + 1
-
-    t_exp = np.arange(0, tstop + dt, dt)
-    i_exp = np.zeros(len(t_exp))
-    i_exp[ramp_st:ramp_end] = get_ramp(ramp_st, ramp_peak, ramp_end, 0, ramp_amp, 0)
+    sweep_idx = get_sweep_index_for_amp(ramp_amp, protocol)
+    i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
 
     # get simulation parameters
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': v_init, 'tstop': t_exp[-1],
+    simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
                          'dt': dt, 'celsius': 35, 'onset': 200}
 
     # record v
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
-
-    return v, t
+    return v, t, i_inj
 
 
 if __name__ == '__main__':
@@ -59,7 +40,7 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     start_time = time.time()
-    v, t = rampIV(cell, ramp_amp, v_init=-75)
+    v, t, _ = simulate_rampIV(cell, ramp_amp, v_init=-75)
     end_time = time.time()
     print 'Runtime (sec): ', end_time - start_time
 
@@ -69,15 +50,6 @@ if __name__ == '__main__':
     save_img = os.path.join(save_dir, 'img', 'rampIV')
     if not os.path.exists(save_img):
         os.makedirs(save_img)
-
-    # with open('./v.npy', 'w') as f:
-    #     np.save(f, v)
-    #
-    # start_time = time.time()
-    # with open('./v.npy', 'r') as f:
-    #     v = np.load(f)
-    # end_time = time.time()
-    # print 'Runtime (sec): ', end_time - start_time
 
     pl.figure()
     #pl.title(str(np.round(ramp_amp, 2)) + ' nA')

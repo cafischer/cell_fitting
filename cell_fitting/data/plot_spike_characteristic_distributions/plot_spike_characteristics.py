@@ -15,8 +15,6 @@ return_characteristics = np.load(os.path.join(save_dir, 'return_characteristics.
 characteristics_mat = np.load(os.path.join(save_dir, 'characteristics_mat.npy'))
 candidate_mat = np.load(os.path.join(save_dir, 'AP_mat.npy'))
 
-#characteristics_mat = np.array(characteristics_mat, dtype=np.float)  # TODO
-
 for i, characteristic in enumerate(return_characteristics):
     if characteristic == 'DAP_exp_slope':
         median = np.nanmedian(characteristics_mat[:, i])

@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
         if protocol_to_series.get('PP(0)') is not None \
             and protocol_to_series.get('IV') is not None \
-            and protocol_to_series.get('rampIV') is not None \
+            and protocol_to_series.get('simulate_rampIV') is not None \
             and protocol_to_series.get('Zap20') is not None \
             and protocol_to_series.get('hypTester') is not None \
             and protocol_to_series.get('PP_tester') is not None:
@@ -55,7 +55,7 @@ if __name__ == '__main__':
                 if protocol == 'IV':
                     amp = -0.15 + sweep_idx[i] * 0.05
                     amp_change = amp
-                elif protocol == 'rampIV':
+                elif protocol == 'simulate_rampIV':
                     amp = sweep_idx[i] * 0.1
                     amp_change = amp / 0.1
                 elif protocol == 'hypTester':
@@ -77,7 +77,7 @@ if __name__ == '__main__':
             max_noise = np.max(v_noise)
 
             # check for DAP
-            protocol = 'rampIV'
+            protocol = 'simulate_rampIV'
             trace = 'Trace1'
             series = protocol_to_series[protocol]
             sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series])+1)]
@@ -95,7 +95,7 @@ if __name__ == '__main__':
                 if protocol == 'IV':
                     amp = -0.15 + sweep_idx[i] * 0.05
                     amp_change = amp
-                elif protocol == 'rampIV':
+                elif protocol == 'simulate_rampIV':
                     amp = sweep_idx[i] * 0.1
                     amp_change = amp / 0.1
                 elif protocol == 'hypTester':

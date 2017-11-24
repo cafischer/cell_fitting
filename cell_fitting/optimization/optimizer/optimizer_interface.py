@@ -1,6 +1,6 @@
 import abc
 import json
-from cell_fitting.optimization import generate_initial_candidates
+from cell_fitting.optimization import generate_candidates
 
 
 class Optimizer:
@@ -28,10 +28,11 @@ class Optimizer:
                     json.dump(cell, f2, indent=4)
 
     def generate_initial_candidates(self):
-        return self.optimization_settings.extra_args.pop('init_candidates',
-                                             generate_initial_candidates(
-                                                                    self.optimization_settings.generator,
-                                                                    self.optimization_settings.bounds['lower_bounds'],
-                                                                    self.optimization_settings.bounds['upper_bounds'],
-                                                                    self.optimization_settings.seed,
-                                                                    self.optimization_settings.n_candidates))
+        candidates = self.optimization_settings.extra_args.pop('init_candidates',
+                                                               lambda: generate_candidates(
+                                                                  self.optimization_settings.generator,
+                                                                  self.optimization_settings.bounds['lower_bounds'],
+                                                                  self.optimization_settings.bounds['upper_bounds'],
+                                                                  self.optimization_settings.seed,
+                                                                  self.optimization_settings.n_candidates))  # TODO: why need to put lambda x to get no error
+        return candidates

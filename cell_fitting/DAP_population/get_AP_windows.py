@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
     save_dir = './results/get_AP_windows/'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/rawData'
-    protocol = 'rampIV'
+    protocol = 'simulate_rampIV'
     v_rest = -75
     correct_vrest = True
     dt = 0.01

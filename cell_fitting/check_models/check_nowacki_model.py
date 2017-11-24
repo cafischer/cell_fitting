@@ -40,10 +40,10 @@ dt = 0.01
 # simulations
 
 # rampIV
-run_on('../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.3(nA).csv', v_init=v_init, plot=True)
+run_on('../data/2015_08_06d/correct_vrest_-16mV/simulate_rampIV/3.3(nA).csv', v_init=v_init, plot=True)
 
 # visualize currents
-data = pd.read_csv('../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.3(nA).csv')
+data = pd.read_csv('../data/2015_08_06d/correct_vrest_-16mV/simulate_rampIV/3.3(nA).csv')
 sim_params = extract_simulation_params(data)
 sim_params['v_init'] = -75.33
 

@@ -123,7 +123,7 @@ fitter_params = {
                     # 'simulation_params': {'celsius': 35, 'onset': 200},
                     'fitnessweights': [[7, 7], [1], [1], [20000]],
                     'data_dirs': [
-                                  '../../data/2015_05_28c/vrest-80/rampIV/3.3(nA).csv',
+                                  '../../data/2015_05_28c/vrest-80/simulate_rampIV/3.3(nA).csv',
                                   '../../data/2015_05_28c/vrest-80/IV/-0.1(nA).csv',
                                   '../../data/2015_05_28c/vrest-80/IV/0.2(nA).csv',
                                   '../../data/2015_05_28c/vrest-80/IV/0.5(nA).csv'

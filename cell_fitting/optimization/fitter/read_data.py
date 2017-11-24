@@ -34,17 +34,3 @@ def read_data_from_dat(data_dir, cell_id, protocol, sweep_idx, return_discontinu
                                         [sweep_idx], t_mat[0][-1], t_mat[0][1] - t_mat[0][0], True)
         return v_mat[0], t_mat[0], i_inj_mat[0], discontinuities
     return v_mat[0], t_mat[0], i_inj_mat[0]
-
-
-def get_sweep_index_for_amp(amp, protocol):
-    if protocol == 'IV':
-        sweep_idx = np.round((amp + 0.15) / 0.05, 10)  # rounding necessary for integer recognition and conversion
-        assert sweep_idx.is_integer()
-        sweep_idx = int(sweep_idx)
-    elif protocol == 'rampIV':
-        sweep_idx = np.round((amp - 0.1) / 0.1, 10)
-        assert sweep_idx.is_integer()
-        sweep_idx = int(sweep_idx)
-    else:
-        raise ValueError('Conversion not available for this protocol!')
-    return sweep_idx

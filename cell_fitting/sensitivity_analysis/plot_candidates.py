@@ -1,8 +1,6 @@
 import os
-
 import matplotlib.pyplot as pl
 import numpy as np
-
 from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
 from cell_fitting.sensitivity_analysis import update_cell
 
@@ -11,7 +9,7 @@ pl.style.use('paper')
 
 # save dir
 save_dir_data = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/'
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10_new')
+save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'distributions')
 
 if not os.path.exists(save_dir_plots):
@@ -27,10 +25,10 @@ range_candidates = [
     [50, 150, 'AP_amp'],
     [0.1, 2.0, 'AP_width'],
     [0, 40, 'fAHP_amp'],
-    [10, 20, 'DAP_amp'],
-    [1, 3, 'DAP_deflection'],
-    [10, 30, 'DAP_width'],
-    [3, 5, 'DAP_time'],
+    [0, 40, 'DAP_amp'],
+    [3, 20, 'DAP_deflection'],
+    [0, 70, 'DAP_width'],
+    [0, 6, 'DAP_time'],
     [-np.inf, np.inf, 'DAP_lin_slope'],
     [-np.inf, np.inf, 'DAP_exp_slope']
 ]
@@ -83,3 +81,8 @@ for candidate_idx, candidate in candidates_in_range:
         cell.update_attr(k[0], v)
     with open(os.path.join(save_dir_data, candidate_idx[0], candidate_idx[1], 'cell.json'), 'w') as f:
         json.dump(cell.get_dict(), f, indent=4)
+
+
+    # 2017-10-10_14:00:01/67982;
+    # 2017-10-10_14:00:01/8945; 2017-10-10_14:00:02/15636; 2017-10-10_14:00:02/69043; 2017-10-10_14:00:01/2058
+    # 2017-10-10_14:00:01/15123;

@@ -1,10 +1,9 @@
 import os
 import re
-
 from heka_reader import HekaReader
-
 from cell_fitting.optimization.helpers import convert_to_unit
 from cell_fitting.read_heka.i_inj_functions import *
+from cell_fitting.util import init_nan
 
 
 def get_protocols_same_base(file_dir, protocol_base, group='Group1', return_heka=False):
@@ -65,7 +64,7 @@ def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sw
 
 
 def get_i_inj_from_function(protocol, sweep_idxs, tstop, dt, return_discontinuities=False):
-    i_inj = [0] * len(sweep_idxs)
+    i_inj = init_nan((len(sweep_idxs), to_idx(tstop, dt)+1))
     discontinuities = []
     for i, sweep_idx in enumerate(sweep_idxs):
         if protocol == 'IV':
@@ -85,8 +84,8 @@ def get_i_inj_from_function(protocol, sweep_idxs, tstop, dt, return_discontinuit
             ramp_start = 10.0  # ms
             ramp_peak = 10.8  # ms
             ramp_end = 12.0  # ms
-            amp_before = -0.05  # TODO: is this always right?
-            amp_after = -0.05
+            amp_before = 0
+            amp_after = 0
             discontinuities = [ramp_start, ramp_peak, ramp_end]
             i_inj[i] = get_i_inj_rampIV(ramp_start, ramp_peak, ramp_end, amp_before, ramp_amp, amp_after, tstop, dt)
         elif protocol == 'Zap20':
@@ -98,6 +97,20 @@ def get_i_inj_from_function(protocol, sweep_idxs, tstop, dt, return_discontinuit
     if return_discontinuities:
         return i_inj, discontinuities
     return i_inj
+
+
+def get_sweep_index_for_amp(amp, protocol):
+    if protocol == 'IV':
+        sweep_idx = np.round((amp + 0.15) / 0.05, 10)  # rounding necessary for integer recognition and conversion
+        assert sweep_idx.is_integer()
+        sweep_idx = int(sweep_idx)
+    elif protocol == 'rampIV':
+        sweep_idx = np.round((amp - 0.1) / 0.1, 10)
+        assert sweep_idx.is_integer()
+        sweep_idx = int(sweep_idx)
+    else:
+        raise ValueError('Conversion not available for this protocol!')
+    return sweep_idx
 
 
 def get_cells_by_protocol(data_dir):

@@ -42,7 +42,7 @@ bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)
 
 model_dir = '../../model/cells/cell_improved_nat.json'
 mechanism_dir = '../../model/vclamp/stellate'
-data_dir = '../../data/2015_08_26b/raw/rampIV/3.0(nA).csv'
+data_dir = '../../data/2015_08_26b/raw/simulate_rampIV/3.0(nA).csv'
 fitter = LinearRegressionFitter(variable_keys, model_dir, mechanism_dir, data_dir, simulation_params={'celsius': 35},
                                 with_cm=False)
 

@@ -90,7 +90,7 @@ if ramp:
     v0 = v_rest
     u0 = [0, 0]
 
-    data_dir = '../data/2015_08_26b/raw/rampIV/3.0(nA).csv'
+    data_dir = '../data/2015_08_26b/raw/simulate_rampIV/3.0(nA).csv'
     data = pd.read_csv(data_dir)
 
     tstop = data.t.values[-1]

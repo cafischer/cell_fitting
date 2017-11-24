@@ -14,7 +14,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv'
+    data_dir = '../../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv'
     #data_dir = '../../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')

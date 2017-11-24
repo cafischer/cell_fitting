@@ -264,9 +264,9 @@ if __name__ == '__main__':
     save_cell(save_dir, best_candidate)
 
     plot_candidate_on_other_data(save_dir, best_candidate,
-                                 '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv', 'img/rampIV/3.0(nA).png')
+                                 '../../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv', 'img/simulate_rampIV/3.0(nA).png')
     plot_candidate_on_other_data(save_dir, best_candidate,
-                                 '../../data/2015_08_26b/vrest-75/rampIV/0.5(nA).csv', 'img/rampIV/0.5(nA).png')
+                                 '../../data/2015_08_26b/vrest-75/simulate_rampIV/0.5(nA).csv', 'img/simulate_rampIV/0.5(nA).png')
     plot_candidate_on_other_data(save_dir, best_candidate,
                                  '../../data/2015_08_26b/vrest-75/IV/-0.1(nA).csv', 'img/IV/-0.1(nA).png')
     plot_candidate_on_other_data(save_dir, best_candidate,

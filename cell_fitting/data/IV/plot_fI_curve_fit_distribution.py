@@ -12,15 +12,20 @@ pl.style.use('paper')
 
 
 def square_root(x, a, b):
-    sr = np.sqrt(a * (x - b))
+    sr = a * np.sqrt(x - b)  # np.sqrt(a * (x - b))
     sr[np.isnan(sr)] = 0
     return sr
+
+# def square_root(x, a, b, c):
+#     sr = a * (x - b)**c
+#     sr[np.isnan(sr)] = 0
+#     return sr
 
 
 if __name__ == '__main__':
 
     # parameters
-    save_dir = './plots/fI_curve/rat'
+    save_dir_img = '../plots/fI_curve/rat/summary'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'IV'
     cells = get_cells_for_protocol(data_dir, protocol)
@@ -28,6 +33,7 @@ if __name__ == '__main__':
     FI_a = []
     FI_b = []
     Cells = []
+    RMSE = []
 
     for cell_id in cells:
         # if not '2015' in cell_id:
@@ -68,6 +74,7 @@ if __name__ == '__main__':
             continue
         try:
             p_opt, _ = curve_fit(square_root, amps_greater0, firing_rates_data, p0=[0.005, b0])
+            #p_opt, _ = curve_fit(square_root, amps_greater0, firing_rates_data, p0=[0.005, b0, 0.5])
         except RuntimeError:
             continue
         if p_opt[0] <= 0:
@@ -76,7 +83,10 @@ if __name__ == '__main__':
         FI_a.append(p_opt[0])
         FI_b.append(p_opt[1])
         Cells.append(cell_id)
+        RMSE.append(np.sqrt(np.sum((firing_rates_data - square_root(amps_greater0, p_opt[0], p_opt[1]))**2)))
+        #RMSE.append(np.sqrt(np.sum((firing_rates_data - square_root(amps_greater0, p_opt[0], p_opt[1], p_opt[2])) ** 2)))
 
+        # print 'RMSE: %.5f' % RMSE[-1]
         # pl.figure()
         # pl.plot(amps_greater0, firing_rates_data, '-ok', label='Exp. Data')
         # pl.plot(amps_greater0, square_root(amps_greater0, p_opt[0], p_opt[1]), 'b')
@@ -88,13 +98,14 @@ if __name__ == '__main__':
         # pl.show()
 
     # plot
-    save_dir_img = os.path.join(save_dir, 'summary')
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
     np.save(os.path.join(save_dir_img, 'FI_a.npy'), FI_a)
     np.save(os.path.join(save_dir_img, 'FI_b.npy'), FI_b)
     np.save(os.path.join(save_dir_img, 'cells.npy'), Cells)
+
+    print 'mean RMSW: %.5f' % np.mean(RMSE)
 
     pl.figure()
     pl.hist(FI_a, bins=100, color='0.5')
@@ -118,5 +129,3 @@ if __name__ == '__main__':
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'scaling_shift_hist.png'))
     pl.show()
-
-    # TODO: sort out interneurons

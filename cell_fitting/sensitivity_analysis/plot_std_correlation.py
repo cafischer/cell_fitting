@@ -2,8 +2,9 @@ from __future__ import division
 import os
 import json
 import numpy as np
-from cell_fitting.sensitivity_analysis.plot_correlation import compute_and_plot_correlations
+from cell_fitting.sensitivity_analysis.plot_correlation_param_characteristic import compute_and_plot_correlations
 from itertools import product
+from cell_fitting.sensitivity_analysis import rename_nat_and_nap
 import matplotlib.pyplot as pl
 pl.style.use('paper')
 
@@ -21,6 +22,7 @@ sig2 = 0.001
 with open(os.path.join(save_dir_analysis, 'params.json'), 'r') as f:
     params = json.load(f)
 variable_names = [p[2][0][-2] + ' ' + p[2][0][-1] for p in params['variables']]
+variable_names = rename_nat_and_nap(variable_names)
 return_characteristics = np.load(os.path.join(save_dir_analysis, 'return_characteristics.npy'))
 characteristics_mat = np.load(os.path.join(save_dir_analysis, 'characteristics_mat.npy'))
 candidate_mat = np.load(os.path.join(save_dir_analysis, 'candidate_mat.npy'))

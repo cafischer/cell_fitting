@@ -3,7 +3,7 @@ import pandas as pd
 
 from cell_fitting.optimization.helpers import *
 
-data_dir = '../../../data/2015_08_26b/raw/rampIV/3.0(nA).csv'
+data_dir = '../../../data/2015_08_26b/raw/simulate_rampIV/3.0(nA).csv'
 data = pd.read_csv(data_dir)
 L = 50  # um
 diam = 100  # um

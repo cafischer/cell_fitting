@@ -7,7 +7,7 @@ pl.style.use('paper')
 
 
 # save dir
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10')
+save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'mean_std_6models', 'analysis')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'distributions')
 
 if not os.path.exists(save_dir_plots):

@@ -98,7 +98,7 @@ def plot_double_ramp(t, v, ramp3_times, save_dir_img):
     pl.legend()
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'PP'+str(ramp3_amp)+'.png'))
-    #pl.show()
+    pl.show()
 
 
 def plot_double_ramp_currents(t, v, currents, ramp3_times, channel_list, save_dir_img):
@@ -187,6 +187,7 @@ if __name__ == '__main__':
 
     # parameters
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/32229'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
@@ -199,7 +200,7 @@ if __name__ == '__main__':
     len_step = 125
     ramp_amp = 2.9
     ramp3_times = get_ramp3_times(3, 2, 10)
-    for ramp3_amp in np.arange(0, 3.55, 0.05):
+    for ramp3_amp in np.arange(2.0, 3.55, 0.05):
         t, v, i_inj, ramp3_times, currents, channel_list, _ = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times,
                                                                        step_amp, len_step, dt, tstop)
 

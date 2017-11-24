@@ -37,7 +37,7 @@ given_variables = {'cm': 185, 'k_rest': 0.75, 'k_t': 200, 'a1': 0.0072, 'b1': 28
                    'v_rest': v_rest, 'v_t': -47.0, 'v_reset': -49.0, 'v_peak': v_peak, 'i_b': 0,
                    'v0': v_rest, 'u0': [0, 0]}
 
-data_dir = '../data/2015_08_26b/rampIV/3.0(nA).csv'
+data_dir = '../data/2015_08_26b/simulate_rampIV/3.0(nA).csv'
 data = pd.read_csv(data_dir)
 dt = data.t[1]
 data_to_fit = data.v[int(13.6/dt):int(120/dt)]
@@ -65,7 +65,7 @@ problem = NormalizedProblem(**problem_specification)
 
 #-----------------------------------------------------------------------------------
 
-save_dir = './results/PSO/'+cell+'/rampIV/DAP_version2(1)/'
+save_dir = './results/PSO/'+cell+'/simulate_rampIV/DAP_version2(1)/'
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 

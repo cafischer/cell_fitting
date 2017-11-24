@@ -63,7 +63,7 @@ def create_pseudo_random_number_generator(seed):
     return pseudo_random_number_generator
 
 
-def generate_initial_candidates(generator_name, lower_bounds, upper_bounds, seed, n_candidates):
+def generate_candidates(generator_name, lower_bounds, upper_bounds, seed, n_candidates):
     generator = getattr(generators, generator_name)
     random = create_pseudo_random_number_generator(seed)
     initial_candidates = [generator(random, lower_bounds, upper_bounds, None)

@@ -16,3 +16,7 @@ def normalize_generator(generator, lower_bounds, upper_bounds):
         return norm(generator(random, args=args), lower_bounds, upper_bounds)  # args by keyword in case
                                                                                # functools.partial is used
     return generator_normalized
+
+
+def init_candidates_generator(random, lower_bounds, upper_bounds, args):
+    return args['init_candidates'].next()

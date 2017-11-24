@@ -125,7 +125,7 @@ fitter_params = {
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
                     'data_dirs': [
-                                  '../../data/2015_08_26b/vrest-75/rampIV/3.0(nA).csv',
+                                  '../../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv',
                                   '../../data/2015_08_26b/vrest-75/IV/0.3(nA).csv'
                                   ],
                     'simulation_params': [

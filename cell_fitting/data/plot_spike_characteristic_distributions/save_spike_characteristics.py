@@ -20,6 +20,7 @@ if __name__ == '__main__':
     AP_threshold = -30  # mV
     AP_interval = 2.5  # ms (also used as interval for fAHP)
     AP_width_before_onset = 2  # ms
+    fAHP_interval = 4.0
     DAP_interval = 10  # ms
     order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
     order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
@@ -57,11 +58,11 @@ if __name__ == '__main__':
                     std_idx_times = (0, start_i_inj * dt)
                     v_rest = np.mean(v[0:start_i_inj])
                     spike_characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest,
-                                                                      AP_threshold, AP_interval, AP_width_before_onset,
-                                                                      std_idx_times, k_splines, s_splines,
-                                                                      order_fAHP_min,
-                                                                      DAP_interval, order_DAP_max, min_dist_to_DAP_max,
-                                                                      check=False))
+                                                                               AP_threshold, AP_interval, AP_width_before_onset,
+                                                                               fAHP_interval, std_idx_times, k_splines,
+                                                                               s_splines, order_fAHP_min, DAP_interval,
+                                                                               order_DAP_max, min_dist_to_DAP_max,
+                                                                               check=False))
                     if None not in spike_characteristics and np.all(spike_characteristics[:-2] >= 0):
                         cell_id_list.append(cell_id)
                         spike_characteristics_list.append(spike_characteristics)

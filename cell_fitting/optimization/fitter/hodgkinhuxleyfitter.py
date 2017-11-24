@@ -1,11 +1,12 @@
 from __future__ import division
+import numpy as np
 from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.optimization import errfuns, fitfuns
 from cell_fitting.optimization.fitter.fitter_interface import Fitter
 from cell_fitting.optimization.fitter.read_data import read_data
 from cell_fitting.optimization.simulate import iclamp_handling_onset, iclamp_adaptive_handling_onset, \
     extract_simulation_params
-from cell_fitting.util import merge_dicts
+from cell_fitting.util import merge_dicts, init_nan
 
 __author__ = 'caro'
 
@@ -66,6 +67,7 @@ class HodgkinHuxleyFitter(Fitter):
 
     def evaluate_fitness(self, candidate, args):
         fitness = 0
+        max_fitness_error = self.args.pop('max_fitness_error', np.inf)
 
         for s, simulation_params in enumerate(self.simulation_params):
             v_candidate, t_candidate, _ = self.simulate_cell(candidate, simulation_params)
@@ -74,10 +76,13 @@ class HodgkinHuxleyFitter(Fitter):
 
             for i in range(len(vars_to_fit)):
                 if vars_to_fit[i] is None:
-                    fitness = 100000  # TODO
+                    fitness = max_fitness_error
                     break
                 else:
                     fitness += self.fitnessweights_per_data_set[s][i] * self.errfun(vars_to_fit[i], self.data_sets_to_fit[s][i])
+            v_candidate, t_candidate, _ = self.simulate_cell(candidate, simulation_params)  # TODO
+        if np.isnan(fitness):
+            return max_fitness_error
         return fitness
 
     def to_dict(self):
@@ -112,7 +117,10 @@ class HodgkinHuxleyFitterAdaptive(HodgkinHuxleyFitter):
 
     def simulate_cell(self, candidate, simulation_params):
         self.update_cell(candidate)
-        v_candidate, t_candidate, i_inj = iclamp_adaptive_handling_onset(self.cell, **simulation_params)
+        try:
+            v_candidate, t_candidate, i_inj = iclamp_adaptive_handling_onset(self.cell, **simulation_params)
+        except RuntimeError:  # prevents failing when adaptive integration cannot find solution
+            v_candidate = t_candidate = i_inj = init_nan(len(simulation_params['i_inj']))
         return v_candidate, t_candidate, i_inj
 
 

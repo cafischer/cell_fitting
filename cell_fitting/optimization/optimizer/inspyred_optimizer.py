@@ -82,13 +82,16 @@ class InspyredOptimizer(Optimizer):
         args = merge_dicts(args, self.algorithm_settings.algorithm_params)
         args['optimization_settings'] = self.optimization_settings.to_dict()  # for multiprocessing
         args['algorithm_settings'] = self.algorithm_settings.to_dict()  # for multiprocessing
+        if self.optimization_settings.extra_args.get('init_candidates', None):
+            args['init_candidates'] = iter(self.generate_initial_candidates())
+            self.optimization_settings.generator = 'init_candidates_generator'
         return args
 
     def optimize(self):
         self.algorithm.evolve(generator=self.generator,
-                              #evaluator=self.evaluator,  # if not using multiprocessing
-                              evaluator=inspyred.ec.evaluators.parallel_evaluation_mp,  # for multiprocessing
-                              mp_evaluator=mp_evaluator,  # for multiprocessing (must be pickable)
+                              evaluator=self.evaluator,  # if not using multiprocessing
+                              #evaluator=inspyred.ec.evaluators.parallel_evaluation_mp,  # for multiprocessing
+                              #mp_evaluator=mp_evaluator,  # for multiprocessing (must be pickable)
                               pop_size=self.optimization_settings.n_candidates,
                               maximize=self.optimization_settings.maximize,
                               bounder=self.bounder,
@@ -118,7 +121,7 @@ class SimulatedAnnealingOptimizer(InspyredOptimizer):
                                   pop_size=self.optimization_settings.n_candidates,
                                   maximize=self.optimization_settings.maximize,
                                   bounder=self.bounder,
-                                  seeds=[self.generator(random, args=None)],
+                                  seeds=[self.generator(random, args=self.args)],  #TODO: self.args = None
                                   **self.args)
 
         self.save_candidates()

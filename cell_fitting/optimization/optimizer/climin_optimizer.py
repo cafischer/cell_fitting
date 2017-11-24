@@ -2,7 +2,6 @@ import functools
 import numdifftools as nd
 import numpy as np
 from cell_fitting.optimization.optimizer.optimizer_interface import Optimizer
-from cell_fitting.optimization import generate_initial_candidates
 import climin
 import copy
 import os
@@ -39,10 +38,11 @@ class CliminOptimizer(Optimizer):
 
     def optimize(self):
         for id, candidate in enumerate(self.initial_candidates):
-            candidates = list()
+            candidates = []
+            candidates.append(candidate)
             optimization_algorithm = self.optimization_algorithm(np.array(candidate), self.jac, **self.algorithm_params)
             for info in optimization_algorithm:
-                candidates.append(copy.copy(optimization_algorithm.wrt))
+                candidates.append(copy.copy(list(optimization_algorithm.wrt)))
                 if info['n_iter'] >= self.optimization_settings.stop_criterion[1]:
                     break
             self.save_candidates(candidates, id)
@@ -50,7 +50,6 @@ class CliminOptimizer(Optimizer):
     def save_candidates(self, candidates, id):
         fitness = [self.fun(c) for c in candidates]
         candidates = [str(c).replace('[', '').replace(']', '').replace(',', '') for c in candidates]
-
         self.write_file(candidates, id, fitness)
 
     def write_file(self, candidates, id, fitness):

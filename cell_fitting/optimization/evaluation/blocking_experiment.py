@@ -40,7 +40,7 @@ if __name__ == '__main__':
     save_dir = '../../results/server/2017-04-14_20:48:28/6/L-BFGS-B'
     method = 'L-BFGS-B'
     n_best = 0
-    data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/rampIV/3.5(nA).csv'
+    data_dir = '../../data/2015_08_06d/correct_vrest_-16mV/simulate_rampIV/3.5(nA).csv'
 
     best_candidate = get_best_candidate(save_dir, n_best)
     plot(best_candidate, data_dir)

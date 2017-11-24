@@ -5,7 +5,7 @@ import numdifftools as nd
 import pandas as pd
 from scipy.optimize import minimize
 
-from cell_fitting.optimization import generate_initial_candidates
+from cell_fitting.optimization import generate_candidates
 from cell_fitting.optimization.optimizer.optimizer_interface import Optimizer
 from cell_fitting.util import merge_dicts
 
@@ -74,7 +74,7 @@ class ScipyOptimizer(Optimizer):
 
     def optimize(self):
         for id, candidate in enumerate(self.initial_candidates):
-            candidates = list()
+            candidates = []
             callback = functools.partial(self.store_candidates, candidates=candidates)
             callback(candidate)
 
@@ -92,7 +92,6 @@ class ScipyOptimizer(Optimizer):
         termination[-1] = termination_end.replace(',', '')
         fitness = [self.fun(c) for c in candidates]
         candidates = [str(l).replace('[', '').replace(']', '').replace(',', '') for l in candidates]
-
         self.write_file(candidates, id, fitness, success, termination)
 
     def write_file(self, candidates, id, fitness, success, termination):
@@ -109,7 +108,7 @@ class ScipyOptimizerInitBounds(ScipyOptimizer):
         super(ScipyOptimizerInitBounds, self).__init__(optimization_settings, algorithm_settings)
 
     def generate_initial_candidates(self):
-        return generate_initial_candidates(
+        return generate_candidates(
                                             self.optimization_settings.generator,
                                             self.init_bounds['lower_bounds'],
                                             self.init_bounds['upper_bounds'],
