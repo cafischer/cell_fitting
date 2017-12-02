@@ -1,14 +1,15 @@
 import os
 import matplotlib.pyplot as pl
 from cell_fitting.read_heka import *
+import pandas as pd
 
 
 if __name__ == '__main__':
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     protocol_dir = '../data/Protocols'
-    cell_id = '2015_08_26b'
+    cell_id = '2013_12_11a'  #'2015_08_06d'
     file_dir = os.path.join(data_dir, cell_id + '.dat')
-    protocol = 'Zap20'
+    protocol = 'hyperRampTester'
 
     v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1',
                                                      sweep_idxs=None, return_sweep_idxs=True)
@@ -28,8 +29,8 @@ if __name__ == '__main__':
     for t, i_inj in zip(t_mat, i_inj_mat):
         pl.figure()
         pl.plot(np.arange(len(i_inj))*dt, i_inj, 'b', label='function')
-        #pl.plot(np.arange(len(i_inj_csv))*dt, i_inj_csv, 'r', label='csv')
+        pl.plot(np.arange(len(i_inj_csv))*dt, i_inj_csv, 'r', label='csv')
         # for zap
-        pl.plot(np.arange(len(i_inj_csv)) * dt + 2000, i_inj_csv, 'r', label='csv')
+        #pl.plot(np.arange(len(i_inj_csv)) * dt + 2000, i_inj_csv, 'r', label='csv')
         pl.legend(loc='upper right')
         pl.show()

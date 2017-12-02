@@ -10,13 +10,8 @@ from cell_fitting.optimization.fitter import extract_simulation_params
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_fitting.util import merge_dicts
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
+from cell_fitting.data.IV.plot_fI_curve_fit_distribution import fit_fun
 pl.style.use('paper')
-
-
-def square_root(x, a, b):
-    sr = a * np.sqrt(x - b)
-    sr[np.isnan(sr)] = 0
-    return sr
 
 
 if __name__ == '__main__':
@@ -25,12 +20,13 @@ if __name__ == '__main__':
     mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     cell_id = '2015_08_26b'
-    save_dir_data = '../../../data/plots/fI_curve/rat/summary'
+    save_dir_data = '../../../data/plots/IV/fi_curve/rat/summary'
     model_ids = range(1, 7)
     load_mechanism_dir(mechanism_dir)
 
     FI_a_models = []
     FI_b_models = []
+    FI_c_models = []
     RMSE = []
 
     for model_id in model_ids:
@@ -69,11 +65,12 @@ if __name__ == '__main__':
 
         # fit square root to FI-curve
         b0 = amps_greater0[np.where(firing_rates_model > 0)[0][0]]
-        p_opt, _ = curve_fit(square_root, amps_greater0, firing_rates_model, p0=[0.005, b0])
+        p_opt, _ = curve_fit(fit_fun, amps_greater0, firing_rates_model, p0=[50, b0, 0.5])
         print p_opt
         FI_a_models.append(p_opt[0])
         FI_b_models.append(p_opt[1])
-        RMSE.append(np.sqrt(np.sum((firing_rates_model - square_root(amps_greater0, p_opt[0], p_opt[1]))**2)))
+        FI_c_models.append(p_opt[2])
+        RMSE.append(np.sqrt(np.sum((firing_rates_model - fit_fun(amps_greater0, p_opt[0], p_opt[1], p_opt[2]))**2)))
 
         # plot
         save_dir_img_model = os.path.join(save_dir_model, 'img', 'IV', 'fi_curve')
@@ -82,11 +79,11 @@ if __name__ == '__main__':
 
         pl.figure()
         pl.plot(amps_greater0, firing_rates_model, '-or', label='Model')
-        pl.plot(amps_greater0, square_root(amps_greater0, p_opt[0], p_opt[1]), 'b')
+        pl.plot(amps_greater0, fit_fun(amps_greater0, p_opt[0], p_opt[1], p_opt[2]), 'b')
         pl.xlabel('Current (nA)')
         pl.ylabel('Firing rate (APs/ms)')
         # pl.legend(loc='lower right')
-        pl.ylim(0, 0.09)
+        pl.ylim(0, 100)
         pl.tight_layout()
         pl.savefig(os.path.join(save_dir_img_model, 'fIcurve_fit.png'))
         #pl.show()
@@ -99,13 +96,38 @@ if __name__ == '__main__':
     print RMSE
     FI_a = list(np.load(os.path.join(save_dir_data, 'FI_a.npy')))
     FI_b = list(np.load(os.path.join(save_dir_data, 'FI_b.npy')))
+    FI_c = list(np.load(os.path.join(save_dir_data, 'FI_c.npy')))
+
     data = pd.DataFrame(np.array([FI_a, FI_b]).T, columns=['Scaling', 'Shift'])
     jp = sns.jointplot('Scaling', 'Shift', data=data, stat_func=None, color='k')
     jp.fig.set_size_inches(6.4, 4.8)
     jp.x = FI_a_models
     jp.y = FI_b_models
-    #pl.scatter(np.array(FI_a_models), np.array(FI_b_models), c='r')
     jp.plot_joint(pl.scatter, c='r')
+    for i, model_id in enumerate(model_ids):
+        pl.gca().annotate(str(model_id), xy=(FI_a_models[i]+3, FI_b_models[i]+0.015), color='r', fontsize=8)
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'scaling_shift_hist.png'))
+
+    data = pd.DataFrame(np.array([FI_a, FI_c]).T, columns=['Scaling', 'Exponent'])
+    jp = sns.jointplot('Scaling', 'Exponent', data=data, stat_func=None, color='k')
+    jp.fig.set_size_inches(6.4, 4.8)
+    jp.x = FI_a_models
+    jp.y = FI_c_models
+    jp.plot_joint(pl.scatter, c='r')
+    for i, model_id in enumerate(model_ids):
+        pl.gca().annotate(str(model_id), xy=(FI_a_models[i]+3, FI_c_models[i]+0.025), color='r', fontsize=8)
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'scaling_exponent_hist.png'))
+
+    data = pd.DataFrame(np.array([FI_c, FI_b]).T, columns=['Exponent', 'Shift'])
+    jp = sns.jointplot('Exponent', 'Shift', data=data, stat_func=None, color='k')
+    jp.fig.set_size_inches(6.4, 4.8)
+    jp.x = FI_c_models
+    jp.y = FI_b_models
+    jp.plot_joint(pl.scatter, c='r')
+    for i, model_id in enumerate(model_ids):
+        pl.gca().annotate(str(model_id), xy=(FI_c_models[i]+0.025, FI_b_models[i]+0.015), color='r', fontsize=8)
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'exponent_shift_hist.png'))
     pl.show()

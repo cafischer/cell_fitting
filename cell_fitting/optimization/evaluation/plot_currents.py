@@ -14,8 +14,8 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '../../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv'
-    #data_dir = '../../data/2015_08_26b/vrest-75/IV/0.4(nA).csv'
+    #data_dir = '../../data/cell_csv_data/2015_08_26b/rampIV/3.0(nA).csv'
+    data_dir = '../../data/cell_csv_data/2015_08_26b/IV/-0.15(nA).csv'
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     # get simulation_params
     data = pd.read_csv(data_dir)
     sim_params = {'onset': 200, 'v_init': -75}
-    simulation_params = merge_dicts(extract_simulation_params(data), sim_params)
+    simulation_params = merge_dicts(extract_simulation_params(data.v.values, data.t.values, data.i.values), sim_params)
 
     # plot currents
     currents, channel_list = simulate_currents(cell, simulation_params, plot=False)

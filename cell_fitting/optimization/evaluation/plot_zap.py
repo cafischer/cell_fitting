@@ -12,14 +12,14 @@ from cell_fitting.data import set_v_rest
 from cell_characteristics import to_idx
 import statsmodels.api as sm
 from cell_fitting.optimization.fitfuns import impedance
-from cell_fitting.read_heka.i_inj_functions import get_zap
+from cell_fitting.read_heka.i_inj_functions import get_i_inj_zap
 
 
 
 def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, zap_dur=30000,
                        tstop=34000, dt=0.01):
 
-    i_exp = get_zap(amp, freq0, freq1, onset_dur, offset_dur, zap_dur, tstop, dt)
+    i_exp = get_i_inj_zap(amp, freq0, freq1, onset_dur, offset_dur, zap_dur, tstop, dt)
 
     # get simulation parameters
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': tstop,

@@ -1,3 +1,4 @@
+from __future__ import division
 import os
 import numpy as np
 import matplotlib.pyplot as pl
@@ -70,15 +71,15 @@ for i, characteristic in enumerate(return_characteristics):
     max_val = max(np.nanmax(characteristics_mat[:, i]), np.nanmax(characteristics_mat_models[:, i]))
     bins = np.linspace(min_val, max_val, 100)
     if return_characteristics[i] == 'AP_width':
-        bins = np.arange(min_val, max_val+0.01, 0.01)
+        bins = np.arange(min_val, max_val+0.015, 0.015)
 
     hist, bins = np.histogram(characteristics_mat[~np.isnan(characteristics_mat[:, i]), i], bins=bins)
     hist_models, _ = np.histogram(characteristics_mat_models[~np.isnan(characteristics_mat_models[:, i]), i],
                                   bins=bins)
-    character_name_dict = {'AP_amp': 'AP amplitude (mV)', 'AP_width': 'AP width (ms)',
-                           'fAHP_amp': 'fAHP amplitude (mV)',
-                           'DAP_amp': 'DAP amplitude (mV)', 'DAP_deflection': 'DAP deflection (mV)',
-                           'DAP_width': 'DAP width (ms)', 'DAP_time': 'DAP time (ms)'}
+    character_name_dict = {'AP_amp': 'AP Amplitude (mV)', 'AP_width': 'AP Width (ms)',
+                           'fAHP_amp': 'fAHP Amplitude (mV)',
+                           'DAP_amp': 'DAP Amplitude (mV)', 'DAP_deflection': 'DAP Deflection (mV)',
+                           'DAP_width': 'DAP Width (ms)', 'DAP_time': 'DAP Time (ms)'}
 
     # plot
     save_dir_img = os.path.join(save_dir, 'img', protocol, 'spike_characteristics')
@@ -89,20 +90,33 @@ for i, characteristic in enumerate(return_characteristics):
     np.savetxt(os.path.join(save_dir_img, 'characteristics_mat.txt'), characteristics_mat_models, fmt='%.3f')
 
     fig, ax1 = pl.subplots()
-    ax1.bar(bins[:-1], hist, width=bins[1] - bins[0], color='0.5') #, alpha=0.5)
-    #ax1.set_ylim(0, ylim)
-    #ax1.set_yticks(range(0, ylim, dylim))
+    ax1.bar(bins[:-1], hist / np.shape(characteristics_mat)[0], width=bins[1] - bins[0], color='k', alpha=0.5)
+    ax1.set_ylim(0, 0.1)
     ax2 = ax1.twinx()
     ax2.spines['right'].set_visible(True)
-    ax2.bar(bins[:-1], hist_models, width=bins[1] - bins[0], color='r', alpha=0.5)
-    #ax2.set_ylim(0, 4)
-    #ax2.set_yticks(range(0, 4))
+    bars = ax2.bar(bins[:-1], hist_models/len(model_ids), width=bins[1] - bins[0], color='r', alpha=0.5)
+
+    # put model numbers above bars
+    model_bin = np.digitize(characteristics_mat_models[:, i], bins)
+    if np.any(np.isnan(characteristics_mat_models[:, i])):
+        model_bin = np.array(model_bin, dtype=float)
+        model_bin[np.isnan(characteristics_mat_models[:, i])] = np.nan
+    for m_bin in np.unique(model_bin[~np.isnan(model_bin)]):
+        h = np.sum(m_bin==model_bin) / len(model_ids)
+        s = ''
+        model_idxs = np.where(m_bin == model_bin)[0]
+        for j, idx in enumerate(model_idxs):
+            if j == len(model_idxs)-1:
+                s += str(model_ids[idx])
+            else:
+                s += str(model_ids[idx]) + ','
+        dbin = np.diff(bins)[0]
+        ax2.annotate(s, xy=(bins[int(m_bin)]-2*dbin, h + 0.01), color='r', fontsize=8)
+
+    ax2.set_ylim(0, 1)
     ax1.set_xlabel(character_name_dict.get(return_characteristics[i], return_characteristics[i]))
-    ax1.set_ylabel('Count Exp. Cells')
-    ax2.set_ylabel('Count Models', fontsize=16)
-    #h1, l1 = ax1.get_legend_handles_labels()
-    #h2, l2 = ax2.get_legend_handles_labels()
-    #ax1.legend(h1 + h2, l1 + l2, fontsize=16)
+    ax1.set_ylabel('Proportion Exp. Cells')
+    ax2.set_ylabel('Proportion Models', fontsize=18, color='r')
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'hist_' + return_characteristics[i] + '.png'))
     pl.show()

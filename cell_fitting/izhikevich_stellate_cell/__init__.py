@@ -1,5 +1,6 @@
 import matplotlib.pyplot as pl
 import numpy as np
+from cell_characteristics import to_idx
 
 
 def get_v_izhikevich(i_inj, tstop, dt, v_rest, v_t, v_reset, v_peak, cm, k_rest, k_t, a, b, d, i_b, v0, u0):
@@ -183,7 +184,6 @@ if __name__ == '__main__':
     u0 = v0 * b
 
     # Active dendrite:
-
     cm_d = 30
     k_d = 1
     couple_d = 20
@@ -200,7 +200,7 @@ if __name__ == '__main__':
 
     tstop = 800  # ms
     dt = 0.1  # ms
-    i_inj = np.zeros(tstop/dt)
+    i_inj = np.zeros(to_idx(tstop, dt))
     i_inj[int(400/dt):int(405/dt)] = 1.
 
     v, t, u, v_d, u_d = get_v_izhikevich_coupled(i_inj, tstop, dt, v_rest, v_t, v_reset, v_peak, cm, k, k, a, b, d, i_b,

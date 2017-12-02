@@ -1,12 +1,10 @@
 from __future__ import division
-
 import os
-
 import matplotlib.pyplot as pl
 import numpy as np
 from cell_characteristics import to_idx
 from nrn_wrapper import Cell
-
+from cell_fitting.read_heka.i_inj_functions import get_i_inj_double_ramp
 from cell_fitting.optimization.simulate import iclamp_handling_onset, simulate_currents
 
 pl.style.use('paper')
@@ -14,14 +12,14 @@ pl.style.use('paper')
 __author__ = 'caro'
 
 
-def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
-    diff_idx = end_idx - start_idx
-    half_diff_up = int(np.ceil(diff_idx / 2))
-    half_diff_down = int(np.floor(diff_idx / 2))
-    i_exp = np.zeros(diff_idx)
-    i_exp[:half_diff_up] = np.linspace(amp_before, ramp_amp, half_diff_up)
-    i_exp[half_diff_up:] = np.linspace(ramp_amp, amp_after, half_diff_down+1)[1:]
-    return i_exp
+# def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
+#     diff_idx = end_idx - start_idx
+#     half_diff_up = int(np.ceil(diff_idx / 2))
+#     half_diff_down = int(np.floor(diff_idx / 2))
+#     i_exp = np.zeros(diff_idx)
+#     i_exp[:half_diff_up] = np.linspace(amp_before, ramp_amp, half_diff_up)
+#     i_exp[half_diff_up:] = np.linspace(ramp_amp, amp_after, half_diff_down+1)[1:]
+#     return i_exp
 
 def get_ramp3_times(delta_first=3, delta_ramp=2, n_times=10):
     return np.arange(delta_first, n_times * delta_ramp + delta_ramp, delta_ramp)
@@ -49,14 +47,12 @@ def double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp, len_step, dt, 
     baseline_amp = -0.05
     len_step2ramp = 15
     len_ramp = 2
-
-    # construct current traces
-    start_ramp1 = to_idx(20, dt)
-    end_ramp1 = start_ramp1 + to_idx(len_ramp, dt)
+    # start_ramp1 = to_idx(20, dt)
+    # end_ramp1 = start_ramp1 + to_idx(len_ramp, dt)
     start_step = to_idx(222, dt)
     end_step = start_step + to_idx(len_step, dt)
     start_ramp2 = end_step + to_idx(len_step2ramp, dt)
-    end_ramp2 = start_ramp2 + to_idx(len_ramp, dt)
+    # end_ramp2 = start_ramp2 + to_idx(len_ramp, dt)
 
     t_exp = np.arange(0, tstop+dt, dt)
     v = np.zeros([len(ramp3_times), len(t_exp)])
@@ -64,14 +60,17 @@ def double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp, len_step, dt, 
     currents = [0] * len(ramp3_times)
 
     for j, ramp3_time in enumerate(ramp3_times):
-        start_ramp3 = start_ramp2 + int(round(ramp3_time / dt))
-        end_ramp3 = start_ramp3 + int(round(len_ramp / dt))
+        # start_ramp3 = start_ramp2 + int(round(ramp3_time / dt))
+        # end_ramp3 = start_ramp3 + int(round(len_ramp / dt))
+        #
+        # i_exp = np.ones(len(t_exp)) * baseline_amp
+        # i_exp[start_ramp1:end_ramp1] = get_ramp(start_ramp1, end_ramp1, 0, ramp_amp, 0)
+        # i_exp[start_step:end_step] = step_amp
+        # i_exp[start_ramp2:end_ramp2] = get_ramp(start_ramp2, end_ramp2, 0, ramp_amp, 0)
+        # i_exp[start_ramp3:end_ramp3] = get_ramp(start_ramp3, end_ramp3, 0, ramp3_amp, 0)
 
-        i_exp = np.ones(len(t_exp)) * baseline_amp
-        i_exp[start_ramp1:end_ramp1] = get_ramp(start_ramp1, end_ramp1, 0, ramp_amp, 0)
-        i_exp[start_step:end_step] = step_amp
-        i_exp[start_ramp2:end_ramp2] = get_ramp(start_ramp2, end_ramp2, 0, ramp_amp, 0)
-        i_exp[start_ramp3:end_ramp3] = get_ramp(start_ramp3, end_ramp3, 0, ramp3_amp, 0)
+        i_exp = get_i_inj_double_ramp(ramp_amp, ramp3_amp, ramp3_time, step_amp, len_step, baseline_amp, len_ramp,
+                                      len_step2ramp=len_step2ramp, tstop=tstop, dt=dt)
 
         # get simulation parameters
         simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': t_exp[-1],
@@ -187,7 +186,7 @@ if __name__ == '__main__':
 
     # parameters
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/32229'
+    #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/32229'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 

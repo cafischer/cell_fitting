@@ -59,7 +59,7 @@ def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sw
         t[i] = t[i].tolist()
         v[i] = v[i].tolist()
 
-    return_idxs = [True, True, return_series, return_sweep_idxs]
+    return_idxs = np.array([True, True, return_series, return_sweep_idxs])
     return np.array([np.array(v), np.array(t), series, sweep_idxs])[return_idxs]  # not matrix if v[i]s have different length
 
 
@@ -89,9 +89,35 @@ def get_i_inj_from_function(protocol, sweep_idxs, tstop, dt, return_discontinuit
             discontinuities = [ramp_start, ramp_peak, ramp_end]
             i_inj[i] = get_i_inj_rampIV(ramp_start, ramp_peak, ramp_end, amp_before, ramp_amp, amp_after, tstop, dt)
         elif protocol == 'Zap20':
-            discontinuities = np.arange(to_idx(tstop, dt, 4) + 1)
-            i_inj[i] = get_zap(amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000-dt, zap_dur=30000,
-                               tstop=tstop, dt=dt)
+            discontinuities = np.arange(0, tstop+dt, dt)
+            i_inj[i] = get_i_inj_zap(amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000 - dt, zap_dur=30000,
+                                     tstop=tstop, dt=dt)
+        elif 'hyperRampTester' in protocol:
+            p_idx = int(protocol[-2:-1])
+            step_amp = -0.05 + p_idx * -0.05
+            print step_amp
+            step_start = 200
+            step_end = 600
+            ramp_len = 2
+            discontinuities = [step_start, step_end, step_end+ramp_len]
+            i_inj[i] = get_i_inj_hyper_depo_ramp(step_start, step_end, ramp_len, step_amp, tstop=tstop, dt=dt)
+        elif 'depoRampTester' in protocol:
+            p_idx = int(protocol[-2:-1])
+            step_amp = 0.05 + p_idx * 0.05
+            step_start = 200
+            step_end = 600
+            ramp_len = 2
+            discontinuities = [step_start, step_end, step_end+ramp_len]
+            i_inj[i] = get_i_inj_hyper_depo_ramp(step_start, step_end, ramp_len, step_amp, tstop=tstop, dt=dt)
+        # elif protocol == 'PP':
+        #     ramp_amp = 4.0
+        #     ramp3_amp = 1.0
+        #     ramp3_time = get_ramp3_times()[0]
+        #     step_amp = 0
+        #     len_step = 250
+        #     len_ramp = 2
+        #     start_ramp1 = 20
+        #     i_inj[i] = get_i_inj_double_ramp(ramp_amp, ramp3_amp, ramp3_time, step_amp, len_step, len_ramp=len_ramp, start_ramp1=start_ramp1, tstop=tstop, dt=dt)
         else:
             raise ValueError('No function saved for this protocol!')
     if return_discontinuities:

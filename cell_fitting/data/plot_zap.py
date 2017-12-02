@@ -7,7 +7,7 @@ from cell_characteristics import to_idx
 
 from cell_fitting.data import shift_v_rest, set_v_rest
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
-from cell_fitting.optimization.evaluation.plot_zap import get_zap
+from cell_fitting.optimization.evaluation.plot_zap import get_i_inj_zap
 from cell_fitting.optimization.fitfuns import impedance
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
         t = t_mat[0]
         dt = t[1]-t[0]
         tstop = t[-1]
-        i_inj = get_zap(0.1, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur, dt=dt, tstop=tstop)
+        i_inj = get_i_inj_zap(0.1, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur, dt=dt, tstop=tstop)
 
         # cut off onset and offset and downsample
         ds = 1000  # number of steps skipped (in t, i, v) for the impedance computation

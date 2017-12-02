@@ -11,21 +11,23 @@ from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_functio
 pl.style.use('paper')
 
 
-def compute_v_sag_and_steady_state(v_traces, amps, AP_threshold, start_step, end_step):
+def compute_v_sag_and_steady_state(v_traces, amps, AP_threshold, start_step_idx, end_step_idx):
 
     amps_subtheshold = []
     v_steady_states = []
     v_sags = []
 
     for i, v_trace in enumerate(v_traces):
-        if len(get_AP_onset_idxs(v_trace, AP_threshold)) == 0:
+        onset_idxs = get_AP_onset_idxs(v_trace, AP_threshold)
+        onset_idxs = onset_idxs[onset_idxs <= end_step_idx]  # rebound spikes are allowed
+        if len(onset_idxs) == 0:
             amps_subtheshold.append(amps[i])
-            v_steady_state = np.mean(v_trace[end_step - int(np.round((end_step - start_step) / 4)):end_step])
+            v_steady_state = np.mean(v_trace[end_step_idx - int(np.round((end_step_idx - start_step_idx) / 4)):end_step_idx])
             v_steady_states.append(v_steady_state)
             if amps[i] > 0:
-                v_sag = np.max(v_trace[start_step:start_step + int(np.round((end_step - start_step) / 4))])
+                v_sag = np.max(v_trace[start_step_idx:start_step_idx + int(np.round((end_step_idx - start_step_idx) / 4))])
             else:
-                v_sag = np.min(v_trace[start_step:start_step + int(np.round((end_step - start_step) / 4))])
+                v_sag = np.min(v_trace[start_step_idx:start_step_idx + int(np.round((end_step_idx - start_step_idx) / 4))])
             v_sags.append(v_sag)
 
             # print 'v_steady_state: %.2f' % v_steady_state

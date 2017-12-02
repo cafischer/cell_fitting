@@ -2,15 +2,16 @@ from __future__ import division
 import os
 import json
 import numpy as np
-from cell_fitting.sensitivity_analysis.plot_correlation_param_characteristic import compute_and_plot_correlations
+from cell_fitting.sensitivity_analysis.plot_correlation_param_characteristic import compute_and_plot_correlations, \
+    plot_corr
 from itertools import product
 from cell_fitting.sensitivity_analysis import rename_nat_and_nap
 import matplotlib.pyplot as pl
 pl.style.use('paper')
 
 # save dir
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10')
-save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'sampled')
+save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'mean3_std6models', 'analysis')
+save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'parameter_characteristic', 'sampled')
 
 n_chunks = 100
 correlation_types = ['kendalltau', 'spearman', 'pearson']
@@ -39,7 +40,7 @@ for chunk_idx in range(n_chunks):
     candidate_mat_chunk = candidate_mat[chunk_idx*size_chunk:(chunk_idx+1)*size_chunk, :]
 
     corr_masked, _, _ = compute_and_plot_correlations(candidate_mat_chunk, characteristics_mat_chunk, correlation_types,
-                                                      sig1, sig2, variable_names, return_characteristics)  # TODO: save?
+                                                      sig1, sig2, variable_names, return_characteristics, plot_corr)
     correlation_mats[:, :, chunk_idx] = corr_masked
 
 # mean and std of correlation mats

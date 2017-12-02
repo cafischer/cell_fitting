@@ -1,5 +1,5 @@
 import pandas as pd
-from cell_fitting.izhikevichStellateCell import get_v_izhikevich, get_v_izhikevich_vector2d
+from cell_fitting.izhikevich_stellate_cell import get_v_izhikevich, get_v_izhikevich_vector2d
 
 __author__ = 'caro'
 

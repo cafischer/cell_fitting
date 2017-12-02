@@ -36,7 +36,7 @@ def plot_corr(corr, sig_level, y_tick_labels, x_tick_labels, correlation_type, s
 
 if __name__ == '__main__':
     # save dir
-    save_dir_analysis = os.path.join('../results/sensitivity_analysis', 'mean_std_6models', 'analysis')
+    save_dir_analysis = os.path.join('../results/sensitivity_analysis', 'mean_2std_6models', 'analysis')
     save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'characteristics_characteristic', 'all')
 
     correlation_types = ['kendalltau', 'spearman', 'pearson']  # 'spearman  # 'kendalltau  # 'pearson'
@@ -50,6 +50,6 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir_plots):
         os.makedirs(save_dir_plots)
 
-    compute_and_plot_correlations(characteristics_mat[:, :-2], characteristics_mat[:, :-2], correlation_types,
-                                  sig1, sig2, return_characteristics[:-2], return_characteristics[:-2], plot_corr,
+    compute_and_plot_correlations(characteristics_mat, characteristics_mat, correlation_types,
+                                  sig1, sig2, return_characteristics, return_characteristics, plot_corr,
                                   save_dir_plots)

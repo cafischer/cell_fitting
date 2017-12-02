@@ -2,7 +2,6 @@ from time import time
 import json
 import os
 from functools import partial
-
 from optimization.problems import get_lowerbound_upperbound_keys
 from optimization.problems.abstract_problems import *
 from optimization.problems.fit_izhikevich_model import *

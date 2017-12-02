@@ -1,13 +1,11 @@
 import json
-from izhikevichStellateCell import get_v_izhikevich
-from new_optimization.fitter import IzhikevichFitter
+from cell_fitting.izhikevich_stellate_cell import get_v_izhikevich
+from cell_fitting.optimization.fitter import IzhikevichFitter
 import matplotlib.pyplot as pl
-from optimization.errfuns import rms
+from cell_fitting.optimization.errfuns import rms
 
 save_dir = './results/L-BFGS-B/ramp/'
 candidate = [4.421702827014319, 0.026529749064180107, 0.0090398616994982594, 1.1377248310015808, -6.0025700499387193]
-
-    #[1.9838785891269231, 0.011480213377600945, 0.010273141510282267, 0.43504013298642369, -0.74825757488734634]
 
 with open(save_dir+'problem.json', 'r') as f:
     problem_specification = json.load(f)

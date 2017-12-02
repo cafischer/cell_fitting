@@ -46,10 +46,11 @@ def get_candidates_in_range(range_candidates, candidate_idxs, candidate_mat, cha
             candidates_in_range.append((candidate_idx, candidate))
     return candidates_in_range
 
+
 if __name__ == '__main__':
     # save dir
-    range_name = 'all'
-    save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'mean_std_6models', 'analysis')
+    range_name = 'DAP_deflection_greater_3'
+    save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'mean3_std6models', 'analysis')
     save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'parameter_parameter', range_name)
 
     correlation_types = ['kendalltau', 'spearman', 'pearson']
@@ -72,7 +73,7 @@ if __name__ == '__main__':
         [0.1, 2.0, 'AP_width'],
         [0, 40, 'fAHP_amp'],
         [0, 40, 'DAP_amp'],
-        [0, 20, 'DAP_deflection'],
+        [3, 20, 'DAP_deflection'],
         [0, 70, 'DAP_width'],
         [0, 20, 'DAP_time'],
         #[-np.inf, np.inf, 'DAP_lin_slope'],

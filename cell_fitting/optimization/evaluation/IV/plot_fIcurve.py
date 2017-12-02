@@ -129,6 +129,5 @@ if __name__ == '__main__':
     #pl.tight_layout()
     fig.text(0.06, 0.5, 'Membrane Potential (mV)', va='center', rotation='vertical', fontsize=14)
     fig.text(0.5, 0.06, 'Time (ms)', ha='center', fontsize=14)
-    pl.savefig(os.path.join(save_dir_img, 'IV_subplots.png'))
     pl.savefig(os.path.join(save_dir_img, 'IV_subplots.pdf'))
     pl.show()

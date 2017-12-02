@@ -10,7 +10,6 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     AP_threshold = -30
     v_shift = -16

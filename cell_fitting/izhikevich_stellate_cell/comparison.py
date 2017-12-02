@@ -1,14 +1,13 @@
 import pandas as pd
+import os
 import matplotlib.pyplot as pl
 import numpy as np
-
-from izhikevichStellateCell import get_v_izhikevich, get_v_izhikevich_vector2d, phase_plot
+from cell_fitting.izhikevich_stellate_cell import get_v_izhikevich, get_v_izhikevich_vector2d, phase_plot
 
 step = True
 ramp = True
 
 cell = '2015_08_26b'
-# 249.45730794687225 0.9191785392903827 0.01913708725391569 14.600701419091514
 if step:
     cm = 249.457  # 300
     k_rest = 0.919  # 1.3
@@ -43,7 +42,7 @@ if step:
     u0 = [0, 0]
 
     #data_dir = '../data/' + cell + '/IV/-0.15(nA).csv'
-    data_dir = '../data/' + cell + '/raw/IV/0.25(nA).csv'
+    data_dir = os.path.join('../data/cell_csv_data', cell, 'IV', '0.25(nA).csv')
     data = pd.read_csv(data_dir)
 
     # shift data to account for changing resting potential of the cell (to -63mV)
@@ -90,7 +89,7 @@ if ramp:
     v0 = v_rest
     u0 = [0, 0]
 
-    data_dir = '../data/2015_08_26b/raw/simulate_rampIV/3.0(nA).csv'
+    data_dir = os.path.join('../data/cell_csv_data', cell, 'rampIV', '3.0(nA).csv')
     data = pd.read_csv(data_dir)
 
     tstop = data.t.values[-1]
