@@ -36,7 +36,7 @@ if __name__ == '__main__':
     mechanism_dir = '../../model/channels/vavoulis'
     ramp_amp = 3.0
     #data_dir = '../../data/2015_08_26b/rampIV/'+str(ramp_amp)+'(nA).csv'
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2013_12_11a.dat'
+    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)

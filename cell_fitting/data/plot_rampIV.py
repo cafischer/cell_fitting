@@ -9,13 +9,13 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    save_dir = './plots/simulate_rampIV/rat'
+    save_dir = './plots/rampIV/rat'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    protocol = 'simulate_rampIV'
+    protocol = 'rampIV'
     v_rest_shift = -16
     AP_threshold = -30
     #cells = get_cells_for_protocol(data_dir, protocol)
-    cells = ['2014_07_02a']
+    cells = ['2015_08_26b']
     animal = 'rat'
 
     for cell_id in cells:

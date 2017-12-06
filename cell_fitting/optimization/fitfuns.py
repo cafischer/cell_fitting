@@ -166,7 +166,7 @@ def get_vrest(v, t, i_inj, args):
 
 
 def get_fAHPamp(v, t, i_inj, args):
-    threshold = args.get('threshold', -45)
+    threshold = args.get('threshold', -20)
     dt = t[1] - t[0]
     vrest = get_v_rest(v, i_inj)
     AP_onset, AP_end = get_AP_start_end(v, threshold)
@@ -180,8 +180,36 @@ def get_fAHPamp(v, t, i_inj, args):
     return fAHP_amp
 
 
+def get_fAHP_min(v, t, i_inj, args):
+    AP_threshold = args.get('threshold', 0)
+    is_data = args.get('is_data', False)
+    if is_data:
+        return -61.4
+    else:
+        start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
+        v_rest = np.mean(v[0:start_i_inj])
+        AP_interval = 2.5  # ms (also used as interval for fAHP)
+        fAHP_interval = 4.0
+        AP_width_before_onset = 2  # ms
+        DAP_interval = 10  # ms
+        order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
+        order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
+        min_dist_to_DAP_max = 0.5  # ms
+        k_splines = 3
+        s_splines = None
+
+        fAHP_min_idx = get_spike_characteristics(v[start_i_inj:], t[start_i_inj:], ['fAHP_min_idx'], v_rest, AP_threshold,
+                                             AP_interval, AP_width_before_onset, fAHP_interval, (None, None), k_splines,
+                                             s_splines, order_fAHP_min, DAP_interval, order_DAP_max,
+                                             min_dist_to_DAP_max, check=False)[0]
+        if fAHP_min_idx is None:
+            return None
+        else:
+            return v[start_i_inj:][fAHP_min_idx]
+
+
 def get_DAPamp(v, t, i_inj, args):
-    threshold = args.get('threshold', -45)
+    threshold = args.get('threshold', -20)
     dt = t[1] - t[0]
     vrest = get_v_rest(v, i_inj)
     AP_onset, AP_end = get_AP_start_end(v, threshold)

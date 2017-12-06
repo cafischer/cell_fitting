@@ -15,10 +15,10 @@ class FitterFactory:
             return HodgkinHuxleyFitter(**fitter_params)
         elif name == 'HodgkinHuxleyFitterAdaptive':
             return HodgkinHuxleyFitterAdaptive(**fitter_params)
-        elif name == 'HodgkinHuxleyFitterCurrentPenalty':
-            return  HodgkinHuxleyFitterCurrentPenalty(**fitter_params)
-        elif name == 'HodgkinHuxleyFitterPareto':
-            return HodgkinHuxleyFitterPareto(**fitter_params)
+        # elif name == 'HodgkinHuxleyFitterCurrentPenalty':
+        #     return  HodgkinHuxleyFitterCurrentPenalty(**fitter_params)
+        # elif name == 'HodgkinHuxleyFitterPareto':
+        #     return HodgkinHuxleyFitterPareto(**fitter_params)
         elif name == 'ChannelFitterSingleTraces':
             return ChannelFitterSingleTraces(**fitter_params)
         elif name == 'ChannelFitterAllTraces':

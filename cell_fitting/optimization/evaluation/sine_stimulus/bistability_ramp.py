@@ -12,7 +12,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
 
@@ -28,9 +28,10 @@ if __name__ == '__main__':
     dt = 0.01
 
     d_amp = 0.1
-    amp1s = np.arange(0.1, 2.0+d_amp, d_amp)
-    d_sine = 500
-    sine1_durs = np.arange(500, 3000+d_sine, d_sine)
+    amp1s = np.arange(0.1, 2.5+d_amp, d_amp)
+    d_sine = 2000
+    sine1_durs = np.arange(2000, 15000+d_sine, d_sine)
+    #sine1_durs = np.array([1000, 5000, 10000])
     n_APs_up = np.zeros((len(amp1s), len(sine1_durs)))
     n_APs_down = np.zeros((len(amp1s), len(sine1_durs)))
 
@@ -51,10 +52,11 @@ if __name__ == '__main__':
             pl.ylabel('Membrane potential (mV)')
             pl.savefig(os.path.join(save_dir_img, 'v_'+str(amp1)+'_'+str(sine1_dur)+'.png'))
             #pl.show()
+            pl.close()
 
     # plot difference in spikes
     max_diff = np.max(np.abs(n_APs_up - n_APs_down))
-    cmap = pl.get_cmap('viridis')
+    cmap = pl.get_cmap('coolwarm')
     norm = Normalize(vmin=-max_diff, vmax=max_diff)
     fig, ax = pl.subplots()
     for i, amp1 in enumerate(amp1s):

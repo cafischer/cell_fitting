@@ -10,7 +10,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
 
@@ -18,12 +18,11 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # apply stim
-    amp1 = 0.8  # 0.5
-    amp2 = 0.8  # 0.2
-    sine1_dur = 5000  # 1000 # 2000  # 5000  # 10000
+    amp1 = 0.4  # 0.5
+    amp2 = 0.6  # 0.2
+    sine1_dur = 1000  # 1000 # 2000  # 5000  # 10000
     freq2 = 5  # 5  # 20
-    onset_dur = 500
-    offset_dur = 500
+    onset_dur = offset_dur = 500
     dt = 0.01
     sine_params = {'amp1': amp1, 'amp2': amp2, 'sine1_dur': sine1_dur, 'freq2': freq2, 'onset_dur': onset_dur,
                    'offset_dur': offset_dur, 'dt': dt}
@@ -31,29 +30,34 @@ if __name__ == '__main__':
     v, t, i_inj = apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
 
     # plot
-    # save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus', 'doublet_test',
-    #                             str(amp1)+'_'+str(amp2)+'_'+str(sine1_dur)+'_'+str(freq2))
-    # if not os.path.exists(save_dir_img):
-    #     os.makedirs(save_dir_img)
-    #
-    # np.save(os.path.join(save_dir_img, 'v.npy'), v)
-    # np.save(os.path.join(save_dir_img, 't.npy'), t)
-    # np.save(os.path.join(save_dir_img, 'i_inj.npy'), i_inj)
-    # with open(os.path.join(save_dir_img, 'sine_params.json'), 'w') as f:
-    #     json.dump(sine_params, f)
+    save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus', 'traces',
+                                str(amp1)+'_'+str(amp2)+'_'+str(sine1_dur)+'_'+str(freq2))
+    if not os.path.exists(save_dir_img):
+        os.makedirs(save_dir_img)
+
+    np.save(os.path.join(save_dir_img, 'v.npy'), v)
+    np.save(os.path.join(save_dir_img, 't.npy'), t)
+    np.save(os.path.join(save_dir_img, 'i_inj.npy'), i_inj)
+    with open(os.path.join(save_dir_img, 'sine_params.json'), 'w') as f:
+        json.dump(sine_params, f)
 
     pl.figure()
-    pl.plot(t, i_inj)
+    pl.title('amp1: ' + str(amp1) + ', amp2: ' + str(amp2) + ', sine1dur: ' + str(sine1_dur) + ', freq2: ' + str(freq2), fontsize=16)
+    pl.plot(t, v, 'r', linewidth=1)
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane Potential (mV)')
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'v.png'))
     pl.show()
 
     pl.figure()
     pl.title('amp1: ' + str(amp1) + ', amp2: ' + str(amp2) + ', sine1dur: ' + str(sine1_dur) + ', freq2: ' + str(freq2), fontsize=16)
-    pl.plot(t, v, 'r')
+    pl.plot(t, v, 'r', linewidth=1)
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane Potential (mV)')
-    #pl.xlim(2800, 3200)
+    pl.xlim(4000, 6000)
     pl.tight_layout()
-    #pl.savefig(os.path.join(save_dir_img, 'v.png'))
+    pl.savefig(os.path.join(save_dir_img, 'v_zoom.png'))
     pl.show()
 
     # # plot influence of input current

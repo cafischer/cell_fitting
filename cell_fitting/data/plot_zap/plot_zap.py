@@ -16,13 +16,14 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
 
-    save_dir = 'plots/'
+    save_dir = '../plots'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     v_rest = None
     v_shift = -16
     protocol = 'Zap20'
     animal = 'rat'
-    cells = get_cells_for_protocol(data_dir, protocol)
+    cell_ids = get_cells_for_protocol(data_dir, protocol)
+    cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
     save_dir = os.path.join(save_dir, protocol, animal)
 
     # frequencies
@@ -36,11 +37,12 @@ if __name__ == '__main__':
     heavy_freqs = lambda x: freqs(x) if onset_dur < x < t[-1]-offset_dur else 0
     freqs_out = lambda x: "%.2f" % heavy_freqs(x)
 
-    for cell_id in cells:
-        if not check_rat_or_gerbil(cell_id) == animal:
-            continue
-        if not '2015' in cell_id:
-            continue
+    res_freqs = np.zeros(len(cell_ids))
+    q_values = np.zeros(len(cell_ids))
+
+    for ci, cell_id in enumerate(cell_ids):
+        # if not '2015' in cell_id:
+        #     continue
 
         v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                          return_sweep_idxs=True)
@@ -48,7 +50,7 @@ if __name__ == '__main__':
         t = t_mat[0]
         dt = t[1]-t[0]
         tstop = t[-1]
-        i_inj = get_i_inj_zap(0.1, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur, dt=dt, tstop=tstop)
+        i_inj = get_i_inj_zap(0.1, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur, dt=dt) #, tstop=tstop)
 
         # cut off onset and offset and downsample
         ds = 1000  # number of steps skipped (in t, i, v) for the impedance computation
@@ -61,6 +63,11 @@ if __name__ == '__main__':
 
         # smooth impedance
         imp_smooth = np.array(sm.nonparametric.lowess(imp, frequencies, frac=0.3)[:, 1])
+
+        # resonance frequency and q value
+        res_freq_idx = np.argmax(imp_smooth)
+        res_freqs[ci] = frequencies[res_freq_idx]
+        q_values[ci] = imp_smooth[res_freq_idx] / imp_smooth[np.where(frequencies == 0)[0][0]]
 
         # plot
         save_dir_img = os.path.join(save_dir, cell_id)
@@ -76,11 +83,6 @@ if __name__ == '__main__':
         # pl.tight_layout()
         # pl.savefig(os.path.join(save_dir_img, 'impedance.png'))
         # pl.show()
-
-        # resonance frequency
-        res_freq_idx = np.argmax(imp_smooth)
-        res_freq = frequencies[res_freq_idx]
-        print 'resonance frequency: '+str(res_freq)
 
         # plot v
         # fig, ax1 = pl.subplots()
@@ -99,6 +101,9 @@ if __name__ == '__main__':
         # pl.savefig(os.path.join(save_dir_img, 'v.png'))
         # # pl.show()
 
+
+        # plot v and impedance
+
         # use same v_rest
         v_rest = -75
         v = set_v_rest(v, v[0], v_rest)
@@ -111,7 +116,7 @@ if __name__ == '__main__':
         #ax1.set_ylim(ylim[0]-2, ylim[1]+2)
         ax1.set_ylim(v_rest-10, v_rest+10)
         ax1.set_xlim(0, (tstop-offset_dur-onset_dur)/1000)
-        ax2.plot(frequencies, imp_smooth, c='r', label='Res. Freq.: %.2f (Hz)' % res_freq)
+        ax2.plot(frequencies, imp_smooth, c='r', label='Res. Freq.: %.2f (Hz)' % res_freqs[ci] + '\nQ-Value: %.2f' % q_values[ci])
         ax3.plot(frequencies, imp_smooth, c='r')
         ax2.set_yticks([])
         ax3.set_xticks([])
@@ -138,4 +143,13 @@ if __name__ == '__main__':
         pl.tight_layout()
         pl.subplots_adjust(left=0.18, right=0.86, bottom=0.14, top=0.88)
         pl.savefig(os.path.join(save_dir_img, 'v_impedance.png'))
-        pl.show()
+        #pl.show()
+        pl.close()
+
+    save_dir_summary = os.path.join(save_dir, 'summary')
+    if not os.path.exists(save_dir_summary):
+        os.makedirs(save_dir_summary)
+
+    np.save(os.path.join(save_dir_summary, 'res_freqs.npy'), res_freqs)
+    np.save(os.path.join(save_dir_summary, 'q_values.npy'), q_values)
+    np.save(os.path.join(save_dir_summary, 'cell_ids.npy'), cell_ids)

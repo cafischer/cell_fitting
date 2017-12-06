@@ -1,9 +1,13 @@
+import os
+
 import matplotlib.pyplot as pl
 import numpy as np
-import os
 import pandas as pd
-from cell_fitting.optimization.evaluation.doubleramp_current_threshold import get_current_threshold, plot_current_threshold
 from cell_characteristics import to_idx
+
+from cell_fitting.optimization.evaluation.double_ramp.doubleramp_current_threshold import get_current_threshold, \
+    plot_current_threshold
+
 pl.style.use('paper')
 
 

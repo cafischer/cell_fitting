@@ -1,10 +1,14 @@
 from __future__ import division
+
+import os
+
 import matplotlib.pyplot as pl
 import numpy as np
-from nrn_wrapper import Cell
 from neuron import h
-from cell_fitting.optimization.evaluation.doubleramp import double_ramp
-import os
+from nrn_wrapper import Cell
+
+from cell_fitting.optimization.evaluation.double_ramp.doubleramp import double_ramp
+
 pl.style.use('paper')
 
 __author__ = 'caro'

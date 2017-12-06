@@ -13,10 +13,10 @@ if __name__ == '__main__':
     dur1 = 5000
     freq2 = 5
     save_dir = os.path.join('../plots/sine_stimulus', str(dur1)+'_'+str(freq2))
-    cells = [os.path.split(d)[-1] for d in os.listdir(save_dir)]
+    cell_ids = [os.path.split(d)[-1] for d in os.listdir(save_dir)]
 
-    for cell in cells:
-        save_dir_cell = os.path.join(save_dir, cell)
+    for cell_id in cell_ids:
+        save_dir_cell = os.path.join(save_dir, cell_id)
 
         # load
         v = np.load(os.path.join(save_dir_cell, 'v.npy'))
@@ -99,7 +99,7 @@ if __name__ == '__main__':
         colors = pl.cm.get_cmap('Greys')(np.linspace(0.2, 1.0, len(period_starts)))
         pl.figure()
         for i, (s, e) in enumerate(zip(period_starts, period_ends)):
-            pl.plot(t[:e - s], v[s:e] + i * -10.0, c=colors[i], label=i)
+            pl.plot(t[:e - s], v[s:e] + i * -10.0, c=colors[i], label=i, linewidth=1)
         pl.yticks([])
         pl.xlabel('Time (ms)')
         pl.ylabel('Membrane Potential (mV)')

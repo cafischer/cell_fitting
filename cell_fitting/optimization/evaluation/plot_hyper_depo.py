@@ -38,6 +38,7 @@ def simulate_hyper_depo_ramp(cell, data_dir):
     currents = []
     DAP_amps = init_nan(len(step_amps))
     DAP_deflections = init_nan(len(step_amps))
+    DAP_widths = init_nan(len(step_amps))
 
     for j, step_amp in enumerate(step_amps):
         i_exp = get_i_inj_hyper_depo_ramp(step_amp=step_amp, ramp_amp=ramp_amp, tstop=tstop, dt=dt)
@@ -54,20 +55,22 @@ def simulate_hyper_depo_ramp(cell, data_dir):
 
         # get DAP amp and deflection
         v_rest = np.mean(v[j][0:to_idx(100, t[1] - t[0])])
-        std_idx_times = (0, 100)
-        DAP_amp, DAP_deflection = get_spike_characteristics(v[j][to_idx(600, t[1] - t[0]):],
+        std_idx_times = (None, None)
+        DAP_amps[j], DAP_deflections[j], DAP_widths[j] = get_spike_characteristics(v[j][to_idx(600, t[1] - t[0]):],
                                                             t[to_idx(600, t[1] - t[0]):],
-                                                            ['DAP_amp', 'DAP_deflection'],
-                                                            v_rest, AP_threshold,
-                                                            AP_interval, AP_width_before_onset, fAHP_interval,
-                                                            std_idx_times, k_splines, s_splines, order_fAHP_min,
-                                                            DAP_interval, order_DAP_max, min_dist_to_DAP_max,
-                                                            check=False)
-        DAP_amps[j] = DAP_amp
-        DAP_deflections[j] = DAP_deflection
+                                                            ['DAP_amp', 'DAP_deflection', 'DAP_width'],
+                                                            v_rest, AP_threshold, AP_interval, AP_width_before_onset,
+                                                            fAHP_interval, std_idx_times, k_splines, s_splines,
+                                                            order_fAHP_min, DAP_interval, order_DAP_max,
+                                                            min_dist_to_DAP_max, check=False)
+
+    # take out spikes on DAP
+    DAP_deflections[DAP_amps > 50] = np.nan
+    DAP_widths[DAP_amps > 50] = np.nan
+    DAP_amps[DAP_amps > 50] = np.nan
 
     # plot
-    save_dir_img = os.path.join(save_dir, 'img', 'hyperdap')
+    save_dir_img = os.path.join(save_dir, 'img', 'hyper_depo')
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
@@ -82,7 +85,7 @@ def simulate_hyper_depo_ramp(cell, data_dir):
     pl.legend(loc='upper right')
     pl.tight_layout()
     pl.xlim(0, t[-1])
-    pl.savefig(os.path.join(save_dir_img, 'hyperDAP.png'))
+    pl.savefig(os.path.join(save_dir_img, 'v.png'))
     #pl.show()
 
     pl.figure(figsize=(8, 6))
@@ -94,11 +97,8 @@ def simulate_hyper_depo_ramp(cell, data_dir):
     pl.xlim(595, 645)
     pl.ylim(-95, -40)
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'hyperDAP_zoom.png'))
+    pl.savefig(os.path.join(save_dir_img, 'v_zoom.png'))
     #pl.show()
-
-    DAP_amps[DAP_amps > 50] = np.nan  # take out spikes on DAP
-    DAP_deflections[DAP_amps > 50] = np.nan
 
     not_nan = ~np.isnan(DAP_amps)
     pl.figure()
@@ -120,16 +120,26 @@ def simulate_hyper_depo_ramp(cell, data_dir):
     pl.savefig(os.path.join(save_dir_img, 'DAP_deflection.png'))
     #pl.show()
 
-    # plot currents
+    not_nan = ~np.isnan(DAP_widths)
     pl.figure()
-    colors = c_map(np.linspace(0, 1, len(currents[0])))
-    for j, step_amp in enumerate(step_amps):
-        for k, current in enumerate(currents[j]):
-            pl.plot(t, -1*current, c=colors[k], label=channel_list[k])
-    pl.xlabel('Time (ms)')
-    pl.ylabel('Current (mA/cm$^2$)')
-    pl.xlim(595, 645)
+    pl.plot(np.array(step_amps)[not_nan], np.array(DAP_widths)[not_nan], 'ok')
+    pl.xlabel('Current Amplitude (nA)')
+    pl.ylabel('DAP Width (ms)')
+    pl.xticks(step_amps)
     pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'DAP_width.png'))
+    pl.show()
+
+    # plot currents
+    # pl.figure()
+    # colors = c_map(np.linspace(0, 1, len(currents[0])))
+    # for j, step_amp in enumerate(step_amps):
+    #     for k, current in enumerate(currents[j]):
+    #         pl.plot(t, -1*current, c=colors[k], label=channel_list[k])
+    # pl.xlabel('Time (ms)')
+    # pl.ylabel('Current (mA/cm$^2$)')
+    # pl.xlim(595, 645)
+    # pl.tight_layout()
     #pl.show()
 
     # compare with data
@@ -165,7 +175,8 @@ def simulate_hyper_depo_ramp(cell, data_dir):
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    #save_dir = '../../results/server_17_12_04/2017-12-01_19:34:50/434/L-BFGS-B'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2013_12_11a.dat'

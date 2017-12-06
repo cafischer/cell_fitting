@@ -96,7 +96,7 @@ if __name__ == '__main__':
     colors = pl.cm.get_cmap('Reds')(np.linspace(0.2, 1.0, len(period_starts)))
     pl.figure()
     for i, (s, e) in enumerate(zip(period_starts, period_ends)):
-        pl.plot(t[:e-s], v[s:e] + i * -10.0, c=colors[i], label=i)
+        pl.plot(t[:e-s], v[s:e] + i * -10.0, c=colors[i], label=i, linewidth=1)
     pl.yticks([])
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane Potential (mV)')

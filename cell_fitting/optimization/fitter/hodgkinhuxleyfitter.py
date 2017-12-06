@@ -7,6 +7,7 @@ from cell_fitting.optimization.fitter.read_data import read_data
 from cell_fitting.optimization.simulate import iclamp_handling_onset, iclamp_adaptive_handling_onset, \
     extract_simulation_params
 from cell_fitting.util import merge_dicts, init_nan
+import copy
 
 __author__ = 'caro'
 
@@ -42,7 +43,8 @@ class HodgkinHuxleyFitter(Fitter):
         for i, data_dict in enumerate(data_dicts):
             extracted_params = extract_simulation_params(**data_dict)
             self.simulation_params.append(merge_dicts(extracted_params, self.init_simulation_params[i]))
-            self.data_sets_to_fit.append([fitfun(args=self.args, **data_dict) for fitfun in self.fitfuns[i]])
+            args = merge_dicts(copy.deepcopy(self.args), {'is_data': True})
+            self.data_sets_to_fit.append([fitfun(args=args, **data_dict) for fitfun in self.fitfuns[i]])
 
         self.model_dir = model_dir
         self.mechanism_dir = mechanism_dir
@@ -79,8 +81,9 @@ class HodgkinHuxleyFitter(Fitter):
                     fitness = max_fitness_error
                     break
                 else:
-                    fitness += self.fitnessweights_per_data_set[s][i] * self.errfun(vars_to_fit[i], self.data_sets_to_fit[s][i])
-            v_candidate, t_candidate, _ = self.simulate_cell(candidate, simulation_params)  # TODO
+                    fitness += self.fitnessweights_per_data_set[s][i] * self.errfun(vars_to_fit[i],
+                                                                                    self.data_sets_to_fit[s][i])
+            v_candidate, t_candidate, _ = self.simulate_cell(candidate, simulation_params)
         if np.isnan(fitness):
             return max_fitness_error
         return fitness

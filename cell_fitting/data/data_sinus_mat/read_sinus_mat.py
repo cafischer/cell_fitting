@@ -11,7 +11,7 @@ def get_sinus_data_from_mat(save_dir):
     amp2 = x['fast_ampl'][0]
     freq1 = x['slow_freq'][0]
     freq2 = x['fast_freq'][0]
-    t = x['xdata']
+    t = x['xdata'] * 1000  # ms
     v = x['ydata']
     t_i_inj = x['xstim']
     i_inj = x['ystim']

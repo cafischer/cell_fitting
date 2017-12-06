@@ -39,12 +39,11 @@ if __name__ == '__main__':
     #                      'dt': dt, 'celsius': 35, 'onset': 200}
 
     # conductance clamp
-    a = 0.01
+    a = 0.015  # 0.015
     conductance_clamp = h.ConductanceClamp(0.5, sec=cell.soma)
-    conductance_clamp.e = 0  # TODO: E for excitatory synapses?
-    #conductance_clamp.g = 1
+    conductance_clamp.e = 0
     g_vec = h.Vector()
-    g_vec.from_python(a * -1 * i_inj)  # TODO: why -1
+    g_vec.from_python(a * i_inj)
     t_vec = h.Vector()
     t_vec.from_python(np.arange(len(i_inj))* dt)
     g_vec.play(conductance_clamp._ref_g, t_vec)  # play current into IClamp (use experimental current trace)
@@ -67,21 +66,32 @@ if __name__ == '__main__':
     t = np.array(t)
 
     # plot
-    # save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus', 'doublet_test',
-    #                             str(amp1)+'_'+str(amp2)+'_'+str(sine1_dur)+'_'+str(freq2))
-    # if not os.path.exists(save_dir_img):
-    #     os.makedirs(save_dir_img)
+    save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus', 'as_conductance',
+                                str(amp1)+'_'+str(amp2)+'_'+str(sine1_dur)+'_'+str(freq2))
+    if not os.path.exists(save_dir_img):
+        os.makedirs(save_dir_img)
 
-    pl.figure()
-    pl.plot(t, i_cc, 'r')
-    pl.show()
+    # pl.figure()
+    # pl.plot(t, i_cc, 'r')
+    # pl.show()
+
+    np.savetxt(os.path.join(save_dir_img, 'a.txt'), np.array([a]))
 
     pl.figure()
     pl.title('amp1: ' + str(amp1) + ', amp2: ' + str(amp2) + ', sine1dur: ' + str(sine1_dur) + ', freq2: ' + str(freq2), fontsize=16)
-    pl.plot(t, v, 'r')
+    pl.plot(t, v, 'r', linewidth=1)
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane Potential (mV)')
-    #pl.xlim(2800, 3200)
     pl.tight_layout()
-    #pl.savefig(os.path.join(save_dir_img, 'v.png'))
+    pl.savefig(os.path.join(save_dir_img, 'v.png'))
+    #pl.show()
+
+    pl.figure()
+    pl.title('amp1: ' + str(amp1) + ', amp2: ' + str(amp2) + ', sine1dur: ' + str(sine1_dur) + ', freq2: ' + str(freq2), fontsize=16)
+    pl.plot(t, v, 'r', linewidth=1)
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane Potential (mV)')
+    pl.xlim(4000, 6000)
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'v_zoom.png'))
     pl.show()

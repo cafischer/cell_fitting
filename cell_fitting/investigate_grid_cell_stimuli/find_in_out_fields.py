@@ -5,7 +5,7 @@ import os
 import pandas as pd
 import json
 import random
-from cell_characteristics.analyze_APs import get_AP_onsets, get_AP_max_idx
+from cell_characteristics.analyze_APs import get_AP_onset_idxs, get_AP_max_idx
 
 
 def get_firing_rate_per_bin(APs, t, position, bins):
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     track_len = params_data['track_len']
 
     # compute spike train
-    AP_onsets = get_AP_onsets(v, threshold=-20)
+    AP_onsets = get_AP_onset_idxs(v, threshold=-20)
     AP_onsets = np.concatenate((AP_onsets, np.array([len(v)])))
     AP_max_idx = [get_AP_max_idx(v, AP_onsets[i], AP_onsets[i + 1], interval=int(round(2/dt))) for i in
                   range(len(AP_onsets) - 1)]
@@ -175,14 +175,14 @@ if __name__ == '__main__':
     pl.show()
 
     pl.figure()
-    pl.plot(firing_rate_real, 'k', label='Firing rate')
+    pl.plot(firing_rate_real, 'k', label='')
     for i, (s, e) in enumerate(zip(start_out, end_out)):
         pl.hlines(-1, s, e, 'b', label='Out field' if i==0 else None, linewidth=3)
     for i, (s, e) in enumerate(zip(start_in, end_in)):
         pl.hlines(-1, s, e, 'r', label='In field' if i==0 else None, linewidth=3)
     pl.xticks(np.arange(0, n_bins + n_bins / 4, n_bins / 4), np.arange(0, track_len + track_len / 4, track_len / 4))
     pl.xlabel('Position (cm)', fontsize=16)
-    pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
+    pl.ylabel('Firing rate (Hz)', fontsize=16)
     pl.legend(fontsize=16)
     pl.savefig(os.path.join(save_dir, 'firing_rate_and_fields.svg'))
     pl.show()
@@ -195,13 +195,13 @@ if __name__ == '__main__':
     end_in = end_in / (n_bins-1) * t_per_run[i_run][-1]
 
     pl.figure()
-    pl.plot(t_per_run[i_run], v_per_run[i_run], 'k', label='Membrane potential')
+    pl.plot(t_per_run[i_run], v_per_run[i_run], 'k', label='')
     for i, (s, e) in enumerate(zip(start_out, end_out)):
         pl.hlines(np.min(v_per_run[i_run])-1, s, e, 'b', label='Out field' if i==0 else None, linewidth=3)
     for i, (s, e) in enumerate(zip(start_in, end_in)):
         pl.hlines(np.min(v_per_run[i_run])-1, s, e, 'r', label='In field' if i==0 else None, linewidth=3)
     pl.xlabel('Time (ms)', fontsize=16)
-    pl.ylabel('Firing rate (spikes/sec)', fontsize=16)
+    pl.ylabel('Membrane potential (mV)', fontsize=16)
     pl.legend(fontsize=16)
     pl.savefig(os.path.join(save_dir, 'v_and_fields.svg'))
     pl.show()

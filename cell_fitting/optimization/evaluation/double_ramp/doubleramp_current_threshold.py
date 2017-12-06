@@ -7,7 +7,7 @@ import numpy as np
 from cell_characteristics.analyze_APs import get_AP_onset_idxs, to_idx
 from nrn_wrapper import Cell
 
-from cell_fitting.optimization.evaluation.doubleramp import double_ramp, get_ramp3_times
+from cell_fitting.optimization.evaluation.double_ramp.doubleramp import double_ramp, get_ramp3_times
 from cell_fitting.util import init_nan
 
 pl.style.use('paper')

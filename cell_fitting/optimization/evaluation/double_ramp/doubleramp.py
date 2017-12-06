@@ -185,24 +185,24 @@ def plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, sav
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/32229'
+    #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '../../results/server_17_12_04/2017-12-01_19:34:50/373/L-BFGS-B'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
-    # load model
+    # load model #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/32229'
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     dt = 0.01
     tstop = 500
     step_amp = 0  # 0, -0.1, 0.1
     len_step = 125
-    ramp_amp = 2.9
+    ramp_amp = 4.0
     ramp3_times = get_ramp3_times(3, 2, 10)
-    for ramp3_amp in np.arange(2.0, 3.55, 0.05):
+    for ramp3_amp in np.arange(0.6, 3.55, 0.1):
         t, v, i_inj, ramp3_times, currents, channel_list, _ = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times,
                                                                        step_amp, len_step, dt, tstop)
-
+ #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/32229'
         save_dir_img = os.path.join(save_dir, 'img', 'PP', '125', 'step' + str(step_amp))
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
