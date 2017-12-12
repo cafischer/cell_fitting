@@ -78,14 +78,12 @@ class HodgkinHuxleyFitter(Fitter):
 
             for i in range(len(vars_to_fit)):
                 if vars_to_fit[i] is None:
-                    fitness = max_fitness_error
-                    break
+                    fitness += max_fitness_error  # even when some or None, algorithm can still improve on others
                 else:
                     fitness += self.fitnessweights_per_data_set[s][i] * self.errfun(vars_to_fit[i],
                                                                                     self.data_sets_to_fit[s][i])
-            v_candidate, t_candidate, _ = self.simulate_cell(candidate, simulation_params)
         if np.isnan(fitness):
-            return max_fitness_error
+            return len(vars_to_fit) * max_fitness_error
         return fitness
 
     def to_dict(self):
@@ -125,6 +123,69 @@ class HodgkinHuxleyFitterAdaptive(HodgkinHuxleyFitter):
         except RuntimeError:  # prevents failing when adaptive integration cannot find solution
             v_candidate = t_candidate = i_inj = init_nan(len(simulation_params['i_inj']))
         return v_candidate, t_candidate, i_inj
+
+
+class HodgkinHuxleyFitterFitfunFromSet(HodgkinHuxleyFitter):
+    # for now can just manage one fitfun
+    def __init__(self, name, variable_keys, errfun_name, fitfun_names_per_data_set, fitnessweights_per_data_set,
+                 data_read_dict_per_data_set, model_dir, mechanism_dir, init_simulation_params=None, args=None):
+        # super(HodgkinHuxleyFitterFitfunFromSet, self).__init__(name, variable_keys, errfun_name,
+        #                                                        fitfun_names_per_data_set, fitnessweights_per_data_set,
+        #                                                        data_read_dict_per_data_set, model_dir, mechanism_dir,
+        #                                                        init_simulation_params, args)
+        self.name = name
+        self.variable_keys = variable_keys
+        self.args = args
+
+        self.errfun_names = errfun_name
+        self.errfun = getattr(errfuns, errfun_name)
+
+        self.fitfun_names_per_data_set = fitfun_names_per_data_set
+        self.fitfuns = [[getattr(fitfuns, fitfun_name) for fitfun_name in fitfun_names]
+                        for fitfun_names in fitfun_names_per_data_set]
+        self.fitnessweights_per_data_set = fitnessweights_per_data_set
+
+        self.data_read_dict_per_data_set = data_read_dict_per_data_set
+        data_dicts = list()
+        for data_read_dict in self.data_read_dict_per_data_set:
+            data_dicts.append(read_data(**data_read_dict))
+
+        self.init_simulation_params = init_simulation_params if not None else {}
+        if type(self.init_simulation_params) is dict:
+            self.init_simulation_params = [self.init_simulation_params] * len(data_dicts)
+        self.simulation_params = []
+        for i, data_dict in enumerate(data_dicts):
+            extracted_params = extract_simulation_params(**data_dict)
+            self.simulation_params.append(merge_dicts(extracted_params, self.init_simulation_params[i]))
+
+        self.model_dir = model_dir
+        self.mechanism_dir = mechanism_dir
+        if mechanism_dir is not None:
+            load_mechanism_dir(mechanism_dir)
+        self.cell = self.get_cell()
+
+        # new part
+        args = merge_dicts(copy.deepcopy(self.args), {'is_data': True})
+        self.data_sets_to_fit = self.fitfuns[0][0](data_dicts, args=args)
+
+    def evaluate_fitness(self, candidate, args):
+        fitness = 0
+        max_fitness_error = self.args.get('max_fitness_error', np.inf)
+        model_dicts = []
+        for s, simulation_params in enumerate(self.simulation_params):
+            v_candidate, t_candidate, i_inj_candidate = self.simulate_cell(candidate, simulation_params)
+            model_dicts.append({'v': v_candidate, 't': t_candidate, 'i_inj': i_inj_candidate})
+        vars_to_fit = self.fitfuns[0][0](model_dicts, args=self.args)
+
+        for i in range(len(vars_to_fit)):
+            if vars_to_fit[i] is None:
+                fitness += max_fitness_error  # even when some or None, algorithm can still improve on others
+            else:
+                fitness += self.fitnessweights_per_data_set[0][i] * self.errfun(vars_to_fit[i],
+                                                                                self.data_sets_to_fit[i])
+        if np.isnan(fitness):
+            return len(vars_to_fit) * max_fitness_error
+        return fitness
 
 
 # TODO: all below

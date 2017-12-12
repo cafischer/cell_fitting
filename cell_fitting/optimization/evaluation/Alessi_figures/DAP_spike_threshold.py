@@ -8,7 +8,7 @@ from cell_characteristics import to_idx
 from nrn_wrapper import Cell
 
 from cell_fitting.optimization.evaluation.Alessi_figures import find_AP_current
-from cell_fitting.optimization.evaluation.IV import get_step
+from cell_fitting.optimization.evaluation.plot_IV import get_step
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 
 pl.style.use('paper')

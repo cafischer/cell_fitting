@@ -44,7 +44,7 @@ fitter_params = {
                     #'simulation_params': {'celsius': 6.3}
                     'model_dir': '../../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../../model/channels/stellate',
-                    'data_dir': '../../../data/2015_08_06d/raw/IV/-0.15(nA).csv',
+                    'data_dir': '../../../data/2015_08_06d/raw/plot_IV/-0.15(nA).csv',
                     'simulation_params': {'celsius': 35}
                 }
 

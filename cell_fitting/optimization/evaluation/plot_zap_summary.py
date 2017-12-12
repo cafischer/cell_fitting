@@ -46,13 +46,13 @@ if __name__ == '__main__':
 
     # plot
     data = pd.DataFrame(np.array([res_freqs_data, q_values_data]).T, columns=['Res. Freq.', 'Q-Value'])
-    jp = sns.jointplot('Res. Freq.', 'Q-Value', data=data, stat_func=None, color='k')
+    jp = sns.jointplot('Res. Freq.', 'Q-Value', data=data, stat_func=None, color='k', alpha=0.5)
     jp.fig.set_size_inches(6.4, 4.8)
     jp.x = res_freqs_model
     jp.y = q_values_model
-    jp.plot_joint(pl.scatter, c='r')
+    jp.plot_joint(pl.scatter, c='r', alpha=0.5)
     for i, model_id in enumerate(model_ids):
-        pl.gca().annotate(str(model_id), xy=(res_freqs_model[i]+0.1, q_values_model[i]+0.1), color='r', fontsize=8)
+        pl.gca().annotate(str(model_id), xy=(res_freqs_model[i]+0.05, q_values_model[i]+0.05), color='r', fontsize=8)
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'res_freq_q_value_hist.png'))
     pl.show()

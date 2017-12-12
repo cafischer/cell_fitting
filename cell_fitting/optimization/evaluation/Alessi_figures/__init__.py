@@ -5,7 +5,7 @@ import numpy as np
 from cell_characteristics import to_idx
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 
-from cell_fitting.optimization.evaluation.IV import get_step, get_IV
+from cell_fitting.optimization.evaluation.plot_IV import get_step, get_IV
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_fitting.util import init_nan
 

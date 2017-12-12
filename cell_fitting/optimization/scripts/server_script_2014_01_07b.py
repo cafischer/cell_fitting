@@ -124,9 +124,9 @@ fitter_params = {
                     'fitnessweights': [[7, 7], [1], [1], [20000]],
                     'data_dirs': [
                                   '../../data/2014_01_07b/vrest-80/simulate_rampIV/4.0(nA).csv',
-                                  '../../data/2014_01_07b/vrest-80/IV/-0.1(nA).csv',
-                                  '../../data/2014_01_07b/vrest-80/IV/0.2(nA).csv',
-                                  '../../data/2014_01_07b/vrest-80/IV/0.7(nA).csv'
+                                  '../../data/2014_01_07b/vrest-80/plot_IV/-0.1(nA).csv',
+                                  '../../data/2014_01_07b/vrest-80/plot_IV/0.2(nA).csv',
+                                  '../../data/2014_01_07b/vrest-80/plot_IV/0.7(nA).csv'
                                   ],
                     'simulation_params': {'celsius': 35, 'onset': 200},
                     'args': {}

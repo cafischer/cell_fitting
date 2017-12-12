@@ -31,7 +31,7 @@ fitter_specification = {
     'given_variables': given_variables,
     'fitfuns': [get_v, get_v],
     'errfun': rms,
-    'data_dirs': ['../data/'+cell+'/IV/-0.15(nA).csv', '../data/'+cell+'/simulate_rampIV/1.0(nA).csv']
+    'data_dirs': ['../data/'+cell+'/plot_IV/-0.15(nA).csv', '../data/'+cell+'/simulate_rampIV/1.0(nA).csv']
 }
 izhikevich_fitter = IzhikevichFitter(**fitter_specification)
 

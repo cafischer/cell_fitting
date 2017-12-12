@@ -53,7 +53,7 @@ def get_i_inj_double_ramp(ramp_amp, ramp3_amp, ramp3_time, step_amp, len_step=25
     end_ramp1 = start_ramp1 + len_ramp
     start_ramp2 = start_step + len_step + len_step2ramp
     end_ramp2 = start_ramp2 + len_ramp
-    start_ramp3 = end_ramp2 + ramp3_time
+    start_ramp3 = start_ramp2 + ramp3_time
 
     start_ramp1_idx = to_idx(start_ramp1, dt)
     end_ramp1_idx = to_idx(end_ramp1, dt)

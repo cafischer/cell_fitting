@@ -176,7 +176,7 @@ if __name__ == '__main__':
     # folder_name = 'vrest-80'
     # v_rest = -80
     # v_rest_shift = -16
-    # protocol = 'IV'
+    # protocol = 'plot_IV'
     #
     # v, t, sweep_idxs = get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None,
     #                              return_sweep_idxs=True)

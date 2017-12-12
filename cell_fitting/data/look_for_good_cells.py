@@ -27,7 +27,7 @@ if __name__ == '__main__':
         protocol_to_series = hekareader.get_protocol(group)
 
         if protocol_to_series.get('PP(0)') is not None \
-            and protocol_to_series.get('IV') is not None \
+            and protocol_to_series.get('plot_IV') is not None \
             and protocol_to_series.get('simulate_rampIV') is not None \
             and protocol_to_series.get('Zap20') is not None \
             and protocol_to_series.get('hypTester') is not None \
@@ -37,7 +37,7 @@ if __name__ == '__main__':
             v_rest = list()
             v_noise = list()
 
-            protocol = 'IV'
+            protocol = 'plot_IV'
             trace = 'Trace1'
             series = protocol_to_series[protocol]
             sweeps = ['Sweep' + str(i) for i in range(1, len(type_to_index[group][series])+1)]
@@ -52,7 +52,7 @@ if __name__ == '__main__':
                 v *= 1000
                 i_inj = pd.read_csv('./Protocols/' + protocol + '.csv', header=None)
                 i_inj = np.array(i_inj)[:, 0]
-                if protocol == 'IV':
+                if protocol == 'plot_IV':
                     amp = -0.15 + sweep_idx[i] * 0.05
                     amp_change = amp
                 elif protocol == 'simulate_rampIV':
@@ -92,7 +92,7 @@ if __name__ == '__main__':
                 v *= 1000
                 i_inj = pd.read_csv('./Protocols/' + protocol + '.csv', header=None)
                 i_inj = np.array(i_inj)[:, 0]
-                if protocol == 'IV':
+                if protocol == 'plot_IV':
                     amp = -0.15 + sweep_idx[i] * 0.05
                     amp_change = amp
                 elif protocol == 'simulate_rampIV':

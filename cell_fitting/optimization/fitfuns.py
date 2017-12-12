@@ -324,6 +324,15 @@ def impedance(v, i_inj, dt, f_range):
     return imp[idx1:idx2], freqs[idx1:idx2]
 
 
+def v_and_diff_fAHP(data_dicts, args=None):
+    fAHP1 = get_fAHP_min(data_dicts[1]['v'], data_dicts[1]['t'], data_dicts[1]['i_inj'], args)
+    fAHP2 = get_fAHP_min(data_dicts[2]['v'], data_dicts[2]['t'], data_dicts[2]['i_inj'], args)
+    if fAHP1 is None or fAHP2 is None:
+        return data_dicts[0]['v'], None
+    fAHP_diff = np.abs(fAHP1 - fAHP2)
+    return data_dicts[0]['v'], fAHP_diff
+
+
 if __name__ == '__main__':
 
     import pandas as pd

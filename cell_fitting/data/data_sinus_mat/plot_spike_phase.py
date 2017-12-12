@@ -5,19 +5,19 @@ from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from cell_characteristics import to_idx
 from grid_cell_stimuli.spike_phase import get_spike_phases, plot_phase_hist, plot_phase_vs_position_per_run, \
     compute_phase_precession, plot_phase_precession
-from cell_fitting.data.data_sinus_mat.find_traces import find_sine_trace
+from cell_fitting.data.data_sinus_mat import find_sine_trace
 from scipy.stats import circmean, circstd
 
 
 if __name__ == '__main__':
     animal = 'rat'
     save_dir = os.path.join('../plots/sine_stimulus/traces/', animal)
-    amp1 = None
-    amp2 = None
+    amp1_use = None #0.6
+    amp2_use = None #0.2
     freq1 = 0.1
     freq2 = 5
     onset_dur = offset_dur = 500
-    v_mat, t_mat, cell_ids, amp1s, amp2s, freq1s, freq2s = find_sine_trace(amp1, amp2, freq1, freq2)
+    v_mat, t_mat, cell_ids, amp1s, amp2s, freq1s, freq2s = find_sine_trace(amp1_use, amp2_use, freq1, freq2)
 
     phase_means = []
     phase_stds = []
@@ -27,8 +27,8 @@ if __name__ == '__main__':
 
         # parameter
         AP_threshold = 0
-        order = int(round(20 / dt))
-        dist_to_AP = int(round(250 / dt))
+        order = to_idx(20, dt)
+        dist_to_AP = to_idx(250, dt)
         speed = 0.040  # cm/ms
 
         # rebuild theta stim (sine2)
@@ -40,8 +40,8 @@ if __name__ == '__main__':
         theta = np.concatenate((onset, theta, offset))
 
         # save and plots
-        save_dir_cell = os.path.join(save_dir, cell_id, str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2))
-        save_dir_img = os.path.join(save_dir_cell, 'spike_phase')
+        save_dir_img = os.path.join(save_dir, cell_id, str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2),
+                                    'spike_phase')
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
 
@@ -68,7 +68,8 @@ if __name__ == '__main__':
         plot_phase_precession(phases, phases_pos, slope, intercept, best_shift, save_dir_img)
 
     # save summary
-    save_dir_summary = os.path.join(save_dir, 'summary', 'spike_phase', 'amp1_amp2_'+str(freq1)+'_'+str(freq2))
+    save_dir_summary = os.path.join(save_dir, 'summary', 'spike_phase',
+                                    str(amp1_use)+'_'+str(amp2_use)+'_'+str(freq1)+'_'+str(freq2))
     if not os.path.exists(save_dir_summary):
         os.makedirs(save_dir_summary)
     np.save(os.path.join(save_dir_summary, 'phase_means.npy'), phase_means)

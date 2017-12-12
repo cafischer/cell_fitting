@@ -125,7 +125,7 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_
         ax2.spines['top'].set_visible(True)
         ax2.spines['right'].set_visible(True)
         ax2.set_xlabel('Frequency (Hz)')
-        ax3.set_ylabel('Impedance (M$\Omega$)')
+        ax3.set_ylabel('Impedance (M$\Omega$)', color='r')
         ax1.set_xlabel('Time (s)')
         ax1.set_ylabel('Membrane Potential (mV)')
 

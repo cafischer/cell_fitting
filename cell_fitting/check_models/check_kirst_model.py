@@ -8,7 +8,7 @@ import pandas as pd
 cell = Cell.from_modeldir('../model/cells/kirst_model.json', '../model/channels/kirst')
 
 # load data
-data = pd.read_csv('../data/2015_08_06d/correct_vrest_-16mV/IV/1.0(nA).csv')
+data = pd.read_csv('../data/2015_08_06d/correct_vrest_-16mV/plot_IV/1.0(nA).csv')
 sim_params = extract_simulation_params(data)
 
 # simulate

@@ -1,11 +1,12 @@
 import numpy as np
 import pandas as pd
 import json
-from cell_fitting.optimization.fitter import FitterFactory
+from cell_fitting.optimization.fitter import FitterFactory, HodgkinHuxleyFitter
 import matplotlib.pyplot as pl
 import os
-from nrn_wrapper import Cell
+from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.read_heka import get_sweep_index_for_amp
+pl.style.use('paper')
 
 __author__ = 'caro'
 
@@ -37,7 +38,6 @@ def get_best_candidate(save_dir, n_best):
 
 
 def get_best_candidate_new_fitfuns(save_dir, fitter_params):
-    from cell_fitting.optimization.fitter import HodgkinHuxleyFitterSeveralDataSeveralFitfuns
     try:
         if os.stat(save_dir + '/candidates.csv').st_size == 0:  # checks if file is completely empty e.g. when error during optimization occured
             return None
@@ -53,7 +53,7 @@ def get_best_candidate_new_fitfuns(save_dir, fitter_params):
     fitter_params['model_dir'] = optimization_settings['fitter_params']['model_dir']
     fitter_params['mechanism_dir'] = None
     fitter_params['variable_keys'] =  optimization_settings['fitter_params']['variable_keys']
-    fitter = HodgkinHuxleyFitterSeveralDataSeveralFitfuns(**fitter_params)
+    fitter = HodgkinHuxleyFitter(**fitter_params)
     # candidates = candidates.iloc[:10]
     fitnesses = np.zeros(len(candidates))
     for i in range(len(candidates)):
@@ -61,6 +61,7 @@ def get_best_candidate_new_fitfuns(save_dir, fitter_params):
 
     idxs = np.argsort(fitnesses)
     return candidates.iloc[idxs], fitnesses[idxs]
+
 
 def get_candidate_params(candidate):
     candidate_params = candidate.candidate
@@ -89,11 +90,14 @@ def plot_candidate(save_dir, candidate):
         for j in range(len(fitter.fitfuns[i])):
             v_model, t, i_inj = fitter.simulate_cell(best_candidate_params, sim_params)
             pl.figure()
-            pl.plot(t, fitter.data_sets_to_fit[i][j], 'k', label='Exp. Data')
+            #if np.size(fitter.data_sets_to_fit[i][j]) == len(t): TODO
+                #pl.plot(t, fitter.data_sets_to_fit[i][j], 'k', label='Exp. Data')
+            if np.size(fitter.data_sets_to_fit[j]) == len(t):
+                pl.plot(t, fitter.data_sets_to_fit[j], 'k', label='Exp. Data')
             pl.plot(t, v_model, 'r', label='Model')
-            pl.legend(fontsize=16)
-            pl.xlabel('Time (ms)', fontsize=16)
-            pl.ylabel('Membrane Potential (mV)', fontsize=16)
+            pl.legend()
+            pl.xlabel('Time (ms)')
+            pl.ylabel('Membrane Potential (mV)')
             pl.tight_layout()
             pl.savefig(save_dir + 'best_candidate'+str(i)+'.png')
             pl.show()
@@ -110,7 +114,7 @@ def plot_candidate_on_other_data(save_dir, candidate, data_read_dict, plot_dir):
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
 
-    optimization_settings['fitter_params']['data_read_dict_per_data_set'] = [data_read_dict]
+    optimization_settings['fitter_params']['data_read_dict_per_data_set'] = data_read_dict  # TODO: [data_read_dict]
     optimization_settings['fitter_params']['mechanism_dir'] = None
     fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
     # use saved cell
@@ -124,7 +128,8 @@ def plot_candidate_on_other_data(save_dir, candidate, data_read_dict, plot_dir):
         os.makedirs(os.path.dirname(os.path.join(save_dir, plot_dir)))
 
     pl.figure()
-    pl.plot(t, fitter.data_sets_to_fit[0][0], 'k', label='Exp. Data')
+    # if np.size(fitter.data_sets_to_fit[0][0]) == len(t): TODO
+    # pl.plot(t, fitter.data_sets_to_fit[0][0], 'k', label='Exp. Data')
     pl.plot(t, v_model, 'r', label='Model')
     pl.legend(fontsize=16)
     pl.xlabel('Time (ms)', fontsize=16)
@@ -149,6 +154,7 @@ def save_cell(save_dir, candidate):
         fitter.update_cell(candidate_params)
         cell = fitter.cell.get_dict()
         json.dump(cell, f, indent=4)
+
 
 def plot_min_error_vs_generation(save_dir):
     candidates = pd.read_csv(save_dir + '/candidates.csv')
@@ -225,17 +231,30 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server_17_12_04/2017-12-05_18:28:29/25'
+    save_dir = '../../results/server_17_12_04/2017-12-08_14:54:57/470'
+    #save_dir = '../scripts/test/0/'
     #[45, 373, 434]
-    #[278, 265, 445, 39, 40, 370, 264, 8, 429, 25]
+    #[379, 98, 172, 8, 33, 310, 341, 212, 454, 470]
 
     method = 'L-BFGS-B'
     save_dir = os.path.join(save_dir, method)
 
-    best_candidate = plot_best_candidate(save_dir, 0)
-    #best_candidate = get_best_candidate(save_dir, 0)
+    #best_candidate = plot_best_candidate(save_dir, 0)
+    best_candidate = get_best_candidate(save_dir, 0)
+    load_mechanism_dir('../../model/channels/vavoulis')
 
     save_cell(save_dir, best_candidate)
+
+    data_read_dict0 = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
+                      'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(0.5, 'rampIV'),
+                      'v_rest_shift': -8, 'file_type': 'dat'}
+    protocol = 'hyperRampTester(3)'
+    data_read_dict1 = {'data_dir': '../../data/dat_files', 'cell_id': '2013_12_11a',
+                       'protocol': protocol, 'sweep_idx': 0, 'v_rest_shift': -8, 'file_type': 'dat'}
+    protocol = 'depoRampTester(3)'
+    data_read_dict2 = {'data_dir': '../../data/dat_files', 'cell_id': '2013_12_11a',
+                       'protocol': protocol, 'sweep_idx': 0, 'v_rest_shift': -8, 'file_type': 'dat'}
+    plot_candidate_on_other_data(save_dir, best_candidate, [data_read_dict1, data_read_dict1, data_read_dict2], 'img/rampIV/0.5(nA).png')
 
     # data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
     #                   'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(3.1, 'rampIV'),
@@ -248,16 +267,16 @@ if __name__ == '__main__':
     plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/rampIV/0.5(nA).png')
 
     data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
-                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(-0.15, 'IV'),
+                      'protocol': 'plot_IV', 'sweep_idx': get_sweep_index_for_amp(-0.15, 'plot_IV'),
                       'v_rest_shift': -8, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/-0.15(nA).png')
+    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/plot_IV/-0.15(nA).png')
 
     data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
-                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(0.1, 'IV'),
+                      'protocol': 'plot_IV', 'sweep_idx': get_sweep_index_for_amp(0.1, 'plot_IV'),
                       'v_rest_shift': -8, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/0.4(nA).png')
+    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/plot_IV/0.4(nA).png')
 
     data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
-                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(0.8, 'IV'),
+                      'protocol': 'plot_IV', 'sweep_idx': get_sweep_index_for_amp(0.8, 'plot_IV'),
                       'v_rest_shift': -8, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/0.8(nA).png')
+    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/plot_IV/0.8(nA).png')

@@ -16,7 +16,7 @@ if __name__ == '__main__':
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     v_rest = None
     v_shift = -16
-    protocol_base = 'IV' #IV  #Zap20 #rampIV
+    protocol_base = 'plot_IV' #plot_IV  #Zap20 #rampIV
     protocol = protocol_base
     reg_exp_protocol = re.compile(protocol_base+'(\([0-9]+\))?')
     save_dir = os.path.join(save_dir, protocol)

@@ -10,7 +10,7 @@ from cell_characteristics.analyze_APs import get_spike_characteristics
 from nrn_wrapper import Cell
 
 from cell_fitting.optimization.evaluation.Alessi_figures import find_hold_amps
-from cell_fitting.optimization.evaluation.IV import get_step
+from cell_fitting.optimization.evaluation.plot_IV import get_step
 from cell_fitting.optimization.evaluation.plot_rampIV import get_ramp
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_fitting.util import init_nan

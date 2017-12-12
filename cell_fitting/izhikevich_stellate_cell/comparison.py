@@ -41,8 +41,8 @@ if step:
     v0 = v_rest
     u0 = [0, 0]
 
-    #data_dir = '../data/' + cell + '/IV/-0.15(nA).csv'
-    data_dir = os.path.join('../data/cell_csv_data', cell, 'IV', '0.25(nA).csv')
+    #data_dir = '../data/' + cell + '/plot_IV/-0.15(nA).csv'
+    data_dir = os.path.join('../data/cell_csv_data', cell, 'plot_IV', '0.25(nA).csv')
     data = pd.read_csv(data_dir)
 
     # shift data to account for changing resting potential of the cell (to -63mV)

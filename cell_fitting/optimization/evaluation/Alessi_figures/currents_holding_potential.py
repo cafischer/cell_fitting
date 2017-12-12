@@ -6,7 +6,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 from nrn_wrapper import Cell
 
-from cell_fitting.optimization.evaluation.IV import get_step
+from cell_fitting.optimization.evaluation.plot_IV import get_step
 from cell_fitting.optimization.simulate import iclamp_handling_onset, simulate_currents
 
 pl.style.use('paper')

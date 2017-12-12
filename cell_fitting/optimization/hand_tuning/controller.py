@@ -1,8 +1,8 @@
 import json
 import os
+import numpy as np
 
 from cell_fitting.optimization.hand_tuning.model import Model
-
 from cell_fitting.optimization.hand_tuning.view import ViewHandTuner
 
 __author__ = 'caro'
@@ -42,11 +42,13 @@ class HandTuner:
 
     def reset_img(self, img_id):
         self.view.clear_ax(img_id)
+        t = np.arange(0, self.model.fitter.simulation_params[0]['tstop']+self.model.fitter.simulation_params[0]['dt'],
+                      self.model.fitter.simulation_params[0]['dt'])
         if img_id == 0:
-            self.view.plot_on_ax(img_id, self.model.fitter.data.t.values, self.model.fitter.data.v.values, color='k',
+            self.view.plot_on_ax(img_id, t, self.model.fitter.data_sets_to_fit[0][0], color='k',
                                  xlabel='Time (ms)', ylabel='V (mV)', linewidth=1.5)
         elif img_id == 1:
-            self.view.plot_on_ax(img_id, self.model.fitter.data.t.values, self.model.lhsHH, color='k',
+            self.view.plot_on_ax(img_id, t, self.model.lhsHH, color='k',
                                  xlabel='Time (ms)', ylabel='$c_m \cdot dV/dt - i_{inj}$', linewidth=1.5)
         self.view.plot_img(img_id)
 

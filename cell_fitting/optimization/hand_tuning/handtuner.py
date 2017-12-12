@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication
 
 from cell_fitting.optimization.hand_tuning.controller import HandTuner
 from cell_fitting.optimization.helpers import *
+from cell_fitting.optimization.fitter.read_data import get_sweep_index_for_amp
 
 __author__ = 'caro'
 
@@ -72,30 +73,31 @@ if __name__ == '__main__':
     ]
 
     lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/3'
     model_dir = os.path.join(save_dir, 'cell.json')
     #model_dir = '../../results/server/2017-07-24_13:59:54/21/L-BFGS-B/model/cell.json'
     #model_dir = '../../results/hand_tuning/test0/cell.json'
     mechanism_dir = '../../model/channels/vavoulis'
     init_var = get_init_var_from_model(model_dir, mechanism_dir, variables, variable_keys)
-
+    data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
+                      'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(amp=3.1, protocol='rampIV'),
+                      'v_rest_shift': -16, 'file_type': 'dat'}
 
     fitter_params = {
         'name': 'HodgkinHuxleyFitter',
         'variable_keys': variable_keys,
         'errfun_name': 'rms',
-        'fitfun_names': ['get_v'],
-        'fitnessweights': [1],
+        'fitfun_names_per_data_set': [['get_v']],
+        'fitnessweights_per_data_set': [[1]],
         'model_dir': model_dir,
         'mechanism_dir': None,
-        #'data_dir': '../../data/2015_08_26b/vrest-75/IV/0.7(nA).csv',
-        'data_dir': '../../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv',
-        'simulation_params': {'celsius': 35, 'onset': 200},
+        'data_read_dict_per_data_set': [data_read_dict],
+        'init_simulation_params': {'celsius': 35, 'onset': 200, 'v_init': -75},
         'args': {}
     }
 
     # create widget
     precision_slds = [1e-5, 1e-6] + [1e-3] * (len(variables) - 2)
-    save_dir = '../../results/hand_tuning/cell_2017-08-23_08:41:41_0'
+    save_dir = '../../results/hand_tuning/model3_0'
     ex = HandTuner(save_dir, fitter_params, precision_slds, lower_bounds, upper_bounds, init_var)
     sys.exit(app.exec_())

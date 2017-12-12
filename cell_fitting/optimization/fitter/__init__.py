@@ -15,6 +15,8 @@ class FitterFactory:
             return HodgkinHuxleyFitter(**fitter_params)
         elif name == 'HodgkinHuxleyFitterAdaptive':
             return HodgkinHuxleyFitterAdaptive(**fitter_params)
+        elif name == 'HodgkinHuxleyFitterFitfunFromSet':
+            return HodgkinHuxleyFitterFitfunFromSet(**fitter_params)
         # elif name == 'HodgkinHuxleyFitterCurrentPenalty':
         #     return  HodgkinHuxleyFitterCurrentPenalty(**fitter_params)
         # elif name == 'HodgkinHuxleyFitterPareto':

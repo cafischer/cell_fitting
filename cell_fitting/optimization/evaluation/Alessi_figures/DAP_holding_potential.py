@@ -4,7 +4,7 @@ import os
 from nrn_wrapper import Cell
 from cell_fitting.optimization.evaluation.Alessi_figures import find_hold_amps, find_AP_current, \
     simulate_with_step_and_holding_current
-from cell_fitting.optimization.evaluation.IV import get_step
+from cell_fitting.optimization.evaluation.plot_IV import get_step
 from cell_characteristics import to_idx
 import matplotlib
 matplotlib.use('Agg')

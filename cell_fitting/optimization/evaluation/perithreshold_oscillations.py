@@ -7,7 +7,7 @@ from grid_cell_stimuli.downsample import antialias_and_downsample
 from neuron import h
 from nrn_wrapper import Cell, load_mechanism_dir
 
-from cell_fitting.optimization.evaluation.IV import get_step
+from cell_fitting.optimization.evaluation.plot_IV import get_step
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 
 pl.style.use('paper')

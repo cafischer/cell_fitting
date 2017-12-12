@@ -110,7 +110,7 @@ bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)
 lower_bounds_init, upper_bounds_init, variable_keys_init = get_lowerbound_upperbound_keys(variables_init)
 bounds_init = {'lower_bounds': list(lower_bounds_init), 'upper_bounds': list(upper_bounds_init)}
 
-# discontinuities for IV
+# discontinuities for plot_IV
 dt = 0.05
 start_step = int(round(250 / dt))
 end_step = int(round(750 / dt))
@@ -126,7 +126,7 @@ fitter_params = {
                     'mechanism_dir': '../../model/channels/vavoulis',
                     'data_dirs': [
                                   '../../data/2015_08_26b/vrest-75/simulate_rampIV/3.0(nA).csv',
-                                  '../../data/2015_08_26b/vrest-75/IV/0.3(nA).csv'
+                                  '../../data/2015_08_26b/vrest-75/plot_IV/0.3(nA).csv'
                                   ],
                     'simulation_params': [
                                          {'celsius': 35, 'onset': 200, 'atol': 1e-5, 'continuous': True,

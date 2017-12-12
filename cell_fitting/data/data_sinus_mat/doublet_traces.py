@@ -14,7 +14,7 @@ pl.style.use('paper')
 if __name__ == '__main__':
     save_dir = './sinus_mat_files'
     animal = 'rat'
-    save_dir_img = os.path.join('../plots/sine_stimulus', 'doublets', animal)
+    save_dir_img = os.path.join('../plots/plot_sine_stimulus', 'doublets', animal)
     cell_ids = [file_name.split('_')[0].replace('-', '_') for file_name in os.listdir(save_dir)]
     cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
     repetition = 0
@@ -27,7 +27,7 @@ if __name__ == '__main__':
         for i_trace in range(len(vs)):
             v, t, i_inj, t_i_inj = vs[0, i_trace][:, repetition], ts[0, i_trace][:, repetition], i_injs[0, i_trace][:, repetition], t_i_injs[0, i_trace][:, repetition]
             amp1, amp2, freq1, freq2 = amp1s[i_trace], amp2s[i_trace], freq1s[i_trace], freq2s[i_trace]
-            save_dir_cell = os.path.join('../plots/sine_stimulus', 'doublets', animal, cell_id,
+            save_dir_cell = os.path.join('../plots/plot_sine_stimulus', 'doublets', animal, cell_id,
                                         str(freq1) + '_' + str(freq2) + '_' + str(amp1) + '_' + str(amp2))
             sine1_dur = (1.0 / freq1 * 1000) / 2
             dt = t[1] - t[0]
