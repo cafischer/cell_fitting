@@ -6,38 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/izhikevich_stellate_cell/izhikevich_DAP_model.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/__init__.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/factor_analysis.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo/plot_hyper_depo.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo/plot_hyper_depo.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo/plot_hyper_depo_summary.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo/plot_hyper_depo_summary.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/from_Franzi.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/izhikevich_stellate_cell/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/izhikevich_stellate_cell/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/blocking_experiment.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/hcn_block.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/hcn_block.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_fIcurve.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_fIcurve.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_hyper_depo/plot_hyper_depo.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_hyper_depo/plot_hyper_depo.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_hyper_depo/plot_hyper_depo_summary.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_hyper_depo/plot_hyper_depo_summary.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/fitfuns.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/fitfuns.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script_2014_01_07b.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script_2014_12_03m.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script_2015_03_30e.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script_2015_04_02n.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script_2015_05_28c.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script_2015_08_25b.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script_add_k.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script0.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/analysis.py" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/analysis.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -632,7 +601,14 @@
       <option name="project" value="LOCAL" />
       <updated>1513069534746</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="rewrote all hyper_depo plots">
+      <created>1513369919804</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1513369919804</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TodoView">
@@ -704,7 +680,8 @@
     <MESSAGE value="updated evaluation plots" />
     <MESSAGE value="updated phase plots" />
     <MESSAGE value="fixed doubleramp start_ramp3 time" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed doubleramp start_ramp3 time" />
+    <MESSAGE value="rewrote all hyper_depo plots" />
+    <option name="LAST_COMMIT_MESSAGE" value="rewrote all hyper_depo plots" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1011,6 +988,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="65" column="0" lean-forward="false" selection-start-line="65" selection-start-column="0" selection-end-line="68" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1040,6 +1018,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#9#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
