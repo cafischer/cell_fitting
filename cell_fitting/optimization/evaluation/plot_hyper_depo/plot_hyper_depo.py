@@ -1,99 +1,75 @@
 import os
-
 import numpy as np
 import pylab as pl
-from cell_characteristics import to_idx
-from cell_characteristics.analyze_APs import get_spike_characteristics
-from nrn_wrapper import Cell
+from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.optimization.simulate import simulate_currents, iclamp_handling_onset
-from cell_fitting.util import init_nan
 from cell_fitting.read_heka import get_i_inj_hyper_depo_ramp
-from cell_fitting.read_heka import get_v_and_t_from_heka
-
+from cell_fitting.data.plot_hyper_depo.plot_hyper_depo import get_spike_characteristics_and_vstep
 pl.style.use('paper')
 
 __author__ = 'caro'
 
+characteristic_name_dict = {'DAP_amp': 'DAP Amplitude', 'DAP_deflection': 'DAP Deflection', 'DAP_width': 'DAP Width',
+                            'DAP_time': 'DAP Time', 'fAHP_amp': 'fAHP Amplitude'}
+characteristic_unit_dict = {'DAP_amp': 'mV', 'DAP_deflection': 'mV', 'DAP_width': 'ms',
+                            'DAP_time': 'ms', 'fAHP_amp': 'mV'}
 
-def simulate_hyper_depo_ramp(cell, data_dir):
-    step_amps = np.array([-0.2, -0.15, -0.1, -0.05, 0.05, 0.1, 0.15, 0.2])
+
+def simulate_hyper_depo_ramp(cell, save_dir):
+    step_amps = np.array([-0.25, -0.2, -0.15, -0.1, -0.05, 0.05, 0.1, 0.15, 0.2, 0.25])
     ramp_amp = 5  # nA
+    step_start = 200
+    ramp_start = 600
     dt = 0.01
     tstop = 1000  # ms
 
-    AP_threshold = 0  # mV
-    AP_interval = 2.5  # ms
-    fAHP_interval = 4.0  # ms
-    AP_width_before_onset = 2  # ms
-    DAP_interval = 10  # ms
-    order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
-    order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
-    min_dist_to_DAP_max = 0.5  # ms
-    k_splines = 3
-    s_splines = 0
+    spike_characteristic_params = {'AP_threshold': 0, 'AP_interval': 2.5, 'AP_width_before_onset': 2,
+                                   'fAHP_interval': 4.0, 'DAP_interval': 10, 'order_fAHP_min': 1.0,
+                                   'order_DAP_max': 1.0, 'min_dist_to_DAP_max': 0.5, 'k_splines': 3, 's_splines': 0}
+    return_characteristics = ['DAP_amp', 'DAP_deflection', 'DAP_width', 'fAHP_amp', 'DAP_time']
 
-    t_exp = np.arange(0, tstop + dt, dt)
-    v = np.zeros([len(step_amps), len(t_exp)])
-    i_inj = np.zeros([len(step_amps), len(t_exp)])
+    t_traces, v_traces, currents = get_v_traces_t_traces_and_currents(cell, dt, ramp_amp, step_amps, tstop)
 
-    currents = []
-    DAP_amps = init_nan(len(step_amps))
-    DAP_deflections = init_nan(len(step_amps))
-    DAP_widths = init_nan(len(step_amps))
-
-    for j, step_amp in enumerate(step_amps):
-        i_inj[j] = get_i_inj_hyper_depo_ramp(step_amp=step_amp, ramp_amp=ramp_amp, tstop=tstop, dt=dt)
-
-        # get simulation parameters
-        simulation_params = {'sec': ('soma', None), 'i_inj': i_inj[j], 'v_init': -75, 'tstop': t_exp[-1],
-                             'dt': dt, 'celsius': 35, 'onset': 200}
-
-        # record v
-        v[j], t, _ = iclamp_handling_onset(cell, **simulation_params)
-
-        currents_tmp, channel_list = simulate_currents(cell, simulation_params, plot=False)
-        currents.append(currents_tmp)
-
-        # get DAP amp and deflection
-        v_rest = np.mean(v[j][0:to_idx(100, t[1] - t[0])])
-        std_idx_times = (None, None)
-        DAP_amps[j], DAP_deflections[j], DAP_widths[j] = get_spike_characteristics(v[j][to_idx(600, t[1] - t[0]):],
-                                                            t[to_idx(600, t[1] - t[0]):],
-                                                            ['DAP_amp', 'DAP_deflection', 'DAP_width'],
-                                                            v_rest, AP_threshold, AP_interval, AP_width_before_onset,
-                                                            fAHP_interval, std_idx_times, k_splines, s_splines,
-                                                            order_fAHP_min, DAP_interval, order_DAP_max,
-                                                            min_dist_to_DAP_max, check=False)
-
-    # take out spikes on DAP
-    DAP_deflections[DAP_amps > 50] = np.nan
-    DAP_widths[DAP_amps > 50] = np.nan
-    DAP_amps[DAP_amps > 50] = np.nan
+    spike_characteristics_mat, v_step = get_spike_characteristics_and_vstep(v_traces, t_traces,
+                                                                            spike_characteristic_params,
+                                                                            return_characteristics, ramp_start, step_start)
 
     # plot
-    save_dir_img = os.path.join(save_dir, 'img', 'plot_hyper_depo')
+    save_dir_img = os.path.join(save_dir, 'img', 'hyper_depo')
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
-    np.save(os.path.join(save_dir_img, 'DAP_deflections.npy'), DAP_deflections)
-    np.save(os.path.join(save_dir_img, 'DAP_widths.npy'), DAP_widths)
-    np.save(os.path.join(save_dir_img, 'DAP_amps.npy'), DAP_amps)
+    np.save(os.path.join(save_dir_img, 'spike_characteristics_mat.npy'), spike_characteristics_mat)
+    np.save(os.path.join(save_dir_img, 'amps.npy'), step_amps)
+    np.save(os.path.join(save_dir_img, 'v_step.npy'), v_step)
 
     c_map = pl.cm.get_cmap('plasma')
     colors = c_map(np.linspace(0, 1, len(step_amps)))
 
-    pl.figure(figsize=(8, 6))
+    pl.figure()
     for j, step_amp in enumerate(step_amps):
-        pl.plot(t, v[j], c=colors[j], label='%.2f (nA)' % step_amp)
+        pl.plot(t_traces[j], v_traces[j], c=colors[j], label='%.2f (nA)' % step_amp)
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane Potential (mV)')
-    pl.legend(loc='upper right')
+    pl.legend(fontsize=10)
     pl.xlim(100, 800)
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'v.png'))
     #pl.show()
 
-    # pl.figure(figsize=(8, 6))
+    pl.figure()
+    for j, step_amp in enumerate(step_amps):
+        pl.plot(t_traces[j], v_traces[j], c=colors[j], label='%.2f (nA)' % step_amp)
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane potential (mV)')
+    pl.legend(fontsize=10)
+    pl.xlim(595, 645)
+    pl.ylim(-95, -40)
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'v_zoom.png'))
+    #pl.show()
+
+    # pl.figure()
     # for j, step_amp in enumerate(step_amps):
     #     pl.plot(t, i_inj[j], c=colors[j], label='%.2f (nA)' % step_amp)
     # pl.xlabel('Time (ms)')
@@ -104,47 +80,17 @@ def simulate_hyper_depo_ramp(cell, data_dir):
     # pl.savefig(os.path.join(save_dir_img, 'i_inj.png'))
     # #pl.show()
 
-    pl.figure(figsize=(8, 6))
-    for j, step_amp in enumerate(step_amps):
-        pl.plot(t, v[j], c=colors[j], label='%.2f (nA)' % step_amp)
-    pl.xlabel('Time (ms)')
-    pl.ylabel('Membrane potential (mV)')
-    pl.legend()
-    pl.xlim(595, 645)
-    pl.ylim(-95, -40)
-    pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'v_zoom.png'))
-    #pl.show()
-
-    not_nan = ~np.isnan(DAP_amps)
-    pl.figure()
-    pl.plot(np.array(step_amps)[not_nan], np.array(DAP_amps)[not_nan], 'ok')
-    pl.xlabel('Current Amplitude (nA)')
-    pl.ylabel('DAP Amplitude (mV)')
-    pl.xticks(step_amps)
-    pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'DAP_amp.png'))
-    # pl.show()
-
-    not_nan = ~np.isnan(DAP_deflections)
-    pl.figure()
-    pl.plot(np.array(step_amps)[not_nan], np.array(DAP_deflections)[not_nan], 'ok')
-    pl.xlabel('Current Amplitude (nA)')
-    pl.ylabel('DAP Deflection (mV)')
-    pl.xticks(step_amps)
-    pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'DAP_deflection.png'))
-    #pl.show()
-
-    not_nan = ~np.isnan(DAP_widths)
-    pl.figure()
-    pl.plot(np.array(step_amps)[not_nan], np.array(DAP_widths)[not_nan], 'ok')
-    pl.xlabel('Current Amplitude (nA)')
-    pl.ylabel('DAP Width (ms)')
-    pl.xticks(step_amps)
-    pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'DAP_width.png'))
-    #pl.show()
+    for i, spike_characteristic in enumerate(spike_characteristics_mat.T):
+        not_nan = ~np.isnan(spike_characteristic)
+        pl.figure()
+        pl.plot(np.array(step_amps)[not_nan], np.array(spike_characteristic)[not_nan], 'ok')
+        pl.xlabel('Step Current Amplitude (nA)')
+        pl.ylabel('$RMSE_{%s}$ (%s)' % (characteristic_name_dict[return_characteristics[i]].replace(' ', '\ '),
+                                               characteristic_unit_dict[return_characteristics[i]]))
+        pl.xlim(min(step_amps)-0.05, max(step_amps)+0.05)
+        pl.tight_layout()
+        pl.savefig(os.path.join(save_dir_img, return_characteristics[i]+'.png'))
+        # pl.show()
 
     # plot currents
     # pl.figure()
@@ -188,17 +134,36 @@ def simulate_hyper_depo_ramp(cell, data_dir):
     # pl.ylim(-95, -40)
     # pl.tight_layout()
     # pl.show()
+    pl.close()
+
+
+def get_v_traces_t_traces_and_currents(cell, dt, ramp_amp, step_amps, tstop):
+    currents = []
+    v_traces = []
+    t_traces = []
+    for j, step_amp in enumerate(step_amps):
+        i_inj = get_i_inj_hyper_depo_ramp(step_amp=step_amp, ramp_amp=ramp_amp, tstop=tstop, dt=dt)
+        simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': -75, 'tstop': tstop,
+                             'dt': dt, 'celsius': 35, 'onset': 200}
+        v, t, _ = iclamp_handling_onset(cell, **simulation_params)
+        v_traces.append(v)
+        t_traces.append(t)
+        currents_tmp, channel_list = simulate_currents(cell, simulation_params, plot=False)
+        currents.append(currents_tmp)
+    return t_traces, v_traces, currents
+
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
-    #save_dir = '../../results/server_17_12_04/2017-12-07_14:22:42/318/L-BFGS-B'
-    model_dir = os.path.join(save_dir, 'cell.json')
-    mechanism_dir = '../../model/channels/vavoulis'
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2013_12_11a.dat'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/'
+    model_ids = range(1, 7)
+    mechanism_dir = '../../../model/channels/vavoulis'
 
-    # load model
-    cell = Cell.from_modeldir(model_dir, mechanism_dir)
+    load_mechanism_dir(mechanism_dir)
+    for model_id in model_ids:
+        # load model
+        model_dir = os.path.join(save_dir, str(model_id), 'cell.json')
+        cell = Cell.from_modeldir(model_dir)
 
-    # simulate
-    simulate_hyper_depo_ramp(cell, data_dir)
+        # simulate
+        simulate_hyper_depo_ramp(cell, save_dir=os.path.join(save_dir, str(model_id)))

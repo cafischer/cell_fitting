@@ -13,8 +13,7 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:42/76805'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
@@ -24,7 +23,7 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # fI-curve for data
-    protocol = 'plot_IV'
+    protocol = 'IV'
     v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                      sweep_idxs=None, return_sweep_idxs=True)
     i_inj_mat = get_i_inj_from_function(protocol, sweep_idxs, t_mat[0][-1], t_mat[0][1] - t_mat[0][0])
@@ -63,7 +62,7 @@ if __name__ == '__main__':
     #v_traces_model = v_traces_model[amps_greater0]
 
     # plot
-    save_dir_img = os.path.join(save_dir, 'img', 'plot_IV')
+    save_dir_img = os.path.join(save_dir, 'img', 'IV')
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 

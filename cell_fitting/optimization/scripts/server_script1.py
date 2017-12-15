@@ -1,20 +1,19 @@
 import sys
-sys.path.append("../../")
 from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
 from cell_fitting.optimization.scripts import optimize
 from cell_fitting.optimization import generate_candidates
 from cell_fitting.optimization.fitter.read_data import get_sweep_index_for_amp
+from time import time
 import os
+import json
 
 
 # parameters
 save_dir = sys.argv[1]
 process_number = int(sys.argv[2])
 batch_size = int(sys.argv[3])
+n_generations = 1000
 
-
-# vs not too small |vs| > 1 otherwise overflow in exp
-# delta e [0, 1]
 variables = [
             [0.3, 2, [['soma', 'cm']]],
             [-100, -75, [['soma', '0.5', 'pas', 'e']]],
@@ -22,80 +21,82 @@ variables = [
 
             [0, 0.5, [['soma', '0.5', 'pas', 'g']]],
             [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
+            [0, 0.5, [['soma', '0.5', 'nap', 'gbar']]],
             [0, 0.5, [['soma', '0.5', 'kdr', 'gbar']]],
             [0, 0.5, [['soma', '0.5', 'hcn_slow', 'gbar']]],
 
-            [0, 6, [['soma', '0.5', 'nat', 'm_pow']]],
-            [0, 6, [['soma', '0.5', 'nat', 'h_pow']]],
-            [0, 6, [['soma', '0.5', 'kdr', 'n_pow']]],
-            [0, 6, [['soma', '0.5', 'hcn_slow', 'n_pow']]],
-
             [-100, 0, [['soma', '0.5', 'nat', 'm_vh']]],
             [-100, 0, [['soma', '0.5', 'nat', 'h_vh']]],
+            [-100, 0, [['soma', '0.5', 'nap', 'm_vh']]],
+            [-100, 0, [['soma', '0.5', 'nap', 'h_vh']]],
             [-100, 0, [['soma', '0.5', 'kdr', 'n_vh']]],
             [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
 
             [1, 30, [['soma', '0.5', 'nat', 'm_vs']]],
             [-30, -1, [['soma', '0.5', 'nat', 'h_vs']]],
+            [1, 30, [['soma', '0.5', 'nap', 'm_vs']]],
+            [-30, -1, [['soma', '0.5', 'nap', 'h_vs']]],
             [1, 30, [['soma', '0.5', 'kdr', 'n_vs']]],
             [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
 
             [0, 50, [['soma', '0.5', 'nat', 'm_tau_min']]],
             [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
+            [0, 50, [['soma', '0.5', 'nap', 'm_tau_min']]],
+            [0, 50, [['soma', '0.5', 'nap', 'h_tau_min']]],
             [0, 50, [['soma', '0.5', 'kdr', 'n_tau_min']]],
             [0, 50, [['soma', '0.5', 'hcn_slow', 'n_tau_min']]],
 
             [0, 100, [['soma', '0.5', 'nat', 'm_tau_max']]],
             [0, 100, [['soma', '0.5', 'nat', 'h_tau_max']]],
+            [0, 100, [['soma', '0.5', 'nap', 'm_tau_max']]],
+            [0, 100, [['soma', '0.5', 'nap', 'h_tau_max']]],
             [0, 100, [['soma', '0.5', 'kdr', 'n_tau_max']]],
             [0, 500, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
 
             [0, 1, [['soma', '0.5', 'nat', 'm_tau_delta']]],
             [0, 1, [['soma', '0.5', 'nat', 'h_tau_delta']]],
+            [0, 1, [['soma', '0.5', 'nap', 'm_tau_delta']]],
+            [0, 1, [['soma', '0.5', 'nap', 'h_tau_delta']]],
             [0, 1, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
-            [0, 1, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]],
+            [0, 1, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]]
             ]
+# variables_extension = [
+#             [0, 0.5, [['soma', '0.5', 'ka', 'gbar']]],
+#
+#             [-100, 0, [['soma', '0.5', 'ka', 'n_vh']]],
+#             [-100, 0, [['soma', '0.5', 'ka', 'l_vh']]],
+#             [1, 30, [['soma', '0.5', 'ka', 'n_vs']]],
+#             [-30, 1, [['soma', '0.5', 'ka', 'l_vs']]],
+#
+#             [0, 50, [['soma', '0.5', 'ka', 'n_tau_min']]],
+#             [0, 50, [['soma', '0.5', 'ka', 'l_tau_min']]],
+#             [1, 100, [['soma', '0.5', 'ka', 'n_tau_max']]],
+#             [1, 100, [['soma', '0.5', 'ka', 'l_tau_max']]],
+#             [0, 1, [['soma', '0.5', 'ka', 'n_tau_delta']]],
+#             [0, 1, [['soma', '0.5', 'ka', 'l_tau_delta']]],
+#             ]
+# variables.extend(variables_extension)
 
-variables_init = [
-            [0.7, 0.9, [['soma', 'cm']]],
-            [-96, -91, [['soma', '0.5', 'pas', 'e']]],
-            [-26, -23, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
-
-            [0.00005, 0.0001, [['soma', '0.5', 'pas', 'g']]],
-            [0.06, 0.1, [['soma', '0.5', 'nat', 'gbar']]],
-            [0.003, 0.01, [['soma', '0.5', 'kdr', 'gbar']]],
-            [0.00006, 0.0004, [['soma', '0.5', 'hcn_slow', 'gbar']]],
-
-            [1.6, 1.9, [['soma', '0.5', 'nat', 'm_pow']]],
-            [2.9, 3.2, [['soma', '0.5', 'nat', 'h_pow']]],
-            [3.5, 3.9, [['soma', '0.5', 'kdr', 'n_pow']]],
-            [2.0, 2.4, [['soma', '0.5', 'hcn_slow', 'n_pow']]],
-
-            [-60, -55, [['soma', '0.5', 'nat', 'm_vh']]],
-            [-80, -76, [['soma', '0.5', 'nat', 'h_vh']]],
-            [-61, -57, [['soma', '0.5', 'kdr', 'n_vh']]],
-            [-72, -68, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
-
-            [1, 3, [['soma', '0.5', 'nat', 'm_vs']]],
-            [-22, -18, [['soma', '0.5', 'nat', 'h_vs']]],
-            [3, 7, [['soma', '0.5', 'kdr', 'n_vs']]],
-            [-20, -16, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
-
-            [0, 0.0001, [['soma', '0.5', 'nat', 'm_tau_min']]],
-            [0.2, 0.6, [['soma', '0.5', 'nat', 'h_tau_min']]],
-            [0.2, 0.6, [['soma', '0.5', 'kdr', 'n_tau_min']]],
-            [2, 6, [['soma', '0.5', 'hcn_slow', 'n_tau_min']]],
-
-            [5, 9, [['soma', '0.5', 'nat', 'm_tau_max']]],
-            [8, 12, [['soma', '0.5', 'nat', 'h_tau_max']]],
-            [23, 28, [['soma', '0.5', 'kdr', 'n_tau_max']]],
-            [132, 136, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
-
-            [0.9, 1.0, [['soma', '0.5', 'nat', 'm_tau_delta']]],
-            [0.3, 0.6, [['soma', '0.5', 'nat', 'h_tau_delta']]],
-            [0.2, 0.5, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
-            [0, 0.005, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]],
-            ]
+variable_range_name = 'mean_std_6models'
+save_dir_range = os.path.join('../../results/sensitivity_analysis/', 'variable_ranges')
+with open(os.path.join(save_dir_range, variable_range_name + '.json'), 'r') as f:
+    variables_init = json.load(f)
+# variables_init_extension = [
+#             [0.001, 0.05, [['soma', '0.5', 'ka', 'gbar']]],
+#
+#             [-75, -30, [['soma', '0.5', 'ka', 'n_vh']]],
+#             [-75, -30, [['soma', '0.5', 'ka', 'l_vh']]],
+#             [1, 25, [['soma', '0.5', 'ka', 'n_vs']]],
+#             [-25, 1, [['soma', '0.5', 'ka', 'l_vs']]],
+#
+#             [0, 10, [['soma', '0.5', 'ka', 'n_tau_min']]],
+#             [0, 10, [['soma', '0.5', 'ka', 'l_tau_min']]],
+#             [1, 50, [['soma', '0.5', 'ka', 'n_tau_max']]],
+#             [1, 50, [['soma', '0.5', 'ka', 'l_tau_max']]],
+#             [0, 1, [['soma', '0.5', 'ka', 'n_tau_delta']]],
+#             [0, 1, [['soma', '0.5', 'ka', 'l_tau_delta']]]
+#             ]
+# variables_init.extend(variables_init_extension)
 
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
@@ -104,32 +105,33 @@ bounds_init = {'lower_bounds': list(lower_bounds_init), 'upper_bounds': list(upp
 
 # read data
 protocol = 'rampIV'
-sweep_idx = get_sweep_index_for_amp(amp=0.2, protocol=protocol)
-#data_read_dict = {'data_dir': '../../data/cell_csv_data', 'cell_id': '2015_08_26b', 'protocol': protocol, 'sweep_idx': sweep_idx,
-#                  'v_rest_shift': -16, 'file_type': 'csv'}
-data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2015_08_26b',
+sweep_idx = get_sweep_index_for_amp(amp=3.1, protocol=protocol)
+data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
                   'protocol': protocol, 'sweep_idx': sweep_idx, 'v_rest_shift': -16, 'file_type': 'dat'}
 
 # dicts for fitting
 fitter_params = {
-                    'name': 'HodgkinHuxleyFitter',
+                    #'name': 'HodgkinHuxleyFitter',
                     #'name': 'HodgkinHuxleyFitterAdaptive',
+                    'name': 'HodgkinHuxleyFitterFitfunFromSet',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
-                    'fitfun_names_per_data_set': [['get_v']],
-                    'fitnessweights_per_data_set': [[1]],
+                    'fitfun_names_per_data_set': [['v_AP_v_DAP_and_DAP_time']],
+                    #'fitfun_names_per_data_set': [['get_v']],
+                    'fitnessweights_per_data_set': [[1, 2, 3]],
+                    #'fitnessweights_per_data_set': [[1]],
                     'data_read_dict_per_data_set': [data_read_dict],
-                    'init_simulation_params': {'celsius': 35, 'onset': 200},
+                    'init_simulation_params': {'celsius': 35, 'onset': 200, 'v_init': -75},
                     #'init_simulation_params': {'celsius': 35, 'onset': 200, 'atol': 1e-5},
-                    'args': {'max_fitness_error': 100000}
+                    'args': {'max_fitness_error': 1000}
                 }
 
 optimization_settings_dict = {
     'maximize': False,
     'n_candidates': batch_size,
-    'stop_criterion': ['generation_termination', 2],
+    'stop_criterion': ['generation_termination', n_generations],
     'seed': time(),
     'generator': 'get_random_numbers_in_bounds',
     'bounds': bounds,
@@ -137,13 +139,13 @@ optimization_settings_dict = {
     'extra_args': {}
 }
 
-# algorithm_settings_dict = {
-#     'algorithm_name': 'L-BFGS-B',
-#     'algorithm_params': {},
-#     'optimization_params': {},
-#     'normalize': False,
-#     'save_dir': os.path.join(save_dir, sys.argv[2])
-# }
+algorithm_settings_dict = {
+    'algorithm_name': 'L-BFGS-B',
+    'algorithm_params': {},
+    'optimization_params': {},
+    'normalize': False,
+    'save_dir': os.path.join(save_dir, sys.argv[2])
+}
 # algorithm_settings_dict = {
 #     'algorithm_name': 'PSO',
 #     'algorithm_params': {'inertia': 0.4, 'cognitive_rate': 1.4, 'social_rate': 1.6},
@@ -181,13 +183,13 @@ optimization_settings_dict = {
 #     'normalize': False,
 #     'save_dir': os.path.join(save_dir, sys.argv[2])
 # }
-algorithm_settings_dict = {
-    'algorithm_name': 'adam',
-    'algorithm_params': {},
-    'optimization_params': {},
-    'normalize': False,
-    'save_dir': os.path.join(save_dir, sys.argv[2])
-}
+# algorithm_settings_dict = {
+#     'algorithm_name': 'adam',
+#     'algorithm_params': {},
+#     'optimization_params': {},
+#     'normalize': False,
+#     'save_dir': os.path.join(save_dir, sys.argv[2])
+# }
 
 # generate initial candidates
 init_candidates = generate_candidates(optimization_settings_dict['generator'],

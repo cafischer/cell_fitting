@@ -19,8 +19,8 @@ def simulate_and_get_current_threshold():
     dt = 0.01
     tstop = 500
     t = np.arange(0, tstop+dt, dt)
-    ramp_amp = 3.0
-    ramp3_amps = np.arange(0, 4.0, 0.05)
+    ramp_amp = 4.0
+    ramp3_amps = np.arange(0, 4.0+0.05, 0.05)
     ramp3_times = get_ramp3_times(3, 2, 10)
     len_step = 125
     AP_threshold = -10

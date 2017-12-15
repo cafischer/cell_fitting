@@ -137,7 +137,7 @@ def get_v_izhikevich_coupled(i_inj, tstop, dt, v_rest, v_t, v_reset, v_peak, cm,
 
 
 if __name__ == '__main__':
-    """
+
     # replicate DAP Model of the Izhikevich Book
     cm = 1
     k = 0.04
@@ -154,7 +154,7 @@ if __name__ == '__main__':
 
     tstop = 50  # ms
     dt = 0.1  # ms
-    i_inj = np.zeros(tstop/dt)
+    i_inj = np.zeros(to_idx(tstop, dt))
     i_inj[int(10/dt):int(12/dt)] = 0.02
 
     v, t, u = get_v_izhikevich(i_inj, tstop, dt, v_rest, v_t, v_reset, v_peak, cm, k, k, a, b, d, i_b, v0, u0)
@@ -213,3 +213,4 @@ if __name__ == '__main__':
 
     #phase_plot(-80, 30, -30, 10, v_rest, v_t, cm, k, a, b, i_b, v, u)
     pl.show()
+    """

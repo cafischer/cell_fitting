@@ -16,7 +16,7 @@ return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_defl
 characteristics_valid_ranges = [(50, 150), (0.1, 2.0), (0, 40), (0, 40), (0, 20), (0, 70), (0, 20)]
 v_rest_valid_range = (-90, -60)
 
-AP_threshold = -30  # mV
+AP_threshold = 0  # mV
 AP_interval = 2.5  # ms (also used as interval for fAHP)
 AP_width_before_onset = 2  # ms
 fAHP_interval = 4.0  # ms

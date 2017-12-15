@@ -55,7 +55,8 @@ if __name__ == '__main__':
                     start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
 
                     # get spike characteristics
-                    std_idx_times = (0, start_i_inj * dt)
+                    std_end = min(10, start_i_inj * dt)
+                    std_idx_times = (0, std_end)
                     v_rest = np.mean(v[0:start_i_inj])
                     spike_characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest,
                                                                                AP_threshold, AP_interval, AP_width_before_onset,
@@ -77,10 +78,10 @@ if __name__ == '__main__':
     print 'cells with DAP: ' + str(len(AP_matrix))
 
     # save
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir)
-    np.save(os.path.join(save_dir, 'return_characteristics.npy'), return_characteristics)
-    np.save(os.path.join(save_dir, 'characteristics_mat.npy'), characteristics_mat)
-    np.save(os.path.join(save_dir, 'AP_mat.npy'), AP_matrix)
-    np.save(os.path.join(save_dir, 't.npy'), t)
-    np.save(os.path.join(save_dir, 'cell_ids.npy'), cell_id_list)
+    # if not os.path.exists(save_dir):
+    #     os.makedirs(save_dir)
+    # np.save(os.path.join(save_dir, 'return_characteristics.npy'), return_characteristics)
+    # np.save(os.path.join(save_dir, 'characteristics_mat.npy'), characteristics_mat)
+    # np.save(os.path.join(save_dir, 'AP_mat.npy'), AP_matrix)
+    # np.save(os.path.join(save_dir, 't.npy'), t)
+    # np.save(os.path.join(save_dir, 'cell_ids.npy'), cell_id_list)

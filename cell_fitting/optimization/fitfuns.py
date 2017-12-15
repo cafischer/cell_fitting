@@ -180,34 +180,6 @@ def get_fAHPamp(v, t, i_inj, args):
     return fAHP_amp
 
 
-def get_fAHP_min(v, t, i_inj, args):
-    AP_threshold = args.get('threshold', 0)
-    is_data = args.get('is_data', False)
-    if is_data:
-        return -61.4
-    else:
-        start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
-        v_rest = np.mean(v[0:start_i_inj])
-        AP_interval = 2.5  # ms (also used as interval for fAHP)
-        fAHP_interval = 4.0
-        AP_width_before_onset = 2  # ms
-        DAP_interval = 10  # ms
-        order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
-        order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
-        min_dist_to_DAP_max = 0.5  # ms
-        k_splines = 3
-        s_splines = None
-
-        fAHP_min_idx = get_spike_characteristics(v[start_i_inj:], t[start_i_inj:], ['fAHP_min_idx'], v_rest, AP_threshold,
-                                             AP_interval, AP_width_before_onset, fAHP_interval, (None, None), k_splines,
-                                             s_splines, order_fAHP_min, DAP_interval, order_DAP_max,
-                                             min_dist_to_DAP_max, check=False)[0]
-        if fAHP_min_idx is None:
-            return None
-        else:
-            return v[start_i_inj:][fAHP_min_idx]
-
-
 def get_DAPamp(v, t, i_inj, args):
     threshold = args.get('threshold', -20)
     dt = t[1] - t[0]
@@ -324,13 +296,78 @@ def impedance(v, i_inj, dt, f_range):
     return imp[idx1:idx2], freqs[idx1:idx2]
 
 
-def v_and_diff_fAHP(data_dicts, args=None):
-    fAHP1 = get_fAHP_min(data_dicts[1]['v'], data_dicts[1]['t'], data_dicts[1]['i_inj'], args)
-    fAHP2 = get_fAHP_min(data_dicts[2]['v'], data_dicts[2]['t'], data_dicts[2]['i_inj'], args)
-    if fAHP1 is None or fAHP2 is None:
-        return data_dicts[0]['v'], None
-    fAHP_diff = np.abs(fAHP1 - fAHP2)
-    return data_dicts[0]['v'], fAHP_diff
+def get_fAHP_min(v, t, i_inj, args):
+    AP_threshold = args.get('threshold', 0)
+    start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
+    v_rest = np.mean(v[0:start_i_inj])
+    AP_interval = 2.5  # ms (also used as interval for fAHP)
+    fAHP_interval = 4.0
+    AP_width_before_onset = 2  # ms
+    DAP_interval = 10  # ms
+    order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
+    order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
+    min_dist_to_DAP_max = 0.5  # ms
+    k_splines = 3
+    s_splines = None
+
+    fAHP_min_idx = get_spike_characteristics(v[start_i_inj:], t[start_i_inj:], ['fAHP_min_idx'], v_rest, AP_threshold,
+                                         AP_interval, AP_width_before_onset, fAHP_interval, (None, None), k_splines,
+                                         s_splines, order_fAHP_min, DAP_interval, order_DAP_max,
+                                         min_dist_to_DAP_max, check=False)[0]
+    if fAHP_min_idx is None:
+        return None
+    else:
+        return v[start_i_inj:][fAHP_min_idx]
+
+
+def get_DAP_time(v, t, i_inj, args):
+    AP_threshold = args.get('threshold', 0)
+    start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
+    v_rest = np.mean(v[0:start_i_inj])
+    AP_interval = 2.5  # ms (also used as interval for fAHP)
+    fAHP_interval = 4.0
+    AP_width_before_onset = 2  # ms
+    DAP_interval = 10  # ms
+    order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
+    order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
+    min_dist_to_DAP_max = 0.5  # ms
+    k_splines = 3
+    s_splines = None
+
+    DAP_time = \
+    get_spike_characteristics(v[start_i_inj:], t[start_i_inj:], ['DAP_time'], v_rest, AP_threshold,
+                              AP_interval, AP_width_before_onset, fAHP_interval, (None, None), k_splines,
+                              s_splines, order_fAHP_min, DAP_interval, order_DAP_max,
+                              min_dist_to_DAP_max, check=False)[0]
+    return DAP_time
+
+
+def v_AP_v_DAP_DAP_time_and_diff_fAHP(data_dicts, args=None):
+    is_data = args.get('is_data', False)
+    fAHP_min_idx = to_idx(13, data_dicts[0]['t'][1]-data_dicts[0]['t'][0])
+    if is_data:
+        DAP_time = 4.94
+        fAHP_diff = -1.58
+    else:
+        DAP_time = get_DAP_time(data_dicts[0]['v'], data_dicts[0]['t'], data_dicts[0]['i_inj'], args)
+
+        fAHP1 = get_fAHP_min(data_dicts[1]['v'], data_dicts[1]['t'], data_dicts[1]['i_inj'], args)
+        fAHP2 = get_fAHP_min(data_dicts[2]['v'], data_dicts[2]['t'], data_dicts[2]['i_inj'], args)
+        if fAHP1 is None or fAHP2 is None:
+            fAHP_diff = None
+        else:
+            fAHP_diff = (fAHP2 - fAHP1)
+    return data_dicts[0]['v'][:fAHP_min_idx], data_dicts[0]['v'][fAHP_min_idx:], DAP_time, fAHP_diff
+
+
+def v_AP_v_DAP_and_DAP_time(data_dicts, args=None):
+    is_data = args.get('is_data', False)
+    fAHP_min_idx = to_idx(13, data_dicts[0]['t'][1]-data_dicts[0]['t'][0])
+    if is_data:
+        DAP_time = 4.94
+    else:
+        DAP_time = get_DAP_time(data_dicts[0]['v'], data_dicts[0]['t'], data_dicts[0]['i_inj'], args)
+    return data_dicts[0]['v'][:fAHP_min_idx], data_dicts[0]['v'][fAHP_min_idx:], DAP_time
 
 
 if __name__ == '__main__':
