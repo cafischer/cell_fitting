@@ -112,7 +112,6 @@ data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
 # dicts for fitting
 fitter_params = {
                     #'name': 'HodgkinHuxleyFitter',
-                    #'name': 'HodgkinHuxleyFitterAdaptive',
                     'name': 'HodgkinHuxleyFitterFitfunFromSet',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
@@ -120,12 +119,11 @@ fitter_params = {
                     'mechanism_dir': '../../model/channels/vavoulis',
                     'fitfun_names_per_data_set': [['v_AP_v_DAP_and_DAP_time']],
                     #'fitfun_names_per_data_set': [['get_v']],
-                    'fitnessweights_per_data_set': [[1, 2, 3]],
+                    'fitnessweights_per_data_set': [[1, 2, 2]],
                     #'fitnessweights_per_data_set': [[1]],
                     'data_read_dict_per_data_set': [data_read_dict],
                     'init_simulation_params': {'celsius': 35, 'onset': 200, 'v_init': -75},
-                    #'init_simulation_params': {'celsius': 35, 'onset': 200, 'atol': 1e-5},
-                    'args': {'max_fitness_error': 1000}
+                    'args': {'max_fitness_error': 50}
                 }
 
 optimization_settings_dict = {

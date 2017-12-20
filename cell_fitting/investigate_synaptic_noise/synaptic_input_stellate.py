@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as pl
 from bac_project.connectivity.connection import synaptic_input
 from nrn_wrapper import Cell, load_mechanism_dir
-from optimization.simulate import iclamp_adaptive_handling_onset
+from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
+from cell_characteristics.analyze_APs import get_AP_onsets_idxs
 from neuron import h
 import os
 
@@ -96,8 +97,7 @@ pl.legend()
 pl.show()
 
 # check for doublets
-from cell_characteristics.analyze_APs import get_AP_onsets
-AP_onsets = get_AP_onsets(v, -30)
+AP_onsets = get_AP_onsets_idxs(v, 0)
 
 # ISI hist
 bins = np.arange(0, 1000+10, 10)

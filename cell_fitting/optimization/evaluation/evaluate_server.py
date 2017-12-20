@@ -6,9 +6,9 @@ from cell_fitting.optimization.evaluation.evaluate import get_best_candidate, pl
 
 if __name__ == '__main__':
     #save_dir = '../scripts/test/'
-    save_dir = '../../results/server_17_12_04/2017-12-13_17:10:25'
+    save_dir = '../../results/server_17_12_04/2017-12-16_10:04:51'
     method = 'L-BFGS-B'
-    n_trials = 500
+    n_trials = 354
     n_best = 0
 
     best_candidates = pd.DataFrame()

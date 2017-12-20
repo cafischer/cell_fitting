@@ -234,7 +234,7 @@ if __name__ == '__main__':
 
     # parameters
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    #save_dir = '../../results/server_17_12_04/2017-12-01_19:34:50/373/L-BFGS-B'
+    save_dir = '../../../results/server_17_12_04/2017-12-16_10:04:51/20/L-BFGS-B'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
 
@@ -250,7 +250,7 @@ if __name__ == '__main__':
     i_inj_mats = []
     v_mats = []
     for step_amp in [0, 0.1, -0.1]:
-        for ramp3_amp in np.arange(0, 4.0+0.05, 0.05):
+        for ramp3_amp in np.arange(0.4, 4.0+0.05, 0.05):
             t, v_mat, i_inj_mat, ramp3_times, currents, channel_list, _ = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times,
                                                                                       step_amp, len_step, dt, tstop)
             if ramp3_amp == 1.5:

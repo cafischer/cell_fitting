@@ -332,7 +332,7 @@ def get_DAP_time(v, t, i_inj, args):
     order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
     min_dist_to_DAP_max = 0.5  # ms
     k_splines = 3
-    s_splines = None
+    s_splines = 0
 
     DAP_time = \
     get_spike_characteristics(v[start_i_inj:], t[start_i_inj:], ['DAP_time'], v_rest, AP_threshold,

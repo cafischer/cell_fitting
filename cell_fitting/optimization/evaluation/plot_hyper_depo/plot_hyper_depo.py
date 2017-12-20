@@ -90,7 +90,7 @@ def simulate_hyper_depo_ramp(cell, save_dir):
         pl.xlim(min(step_amps)-0.05, max(step_amps)+0.05)
         pl.tight_layout()
         pl.savefig(os.path.join(save_dir_img, return_characteristics[i]+'.png'))
-        # pl.show()
+        #pl.show()
 
     # plot currents
     # pl.figure()
@@ -102,7 +102,7 @@ def simulate_hyper_depo_ramp(cell, save_dir):
     # pl.ylabel('Current (mA/cm$^2$)')
     # pl.xlim(595, 645)
     # pl.tight_layout()
-    #pl.show()
+    pl.show()
 
     # # compare with data
     # for p_idx in [0, 1, 2, 3]:
@@ -134,7 +134,7 @@ def simulate_hyper_depo_ramp(cell, save_dir):
     # pl.ylim(-95, -40)
     # pl.tight_layout()
     # pl.show()
-    pl.close()
+    #pl.close()
 
 
 def get_v_traces_t_traces_and_currents(cell, dt, ramp_amp, step_amps, tstop):
@@ -159,10 +159,15 @@ if __name__ == '__main__':
     model_ids = range(1, 7)
     mechanism_dir = '../../../model/channels/vavoulis'
 
+    save_dir = '../../../results/server_17_12_04/2017-12-16_10:04:51/'
+    model_ids = [20]
+    method = 'L-BFGS-B'
+
     load_mechanism_dir(mechanism_dir)
     for model_id in model_ids:
         # load model
         model_dir = os.path.join(save_dir, str(model_id), 'cell.json')
+        model_dir = os.path.join(save_dir, str(model_id), method, 'cell.json')
         cell = Cell.from_modeldir(model_dir)
 
         # simulate

@@ -89,6 +89,7 @@ def plot_candidate(save_dir, candidate):
     for i, sim_params in enumerate(fitter.simulation_params):
         for j in range(len(fitter.fitfuns[i])):
             v_model, t, i_inj = fitter.simulate_cell(best_candidate_params, sim_params)
+
             pl.figure()
             #if np.size(fitter.data_sets_to_fit[i][j]) == len(t): TODO
                 #pl.plot(t, fitter.data_sets_to_fit[i][j], 'k', label='Exp. Data')
@@ -231,16 +232,17 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server_17_12_04/2017-12-13_17:10:25/73'
+    save_dir = '../../results/server_17_12_04/2017-12-16_10:04:51/58'
     #save_dir = '../scripts/test/0/'
-    #[353, 315, 43, 73, 239, 89, 42, 30, 110, 154]
+    # [58, 49, 181, 42, 215, 0, 20, 6, 244, 210]
+    #2017-12-16_10:04:51 : 42, 20
 
     method = 'L-BFGS-B'
     save_dir = os.path.join(save_dir, method)
 
-    #best_candidate = plot_best_candidate(save_dir, 0)
-    best_candidate = get_best_candidate(save_dir, 0)
-    load_mechanism_dir('../../model/channels/vavoulis')
+    best_candidate = plot_best_candidate(save_dir, 0)
+    #best_candidate = get_best_candidate(save_dir, 0)
+    #load_mechanism_dir('../../model/channels/vavoulis')
 
     save_cell(save_dir, best_candidate)
 

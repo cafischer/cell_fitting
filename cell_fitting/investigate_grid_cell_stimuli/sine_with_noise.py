@@ -5,9 +5,9 @@ import numpy as np
 import json
 import copy
 from nrn_wrapper import Cell, load_mechanism_dir
-from new_optimization.evaluation.sine_stimulus import get_sine_stimulus
+from cell_fitting.optimization.evaluation.plot_sine_stimulus import get_sine_stimulus
 from bac_project.connectivity.connection import synaptic_input
-from optimization.simulate import iclamp_handling_onset
+from cell_fitting.optimization.simulate import iclamp_handling_onset
 from time import time
 import random
 
@@ -55,10 +55,10 @@ def synaptic_noise_input():
 
 
 def get_sines(random_generator, field_pos, position, time):
-    amp1 = 0.45
-    amp2 = 0.12
+    amp1 = 0.5  # 0.45
+    amp2 = 0.2  # 0.12
     freq2 = 8
-    sine1_dur_mu = 1000  # ms
+    sine1_dur_mu = 2000  # ms
     sine1_dur_sig = 400  # ms
 
     # intervals between fields
@@ -69,13 +69,13 @@ def get_sines(random_generator, field_pos, position, time):
     # draw sine durations
     sine1_durs = draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, len(field_pos))
     sine1_intervals_dur = np.array([sine1_durs[0]/2]
-                                +[(d1+d2)/2 for d1,d2 in zip(sine1_durs[:-1], sine1_durs[1:])]
-                                +[sine1_durs[-1]/2])
-    while(not np.all(sine1_intervals_dur < field_intervals_t)):
+                                   + [(d1+d2)/2 for d1,d2 in zip(sine1_durs[:-1], sine1_durs[1:])]
+                                   + [sine1_durs[-1]/2])
+    while ~np.all(sine1_intervals_dur < field_intervals_t):
         sine1_durs = draw_sines(random_generator, sine1_dur_mu, sine1_dur_sig, len(field_pos))
         sine1_intervals_dur = np.array([sine1_durs[0] / 2]
-                                    + [(d1 + d2) / 2 for d1, d2 in zip(sine1_durs[:-1], sine1_durs[1:])]
-                                    + [sine1_durs[-1] / 2])
+                                       + [(d1 + d2) / 2 for d1, d2 in zip(sine1_durs[:-1], sine1_durs[1:])]
+                                       + [sine1_durs[-1] / 2])
 
     # compute onset times
     onset_durs = field_intervals_t - sine1_intervals_dur
@@ -132,8 +132,10 @@ if __name__ == '__main__':
     # parameters
     folder = 'test0'
     save_dir = './results/'+folder+'/data'
-    save_dir_model = '../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
-    model_dir = os.path.join(save_dir_model, 'model', 'cell.json')
+    #save_dir_model = '../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
+    #model_dir = os.path.join(save_dir_model, 'model', 'cell.json')
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../model/channels/vavoulis'
 
     onset = 200
@@ -142,7 +144,7 @@ if __name__ == '__main__':
     v_init = -75
     n_runs = 14
     track_len = 400  # cm
-    n_fields = 4
+    n_fields = 3
     speed_type = 'constant'
     field_pos = np.cumsum([track_len / n_fields] * n_fields) - (track_len / n_fields) / 2
     seed = time()

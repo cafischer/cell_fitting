@@ -3,7 +3,7 @@ from heka_reader import HekaReader
 import matplotlib.pyplot as pl
 import os
 import numpy as np
-from cell_characteristics.analyze_APs import get_AP_onsets
+from cell_characteristics.analyze_APs import get_AP_onsets_idxs
 
 
 if __name__ == '__main__':
@@ -41,7 +41,7 @@ if __name__ == '__main__':
             pl.show()
 
             # get AP_onsets
-            AP_onsets = get_AP_onsets(v, -10)
+            AP_onsets = get_AP_onsets_idxs(v, 0)
 
             # ISI hist
             bins = np.arange(0, 1000 + 10, 10)

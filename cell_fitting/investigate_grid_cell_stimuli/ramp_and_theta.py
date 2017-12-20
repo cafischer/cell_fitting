@@ -46,4 +46,4 @@ if __name__ == '__main__':
 
     plot_filter(filter_ramp, filter_theta, dt, save_dir)
     plot_spectrum(v, ramp, theta, dt, save_dir)
-    plot_v_ramp_theta(v, t, ramp, theta, t_ramp_theta, save_dir)
+    plot_v_ramp_theta(v, t, ramp, theta, t_ramp_theta, save_dir, show=True)

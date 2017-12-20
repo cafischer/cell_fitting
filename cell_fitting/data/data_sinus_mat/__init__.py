@@ -21,8 +21,8 @@ def get_sinus_data_from_mat(save_dir):
     return v, t, i_inj, t_i_inj, amp1, amp2, freq1, freq2
 
 
-def find_sine_trace(amp1_to_find=None, amp2_to_find=None, freq1_to_find=None, freq2_to_find=None):
-    save_dir = './sinus_mat_files'
+def find_sine_trace(amp1_to_find=None, amp2_to_find=None, freq1_to_find=None, freq2_to_find=None,
+                    save_dir='./sinus_mat_files'):
     animal = 'rat'
     cell_ids = [file_name.split('_')[0].replace('-', '_') for file_name in os.listdir(save_dir)]
     cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
