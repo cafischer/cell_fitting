@@ -93,7 +93,7 @@ if __name__ == '__main__':
                                                                                start_step, end_step)
 
     # plot
-    save_dir_img = os.path.join(save_dir, 'img', 'plot_IV', 'sag_vs_steady_state')
+    save_dir_img = os.path.join(save_dir, 'img', 'IV', 'sag')
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 

@@ -105,10 +105,12 @@ if __name__ == '__main__':
     # parameters
     save_dir_img = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/img/hyper_depo'
     save_dir_summary_data = '../../../data/plots/hyper_depo/summary'
+    save_dir_models = '../../../results/best_models/'
     model_ids = range(1, 7)
 
     # load data
-    spike_characteristic_mat_per_cell = np.load(os.path.join(save_dir_summary_data, 'spike_characteristic_mat_per_cell.npy'))
+    spike_characteristic_mat_per_cell = np.load(os.path.join(save_dir_summary_data,
+                                                             'spike_characteristic_mat_per_cell.npy'))
     amps_per_cell = np.load(os.path.join(save_dir_summary_data, 'amps_per_cell.npy'))
     return_characteristics = np.load(os.path.join(save_dir_summary_data, 'return_characteristics.npy'))
     cell_ids = np.load(os.path.join(save_dir_summary_data, 'cell_ids.npy'))
@@ -119,7 +121,7 @@ if __name__ == '__main__':
     amps_per_model = []
     v_step_per_model = []
     for i, model_id in enumerate(model_ids):
-        save_dir_summary_model = os.path.join('../../../results/best_models/', str(model_id), 'img', 'hyper_depo')
+        save_dir_summary_model = os.path.join(save_dir_models, str(model_id), 'img', 'hyper_depo')
         spike_characteristic_mat_per_model.append(np.load(os.path.join(save_dir_summary_model,
                                                                        'spike_characteristics_mat.npy')))
         amps_per_model.append(np.load(os.path.join(save_dir_summary_model, 'amps.npy')))

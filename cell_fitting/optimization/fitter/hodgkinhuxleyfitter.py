@@ -175,7 +175,7 @@ class HodgkinHuxleyFitterFitfunFromSet(HodgkinHuxleyFitter):
         for s, simulation_params in enumerate(self.simulation_params):
             v_candidate, t_candidate, i_inj_candidate = self.simulate_cell(candidate, simulation_params)
             model_dicts.append({'v': v_candidate, 't': t_candidate, 'i_inj': i_inj_candidate})
-        vars_to_fit = self.fitfuns[0][0](model_dicts, args=self.args)
+        vars_to_fit = self.fitfuns[0][0](model_dicts, args=merge_dicts(copy.deepcopy(self.args), {'cell': self.cell}))
 
         for i in range(len(vars_to_fit)):
             if vars_to_fit[i] is None:

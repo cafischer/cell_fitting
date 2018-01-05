@@ -15,16 +15,17 @@ __author__ = 'caro'
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/3'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    percent_block = 0.1
+    percent_block_nap = 0.4
+    percent_block_nat = 0.2
     use_same_hold_amps = True
     use_given_hold_amps_block = False
     if use_same_hold_amps:
-        save_dir_img = os.path.join(save_dir, 'img', 'alessi', 'TTX', 'block', 'same_amps', 'percent_block_' + str(percent_block))
+        save_dir_img = os.path.join(save_dir, 'img', 'alessi', 'AEA', 'block', 'same_amps')
     else:
-        save_dir_img = os.path.join(save_dir, 'img', 'alessi', 'TTX', 'block', 'new_amps', 'percent_block_'+str(percent_block))
+        save_dir_img = os.path.join(save_dir, 'img', 'alessi', 'AEA', 'block', 'new_amps')
     #save_dir_hold = os.path.join(save_dir, 'img', 'DAP_at_different_holding_potentials')
     save_dir_hold = os.path.join(save_dir, 'img', 'alessi', 'no_hold')
 
@@ -43,8 +44,8 @@ if __name__ == '__main__':
     v_mat = np.load(os.path.join(save_dir_hold, 'v_mat.npy'))
 
     # TTX application
-    cell.soma(.5).nat.gbar = cell.soma(.5).nat.gbar * (1 - percent_block)
-    cell.soma(.5).nap.gbar = cell.soma(.5).nap.gbar * (1 - percent_block)
+    cell.soma(.5).nat.gbar = cell.soma(.5).nat.gbar * (1 - percent_block_nat)
+    cell.soma(.5).nap.gbar = cell.soma(.5).nap.gbar * (1 - percent_block_nap)
 
     # find hold_amps
     if use_same_hold_amps:
@@ -80,7 +81,7 @@ if __name__ == '__main__':
 
         pl.figure()
         pl.plot(t, v_mat[i], 'r', label='No Block')
-        pl.plot(t, v_mat_block[i], 'orange', label=str(percent_block*100) + '% Block of Na$^+$')
+        pl.plot(t, v_mat_block[i], 'orange', label='AEA')
         pl.xlabel('Time (ms)')
         pl.ylabel('Membrane potential (mV)')
         pl.legend()

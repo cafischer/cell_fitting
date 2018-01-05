@@ -27,7 +27,7 @@ NEURON {
 PARAMETER {
         dt                      (ms)
         v                       (mV)
-        ek                      (mV)    : must be explicitely def. in hoc
+        ek                      (mV)    : must be explicitly def. in hoc
         celsius                 (degC)
 
         temp    = 24            (degC)

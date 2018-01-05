@@ -28,7 +28,7 @@ if __name__ == '__main__':
     k_splines = 3
     s_splines = None
     return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_deflection', 'DAP_width', 'DAP_time',
-                              'DAP_lin_slope', 'DAP_exp_slope']
+                              'fAHP2DAP_time']
 
     cell_id_list = []
     spike_characteristics_list = []
@@ -78,10 +78,10 @@ if __name__ == '__main__':
     print 'cells with DAP: ' + str(len(AP_matrix))
 
     # save
-    # if not os.path.exists(save_dir):
-    #     os.makedirs(save_dir)
-    # np.save(os.path.join(save_dir, 'return_characteristics.npy'), return_characteristics)
-    # np.save(os.path.join(save_dir, 'characteristics_mat.npy'), characteristics_mat)
-    # np.save(os.path.join(save_dir, 'AP_mat.npy'), AP_matrix)
-    # np.save(os.path.join(save_dir, 't.npy'), t)
-    # np.save(os.path.join(save_dir, 'cell_ids.npy'), cell_id_list)
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    np.save(os.path.join(save_dir, 'return_characteristics.npy'), return_characteristics)
+    np.save(os.path.join(save_dir, 'characteristics_mat.npy'), characteristics_mat)
+    np.save(os.path.join(save_dir, 'AP_mat.npy'), AP_matrix)
+    np.save(os.path.join(save_dir, 't.npy'), t)
+    np.save(os.path.join(save_dir, 'cell_ids.npy'), cell_id_list)

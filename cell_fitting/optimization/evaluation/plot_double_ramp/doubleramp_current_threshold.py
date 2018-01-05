@@ -1,11 +1,9 @@
 from __future__ import division
-
 import os
 import matplotlib.pyplot as pl
 import numpy as np
-from cell_characteristics.analyze_APs import get_AP_onset_idxs, to_idx, get_spike_characteristics
+from cell_characteristics.analyze_APs import get_AP_onset_idxs, to_idx
 from nrn_wrapper import Cell
-
 from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp import double_ramp, get_ramp3_times
 from cell_fitting.util import init_nan
 
@@ -14,7 +12,7 @@ pl.style.use('paper')
 __author__ = 'caro'
 
 
-def simulate_and_get_current_threshold():
+def simulate_and_get_current_threshold(cell, step_amp):
 
     dt = 0.01
     tstop = 500
@@ -37,7 +35,7 @@ def simulate_and_get_current_threshold():
 
     current_thresholds = get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2, dt, AP_threshold)
 
-    return current_thresholds, ramp3_times, ramp3_amps, v_dap, t_dap
+    return current_thresholds, ramp3_times, ramp3_amps, v_dap, t_dap, v_mat, t
 
 
 def get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2_idx, dt, AP_threshold=None):
@@ -60,83 +58,13 @@ def get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2_idx, dt, A
 
 
 def plot_current_threshold(current_thresholds, current_threshold_rampIV, ramp3_times, step_amps, ramp3_amp_min,
-                           ramp3_amp_max, v_dap, t_dap, save_dir_img, legend_loc='upper left'):
+                           ramp3_amp_max, v_dap, t_dap, save_dir_img=None, legend_loc='upper left'):
 
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
     colors_dict = {-0.1: 'b', 0.0: 'k', 0.1: 'r'}
     colors = [colors_dict[amp] for amp in step_amps]
-
-    # # plot current threshold
-    # ratio = 5
-    # fig, (ax2, ax) = pl.subplots(2, 1, sharex=True, gridspec_kw={'height_ratios': [1, ratio]})
-    #
-    # ax_twin = ax.twinx()
-    # ax_twin.plot(t_dap, v_dap, 'k')
-    # ax2_twin = ax2.twinx()
-    # ax2_twin.plot(t_dap, v_dap, 'k')
-    #
-    # ax.axhline(ramp3_amp_min, linestyle='--', c='0.5')
-    # ax.axhline(ramp3_amp_max, linestyle='--', c='0.5')
-    # ax2.plot(0, current_threshold_rampIV, 'ok', markersize=6.5)
-    # for i, current_threshold in enumerate(current_thresholds):
-    #     ax2.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Step Amp.: '+str(step_amps[i]),
-    #             markersize=9-2.5*i)
-    # ax.plot(0, current_threshold_rampIV, 'ok', markersize=6.5)
-    # lines = []
-    # for i, current_threshold in enumerate(current_thresholds):
-    #     lines.append(ax.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Step Amp.: '+str(step_amps[i]),
-    #             markersize=9-2.5*i)[0])
-    # labels = [line._label for line in lines]
-    #
-    # # hide the spines between ax and ax2
-    # ax2.spines['bottom'].set_visible(False)
-    # ax2_twin.spines['bottom'].set_visible(False)
-    # ax_twin.spines['right'].set_visible(True)
-    # ax2_twin.spines['right'].set_visible(True)
-    # ax.spines['top'].set_visible(False)
-    # ax2.xaxis.tick_top()
-    # ax2.tick_params(labeltop='off')  # don't put tick labels at the top
-    # ax.xaxis.tick_bottom()
-    #
-    # ax.set_xlabel('Time (ms)')
-    # ax.set_ylabel('Current threshold (mA/$cm^2$)')
-    # ax_twin.set_ylabel('Membrane Potential (mV)')
-    # ax.set_xticks(np.insert(ramp3_times, 0, [0]))
-    # ax2.set_xticks([])
-    #
-    # dy2 = 0.5
-    # ymin2 = filter(lambda x: np.round(x, 10) % dy2 == 0, np.arange(current_threshold_rampIV-dy2,
-    #                                                                current_threshold_rampIV+0.05, 0.05))[0]
-    # ymax2 = ymin2 + 3 * dy2 / ratio
-    # ax.set_ylim(0, 3.5+dy2/4.)
-    # ax2.set_ylim(ymin2-dy2/4., ymax2)
-    # dy2t = 20
-    # ymint = -80
-    # ymaxt = 60
-    # ymin2t = ymaxt
-    # ymax2t = ymin2t + dy2t / ratio
-    # ax_twin.set_ylim(ymint, ymaxt+dy2t/4.)
-    # ax2_twin.set_ylim(ymin2t-dy2t/4., ymax2t)
-    # ax.set_yticks(np.arange(0, 3.5+dy2, dy2))
-    # ax2.set_yticks(np.arange(ymin2, ymax2+2*dy2, dy2))
-    # ax_twin.set_yticks(np.arange(ymint, ymaxt+dy2t, dy2t))
-    # ax2_twin.set_yticks(np.arange(ymin2t, ymax2t+dy2t, dy2t))
-    #
-    # d = .01  # how big to make the diagonal lines in axes coordinates
-    # kwargs = dict(transform=ax2.transAxes, color='k', clip_on=False)
-    # ax2.plot((-d, +d), (-d*ratio, +d*ratio), **kwargs)  # top-left diagonal
-    # ax2.plot((1 - d, 1 + d), (-d*ratio, +d*ratio), **kwargs)  # top-right diagonal
-    # kwargs.update(transform=ax.transAxes)  # switch to the bottom axes
-    # ax.plot((-d, +d), (1 - d, 1 + d), **kwargs)  # bottom-left diagonal
-    # ax.plot((1 - d, 1 + d), (1 - d, 1 + d), **kwargs)  # bottom-right diagonal
-    #
-    # fig.legend(lines, labels, loc=(0.38, 0.7))
-    # pl.tight_layout()
-    # pl.subplots_adjust(hspace=0.03)
-    # pl.savefig(os.path.join(save_dir_img, 'current_threshold.png'))
-    # pl.show()
 
     # plot current threshold
     fig, ax = pl.subplots()
@@ -158,30 +86,10 @@ def plot_current_threshold(current_thresholds, current_threshold_rampIV, ramp3_t
     ax.set_ylim(0, 4.2)
     ax.legend(loc=legend_loc)
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'current_threshold.png'))
-    pl.show()
+    if save_dir_img is not None:
+        pl.savefig(os.path.join(save_dir_img, 'current_threshold.png'))
+    return fig
 
-    # # plot current threshold zoom
-    # fig, ax = pl.subplots()
-    # ax2 = ax.twinx()
-    # ax2.plot(t_dap, v_dap, 'k')
-    # ax2.set_ylabel('Membrane Potential (mV)')
-    # ax2.spines['right'].set_visible(True)
-    #
-    # ax.axhline(ramp3_amp_min, linestyle='--', c='0.5')
-    # ax.axhline(ramp3_amp_max, linestyle='--', c='0.5')
-    # ax.plot(0, current_threshold_rampIV, 'ok', markersize=6.5)
-    # for i, current_threshold in enumerate(current_thresholds):
-    #     ax.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Step Amp.: '+str(step_amps[i]),
-    #             markersize=9-2.5*i)
-    # ax.set_xlabel('Time (ms)')
-    # ax.set_ylabel('Current threshold (mA/$cm^2$)')
-    # ax.set_xticks(np.insert(ramp3_times, 0, [0]))
-    # ax.set_xlim(-0.5, ramp3_times[-1]+2)
-    # ax.legend()
-    # pl.tight_layout()
-    # pl.savefig(os.path.join(save_dir_img, 'current_threshold_zoom.png'))
-    # pl.show()
 
 
 def save_diff_current_threshold(current_threshold_rampIV, current_thresholds, save_dir):
@@ -207,7 +115,7 @@ if __name__ == '__main__':
     # simulation
     current_thresholds = [0] * len(step_amps)
     for i, step_amp in enumerate(step_amps):
-        current_thresholds[i], ramp3_times, ramp3_amps, v_dap, t_dap = simulate_and_get_current_threshold()
+        current_thresholds[i], ramp3_times, ramp3_amps, v_dap, t_dap, _ = simulate_and_get_current_threshold(cell)
 
     # save difference of minimal current threshold and from rampIV
     save_diff_current_threshold(current_threshold_rampIV, current_thresholds,

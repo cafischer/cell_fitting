@@ -6,7 +6,7 @@ from grid_cell_stimuli.ISI_hist import get_ISI_hist, get_ISI_hists_into_outof_fi
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 import matplotlib.pyplot as pl
 from nrn_wrapper import Cell, load_mechanism_dir
-from cell_fitting.optimization.evaluation.plot_sine_stimulus import apply_sine_stimulus
+from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
 from cell_characteristics import to_idx
 pl.style.use('paper')
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
             os.makedirs(save_dir_img)
 
         # simulate
-        v, t, i_inj = apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
+        v, t, i_inj = simulate_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
 
         # parameter
         AP_threshold = -30

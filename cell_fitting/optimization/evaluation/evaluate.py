@@ -232,10 +232,12 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server_17_12_04/2017-12-16_10:04:51/58'
+    save_dir = '../../results/server_17_12_04/2017-12-26_08:14:12/13'
     #save_dir = '../scripts/test/0/'
-    # [58, 49, 181, 42, 215, 0, 20, 6, 244, 210]
     #2017-12-16_10:04:51 : 42, 20
+    #2017-12-20_10:24:47: [330, 129, 135]
+    # [330, 142, 489, 166, 492, 65, 313, 129, 103, 135]
+    # 2017-12-26_08:14:12: [105, 69, 185, 112]
 
     method = 'L-BFGS-B'
     save_dir = os.path.join(save_dir, method)

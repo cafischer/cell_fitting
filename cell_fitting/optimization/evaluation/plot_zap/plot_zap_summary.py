@@ -4,8 +4,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import pandas as pd
 import seaborn as sns
-
-from cell_fitting.optimization.evaluation.plot_zap import apply_zap_stimulus
+from cell_fitting.optimization.evaluation.plot_zap.plot_zap import apply_zap_stimulus
 from nrn_wrapper import Cell, load_mechanism_dir
 
 pl.style.use('paper')

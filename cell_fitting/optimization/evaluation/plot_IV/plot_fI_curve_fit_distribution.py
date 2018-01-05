@@ -63,7 +63,7 @@ if __name__ == '__main__':
         amps_greater0 = amps[amps_greater0_idx]
         firing_rates_model = firing_rates_model[amps_greater0_idx]
 
-        # fit square root to FI-curve
+        # fit FI-curve
         b0 = amps_greater0[np.where(firing_rates_model > 0)[0][0]]
         p_opt, _ = curve_fit(fit_fun, amps_greater0, firing_rates_model, p0=[50, b0, 0.5])
         print p_opt

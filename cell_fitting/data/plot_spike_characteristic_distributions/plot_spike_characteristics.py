@@ -39,7 +39,8 @@ for i, characteristic in enumerate(return_characteristics):
     character_name_dict = {'AP_amp': 'AP amplitude (mV)', 'AP_width': 'AP width (ms)',
                            'fAHP_amp': 'fAHP amplitude (mV)',
                            'DAP_amp': 'DAP amplitude (mV)', 'DAP_deflection': 'DAP deflection (mV)',
-                           'DAP_width': 'DAP width (ms)', 'DAP_time': 'DAP time (ms)'}
+                           'DAP_width': 'DAP width (ms)', 'DAP_time': 'DAP time (ms)',
+                           'fAHP2DAP_time': '$Time_{DAP_{max} - fAHP_{min}}$'}
 
 
     fig, ax1 = pl.subplots()

@@ -50,7 +50,6 @@ def find_AP_current(cell, other_i_inj, test_step_amps, step_st_ms, step_end_ms, 
 
         if len(onsets_after_step) > 0:
             step_amp_spike = step_amp
-            print 'Step current amplitude: %.2f' % step_amp_spike
             break
 
         if plot:
@@ -62,14 +61,15 @@ def find_AP_current(cell, other_i_inj, test_step_amps, step_st_ms, step_end_ms, 
 
 
 def simulate_with_step_and_holding_current(cell, hold_potentials, hold_amps, step_amp_spike, step_st_ms, step_end_ms,
-                                           tstop, dt, onset=200, celsius=35):
+                                           tstop, dt, onset=200, celsius=35, v_init=-75):
     v_mat = []
     for i, hold_amp in enumerate(hold_amps):
         i_step = get_step(to_idx(step_st_ms, dt), to_idx(step_end_ms, dt), to_idx(tstop, dt) + 1, step_amp_spike)
         i_hold = get_step(0, to_idx(tstop, dt) + 1, to_idx(tstop, dt) + 1, hold_amp)
         i_exp = i_hold + i_step
 
-        simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': hold_potentials[i],
+        v_init = v_init if hold_potentials[0] is None else hold_potentials[i]
+        simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': v_init,
                              'tstop': tstop, 'dt': dt, 'celsius': celsius, 'onset': onset}
         v, t, _ = iclamp_handling_onset(cell, **simulation_params)
         v_mat.append(v)

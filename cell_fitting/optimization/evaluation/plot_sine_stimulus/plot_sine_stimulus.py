@@ -4,7 +4,7 @@ import numpy as np
 from nrn_wrapper import Cell
 import os
 import json
-from cell_fitting.optimization.evaluation.plot_sine_stimulus import apply_sine_stimulus
+from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
 pl.style.use('paper')
 
 
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     sine_params = {'amp1': amp1, 'amp2': amp2, 'sine1_dur': sine1_dur, 'freq2': freq2, 'onset_dur': onset_dur,
                    'offset_dur': offset_dur, 'dt': dt}
 
-    v, t, i_inj = apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
+    v, t, i_inj = simulate_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
 
     # plot
     save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus', 'traces',

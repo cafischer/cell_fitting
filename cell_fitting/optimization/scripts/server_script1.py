@@ -60,43 +60,11 @@ variables = [
             [0, 1, [['soma', '0.5', 'kdr', 'n_tau_delta']]],
             [0, 1, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]]
             ]
-# variables_extension = [
-#             [0, 0.5, [['soma', '0.5', 'ka', 'gbar']]],
-#
-#             [-100, 0, [['soma', '0.5', 'ka', 'n_vh']]],
-#             [-100, 0, [['soma', '0.5', 'ka', 'l_vh']]],
-#             [1, 30, [['soma', '0.5', 'ka', 'n_vs']]],
-#             [-30, 1, [['soma', '0.5', 'ka', 'l_vs']]],
-#
-#             [0, 50, [['soma', '0.5', 'ka', 'n_tau_min']]],
-#             [0, 50, [['soma', '0.5', 'ka', 'l_tau_min']]],
-#             [1, 100, [['soma', '0.5', 'ka', 'n_tau_max']]],
-#             [1, 100, [['soma', '0.5', 'ka', 'l_tau_max']]],
-#             [0, 1, [['soma', '0.5', 'ka', 'n_tau_delta']]],
-#             [0, 1, [['soma', '0.5', 'ka', 'l_tau_delta']]],
-#             ]
-# variables.extend(variables_extension)
 
 variable_range_name = 'mean_std_6models'
 save_dir_range = os.path.join('../../results/sensitivity_analysis/', 'variable_ranges')
 with open(os.path.join(save_dir_range, variable_range_name + '.json'), 'r') as f:
     variables_init = json.load(f)
-# variables_init_extension = [
-#             [0.001, 0.05, [['soma', '0.5', 'ka', 'gbar']]],
-#
-#             [-75, -30, [['soma', '0.5', 'ka', 'n_vh']]],
-#             [-75, -30, [['soma', '0.5', 'ka', 'l_vh']]],
-#             [1, 25, [['soma', '0.5', 'ka', 'n_vs']]],
-#             [-25, 1, [['soma', '0.5', 'ka', 'l_vs']]],
-#
-#             [0, 10, [['soma', '0.5', 'ka', 'n_tau_min']]],
-#             [0, 10, [['soma', '0.5', 'ka', 'l_tau_min']]],
-#             [1, 50, [['soma', '0.5', 'ka', 'n_tau_max']]],
-#             [1, 50, [['soma', '0.5', 'ka', 'l_tau_max']]],
-#             [0, 1, [['soma', '0.5', 'ka', 'n_tau_delta']]],
-#             [0, 1, [['soma', '0.5', 'ka', 'l_tau_delta']]]
-#             ]
-# variables_init.extend(variables_init_extension)
 
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
@@ -117,9 +85,9 @@ fitter_params = {
                     'errfun_name': 'rms',
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
                     'mechanism_dir': '../../model/channels/vavoulis',
-                    'fitfun_names_per_data_set': [['v_AP_v_DAP_and_DAP_time']],
+                    'fitfun_names_per_data_set': [['v_AP_v_DAP_DAP_time_current_threshold']],
                     #'fitfun_names_per_data_set': [['get_v']],
-                    'fitnessweights_per_data_set': [[1, 2, 2]],
+                    'fitnessweights_per_data_set': [[1, 3, 2, 1]],
                     #'fitnessweights_per_data_set': [[1]],
                     'data_read_dict_per_data_set': [data_read_dict],
                     'init_simulation_params': {'celsius': 35, 'onset': 200, 'v_init': -75},

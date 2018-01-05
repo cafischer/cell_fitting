@@ -5,10 +5,7 @@ import os
 import pandas as pd
 from cell_fitting.data import shift_v_rest
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_protocols_same_base
-from cell_characteristics.analyze_APs import get_spike_characteristics, get_AP_onset_idxs
-from cell_characteristics import to_idx
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
-from cell_fitting.util import init_nan
 pl.style.use('paper')
 
 
@@ -67,31 +64,6 @@ def get_amps_v_traces_t_traces(cell_id, data_dir, protocol_hyper, protocol_depo,
     t_traces = t_traces[sort_idxs]
 
     return amps, v_traces, t_traces
-
-
-def get_spike_characteristics_and_vstep(v_traces, t_traces, spike_characteristic_params, return_characteristics,
-                                        ramp_start, step_start):
-    spike_characteristics_mat = init_nan((len(v_traces), len(return_characteristics)))
-    v_step = init_nan(len(v_traces))
-    for i, (v, t) in enumerate(zip(v_traces, t_traces)):
-        onset_idxs_after_ramp = get_AP_onset_idxs(v[to_idx(ramp_start, t[1] - t[0]):to_idx(ramp_start + 10, t[1] - t[0])],
-                                                 spike_characteristic_params['AP_threshold'])
-        onset_idxs_all = get_AP_onset_idxs(v, spike_characteristic_params['AP_threshold'])
-
-        if len(onset_idxs_after_ramp) >= 1 and len(onset_idxs_all) - len(onset_idxs_after_ramp) == 0:
-            v_step[i] = np.mean(v[to_idx(step_start + (ramp_start-step_start)/2, t[1] - t[0]): to_idx(ramp_start, t[1] - t[0])])
-            v_rest = np.mean(v[0:to_idx(step_start, t[1] - t[0])])
-            std_idx_times = (0, 10)  # rather short so that no global changes interfere
-            spike_characteristics_mat[i, :] = get_spike_characteristics(np.array(v, dtype=float),
-                                                                        np.array(t, dtype=float),
-                                                                        return_characteristics,
-                                                                        v_rest=v_rest, std_idx_times=std_idx_times,
-                                                                        check=False,
-                                                                        **spike_characteristic_params)
-            # set to nan if spike on DAP
-            if spike_characteristics_mat[i, np.array(return_characteristics) == 'DAP_amp'] > 50:
-                spike_characteristics_mat[i, :] = init_nan(len(return_characteristics))
-    return spike_characteristics_mat, v_step
 
 
 if __name__ == '__main__':

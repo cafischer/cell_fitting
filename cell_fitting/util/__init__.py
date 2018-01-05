@@ -19,4 +19,3 @@ def norm(x, lower_bound, upper_bound):
 
 def unnorm(x, lower_bound, upper_bound):
     return [x[i] * (upper_bound[i] - lower_bound[i]) + lower_bound[i] for i in range(len(x))]
-

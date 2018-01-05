@@ -8,9 +8,10 @@ def get_ramp3_times(delta_first=3, delta_ramp=2, n_times=10):
 
 
 def get_ramp(start, peak, end, amp_before, ramp_amp, amp_after, dt):
-    start_idx = to_idx(start, dt)
-    peak_idx = to_idx(peak, dt)
-    end_idx = to_idx(end, dt, 4)
+    decimal_place = get_decimal_place(dt)
+    start_idx = to_idx(start, dt, decimal_place)
+    peak_idx = to_idx(peak, dt, decimal_place)
+    end_idx = to_idx(end, dt, decimal_place)
     diff_idx = end_idx - start_idx + 1
     half_diff_up = peak_idx - start_idx + 1
     half_diff_down = end_idx - peak_idx + 1
@@ -86,3 +87,15 @@ def get_i_inj_hyper_depo_ramp(step_start=200, step_end=600, ramp_len=2, step_amp
     i_inj[step_st_idx:step_end_idx] = step_amp
     i_inj[step_end_idx:ramp_end_idx+1] = get_ramp(step_end, step_end + 0.8, ramp_end, step_amp, ramp_amp, 0, dt)
     return i_inj
+
+
+def get_decimal_place(x):
+    """
+    Note: Does not work for 1ex.
+    :param x:
+    :return:
+    """
+    s = str(x)
+    if not '.' in s:
+        return 0
+    return len(s) - s.index('.') - 1

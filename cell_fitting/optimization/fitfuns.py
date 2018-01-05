@@ -1,6 +1,8 @@
 import numpy as np
 from cell_characteristics.analyze_APs import *
 import scipy
+import statsmodels.api as sm
+from cell_fitting.optimization.evaluation.plot_rampIV import find_current_threshold
 
 __author__ = 'caro'
 
@@ -293,7 +295,10 @@ def impedance(v, i_inj, dt, f_range):
     idx1 = np.argmin(np.abs(freqs-f_range[0]))
     idx2 = np.argmin(np.abs(freqs-f_range[1]))
 
-    return imp[idx1:idx2], freqs[idx1:idx2]
+    # smooth
+    imp_smooth = np.array(sm.nonparametric.lowess(imp[idx1:idx2], freqs[idx1:idx2], frac=0.3)[:, 1])
+
+    return imp[idx1:idx2], freqs[idx1:idx2], imp_smooth
 
 
 def get_fAHP_min(v, t, i_inj, args):
@@ -368,6 +373,17 @@ def v_AP_v_DAP_and_DAP_time(data_dicts, args=None):
     else:
         DAP_time = get_DAP_time(data_dicts[0]['v'], data_dicts[0]['t'], data_dicts[0]['i_inj'], args)
     return data_dicts[0]['v'][:fAHP_min_idx], data_dicts[0]['v'][fAHP_min_idx:], DAP_time
+
+def v_AP_v_DAP_DAP_time_current_threshold(data_dicts, args=None):
+    is_data = args.get('is_data', False)
+    fAHP_min_idx = to_idx(13, data_dicts[0]['t'][1]-data_dicts[0]['t'][0])
+    if is_data:
+        DAP_time = 4.94
+        current_threshold = 3.1
+    else:
+        DAP_time = get_DAP_time(data_dicts[0]['v'], data_dicts[0]['t'], data_dicts[0]['i_inj'], args)
+        current_threshold = find_current_threshold(args['cell'])
+    return data_dicts[0]['v'][:fAHP_min_idx], data_dicts[0]['v'][fAHP_min_idx:], DAP_time, current_threshold
 
 
 if __name__ == '__main__':

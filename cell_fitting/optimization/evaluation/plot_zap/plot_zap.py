@@ -1,32 +1,19 @@
 from __future__ import division
-
 import matplotlib.pyplot as pl
 import numpy as np
-
-pl.style.use('paper')
 import os
-from cell_fitting.optimization.simulate import iclamp_handling_onset
 from nrn_wrapper import Cell
 from cell_fitting.read_heka import get_v_and_t_from_heka
 from cell_fitting.data import set_v_rest
 from cell_characteristics import to_idx
-import statsmodels.api as sm
 from cell_fitting.optimization.fitfuns import impedance
-from cell_fitting.read_heka.i_inj_functions import get_i_inj_zap
-
+from cell_fitting.optimization.evaluation.plot_zap import simulate_zap, plot_v_and_impedance
+pl.style.use('paper')
 
 
 def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, zap_dur=30000,
                        tstop=34000, dt=0.01, save_dir=None):
-
-    i_exp = get_i_inj_zap(amp, freq0, freq1, onset_dur, offset_dur, zap_dur, tstop, dt)
-
-    # get simulation parameters
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': tstop,
-                         'dt': dt, 'celsius': 35, 'onset': 200}
-
-    # record v
-    v, t, i_exp = iclamp_handling_onset(cell, **simulation_params)
+    v, t, i_exp = simulate_zap(cell, amp=amp)
 
     freqs = lambda x: (freq0-freq1)/(onset_dur-t[-1]-offset_dur) * x \
                       + (freq0-(freq0-freq1)/(onset_dur-t[-1]-offset_dur)*onset_dur)
@@ -39,8 +26,7 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_
     v_ds = v[to_idx(onset_dur, dt, 3):to_idx(tstop - offset_dur, dt, 3)]
 
     # compute impedance
-    imp, frequencies = impedance(v_ds, i_inj_ds, dt / 1000, [freq0, freq1])  # dt in (sec) for fft
-    imp_smooth = np.array(sm.nonparametric.lowess(imp, frequencies, frac=0.3)[:, 1])
+    imp, frequencies, imp_smooth = impedance(v_ds, i_inj_ds, dt / 1000, [freq0, freq1])  # dt in (sec) for fft
 
     # resonance frequency
     res_freq_idx = np.argmax(imp_smooth)
@@ -104,44 +90,11 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_
         v_rest = -75
         v = set_v_rest(v, v[0], v_rest)
 
-        fig, ax1 = pl.subplots()
-        ax2 = ax1.twinx().twiny()  # need two twins for labeling new x and y axis
-        ax3 = ax1.twiny().twinx()
-        ax1.plot((t - onset_dur) / 1000, v, 'k')
-        # ylim = ax1.get_ylim()
-        # ax1.set_ylim(ylim[0]-2, ylim[1]+2)
-        ax1.set_ylim(v_rest - 10, v_rest + 10)
-        ax1.set_xlim(0, (tstop - offset_dur - onset_dur) / 1000)
-        ax2.plot(frequencies, imp_smooth, c='r', label='Res. Freq.: %.2f (Hz)' % res_freq + '\nQ-Value: %.2f' % q_value)
-        ax3.plot(frequencies, imp_smooth, c='r')
-        ax2.set_yticks([])
-        ax3.set_xticks([])
-        ax2.set_xlim(freq0, freq1)
-        ax3.set_xlim(freq0, freq1)
-        # ylim = ax3.get_ylim()
-        ylim = [0, 100]
-        ax3.set_ylim(ylim[0] - 5, ylim[1] + 5)
-        ax2.set_ylim(ylim[0] - 5, ylim[1] + 5)
-        ax2.spines['top'].set_visible(True)
-        ax2.spines['right'].set_visible(True)
-        ax2.set_xlabel('Frequency (Hz)')
-        ax3.set_ylabel('Impedance (M$\Omega$)', color='r')
-        ax1.set_xlabel('Time (s)')
-        ax1.set_ylabel('Membrane Potential (mV)')
-
-        # ax2.annotate('%.2f (Hz)' % res_freq, xy=(res_freq, imp_smooth[res_freq_idx]+0.3),
-        #              xytext=(res_freq+0.5, imp_smooth[res_freq_idx]+3), fontsize=16,
-        #             arrowprops=dict(arrowstyle='wedge', color='r'))
-        leg = ax2.legend(handlelength=0, handletextpad=0, fancybox=True, fontsize=16)
-        for item in leg.legendHandles:
-            item.set_visible(False)
-
-        pl.tight_layout()
-        pl.subplots_adjust(left=0.18, right=0.86, bottom=0.14, top=0.88)
-        pl.savefig(os.path.join(save_dir_img, 'v_impedance.png'))
-        pl.show()
+        plot_v_and_impedance(freq0, freq1, frequencies, imp_smooth, offset_dur, onset_dur, q_value, res_freq,
+                             save_dir_img, t, tstop, v, v_rest)
 
     return res_freq, q_value
+
 
 
 if __name__ == '__main__':
@@ -157,4 +110,4 @@ if __name__ == '__main__':
 
     # apply stim
     apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, zap_dur=30000, tstop=34000,
-                       dt=0.1, save_dir=save_dir)
+                       dt=0.01, save_dir=save_dir)

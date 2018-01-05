@@ -12,15 +12,6 @@ pl.style.use('paper')
 __author__ = 'caro'
 
 
-# def get_ramp(start_idx, end_idx, amp_before, ramp_amp, amp_after):
-#     diff_idx = end_idx - start_idx
-#     half_diff_up = int(np.ceil(diff_idx / 2))
-#     half_diff_down = int(np.floor(diff_idx / 2))
-#     i_exp = np.zeros(diff_idx)
-#     i_exp[:half_diff_up] = np.linspace(amp_before, ramp_amp, half_diff_up)
-#     i_exp[half_diff_up:] = np.linspace(ramp_amp, amp_after, half_diff_down+1)[1:]
-#     return i_exp
-
 def get_ramp3_times(delta_first=3, delta_ramp=2, n_times=10):
     return np.arange(delta_first, n_times * delta_ramp + delta_ramp, delta_ramp)
 
@@ -60,15 +51,6 @@ def double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp, len_step, dt, 
     currents = [0] * len(ramp3_times)
 
     for j, ramp3_time in enumerate(ramp3_times):
-        # start_ramp3 = start_ramp2 + int(round(ramp3_time / dt))
-        # end_ramp3 = start_ramp3 + int(round(len_ramp / dt))
-        #
-        # i_exp = np.ones(len(t_exp)) * baseline_amp
-        # i_exp[start_ramp1:end_ramp1] = get_ramp(start_ramp1, end_ramp1, 0, ramp_amp, 0)
-        # i_exp[start_step:end_step] = step_amp
-        # i_exp[start_ramp2:end_ramp2] = get_ramp(start_ramp2, end_ramp2, 0, ramp_amp, 0)
-        # i_exp[start_ramp3:end_ramp3] = get_ramp(start_ramp3, end_ramp3, 0, ramp3_amp, 0)
-
         i_exp = get_i_inj_double_ramp(ramp_amp, ramp3_amp, ramp3_time, step_amp, len_step, baseline_amp, len_ramp,
                                       len_step2ramp=len_step2ramp, tstop=tstop, dt=dt)
 
@@ -233,8 +215,8 @@ def plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, sav
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    save_dir = '../../../results/server_17_12_04/2017-12-16_10:04:51/20/L-BFGS-B'
+    #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '../../../results/server_17_12_04/2017-12-26_08:17:19/473/L-BFGS-B'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
 
@@ -250,7 +232,7 @@ if __name__ == '__main__':
     i_inj_mats = []
     v_mats = []
     for step_amp in [0, 0.1, -0.1]:
-        for ramp3_amp in np.arange(0.4, 4.0+0.05, 0.05):
+        for ramp3_amp in np.arange(1.5, 4.0+0.05, 0.05):
             t, v_mat, i_inj_mat, ramp3_times, currents, channel_list, _ = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times,
                                                                                       step_amp, len_step, dt, tstop)
             if ramp3_amp == 1.5:

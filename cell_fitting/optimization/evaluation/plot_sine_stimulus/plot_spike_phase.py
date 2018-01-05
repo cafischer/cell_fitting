@@ -2,7 +2,7 @@ from __future__ import division
 import os
 import numpy as np
 from nrn_wrapper import Cell, load_mechanism_dir
-from cell_fitting.optimization.evaluation.plot_sine_stimulus import apply_sine_stimulus
+from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
 from cell_characteristics import to_idx
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from scipy.stats import circmean, circstd
@@ -35,7 +35,7 @@ if __name__ == '__main__':
             os.makedirs(save_dir_img)
 
         # simulate
-        v, t, i_inj = apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
+        v, t, i_inj = simulate_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
 
         # parameter
         AP_threshold = 0

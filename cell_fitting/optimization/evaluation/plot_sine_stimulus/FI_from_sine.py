@@ -4,7 +4,7 @@ import numpy as np
 from nrn_wrapper import Cell
 import os
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
-from cell_fitting.optimization.evaluation.plot_sine_stimulus import apply_sine_stimulus
+from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
 from cell_characteristics import to_idx
 pl.style.use('paper')
 
@@ -62,7 +62,7 @@ if __name__ == '__main__':
                     sine_params = {'amp1': amp1, 'amp2': amp2, 'sine1_dur': sine1_dur, 'freq2': freq2, 'onset_dur': onset_dur,
                                    'offset_dur': offset_dur, 'dt': dt}
 
-                    v, t, i_inj = apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
+                    v, t, i_inj = simulate_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
 
                     start_idx = to_idx(onset_dur+sine1_dur/2-250, dt)
                     end_idx = to_idx(onset_dur+sine1_dur/2+250, dt)

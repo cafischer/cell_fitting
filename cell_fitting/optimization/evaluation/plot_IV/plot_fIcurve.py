@@ -7,6 +7,7 @@ from cell_fitting.optimization.fitter import extract_simulation_params
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_fitting.util import merge_dicts
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
+from cell_fitting.optimization.evaluation.plot_IV import plot_IV_traces, plot_fi_curve
 pl.style.use('paper')
 
 
@@ -58,24 +59,13 @@ if __name__ == '__main__':
     firing_rates_model = firing_rates_model[amps_greater0_idx]
     firing_rates_data_last_ISI = firing_rates_data_last_ISI[amps_greater0_idx]
     firing_rates_model_last_ISI = firing_rates_model_last_ISI[amps_greater0_idx]
-    #v_traces_data = v_traces_data[amps_greater0]
-    #v_traces_model = v_traces_model[amps_greater0]
 
     # plot
     save_dir_img = os.path.join(save_dir, 'img', 'IV')
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
-    pl.figure()
-    #pl.plot(amps_greater0, firing_rates_data, '-ok', label='Exp. Data')
-    pl.plot(amps_greater0, firing_rates_model, '-or', label='Model')
-    pl.ylim([0, 0.09])
-    pl.xlabel('Current (nA)')
-    pl.ylabel('Firing rate (APs/ms)')
-    #pl.legend(loc='lower right')
-    pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'fIcurve.png'))
-    #pl.show()
+    plot_fi_curve(amps_greater0, firing_rates_model, os.path.join(save_dir_img, 'fi_curve'))
 
     np.save(os.path.join(save_dir_img, 'amps_greater0.npy'), amps_greater0)
     np.save(os.path.join(save_dir_img, 'firing_rates.npy'), firing_rates_model)
@@ -117,16 +107,5 @@ if __name__ == '__main__':
     #     pl.savefig(os.path.join(save_dir_img, 'plot_IV' + str(amp) + '.png'))
     #     pl.show()
 
-    # plot all under another with subfigures
-    #fig, ax = pl.subplots(sum(amps_greater0_idx), 1, sharex=True)
-    fig, ax = pl.subplots(20, 1, sharex=True, figsize=(21, 29.7))
-    for i, (amp, v_trace_model) in enumerate(zip(amps[amps_greater0_idx][1:21], v_mat_model[amps_greater0_idx][1:21])):
-        ax[i].plot(t_model, v_trace_model, 'r', label='$i_{amp}: $ %.2f' % amp)
-        ax[i].set_ylim(-80, 60)
-        ax[i].set_xlim(200, 850)
-        ax[i].legend(fontsize=14)
-    #pl.tight_layout()
-    fig.text(0.06, 0.5, 'Membrane Potential (mV)', va='center', rotation='vertical', fontsize=14)
-    fig.text(0.5, 0.06, 'Time (ms)', ha='center', fontsize=14)
-    pl.savefig(os.path.join(save_dir_img, 'IV_subplots.pdf'))
+    plot_IV_traces(amps[amps_greater0_idx], t_model, v_mat_model[amps_greater0_idx], save_dir_img)
     pl.show()

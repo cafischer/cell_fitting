@@ -2,16 +2,17 @@ from __future__ import division
 import os
 import numpy as np
 import matplotlib.pyplot as pl
-from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
+from cell_fitting.optimization.evaluation.rampIV import simulate_rampIV
 from nrn_wrapper import Cell, load_mechanism_dir
 from cell_characteristics.analyze_APs import get_AP_onset_idxs, get_spike_characteristics
+from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
 pl.style.use('paper')
 
 
 # save dir
 save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/'
-mechanism_dir = '../../model/channels/vavoulis'
-data_dir = '../../data/plots/spike_characteristics/distributions/rat'
+mechanism_dir = '../../../model/channels/vavoulis'
+data_dir = '../../../data/plots/spike_characteristics/distributions/rat'
 
 # for models
 protocol = 'rampIV'
@@ -20,17 +21,8 @@ sweep_idxs = range(83)  # till 4.0 nA
 v_rest_shift = -16
 tstop = 161.99
 dt = 0.01
-AP_threshold = -30  # mV
-AP_interval = 2.5  # ms (also used as interval for fAHP)
-fAHP_interval = 4.0
-AP_width_before_onset = 2  # ms
-DAP_interval = 10  # ms
-order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
-order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
-min_dist_to_DAP_max = 0.5  # ms
-k_splines = 3
-s_splines = None
-return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_deflection', 'DAP_width', 'DAP_time']
+return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_deflection', 'DAP_width', 'DAP_time',
+                          'fAHP2DAP_time']
 load_mechanism_dir(mechanism_dir)
 
 spike_characteristics_list = []
@@ -43,7 +35,7 @@ for model_id in model_ids:
     for ramp_amp in np.arange(3.0, 3.5, 0.1):
         v, t, i_inj = simulate_rampIV(cell, ramp_amp, v_init=-75)
 
-        onset_idxs = get_AP_onset_idxs(v, AP_threshold)
+        onset_idxs = get_AP_onset_idxs(v, threshold=-10)
         if len(onset_idxs) == 1 and onset_idxs * dt < 12.5:
             # get spike characteristics
             print model_id, ramp_amp
@@ -51,11 +43,8 @@ for model_id in model_ids:
             std_idx_times = (0, start_i_inj * dt)
             v_rest = np.mean(v[0:start_i_inj])
             spike_characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest,
-                                                                       AP_threshold, AP_interval, AP_width_before_onset,
-                                                                       fAHP_interval, std_idx_times,
-                                                                       k_splines, s_splines, order_fAHP_min,
-                                                                       DAP_interval, order_DAP_max, min_dist_to_DAP_max,
-                                                                       check=False), dtype=float)
+                                                                       std_idx_times=std_idx_times, check=False,
+                                                                       **get_spike_characteristics_dict()), dtype=float)
             spike_characteristics_list.append(spike_characteristics)
             v_list.append(v)
             break
@@ -79,7 +68,8 @@ for i, characteristic in enumerate(return_characteristics):
     character_name_dict = {'AP_amp': 'AP Amplitude (mV)', 'AP_width': 'AP Width (ms)',
                            'fAHP_amp': 'fAHP Amplitude (mV)',
                            'DAP_amp': 'DAP Amplitude (mV)', 'DAP_deflection': 'DAP Deflection (mV)',
-                           'DAP_width': 'DAP Width (ms)', 'DAP_time': 'DAP Time (ms)'}
+                           'DAP_width': 'DAP Width (ms)', 'DAP_time': 'DAP Time (ms)',
+                           'fAHP2DAP_time': '$Time_{DAP_{max} - fAHP_{min}} (ms)$'}
 
     # plot
     save_dir_img = os.path.join(save_dir, 'img', protocol, 'spike_characteristics')
@@ -120,5 +110,3 @@ for i, characteristic in enumerate(return_characteristics):
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'hist_' + return_characteristics[i] + '.png'))
     pl.show()
-
-    # TODO: model 1 does not have fAHP min and DAPtime quite long

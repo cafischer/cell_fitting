@@ -7,7 +7,7 @@ from cell_characteristics.analyze_APs import get_AP_max_idx, get_fAHP_min_idx_us
 from nrn_wrapper import Cell
 
 from cell_fitting.optimization.errfuns import rms
-from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
+from cell_fitting.optimization.evaluation.rampIV import simulate_rampIV
 
 pl.style.use('paper')
 

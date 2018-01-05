@@ -79,12 +79,11 @@ def plot_linear_fits(x_per_cell, xlabel, spike_characteristic_per_cell, return_c
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
         pl.savefig(os.path.join(save_dir_img, 'linear_fits_' + return_characteristic + '.png'))
-    #pl.show()
 
 
 def plot_slope_rmse(return_characteristics, xlabel, rmses, slopes, slopes_model=None, rmses_model=None, model_ids=None,
                     save_dir=None):
-
+    figs = []
     for c_idx, return_characteristic in enumerate(return_characteristics):
         star = get_star_from_ttest(slopes[:, c_idx])
 
@@ -123,7 +122,8 @@ def plot_slope_rmse(return_characteristics, xlabel, rmses, slopes, slopes_model=
             if not os.path.exists(save_dir_img):
                 os.makedirs(save_dir_img)
             pl.savefig(os.path.join(save_dir_img, 'slope_rmse_' + return_characteristic + '.png'))
-        #pl.show()
+        figs.append(fig)
+    return figs
 
 
 if __name__ == '__main__':

@@ -47,7 +47,7 @@ if __name__ == '__main__':
         v_model, t_model, _ = iclamp_adaptive_handling_onset(cell, **simulation_params)
 
         v_sags, v_steady_states, _ = compute_v_sag_and_steady_state([v_model], [amp], AP_threshold,
-                                                                start_step_idx, end_step_idx)
+                                                                    start_step_idx, end_step_idx)
         sag_amp = v_steady_states[0] - v_sags[0]
         sag_amps_model.append(sag_amp)
 

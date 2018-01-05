@@ -16,25 +16,25 @@ __author__ = 'caro'
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    save_dir_img = os.path.join(save_dir, 'img', 'DAP_at_different_holding_potentials')
+    save_dir_img = os.path.join(save_dir, 'img', 'alessi', 'no_hold')
     amps_given = False
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # different holding potentials
-    hold_potentials = [-87, -82, -72, -67]
-    dt = 0.001
+    hold_potentials = [None]  # [-87, -82, -72, -67]
+    dt = 0.01
     step_st_ms = 50  # ms
     step_end_ms = step_st_ms + 1  # ms
     tstop = 240  # ms
     tstop_hold = 100
     test_hold_amps = np.arange(-2, 1, 0.001)
-    test_step_amps = np.arange(2.0, 8.0, 0.1)
-    AP_threshold = -20
+    test_step_amps = np.arange(3.0, 8.0, 0.1)  # TODO: 2.0
+    AP_threshold = 0
 
     # compute/load holding and spike amplitudes
     if amps_given:
@@ -42,12 +42,17 @@ if __name__ == '__main__':
         hold_potentials = np.load(os.path.join(save_dir_img, 'hold_potentials.npy'))
         hold_amps = np.load(os.path.join(save_dir_img, 'hold_amps.npy'))
     else:
-        hold_amps = find_hold_amps(cell, hold_potentials, test_hold_amps, tstop_hold, dt)
+        if hold_potentials[0] is None:
+            hold_amps = [0]
+        else:
+            hold_amps = find_hold_amps(cell, hold_potentials, test_hold_amps, tstop_hold, dt)
         print 'Holding amplitudes: ', hold_amps
 
+        v_init = -75 if hold_potentials[0] is None else hold_potentials[0]
+
         i_hold = get_step(0, to_idx(tstop, dt) + 1, to_idx(tstop, dt) + 1, hold_amps[0])
-        step_amp_spike = find_AP_current(cell, i_hold, hold_amps[0], test_step_amps, step_st_ms, step_end_ms,
-                                         AP_threshold, hold_potentials[0], tstop, dt)
+        step_amp_spike = find_AP_current(cell, i_hold, test_step_amps, step_st_ms, step_end_ms,
+                                         AP_threshold, v_init, tstop, dt)
         print 'Spike amplitude: ', step_amp_spike
 
     # simulate different holding potentials with step current

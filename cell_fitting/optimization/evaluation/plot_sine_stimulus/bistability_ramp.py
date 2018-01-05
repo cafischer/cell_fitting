@@ -5,7 +5,7 @@ from matplotlib.colors import Normalize
 import numpy as np
 import os
 from nrn_wrapper import Cell
-from cell_fitting.optimization.evaluation.plot_sine_stimulus import apply_sine_stimulus
+from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 pl.style.use('paper')
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     for i, amp1 in enumerate(amp1s):
         for j, sine1_dur in enumerate(sine1_durs):
-            v, t, _ = apply_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
+            v, t, _ = simulate_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
             onsets = get_AP_onset_idxs(v, AP_threshold)
             n_APs_up[i, j] = len(onsets[onsets < len(t)/2])
             n_APs_down[i, j] = len(onsets[onsets > len(t)/2])

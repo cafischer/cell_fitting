@@ -11,7 +11,7 @@ from nrn_wrapper import Cell
 
 from cell_fitting.optimization.evaluation.Alessi_figures import find_hold_amps
 from cell_fitting.optimization.evaluation.plot_IV import get_step
-from cell_fitting.optimization.evaluation.plot_rampIV import get_ramp
+from cell_fitting.read_heka.i_inj_functions import get_ramp
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_fitting.util import init_nan
 
@@ -22,23 +22,23 @@ __author__ = 'caro'
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    save_dir_hold = os.path.join(save_dir, 'img', 'alessi', 'no_hold')
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     AP_amp_tol = 1
     AP_width_tol = 0.1
     AP_time_tol = 0.1
-    percent_block = 0.9
-    use_same_hold_amps = False
-    use_given_hold_amps_block = True
-    use_given_ramp = True
+    percent_block = 0.1
+    use_same_hold_amps = True
+    use_given_hold_amps_block = False
+    use_given_ramp = False
     if use_same_hold_amps:
-        save_dir_img = os.path.join(save_dir, 'img', 'TTX', 'reconstructed_AP', 'same_amps',
-                                    'percent_block' + str(percent_block))
+        save_dir_img = os.path.join(save_dir, 'img', 'alessi', 'TTX', 'reconstructed_AP', 'same_amps',
+                                    'percent_block_' + str(percent_block))
     else:
-        save_dir_img = os.path.join(save_dir, 'img', 'TTX', 'reconstructed_AP', 'new_amps',
-                                    'percent_block'+str(percent_block))
-    save_dir_hold = os.path.join(save_dir, 'img', 'DAP_at_different_holding_potentials')
+        save_dir_img = os.path.join(save_dir, 'img', 'alessi', 'TTX', 'reconstructed_AP', 'new_amps',
+                                    'percent_block_'+str(percent_block))
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     # load holding potentials and amplitudes
     celsius = 35
     onset = 200
-    dt = 0.001
+    dt = 0.01
     step_st_ms = 50  # ms
     step_end_ms = step_st_ms + 1  # ms
     tstop = 240  # ms
@@ -81,15 +81,15 @@ if __name__ == '__main__':
                 print 'Hold amp is nan!'
                 v_mat_block.append(init_nan(len(t)))
                 break
-
+            v_rest = np.mean(v_mat[i][:to_idx(step_st_ms, dt)])
             AP_amp, AP_width, AP_time = get_spike_characteristics(v_mat[i], t, ['AP_amp', 'AP_width', 'AP_time'],
-                                                                  hold_potential, AP_interval=4, check=False)
+                                                                  v_rest, AP_interval=4, check=False)
             AP_amp_block = AP_amp - 2 * AP_amp_tol
             AP_width_block = AP_width - 2 * AP_width_tol
             AP_time_block = AP_time - 2 * AP_time_tol
 
             step_dur = step_end_ms - step_st_ms
-            ramp_amp = 30
+            ramp_amp = 20
             ramp_dur = 1.5
             ramp_shift = 0
             counter = 0
@@ -151,18 +151,20 @@ if __name__ == '__main__':
                                   step_amp_spike)
                 i_ramp = np.zeros(to_idx(tstop, dt) + 1)
                 ramp_middle = AP_time + ramp_shift
-                i_ramp[to_idx(ramp_middle-ramp_dur/2, dt, 6):to_idx(ramp_middle+ramp_dur/2, dt, 6)] = get_ramp(
-                                                                    to_idx(ramp_middle-ramp_dur/2, dt, 6),
-                                                                    to_idx(ramp_middle, dt, 6),
-                                                                    to_idx(ramp_middle+ramp_dur/2, dt, 6), 0, ramp_amp, 0)
+                i_ramp[to_idx(ramp_middle-ramp_dur/2, dt, 6):to_idx(ramp_middle+ramp_dur/2, dt, 6)+1] = get_ramp(
+                                                                    ramp_middle-ramp_dur/2,
+                                                                    ramp_middle,
+                                                                    ramp_middle+ramp_dur/2,
+                                                                    0, ramp_amp, 0, dt)
                 i_exp = i_hold + i_step + i_ramp
-                simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': hold_potential,
+                simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': v_rest,
                                      'tstop': tstop, 'dt': dt, 'celsius': celsius, 'onset': onset}
                 v, t, _ = iclamp_handling_onset(cell, **simulation_params)
+                v_rest = np.mean(v_mat[i][:to_idx(step_st_ms, dt)])
                 AP_amp_block, AP_width_block, AP_time_block = get_spike_characteristics(v[to_idx(step_st_ms, dt):],  # use v after current input because other spikes can occur before
                                                                                         t[to_idx(step_st_ms, dt):],
                                                                                         ['AP_amp', 'AP_width', 'AP_time'],
-                                                                                        hold_potential, AP_interval=4,
+                                                                                        v_rest, AP_interval=4,
                                                                                         check=False)
 
                 print 'ramp amp: ' + str(ramp_amp)
