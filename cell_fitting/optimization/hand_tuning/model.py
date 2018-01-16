@@ -2,6 +2,7 @@
 from cell_fitting.optimization.fitter import FitterFactory
 from cell_fitting.optimization.helpers import *
 from cell_fitting.optimization.simulate import currents_given_v, iclamp_handling_onset, iclamp_adaptive_handling_onset
+from cell_fitting.util import convert_from_unit
 
 __author__ = 'caro'
 

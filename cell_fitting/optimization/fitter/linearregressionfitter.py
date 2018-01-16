@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 from nrn_wrapper import load_mechanism_dir, Cell, iclamp
 
-from cell_fitting.optimization.helpers import get_channel_list, get_ionlist, get_cellarea, convert_from_unit
+from cell_fitting.optimization.helpers import get_channel_list, get_ionlist, get_cellarea
+from cell_fitting.util import convert_from_unit
 from cell_fitting.optimization.linear_regression import linear_regression
 from cell_fitting.optimization.simulate import currents_given_v
 from cell_fitting.optimization.simulate import extract_simulation_params

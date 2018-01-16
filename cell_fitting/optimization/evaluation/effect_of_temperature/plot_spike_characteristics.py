@@ -2,7 +2,7 @@ from __future__ import division
 import os
 import numpy as np
 import matplotlib.pyplot as pl
-from cell_fitting.optimization.evaluation.rampIV import simulate_rampIV
+from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
 from nrn_wrapper import Cell, load_mechanism_dir
 from cell_characteristics.analyze_APs import get_AP_onset_idxs, get_spike_characteristics
 from cell_fitting.optimization.evaluation.effect_of_temperature import set_q10, set_q10_g
@@ -33,7 +33,7 @@ order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
 order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
 min_dist_to_DAP_max = 0.5  # ms
 k_splines = 3
-s_splines = None
+s_splines = 0
 return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_deflection', 'DAP_width', 'DAP_time',
                           'fAHP2DAP_time']
 load_mechanism_dir(mechanism_dir)

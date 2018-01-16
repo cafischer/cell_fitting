@@ -12,6 +12,7 @@ if __name__ == '__main__':
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     file_names = os.listdir(data_dir)
     cell_ids = [f_n[:-4] for f_n in file_names][0:]
+    #cell_ids = ['2015_08_26b']
     protocol = 'rampIV'
     animal = 'rat'
 

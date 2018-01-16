@@ -31,9 +31,9 @@ def get_characteristic_unit_dict():
     return {'DAP_amp': 'mV', 'DAP_deflection': 'mV', 'DAP_width': 'ms', 'DAP_time': 'ms', 'fAHP_amp': 'mV'}
 
 
-def plot_v(t, v, save_dir_img=None):
+def plot_v(t, v, c='r', save_dir_img=None):
     fig = pl.figure()
-    pl.plot(t, v, 'r', label='Model')
+    pl.plot(t, v, c, label='Model')
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane Potential (mV)')
     pl.tight_layout()

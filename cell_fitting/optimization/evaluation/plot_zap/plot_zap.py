@@ -5,9 +5,8 @@ import os
 from nrn_wrapper import Cell
 from cell_fitting.read_heka import get_v_and_t_from_heka
 from cell_fitting.data import set_v_rest
-from cell_characteristics import to_idx
-from cell_fitting.optimization.fitfuns import impedance
-from cell_fitting.optimization.evaluation.plot_zap import simulate_zap, plot_v_and_impedance
+from cell_fitting.optimization.evaluation.plot_zap import simulate_zap, plot_v_and_impedance,\
+    compute_res_freq_and_q_val, compute_smoothed_impedance
 pl.style.use('paper')
 
 
@@ -20,18 +19,10 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_
     heavy_freqs = lambda x: freqs(x) if onset_dur < x < t[-1]-offset_dur else 0
     freqs_out = lambda x: "%.2f" % heavy_freqs(x)
 
-    # downsample t, i, v
-    i_inj = i_exp
-    i_inj_ds = i_inj[to_idx(onset_dur, dt, 3):to_idx(tstop - offset_dur, dt, 3)]
-    v_ds = v[to_idx(onset_dur, dt, 3):to_idx(tstop - offset_dur, dt, 3)]
-
-    # compute impedance
-    imp, frequencies, imp_smooth = impedance(v_ds, i_inj_ds, dt / 1000, [freq0, freq1])  # dt in (sec) for fft
+    imp_smooth, frequencies = compute_smoothed_impedance(v, freq0, freq1, i_exp, offset_dur, onset_dur, tstop, dt)
 
     # resonance frequency
-    res_freq_idx = np.argmax(imp_smooth)
-    res_freq = frequencies[res_freq_idx]
-    q_value = imp_smooth[res_freq_idx] / imp_smooth[np.where(frequencies == 0)[0][0]]
+    res_freq, q_value = compute_res_freq_and_q_val(imp_smooth, frequencies)
     print 'resonance frequency: ' + str(res_freq)
 
     if save_dir is not None:
@@ -92,7 +83,6 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_
 
         plot_v_and_impedance(freq0, freq1, frequencies, imp_smooth, offset_dur, onset_dur, q_value, res_freq,
                              save_dir_img, t, tstop, v, v_rest)
-
     return res_freq, q_value
 
 

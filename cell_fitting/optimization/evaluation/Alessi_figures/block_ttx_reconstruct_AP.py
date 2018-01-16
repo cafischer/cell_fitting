@@ -22,14 +22,14 @@ __author__ = 'caro'
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     save_dir_hold = os.path.join(save_dir, 'img', 'alessi', 'no_hold')
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     AP_amp_tol = 1
     AP_width_tol = 0.1
     AP_time_tol = 0.1
-    percent_block = 0.1
+    percent_block = 0.2
     use_same_hold_amps = True
     use_given_hold_amps_block = False
     use_given_ramp = False

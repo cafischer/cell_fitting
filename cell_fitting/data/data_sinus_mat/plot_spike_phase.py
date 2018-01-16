@@ -7,6 +7,8 @@ from grid_cell_stimuli.spike_phase import get_spike_phases, plot_phase_hist, plo
     compute_phase_precession, plot_phase_precession
 from cell_fitting.data.data_sinus_mat import find_sine_trace
 from scipy.stats import circmean, circstd
+from cell_fitting.optimization.evaluation import plot_v
+import matplotlib.pyplot as pl
 
 
 if __name__ == '__main__':
@@ -45,6 +47,9 @@ if __name__ == '__main__':
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
 
+        plot_v(t, v, c='k',
+               save_dir_img=os.path.join(save_dir, cell_id, str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2)))
+
         # spike phase
         AP_onsets = get_AP_onset_idxs(v, threshold=AP_threshold)
         phases = get_spike_phases(AP_onsets, t, theta, order, dist_to_AP)
@@ -66,6 +71,7 @@ if __name__ == '__main__':
 
         slope, intercept, best_shift = compute_phase_precession(phases, phases_pos)
         plot_phase_precession(phases, phases_pos, slope, intercept, best_shift, save_dir_img)
+        pl.close()
 
     # save summary
     save_dir_summary = os.path.join(save_dir, 'summary', 'spike_phase',

@@ -75,9 +75,12 @@ if __name__ == '__main__':
         pl.show()
 
         # pl.figure()
-        # pl.title('amp1: '+str(amp1[i])+' '+'amp2: '+str(amp2[i])+' '+
-        #          'freq1: '+str(freq1[i])+' '+'freq2: '+str(freq2[i])+' ')
-        # pl.plot(t_i_inj[0, i][0, :], i_inj[0, i][0, :])
+        # # pl.title('amp1: '+str(amp1[i])+' '+'amp2: '+str(amp2[i])+' '+
+        # #          'freq1: '+str(freq1[i])+' '+'freq2: '+str(freq2[i])+' ')
+        # pl.plot(t_i_inj[0, i][0, :], i_inj[0, i][0, :], 'k')
+        # pl.xlabel('Time (s)')
+        # pl.ylabel('Current (nA)')
+        # pl.tight_layout()
         # pl.show()
 
     # example find_traces

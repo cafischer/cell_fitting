@@ -27,7 +27,8 @@ if __name__ == '__main__':
     v_rest_shift = -16
     AP_threshold = -10
     #cells = get_cells_for_protocol(data_dir, protocol)
-    cells = ['2014_07_10b', '2014_07_02a', '2014_07_03a', '2017_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
+    #cells = ['2014_07_10b', '2014_07_02a', '2014_07_03a', '2017_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
+    cells = ['2015_08_26b']
     animal = 'rat'
 
     for cell_id in cells:
@@ -59,3 +60,13 @@ if __name__ == '__main__':
             pl.tight_layout()
             pl.savefig(os.path.join(save_dir_img, 'v.png'))
             pl.show()
+
+            # fig, ax = pl.subplots(2, 1, sharex=True)
+            # ax[0].plot(t, v_mat[idx], 'k')
+            # ax[1].plot(t, i_inj_mat[idx], 'k')
+            # pl.xlabel('Time (ms)', fontsize=16)
+            # ax[0].set_ylabel('Membrane \nPotential (mV)', fontsize=16)
+            # ax[1].set_ylabel('Injected \nCurrent (nA)', fontsize=16)
+            # pl.tight_layout()
+            # pl.savefig(os.path.join(save_dir_img, 'v_i.png'))
+            # pl.show()

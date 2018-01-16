@@ -15,8 +15,9 @@ pl.style.use('paper')
 if __name__ == '__main__':
     # parameters
     #data_dir = '../../data/cell_csv_data/2015_08_26b/rampIV/3.0(nA).csv'
-    data_dir = '../../data/cell_csv_data/2015_08_26b/IV/0.5(nA).csv'
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    data_dir = '../../data/cell_csv_data/2015_08_26b/rampIV/3.1(nA).csv'
+    #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '../../results/server_17_12_04/2018-01-05_14:13:33/154/L-BFGS-B'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 

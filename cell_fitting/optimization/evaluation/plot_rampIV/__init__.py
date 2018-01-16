@@ -39,7 +39,7 @@ def evaluate_rampIV(pdf, cell, data_dir, data_dir_characteristics, save_dir):
         os.makedirs(save_dir_img)
     np.savetxt(os.path.join(save_dir_img, 'current_threshold.txt'), np.array([ramp_amp]))
 
-    plot_v(t, v, os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp))
+    plot_v(t, v, 'r', os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp))
     fig = plot_rampIV_with_data(t, v, t_data, v_data, os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp))
     pdf.savefig(fig)
     pl.close()
@@ -72,10 +72,8 @@ def find_current_threshold(cell):
     return None
 
 
-def simulate_rampIV(cell, ramp_amp, v_init=-75, celsius=35):
+def simulate_rampIV(cell, ramp_amp, v_init=-75, celsius=35, dt=0.01, tstop=161.99):
     protocol = 'rampIV'
-    dt = 0.01  # ms
-    tstop = 161.99  # ms
     sweep_idx = get_sweep_index_for_amp(ramp_amp, protocol)
     i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
 
@@ -98,7 +96,7 @@ def load_data(data_dir, ramp_amp, v_shift=-16):
 def plot_characteristics(characteristics_mat_models, data_dir_characteristics, return_characteristics,
                          save_dir_img=None):
     fig, ((ax1, ax2), (ax3, ax4)) = pl.subplots(nrows=2, ncols=2, figsize=(2 * 6.4, 2 * 4.8))
-    plot_characteristics_on_axes([ax1, ax2, ax3, ax4], return_characteristics, np.array([characteristics_mat_models]),
+    plot_characteristics_on_axes([ax1, ax2, ax3, ax4], return_characteristics, np.array([characteristics_mat_models], dtype=float),
                                  data_dir_characteristics)
     if save_dir_img is not None:
         if not os.path.exists(save_dir_img):
@@ -122,7 +120,7 @@ def get_rmse(v_model, v_data, t_data, i_inj_data, dt):
                                          v_rest=np.mean(v_data[:np.nonzero(i_inj_data)[0][0]]),
                                          std_idx_times=(0, 5),
                                          **get_spike_characteristics_dict())
-    rmse_dap = np.sqrt(np.mean((v_model[fAHP_min_idx:DAP_width_idx] - v_data[fAHP_min_idx:DAP_width_idx]) * 2))
+    rmse_dap = np.sqrt(np.mean((v_model[fAHP_min_idx:DAP_width_idx] - v_data[fAHP_min_idx:DAP_width_idx]) ** 2))
     return rmse, rmse_dap
 
 

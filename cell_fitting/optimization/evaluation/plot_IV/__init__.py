@@ -1,13 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as pl
 import os
-from cell_fitting.optimization.fitter import iclamp_handling_onset
+from cell_fitting.optimization.simulate import iclamp_handling_onset, extract_simulation_params
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from cell_characteristics import to_idx
 from cell_fitting.util import merge_dicts
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function, get_sweep_index_for_amp
 from cell_characteristics.fIcurve import compute_fIcurve
-from cell_fitting.optimization.fitter import extract_simulation_params
 from cell_fitting.data.plot_IV.plot_fI_curve_fit_distribution import fit_fun
 from scipy.optimize import curve_fit
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
@@ -61,7 +60,10 @@ def evaluate_IV(pdf, cell, data_dir, data_dir_FI_fit, data_dir_sag, save_dir):
 
     # fit FI-curve
     b0 = amps_greater0[np.where(firing_rates_model > 0)[0][0]]
-    p_opt, _ = curve_fit(fit_fun, amps_greater0, firing_rates_model, p0=[50, b0, 0.5])
+    try:
+        p_opt, _ = curve_fit(fit_fun, amps_greater0, firing_rates_model, p0=[50, b0, 0.5])
+    except RuntimeError:
+        p_opt = (np.nan, np.nan, np.nan)
     fi_a, fi_b, fi_c = p_opt
     # rmse = np.sqrt(np.sum((firing_rates_model - fit_fun(amps_greater0, p_opt[0], p_opt[1], p_opt[2]))**2))
 
@@ -98,7 +100,7 @@ def evaluate_IV(pdf, cell, data_dir, data_dir_FI_fit, data_dir_sag, save_dir):
     pdf.savefig(jp3)
     pl.close()
 
-    fig = plot_v(t_mat[0], v_mat_model[0], os.path.join(save_dir_img, 'sag'))
+    fig = plot_v(t_mat[0], v_mat_model[0], 'r', os.path.join(save_dir_img, 'sag'))
     pdf.savefig(fig)
     pl.close()
 

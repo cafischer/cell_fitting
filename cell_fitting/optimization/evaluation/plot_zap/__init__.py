@@ -21,19 +21,14 @@ def evaluate_zap(pdf, cell, data_dir_resonance, save_dir):
     dt = 0.01
 
     # simulate / load
-    t, v, i_inj = simulate_zap(cell, amp, freq0, freq1, onset_dur, offset_dur, zap_dur, tstop, dt)
+    v, t, i_inj = simulate_zap(cell, amp, freq0, freq1, onset_dur, offset_dur, zap_dur, tstop, dt)
 
     # evaluate
-    i_inj_ds = i_inj[to_idx(onset_dur, dt, 3):to_idx(tstop - offset_dur, dt, 3)]
-    v_ds = v[to_idx(onset_dur, dt, 3):to_idx(tstop - offset_dur, dt, 3)]
-    imp, frequencies, imp_smooth = impedance(v_ds, i_inj_ds, dt / 1000, [freq0, freq1])  # dt in (sec) for fft
-
-    res_freq_idx = np.argmax(imp_smooth)
-    res_freq = frequencies[res_freq_idx]
-    q_value = imp_smooth[res_freq_idx] / imp_smooth[np.where(frequencies == 0)[0][0]]
-
     res_freqs_data = np.load(os.path.join(data_dir_resonance, 'res_freqs.npy'))
     q_values_data = np.load(os.path.join(data_dir_resonance, 'q_values.npy'))
+
+    imp_smooth, frequencies = compute_smoothed_impedance(v, freq0, freq1, i_inj, offset_dur, onset_dur, tstop, dt)
+    res_freq, q_value = compute_res_freq_and_q_val(imp_smooth, frequencies)
 
     v_rest = -75
     v = set_v_rest(v, v[0], v_rest)  # for plotting bring to same v_rest
@@ -53,6 +48,19 @@ def evaluate_zap(pdf, cell, data_dir_resonance, save_dir):
     pl.close()
 
 
+def compute_smoothed_impedance(v, freq0, freq1, i_inj, offset_dur, onset_dur, tstop, dt):
+    i_inj_ds = i_inj[to_idx(onset_dur, dt, 3):to_idx(tstop - offset_dur, dt, 3)]
+    v_ds = v[to_idx(onset_dur, dt, 3):to_idx(tstop - offset_dur, dt, 3)]
+    imp, frequencies, imp_smooth = impedance(v_ds, i_inj_ds, dt / 1000, [freq0, freq1])  # dt in (sec) for fft
+    return imp_smooth, frequencies
+
+def compute_res_freq_and_q_val(imp_smooth, frequencies):
+    res_freq_idx = np.argmax(imp_smooth)
+    res_freq = frequencies[res_freq_idx]
+    q_value = imp_smooth[res_freq_idx] / imp_smooth[np.where(frequencies == 0)[0][0]]
+    return res_freq, q_value
+
+
 def simulate_zap(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, zap_dur=30000,
                  tstop = 34000, dt=0.01, v_init=-75, celsius=35, onset=200):
     i_exp = get_i_inj_zap(amp=amp, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur,
@@ -60,7 +68,7 @@ def simulate_zap(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=20
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': v_init, 'tstop': tstop,
                          'dt': dt, 'celsius': celsius, 'onset': onset}
     v, t, i_inj = iclamp_handling_onset(cell, **simulation_params)
-    return t, v, i_inj
+    return v, t, i_inj
 
 
 def plot_v_and_impedance(freq0, freq1, frequencies, imp_smooth, offset_dur, onset_dur, q_value, res_freq, save_dir_img,

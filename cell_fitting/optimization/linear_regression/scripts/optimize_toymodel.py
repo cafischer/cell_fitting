@@ -7,6 +7,7 @@ from cell_fitting.optimization.fitter.hodgkinhuxleyfitter import HodgkinHuxleyFi
 from cell_fitting.optimization.helpers import *
 from cell_fitting.optimization.linear_regression import *
 from cell_fitting.optimization.simulate import currents_given_v
+from cell_fitting.util import convert_from_unit
 
 __author__ = 'caro'
 

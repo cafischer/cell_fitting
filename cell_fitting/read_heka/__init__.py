@@ -1,9 +1,8 @@
 import os
 import re
 from heka_reader import HekaReader
-from cell_fitting.optimization.helpers import convert_to_unit
 from cell_fitting.read_heka.i_inj_functions import *
-from cell_fitting.util import init_nan
+from cell_fitting.util import init_nan, convert_to_unit
 
 
 def get_protocols_same_base(file_dir, protocol_base, group='Group1', return_heka=False):

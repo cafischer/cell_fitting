@@ -1,7 +1,5 @@
-from hodgkinhuxleyfitter import *
-from izhikevichfitter import *
-from linearregressionfitter import *
-from channelfitter import *
+from hodgkinhuxleyfitter import HodgkinHuxleyFitter, HodgkinHuxleyFitterAdaptive, HodgkinHuxleyFitterFitfunFromSet
+from channelfitter import ChannelFitterSingleTraces, ChannelFitterAllTraces
 
 
 class FitterFactory:
