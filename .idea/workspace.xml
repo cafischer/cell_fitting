@@ -6,37 +6,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_rampIV_all_models.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_zap_all_models.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/model_noise/__init__.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/model_noise/with_OU.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/spike_triggered_average.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold_with_noise.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/analyze_rampIV_with_noise.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/spike_triggered_average.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/__init__.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_ISI_hist.py" afterPath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_ISI_hist.py" />
       <change beforePath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_spike_phase.py" afterPath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_spike_phase.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/Alessi_figures/block_ttx_reconstruct_AP.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/Alessi_figures/block_ttx_reconstruct_AP.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/sine_with_noise.py" afterPath="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/sine_with_noise.py" />
       <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_rampIV.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_rampIV.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_spike_characteristics.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_spike_characteristics.py" />
       <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py" />
       <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_model.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_model.py" />
       <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/fIcurve_high_res.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/fIcurve_high_res.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp.py" />
       <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/plot_zap.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/plot_zap.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/fitfuns.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/fitfuns.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/fitter/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/fitter/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/fitter/linearregressionfitter.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/fitter/linearregressionfitter.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/hand_tuning/model.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/hand_tuning/model.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/plot_rampIV.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/analyze_rampIV.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_sine_stimulus_pdf.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_sine_stimulus_pdf.py" />
       <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/helpers.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/helpers.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_toymodel.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_toymodel.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/plot_cmdvdt.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/plot_cmdvdt.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/optimizer/scipy_optimizer.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/optimizer/scipy_optimizer.py" />
       <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/util/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/util/__init__.py" />
+      <change beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,50 +39,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="evaluate_server.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="10" column="18" lean-forward="false" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="evaluate.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
-              <caret line="231" column="0" lean-forward="true" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="22" column="12" lean-forward="true" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="evaluate_model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="18" column="42" lean-forward="true" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -100,22 +50,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>get_spike_features</find>
-      <find>get_spike_characteristics_and_vstep</find>
-      <find>GridSearchCV</find>
-      <find>save_dir_plots</find>
-      <find>fitfu</find>
-      <find>plot_bes</find>
-      <find>print</find>
-      <find>hold_potentials</find>
-      <find>v_mat</find>
-      <find>get_ion</find>
-      <find>TODO</find>
-      <find>=</find>
-      <find>v_rest</find>
       <find>check</find>
       <find>.pdf</find>
-      <find>loa</find>
       <find>os.path.e</find>
       <find>plot_ramp</find>
       <find>plot_IV</find>
@@ -128,8 +64,22 @@
       <find>cma</find>
       <find>plot</find>
       <find>plo</find>
-      <find>text</find>
       <find>plot_v(</find>
+      <find>ou</find>
+      <find>gfluct</find>
+      <find>curve_fit</find>
+      <find>R_in</find>
+      <find>c_m</find>
+      <find>text</find>
+      <find>get_cellare</find>
+      <find>synaptic_noise_input</find>
+      <find>random_generator</find>
+      <find>ConductanceClamp</find>
+      <find>loa</find>
+      <find>load_</find>
+      <find>start_ramp2</find>
+      <find>plot_rampIV</find>
+      <find>area</find>
     </findStrings>
     <replaceStrings>
       <replace>h_</replace>
@@ -145,8 +95,8 @@
       <dir>$PROJECT_DIR$/cell_fitting/new_optimization/evaluation/Alessi_figures</dir>
       <dir>$PROJECT_DIR$/cell_fitting/new_optimization</dir>
       <dir>$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus</dir>
-      <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/cell_fitting</dir>
+      <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -155,29 +105,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/plot_spike_characteristics.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_hyper_depo/plot_hyper_depo_summary.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_spike_characteristics.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/read_heka/i_inj_functions.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/rampIV/plot_rampIV.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/rampIV/plot_spike_characteristics.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/rampIV/__init__.py" />
-        <option value="$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/fIcurve.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_fIcurve.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_fI_curve_fit_distribution.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/util/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_sag_distribution.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/potential_sag_vs_steady_state.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/plot_zap_summary.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo/plot_hyper_depo.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_hyper_depo/plot_hyper_depo.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sigmoid/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_hyper_depo/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo/plot_hyper_depo_summary.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/fitter/hodgkinhuxleyfitter.py" />
@@ -190,28 +123,45 @@
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/plot_zap.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_rampIV_all_models.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/fitter/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/helpers.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/fitfuns.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_zap_all_models.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_spike_phase.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/model_noise/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_model.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_spike_phase.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/model_noise/with_OU.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_sine_stimulus_pdf.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/sine_with_noise.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/plot_rampIV_with_noise.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/plot_rampIV.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/analyze_rampIV.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/analyze_rampIV_with_noise.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/spike_triggered_average.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold_with_noise.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/model/OU_process/Gfluct.mod" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/spike_triggered_average.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_ISI_hist.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/optimizer/scipy_optimizer.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/helpers.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="28" />
-    <option name="width" value="1920" />
+    <option name="width" value="960" />
     <option name="height" value="1052" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -251,8 +201,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -269,60 +217,47 @@
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="investigate_grid_cell_stimuli" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="plot_spike_characteristic_distributions" type="462c0819:PsiDirectoryNode" />
+              <item name="investigate_grid_cell_stimuli" type="462c0819:PsiDirectoryNode" />
+              <item name="model_noise" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-              <item name="evaluation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-              <item name="evaluation" type="462c0819:PsiDirectoryNode" />
-              <item name="plot_zap" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/cell_fitting/util/__init__.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../analyze_in_vivo" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cell_fitting/optimization/evaluation" />
+      <recent name="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV" />
+      <recent name="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp" />
       <recent name="$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature" />
       <recent name="$PROJECT_DIR$/cell_fitting/optimization/evaluation/Alessi_figures" />
-      <recent name="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/schmidt_hieber_analysis" />
-      <recent name="$PROJECT_DIR$/cell_fitting/data/plot_sine_stimulus/schmidt_hieber_analysis" />
-      <recent name="$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cell_fitting/data" />
       <recent name="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap" />
       <recent name="$PROJECT_DIR$/cell_fitting/optimization/evaluation/rampIV" />
       <recent name="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat" />
       <recent name="$PROJECT_DIR$/cell_fitting/data/plot_sine_stimulus/schmidt_hieber_analysis" />
-      <recent name="$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -337,8 +272,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.evaluate_model">
-    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.plot_ISI_hist">
+    <configuration name="doubleramp_current_threshold_with_noise" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold_with_noise.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="plot_ISI_hist" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -350,13 +303,31 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/__init__.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_ISI_hist.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="evaluate" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="plot_rampIV_with_noise" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/analyze_rampIV_with_noise.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="spike_triggered_average (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -368,80 +339,44 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/spike_triggered_average.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="evaluate_model" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="spike_triggered_average" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_model.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="evaluate_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="save_spike_characteristics" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/spike_triggered_average.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.__init__" />
-      <item index="1" class="java.lang.String" itemvalue="Python.evaluate_server" />
-      <item index="2" class="java.lang.String" itemvalue="Python.evaluate" />
-      <item index="3" class="java.lang.String" itemvalue="Python.evaluate_model" />
-      <item index="4" class="java.lang.String" itemvalue="Python.save_spike_characteristics" />
+      <item index="0" class="java.lang.String" itemvalue="Python.doubleramp_current_threshold_with_noise" />
+      <item index="1" class="java.lang.String" itemvalue="Python.plot_rampIV_with_noise" />
+      <item index="2" class="java.lang.String" itemvalue="Python.spike_triggered_average" />
+      <item index="3" class="java.lang.String" itemvalue="Python.spike_triggered_average (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.plot_ISI_hist" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.evaluate_model" />
-        <item index="1" class="java.lang.String" itemvalue="Python.save_spike_characteristics" />
-        <item index="2" class="java.lang.String" itemvalue="Python.evaluate" />
-        <item index="3" class="java.lang.String" itemvalue="Python.evaluate_server" />
-        <item index="4" class="java.lang.String" itemvalue="Python.__init__" />
+        <item index="0" class="java.lang.String" itemvalue="Python.plot_ISI_hist" />
+        <item index="1" class="java.lang.String" itemvalue="Python.spike_triggered_average (1)" />
+        <item index="2" class="java.lang.String" itemvalue="Python.spike_triggered_average" />
+        <item index="3" class="java.lang.String" itemvalue="Python.plot_rampIV_with_noise" />
+        <item index="4" class="java.lang.String" itemvalue="Python.doubleramp_current_threshold_with_noise" />
       </list>
     </recent_temporary>
   </component>
@@ -704,7 +639,14 @@
       <option name="project" value="LOCAL" />
       <updated>1515157155626</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="added function to evaluate model on all protocols">
+      <created>1516095760579</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1516095760579</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TodoView">
@@ -718,13 +660,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="28" width="1920" height="1052" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20137058" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20137058" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295838" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36220473" sideWeight="0.10595677" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24184477" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26771653" sideWeight="0.8940432" order="2" side_tool="false" content_ui="tabs" x="0" y="436" width="1920" height="224" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24184477" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31158605" sideWeight="0.8940432" order="2" side_tool="false" content_ui="tabs" x="0" y="436" width="1920" height="224" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24296963" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32058492" sideWeight="0.49359658" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2524013" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -800,11 +741,6 @@
           <option name="timeStamp" value="750" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_spike_phase.py</url>
-          <line>83</line>
-          <option name="timeStamp" value="751" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/Alessi_figures/block_ttx.py</url>
           <line>49</line>
           <option name="timeStamp" value="764" />
@@ -825,34 +761,240 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="851" />
+      <option name="time" value="864" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>colors_dict = {-0.1: 'b', 0.0: 'k', 0.1: 'r'}
+colors = [colors_dict[amp] for amp in step_amps]
+fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', marker='o', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Current Amplitude (nA)')
+ax.set_zlabel('Firing Probability')
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+ax.view_init(30, -135)
+# ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+#pl.show()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)', fontsize=16)
+ax.set_ylabel('Current Amplitude (nA)', fontsize=16)
+ax.set_zlabel('Firing Probability', fontsize=16)
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+ax.view_init(30, -135)
+# ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+pl.show()  # TODO</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Current Amplitude (nA)')
+ax.set_zlabel('Firing Probability')
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+ax.view_init(30, -135)
+# ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+pl.show()  # TODO</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Current Amplitude (nA)')
+ax.set_zlabel('Firing Probability')
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+ax.view_init(30, -180)
+# ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+pl.show()  # TODO</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Current Amplitude (nA)')
+ax.set_zlabel('Firing Probability')
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+ax.view_init(30, -90)
+# ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+pl.show()  # TODO</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Current Amplitude (nA)')
+ax.set_zlabel('Firing Probability')
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+#ax.view_init(30, 90)
+# ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+pl.show()  # TODO</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Current Amplitude (nA)')
+ax.set_zlabel('Firing Probability')
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+ax.view_init(30, 90)
+# ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+pl.show()  # TODO</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Current Amplitude (nA)')
+ax.set_zlabel('Firing Probability')
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+ax.view_init(30, 180)
+# ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+pl.show()  # TODO</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>fig = pl.figure()
+ax = fig.gca(projection='3d')
+for i, step_amp in enumerate(step_amps):
+    for ramp3_time_idx, ramp3_time in enumerate(ramp3_times):
+        ax.plot(np.ones(len(ramp3_amps)) * ramp3_time, ramp3_amps, current_thresholds_3d[i][:, ramp3_time_idx],
+                linestyle='-', color=colors[i], markersize=9 - 2.5 * i,
+                label='Step Amp.: ' + str(step_amps[i]))
+ax.set_xlabel('Time (ms)')
+ax.set_ylabel('Current Amplitude (nA)')
+ax.set_zlabel('Firing Probability')
+ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+ax.set_ylim(0, 4.2)
+#ax.legend(loc='lower right')
+pl.tight_layout()
+pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
+pl.show()  # TODO</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>np.max(v)</expression-string>
+        <expression-string>i_noise.record(ou_process._ref_i)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.max(t)</expression-string>
+        <expression-string>ou_process</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>v</expression-string>
+        <expression-string>cell.soma(.5)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>i_inj</expression-string>
+        <expression-string>cell.soma</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>t</expression-string>
+        <expression-string>cell</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>AP_prob</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -862,391 +1004,368 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>sweep_idx</expression-string>
+        <expression-string>ramp</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>t[0]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>t_i_inj[0][0]</expression-string>
+        <expression-string>pl.close('all')</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp_summary.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/results/test0/in_out_fields/p_value.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/results/test0/in_out_fields/firing_rate_binned.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/results/test0/in_out_fields/firing_rate_and_fields.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/results/test0/in_out_fields/firing_rate_and_fields.svg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/in_out_field_diff.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-502">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="120" column="40" lean-forward="false" selection-start-line="120" selection-start-column="40" selection-end-line="120" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sigmoid/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/find_in_out_fields.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="18" selection-end-line="0" selection-end-column="18" />
+          <caret line="15" column="46" lean-forward="false" selection-start-line="15" selection-start-column="46" selection-end-line="15" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_sine_stimulus.py">
+    <entry file="file://$PROJECT_DIR$/../bac_project/bac_project/connectivity/connection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="143" column="26" lean-forward="false" selection-start-line="143" selection-start-column="26" selection-end-line="143" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../bac_project/bac_project/connectivity/synapse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="92" column="19" lean-forward="false" selection-start-line="92" selection-start-column="12" selection-end-line="92" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="8" column="46" lean-forward="false" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="15" column="45" lean-forward="false" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="26" column="49" lean-forward="false" selection-start-line="26" selection-start-column="49" selection-end-line="26" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_spike_phase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="20" column="19" lean-forward="true" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/read_in.py" />
+    <entry file="file://$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_correlation_characteristic_characteristic.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/util/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="241" column="32" lean-forward="false" selection-start-line="241" selection-start-column="32" selection-end-line="241" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="40" column="95" lean-forward="false" selection-start-line="40" selection-start-column="95" selection-end-line="40" selection-end-column="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/OU_process/ConductanceClamp.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="44" lean-forward="true" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/cell_fitting-0.1-py2.7.egg/cell_fitting/investigate_grid_cell_stimuli/sine_with_noise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="190" column="51" lean-forward="true" selection-start-line="190" selection-start-column="51" selection-end-line="190" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/model_noise/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-322">
+          <caret line="71" column="0" lean-forward="false" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/sine_as_conductance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="10" lean-forward="true" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/model_noise/with_OU.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="20" lean-forward="false" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/results/noise/STA/5/STA.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="27" column="28" lean-forward="false" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_sine_stimulus_pdf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="20" column="27" lean-forward="true" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+        <state relative-caret-position="54">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        <state relative-caret-position="90">
+          <caret line="59" column="4" lean-forward="false" selection-start-line="59" selection-start-column="4" selection-end-line="59" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/plot_doubleramp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="87" lean-forward="true" selection-start-line="14" selection-start-column="87" selection-end-line="14" selection-end-column="87" />
+        <state relative-caret-position="290">
+          <caret line="236" column="44" lean-forward="true" selection-start-line="236" selection-start-column="44" selection-end-line="236" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9">
+          <caret line="35" column="26" lean-forward="true" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/sine_with_noise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3564">
+          <caret line="210" column="13" lean-forward="false" selection-start-line="210" selection-start-column="13" selection-end-line="210" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="61" column="71" lean-forward="true" selection-start-line="61" selection-start-column="71" selection-end-line="61" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/i_inj_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="36" column="17" lean-forward="false" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/analyze_rampIV.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
-          <caret line="39" column="55" lean-forward="false" selection-start-line="39" selection-start-column="55" selection-end-line="39" selection-end-column="55" />
+          <caret line="20" column="16" lean-forward="true" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_hyper_depo/plot_hyper_depo_summary.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-898">
-          <caret line="77" column="11" lean-forward="true" selection-start-line="77" selection-start-column="11" selection-end-line="77" selection-end-column="11" />
+        <state relative-caret-position="418">
+          <caret line="1667" column="0" lean-forward="false" selection-start-line="1667" selection-start-column="0" selection-end-line="1667" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script0.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/spike_triggered_average.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2052">
+        <state relative-caret-position="720">
+          <caret line="72" column="17" lean-forward="false" selection-start-line="72" selection-start-column="17" selection-end-line="72" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/simulate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-22">
+          <caret line="198" column="4" lean-forward="false" selection-start-line="198" selection-start-column="4" selection-end-line="198" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/vavoulis/nap.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/vavoulis/hcn_slow.mod">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_hyper_depo/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/vavoulis/ka.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1944">
-          <caret line="118" column="14" lean-forward="true" selection-start-line="118" selection-start-column="14" selection-end-line="118" selection-end-column="14" />
+        <state relative-caret-position="-246">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold_with_noise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="9" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/optimizer/scipy_optimizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        <state relative-caret-position="-594">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/scripts/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/optimizer/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/optimizer/optimizer_interface.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="1561" column="0" lean-forward="false" selection-start-line="1561" selection-start-column="0" selection-end-line="1561" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_fIcurve.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="21" column="0" lean-forward="true" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/fIcurve_high_res.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="19" lean-forward="true" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/Alessi_figures/block_ttx_reconstruct_AP.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_IV/plot_fI_curve_fit_distribution.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_spike_characteristics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="72" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_rampIV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="64" lean-forward="false" selection-start-line="17" selection-start-column="64" selection-end-line="17" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/analyze_APs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1521">
-          <caret line="459" column="55" lean-forward="false" selection-start-line="459" selection-start-column="55" selection-end-line="459" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_zap.py" />
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/plot_zap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="9" lean-forward="true" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="18" column="72" lean-forward="false" selection-start-line="18" selection-start-column="72" selection-end-line="18" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_rampIV_all_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1482">
-          <caret line="97" column="19" lean-forward="true" selection-start-line="97" selection-start-column="19" selection-end-line="97" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/plot_spike_characteristics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1296">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/plot_rampIV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13">
-          <caret line="33" column="39" lean-forward="false" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/plot_spike_characteristics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="-102">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        <state relative-caret-position="222">
+          <caret line="42" column="45" lean-forward="true" selection-start-line="42" selection-start-column="45" selection-end-line="42" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/fitter/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_ISI_hist.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="27" column="36" lean-forward="false" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/spike_triggered_average.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="93" column="0" lean-forward="false" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/cells/dapmodel_simpel.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="114" lean-forward="false" selection-start-line="0" selection-start-column="114" selection-end-line="0" selection-end-column="114" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="27" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="45" column="42" lean-forward="false" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/fitter/hodgkinhuxleyfitter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="177" column="0" lean-forward="false" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/fitfuns.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="383" column="28" lean-forward="true" selection-start-line="383" selection-start-column="28" selection-end-line="383" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="106" column="0" lean-forward="true" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_sine_stimulus/plot_sine_stimulus.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/cells/dapmodel_nocurrents.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_ISI_hist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-684">
-          <caret line="13" column="18" lean-forward="true" selection-start-line="13" selection-start-column="18" selection-end-line="13" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_spike_phase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="24" column="19" lean-forward="true" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/effect_of_temperature/plot_zap_all_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="35" column="19" lean-forward="false" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1043">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="10" column="18" lean-forward="false" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1026">
-          <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="30" lean-forward="false" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="22" column="12" lean-forward="true" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
+        <state relative-caret-position="18">
+          <caret line="11" column="21" lean-forward="false" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate_model.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/fitter/linearregressionfitter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="18" column="42" lean-forward="true" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
+        <state relative-caret-position="114">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/model/OU_process/Gfluct.mod">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="231" column="0" lean-forward="true" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
+        <state relative-caret-position="224">
+          <caret line="124" column="20" lean-forward="false" selection-start-line="124" selection-start-column="20" selection-end-line="124" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/analyze_rampIV_with_noise.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#31#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

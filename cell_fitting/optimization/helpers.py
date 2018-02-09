@@ -49,7 +49,7 @@ def get_cellarea(L, diam):
     :type L: float
     :param diam: Diameter (um).
     :type diam: float
-    :return: Cell area (cm).
+    :return: Cell area (um).
     :rtype: float
     """
     return L * diam * np.pi

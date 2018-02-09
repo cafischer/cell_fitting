@@ -1,11 +1,10 @@
 import matplotlib.pyplot as pl
 import numpy as np
 import os
-from cell_fitting.optimization.evaluation.rampIV import simulate_rampIV, find_current_threshold, plot_rampIV, \
+from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV, find_current_threshold, plot_rampIV, \
     load_data, get_rmse
 from nrn_wrapper import Cell
 import time
-
 pl.style.use('paper')
 
 

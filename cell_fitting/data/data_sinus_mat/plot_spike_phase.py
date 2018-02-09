@@ -71,6 +71,7 @@ if __name__ == '__main__':
 
         slope, intercept, best_shift = compute_phase_precession(phases, phases_pos)
         plot_phase_precession(phases, phases_pos, slope, intercept, best_shift, save_dir_img)
+        pl.show()
         pl.close()
 
     # save summary

@@ -1,8 +1,20 @@
 import matplotlib.pyplot as pl
 import os
-from cell_fitting.optimization.evaluation.rampIV import simulate_rampIV
+from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
 from nrn_wrapper import Cell, load_mechanism_dir
 pl.style.use('paper')
+
+
+def block_channel(cell, channel_name, percent_block):
+    if isinstance(channel_name, list):
+        for p_b, c_n in zip(percent_block, channel_name):
+            old_gbar = cell.get_attr(['soma', '0.5', c_n, 'gbar'])
+            new_gbar = old_gbar * (100 - p_b) / 100
+            cell.update_attr(['soma', '0.5', c_n, 'gbar'], new_gbar)
+    else:
+        old_gbar = cell.get_attr(['soma', '0.5', channel_name, 'gbar'])
+        new_gbar = old_gbar * (100 - percent_block) / 100
+        cell.update_attr(['soma', '0.5', channel_name, 'gbar'], new_gbar)
 
 
 if __name__ == '__main__':
@@ -13,7 +25,7 @@ if __name__ == '__main__':
     ramp_amp = 3.5
     load_mechanism_dir(mechanism_dir)
     channel_names = [['nat', 'nap']]  # ['hcn_slow', 'nat', 'nap', 'kdr']
-    percent_blocks = [[20, 20]]  # [5, 10, 20, 50, 100]
+    percent_blocks = [[10, 10]]  # [5, 10, 20, 50, 100]
 
     for model_id in model_ids:
         for channel_name in channel_names:
@@ -25,15 +37,7 @@ if __name__ == '__main__':
                 v_before, t_before, _ = simulate_rampIV(cell, ramp_amp, v_init=-75)
 
                 # blocking
-                if isinstance(channel_name, list):
-                    for p_b, c_n in zip(percent_block, channel_name):
-                        old_gbar = cell.get_attr(['soma', '0.5', c_n, 'gbar'])
-                        new_gbar = old_gbar * (100 - p_b) / 100
-                        cell.update_attr(['soma', '0.5', c_n, 'gbar'], new_gbar)
-                else:
-                    old_gbar = cell.get_attr(['soma', '0.5', channel_name, 'gbar'])
-                    new_gbar = old_gbar * (100 - percent_block) / 100
-                    cell.update_attr(['soma', '0.5', channel_name, 'gbar'], new_gbar)
+                block_channel(cell, channel_name, percent_block)
 
                 # simulation
                 v_after, t_after, _ = simulate_rampIV(cell, ramp_amp, v_init=-75)

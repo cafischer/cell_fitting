@@ -38,7 +38,7 @@ def evaluate_model(model_dir, mechanism_dir, save_dir):
 
 if __name__ == '__main__':
     #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/server_17_12_04/2018-01-11_13:42:29/355/L-BFGS-B'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/server_17_12_04/2018-01-16_11:02:23/69/L-BFGS-B'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     evaluate_model(model_dir, mechanism_dir, save_dir)

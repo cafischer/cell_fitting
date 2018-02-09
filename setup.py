@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(name='cell_fitting',
       version='0.1',
@@ -7,5 +7,5 @@ setup(name='cell_fitting',
       author='Caroline Fischer',
       author_email='coralinefischer@gmail.com',
       license='',
-      packages=['cell_fitting'],
+      packages=find_packages(),
       zip_safe=False)

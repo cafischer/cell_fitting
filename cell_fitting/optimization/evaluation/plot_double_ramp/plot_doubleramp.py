@@ -69,14 +69,12 @@ def double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp, len_step, dt, 
 
 def plot_double_ramp(t, v_mat, ramp3_times, save_dir_img):
     pl.figure()
-    #pl.title('1st Ramp = 4 nA, 2nd Ramp = ' + str(ramp3_amp) + ' nA')
     for j, ramp3_time in enumerate(ramp3_times):
-        pl.plot(t, v_mat[j], label='Model' if j == 0 else '', c='r')
+        pl.plot(t, v_mat[j], c='r')
     pl.xlabel('Time (ms)')
     pl.ylabel('Membrane Potential (mV)')
     #pl.xlim(485, 560)
     pl.xlim(360, 400)
-    #pl.legend()
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'PP'+str(ramp3_amp)+'.png'))
     pl.show()

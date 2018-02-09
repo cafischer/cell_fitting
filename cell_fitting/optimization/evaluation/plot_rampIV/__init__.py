@@ -139,6 +139,17 @@ def plot_rampIV_with_data(t, v, t_data, v_data, save_dir_img=None):
     return fig
 
 
+def plot_rampIV(t, v, save_dir_img=None):
+    fig = pl.figure()
+    pl.plot(t, v, 'r', label='Model')
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane Potential (mV)')
+    pl.tight_layout()
+    if save_dir_img is not None:
+        pl.savefig(os.path.join(save_dir_img, 'v.png'))
+    return fig
+
+
 def plot_characteristics_on_axes(ax, return_characteristics, characteristics_mat_models, data_dir):
 
     characteristics_mat_data = np.load(os.path.join(data_dir, 'characteristics_mat.npy'))

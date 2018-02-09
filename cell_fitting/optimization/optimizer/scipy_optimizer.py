@@ -1,10 +1,8 @@
 import functools
 import os
-
 import numdifftools as nd
 import pandas as pd
 from scipy.optimize import minimize
-
 from cell_fitting.optimization import generate_candidates
 from cell_fitting.optimization.optimizer.optimizer_interface import Optimizer
 from cell_fitting.util import merge_dicts

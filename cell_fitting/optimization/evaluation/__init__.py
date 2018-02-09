@@ -6,7 +6,7 @@ import matplotlib.pyplot as pl
 pl.style.use('paper')
 
 
-def get_spike_characteristics_dict():
+def get_spike_characteristics_dict(for_data=False):
     spike_characteristics_dict = {
         'AP_threshold': -10,  # mV
         'AP_interval': 2.5,  # ms
@@ -19,6 +19,8 @@ def get_spike_characteristics_dict():
         'k_splines': 3,
         's_splines': 0  # 0 means no interpolation, use for models
     }
+    if for_data:
+        spike_characteristics_dict['s_splines'] = None
     return spike_characteristics_dict
 
 
