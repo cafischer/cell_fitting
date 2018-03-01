@@ -2,25 +2,18 @@ import matplotlib.pyplot as pl
 import numpy as np
 import os
 from cell_characteristics.fIcurve import compute_fIcurve, compute_fIcurve_last_ISI
+from cell_fitting.data.plot_IV import check_v_at_i_inj_0_is_at_right_sweep_idx
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj_from_function, get_sweep_index_for_amp
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 pl.style.use('paper')
 
 
-def get_index_i_inj_start_end(i_inj):
-    nonzero = np.nonzero(i_inj)[0]
-    if len(nonzero) <= 1:
-        return None
-    else:
-        return nonzero[0], nonzero[-1]
-
-
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '../plots/plot_IV/fi_curve/rat'
+    save_dir = '../plots/IV/fi_curve/rat'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    protocol = 'plot_IV'
+    protocol = 'IV'
     #cells = get_cells_for_protocol(data_dir, protocol)
     cells = ['2013_12_02a']
     #cells = ['2015_05_26d', '2015_06_08a', '2015_06_09f', '2015_06_19i', '2015_08_10g', '2015_08_26b']
@@ -38,15 +31,7 @@ if __name__ == '__main__':
         t = t_mat[0, :]
         i_inj_mat = get_i_inj_from_function(protocol, sweep_idxs, t[-1], t[1]-t[0])
 
-        # check that no step in V at 0 injected current
-        i_inj_start_idx, i_inj_end_idx = get_index_i_inj_start_end(i_inj_mat[0, :])
-        sweep0 = get_sweep_index_for_amp(0, 'plot_IV')
-        try:
-            if np.abs(np.mean(np.concatenate((v_mat[sweep0, :i_inj_start_idx], v_mat[sweep0, i_inj_end_idx:])))
-                                                     - np.mean(v_mat[sweep0, i_inj_start_idx:i_inj_end_idx])) >= 0.5:  # mV mean values should be roughly the same
-                print '0 trace not ok: ' + str(cell_id)
-        except IndexError:
-            continue
+        check_v_at_i_inj_0_is_at_right_sweep_idx(v_mat, i_inj_mat)
 
         # compute fi curve
         amps, firing_rates_data = compute_fIcurve(v_mat, i_inj_mat, t)

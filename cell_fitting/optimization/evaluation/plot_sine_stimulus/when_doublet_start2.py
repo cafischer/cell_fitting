@@ -14,7 +14,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/3'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
 
@@ -24,31 +24,40 @@ if __name__ == '__main__':
     # parameters
     AP_threshold = -10
     amp1 = 0.6
-    sine1_dur = 1000
+    sine1_dur = 2000
+    freq1 = 1. / (2*sine1_dur/1000)
+    freq2 = 5
     onset_dur = 500
     offset_dur = 500
     dt = 0.01
 
     d_amp = 0.1
+    amp1s = np.arange(0.1, 1.0+d_amp, d_amp)
     amp2s = np.arange(0.1, 1.0+d_amp, d_amp)
-    d_freq = 2
-    freq2s = np.arange(3, 15+d_freq, d_freq)
 
-    ISI_first = init_nan((len(amp2s), len(freq2s)))
+    ISI_1st = init_nan((len(amp1s), len(amp2s)))
 
     save_dir_img = os.path.join(save_dir, 'img', 'sine_stimulus', 'when_doublet', 'start',
-                                'amp1_'+str(amp1) + '_dur1_'+str(sine1_dur))
+                                'freq2_'+str(freq2) + '_freq1_'+str(freq1))
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
-    for i, amp2 in enumerate(amp2s):
-        for j, freq2 in enumerate(freq2s):
+    for i, amp1 in enumerate(amp1s):
+        for j, amp2 in enumerate(amp2s):
             v, t, _ = simulate_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt)
-            onsets = get_AP_onset_idxs(v, AP_threshold)  # use only period in the middle
-            if len(onsets) >= 2:
-                if (onsets[1] - onsets[0]) * dt < 1/2 * 1/freq2 * 1000:
-                    ISI_first[i, j] = (onsets[1] - onsets[0]) * dt
-                    print ISI_first[i, j]
+            onsets = get_AP_onset_idxs(v, AP_threshold)
+            half_osc_idx = to_idx(1./freq2 / 2 * 1000, dt)
+            onsets_1st_osc = onsets[np.logical_and(to_idx(onset_dur, dt) < onsets,
+                                                   onsets < to_idx(onset_dur, dt) + half_osc_idx)]
+            onsets_2nd_osc = onsets[np.logical_and(to_idx(onset_dur, dt) + half_osc_idx < onsets,
+                                    onsets < to_idx(onset_dur, dt) + 3 * half_osc_idx)]
+            if len(onsets_1st_osc) >= 2:
+                ISI_1st[i, j] = (onsets_1st_osc[1] - onsets_1st_osc[0]) * dt
+            elif len(onsets_2nd_osc) >= 2:
+                ISI_1st[i, j] = (onsets_2nd_osc[1] - onsets_2nd_osc[0]) * dt
+            else:
+                ISI_1st[i, j] = np.nan
+            print ISI_1st[i, j]
 
             pl.figure(figsize=(18, 8))
             pl.plot(t, v, 'k', linewidth=1.0)
@@ -56,7 +65,7 @@ if __name__ == '__main__':
             pl.ylabel('Membrane Potential (mV)')
             pl.ylim(-95, 55)
             pl.tight_layout()
-            pl.savefig(os.path.join(save_dir_img, 'v_'+str(amp2)+'_'+str(freq2)+'.png'))
+            pl.savefig(os.path.join(save_dir_img, 'v_amp1_%.2f_amp2_%.2f.png' % (amp1, amp2)))
             #pl.show()
 
     # plot
@@ -64,23 +73,21 @@ if __name__ == '__main__':
     ISI_max = 15
     norm = Normalize(vmin=0, vmax=ISI_max)
     fig, ax = pl.subplots()
-    for i, amp2 in enumerate(amp2s):
-        for j, freq2 in enumerate(freq2s):
-            if not np.isnan(ISI_first[i, j]):
-                if ISI_first[i, j] > ISI_max:
+    for i, amp1 in enumerate(amp1s):
+        for j, amp2 in enumerate(amp2s):
+            if not np.isnan(ISI_1st[i, j]):
+                if ISI_1st[i, j] > ISI_max:
                     w = d_amp / 2
-                    h = d_freq / 6
-                    ax.add_patch(Rectangle((amp2 - w / 2, freq2 - h / 2), w, h, color='r'))
+                    ax.add_patch(Rectangle((amp1 - w / 2, amp2 - w / 2), w, w, color='r'))
                 else:
-                    c = cmap(norm(ISI_first[i, j]))
+                    c = cmap(norm(ISI_1st[i, j]))
                     w = d_amp/2
-                    h = d_freq/6
-                    ax.add_patch(Rectangle((amp2-w/2, freq2-h/2), w, h, color=c))
+                    ax.add_patch(Rectangle((amp1-w/2, amp2-w/2), w, w, color=c))
 
-    pl.xlim(amp2s[0]-d_amp/2, amp2s[-1]+d_amp/2)
-    pl.ylim(freq2s[0]-d_freq/2, freq2s[-1]+d_freq/2)
-    pl.xlabel('Amplitude (nA)')
-    pl.ylabel('Frequency (Hz)')
+    pl.xlim(amp1s[0]-d_amp/2, amp1s[-1]+d_amp/2)
+    pl.ylim(amp2s[0]-d_amp/2, amp2s[-1]+d_amp/2)
+    pl.xlabel('Amplitude Ramp (nA)')
+    pl.ylabel('Amplitude Modulation (nA)')
     sm = pl.cm.ScalarMappable(cmap=cmap, norm=norm)
     sm.set_array(np.array([0, ISI_max]))
     cb = pl.colorbar(sm)

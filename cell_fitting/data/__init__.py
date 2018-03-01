@@ -4,14 +4,6 @@ import numpy as np
 __author__ = 'caro'
 
 
-def set_v_rest(v, v_rest_old, vrest_new):
-    return v - (v_rest_old - vrest_new)
-
-
-def shift_v_rest(v, v_rest_shift):
-    return v + v_rest_shift
-
-
 def power_of_2(n):
     power_of_2 = 1
     while power_of_2 <= n:

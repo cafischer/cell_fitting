@@ -1,6 +1,5 @@
 from cell_fitting.read_heka import *
 import pandas as pd
-from cell_fitting.data import shift_v_rest
 
 
 def read_data(data_dir, cell_id, protocol, sweep_idx, v_rest_shift=0, file_type='dat', return_discontinuities=False):

@@ -1,11 +1,9 @@
 from __future__ import division
 import os
 import numpy as np
-from grid_cell_stimuli.ISI_hist import get_ISI_hist, get_ISI_hists_into_outof_field, plot_ISI_hist, \
-    plot_ISI_hist_into_outof_field
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 import matplotlib.pyplot as pl
-from cell_fitting.data.data_sinus_mat.read_sinus_mat import get_sinus_data_from_mat
+from cell_fitting.data.data_sinus_mat import get_sinus_data_from_mat
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 from cell_characteristics import to_idx
 pl.style.use('paper')
@@ -21,6 +19,9 @@ if __name__ == '__main__':
     ISI = 10  # ms
     AP_threshold = 0
 
+    count_freq5_all = {}
+    count_freq5_doublets = {}
+
     for cell_id in cell_ids:
         vs, ts, i_injs, t_i_injs, amp1s, amp2s, freq1s, freq2s = get_sinus_data_from_mat(os.path.join(save_dir,
                                                                                               cell_id.replace('_', '-') + '_Sinus_variables.mat'))
@@ -33,6 +34,9 @@ if __name__ == '__main__':
             dt = t[1] - t[0]
             onset_dur = offset_dur = 500
 
+            if freq2 == 5:
+                count_freq5_all[cell_id] = True
+
             # check for doublets
             AP_onset_idxs = get_AP_onset_idxs(v, AP_threshold)
             ISIs = np.diff(t[AP_onset_idxs])
@@ -40,6 +44,9 @@ if __name__ == '__main__':
             doublet_ISI_idxs = AP_onset_idxs[:-1][doublet_ISI_lidxs]
 
             if np.sum(doublet_ISI_lidxs) > 0:
+
+                if freq2 == 5:
+                    count_freq5_doublets[cell_id] = True
 
                 # save and plots
                 if not os.path.exists(save_dir_cell):
@@ -54,7 +61,7 @@ if __name__ == '__main__':
                 pl.ylabel('Membrane Potential (mV)')
                 pl.tight_layout()
                 pl.savefig(os.path.join(save_dir_cell, 'v.png'))
-                pl.show()
+                #pl.show()
 
                 # periods
                 period = to_idx(1./freq2*1000, dt)
@@ -80,6 +87,8 @@ if __name__ == '__main__':
                 pl.legend(fontsize=6, title='Period')
                 pl.tight_layout()
                 pl.savefig(os.path.join(save_dir_cell, 'periods.png'))
-                pl.show()
+                #pl.show()
 
                 # TODO: mark short ISIs
+
+    print float(len(count_freq5_doublets.keys())) / len(count_freq5_all.keys()) * 100.

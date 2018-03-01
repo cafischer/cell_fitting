@@ -4,8 +4,7 @@ import matplotlib.pyplot as pl
 import os
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from cell_fitting.optimization.simulate import iclamp_handling_onset
-from cell_fitting.read_heka import get_sweep_index_for_amp, get_i_inj_from_function, get_v_and_t_from_heka
-from cell_fitting.data import shift_v_rest
+from cell_fitting.read_heka import get_sweep_index_for_amp, get_i_inj_from_function, get_v_and_t_from_heka, shift_v_rest
 from cell_fitting.optimization.evaluation import get_spike_characteristics_dict, plot_v
 from cell_characteristics.analyze_APs import get_spike_characteristics
 from cell_fitting.data.plot_rampIV import find_current_threshold_data

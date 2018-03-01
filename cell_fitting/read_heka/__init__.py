@@ -158,6 +158,14 @@ def get_cells_for_protocol(data_dir, protocol):
     return cells_by_protocol[protocol]
 
 
+def set_v_rest(v, v_rest_old, vrest_new):
+    return v - (v_rest_old - vrest_new)
+
+
+def shift_v_rest(v, v_rest_shift):
+    return v + v_rest_shift
+
+
 if __name__ == '__main__':
 
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
@@ -179,7 +187,7 @@ if __name__ == '__main__':
     #
     # v, t, sweep_idxs = get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None,
     #                              return_sweep_idxs=True)
-    # i_inj = get_i_inj(protocol, sweep_idxs)  # re.sub('\(.*\)', '', protocol)
+    # i_inj = get_i_inj_from_function(protocol, sweep_idxs)  # re.sub('\(.*\)', '', protocol)
     # v_set = set_v_rest(v, np.array([v[:, 0]]).T, np.ones((np.shape(v)[0], 1))*v_rest)
     # v_shifted = shift_v_rest(v, v_rest_shift)
     #

@@ -1,0 +1,21 @@
+import numpy as np
+from cell_fitting.read_heka import get_sweep_index_for_amp
+
+
+def get_index_i_inj_start_end(i_inj):
+    nonzero = np.nonzero(i_inj)[0]
+    if len(nonzero) <= 1:
+        return None
+    else:
+        return nonzero[0], nonzero[-1]
+
+
+def check_v_at_i_inj_0_is_at_right_sweep_idx(v_mat, i_inj_mat, acceptable_diff=0.5):
+    i_inj_start_idx, i_inj_end_idx = get_index_i_inj_start_end(i_inj_mat[0, :])
+    sweep0 = get_sweep_index_for_amp(0, 'IV')
+    if np.shape(v_mat)[0] > sweep0:  # trace exists
+        v_rest_mean = np.mean(np.concatenate((v_mat[sweep0, :i_inj_start_idx], v_mat[sweep0, i_inj_end_idx:])))
+        v_step_mean = np.mean(v_mat[sweep0, i_inj_start_idx:i_inj_end_idx])
+        if np.abs(v_rest_mean - v_step_mean) >= acceptable_diff:
+            # mV mean values should be roughly the same
+            raise AssertionError('V at i_inj=0 is not ok!')
