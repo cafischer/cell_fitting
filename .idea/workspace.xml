@@ -6,22 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_IV/STA.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_firing_rate.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/when_doublet_start2.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sta/__init__.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sta/spike_triggered_average_with_pulse.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sta/spike_triggered_average_with_pulse2.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/data/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/doublet_traces.py" afterPath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/doublet_traces.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_IV/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_IV/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_IV/plot_fI_curve.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_IV/plot_fI_curve.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/when_doublet_start.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/when_doublet_start.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/spike_triggered_average.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sta/spike_triggered_average.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/fitter/read_data.py" afterPath="$PROJECT_DIR$/cell_fitting/optimization/fitter/read_data.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_IV/STA.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_IV/STA.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,9 +21,23 @@
       <file leaf-file-name="STA.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_IV/STA.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-991">
-              <caret line="9" column="29" lean-forward="false" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="251">
+              <caret line="90" column="60" lean-forward="false" selection-start-line="90" selection-start-column="60" selection-end-line="90" selection-end-column="60" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sta_stc.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/sta_stc.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="191">
+              <caret line="345" column="90" lean-forward="false" selection-start-line="345" selection-start-column="90" selection-end-line="345" selection-end-column="90" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -53,7 +53,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>find_</find>
       <find>plasma</find>
       <find>cma</find>
       <find>plot</find>
@@ -83,6 +82,7 @@
       <find>slow_ampl</find>
       <find>twin</find>
       <find>pdf</find>
+      <find>ica_components</find>
     </findStrings>
     <replaceStrings>
       <replace>h_</replace>
@@ -207,7 +207,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -258,6 +257,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -674,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1518191176292</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="updated sta/stc">
+      <created>1519897319672</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1519897319672</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView">
@@ -693,8 +700,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19399051" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295838" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36220473" sideWeight="0.10595677" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24184477" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2913386" sideWeight="0.8940432" order="2" side_tool="false" content_ui="tabs" x="0" y="436" width="1920" height="224" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2913386" sideWeight="0.8940432" order="2" side_tool="false" content_ui="tabs" x="0" y="436" width="1920" height="224" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24296963" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32058492" sideWeight="0.49359658" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2524013" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -706,6 +712,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24184477" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -724,7 +731,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add all files again" />
     <MESSAGE value="evaluate sine_stimulus" />
     <MESSAGE value="evaluate sine_stimulus also on data" />
     <MESSAGE value="new package to evaluate fI_curves more rigorously" />
@@ -749,7 +755,8 @@
     <MESSAGE value="added code to decompose exp. cells sinus stimulus in ramp and theta" />
     <MESSAGE value="added function to evaluate model on all protocols" />
     <MESSAGE value="some updates in STA and noise modeling" />
-    <option name="LAST_COMMIT_MESSAGE" value="some updates in STA and noise modeling" />
+    <MESSAGE value="updated sta/stc" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated sta/stc" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -790,7 +797,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="894" />
+      <option name="time" value="903" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -868,65 +875,53 @@ pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>[np.dot(v1, v2) for v1, v2 in combinations(eigvecs.T, 2)]</expression-string>
+        <expression-string>pl.get_cmap('plasma')([float(i) / n_clusters for i in range(n_clusters)])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>[np.round(np.dot(v1, v2), 15) for v1, v2 in combinations(eigvecs.T, 2)]</expression-string>
+        <expression-string>[float(i) / n_clusters for i in range(n_clusters)]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>[np.round(np.dot(v1, v2), 10) for v1, v2 in combinations(eigvecs.T, 2)]</expression-string>
+        <expression-string>[i / n_clusters for i in range(n_clusters)]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>[np.round(np.dot(v1, v2), 10) == 0 for v1, v2 in combinations(eigvecs.T, 2)]</expression-string>
+        <expression-string>AP_max_high_idx</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.all([np.round(np.dot(v1, v2), 10) == 0 for v1, v2 in combinations(eigvecs.T, 2)])</expression-string>
+        <expression-string>~AP_max_high_idx</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>eigvals[-1]</expression-string>
+        <expression-string>AP_max_low_idx</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>eigvals[0]</expression-string>
+        <expression-string>print np.dot(chosen_eigvecs.T, np.linalg.inv(chosen_eigvecs.T))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>eigvals</expression-string>
+        <expression-string>print np.dot(chosen_eigvecs.T, np.linalg.pinv(chosen_eigvecs.T))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>[np.round(np.dot(v1, v2), 10) for v1, v2 in combinations(eigvecs.T, 2)][30130]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>[np.round(np.dot(v1, v2), 10) for v1, v2 in combinations(eigvecs.T, 2)][30117]</expression-string>
+        <expression-string>np.dot(chosen_eigvecs.T, np.linalg.pinv(chosen_eigvecs.T))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cell_fitting/model/OU_process/ConductanceClamp.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="44" lean-forward="true" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/cell_fitting-0.1-py2.7.egg/cell_fitting/investigate_grid_cell_stimuli/sine_with_noise.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -1259,25 +1254,33 @@ pl.savefig(os.path.join(save_dir_img, 'current_threshold_3d.png'))
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="387">
           <caret line="248" column="55" lean-forward="false" selection-start-line="248" selection-start-column="55" selection-end-line="248" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#31#0" expanded="false" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/matplotlib/axes/_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="249" column="23" lean-forward="true" selection-start-line="249" selection-start-column="23" selection-end-line="249" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../packages/cell_characteristics/cell_characteristics/sta_stc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="38" column="46" lean-forward="false" selection-start-line="38" selection-start-column="39" selection-end-line="38" selection-end-column="46" />
-          <folding />
+        <state relative-caret-position="191">
+          <caret line="345" column="90" lean-forward="false" selection-start-line="345" selection-start-column="90" selection-end-line="345" selection-end-column="90" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_IV/STA.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-991">
-          <caret line="9" column="29" lean-forward="false" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
-          <folding />
+        <state relative-caret-position="251">
+          <caret line="90" column="60" lean-forward="false" selection-start-line="90" selection-start-column="60" selection-end-line="90" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
