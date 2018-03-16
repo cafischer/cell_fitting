@@ -6,13 +6,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_traces.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_all.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_short.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/phase_doublets.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_both.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/__init__.py" afterPath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/__init__.py" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_IV/STA.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_IV/STA.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_all.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_all.py" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_short.py" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_short.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="plot_vectorstrength_all.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="plot_vectorstrength_all.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_all.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1386">
-              <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+            <state relative-caret-position="263">
+              <caret line="87" column="42" lean-forward="false" selection-start-line="87" selection-start-column="42" selection-end-line="87" selection-end-column="42" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -35,12 +32,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plot_vectorstrength_short.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="plot_vectorstrength_short.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_short.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="48" column="43" lean-forward="true" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
-              <folding />
+            <state relative-caret-position="305">
+              <caret line="94" column="40" lean-forward="true" selection-start-line="94" selection-start-column="40" selection-end-line="94" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="plot_vectorstrength_both.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_both.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="66" column="91" lean-forward="true" selection-start-line="66" selection-start-column="91" selection-end-line="66" selection-end-column="91" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -56,7 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>plot</find>
       <find>plo</find>
       <find>plot_v(</find>
       <find>ou</find>
@@ -86,6 +96,7 @@
       <find>pdf</find>
       <find>spike_characteristics_dict</find>
       <find>k</find>
+      <find>ks_2s</find>
     </findStrings>
     <replaceStrings>
       <replace>h_</replace>
@@ -115,7 +126,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_zap/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py" />
@@ -164,8 +174,9 @@
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_IV/STA.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_vector_strength/plot_vector_strength.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_short.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_both.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_all.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_short.py" />
       </list>
     </option>
   </component>
@@ -248,15 +259,6 @@
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="plot_vectorstrength" type="462c0819:PsiDirectoryNode" />
-              <item name="vectorstrength" type="462c0819:PsiDirectoryNode" />
-              <item name="short_ISIs_4-10ms_all" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="optimization" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -314,7 +316,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.plot_vectorstrength">
+  <component name="RunManager" selected="Python.plot_vectorstrength_short">
     <configuration name="STC" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -333,24 +335,6 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="plot_traces" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="cell_fitting" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/plot_traces.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
     <configuration name="plot_vectorstrength" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -364,6 +348,24 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="cell_fitting" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_all.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="plot_vectorstrength_both" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cell_fitting" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_both.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -407,18 +409,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.STC" />
-      <item index="1" class="java.lang.String" itemvalue="Python.plot_traces" />
-      <item index="2" class="java.lang.String" itemvalue="Python.sta_stc" />
-      <item index="3" class="java.lang.String" itemvalue="Python.plot_vectorstrength" />
-      <item index="4" class="java.lang.String" itemvalue="Python.plot_vectorstrength_short" />
+      <item index="1" class="java.lang.String" itemvalue="Python.sta_stc" />
+      <item index="2" class="java.lang.String" itemvalue="Python.plot_vectorstrength" />
+      <item index="3" class="java.lang.String" itemvalue="Python.plot_vectorstrength_short" />
+      <item index="4" class="java.lang.String" itemvalue="Python.plot_vectorstrength_both" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.plot_vectorstrength" />
-        <item index="1" class="java.lang.String" itemvalue="Python.plot_vectorstrength_short" />
-        <item index="2" class="java.lang.String" itemvalue="Python.STC" />
-        <item index="3" class="java.lang.String" itemvalue="Python.sta_stc" />
-        <item index="4" class="java.lang.String" itemvalue="Python.plot_traces" />
+        <item index="0" class="java.lang.String" itemvalue="Python.plot_vectorstrength_short" />
+        <item index="1" class="java.lang.String" itemvalue="Python.plot_vectorstrength" />
+        <item index="2" class="java.lang.String" itemvalue="Python.plot_vectorstrength_both" />
+        <item index="3" class="java.lang.String" itemvalue="Python.STC" />
+        <item index="4" class="java.lang.String" itemvalue="Python.sta_stc" />
       </list>
     </recent_temporary>
   </component>
@@ -709,7 +711,14 @@
       <option name="project" value="LOCAL" />
       <updated>1520858359662</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="vector_strength_plots">
+      <created>1521120104953</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1521120104953</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TodoView">
@@ -728,6 +737,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1412757" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295838" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36220473" sideWeight="0.10595677" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24184477" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24296963" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32058492" sideWeight="0.49359658" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2913386" sideWeight="0.8940432" order="2" side_tool="false" content_ui="tabs" x="0" y="436" width="1920" height="224" />
@@ -740,7 +750,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24184477" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -759,7 +768,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="evaluate sine_stimulus" />
     <MESSAGE value="evaluate sine_stimulus also on data" />
     <MESSAGE value="new package to evaluate fI_curves more rigorously" />
     <MESSAGE value="improved plot_PP" />
@@ -784,7 +792,8 @@
     <MESSAGE value="added function to evaluate model on all protocols" />
     <MESSAGE value="some updates in STA and noise modeling" />
     <MESSAGE value="updated sta/stc" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated sta/stc" />
+    <MESSAGE value="vector_strength_plots" />
+    <option name="LAST_COMMIT_MESSAGE" value="vector_strength_plots" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -825,12 +834,30 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="924" />
+      <option name="time" value="934" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>print mat_cell_id.ix[np.logical_and(mat_cell_id['Stim length'] == dur_sine_slow[:-1], 
+                                                                     ~np.any(np.vstack([(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast]), axis=0))]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>mat_cell_id.ix[np.logical_and(mat_cell_id['Stim length'] == dur_sine_slow[:-1], 
+                                                                     ~np.any(np.vstack([(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast]), axis=0))]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>mat_cell_id.ix[np.logical_and(mat_cell_id['Stim length'] == dur_sine_slow[:-1], 
+                                                                     ~np.any(np.vstack([(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast]), axis=0)]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>sine1_dur</expression-string>
         <language-id>Python</language-id>
@@ -876,84 +903,56 @@ eigvecs = abs(eigvecs)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>abs(eigvecs)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>eigvecs</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>[np.dot(v1, v2)==0 for v1, v2 in combinations(eigvecs.T, 2)]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>AP_max_high = AP_max &gt; AP_max_sort[int(round(len(AP_max_sort) / 2.))]
-AP_max_low = AP_max &gt; AP_max_sort[int(round(len(AP_max_sort) / 2.))]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>mat['short_ISI'][:, 12]</expression-string>
+        <expression-string>~np.any(np.vstack([(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast]), axis=0)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>mat['short_ISI'][:, 16]</expression-string>
+        <expression-string>np.all(np.vstack([(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast]), axis=0)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>mat['short_ISI'][:, 15]</expression-string>
+        <expression-string>np.all(np.vstack([(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast], axis=0)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>mat['short_ISI'][:, 14]</expression-string>
+        <expression-string>np.vstack([(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>mat['short_ISI'][:, 13]</expression-string>
+        <expression-string>map(lambda (x, y): np.logical_and(x, y), [(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>mat['short_ISI'][:, 11]</expression-string>
+        <expression-string>map(np.logical_and, [(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>mat['short_ISI'][:,11]</expression-string>
+        <expression-string>[(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>mat['short_ISI']</expression-string>
+        <expression-string>[mat_cell_id['Freq'] == f[:-2] for f in freqs_fast]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>mat</expression-string>
+        <expression-string>map(np.logical_and, [mat_cell_id['Freq'] == f[:-2] for f in freqs_fast])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/spike_triggered_average.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="72" column="17" lean-forward="false" selection-start-line="72" selection-start-column="17" selection-end-line="72" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/simulate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-22">
@@ -1254,6 +1253,7 @@ AP_max_low = AP_max &gt; AP_max_sort[int(round(len(AP_max_sort) / 2.))]</express
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1261,6 +1261,7 @@ AP_max_low = AP_max &gt; AP_max_sort[int(round(len(AP_max_sort) / 2.))]</express
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1291,18 +1292,30 @@ AP_max_low = AP_max &gt; AP_max_sort[int(round(len(AP_max_sort) / 2.))]</express
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_short.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_both.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="48" column="43" lean-forward="true" selection-start-line="48" selection-start-column="43" selection-end-line="48" selection-end-column="43" />
-          <folding />
+        <state relative-caret-position="90">
+          <caret line="66" column="91" lean-forward="true" selection-start-line="66" selection-start-column="91" selection-end-line="66" selection-end-column="91" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_all.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1386">
-          <caret line="77" column="0" lean-forward="true" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        <state relative-caret-position="263">
+          <caret line="87" column="42" lean-forward="false" selection-start-line="87" selection-start-column="42" selection-end-line="87" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_vectorstrength/plot_vectorstrength_short.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="94" column="40" lean-forward="true" selection-start-line="94" selection-start-column="40" selection-end-line="94" selection-end-column="40" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
