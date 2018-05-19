@@ -261,7 +261,7 @@ def get_DAPtime(v, t, i_inj, args):
     return DAP_time_from_AP
 
 
-def impedance(v, i_inj, dt, f_range):
+def impedance(v, i_inj, dt, f_range, frac_smooth=0.3):
     """
     Computes the impedance (impedance = fft(v) / fft(i)) for a given range of frequencies.
 
@@ -296,7 +296,7 @@ def impedance(v, i_inj, dt, f_range):
     idx2 = np.argmin(np.abs(freqs-f_range[1]))
 
     # smooth
-    imp_smooth = np.array(sm.nonparametric.lowess(imp[idx1:idx2], freqs[idx1:idx2], frac=0.3)[:, 1])
+    imp_smooth = np.array(sm.nonparametric.lowess(imp[idx1:idx2], freqs[idx1:idx2], frac=frac_smooth)[:, 1])
 
     return imp[idx1:idx2], freqs[idx1:idx2], imp_smooth
 

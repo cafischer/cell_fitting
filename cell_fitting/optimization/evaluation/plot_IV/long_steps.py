@@ -10,18 +10,18 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/4'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     cell_id = '2015_08_26b'
 
     v_init = -75
-    tstop = 5000
+    tstop = 1000  #5000
     dt = 0.01
-    start_step = 200
-    end_step = 4800
-    step_amps = np.arange(0.05, 1.05, 0.05)
+    start_step = 250  #200
+    end_step = 750  #4800
+    step_amps = [-0.8]  #np.arange(0.05, 1.05, 0.05)
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
@@ -40,6 +40,10 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
+    pl.figure()
+    pl.plot(t_model, v_mat_model[0], 'r')
+    pl.show()
+
     # plot all under another with subfigures
     fig, ax=pl.subplots(20, 1, sharex=True, figsize=(21, 29.7))
     for i, (amp, v_trace_model) in enumerate(zip(step_amps, v_mat_model)):
@@ -49,5 +53,5 @@ if __name__ == '__main__':
         ax[i].legend(fontsize=14, loc='center left', bbox_to_anchor=(1, 0.5))
     fig.text(0.06, 0.5, 'Membrane Potential (mV)', va='center', rotation='vertical', fontsize=14)
     fig.text(0.5, 0.06, 'Time (ms)', ha='center', fontsize=14)
-    pl.savefig(os.path.join(save_dir_img, 'IV_subplots.pdf'))
+    #pl.savefig(os.path.join(save_dir_img, 'IV_subplots.pdf'))
     pl.show()

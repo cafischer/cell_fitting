@@ -5,7 +5,7 @@ from cell_fitting.read_heka.i_inj_functions import get_i_inj_zap
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_fitting.optimization.fitfuns import impedance
 from cell_characteristics import to_idx
-from cell_fitting.data import set_v_rest
+from cell_fitting.read_heka import set_v_rest
 from cell_fitting.optimization.evaluation import joint_plot_data_and_model
 
 

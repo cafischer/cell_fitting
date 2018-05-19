@@ -26,10 +26,11 @@ if __name__ == '__main__':
     load_mechanism_dir("/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/OU_process")
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    noise_params = {'g_e0': 0.0001, 'g_i0': 0.05, 'std_e': 0.007, 'std_i': 0.006, 'tau_e': 2.4, 'tau_i': 5.0}
+    #noise_params = {'g_e0': 0.001, 'g_i0': 0.05, 'std_e': 0.008, 'std_i': 0.008, 'tau_e': 2.5, 'tau_i': 5.0}
+    noise_params = {'g_e0': 0, 'g_i0': 0.05, 'std_e': 0, 'std_i': 0, 'tau_e': 2.5, 'tau_i': 5.0}
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)

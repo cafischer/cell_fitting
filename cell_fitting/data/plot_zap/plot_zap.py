@@ -1,16 +1,12 @@
 import os
-
 import matplotlib.pyplot as pl
 import numpy as np
 import statsmodels.api as sm
 from cell_characteristics import to_idx
-
-from cell_fitting.data import shift_v_rest, set_v_rest
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 from cell_fitting.optimization.evaluation.plot_zap import get_i_inj_zap
 from cell_fitting.optimization.fitfuns import impedance
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol
-
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, shift_v_rest, set_v_rest
 pl.style.use('paper')
 
 
@@ -23,6 +19,7 @@ if __name__ == '__main__':
     protocol = 'Zap20'
     animal = 'rat'
     cell_ids = get_cells_for_protocol(data_dir, protocol)
+    cell_ids = ['2015_08_26b']
     cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
     save_dir = os.path.join(save_dir, protocol, animal)
 
@@ -59,10 +56,7 @@ if __name__ == '__main__':
         v_ds = v[to_idx(onset_dur, dt, 3):to_idx(tstop-offset_dur, dt, 3):ds]
 
         # compute impedance
-        imp, frequencies = impedance(v_ds, i_inj_ds, (t_ds[1] - t_ds[0]) / 1000, [freq0, freq1])  # dt in (sec) for fft
-
-        # smooth impedance
-        imp_smooth = np.array(sm.nonparametric.lowess(imp, frequencies, frac=0.3)[:, 1])
+        imp, frequencies, imp_smooth = impedance(v_ds, i_inj_ds, (t_ds[1] - t_ds[0]) / 1000, [freq0, freq1])  # dt in (sec) for fft
 
         # resonance frequency and q value
         res_freq_idx = np.argmax(imp_smooth)
@@ -73,6 +67,9 @@ if __name__ == '__main__':
         save_dir_img = os.path.join(save_dir, cell_id)
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
+
+        np.save(os.path.join(save_dir_img, 'impedance.npy'), imp_smooth)
+        np.save(os.path.join(save_dir_img, 'frequencies.npy'), frequencies)
 
         # plot impedance
         # pl.figure()
@@ -143,7 +140,7 @@ if __name__ == '__main__':
         pl.tight_layout()
         pl.subplots_adjust(left=0.18, right=0.86, bottom=0.14, top=0.88)
         pl.savefig(os.path.join(save_dir_img, 'v_impedance.png'))
-        #pl.show()
+        pl.show()
         pl.close()
 
     save_dir_summary = os.path.join(save_dir, 'summary')

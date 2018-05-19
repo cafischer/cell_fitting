@@ -20,16 +20,19 @@ if __name__ == '__main__':
     vectorstrength_dict = {}
     n_cells_dict = {}
     phases_dict = {}
+    phases_dict_cells = {}
     for relative_to in relative_tos:
         vectorstrength_dict[relative_to] = {}
         n_cells_dict[relative_to] = {}
         phases_dict[relative_to] = {}
+        phases_dict_cells[relative_to] = {}
     for relative_to in relative_tos:
         for dur_sine_slow in durs_sine_slow:
             for freq_fast in freqs_fast:
                 vectorstrength_dict[relative_to][dur_sine_slow+'_'+freq_fast] = []
                 n_cells_dict[relative_to][dur_sine_slow+'_'+freq_fast] = 0
                 phases_dict[relative_to][dur_sine_slow + '_' + freq_fast] = []
+                phases_dict_cells[relative_to][dur_sine_slow + '_' + freq_fast] = {}
 
     for dur_sine_slow in durs_sine_slow:
         file_name_idxs = np.where([re.match('^2015-\d\d-\d\d[a-z]_Phase_' + dur_sine_slow + '.mat$', f) is not None
@@ -37,6 +40,7 @@ if __name__ == '__main__':
         file_names = all_file_names[file_name_idxs]
 
         for file_name in file_names:
+            cell_id = file_name.split('_')[0].replace('-', '_')
             mat = loadmat(os.path.join(save_dir, file_name))
 
             for relative_to in relative_tos:
@@ -50,6 +54,7 @@ if __name__ == '__main__':
                         vectorstrength_dict[relative_to][dur_sine_slow+'_'+freq_fast].append(vs)
                         n_cells_dict[relative_to][dur_sine_slow+'_'+freq_fast] += 1
                         phases_dict[relative_to][dur_sine_slow + '_' + freq_fast].extend(np.array(phases, dtype=float))
+                        phases_dict_cells[relative_to][dur_sine_slow + '_' + freq_fast][cell_id] = np.array(phases, dtype=float).tolist()
 
     # save dicts
     with open('./vectorstrength_dict_all.json', 'w') as f:
@@ -58,6 +63,8 @@ if __name__ == '__main__':
         json.dump(n_cells_dict, f)
     with open('./phases_dict_all.json', 'w') as f:
         json.dump(phases_dict, f)
+    with open('./phases_dict_cells_all.json', 'w') as f:
+        json.dump(phases_dict_cells, f)
 
     # plot
     bins = np.arange(0, 1+0.025, 0.025)

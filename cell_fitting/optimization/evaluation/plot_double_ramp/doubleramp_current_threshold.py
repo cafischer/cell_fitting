@@ -18,7 +18,7 @@ def simulate_and_get_current_threshold(cell, step_amp):
     tstop = 500
     t = np.arange(0, tstop+dt, dt)
     ramp_amp = 4.0
-    ramp3_amps = np.arange(0, 4.0+0.05, 0.05)
+    ramp3_amps = np.arange(0, 3.0+0.05, 0.05)
     ramp3_times = get_ramp3_times(3, 2, 10)
     len_step = 125
     AP_threshold = -10
@@ -70,7 +70,7 @@ def plot_current_threshold(current_thresholds, current_threshold_rampIV, ramp3_t
     fig, ax = pl.subplots()
     ax2 = ax.twinx()
     ax2.plot(t_dap, v_dap, 'k')
-    ax2.set_ylabel('Membrane Potential (mV)')
+    ax2.set_ylabel('Membrane potential (mV)')
     ax2.spines['right'].set_visible(True)
 
     ax.axhline(ramp3_amp_min, linestyle='--', c='0.5')
@@ -80,7 +80,7 @@ def plot_current_threshold(current_thresholds, current_threshold_rampIV, ramp3_t
         ax.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Step Amp.: ' + str(step_amps[i]),
                 markersize=9 - 2.5 * i)
     ax.set_xlabel('Time (ms)')
-    ax.set_ylabel('Current threshold (mA/$cm^2$)')
+    ax.set_ylabel('Current threshold (nA)')
     ax.set_xticks(np.insert(ramp3_times, 0, [0]))
     ax.set_xlim(-0.5, ramp3_times[-1] + 2)
     ax.set_ylim(0, 4.2)
@@ -88,6 +88,43 @@ def plot_current_threshold(current_thresholds, current_threshold_rampIV, ramp3_t
     pl.tight_layout()
     if save_dir_img is not None:
         pl.savefig(os.path.join(save_dir_img, 'current_threshold.png'))
+    return fig
+
+
+def plot_current_threshold_compare_in_vivo(current_thresholds, current_threshold_rampIV, ramp3_times, step_amps,
+                                           ramp3_amp_min, ramp3_amp_max, v_dap, t_dap, save_dir_img=None,
+                                           legend_loc='upper left'):
+
+    if not os.path.exists(save_dir_img):
+        os.makedirs(save_dir_img)
+
+    AP_max_idx = np.argmax(v_dap)
+    time_shift = t_dap[AP_max_idx]
+    t_dap -= time_shift
+    ramp3_times -= time_shift
+
+    colors_dict = {-0.1: 'b', 0.0: 'k', 0.1: 'r'}
+    colors = [colors_dict[amp] for amp in step_amps]
+
+    # plot current threshold
+    fig, ax = pl.subplots()
+    ax2 = ax.twinx()
+    ax2.plot(t_dap, v_dap, 'k')
+    ax2.set_ylabel('Membrane potential (mV)')
+    ax2.spines['right'].set_visible(True)
+    ax.axhline(ramp3_amp_min, linestyle='--', c='0.5')
+    ax.axhline(ramp3_amp_max, linestyle='--', c='0.5')
+    for i, current_threshold in enumerate(current_thresholds):
+        ax.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Step Amp.: ' + str(step_amps[i]),
+                markersize=9 - 2.5 * i)
+    ax.set_xlabel('Time (ms)')
+    ax.set_ylabel('Current threshold (nA)')
+    ax.set_xlim(0, 25)
+    ax.set_ylim(0, 4.2)
+    ax.legend(loc=legend_loc)
+    pl.tight_layout()
+    if save_dir_img is not None:
+        pl.savefig(os.path.join(save_dir_img, 'current_threshold_cut.png'))
     return fig
 
 

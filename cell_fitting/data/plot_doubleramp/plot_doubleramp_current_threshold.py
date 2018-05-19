@@ -1,13 +1,10 @@
 import os
-
 import matplotlib.pyplot as pl
 import numpy as np
 import pandas as pd
 from cell_characteristics import to_idx
-
 from cell_fitting.optimization.evaluation.plot_double_ramp.doubleramp_current_threshold import get_current_threshold, \
-    plot_current_threshold, save_diff_current_threshold
-
+    plot_current_threshold, save_diff_current_threshold, plot_current_threshold_compare_in_vivo
 pl.style.use('paper')
 
 
@@ -20,10 +17,10 @@ protocol_idx = 0
 
 #cells = ['2015_08_05b', '2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11d',
 #         '2015_08_11e', '2015_08_11f']  # 05b, 11f only 10 amp increase, 05c, 06d 20
-# cells = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
-# run_idxs = [3, 7, 4, 5, 8, 1, 5]
-cell_id = '2014_07_10b'
-run_idx = 3
+cells = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
+run_idxs = [3, 7, 4, 5, 8, 1, 5]
+cell_id = cells[0]
+run_idx = run_idxs[0]
 
 # load current threshold
 current_threshold_rampIV = float(np.loadtxt(os.path.join(save_dir, 'rampIV', 'rat', cell_id, 'current_threshold.txt')))
@@ -57,7 +54,7 @@ for i, step_amp in enumerate(step_amps):
 
 print dt
 start_ramp1 = to_idx(20, dt)
-v_dap = v_mat[0, 0, start_ramp1:start_ramp1+to_idx(ramp3_times[-1]+ramp3_times[0], dt)]
+v_dap = v_mat[0, 0, start_ramp1:start_ramp1+to_idx(ramp3_times[-1]+ramp3_times[0]+10, dt)]
 t_dap = np.arange(len(v_dap)) * dt
 
 # save difference of current threshold at DAP max and from rampIV
@@ -66,3 +63,6 @@ save_diff_current_threshold(current_threshold_rampIV, current_thresholds,
 
 plot_current_threshold(current_thresholds, current_threshold_rampIV, ramp3_times, step_amps, ramp3_amps[0],
                        ramp3_amps[-1], v_dap, t_dap, save_dir_cell, legend_loc='upper right')  #'center right')
+plot_current_threshold_compare_in_vivo(current_thresholds, current_threshold_rampIV, ramp3_times, step_amps, ramp3_amps[0],
+                       ramp3_amps[-1], v_dap, t_dap, save_dir_cell, legend_loc='upper right')
+pl.show()

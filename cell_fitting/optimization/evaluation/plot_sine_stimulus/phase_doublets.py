@@ -1,7 +1,5 @@
 from __future__ import division
 import matplotlib.pyplot as pl
-from matplotlib.patches import Rectangle
-from matplotlib.colors import Normalize
 import numpy as np
 import os
 from nrn_wrapper import Cell
@@ -33,8 +31,8 @@ if __name__ == '__main__':
     AP_threshold = -10
     freq1 = 0.25
     freq2 = 5
-    amp1 = 0.6  # 0.5
-    amp2 = 0.3  # 0.2
+    amp1 = 0.5  # 0.5
+    amp2 = 0.2  # 0.2
     sine1_dur = 1. / freq1 / 2 * 1000
     onset_dur = 500
     offset_dur = 500
@@ -73,4 +71,4 @@ if __name__ == '__main__':
     ax.set_xlim(0, 15)
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'short_ISI_phases.png'))
-    #pl.show()
+    pl.show()

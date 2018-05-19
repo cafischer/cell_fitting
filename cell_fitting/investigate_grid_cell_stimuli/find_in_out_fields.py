@@ -44,6 +44,8 @@ def get_v_per_run(v, t, position):
 
 def shuffle_APs(APs, n_shuffles, seed):
     n_samples = len(v)
+
+
     APs_shuffles = np.zeros((n_shuffles, n_samples))
     random_generator = random.Random()
     random_generator.seed(seed)

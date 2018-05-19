@@ -27,8 +27,9 @@ if __name__ == '__main__':
     v_rest_shift = -16
     AP_threshold = -10
     #cells = get_cells_for_protocol(data_dir, protocol)
-    #cells = ['2014_07_10b', '2014_07_02a', '2014_07_03a', '2017_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
-    cells = ['2015_08_26b']
+    cells = ['2014_07_10b', '2014_07_02a', '2014_07_03a', '2017_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f',
+             '2014_07_10d']
+    #cells = ['2015_08_26b']
     animal = 'rat'
 
     for cell_id in cells:

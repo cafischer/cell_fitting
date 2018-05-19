@@ -19,7 +19,8 @@ if __name__ == '__main__':
     load_mechanism_dir("/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/OU_process")
     load_mechanism_dir(mechanism_dir)
 
-    gi0s = np.arange(0, 0.21, 0.025)
+    # TODO: gi0s = np.arange(0, 0.21, 0.025)
+    gi0s = [0.0, 0.05, 0.1, 0.15]
 
     tstop = 200
     dt = 0.01
@@ -30,16 +31,7 @@ if __name__ == '__main__':
     n_trials = 5
     AP_threshold = -20
 
-    i_amp = 5.0  # nA
-    ramp_start = 50.0  # ms
-    ramp_peak = 50.8  # ms
-    ramp_end = 52.0  # ms
-    ramp_start_idx = to_idx(ramp_start, dt)
-
-    before_AP = 50
-    after_AP = 100
-    before_AP_idx = to_idx(before_AP, dt)
-    after_AP_idx = to_idx(after_AP, dt)
+    i_amp = 0.8  # nA
 
     #noise_params = {'g_e0': 0.003, 'g_i0': 0.05, 'std_e': 0.007, 'std_i': 0.006, 'tau_e': 2.4, 'tau_i': 5.0}
     noise_params = {'g_e0': 0.0, 'g_i0': 0.0, 'std_e': 0.0, 'std_i': 0.0, 'tau_e': 1.0, 'tau_i': 1.0}
@@ -52,7 +44,7 @@ if __name__ == '__main__':
         spike_triggered_avg_vs = []
         for gi0 in gi0s:
             noise_params['g_i0'] = gi0  # TODO g_i0
-            v_APs = []
+            v_IVs = []
             for trial in range(n_trials):
                 cell = Cell.from_modeldir(os.path.join(save_dir, str(model_id), 'cell.json'))
 
@@ -67,7 +59,10 @@ if __name__ == '__main__':
                 g_i = h.Vector()
                 g_i.record(ou_process._ref_g_i)
 
-                i_inj = get_i_inj_rampIV(ramp_start, ramp_peak, ramp_end, 0, i_amp, 0, tstop, dt)
+                # TODO: i_inj = get_i_inj_rampIV(ramp_start, ramp_peak, ramp_end, 0, i_amp, 0, tstop, dt)
+                tstop = 1000
+                i_inj = np.zeros(to_idx(tstop+dt, dt))
+                i_inj[to_idx(250, dt):to_idx(750, dt)] = i_amp
 
                 simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init,
                                      'tstop': tstop, 'dt': dt, 'celsius': celsius, 'onset': onset}
@@ -77,19 +72,15 @@ if __name__ == '__main__':
                 g_i = np.array(g_i)[to_idx(onset, dt):]
 
                 # take window around stimulus onset
-                v_AP = v[ramp_start_idx - before_AP_idx:ramp_start_idx + after_AP_idx + 1]
-                onset_idxs = get_AP_onset_idxs(v_AP, AP_threshold)
-                if len(onset_idxs) == 1 and ramp_start_idx < onset_idxs[0] < ramp_start_idx + to_idx(2, dt):  # no bursts and AP at stimulus onset
-                    i_AP = i_noise[ramp_start_idx - before_AP_idx:ramp_start_idx + after_AP_idx + 1]
-                    v_APs.append(v_AP)
+                v_IVs.append(v)
 
-            if len(v_APs) > 0:
-                v_APs = np.vstack(v_APs)
-                t_AP = np.arange(after_AP_idx + before_AP_idx + 1) * dt
+            if len(v_IVs) > 0:
+                v_IVs = np.vstack(v_IVs)
+                t_AP = t
 
                 # STA on v
-                spike_triggered_avg_v = np.mean(v_APs, 0)
-                spike_triggered_std_v = np.std(v_APs, 0)
+                spike_triggered_avg_v = np.mean(v_IVs, 0)
+                spike_triggered_std_v = np.std(v_IVs, 0)
 
                 spike_triggered_avg_vs.append(spike_triggered_avg_v)
 

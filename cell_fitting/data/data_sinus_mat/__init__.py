@@ -93,7 +93,7 @@ def find_sine_trace_of_cell(cell_id, amp1_to_find=None, amp2_to_find=None, freq1
 if __name__ == '__main__':
     # example read_data_sinus_mat
     save_dir = './sinus_mat_files'
-    cell_id = '2015-08-25d'
+    cell_id = '2015-08-26e'
     file_name = cell_id + '_Sinus_variables.mat'
     repetition = 0
 
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     #     # pl.show()
 
     # example find_traces
-    v_mat, t_mat, amp1s, amp2s, _, _ = find_sine_trace_of_cell(cell_id, None, None, 0.25, 5, save_dir)
+    v_mat, t_mat, amp1s, amp2s, _, _ = find_sine_trace_of_cell(cell_id, None, None, 0.25, 5, 0, save_dir)
 
     print amp1s[0], amp2s[0]
     pl.figure()

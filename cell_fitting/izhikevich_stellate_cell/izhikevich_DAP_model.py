@@ -31,7 +31,7 @@ def get_v_izhikevich(i_inj, tstop, dt, v_rest, v_t, v_reset, v_peak, cm, k_rest,
 
 def phase_plot(vmin, vmax, umin, umax, v_rest, v_t, cm, k, a, b, i_b, v_trajectory=None, u_trajectory=None):
 
-    V, U = np.meshgrid(np.arange(vmin, vmax, 5), np.arange(umin, umax, 4))
+    V, U = np.meshgrid(np.arange(vmin, vmax+5, 5), np.arange(umin, umax+5, 5))
     dvdt = (k * (V - v_rest) * (V - v_t) + i_b - U) / cm
     dudt = (a * (b * (V - v_rest) - U))
 
@@ -82,5 +82,7 @@ if __name__ == '__main__':
     plt.figure()
     plt.plot(t, v)
 
-    phase_plot(-80, 30, -30, 10, v_rest, v_t, cm, k, a, b, i_b, v, u)
+    #phase_plot(-80, 30, -30, 10, v_rest, v_t, cm, k, a, b, i_b, v, u)
+
+    phase_plot(-80, 20, -30, 10, v_rest, v_t, cm, k, a, b, i_b, v, u)
     plt.show()

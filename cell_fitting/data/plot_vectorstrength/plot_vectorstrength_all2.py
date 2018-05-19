@@ -1,14 +1,16 @@
 from __future__ import division
 import numpy as np
-import json
+from scipy.io import loadmat
 from scipy.signal import vectorstrength
 import matplotlib.pyplot as pl
 import os
-import pandas as pd
+import copy
+import json
 
 
 if __name__ == '__main__':
-    save_dir = './vectorstrength/Phasen_shortISIs.csv'
+    save_dir = './vectorstrength/all_ISIs'
+    file_names = np.array(os.listdir(save_dir))
 
     durs_sine_slow = ['1s', '2s', '5s', '10s']
     relative_tos = ['fast']  # 'slow'
@@ -32,41 +34,44 @@ if __name__ == '__main__':
                 phases_dict[relative_to][dur_sine_slow + '_' + freq_fast] = []
                 phases_dict_cells[relative_to][dur_sine_slow + '_' + freq_fast] = {}
 
-    # read data sheat
-    mat = pd.read_csv(save_dir, dtype={'cellname': str, 'ISI': float, 'Stim length': str, 'Freq': str,
-                                       'fast Phase': float, 'slow Phase': float})
-    cell_ids = np.unique(mat['cellname'].dropna().values)
+    for file_name in file_names:
+        cell_id = file_name.split('_')[0].replace('-', '_')
+        mat = loadmat(os.path.join(save_dir, file_name))['short_ISI']
 
-    for cell_id in cell_ids:
         for relative_to in relative_tos:
-            for dur_sine_slow in durs_sine_slow:
-                for freq_fast in freqs_fast:
+            for freq_fast in freqs_fast:
+                for dur_sine_slow in durs_sine_slow:
 
-                    mat_cell_id = mat.ix[np.where(mat.cellname == cell_id)[0]]
+                    stim_lens = mat[:, 6]
+                    freqs = mat[:, 7]
+
                     if freq_fast == 'RF':
-                        mat_selected = mat_cell_id.ix[np.logical_and(mat_cell_id['Stim length'] == dur_sine_slow[:-1],
-                                                                     ~np.any(np.vstack([(mat_cell_id['Freq'] == f[:-2]).values for f in freqs_fast]), axis=0))]
+                        freqs_fast_without_RF = copy.copy(freqs_fast)
+                        freqs_fast_without_RF.remove('RF')
+                        mat_selected = mat[np.logical_and(stim_lens == float(dur_sine_slow[:-1]),
+                                                                         ~np.any(np.vstack(
+                                                                         [freqs == float(f[:-2]) for f
+                                                                          in freqs_fast_without_RF]), axis=0))]
                     else:
-                        mat_selected = mat_cell_id.ix[np.logical_and(mat_cell_id['Stim length'] == dur_sine_slow[:-1],
-                                                                     mat_cell_id['Freq'] == freq_fast[:-2])]
+                        mat_selected = mat[np.logical_and(stim_lens == float(dur_sine_slow[:-1]),
+                                                                     freqs == float(freq_fast[:-2]))]
 
-                    if not mat_selected.empty:
-                        phases = mat_selected[relative_to+' Phase'].values
-
+                    phases = mat_selected[:, 12]
+                    if len(phases) > 1:
                         vs = vectorstrength(phases, 360)[0]  # 0 strength, 1 phase
                         vectorstrength_dict[relative_to][dur_sine_slow+'_'+freq_fast].append(vs)
                         n_cells_dict[relative_to][dur_sine_slow+'_'+freq_fast] += 1
-                        phases_dict[relative_to][dur_sine_slow + '_' + freq_fast].extend(phases)
-                        phases_dict_cells[relative_to][dur_sine_slow + '_' + freq_fast][cell_id] = phases.tolist()
+                        phases_dict[relative_to][dur_sine_slow + '_' + freq_fast].extend(np.array(phases, dtype=float))
+                        phases_dict_cells[relative_to][dur_sine_slow + '_' + freq_fast][cell_id] = np.array(phases, dtype=float).tolist()
 
     # save dicts
-    with open('./vectorstrength_dict_short.json', 'w') as f:
+    with open('./vectorstrength_dict_all.json', 'w') as f:
         json.dump(vectorstrength_dict, f)
-    with open('./n_cells_dict_short.json', 'w') as f:
+    with open('./n_cells_dict_all.json', 'w') as f:
         json.dump(n_cells_dict, f)
-    with open('./phases_dict_short.json', 'w') as f:
+    with open('./phases_dict_all.json', 'w') as f:
         json.dump(phases_dict, f)
-    with open('./phases_dict_cells_short.json', 'w') as f:
+    with open('./phases_dict_cells_all.json', 'w') as f:
         json.dump(phases_dict_cells, f)
 
     # plot
@@ -101,10 +106,10 @@ if __name__ == '__main__':
                 if j == len(freqs_fast):
                     axes[len(freqs_fast)-i-1, j].set_ylabel(freq_fast, fontsize=16)
                     axes[len(freqs_fast)-i-1, j].yaxis.set_label_position("right")
-        fig.text(0.01, 0.5, 'Vector strength relative to '+relative_to+' oscillation (APs with ISI<10ms)', va='center',
+        fig.text(0.01, 0.5, 'Vector strength relative to '+relative_to+' oscillation (all APs)', va='center',
                  rotation='vertical', fontsize=16)
         fig.legend((l1, l2), ('avg.', 'all phases'), loc='upper right')
     pl.tight_layout()
     pl.subplots_adjust(left=0.08)
-    pl.savefig(os.path.join('./', 'vector_strength_short.png'))
+    pl.savefig(os.path.join('./', 'vector_strength_all.png'))
     pl.show()
