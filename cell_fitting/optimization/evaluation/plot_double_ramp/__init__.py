@@ -42,3 +42,31 @@ def plot_double_ramp(current_thresholds, ramp3_amps, t, v_mat_step0, save_dir_im
     if save_dir_img is not None:
         pl.savefig(os.path.join(save_dir_img, 'v.png'))
     return fig
+
+
+def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampIV, ramp3_times, step_amps,
+                                 ramp3_amps, v_dap, t_dap, legend_loc='upper left'):
+    colors_dict = {-0.1: 'b', 0.0: 'k', 0.1: 'r'}
+    colors = [colors_dict[amp] for amp in step_amps]
+
+    # plot current threshold
+    ax2 = ax.twinx()
+    ax2.plot(t_dap, v_dap, 'k')
+    ax2.set_ylabel('Mem. pot. (mV)', fontsize=12)
+    ax2.spines['right'].set_visible(True)
+
+    ax.axhline(ramp3_amps[0], linestyle='--', c='0.5')
+    ax.axhline(ramp3_amps[-1], linestyle='--', c='0.5')
+    ax.plot(0, current_threshold_rampIV, 'ok', markersize=5)
+    for i, current_threshold in enumerate(current_thresholds):
+        ax.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Amp.: ' + str(step_amps[i]),
+                markersize=7 - 2.0 * i)
+    ax.set_xlabel('Start 2nd pulse (ms)', fontsize=12)
+    ax.set_ylabel('Current thresh. (nA)', fontsize=12)
+    ax.set_xticks(np.insert(ramp3_times, 0, [0]))
+    ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+    ax.set_ylim(0, 4.2)
+    ax.legend(loc=legend_loc, fontsize=10)
+    ax.xaxis.set_tick_params(labelsize=10)
+    ax.yaxis.set_tick_params(labelsize=10)
+    ax2.yaxis.set_tick_params(labelsize=10)

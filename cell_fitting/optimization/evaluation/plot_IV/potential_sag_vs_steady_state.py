@@ -1,13 +1,11 @@
 import os
-
 import matplotlib.pyplot as pl
 import numpy as np
+import json
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from nrn_wrapper import Cell
-
 from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
-
 pl.style.use('paper')
 
 
@@ -38,10 +36,21 @@ def compute_v_sag_and_steady_state(v_traces, amps, AP_threshold, start_step_idx,
     return v_sags, v_steady_states, amps_subtheshold
 
 
+def plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags):
+    ax.plot(amps_subtheshold, v_steady_states, linestyle='-', marker='o', c='0.0', markersize=4, label='Steady State')
+    ax.plot(amps_subtheshold, v_sags, linestyle='-', marker='o', c='0.5', markersize=4, label='Sag')
+    ax.set_xlabel('Inj. current (nA)', fontsize=12)
+    ax.set_ylabel('Mem. pot. (mV)', fontsize=12)
+    ax.legend(loc='upper left', fontsize=10)
+    ax.set_xticks(np.arange(-0.15, 0.15+0.05, 0.05))
+    ax.xaxis.set_tick_params(labelsize=10)
+    ax.yaxis.set_tick_params(labelsize=10)
+
+
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
     model_dir = os.path.join(save_dir, 'cell.json')
     #save_dir = '../../../results/server/2017-07-27_09:18:59/22/L-BFGS-B'
     #model_dir = os.path.join(save_dir, 'model', 'cell.json')
@@ -63,8 +72,8 @@ if __name__ == '__main__':
     discontinuities_IV = [start_step, end_step]
 
     # read data
-    v_mat_data, t_mat_data, sweep_idxs = get_v_and_t_from_heka(data_dir, 'plot_IV', return_sweep_idxs=True)
-    i_inj_mat = get_i_inj_from_function('plot_IV', sweep_idxs, t_mat_data[0][-1], t_mat_data[0][1]-t_mat_data[0][0])
+    v_mat_data, t_mat_data, sweep_idxs = get_v_and_t_from_heka(data_dir, 'IV', return_sweep_idxs=True)
+    i_inj_mat = get_i_inj_from_function('IV', sweep_idxs, t_mat_data[0][-1], t_mat_data[0][1]-t_mat_data[0][0])
 
     # VI for model
     simulation_params = {'sec': ('soma', None), 'celsius': 35, 'onset': 200, 'atol': 1e-6, 'continuous': True,
@@ -92,24 +101,23 @@ if __name__ == '__main__':
     v_sags, v_steady_states, amps_subtheshold = compute_v_sag_and_steady_state(v_traces_model, amps, AP_threshold,
                                                                                start_step, end_step)
 
+    # save
+    max_amp = 0.15
+    amps_subtheshold_range = np.array(amps_subtheshold) < max_amp + 0.05
+    amps_subtheshold = np.array(amps_subtheshold)[amps_subtheshold_range]
+    v_steady_states = np.array(v_steady_states)[amps_subtheshold_range]
+    v_sags = np.array(v_sags)[amps_subtheshold_range]
+
+    sag_dict = dict(amps_subtheshold=list(amps_subtheshold), v_steady_states=list(v_steady_states), v_sags=list(v_sags))
+    with open(os.path.join(save_dir, 'img', 'IV', 'sag', 'sag_dict.json'), 'w') as f:
+        json.dump(sag_dict, f)
+
     # plot
     save_dir_img = os.path.join(save_dir, 'img', 'IV', 'sag')
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
-    max_amp = 0.15
-    amps_subtheshold = np.array(amps_subtheshold)
-    amps_subtheshold_range = np.array(amps_subtheshold) < max_amp + 0.05
-
-    pl.figure()
-    pl.plot(amps_subtheshold[amps_subtheshold_range], np.array(v_steady_states)[amps_subtheshold_range], linestyle='-',
-            marker='o', c='0.0', label='Steady State')
-    pl.plot(amps_subtheshold[amps_subtheshold_range], np.array(v_sags)[amps_subtheshold_range], linestyle='-',
-            marker='o', c='0.5', label='Sag')
-    pl.xlabel('Current (nA)')
-    pl.ylabel('Membrane Potential (mV)')
-    pl.legend(loc='upper left')
-    pl.xticks(np.arange(-0.15, max_amp+0.05, 0.05))
+    fig, ax = pl.subplots()
+    plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold_range, v_steady_states, v_sags)
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'sag_steady_state.png'))
-    pl.show()
+    pl.savefig(os.path.join(save_dir_img, 'sag_vs_steady_state.png'))

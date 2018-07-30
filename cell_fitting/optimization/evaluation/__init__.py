@@ -3,6 +3,8 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as pl
+from cell_fitting.read_heka import get_sweep_index_for_amp, get_i_inj_from_function
+from cell_fitting.optimization.simulate import iclamp_handling_onset
 pl.style.use('paper')
 
 
@@ -58,3 +60,18 @@ def joint_plot_data_and_model(x_data, y_data, x_model, y_model, x_name, y_name, 
             os.makedirs(save_dir_img)
         pl.savefig(os.path.join(save_dir_img, x_name+'_'+y_name+'.png'))
     return jp.fig
+
+
+def simulate_model(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, onset=200):
+    if protocol == 'Zap20':
+        sweep_idx = 0
+        print 'amp not used!'
+    else:
+        sweep_idx = get_sweep_index_for_amp(amp, protocol)
+    i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
+
+    simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
+                         'dt': dt, 'celsius': celsius, 'onset': onset}
+
+    v, t, _ = iclamp_handling_onset(cell, **simulation_params)
+    return v, t, i_inj

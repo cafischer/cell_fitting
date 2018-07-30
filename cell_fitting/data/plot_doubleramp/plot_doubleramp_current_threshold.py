@@ -1,4 +1,5 @@
 import os
+import json
 import matplotlib.pyplot as pl
 import numpy as np
 import pandas as pd
@@ -56,6 +57,15 @@ print dt
 start_ramp1 = to_idx(20, dt)
 v_dap = v_mat[0, 0, start_ramp1:start_ramp1+to_idx(ramp3_times[-1]+ramp3_times[0]+10, dt)]
 t_dap = np.arange(len(v_dap)) * dt
+
+# save
+current_thresholds_lists = [list(c) for c in current_thresholds]
+current_threshold_dict = dict(current_thresholds=current_thresholds_lists,
+                              current_threshold_rampIV=[current_threshold_rampIV],
+                              ramp3_times=list(ramp3_times), step_amps=list(step_amps), ramp3_amps=list(ramp3_amps),
+                              v_dap=list(v_dap), t_dap=list(t_dap))
+with open(os.path.join(save_dir, 'PP', cell_id, 'current_threshold_dict.json'), 'w') as f:
+    json.dump(current_threshold_dict, f)
 
 # save difference of current threshold at DAP max and from rampIV
 save_diff_current_threshold(current_threshold_rampIV, current_thresholds,

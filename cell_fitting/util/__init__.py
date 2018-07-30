@@ -2,7 +2,7 @@ import numpy as np
 
 
 def init_nan(shape):
-    x = np.zeros(shape)
+    x = np.empty(shape)
     x[:] = np.nan
     return x
 

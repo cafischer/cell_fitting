@@ -7,6 +7,7 @@ from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp import double_ramp, get_ramp3_times
 from cell_fitting.util import init_nan
 from cell_fitting.investigate_grid_cell_stimuli.model_noise.with_OU import ou_noise_input
+import json
 pl.style.use('paper')
 
 __author__ = 'caro'
@@ -18,7 +19,7 @@ def simulate_and_get_current_threshold(cell, step_amp):
     tstop = 500
     t = np.arange(0, tstop+dt, dt)
     ramp_amp = 4.0
-    ramp3_amps = np.arange(0, 3.0+0.05, 0.05)
+    ramp3_amps = np.arange(0.0, 3.0+0.05, 0.05)
     ramp3_times = get_ramp3_times(3, 2, 10)
     len_step = 125
     AP_threshold = -10
@@ -150,7 +151,7 @@ def plot_double_ramp(v_mat, t, ramp3_times, ramp3_amps, save_dir_img):
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     AP_threshold = 0
@@ -177,6 +178,15 @@ if __name__ == '__main__':
             os.makedirs(save_dir_img_step)
         plot_double_ramp(v_mat, t, ramp3_times, ramp3_amps, save_dir_img_step)
         pl.close()
+
+    # save
+    current_thresholds_lists = [list(c) for c in current_thresholds]
+    current_threshold_dict = dict(current_thresholds=current_thresholds_lists,
+                                  current_threshold_rampIV=[current_threshold_rampIV],
+                                  ramp3_times=list(ramp3_times), step_amps=list(step_amps), ramp3_amps=list(ramp3_amps),
+                                  v_dap=list(v_dap), t_dap=list(t_dap))
+    with open(os.path.join(save_dir_img, 'current_threshold_dict.json'), 'w') as f:
+        json.dump(current_threshold_dict, f)
 
     # save difference of minimal current threshold and from rampIV
     save_diff_current_threshold(current_threshold_rampIV, current_thresholds,

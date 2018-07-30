@@ -1,6 +1,7 @@
 import os
 import matplotlib.pyplot as pl
 import numpy as np
+import json
 import statsmodels.api as sm
 from cell_characteristics import to_idx
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
@@ -21,7 +22,7 @@ if __name__ == '__main__':
     cell_ids = get_cells_for_protocol(data_dir, protocol)
     cell_ids = ['2015_08_26b']
     cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
-    save_dir = os.path.join(save_dir, protocol, animal)
+    save_dir = os.path.join(save_dir, protocol)
 
     # frequencies
     freq0 = 0
@@ -64,9 +65,17 @@ if __name__ == '__main__':
         q_values[ci] = imp_smooth[res_freq_idx] / imp_smooth[np.where(frequencies == 0)[0][0]]
 
         # plot
-        save_dir_img = os.path.join(save_dir, cell_id)
+        save_dir_img = os.path.join(save_dir, animal, cell_id)
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
+
+        # save
+        if not os.path.exists(os.path.join(save_dir, cell_id)):
+            os.makedirs(os.path.join(save_dir, cell_id))
+
+        impedance_dict = dict(impedance=list(imp_smooth), frequencies=list(frequencies))
+        with open(os.path.join(save_dir, cell_id, 'impedance_dict.json'), 'w') as f:
+            json.dump(impedance_dict, f)
 
         np.save(os.path.join(save_dir_img, 'impedance.npy'), imp_smooth)
         np.save(os.path.join(save_dir_img, 'frequencies.npy'), frequencies)

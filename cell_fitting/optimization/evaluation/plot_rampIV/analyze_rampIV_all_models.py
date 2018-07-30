@@ -2,7 +2,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import os
 from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV, find_current_threshold, plot_rampIV, \
-    load_data, get_rmse
+    load_rampIV_data, get_rmse
 from nrn_wrapper import Cell, load_mechanism_dir
 import time
 pl.style.use('paper')

@@ -147,14 +147,22 @@ def plot_fi_curve(amps_greater0, firing_rates_model, save_dir_img=None):
     fig = pl.figure()
     pl.plot(amps_greater0, firing_rates_model, '-or', label='Model')
     pl.ylim([0, 100])
-    pl.xlabel('Current (nA)')
-    pl.ylabel('Firing rate (APs/s)')
+    pl.xlabel('Inj. current (nA)')
+    pl.ylabel('Firing rate (Hz)')
     pl.tight_layout()
     if save_dir_img is not None:
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
         pl.savefig(os.path.join(save_dir_img, 'fIcurve.png'))
     return fig
+
+
+def plot_fi_curve_on_ax(ax, amps, firing_rates):
+    ax.plot(amps, firing_rates, '-ok', markersize=4)
+    ax.set_xlabel('Inj. current (nA)', fontsize=12)
+    ax.set_ylabel('Firing rate (Hz)', fontsize=12)
+    ax.xaxis.set_tick_params(labelsize=10)
+    ax.yaxis.set_tick_params(labelsize=10)
 
 
 def plot_fi_curve_with_data(amps_greater0, firing_rates_model, firing_rates_data, save_dir_img=None):

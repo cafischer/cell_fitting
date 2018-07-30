@@ -1,20 +1,21 @@
 import os
 import matplotlib.pyplot as pl
 import numpy as np
+import json
 from cell_characteristics.fIcurve import compute_fIcurve, compute_fIcurve_last_ISI
 from nrn_wrapper import Cell
-from cell_fitting.optimization.fitter import extract_simulation_params
-from cell_fitting.optimization.simulate import iclamp_handling_onset
+from cell_fitting.optimization.simulate import iclamp_handling_onset, extract_simulation_params
 from cell_fitting.util import merge_dicts
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
 from cell_fitting.optimization.evaluation.plot_IV import plot_IV_traces, plot_fi_curve
+from cell_characteristics.analyze_APs import get_AP_max_idx, get_AP_start_end
 pl.style.use('paper')
 
 
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
@@ -65,6 +66,11 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
+    # save
+    fi_dict = dict(amps=list(amps_greater0), firing_rates=list(firing_rates_model))
+    with open(os.path.join(save_dir, 'img', 'IV', 'fi_curve', 'fi_dict.json'), 'w') as f:
+        json.dump(fi_dict, f)
+
     plot_fi_curve(amps_greater0, firing_rates_model, os.path.join(save_dir_img, 'fi_curve'))
 
     np.save(os.path.join(save_dir_img, 'amps_greater0.npy'), amps_greater0)
@@ -81,7 +87,7 @@ if __name__ == '__main__':
     #pl.show()
 
     # # plot single traces
-    # for amp, v_trace_data, v_trace_model in zip(amps, v_traces_data, v_traces_model):
+    # for amp, v_trace_data, v_trace_model in zip(amps, v_traces_data, v_mat_model):
     #     AP_start_model, AP_end_model = get_AP_start_end(v_trace_model, threshold=-30, n=0)
     #     AP_start_data, AP_end_data = get_AP_start_end(v_trace_data, threshold=-30, n=0)
     #
@@ -91,12 +97,12 @@ if __name__ == '__main__':
     #         AP_peak_data = v_trace_data[get_AP_max_idx(v_trace_data, AP_start_data, AP_end_data)]
     #         if AP_peak_model > AP_peak_data:
     #             pl.plot(t_model, v_trace_model, 'r', label='Model')
-    #             #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+    #             pl.plot(t_mat[0, :], v_trace_data - v_trace_data[0] + v_trace_model[0], 'k', label='Exp. Data')
     #         else:
-    #             #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+    #             pl.plot(t_mat[0, :], v_trace_data - v_trace_data[0] + v_trace_model[0], 'k', label='Exp. Data')
     #             pl.plot(t_model, v_trace_model, 'r', label='Model')
     #     else:
-    #         #pl.plot(t_trace, v_trace_data, 'k', label='Exp. Data')
+    #         pl.plot(t_mat[0, :], v_trace_data - v_trace_data[0] + v_trace_model[0], 'k', label='Exp. Data')
     #         pl.plot(t_model, v_trace_model, 'r', label='Model')
     #     pl.xlabel('Time (ms)')
     #     pl.ylabel('Membrane Potential (mV)')
@@ -104,8 +110,8 @@ if __name__ == '__main__':
     #         pl.ylim(-80, -60)
     #     #pl.legend()
     #     pl.tight_layout()
-    #     pl.savefig(os.path.join(save_dir_img, 'plot_IV' + str(amp) + '.png'))
+    #     pl.savefig(os.path.join(save_dir_img, 'IV' + str(amp) + '.png'))
     #     pl.show()
-
-    plot_IV_traces(amps[amps_greater0_idx], t_model, v_mat_model[amps_greater0_idx], save_dir_img)
-    pl.show()
+    #
+    # plot_IV_traces(amps[amps_greater0_idx], t_model, v_mat_model[amps_greater0_idx], save_dir_img)
+    # pl.show()

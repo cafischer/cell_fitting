@@ -2,7 +2,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import os
 from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV, find_current_threshold, plot_rampIV, \
-    load_data, get_rmse
+    load_rampIV_data, get_rmse
 from nrn_wrapper import Cell
 import time
 pl.style.use('paper')
@@ -10,7 +10,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
     #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/3519'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     current_threshold = find_current_threshold(cell)
     print 'Current threshold: %.2f nA' % current_threshold
 
-    v_data, t_data, i_inj_data = load_data(data_dir, ramp_amp, v_shift=-16)
+    v_data, t_data, i_inj_data = load_rampIV_data(data_dir, ramp_amp, v_shift=-16)
     dt = t_data[1] - t_data[0]
 
     # rmse
@@ -44,6 +44,9 @@ if __name__ == '__main__':
 
     np.savetxt(os.path.join(save_dir_img, 'current_threshold.txt'), np.array([current_threshold]))
 
+    if not os.path.exists(os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp)):
+        os.makedirs(os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp))
+
     pl.figure()
     #pl.title(str(np.round(ramp_amp, 2)) + ' nA')
     pl.plot(t_data, v_data, 'k', label='Exp. Data')
@@ -52,7 +55,6 @@ if __name__ == '__main__':
     pl.ylabel('Membrane Potential (mV)')
     pl.legend(loc='upper right')
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'rampIV_with_data' + str(np.round(ramp_amp, 2)) + 'nA' + '.png'))
-    pl.show()
+    pl.savefig(os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp, 'rampIV_with_data.png'))
 
     plot_rampIV(t, v, os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp))

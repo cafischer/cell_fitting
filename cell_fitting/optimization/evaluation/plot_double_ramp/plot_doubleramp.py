@@ -213,12 +213,12 @@ def plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, sav
 if __name__ == '__main__':
 
     # parameters
-    #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    save_dir = '../../../results/server_17_12_04/2017-12-26_08:17:19/473/L-BFGS-B'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    #save_dir = '../../../results/server_17_12_04/2017-12-26_08:17:19/473/L-BFGS-B'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
 
-    # load model #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/32229'
+    # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     dt = 0.01

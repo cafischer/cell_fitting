@@ -9,7 +9,6 @@ from pandas.tools.plotting import table
 import os
 from itertools import combinations
 import numpy.ma as ma
-
 from optimization.simulate import extract_simulation_params
 from optimization.errfuns import rms
 from optimization.helpers import get_lowerbound_upperbound_keys

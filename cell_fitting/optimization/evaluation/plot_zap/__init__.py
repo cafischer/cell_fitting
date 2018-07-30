@@ -102,3 +102,11 @@ def plot_v_and_impedance(freq0, freq1, frequencies, imp_smooth, offset_dur, onse
     if save_dir_img is not None:
         pl.savefig(os.path.join(save_dir_img, 'v_impedance.png'))
     return fig
+
+
+def plot_impedance_on_ax(ax, frequencies, impedance):
+    ax.plot(frequencies, impedance, '-k', markersize=4)
+    ax.set_xlabel('Frequency (Hz)', fontsize=12)
+    ax.set_ylabel('Impedance (M$\Omega$)', fontsize=12)
+    ax.xaxis.set_tick_params(labelsize=10)
+    ax.yaxis.set_tick_params(labelsize=10)

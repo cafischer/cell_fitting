@@ -3,8 +3,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import os
 import pandas as pd
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_protocols_same_base
-from cell_fitting.data import shift_v_rest
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_protocols_same_base, shift_v_rest
 from cell_fitting.util import init_nan
 pl.style.use('paper')
 
@@ -48,8 +47,8 @@ data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
 PP_params_dir = '/home/cf/Phd/DAP-Project/cell_data/PP_params2.csv'
 protocol = 'PP'
 v_rest_shift = -16
-cell_id = '2014_07_10d'
-run_idx = 5
+cell_id = '2014_07_10b'
+run_idx = 3
 step_flags = [0, 1, 2]
 step_amps = [0, -0.1, 0.1]
 

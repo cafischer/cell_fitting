@@ -28,6 +28,19 @@ def get_protocols_same_base(file_dir, protocol_base, group='Group1', return_heka
     return protocols_match
 
 
+def load_data(data_dir, protocol, amp, v_shift=-16):
+    if protocol == 'Zap20':
+        sweep_idxs = [0]
+        print 'amp not used!'
+    else:
+        sweep_idxs = [get_sweep_index_for_amp(amp, protocol)]
+    v, t = get_v_and_t_from_heka(data_dir, protocol, sweep_idxs=sweep_idxs)
+    v = shift_v_rest(v[0], v_shift)
+    t = t[0]
+    i_inj = get_i_inj_from_function(protocol, sweep_idxs, t[-1], t[1]-t[0])[0]
+    return v, t, i_inj
+
+
 def get_v_and_t_from_heka(file_dir, protocol, group='Group1', trace='Trace1', sweep_idxs=None, return_series=False,
                           return_sweep_idxs=False, heka_dict=None):
     if heka_dict is None:

@@ -171,12 +171,24 @@ def simulate_gates(cell, simulation_params, return_vh_vs=False, plot=False):
 
     # plot gate traces
     if plot:
-        pl.figure()
-        for k in gates.keys():
-            pl.plot(t, gates[k] ** power_gates[k], label=k)
-            pl.ylabel('Gate', fontsize=16)
-            pl.xlabel('Time (ms)', fontsize=16)
-            pl.legend(loc='upper right', fontsize=16)
+        new_channel_names = {k: k for k in gates.keys()}
+        new_channel_names['nap_m'] = 'nat_m'
+        new_channel_names['nap_h'] = 'nat_h'
+        new_channel_names['nat_m'] = 'nap_m'
+        new_channel_names['nat_h'] = 'nap_h'
+
+        fig, ax1 = pl.subplots()
+        for k in sorted(new_channel_names.keys(), reverse=True):
+            ax1.plot(t, gates[k] ** power_gates[k], label=new_channel_names[k])
+            ax1.set_ylabel('Gate')
+            ax1.set_xlabel('Time (ms)')
+        ax2 = ax1.twinx()
+        ax2.plot(t, v_model, 'k')
+        ax2.set_ylabel('Membrane Potential (mV)')
+        ax2.spines['right'].set_visible(True)
+        ax1.legend()
+        ax2.set_ylim(-80, -40)
+        pl.tight_layout()
         pl.show()
 
         pl.figure()

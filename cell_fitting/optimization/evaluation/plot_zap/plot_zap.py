@@ -1,10 +1,11 @@
 from __future__ import division
 import matplotlib.pyplot as pl
 import numpy as np
+import json
 import os
 from nrn_wrapper import Cell
 from cell_fitting.read_heka import get_v_and_t_from_heka
-from cell_fitting.data import set_v_rest
+from cell_fitting.read_heka import set_v_rest
 from cell_fitting.optimization.evaluation.plot_zap import simulate_zap, plot_v_and_impedance,\
     compute_res_freq_and_q_val, compute_smoothed_impedance
 pl.style.use('paper')
@@ -30,6 +31,11 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_
         save_dir_img = os.path.join(save_dir, 'img', 'zap')
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
+
+        # save
+        impedance_dict = dict(impedance=list(imp_smooth), frequencies=list(frequencies))
+        with open(os.path.join(save_dir_img, 'impedance_dict.json'), 'w') as f:
+            json.dump(impedance_dict, f)
 
         # exp data
         v_exp, t_exp = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), 'Zap20')
@@ -83,15 +89,15 @@ def apply_zap_stimulus(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_
 
         plot_v_and_impedance(freq0, freq1, frequencies, imp_smooth, offset_dur, onset_dur, q_value, res_freq,
                              save_dir_img, t, tstop, v, v_rest)
+        pl.show()
     return res_freq, q_value
-
 
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/4'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
-    mechanism_dir = '../../model/channels/vavoulis'
+    mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     cell_id = '2015_08_26b'
 

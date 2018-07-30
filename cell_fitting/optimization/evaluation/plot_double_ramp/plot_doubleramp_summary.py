@@ -15,9 +15,9 @@ def plot_current_threshold(diff_current_data, diff_current_model, save_dir):
     fig, ax = pl.subplots(figsize=(2.5, 4.8))
     ax.errorbar(0.2, np.mean(diff_current_data), yerr=np.std(diff_current_data), color='k', marker='o', capsize=3)
     ax.plot(np.zeros(len(diff_current_data)), diff_current_data, 'ok', alpha=0.5)
-    ax.plot(np.zeros(len(diff_current_model)), diff_current_model, 'or', alpha=0.5)
-    for i, model_id in enumerate(model_ids):
-        ax.annotate(str(model_id), xy=(0.05, diff_current_model[i]), color='r', fontsize=8)
+    #ax.plot(np.zeros(len(diff_current_model)), diff_current_model, 'or', alpha=0.5)
+    #for i, model_id in enumerate(model_ids):
+    #    ax.annotate(str(model_id), xy=(0.05, diff_current_model[i]), color='r', fontsize=8)
     vertical_square_bracket(ax, star, x1=0.35, x2=0.4, y1=np.mean(diff_current_data), y2=h0)
     ax.set_xticks([])
     ax.set_ylabel('Current Threshold: Rest - DAP (nA)')

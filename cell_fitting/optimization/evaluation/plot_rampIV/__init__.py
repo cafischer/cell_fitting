@@ -83,7 +83,7 @@ def simulate_rampIV(cell, ramp_amp, v_init=-75, celsius=35, dt=0.01, tstop=161.9
     return v, t, i_inj
 
 
-def load_data(data_dir, ramp_amp, v_shift=-16):
+def load_rampIV_data(data_dir, ramp_amp, v_shift=-16):
     sweep_idxs = [get_sweep_index_for_amp(ramp_amp, 'rampIV')]
     v, t = get_v_and_t_from_heka(data_dir, 'rampIV', sweep_idxs=sweep_idxs)
     v = shift_v_rest(v[0], v_shift)
