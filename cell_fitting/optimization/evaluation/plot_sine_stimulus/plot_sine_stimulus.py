@@ -18,9 +18,9 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # apply stim
-    amp1 = 0.6  # 0.5
+    amp1 = 0.4  # 0.5
     amp2 = 0.2  # 0.2
-    freq1 = 0.25  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
+    freq1 = 0.2  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
     sine1_dur = 1./freq1 * 1000 / 2
     freq2 = 5  # 5  # 20
     onset_dur = offset_dur = 500

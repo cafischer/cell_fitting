@@ -4,13 +4,13 @@ import json
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from grid_cell_stimuli.spike_phase import get_spike_phases, plot_phase_hist, plot_phase_vs_position_per_run, \
     compute_phase_precession, plot_phase_precession
-from scipy.stats import circmean
+from scipy.stats import circmean, circstd
 
 
 if __name__ == '__main__':
-    dur1 = 5000
+    freq1 = 0.2
     freq2 = 5
-    save_dir = os.path.join('../plots/plot_sine_stimulus', str(dur1)+'_'+str(freq2))
+    save_dir = os.path.join('../plots/sine_stimulus/traces/rat', str(freq1)+'_'+str(freq2))
     cells = [os.path.split(d)[-1] for d in os.listdir(save_dir)]
 
     for cell in cells:
@@ -48,7 +48,12 @@ if __name__ == '__main__':
         phases = phases[not_nan]
         AP_onsets = AP_onsets[not_nan]
         mean_phase = circmean(phases, 360, 0)
+        std_phase = circstd(phases, 360, 0)
         plot_phase_hist(phases, save_dir_img, mean_phase=mean_phase)
+
+        sine_dict = dict(phases=list(phases), mean_phase=[mean_phase], std_phase=[std_phase])
+        with open(os.path.join(save_dir_img, 'sine_dict.json'), 'w') as f:
+            json.dump(sine_dict, f)
 
         # phase precession
         position = t * speed

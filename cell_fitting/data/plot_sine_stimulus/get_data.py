@@ -1,7 +1,6 @@
 from __future__ import division
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, shift_v_rest
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
-from cell_fitting.data import shift_v_rest
 import os
 import matplotlib.pyplot as pl
 import re
@@ -12,11 +11,11 @@ pl.style.use('paper')
 
 
 if __name__ == '__main__':
-    save_dir = '../plots/plot_sine_stimulus/traces/rat'
+    save_dir = '../plots/sine_stimulus/traces/rat'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     sine_params_dir = '/home/cf/Phd/DAP-Project/cell_data/sine_params.csv'
     protocol_base = 'Stimulus'
-    dur1 = 1000  # ms
+    freq1 = 0.1  # Hz
     freq2 = 5  # Hz
     v_rest_shift = -16
     correct_vrest = True
@@ -49,10 +48,12 @@ if __name__ == '__main__':
                 '2015_05_29g.dat', '2015_06_19l.dat', '2015_08_11e.dat', '2015_08_11b.dat', '2015_05_22q.dat',
                 '2015_08_20e.dat', '2015_08_05c.dat', '2015_08_04c.dat', '2015_05_22t.dat', '2015_08_21c.dat',
                 '2015_05_26b.dat', '2015_08_11f.dat']
+    cell_ids = ['2015_08_26b']
 
     for cell_id in cell_ids:
         sine_params_cell = sine_params[sine_params['cell'] == cell_id[:-4]]
-        protocol_idx = np.where(np.logical_and(sine_params_cell['sine1_dur'] == dur1, sine_params_cell['freq2'] == freq2))[0]
+        protocol_idx = np.where(np.logical_and(sine_params_cell['sine1_dur'] == int(1./freq1*1000),
+                                               sine_params_cell['freq2'] == freq2))[0]
         if len(protocol_idx) > 0:
             protocol = protocol_base+'('+str(protocol_idx[0])+')' if protocol_idx[0] > 0 else protocol_base
             v_mat, t_mat = get_v_and_t_from_heka(os.path.join(data_dir, cell_id), protocol)
@@ -61,7 +62,7 @@ if __name__ == '__main__':
             v = shift_v_rest(v, v_rest_shift)
             sine_params_cell = sine_params_cell.iloc[protocol_idx[0]].to_dict()
 
-            save_dir_cell = os.path.join(save_dir, str(dur1) + '_' + str(freq2), cell_id[:-4])
+            save_dir_cell = os.path.join(save_dir, str(freq1) + '_' + str(freq2), cell_id[:-4])
             if not os.path.exists(save_dir_cell):
                 os.makedirs(save_dir_cell)
             np.save(os.path.join(save_dir_cell, 'v.npy'), v)
@@ -77,4 +78,4 @@ if __name__ == '__main__':
             #pl.legend(loc='upper right')
             pl.tight_layout()
             pl.savefig(os.path.join(save_dir_cell, 'v.png'))
-            pl.show()
+            #pl.show()

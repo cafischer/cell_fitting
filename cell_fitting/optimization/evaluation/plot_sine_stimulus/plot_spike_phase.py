@@ -1,6 +1,7 @@
 from __future__ import division
 import os
 import numpy as np
+import json
 from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
 from cell_characteristics import to_idx
@@ -16,9 +17,9 @@ if __name__ == '__main__':
     mechanism_dir = '../../../model/channels/vavoulis'
     load_mechanism_dir(mechanism_dir)
 
-    amp1 = 0.6  # 0.5
+    amp1 = 0.4  # 0.5
     amp2 = 0.2  # 0.2
-    freq1 = 0.1  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
+    freq1 = 0.2  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
     sine1_dur = 1./freq1 * 1000 / 2
     freq2 = 5  # 5  # 20
     onset_dur = offset_dur = 500
@@ -58,6 +59,10 @@ if __name__ == '__main__':
         mean_phase = circmean(phases, 360, 0)
         std_phase = circstd(phases, 360, 0)
         plot_phase_hist(phases, save_dir_img, mean_phase=mean_phase, std_phase=std_phase)
+
+        sine_dict = dict(phases=list(phases), mean_phase=[mean_phase], std_phase=[std_phase])
+        with open(os.path.join(save_dir_img, 'sine_dict.json'), 'w') as f:
+            json.dump(sine_dict, f)
 
         # parameter
         AP_threshold = 0

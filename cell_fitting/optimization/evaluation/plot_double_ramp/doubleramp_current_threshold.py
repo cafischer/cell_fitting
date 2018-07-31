@@ -151,7 +151,7 @@ def plot_double_ramp(v_mat, t, ramp3_times, ramp3_amps, save_dir_img):
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     AP_threshold = 0
