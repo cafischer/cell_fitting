@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib
 
 
 def init_nan(shape):
@@ -87,3 +88,20 @@ def convert_to_unit(prefix, x):
         return x * 1e12
     else:
         raise ValueError('No valid prefix!')
+
+
+def change_color_brightness(color, percent, direction='brighter'):
+    '''
+    Makes color brighter by the given percentage.
+    :param color: Color in rgb (in [0, 1]).
+    :param percent: Percentage of brightening.
+    :return: Brightened color in rgb (in [0, 1])
+    '''
+    color = np.array(color)
+    if direction == 'brighter':
+        comp_color = np.array(matplotlib.colors.to_rgb('w'))
+    elif direction == 'darker':
+        comp_color = np.array(matplotlib.colors.to_rgb('k'))
+    else:
+        raise ValueError('direction can only be brighter or darker!')
+    return color * (1 - percent/100.) + comp_color * (percent/100.0)

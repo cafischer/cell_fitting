@@ -7,7 +7,7 @@ from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sin
 from cell_characteristics import to_idx
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from scipy.stats import circmean, circstd
-from grid_cell_stimuli.spike_phase import get_spike_phases, plot_phase_hist, plot_phase_vs_position_per_run, \
+from grid_cell_stimuli.spike_phase import get_spike_phases_by_min, plot_phase_hist, plot_phase_vs_position_per_run, \
     compute_phase_precession, plot_phase_precession
 
 
@@ -52,7 +52,7 @@ if __name__ == '__main__':
 
         # spike phase
         AP_onsets = get_AP_onset_idxs(v, threshold=AP_threshold)
-        phases = get_spike_phases(AP_onsets, t, theta, order, dist_to_AP)
+        phases = get_spike_phases_by_min(AP_onsets, t, theta, order, dist_to_AP)
         not_nan = np.logical_not(np.isnan(phases))
         phases = phases[not_nan]
         AP_onsets = AP_onsets[not_nan]

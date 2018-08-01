@@ -157,8 +157,8 @@ def plot_fi_curve(amps_greater0, firing_rates_model, save_dir_img=None):
     return fig
 
 
-def plot_fi_curve_on_ax(ax, amps, firing_rates):
-    ax.plot(amps, firing_rates, '-ok', markersize=4)
+def plot_fi_curve_on_ax(ax, amps, firing_rates, color_line='k'):
+    ax.plot(amps, firing_rates, '-o', color=color_line, markersize=4)
     ax.set_xlabel('Inj. current (nA)', fontsize=12)
     ax.set_ylabel('Firing rate (Hz)', fontsize=12)
     ax.xaxis.set_tick_params(labelsize=10)

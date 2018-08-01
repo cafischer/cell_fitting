@@ -42,7 +42,6 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_img, 'sine_params.json'), 'w') as f:
         json.dump(sine_params, f)
 
-    print save_dir_img
     pl.figure()
     #pl.title('amp1: ' + str(amp1) + ', amp2: ' + str(amp2) + ', sine1dur: ' + str(sine1_dur) + ', freq2: ' + str(freq2), fontsize=16)
     pl.plot(t, v, 'r', linewidth=1)

@@ -1,11 +1,13 @@
 import os
 import matplotlib.pyplot as pl
+import matplotlib
 import numpy as np
 import json
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from nrn_wrapper import Cell
 from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
+from cell_fitting.util import change_color_brightness
 pl.style.use('paper')
 
 
@@ -36,15 +38,16 @@ def compute_v_sag_and_steady_state(v_traces, amps, AP_threshold, start_step_idx,
     return v_sags, v_steady_states, amps_subtheshold
 
 
-def plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags):
-    ax.plot(amps_subtheshold, v_steady_states, linestyle='-', marker='o', c='0.0', markersize=4, label='Steady State')
-    ax.plot(amps_subtheshold, v_sags, linestyle='-', marker='o', c='0.5', markersize=4, label='Sag')
+def plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags, color_lines='k', label=True):
+    ax.plot(amps_subtheshold, v_steady_states, linestyle='-', marker='o', c=color_lines, markersize=4,
+            label='Steady State' if label else '')
+    ax.plot(amps_subtheshold, v_sags, linestyle='-', marker='o',
+            c=change_color_brightness(matplotlib.colors.to_rgb(color_lines), 50, 'brighter'), alpha=0.5, markersize=4,
+            label='Sag' if label else '')
     ax.set_xlabel('Inj. current (nA)', fontsize=12)
     ax.set_ylabel('Mem. pot. (mV)', fontsize=12)
     ax.legend(loc='upper left', fontsize=10)
-    ax.set_xticks(np.arange(-0.15, 0.15+0.05, 0.05))
-    ax.xaxis.set_tick_params(labelsize=10)
-    ax.yaxis.set_tick_params(labelsize=10)
+    ax.set_xticks(np.arange(-0.15, 0.15+0.1, 0.1))
 
 
 if __name__ == '__main__':

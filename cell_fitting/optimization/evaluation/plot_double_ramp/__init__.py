@@ -45,28 +45,40 @@ def plot_double_ramp(current_thresholds, ramp3_amps, t, v_mat_step0, save_dir_im
 
 
 def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampIV, ramp3_times, step_amps,
-                                 ramp3_amps, v_dap, t_dap, legend_loc='upper left'):
-    colors_dict = {-0.1: 'b', 0.0: 'k', 0.1: 'r'}
+                                 ramp3_amps, v_dap, t_dap, legend_loc='upper left', color_lines='k', v_init=-75,
+                                 label=True):
+    colors_dict = {-0.1: color_lines,
+                   0.0: color_lines,
+                   0.1: color_lines}
+    marker_dict = {
+        -0.1: 'v',
+        0.0: 'o',
+        0.1: '^'
+    }
     colors = [colors_dict[amp] for amp in step_amps]
+    markers = [marker_dict[amp] for amp in step_amps]
+    if label == True:
+        labels = ['Amp.: ' + str(amp) for amp in step_amps]
+    else:
+        labels = ['' for amp in step_amps]
 
     # plot current threshold
     ax2 = ax.twinx()
-    ax2.plot(t_dap, v_dap, 'k')
-    ax2.set_ylabel('Mem. pot. (mV)', fontsize=12)
+    v_dap = np.array(v_dap) - v_dap[0] + v_init
+    ax2.plot(t_dap, v_dap, color=color_lines)
+    ax2.set_ylabel('Mem. pot. (mV)')
     ax2.spines['right'].set_visible(True)
+    ax2.set_ylim(-80, 20)
 
     ax.axhline(ramp3_amps[0], linestyle='--', c='0.5')
     ax.axhline(ramp3_amps[-1], linestyle='--', c='0.5')
-    ax.plot(0, current_threshold_rampIV, 'ok', markersize=5)
+    ax.plot(0, current_threshold_rampIV, 'o', color=color_lines)
     for i, current_threshold in enumerate(current_thresholds):
-        ax.plot(ramp3_times, current_threshold, '-o', color=colors[i], label='Amp.: ' + str(step_amps[i]),
-                markersize=7 - 2.0 * i)
-    ax.set_xlabel('Start 2nd pulse (ms)', fontsize=12)
-    ax.set_ylabel('Current thresh. (nA)', fontsize=12)
+        ax.plot(ramp3_times, current_threshold, linestyle='-', marker=markers[i], color=colors[i],
+                label=labels[i])
+    ax.set_xlabel('Start 2nd pulse (ms)')
+    ax.set_ylabel('Current thresh. (nA)')
     ax.set_xticks(np.insert(ramp3_times, 0, [0]))
     ax.set_xlim(-0.5, ramp3_times[-1] + 2)
-    ax.set_ylim(0, 4.2)
-    ax.legend(loc=legend_loc, fontsize=10)
-    ax.xaxis.set_tick_params(labelsize=10)
-    ax.yaxis.set_tick_params(labelsize=10)
-    ax2.yaxis.set_tick_params(labelsize=10)
+    ax.set_ylim(0, 3.2)
+    ax.legend(loc=legend_loc)

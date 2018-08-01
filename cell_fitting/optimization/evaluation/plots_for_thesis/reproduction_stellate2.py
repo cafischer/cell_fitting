@@ -22,7 +22,7 @@ if __name__ == '__main__':
     mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
     save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
-    model = '1'
+    model = '2'
     exp_cell = '2015_08_26b'
     v_init = -75
 
@@ -48,19 +48,17 @@ if __name__ == '__main__':
     ax0.plot(t_model, v_model, 'steelblue', label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
-    ax0.legend(fontsize=12)
+    ax0.legend()
     ax0.set_xticks([])
-    ax0.set_ylabel('Mem. pot. (mV)', fontsize=12)
-    ax1.set_ylabel('Inj. current (nA)', fontsize=12)
-    ax1.set_xlabel('Time (ms)', fontsize=12)
+    ax0.set_ylabel('Mem. pot. (mV)')
+    ax1.set_ylabel('Inj. current (nA)')
+    ax1.set_xlabel('Time (ms)')
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
 
     # double-ramp
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[1, 0])
+    inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 0])
     ax0 = pl.Subplot(fig, inner[0])
-    ax1 = pl.Subplot(fig, inner[1])
     fig.add_subplot(ax0)
-    fig.add_subplot(ax1)
 
     with open(os.path.join(save_dir_model, model, 'img', 'PP', '125', 'current_threshold_dict.json'), 'r') as f:
         current_threshold_dict_model = json.load(f)
@@ -68,12 +66,8 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_data_plots, 'PP', '2014_07_10b', 'current_threshold_dict.json'), 'r') as f:  # TODO: here using different cell!!!
         current_threshold_dict_data = json.load(f)
 
-    plot_current_threshold_on_ax(ax0, **current_threshold_dict_model)
-    plot_current_threshold_on_ax(ax1, **current_threshold_dict_data)
-    # TODO: same y limits both sides
-
-    ax0.set_xlabel('')
-    ax0.set_xticks([])
+    plot_current_threshold_on_ax(ax0, color_lines='steelblue', label=False, **current_threshold_dict_model)
+    plot_current_threshold_on_ax(ax0, color_lines='k', label=True, **current_threshold_dict_data)
 
     # sag
     inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0, 1], hspace=0.1, height_ratios=[5, 1])
@@ -91,19 +85,16 @@ if __name__ == '__main__':
     ax0.plot(t_model, v_model, 'steelblue', label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
-    ax0.legend(fontsize=12)
     ax0.set_xticks([])
-    ax0.set_ylabel('Mem. pot. (mV)', fontsize=12)
-    ax1.set_ylabel('Inj. current (nA)', fontsize=12)
-    ax1.set_xlabel('Time (ms)', fontsize=12)
+    ax0.set_ylabel('Mem. pot. (mV)')
+    ax1.set_ylabel('Inj. current (nA)')
+    ax1.set_xlabel('Time (ms)')
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
 
     # sag vs. steady-state
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[1, 1], hspace=0.1)
+    inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 1], hspace=0.1)
     ax0 = pl.Subplot(fig, inner[0])
-    ax1 = pl.Subplot(fig, inner[1])
     fig.add_subplot(ax0)
-    fig.add_subplot(ax1)
 
     with open(os.path.join(save_dir_model, model, 'img', 'IV', 'sag', 'sag_dict.json'), 'r') as f:
         sag_dict_model = json.load(f)
@@ -111,11 +102,8 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_data_plots, 'IV', 'sag', exp_cell, 'sag_dict.json'), 'r') as f:
         sag_dict_data = json.load(f)
 
-    plot_sag_vs_steady_state_on_ax(ax0, **sag_dict_model)
-    plot_sag_vs_steady_state_on_ax(ax1, **sag_dict_data)
-
-    ax0.set_xlabel('')
-    ax0.set_xticks([])
+    plot_sag_vs_steady_state_on_ax(ax0, color_lines='steelblue', label=False, **sag_dict_model)
+    plot_sag_vs_steady_state_on_ax(ax0, color_lines='k', label=True, **sag_dict_data)
 
     # pos. step
     inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0, 2], hspace=0.1, height_ratios=[5, 1])
@@ -133,19 +121,16 @@ if __name__ == '__main__':
     ax0.plot(t_model, v_model, 'steelblue', label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
-    ax0.legend(fontsize=12)
     ax0.set_xticks([])
-    ax0.set_ylabel('Mem. pot. (mV)', fontsize=12)
-    ax1.set_ylabel('Inj. current (nA)', fontsize=12)
-    ax1.set_xlabel('Time (ms)', fontsize=12)
+    ax0.set_ylabel('Mem. pot. (mV)')
+    ax1.set_ylabel('Inj. current (nA)')
+    ax1.set_xlabel('Time (ms)')
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
 
     # f-I curve
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[1, 2], hspace=0.1)
+    inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 2], hspace=0.1)
     ax0 = pl.Subplot(fig, inner[0])
-    ax1 = pl.Subplot(fig, inner[1])
     fig.add_subplot(ax0)
-    fig.add_subplot(ax1)
 
     with open(os.path.join(save_dir_model, model, 'img', 'IV', 'fi_curve', 'fi_dict.json'), 'r') as f:
         fi_dict_model = json.load(f)
@@ -153,11 +138,8 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_data_plots, 'IV', 'fi_curve', exp_cell, 'fi_dict.json'), 'r') as f:
         fi_dict_data = json.load(f)
 
-    plot_fi_curve_on_ax(ax0, **fi_dict_model)
-    plot_fi_curve_on_ax(ax1, **fi_dict_data)
-
-    ax0.set_xlabel('')
-    ax0.set_xticks([])
+    plot_fi_curve_on_ax(ax0, color_line='steelblue', **fi_dict_model)
+    plot_fi_curve_on_ax(ax0, color_line='k', **fi_dict_data)
 
     # zap
     inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0, 3], hspace=0.1, height_ratios=[5, 1])
@@ -175,16 +157,13 @@ if __name__ == '__main__':
     ax0.plot(t_model, v_model, 'steelblue', label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
-    ax0.legend(fontsize=12)
     ax0.set_xticks([])
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
 
     # impedance
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[1, 3], hspace=0.1)
+    inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 3], hspace=0.1)
     ax0 = pl.Subplot(fig, inner[0])
-    ax1 = pl.Subplot(fig, inner[1])
     fig.add_subplot(ax0)
-    fig.add_subplot(ax1)
 
     with open(os.path.join(save_dir_model, model, 'img', 'zap', 'impedance_dict.json'), 'r') as f:
         impedance_dict_model = json.load(f)
@@ -192,12 +171,9 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_data_plots, 'Zap20', exp_cell, 'impedance_dict.json'), 'r') as f:
         impedance_dict_data = json.load(f)
 
-    plot_impedance_on_ax(ax0, **impedance_dict_model)
-    plot_impedance_on_ax(ax1, **impedance_dict_data)
+    plot_impedance_on_ax(ax0, color_line='steelblue', **impedance_dict_model)
+    plot_impedance_on_ax(ax0, color_line='k', **impedance_dict_data)
     # TODO: add legend with res. freq. and q-value
-
-    ax0.set_xlabel('')
-    ax0.set_xticks([])
 
     # sine
     inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0, 4], hspace=0.1, height_ratios=[5, 1])
@@ -223,19 +199,16 @@ if __name__ == '__main__':
     ax0.plot(t_model, v_model, 'steelblue', label='Model')
     ax1.plot(t_model, i_inj, 'k')
 
-    ax0.legend(fontsize=12)
     ax0.set_xticks([])
-    ax0.set_ylabel('Mem. pot. (mV)', fontsize=12)
-    ax1.set_ylabel('Inj. current (nA)', fontsize=12)
-    ax1.set_xlabel('Time (ms)', fontsize=12)
+    ax0.set_ylabel('Mem. pot. (mV)')
+    ax1.set_ylabel('Inj. current (nA)')
+    ax1.set_xlabel('Time (ms)')
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
 
     # phase hist.
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[1, 4], hspace=0.1)
+    inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 4], hspace=0.1)
     ax0 = pl.Subplot(fig, inner[0])
-    ax1 = pl.Subplot(fig, inner[1])
     fig.add_subplot(ax0)
-    fig.add_subplot(ax1)
 
     with open(os.path.join(save_dir_model, model, 'img', 'sine_stimulus/traces',
                            str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2), 'phase_hist',
@@ -246,15 +219,13 @@ if __name__ == '__main__':
                            'spike_phase', 'sine_dict.json'), 'r') as f:
         sine_dict_data = json.load(f)
 
-    plot_phase_hist_on_axes(ax0, 0, [sine_dict_model['phases']], plot_mean=True, plot_std=True)
-    plot_phase_hist_on_axes(ax1, 0, [sine_dict_data['phases']], plot_mean=True, plot_std=True)
+    plot_phase_hist_on_axes(ax0, 0, [sine_dict_model['phases']], plot_mean=True, color_hist='steelblue',
+                            alpha=0.6, color_lines='steelblue')
+    plot_phase_hist_on_axes(ax0, 0, [sine_dict_data['phases']], plot_mean=True, color_hist='k',
+                            alpha=0.3, color_lines='k')
 
-    ax0.set_ylabel('Count', fontsize=12)
-    ax1.set_ylabel('Count', fontsize=12)
-    ax1.set_xlabel('Phase (deg.)', fontsize=12)
-    ax0.set_xlabel('')
-    ax0.set_xticks([])
-    # TODO: make sine peak in the middle (180)
+    ax0.set_ylabel('Count')
+    ax0.set_xlabel('Phase (deg.)')
 
     pl.tight_layout()
     #pl.savefig(save_dir_img)
