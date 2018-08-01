@@ -5,8 +5,35 @@ import numpy as np
 import pandas as pd
 from nrn_wrapper import Cell
 from cell_fitting.optimization.simulate import extract_simulation_params, simulate_currents, iclamp_handling_onset
-from cell_fitting.util import merge_dicts
+from cell_fitting.util import merge_dicts, get_channel_dict_for_plotting
 pl.style.use('paper')
+
+
+def plot_currents_on_ax(ax1, channel_list, currents, t, v):
+    new_channel_list = copy.copy(channel_list)
+    new_channel_list[channel_list.index('nap')] = 'nat'
+    new_channel_list[channel_list.index('nat')] = 'nap'
+    new_channel_list[channel_list.index('hcn_slow')] = 'hcn'
+
+    channel_dict = get_channel_dict_for_plotting()
+
+    t_plot = t - 7
+
+    ax2 = ax1.twinx()
+    ax2.plot(t_plot, v, 'k')
+    ax2.set_ylabel('Mem. pot. (mV)')
+    ax2.spines['right'].set_visible(True)
+
+    for i in range(len(channel_list)):
+        ax1.plot(t_plot, -1 * currents[i], label=channel_dict[new_channel_list[i]])
+        ax1.set_ylabel('Current (mA/cm$^2$)')
+        ax1.set_xlabel('Time (ms)')
+    h1, l1 = ax1.get_legend_handles_labels()
+    h2, l2 = ax2.get_legend_handles_labels()
+    ax1.legend(h1 + h2, l1 + l2)
+    ax2.set_ylim(-80, -40)
+    ax1.set_ylim(-0.1, 0.1)
+    ax1.set_xlim(0, 55)
 
 
 if __name__ == '__main__':

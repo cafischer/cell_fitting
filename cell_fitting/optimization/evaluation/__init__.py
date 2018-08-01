@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as pl
 from cell_fitting.read_heka import get_sweep_index_for_amp, get_i_inj_from_function
 from cell_fitting.optimization.simulate import iclamp_handling_onset
+from cell_fitting.optimization.simulate import simulate_currents, simulate_gates
 pl.style.use('paper')
 
 
@@ -75,3 +76,33 @@ def simulate_model(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, 
 
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
     return v, t, i_inj
+
+
+def simulate_model_currents(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, onset=200):
+    if protocol == 'Zap20':
+        sweep_idx = 0
+        print 'amp not used!'
+    else:
+        sweep_idx = get_sweep_index_for_amp(amp, protocol)
+    i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
+
+    simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
+                         'dt': dt, 'celsius': celsius, 'onset': onset}
+
+    currents, channel_list = simulate_currents(cell, simulation_params)
+    return currents, channel_list
+
+
+def simulate_model_gates(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, onset=200):
+    if protocol == 'Zap20':
+        sweep_idx = 0
+        print 'amp not used!'
+    else:
+        sweep_idx = get_sweep_index_for_amp(amp, protocol)
+    i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
+
+    simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
+                         'dt': dt, 'celsius': celsius, 'onset': onset}
+
+    gates, power_gates = simulate_gates(cell, simulation_params)
+    return gates, power_gates

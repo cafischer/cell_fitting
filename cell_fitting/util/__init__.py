@@ -105,3 +105,13 @@ def change_color_brightness(color, percent, direction='brighter'):
     else:
         raise ValueError('direction can only be brighter or darker!')
     return color * (1 - percent/100.) + comp_color * (percent/100.0)
+
+
+def get_channel_dict_for_plotting():
+    return {
+        'nat': '$Na_T$',
+        'nap': '$Na_P$',
+        'hcn': '$HCN$',
+        'kdr': '$K_{DR}$',
+        'pas': 'Leak'
+    }
