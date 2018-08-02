@@ -10,7 +10,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
 
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     # apply stim
     amp1 = 0.4  # 0.5
     amp2 = 0.2  # 0.2
-    freq1 = 0.2  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
+    freq1 = 0.1  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
     sine1_dur = 1./freq1 * 1000 / 2
     freq2 = 5  # 5  # 20
     onset_dur = offset_dur = 500

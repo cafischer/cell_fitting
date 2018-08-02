@@ -9,6 +9,7 @@ from cell_fitting.read_heka import load_data
 from cell_fitting.optimization.evaluation import simulate_model, simulate_model_currents, simulate_model_gates
 from cell_fitting.optimization.evaluation.plot_currents import plot_currents_on_ax
 from cell_fitting.optimization.evaluation.plot_gates import plot_gates_on_ax
+from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel
 pl.style.use('paper_subplots')
 
 
@@ -29,7 +30,7 @@ if __name__ == '__main__':
 
     # plot
     fig = pl.figure(figsize=(10, 8))
-    outer = gridspec.GridSpec(2, 5)
+    outer = gridspec.GridSpec(2, 2)
 
     # simulate for ionic currents and gates
     ramp_amp = 3.5
@@ -58,17 +59,34 @@ if __name__ == '__main__':
     ax0 = pl.Subplot(fig, inner[0])
     fig.add_subplot(ax0)
 
+    from cell_fitting.util import merge_dicts, get_channel_dict_for_plotting
+    channel_dict = get_channel_dict_for_plotting()
 
-    # # blocking Nat and reconstructing AP
-    # inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 1], hspace=0.1)
-    # ax0 = pl.Subplot(fig, inner[0])
-    # fig.add_subplot(ax0)
-    #
-    # with open(os.path.join(save_dir_model, model, 'img', 'IV', 'sag', 'sag_dict.json'), 'r') as f:
-    #     sag_dict_model = json.load(f)
-    #
-    # plot_sag_vs_steady_state_on_ax(ax0, color_lines='steelblue', label=False, **sag_dict_model)
+    channel_list.remove('pas')
+    percent_block = 10
+    v_after_block = np.zeros((len(channel_list), len(t_model)))
+    for i, channel_name in enumerate(channel_list):
+        # blocking
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
+        block_channel(cell, channel_name, percent_block)
+        v_after_block[i, :], _, _ = simulate_model(cell, 'rampIV', ramp_amp, t_data[-1], v_init=v_init)
+
+    ax0.plot(t_model, v_model, 'k', label='without block')
+    for i, channel_name in enumerate(channel_list):
+        if channel_name == 'hcn_slow':
+            channel_name = 'hcn'
+        ax0.plot(t_model, v_after_block[i, :], label=str(percent_block)+' % block of ' + channel_dict[channel_name])
+    ax0.set_xlabel('Time (ms)')
+    ax0.set_ylabel('Membrane potential (mV)')
+    ax0.legend(loc='upper right')
+
+    # activation and inactivation Nat
+    inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 1])
+    ax0 = pl.Subplot(fig, inner[0])
+    fig.add_subplot(ax0)
+
+    # blocking Nat and reconstructing AP
 
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'reproduction_stellate.png'))
+    pl.savefig(os.path.join(save_dir_img, 'dap_mechanism.png'))
     pl.show()

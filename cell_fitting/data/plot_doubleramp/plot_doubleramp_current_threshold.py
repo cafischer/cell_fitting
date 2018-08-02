@@ -13,7 +13,6 @@ save_dir = '../plots'
 data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
 PP_params_dir = '/home/cf/Phd/DAP-Project/cell_data/PP_params2.csv'
 protocol = 'PP'
-v_rest_shift = -16
 protocol_idx = 0
 
 #cells = ['2015_08_05b', '2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11d',

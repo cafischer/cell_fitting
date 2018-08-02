@@ -20,7 +20,7 @@ if __name__ == '__main__':
     protocol = 'Zap20'
     animal = 'rat'
     cell_ids = get_cells_for_protocol(data_dir, protocol)
-    cell_ids = ['2015_08_26b']
+    cell_ids = ['2015_08_10g']  #['2015_08_26b']
     cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
     save_dir = os.path.join(save_dir, protocol)
 

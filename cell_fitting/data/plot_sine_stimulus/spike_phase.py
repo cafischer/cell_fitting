@@ -51,10 +51,6 @@ if __name__ == '__main__':
         std_phase = circstd(phases, 360, 0)
         plot_phase_hist(phases, save_dir_img, mean_phase=mean_phase)
 
-        sine_dict = dict(phases=list(phases), mean_phase=[mean_phase], std_phase=[std_phase])
-        with open(os.path.join(save_dir_img, 'sine_dict.json'), 'w') as f:
-            json.dump(sine_dict, f)
-
         # phase precession
         position = t * speed
         track_len = position[-1]

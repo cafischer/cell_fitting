@@ -115,3 +115,15 @@ def get_channel_dict_for_plotting():
         'kdr': '$K_{DR}$',
         'pas': 'Leak'
     }
+
+
+def get_gate_dict_for_plotting():
+    return {
+        'nat_m': '$act.$',
+        'nat_h': '$inact.$',
+        'nap_m': '$act.$',
+        'nap_h': '$inact.$',
+        'hcn_n': '$inact.$',
+        'kdr_n': '$act.$',
+        'pas': ''
+    }

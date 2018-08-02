@@ -1,14 +1,16 @@
 from __future__ import division
 import os
 import numpy as np
+import json
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from cell_characteristics import to_idx
-from grid_cell_stimuli.spike_phase import get_spike_phases, plot_phase_hist, plot_phase_vs_position_per_run, \
+from grid_cell_stimuli.spike_phase import get_spike_phases_by_min, plot_phase_hist, plot_phase_vs_position_per_run, \
     compute_phase_precession, plot_phase_precession
 from cell_fitting.data.data_sinus_mat import find_sine_trace
 from scipy.stats import circmean, circstd
 from cell_fitting.optimization.evaluation import plot_v
 import matplotlib.pyplot as pl
+from cell_fitting.read_heka import shift_v_rest
 
 
 if __name__ == '__main__':
@@ -19,12 +21,14 @@ if __name__ == '__main__':
     freq1 = 0.1
     freq2 = 5
     onset_dur = offset_dur = 500
+    v_shift = -16
     v_mat, t_mat, cell_ids, amp1s, amp2s, freq1s, freq2s = find_sine_trace(amp1_use, amp2_use, freq1, freq2)
 
     phase_means = []
     phase_stds = []
 
     for v, t, cell_id, amp1, amp2 in zip(v_mat, t_mat, cell_ids, amp1s, amp2s):
+        v = shift_v_rest(v, v_shift)
         dt = t[1] - t[0]
 
         # parameter
@@ -52,7 +56,7 @@ if __name__ == '__main__':
 
         # spike phase
         AP_onsets = get_AP_onset_idxs(v, threshold=AP_threshold)
-        phases = get_spike_phases(AP_onsets, t, theta, order, dist_to_AP)
+        phases = get_spike_phases_by_min(AP_onsets, t, theta, order, dist_to_AP)
         not_nan = np.logical_not(np.isnan(phases))
         phases = phases[not_nan]
         AP_onsets = AP_onsets[not_nan]
@@ -60,7 +64,14 @@ if __name__ == '__main__':
         std_phase = circstd(phases, 360, 0)
         phase_means.append(mean_phase)
         phase_stds.append(std_phase)
-        plot_phase_hist(phases, save_dir_img, mean_phase=mean_phase, std_phase=std_phase, show=False)
+        plot_phase_hist(phases, mean_phase=mean_phase, std_phase=std_phase, save_dir_img=save_dir_img)
+
+        # save
+        sine_dict = dict(phases=list(phases), mean_phase=[mean_phase], std_phase=[std_phase])
+        with open(os.path.join(save_dir_img, 'sine_dict.json'), 'w') as f:
+            json.dump(sine_dict, f)
+        np.save(os.path.join(save_dir, cell_id, str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2), 't.npy'), t)
+        np.save(os.path.join(save_dir, cell_id, str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2), 'v.npy'), v)
 
         # phase precession
         position = t * speed
@@ -71,8 +82,8 @@ if __name__ == '__main__':
 
         slope, intercept, best_shift = compute_phase_precession(phases, phases_pos)
         plot_phase_precession(phases, phases_pos, slope, intercept, best_shift, save_dir_img)
-        pl.show()
-        pl.close()
+        #pl.show()
+        pl.close('all')
 
     # save summary
     save_dir_summary = os.path.join(save_dir, 'summary', 'spike_phase',

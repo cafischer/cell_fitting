@@ -46,7 +46,7 @@ def plot_double_ramp(current_thresholds, ramp3_amps, t, v_mat_step0, save_dir_im
 
 def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampIV, ramp3_times, step_amps,
                                  ramp3_amps, v_dap, t_dap, legend_loc='upper left', color_lines='k', v_init=-75,
-                                 label=True):
+                                 label=True, plot_range=True):
     colors_dict = {-0.1: color_lines,
                    0.0: color_lines,
                    0.1: color_lines}
@@ -66,12 +66,14 @@ def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampI
     ax2 = ax.twinx()
     v_dap = np.array(v_dap) - v_dap[0] + v_init
     ax2.plot(t_dap, v_dap, color=color_lines)
-    ax2.set_ylabel('Mem. pot. (mV)')
-    ax2.spines['right'].set_visible(True)
+    #ax2.set_ylabel('Mem. pot. (mV)')
+    #ax2.spines['right'].set_visible(True)
     ax2.set_ylim(-80, 20)
+    ax2.set_yticks([])
 
-    ax.axhline(ramp3_amps[0], linestyle='--', c='0.5')
-    ax.axhline(ramp3_amps[-1], linestyle='--', c='0.5')
+    if plot_range:
+        ax.axhline(ramp3_amps[0], linestyle='--', c='0.5')
+        ax.axhline(ramp3_amps[-1], linestyle='--', c='0.5')
     ax.plot(0, current_threshold_rampIV, 'o', color=color_lines)
     for i, current_threshold in enumerate(current_thresholds):
         ax.plot(ramp3_times, current_threshold, linestyle='-', marker=markers[i], color=colors[i],

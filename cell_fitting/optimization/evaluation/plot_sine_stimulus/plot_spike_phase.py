@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     amp1 = 0.4  # 0.5
     amp2 = 0.2  # 0.2
-    freq1 = 0.2  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
+    freq1 = 0.1  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
     sine1_dur = 1./freq1 * 1000 / 2
     freq2 = 5  # 5  # 20
     onset_dur = offset_dur = 500
@@ -58,7 +58,7 @@ if __name__ == '__main__':
         AP_onsets = AP_onsets[not_nan]
         mean_phase = circmean(phases, 360, 0)
         std_phase = circstd(phases, 360, 0)
-        plot_phase_hist(phases, save_dir_img, mean_phase=mean_phase, std_phase=std_phase)
+        plot_phase_hist(phases, mean_phase=mean_phase, std_phase=std_phase, save_dir_img=save_dir_img)
 
         sine_dict = dict(phases=list(phases), mean_phase=[mean_phase], std_phase=[std_phase])
         with open(os.path.join(save_dir_img, 'sine_dict.json'), 'w') as f:
@@ -78,4 +78,4 @@ if __name__ == '__main__':
         plot_phase_vs_position_per_run(phases, phases_pos, AP_onsets, track_len, run_start_idx, save_dir_img)
 
         slope, intercept, best_shift = compute_phase_precession(phases, phases_pos)
-        plot_phase_precession(phases, phases_pos, slope, intercept, best_shift, save_dir_img, show=False)
+        plot_phase_precession(phases, phases_pos, slope, intercept, best_shift, save_dir_img)
