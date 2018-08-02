@@ -69,6 +69,36 @@ def plot_corr(corr, sig_level, return_characteristics, variable_names, correlati
     #pl.show()
 
 
+def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names):
+    X, Y = np.meshgrid(np.arange(np.size(corr_mat, 1)), np.arange(np.size(corr_mat, 0)))
+    pl.pcolor(X, Y, corr_mat, vmin=-1, vmax=1, cmap=pl.cm.get_cmap('viridis'))
+
+    # p-values
+    sig_levels = [0.1, 0.01, 0.001, 0]
+    markers = ['*', '**', '***']
+    for i in range(len(sig_levels)-1):
+        sig = np.logical_and(p_val_mat.T < sig_levels[i], ~(p_val_mat.T < sig_levels[i+1]))
+        xs, ys = np.where(sig)
+        for x, y in zip(xs, ys):
+            ax.annotate(markers[i], xy=(x+0.5, y+0.5), ha='center', va='center')
+
+    ax.set_xlabel('Parameter')
+    ax.set_ylabel('Characteristic')
+    ax.set_xticks(np.arange(len(variable_names)) + 0.5)
+    ax.set_xticklabels(variable_names, rotation='40', ha='right')
+    ax.set_yticks(np.arange(len(return_characteristics)) + 0.5)
+    ax.set_yticklabels(return_characteristics)
+    ax = pl.gca()
+    for label in ax.xaxis.get_majorticklabels():
+        label.customShiftValue = -0.3
+        label.set_x = types.MethodType(lambda self, x: matplotlib.text.Text.set_x(self, x - self.customShiftValue),
+                                       label, matplotlib.text.Text)
+    ax.tick_params(axis='x', which='major', pad=0)
+    ax.axis('scaled')
+    cb = pl.colorbar(fraction=0.007)
+    cb.set_label('Correlation', rotation=-90, labelpad=30)
+
+
 def compute_and_plot_correlations(candidate_mat, characteristics_mat, correlation_types, sig1, sig2,
                                   variable_names, return_characteristics, plot_corr, save_dir_plots=None):
     for correlation_type in correlation_types:
@@ -77,6 +107,9 @@ def compute_and_plot_correlations(candidate_mat, characteristics_mat, correlatio
         if save_dir_plots is not None:
             np.save(os.path.join(save_dir_plots, 'correlation_' + correlation_type + '.npy'), corr_mat)
             np.save(os.path.join(save_dir_plots, 'p_val_' + correlation_type + '.npy'), p_val)
+            np.save(os.path.join(save_dir_plots, 'return_characteristics_' + correlation_type + '.npy'),
+                    return_characteristics)
+            np.save(os.path.join(save_dir_plots, 'variable_names_' + correlation_type + '.npy'), variable_names)
 
         # plot feature vs parameter + color = correlation
         p_sig1 = p_val < sig1

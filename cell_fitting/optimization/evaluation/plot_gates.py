@@ -4,8 +4,8 @@ import matplotlib.pyplot as pl
 from matplotlib.colors import to_rgb
 from nrn_wrapper import Cell
 from cell_fitting.optimization.simulate import extract_simulation_params, simulate_gates
-from cell_fitting.util import merge_dicts
-from cell_fitting.util import change_color_brightness, get_channel_dict_for_plotting, get_gate_dict_for_plotting
+from cell_fitting.util import merge_dicts, change_color_brightness, get_channel_dict_for_plotting, \
+    get_gate_dict_for_plotting
 
 
 def plot_gates_on_ax(ax1, channel_list, gates, t, v, power_gates=None):

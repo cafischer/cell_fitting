@@ -3,18 +3,36 @@ import os
 import json
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
-
+from matplotlib.colors import to_rgb
+from cell_fitting.util import change_color_brightness
 from nrn_wrapper import Cell
 from cell_fitting.read_heka import load_data
 from cell_fitting.optimization.evaluation import simulate_model, simulate_model_currents, simulate_model_gates
 from cell_fitting.optimization.evaluation.plot_currents import plot_currents_on_ax
 from cell_fitting.optimization.evaluation.plot_gates import plot_gates_on_ax
-from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel
+from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel, plot_channel_block_on_ax
+from cell_fitting.test_channels.channel_characteristics import boltzmann_fun
+from cell_fitting.util import get_channel_dict_for_plotting
+from cell_fitting.sensitivity_analysis.plot_correlation_param_characteristic import plot_corr_on_ax
 pl.style.use('paper_subplots')
+
+
+def plot_act_inact_on_ax(ax, v_range, curve_act, curve_inact):
+    channel_dict = get_channel_dict_for_plotting()
+    ax0.fill_between(v_range, 0, [min(c_act, c_inact) for c_act, c_inact in zip(curve_act, curve_inact)], color='0.9')
+    ax0.plot(v_range, curve_act, color=change_color_brightness(to_rgb('g'), 35, 'brighter'),
+             label=channel_dict['nat']+' Act.')
+    ax0.plot(v_range, curve_inact, color=change_color_brightness(to_rgb('g'), 35, 'darker'),
+             label=channel_dict['nat']+' Inact.')
+    ax0.set_xlabel('Mem. pot. (mV)')
+    ax0.set_ylabel('Degree of opening')
+    ax0.legend()
 
 
 # TODO: colors
 # TODO: check simulation_params (e.g. dt)
+# TODO: could remove right mem. pot. axis from upper two plots
+# TODO: maybe add blocking Nat and reconstructing AP
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Phd/DAP-Project/thesis/figures'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
@@ -30,7 +48,7 @@ if __name__ == '__main__':
 
     # plot
     fig = pl.figure(figsize=(10, 8))
-    outer = gridspec.GridSpec(2, 2)
+    outer = gridspec.GridSpec(3, 2)
 
     # simulate for ionic currents and gates
     ramp_amp = 3.5
@@ -59,33 +77,42 @@ if __name__ == '__main__':
     ax0 = pl.Subplot(fig, inner[0])
     fig.add_subplot(ax0)
 
-    from cell_fitting.util import merge_dicts, get_channel_dict_for_plotting
-    channel_dict = get_channel_dict_for_plotting()
-
     channel_list.remove('pas')
     percent_block = 10
     v_after_block = np.zeros((len(channel_list), len(t_model)))
     for i, channel_name in enumerate(channel_list):
-        # blocking
         cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
         block_channel(cell, channel_name, percent_block)
         v_after_block[i, :], _, _ = simulate_model(cell, 'rampIV', ramp_amp, t_data[-1], v_init=v_init)
 
-    ax0.plot(t_model, v_model, 'k', label='without block')
-    for i, channel_name in enumerate(channel_list):
-        if channel_name == 'hcn_slow':
-            channel_name = 'hcn'
-        ax0.plot(t_model, v_after_block[i, :], label=str(percent_block)+' % block of ' + channel_dict[channel_name])
-    ax0.set_xlabel('Time (ms)')
-    ax0.set_ylabel('Membrane potential (mV)')
-    ax0.legend(loc='upper right')
+    plot_channel_block_on_ax(ax0, channel_list, t_model, v_model, v_after_block, percent_block)
 
     # activation and inactivation Nat
     inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 1])
     ax0 = pl.Subplot(fig, inner[0])
     fig.add_subplot(ax0)
 
-    # blocking Nat and reconstructing AP
+    v_range = np.arange(-95, 30, 0.1)
+    curve_act = boltzmann_fun(v_range, cell.soma(.5).nat.m_vh, -cell.soma(.5).nat.m_vs)
+    curve_inact = boltzmann_fun(v_range, cell.soma(.5).nat.h_vh, -cell.soma(.5).nat.h_vs)
+
+    plot_act_inact_on_ax(ax0, v_range, curve_act, curve_inact)
+
+    # sensitivity analysis
+    inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[2, :])
+    ax0 = pl.Subplot(fig, inner[0])
+    fig.add_subplot(ax0)
+    s_ = os.path.join('/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/sensitivity_analysis',
+                      'mean_2std_6models', 'analysis', 'plots', 'correlation', 'parameter_characteristic', 'all')
+    corr_mat = np.load(os.path.join(s_, 'correlation_' + 'pearson' + '.npy'))
+    p_val_mat = np.load(os.path.join(s_, 'p_val_' + 'pearson' + '.npy'))
+    # TODO: decide which correlation to do! (pearson, spearman, kendalltau)
+    characteristics = np.load(os.path.join(s_, 'return_characteristics_' + 'pearson' + '.npy'))
+    parameters = np.load(os.path.join(s_, 'variable_names_' + 'pearson' + '.npy'))
+
+    plot_corr_on_ax(ax0, corr_mat, p_val_mat, characteristics, parameters)
+
+    # TODO: need to correct significance levels for multiple testing???
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'dap_mechanism.png'))
