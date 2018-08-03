@@ -127,3 +127,29 @@ def get_gate_dict_for_plotting():
         'kdr_n': '$act.$',
         'pas': ''
     }
+
+
+def characteristics_dict_for_plotting():
+    return {
+        'AP_amp': 'AP amp.',
+        'AP_width': 'AP width',
+        'DAP_amp': 'DAP amp.',
+        'DAP_width': 'DAP width',
+        'DAP_deflection': 'DAP deflection',
+        'fAHP_amp': 'fAHP amp.',
+    }
+
+
+def parameter_dict_for_plotting():
+    return {
+        'e': 'E',
+        'ehcn': 'E',
+        'gbar': '$g_{max}$',
+        'g': '$g_{max}$',
+        'cm': '$c_m$',
+        'vh': '$V_h$',
+        'vs': '$V_s$',
+        'tau_min': r'$\tau_{min}$',
+        'tau_max': r'$\tau_{max}$',
+        'tau_delta': r'$\tau_{delta}$'
+    }

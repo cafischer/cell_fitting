@@ -7,6 +7,9 @@ from cell_fitting.sensitivity_analysis import rename_nat_and_nap
 import types
 import matplotlib
 import matplotlib.pyplot as pl
+from cell_fitting.util import characteristics_dict_for_plotting, get_channel_dict_for_plotting, \
+    get_gate_dict_for_plotting, parameter_dict_for_plotting
+from statsmodels.sandbox.stats.multicomp import multipletests
 pl.style.use('paper')
 
 
@@ -69,7 +72,7 @@ def plot_corr(corr, sig_level, return_characteristics, variable_names, correlati
     #pl.show()
 
 
-def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names):
+def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names, correlation_measure):
     X, Y = np.meshgrid(np.arange(np.size(corr_mat, 1)), np.arange(np.size(corr_mat, 0)))
     pl.pcolor(X, Y, corr_mat, vmin=-1, vmax=1, cmap=pl.cm.get_cmap('viridis'))
 
@@ -77,17 +80,44 @@ def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_na
     sig_levels = [0.1, 0.01, 0.001, 0]
     markers = ['*', '**', '***']
     for i in range(len(sig_levels)-1):
-        sig = np.logical_and(p_val_mat.T < sig_levels[i], ~(p_val_mat.T < sig_levels[i+1]))
-        xs, ys = np.where(sig)
+        reject, p_val_corrected, _, _ = multipletests(p_val_mat.flatten(), sig_levels[i], method='bonferroni')
+        reject = np.reshape(reject, np.shape(p_val_mat))
+        #reject = np.logical_and(p_val_mat.T < sig_levels[i], ~(p_val_mat.T < sig_levels[i+1]))
+        xs, ys = np.where(reject)
         for x, y in zip(xs, ys):
-            ax.annotate(markers[i], xy=(x+0.5, y+0.5), ha='center', va='center')
+            ax.annotate(markers[i], xy=(x+0.5, y+0.5), ha='center', va='center', fontsize=8)
 
     ax.set_xlabel('Parameter')
     ax.set_ylabel('Characteristic')
     ax.set_xticks(np.arange(len(variable_names)) + 0.5)
-    ax.set_xticklabels(variable_names, rotation='40', ha='right')
+
+    channel_dict = get_channel_dict_for_plotting()
+    gate_dict = get_gate_dict_for_plotting()
+    parameter_dict = parameter_dict_for_plotting()
+
+    new_variable_names = np.zeros(len(variable_names), dtype=object)
+    for i, v in enumerate(variable_names):
+        v_split = v.split(' ')
+        if 'soma' in v:
+            new_variable_names[i] = 'Soma ' + parameter_dict[v_split[1]]
+            continue
+
+        if v_split[0] == 'hcn_slow':
+            v_split[0] = 'hcn'
+        if '_' in v_split[1]:
+            v_s2 = v_split[1].split('_')
+            if len(v_s2) == 3:
+                param = v_s2[1] + '_' + v_s2[2]
+            else:
+                param = v_s2[1]
+            new_variable_names[i] = channel_dict[v_split[0]] + ' ' + gate_dict[v_split[0]+'_'+v_s2[0]] + ' ' + parameter_dict[param]
+        else:
+            new_variable_names[i] = channel_dict[v_split[0]] + ' ' + parameter_dict[v_split[1]]
+
+    ax.set_xticklabels(new_variable_names, rotation='40', ha='right')
     ax.set_yticks(np.arange(len(return_characteristics)) + 0.5)
-    ax.set_yticklabels(return_characteristics)
+    characteristics_dict = characteristics_dict_for_plotting()
+    ax.set_yticklabels([characteristics_dict[c] for c in return_characteristics])
     ax = pl.gca()
     for label in ax.xaxis.get_majorticklabels():
         label.customShiftValue = -0.3
@@ -95,8 +125,11 @@ def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_na
                                        label, matplotlib.text.Text)
     ax.tick_params(axis='x', which='major', pad=0)
     ax.axis('scaled')
-    cb = pl.colorbar(fraction=0.007)
-    cb.set_label('Correlation', rotation=-90, labelpad=30)
+    cb = pl.colorbar(fraction=0.0055, ticks=[-1, -0.5, 0, 0.5, 1.0])
+    if correlation_measure == 'kendalltau':
+        correlation_measure = 'Kendalls tau'
+    cb.set_label(correlation_measure, rotation=-90, labelpad=13)
+    cb.ax.set_yticklabels([-1, -0.5, 0, 0.5, 1.0])
 
 
 def compute_and_plot_correlations(candidate_mat, characteristics_mat, correlation_types, sig1, sig2,

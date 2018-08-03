@@ -47,7 +47,7 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
 
     # plot
-    fig = pl.figure(figsize=(10, 8))
+    fig = pl.figure(figsize=(9, 8))
     outer = gridspec.GridSpec(3, 2)
 
     # simulate for ionic currents and gates
@@ -102,17 +102,16 @@ if __name__ == '__main__':
     inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[2, :])
     ax0 = pl.Subplot(fig, inner[0])
     fig.add_subplot(ax0)
+    correlation_measure = 'kendalltau'  # non-parametric, robust
     s_ = os.path.join('/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/sensitivity_analysis',
                       'mean_2std_6models', 'analysis', 'plots', 'correlation', 'parameter_characteristic', 'all')
-    corr_mat = np.load(os.path.join(s_, 'correlation_' + 'pearson' + '.npy'))
-    p_val_mat = np.load(os.path.join(s_, 'p_val_' + 'pearson' + '.npy'))
-    # TODO: decide which correlation to do! (pearson, spearman, kendalltau)
-    characteristics = np.load(os.path.join(s_, 'return_characteristics_' + 'pearson' + '.npy'))
-    parameters = np.load(os.path.join(s_, 'variable_names_' + 'pearson' + '.npy'))
+    corr_mat = np.load(os.path.join(s_, 'correlation_' + correlation_measure + '.npy'))
+    p_val_mat = np.load(os.path.join(s_, 'p_val_' + correlation_measure + '.npy'))
+    characteristics = np.load(os.path.join(s_, 'return_characteristics_' + correlation_measure + '.npy'))
+    parameters = np.load(os.path.join(s_, 'variable_names_' + correlation_measure + '.npy'))
 
-    plot_corr_on_ax(ax0, corr_mat, p_val_mat, characteristics, parameters)
-
-    # TODO: need to correct significance levels for multiple testing???
+    plot_corr_on_ax(ax0, corr_mat, p_val_mat, characteristics, parameters, correlation_measure)
+    # corrected for multiple testing with bonferroni
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'dap_mechanism.png'))
