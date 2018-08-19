@@ -5,107 +5,10 @@
     <bookmark url="file://$PROJECT_DIR$/cell_fitting/read_heka/__init__.py" line="78" mnemonic="8" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/plot_AP_vs_IV_characteristics.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cell_fitting/data/simulate_hodgkin_huxley_model/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cell_fitting/model/channels/stellate_channels_modeldb/hcn_fast_sh13.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cell_fitting/model/channels/stellate_channels_modeldb/hcn_fast_sh17.mod" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/tabulate_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/fit_stellate_with_existing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_hodgkin_huxley.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_model.py" afterDir="false" />
+    <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="update linear_regression code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_IV/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_IV/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_IV/plot_fI_curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_IV/plot_fI_curve.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_doubleramp/plot_doubleramp.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_doubleramp/plot_doubleramp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_doubleramp/plot_doubleramp_current_threshold.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_doubleramp/plot_doubleramp_current_threshold.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_rampIV.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/izhikevich_stellate_cell/izhikevich_DAP_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/izhikevich_stellate_cell/izhikevich_DAP_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/cells/hhCell.json" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/model/cells/hhCell.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/caHVA.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/caLVA.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/cad.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/hcn.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/hcn_fast.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/hcn_slow.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/ka.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/kca.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/kdr.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/libnrnmech.la" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/libnrnmech.lai" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/libnrnmech.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/libnrnmech.so.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/libnrnmech.so.0.0.0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/mod_func.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/na8st.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/nap.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/narsg.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/.libs/nat.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/caHVA.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/caHVA.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/caHVA.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/caLVA.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/caLVA.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/caLVA.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/cad.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/cad.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/cad.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn_fast.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn_fast.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn_fast.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn_slow.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn_slow.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/hcn_slow.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/ka.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/ka.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/ka.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/kca.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/kca.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/kca.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/kdr.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/kdr.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/kdr.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/libnrnmech.la" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/mod_func.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/mod_func.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/na8st.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/na8st.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/na8st.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/nap.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/nap.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/nap.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/narsg.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/narsg.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/narsg.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/nat.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/nat.lo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/nat.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/i686/special" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/x86_64/.libs/libnrnmech.so.0.0.0" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/x86_64/.libs/libnrnmech.so.0.0.0" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/x86_64/.libs/mod_func.o" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/x86_64/.libs/mod_func.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/x86_64/mod_func.c" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/x86_64/mod_func.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/x86_64/special" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/model/channels/stellate/x86_64/special" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/potential_sag_vs_steady_state.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/potential_sag_vs_steady_state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/doubleramp_current_threshold.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_gates.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_gates.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate_old.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/fitter/hodgkinhuxleyfitter.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/fitter/hodgkinhuxleyfitter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/helpers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_toymodel.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_correlation_param_characteristic.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_correlation_param_characteristic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/util/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/util/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/estimate_cellsize.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_model.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -126,7 +29,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>exp_cell</find>
       <find>speed</find>
       <find>v_data +=</find>
       <find>v_shift</find>
@@ -156,6 +58,7 @@
       <find>gnabar</find>
       <find>gbar</find>
       <find>dt</find>
+      <find>celsius</find>
     </findStrings>
     <replaceStrings>
       <replace>h_</replace>
@@ -188,7 +91,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/spike_phase/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_sine_stimulus.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_spike_phase.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_IV/sag_vs_steady_state.py" />
@@ -235,10 +137,11 @@
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_toymodel.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_toymodel2.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_hodgkin_huxley.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/__init__.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_model.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/fit_stellate_with_existing.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_hodgkin_huxley.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_model.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/estimate_cellsize.py" />
       </list>
     </option>
   </component>
@@ -298,6 +201,21 @@
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="optimization" type="462c0819:PsiDirectoryNode" />
+              <item name="linear_regression" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="optimization" type="462c0819:PsiDirectoryNode" />
+              <item name="linear_regression" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -342,8 +260,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.fit_stellate_with_existing">
-    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.plot_cmdvdt">
+    <configuration name="estimate_cellsize" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="cell_fitting" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -351,11 +269,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data/simulate_hodgkin_huxley_model" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/simulate_hodgkin_huxley_model/__init__.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/estimate_cellsize.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -415,7 +333,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="tabulate_model" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="plot_cmdvdt" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="cell_fitting" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -423,11 +341,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/tabulate_model.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/plot_cmdvdt.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -435,18 +353,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.optimize_toymodel" />
-      <item itemvalue="Python.tabulate_model" />
-      <item itemvalue="Python.__init__" />
       <item itemvalue="Python.fit_stellate_with_existing" />
       <item itemvalue="Python.optimize_toymodel2" />
+      <item itemvalue="Python.estimate_cellsize" />
+      <item itemvalue="Python.plot_cmdvdt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.plot_cmdvdt" />
+        <item itemvalue="Python.estimate_cellsize" />
         <item itemvalue="Python.fit_stellate_with_existing" />
         <item itemvalue="Python.optimize_toymodel" />
         <item itemvalue="Python.optimize_toymodel2" />
-        <item itemvalue="Python.__init__" />
-        <item itemvalue="Python.tabulate_model" />
       </list>
     </recent_temporary>
   </component>
@@ -460,13 +378,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1503167081855</updated>
-    </task>
-    <task id="LOCAL-00002" summary="added all .py in data">
-      <created>1503414234055</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1503414234055</updated>
     </task>
     <task id="LOCAL-00003" summary="add all files again">
       <created>1503901056123</created>
@@ -804,7 +715,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534682712954</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="update linear_regression code">
+      <created>1534682747572</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1534682747572</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TodoView">
@@ -821,8 +739,8 @@
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49848944" visible="true" weight="0.21085925" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295838" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.10648392" side_tool="true" weight="0.32468995" />
-      <window_info anchor="bottom" x="0" y="436" width="1920" height="224" id="Run" order="2" sideWeight="0.89351606" visible="true" weight="0.32130778" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.10701107" side_tool="true" weight="0.32130778" />
+      <window_info anchor="bottom" x="0" y="436" width="1920" height="224" id="Run" order="2" sideWeight="0.8929889" visible="true" weight="0.32130778" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.24296963" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.49359658" weight="0.0" />
       <window_info id="Structure" order="1" sideWeight="0.50151056" side_tool="true" weight="0.21085925" />
@@ -913,6 +831,11 @@
           <line>45</line>
           <option name="timeStamp" value="1059" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py</url>
+          <line>33</line>
+          <option name="timeStamp" value="1103" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -924,7 +847,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1100" />
+      <option name="time" value="1106" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -1024,67 +947,53 @@ current_threshold_dict = dict(current_thresholds=current_thresholds2,
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>data</expression-string>
+        <expression-string>linear_regression(dvdt_cut, i_exp_cut, currents_cut, i_pas=0, Cm=None, cell_area=cell_area)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>variables</expression-string>
+        <expression-string>np.c_[-1 * np.vstack(currents), i_inj.T]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>fitter.simulation_params[0]['dt']</expression-string>
+        <expression-string>np.c_[-1 * np.vstack(currents).T, i_inj.T]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>fitter.simulation_params[0]['tstop']</expression-string>
+        <expression-string>i_inj.T</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>dt</expression-string>
+        <expression-string>np.vstack(currents).T</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>i_inj[0]</expression-string>
+        <expression-string>currents_cut</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>i_inj</expression-string>
+        <expression-string>i_exp_cut</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>(param_format[param] % param_val_dict[channel + ' ' + gate + ' ' + param]) + ' (' + param_unit[param] + ')'</expression-string>
+        <expression-string>dvdt_cut</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>(param_format[param] % param_val_dict[channel + ' ' + gate + ' ' + param]) \                                   + ' (' + param_unit[param] + ')'</expression-string>
+        <expression-string>i_exp[idx_end+1]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_gates.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="34" column="46" lean-forward="true" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="267">
@@ -1356,26 +1265,6 @@ current_threshold_dict = dict(current_thresholds=current_thresholds2,
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43">
-          <caret line="11" column="72" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="72" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="85" column="41" selection-start-line="85" selection-start-column="41" selection-end-line="85" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/fit_stellate_with_existing.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -1386,22 +1275,62 @@ current_threshold_dict = dict(current_thresholds=current_thresholds2,
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/estimate_cellsize.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="88" column="21" lean-forward="true" selection-start-line="88" selection-start-column="21" selection-end-line="88" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="14" lean-forward="true" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+        <state relative-caret-position="864">
+          <caret line="48" selection-start-line="48" selection-end-line="48" selection-end-column="63" />
           <folding>
-            <element signature="e#1#48#0" expanded="true" />
+            <element signature="e#0#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/optimize_hodgkin_huxley.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="295">
+          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="43" column="20" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/plot_cmdvdt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="313">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>

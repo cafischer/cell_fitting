@@ -46,7 +46,7 @@ variables = [
                 [0, 1.0, [['soma', '0.5', 'nap_sh17', 'gbar']]],
             ]
 
-lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
+_, _, variable_keys = get_lowerbound_upperbound_keys(variables)
 
 # load data
 protocol = 'rampIV'
