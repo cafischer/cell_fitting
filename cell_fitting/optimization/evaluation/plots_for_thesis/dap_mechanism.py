@@ -12,17 +12,18 @@ from cell_fitting.optimization.evaluation.plot_currents import plot_currents_on_
 from cell_fitting.optimization.evaluation.plot_gates import plot_gates_on_ax
 from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel, plot_channel_block_on_ax
 from cell_fitting.test_channels.channel_characteristics import boltzmann_fun
-from cell_fitting.util import get_channel_dict_for_plotting
+from cell_fitting.util import get_channel_dict_for_plotting, get_channel_color_for_plotting
 from cell_fitting.sensitivity_analysis.plot_correlation_param_characteristic import plot_corr_on_ax
 pl.style.use('paper_subplots')
 
 
-def plot_act_inact_on_ax(ax, v_range, curve_act, curve_inact):
+def plot_act_inact_on_ax(ax, v_range, curve_act, curve_inact, channel_name):
     channel_dict = get_channel_dict_for_plotting()
+    channel_color = get_channel_color_for_plotting()
     ax0.fill_between(v_range, 0, [min(c_act, c_inact) for c_act, c_inact in zip(curve_act, curve_inact)], color='0.9')
-    ax0.plot(v_range, curve_act, color=change_color_brightness(to_rgb('g'), 35, 'brighter'),
+    ax0.plot(v_range, curve_act, color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'brighter'),
              label=channel_dict['nat']+' Act.')
-    ax0.plot(v_range, curve_inact, color=change_color_brightness(to_rgb('g'), 35, 'darker'),
+    ax0.plot(v_range, curve_inact, color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'darker'),
              label=channel_dict['nat']+' Inact.')
     ax0.set_xlabel('Mem. pot. (mV)')
     ax0.set_ylabel('Degree of opening')
@@ -31,7 +32,6 @@ def plot_act_inact_on_ax(ax, v_range, curve_act, curve_inact):
 
 # TODO: colors
 # TODO: check simulation_params (e.g. dt)
-# TODO: could remove right mem. pot. axis from upper two plots
 # TODO: maybe add blocking Nat and reconstructing AP
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Phd/DAP-Project/thesis/figures'
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     ax0 = pl.Subplot(fig, inner[0])
     fig.add_subplot(ax0)
 
-    plot_gates_on_ax(ax0,channel_list, gates, t_model, v_model)
+    plot_gates_on_ax(ax0, gates, t_model, v_model)
 
     # blocking ion channels
     inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1, 0])
@@ -96,7 +96,7 @@ if __name__ == '__main__':
     curve_act = boltzmann_fun(v_range, cell.soma(.5).nat.m_vh, -cell.soma(.5).nat.m_vs)
     curve_inact = boltzmann_fun(v_range, cell.soma(.5).nat.h_vh, -cell.soma(.5).nat.h_vs)
 
-    plot_act_inact_on_ax(ax0, v_range, curve_act, curve_inact)
+    plot_act_inact_on_ax(ax0, v_range, curve_act, curve_inact, 'nat')
 
     # sensitivity analysis
     inner = gridspec.GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[2, :])

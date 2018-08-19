@@ -82,5 +82,5 @@ def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampI
     ax.set_ylabel('Current thresh. (nA)')
     ax.set_xticks(np.insert(ramp3_times, 0, [0]))
     ax.set_xlim(-0.5, ramp3_times[-1] + 2)
-    ax.set_ylim(0, 3.2)
+    ax.set_ylim(0, 3.5)
     ax.legend(loc=legend_loc)

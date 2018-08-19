@@ -10,4 +10,4 @@ if test "" = "yes" ; then
 else
 	NRNIV="${NRNBIN}nrniv"
 fi
-"${NRNIV}" -dll "/home/cf/Phd/programming/projects/cell_fitting/model/channels/stellate/x86_64/.libs/libnrnmech.so" "$@"
+"${NRNIV}" -dll "/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/stellate/x86_64/.libs/libnrnmech.so" "$@"

@@ -44,7 +44,7 @@ def plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags
     ax.plot(amps_subtheshold, v_sags, linestyle='-', marker='o',
             c=change_color_brightness(matplotlib.colors.to_rgb(color_lines), 50, 'brighter'), alpha=0.5, markersize=4,
             label='Sag' if label else '')
-    ax.set_xlabel('Inj. current (nA)', fontsize=12)
+    ax.set_xlabel('Current (nA)', fontsize=12)
     ax.set_ylabel('Mem. pot. (mV)', fontsize=12)
     ax.legend(loc='upper left', fontsize=10)
     ax.set_xticks(np.arange(-0.15, 0.15+0.1, 0.1))

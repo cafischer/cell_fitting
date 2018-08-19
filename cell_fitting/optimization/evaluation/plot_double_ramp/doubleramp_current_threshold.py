@@ -48,6 +48,10 @@ def get_current_threshold(v_mat, ramp3_amps, ramp3_times, start_ramp2_idx, dt, A
         for i in range(len(ramp3_amps)):
             onsets = get_AP_onset_idxs(v_mat[i, j, :], AP_threshold)
             onsets = onsets[onsets > start_ramp2_idx]
+
+            # pl.figure()
+            # pl.plot(np.arange(len(v_mat[i, j, :]))*0.01, v_mat[i, j, :])
+            # pl.show()
             if len(onsets) > 1 and onsets[1] - onsets[0] <= to_idx(3, dt):  #  sometimes 1st AP gets 2 onsets because charging is so high
                 onsets = onsets[1:]
             if len(onsets) > 1:  # 1st spike is mandatory, 2nd would be on the DAP

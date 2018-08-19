@@ -74,7 +74,7 @@ def plot_corr(corr, sig_level, return_characteristics, variable_names, correlati
 
 def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names, correlation_measure):
     X, Y = np.meshgrid(np.arange(np.size(corr_mat, 1)), np.arange(np.size(corr_mat, 0)))
-    pl.pcolor(X, Y, corr_mat, vmin=-1, vmax=1, cmap=pl.cm.get_cmap('viridis'))
+    pl.pcolor(X, Y, corr_mat, vmin=-1, vmax=1, cmap=pl.cm.get_cmap('gray'))
 
     # p-values
     sig_levels = [0.1, 0.01, 0.001, 0]

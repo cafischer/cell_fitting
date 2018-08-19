@@ -47,8 +47,8 @@ data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
 PP_params_dir = '/home/cf/Phd/DAP-Project/cell_data/PP_params2.csv'
 protocol = 'PP'
 v_rest_shift = -16
-cell_id = '2014_07_10b'
-run_idx = 3
+cell_id = '2014_03_18f'
+run_idx = 1
 step_flags = [0, 1, 2]
 step_amps = [0, -0.1, 0.1]
 
@@ -154,9 +154,9 @@ for step_flag in step_flags:
 
     v_mats.append(v_mat)
 
-save_dir_img = os.path.join(save_dir, 'PP', 'explanation')
-if not os.path.exists(save_dir_img):
-    os.makedirs(save_dir_img)
-explanation_img(t, v_mats, save_dir_img)
+# save_dir_img = os.path.join(save_dir, 'PP', 'explanation')
+# if not os.path.exists(save_dir_img):
+#     os.makedirs(save_dir_img)
+# explanation_img(t, v_mats, save_dir_img)
 
 # Series number = 2nd number in Igor (sweep number is 3rd) = current number Franzi writes down

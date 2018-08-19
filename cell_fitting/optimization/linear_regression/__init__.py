@@ -1,5 +1,6 @@
 import matplotlib.pyplot as pl
 import numpy as np
+import os
 from matplotlib.pyplot import cm as cmap
 from scipy.optimize import nnls
 
@@ -44,7 +45,7 @@ def plot_fit(y, X, weights, t, channel_list, i_pas=0, save_dir=None):
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(loc='upper right', fontsize=16)
     pl.tight_layout()
-    if save_dir is not None: pl.savefig(save_dir+'bestfit_derivative.png')
+    if save_dir is not None: pl.savefig(os.path.join(save_dir, 'bestfit_derivative.png'))
     pl.show()
 
     # plot current trace and derivative
@@ -59,7 +60,7 @@ def plot_fit(y, X, weights, t, channel_list, i_pas=0, save_dir=None):
     pl.xlabel('Time (ms)', fontsize=16)
     pl.legend(loc='upper right', fontsize=16)
     pl.tight_layout()
-    if save_dir is not None: pl.savefig(save_dir+'bestfit_currents.png')
+    if save_dir is not None: pl.savefig(os.path.join(save_dir, 'bestfit_currents.png'))
     pl.show()
 
 
@@ -69,3 +70,9 @@ def sort_weights_by_variable_keys(channel_list, weights, variable_keys):
     channel_list_ordered = [channel_dict[c] for c in channel_list]
     sorted_weights = [c for (n, c) in sorted(zip(channel_list_ordered, weights))]
     return sorted_weights
+
+
+def update_variables(cell, variable_values, variable_keys):
+    for i in range(len(variable_values)):
+            for path in variable_keys[i]:
+                cell.update_attr(path, variable_values[i])

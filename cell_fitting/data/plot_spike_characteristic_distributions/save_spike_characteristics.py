@@ -20,7 +20,7 @@ if __name__ == '__main__':
     AP_threshold = -10  # mV
     spike_characteristics_dict = get_spike_characteristics_dict(for_data=True)
     return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_deflection', 'DAP_width', 'DAP_time',
-                              'fAHP2DAP_time']
+                              'fAHP2DAP_time', 'height_3ms_after_AP']
 
     cell_id_list = []
     spike_characteristics_list = []
@@ -53,17 +53,18 @@ if __name__ == '__main__':
                     spike_characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest,
                                                                                check=False, std_idx_times=std_idx_times,
                                                                                **spike_characteristics_dict))
-                    if None not in spike_characteristics and np.all(spike_characteristics[:-2] >= 0):
-                        cell_id_list.append(cell_id)
-                        spike_characteristics_list.append(spike_characteristics)
-                        v_list.append(v)
+                    #if None not in spike_characteristics and np.all(spike_characteristics[:-2] >= 0):
+                    cell_id_list.append(cell_id)
+                    spike_characteristics_list.append(spike_characteristics)
+                    v_list.append(v)
+
                     if spike_characteristics[4] is None:
                         no_DAP += 1
-                        # TODO
-                        spike_characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest,
-                                                                                   check=False,
-                                                                                   std_idx_times=std_idx_times,
-                                                                                   **spike_characteristics_dict))
+                        # # TODO
+                        # spike_characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest,
+                        #                                                            check=False,
+                        #                                                            std_idx_times=std_idx_times,
+                        #                                                            **spike_characteristics_dict))
                     break
         except KeyError:
             continue

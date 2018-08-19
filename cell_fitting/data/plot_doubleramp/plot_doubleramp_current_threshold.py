@@ -15,10 +15,11 @@ PP_params_dir = '/home/cf/Phd/DAP-Project/cell_data/PP_params2.csv'
 protocol = 'PP'
 protocol_idx = 0
 
-#cells = ['2015_08_05b', '2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11d',
-#         '2015_08_11e', '2015_08_11f']  # 05b, 11f only 10 amp increase, 05c, 06d 20
-cells = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
-run_idxs = [3, 7, 4, 5, 8, 1, 5]
+#cells = ['2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11e', '2015_08_11f']  # 05b, 11f only 10 amp increase, 05c, 06d 20
+#cells = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
+#run_idxs = [3, 7, 4, 5, 8, 1, 5]
+cells = ['2014_03_18f']
+run_idxs = [1]
 cell_id = cells[0]
 run_idx = run_idxs[0]
 
@@ -34,7 +35,7 @@ PP_params_cell = PP_params[PP_params['cell_id'] == cell_id].iloc[run_idx]
 len_ramp3_times = PP_params_cell['len_ramp3_times']
 delta_first = PP_params_cell['delta_first']
 delta_ramp = PP_params_cell['delta_ramp']
-start_ramp2_idx = PP_params_cell['start_ramp2_idx']  # TODO: 48700 for 2015
+start_ramp2_idx = int(PP_params_cell['start_ramp2_idx'])  # TODO: 48700 for 2015
 ramp3_times = np.arange(delta_first, len_ramp3_times * delta_ramp + delta_ramp, delta_ramp)
 
 save_dir_cell = os.path.join(save_dir, 'PP', cell_id, str(run_idx))

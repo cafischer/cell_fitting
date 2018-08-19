@@ -2,7 +2,7 @@ import matplotlib.pyplot as pl
 import os
 from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
 from nrn_wrapper import Cell, load_mechanism_dir
-from cell_fitting.util import get_channel_dict_for_plotting
+from cell_fitting.util import get_channel_dict_for_plotting, get_channel_color_for_plotting
 pl.style.use('paper')
 
 
@@ -20,11 +20,13 @@ def block_channel(cell, channel_name, percent_block):
 
 def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block, percent_block):
     channel_dict = get_channel_dict_for_plotting()
+    channel_color = get_channel_color_for_plotting()
     ax.plot(t, v_before_block, 'k', label='without block')
     for i, channel_name in enumerate(channel_list):
         if channel_name == 'hcn_slow':
             channel_name = 'hcn'
-        ax.plot(t, v_after_block[i, :], label=str(percent_block) + ' % block of ' + channel_dict[channel_name])
+        ax.plot(t, v_after_block[i, :], color=channel_color[channel_name],
+                label=str(percent_block) + ' % block of ' + channel_dict[channel_name])
     ax.set_xlabel('Time (ms)')
     ax.set_ylabel('Mem. pot. (mV)')
     ax.legend(loc='upper right')

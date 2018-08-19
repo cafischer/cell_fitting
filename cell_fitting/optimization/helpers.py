@@ -17,6 +17,7 @@ def get_lowerbound_upperbound_keys(variables):
 def get_channel_list(cell, sec_name):
     mechanism_dict = cell.get_dict()[sec_name]['mechanisms']
     channel_list = [mech for mech in mechanism_dict if not '_ion' in mech]
+    channel_list.sort(reverse=True)
     return channel_list
 
 

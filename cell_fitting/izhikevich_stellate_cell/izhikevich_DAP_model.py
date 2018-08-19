@@ -86,3 +86,20 @@ if __name__ == '__main__':
 
     phase_plot(-80, 20, -30, 10, v_rest, v_t, cm, k, a, b, i_b, v, u)
     plt.show()
+
+
+    tstop = 500  # ms
+    dt = 0.1  # ms
+    i_inj = np.zeros(int(round(tstop / dt)))
+    i_inj[int(10/dt):int(410/dt)] = -0.01
+    i_inj[int(420/dt):int(422/dt)] = 0.02
+
+    v, t, u = get_v_izhikevich(i_inj, tstop, dt, v_rest, v_t, v_reset, v_peak, cm, k, k, a, b, d, i_b, v0, u0)
+
+    plt.figure()
+    plt.plot(t, v)
+
+    #phase_plot(-80, 30, -30, 10, v_rest, v_t, cm, k, a, b, i_b, v, u)
+
+    phase_plot(-80, 20, -30, 10, v_rest, v_t, cm, k, a, b, i_b, v, u)
+    plt.show()

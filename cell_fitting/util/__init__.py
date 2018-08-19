@@ -153,3 +153,13 @@ def parameter_dict_for_plotting():
         'tau_max': r'$\tau_{max}$',
         'tau_delta': r'$\tau_{delta}$'
     }
+
+
+def get_channel_color_for_plotting():
+    return {
+        'nat': 'r',
+        'nap': 'b',
+        'hcn': 'y',
+        'kdr': 'g',
+        'pas': 'orange'
+    }

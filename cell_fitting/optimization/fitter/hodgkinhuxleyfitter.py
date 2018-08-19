@@ -19,7 +19,7 @@ class HodgkinHuxleyFitter(Fitter):
         super(HodgkinHuxleyFitter, self).__init__()
         self.name = name
         self.variable_keys = variable_keys
-        self.args = args
+        self.args = args if args is not None else {}
 
         self.errfun_names = errfun_name
         self.errfun = getattr(errfuns, errfun_name)
