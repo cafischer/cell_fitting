@@ -16,12 +16,12 @@ protocol = 'PP'
 protocol_idx = 0
 
 #cells = ['2015_08_05c', '2015_08_06d', '2015_08_10a', '2015_08_11e', '2015_08_11f']  # 05b, 11f only 10 amp increase, 05c, 06d 20
-#cells = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
-#run_idxs = [3, 7, 4, 5, 8, 1, 5]
-cells = ['2014_03_18f']
-run_idxs = [1]
-cell_id = cells[0]
-run_idx = run_idxs[0]
+cell_ids = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
+run_idxs = [3, 7, 4, 5, 8, 1, 5]
+# cells = ['2015_08_06d']
+# run_idxs = [0]
+cell_id = cell_ids[1]
+run_idx = run_idxs[1]
 
 # load current threshold
 current_threshold_rampIV = float(np.loadtxt(os.path.join(save_dir, 'rampIV', 'rat', cell_id, 'current_threshold.txt')))
@@ -70,9 +70,13 @@ with open(os.path.join(save_dir, 'PP', cell_id, 'current_threshold_dict.json'), 
 # save difference of current threshold at DAP max and from rampIV
 save_diff_current_threshold(current_threshold_rampIV, current_thresholds,
                             os.path.join(save_dir, 'PP', cell_id, 'diff_current_threshold.txt'))
+np.savetxt(os.path.join(save_dir, 'PP', cell_id, 'current_threshold_DAP.txt'),
+           np.array([np.nanmin(current_thresholds[1])]))
+np.savetxt(os.path.join(save_dir, 'PP', cell_id, 'current_threshold_rest.txt'),
+           np.array([current_threshold_rampIV]))
 
 plot_current_threshold(current_thresholds, current_threshold_rampIV, ramp3_times, step_amps, ramp3_amps[0],
                        ramp3_amps[-1], v_dap, t_dap, save_dir_cell, legend_loc='upper right')  #'center right')
 plot_current_threshold_compare_in_vivo(current_thresholds, current_threshold_rampIV, ramp3_times, step_amps, ramp3_amps[0],
                        ramp3_amps[-1], v_dap, t_dap, save_dir_cell, legend_loc='upper right')
-pl.show()
+#pl.show()

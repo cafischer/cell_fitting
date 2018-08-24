@@ -26,7 +26,7 @@ if __name__ == '__main__':
     mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
     save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
-    model = '2'  # TODO: choose model (2)
+    model = '2'  # TODO: choose model 2
     exp_cell = '2015_08_26b'
     v_init = -75
     color_model = '0.5'

@@ -43,9 +43,9 @@ if __name__ == '__main__':
     save_dir = '../plots/IV/fi_curve/'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'IV'
-    cells_ids = get_cells_for_protocol(data_dir, protocol)
+    #cells_ids = get_cells_for_protocol(data_dir, protocol)
     # cells_ids = ['2015_05_26d', '2015_06_08a', '2015_06_09f', '2015_06_19i', '2015_08_10g', '2015_08_26b']
-    # cells_ids = ['2013_10_12a']
+    cells_ids = ['2015_08_26b']
     animal = 'rat'
 
     ISI_1st = init_nan(len(cells_ids))
@@ -93,6 +93,15 @@ if __name__ == '__main__':
         save_dir_img = os.path.join(save_dir, animal, cell_id)
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
+
+        # save an example
+        import pandas as pd
+        idx = get_sweep_index_for_amp(0.4, protocol)
+        data = pd.DataFrame(np.vstack((t, v_mat[idx], i_inj_mat[idx])).T, columns=['t', 'v', 'i'])
+        data.to_csv(os.path.join(save_dir_img, cell_id + '_IV.csv'))
+        pl.figure()
+        pl.plot(t, v_mat[idx])
+        pl.show()
 
         # save
         if not os.path.exists(os.path.join(save_dir, cell_id)):

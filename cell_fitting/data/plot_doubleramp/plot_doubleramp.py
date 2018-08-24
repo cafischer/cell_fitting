@@ -47,8 +47,8 @@ data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
 PP_params_dir = '/home/cf/Phd/DAP-Project/cell_data/PP_params2.csv'
 protocol = 'PP'
 v_rest_shift = -16
-cell_id = '2014_03_18f'
-run_idx = 1
+cell_id = '2014_07_03a'
+run_idx = 7
 step_flags = [0, 1, 2]
 step_amps = [0, -0.1, 0.1]
 
