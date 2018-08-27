@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as pl
 import os
 from cell_fitting.optimization.simulate import iclamp_handling_onset, extract_simulation_params
-from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from cell_characteristics import to_idx
 from cell_fitting.util import merge_dicts
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function, get_sweep_index_for_amp
@@ -225,19 +224,23 @@ def simulate_IV(cell, step_amp, v_init=-75):
 
     # record v
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
-    return v, t
+    return v, t, i_inj
 
 
-def compute_time_to_1st_spike(v_traces, i_traces, t_trace):
+def fit_fI_curve(amps, firing_rates):
+    b0 = amps[np.where(firing_rates > 0)[0][0]]
+    p_opt, _ = curve_fit(fit_fun, amps, firing_rates, p0=[50, b0, 0.5])
+    FI_a, FI_b, FI_c = p_opt
+    RMSE = np.sqrt(np.sum((firing_rates - fit_fun(amps, FI_a, FI_b, FI_c)) ** 2))
+    return FI_a, FI_b, FI_c, RMSE
 
-    start_step = np.nonzero(i_traces[0])[0][0]
-    amps = np.array([i_inj[start_step] for i_inj in i_traces])
 
-    time_to_1st_spike = np.zeros(len(amps))
-    for i, amp in enumerate(amps):
-        AP_onsets = get_AP_onset_idxs(v_traces[i], threshold=0)
-        if len(AP_onsets) == 0:
-            time_to_1st_spike[i] = np.nan
-        else:
-            time_to_1st_spike[i] = t_trace[AP_onsets[0]] - t_trace[start_step]
-    return amps, time_to_1st_spike
+def simulate_and_compute_fI_curve(cell, step_amps=np.arange(0.0, 1.1, 0.05)):
+    v_mat = []
+    i_inj_mat = []
+    for step_amp_idx, step_amp in enumerate(step_amps):
+        v, t, i_inj = simulate_IV(cell, step_amp, v_init=-75)
+        v_mat.append(v)
+        i_inj_mat.append(i_inj)
+    firing_rates_model = compute_fIcurve(v_mat, t, step_amps, start_step=250, end_step=750)
+    return step_amps, firing_rates_model

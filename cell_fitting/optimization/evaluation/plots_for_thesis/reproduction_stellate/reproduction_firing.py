@@ -6,7 +6,10 @@ import matplotlib.gridspec as gridspec
 from cell_fitting.read_heka import load_data
 from cell_fitting.optimization.evaluation import simulate_model
 from nrn_wrapper import Cell
-from cell_fitting.optimization.evaluation.plot_IV import plot_fi_curve_on_ax
+from cell_fitting.optimization.evaluation.plot_IV import plot_fi_curve_on_ax, simulate_and_compute_fI_curve, \
+    fit_fI_curve
+from cell_fitting.optimization.evaluation.plot_IV.latency_vs_ISI12_distribution import get_latency_and_ISI12
+from mpl_toolkits.mplot3d import Axes3D
 pl.style.use('paper_subplots')
 
 
@@ -70,6 +73,35 @@ if __name__ == '__main__':
 
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
 
+    # latency vs ISI1/2
+    ax = pl.Subplot(fig, outer[1, 0])
+    fig.add_subplot(ax)
+    latency_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat/summary', 'latency.npy'))
+    ISI12_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat/summary', 'ISI12.npy'))
+    ax.plot(latency_data, ISI12_data, 'o', color='k', alpha=0.5)
+
+    latency_model, ISI12_model = get_latency_and_ISI12(cell)
+    ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5)
+
+    ax.set_xlabel('Latency (ms)')
+    ax.set_ylabel('ISI1/2 (ms)')
+
+    # fit fI-curve
+    ax = pl.subplot(outer[1, 1], projection='3d')
+
+    FI_a = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat/summary', 'FI_a.npy'))
+    FI_b = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat/summary', 'FI_b.npy'))
+    FI_c = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat/summary', 'FI_c.npy'))
+    ax.plot(FI_a, FI_b, FI_c, 'o', color='k', alpha=0.5)
+
+    amps_greater0, firing_rates_model = simulate_and_compute_fI_curve(cell)
+    FI_a_model, FI_b_model, FI_c_model, RMSE_model = fit_fI_curve(amps_greater0, firing_rates_model)
+    ax.plot([FI_a_model], [FI_b_model], [FI_c_model], 'o', color=color_model, alpha=0.5)
+
+    ax.set_xlabel('a')
+    ax.set_ylabel('b')
+    ax.set_zlabel('c')
+    ax.view_init(azim=-50, elev=38)
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_firing.png'))

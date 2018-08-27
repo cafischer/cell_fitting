@@ -20,18 +20,18 @@ def fit_fun(x, a, b, c):
 if __name__ == '__main__':
 
     # parameters
-    save_dir_img = '../plots/plot_IV/fi_curve/rat/summary'
+    save_dir_img = '../plots/IV/fi_curve/rat/summary'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'IV'
-    cells = get_cells_for_protocol(data_dir, protocol)
+    cell_ids = get_cells_for_protocol(data_dir, protocol)
     animal = 'rat'
     FI_a = []
     FI_b = []
     FI_c = []
-    Cells = []
+    cell_ids_used = []
     RMSE = []
 
-    for cell_id in cells:
+    for cell_id in cell_ids:
         if not check_rat_or_gerbil(cell_id) == animal:
             continue
 
@@ -76,7 +76,7 @@ if __name__ == '__main__':
         FI_a.append(p_opt[0])
         FI_b.append(p_opt[1])
         FI_c.append(p_opt[2])
-        Cells.append(cell_id)
+        cell_ids_used.append(cell_id)
         RMSE.append(np.sqrt(np.sum((firing_rates_data - fit_fun(amps_greater0, p_opt[0], p_opt[1], p_opt[2])) ** 2)))
 
         print 'RMSE: %.5f' % RMSE[-1]
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     np.save(os.path.join(save_dir_img, 'FI_b.npy'), FI_b)
     np.save(os.path.join(save_dir_img, 'FI_c.npy'), FI_c)
     np.save(os.path.join(save_dir_img, 'RMSE.npy'), RMSE)
-    np.save(os.path.join(save_dir_img, 'cells.npy'), Cells)
+    np.save(os.path.join(save_dir_img, 'cells.npy'), cell_ids_used)
 
     pl.figure()
     pl.hist(FI_a, bins=100, color='0.5')
