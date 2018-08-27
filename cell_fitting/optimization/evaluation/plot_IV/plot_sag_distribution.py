@@ -8,7 +8,6 @@ from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function, get_sweep_index_for_amp
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
-
 pl.style.use('paper')
 
 
@@ -22,7 +21,7 @@ if __name__ == '__main__':
     save_dir_data = os.path.join('../../../data/plots/IV/sag_hist', 'rat')
     model_ids = range(1, 7)
 
-    amp = -0.15
+    amp = -0.1
     AP_threshold = 0
     sweep_idx = get_sweep_index_for_amp(amp, 'IV')
     load_mechanism_dir(mechanism_dir)
@@ -59,8 +58,8 @@ if __name__ == '__main__':
     if not os.path.exists(save_dir_img):
         os.makedirs(save_dir_img)
 
-    sag_amps_data = np.load(os.path.join(save_dir_data, 'sag_amps.npy'))
-    v_deflections_data = np.load(os.path.join(save_dir_data, 'v_deflections.npy'))
+    sag_amps_data = np.load(os.path.join(save_dir_data, str(amp), 'sag_amps.npy'))
+    v_deflections_data = np.load(os.path.join(save_dir_data, str(amp), 'v_deflections.npy'))
 
     # plot sag amps
     min_val = 0 #min(np.min(sag_amps_data), np.min(sag_amps_model))
@@ -100,7 +99,6 @@ if __name__ == '__main__':
     ax2.set_ylabel('Proportion Models', fontsize=18, color='r')
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'hist_sag.png'))
-    pl.show()
 
     # plot deflections
     min_val = 0  # min(np.min(v_deflections_data), np.min(v_deflections_model))

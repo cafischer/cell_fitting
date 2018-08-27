@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # parameters
     save_dir_img = '../plots/plot_IV/fi_curve/rat/summary'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    protocol = 'plot_IV'
+    protocol = 'IV'
     cells = get_cells_for_protocol(data_dir, protocol)
     animal = 'rat'
     FI_a = []
@@ -32,8 +32,6 @@ if __name__ == '__main__':
     RMSE = []
 
     for cell_id in cells:
-        # if not '2015' in cell_id:
-        #     continue
         if not check_rat_or_gerbil(cell_id) == animal:
             continue
 
@@ -45,7 +43,7 @@ if __name__ == '__main__':
 
         try:
             amps, firing_rates_data = compute_fIcurve(v_mat, i_inj_mat, t)
-        except IndexError:
+        except AssertionError:
             continue
 
         # sort according to amplitudes

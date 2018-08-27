@@ -27,18 +27,21 @@ def plot_current_threshold(diff_current_data, diff_current_model, save_dir):
     pl.show()
 
 
-def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest):
+def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, plot_sig=True):
     percentage_difference = 100 - (current_thresholds_DAP / current_thresholds_rest * 100)
-    h0 = 0
-    star = get_star_from_ttest(percentage_difference, h0)
 
     ax.errorbar(0.0, np.mean(percentage_difference), yerr=np.std(percentage_difference), color='k', marker='o', capsize=3)
     ax.plot(np.zeros(len(percentage_difference))-0.4, percentage_difference, 'ok')
-    vertical_square_bracket(ax, star, x1=0.35, x2=0.4, y1=np.mean(percentage_difference), y2=h0)
+    if plot_sig:
+        h0 = 0
+        star = get_star_from_ttest(percentage_difference, h0)
+        vertical_square_bracket(ax, star, x1=0.35, x2=0.4, y1=np.mean(percentage_difference), y2=h0)
+        ax.set_xlim([-1, 1])
+    else:
+        ax.set_xlim([-1.2, 0.8])
     ax.set_xticks([])
+    ax.set_ylim([0, None])
     ax.set_ylabel('Decrease current thresh. (%)')
-    ax.set_xlim([-1, 1])
-    ax.set_aspect(0.1)
 
 
 def vertical_square_bracket(ax, star, x1, x2, y1, y2):
