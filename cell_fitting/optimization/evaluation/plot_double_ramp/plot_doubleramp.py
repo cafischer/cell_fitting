@@ -6,14 +6,9 @@ from cell_characteristics import to_idx
 from nrn_wrapper import Cell
 from cell_fitting.read_heka.i_inj_functions import get_i_inj_double_ramp
 from cell_fitting.optimization.simulate import iclamp_handling_onset, simulate_currents
-
+from cell_fitting.data.plot_doubleramp import get_ramp3_times
 pl.style.use('paper')
-
 __author__ = 'caro'
-
-
-def get_ramp3_times(delta_first=3, delta_ramp=2, n_times=10):
-    return np.arange(delta_first, n_times * delta_ramp + delta_ramp, delta_ramp)
 
 
 def double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp, len_step, dt, tstop):
@@ -213,39 +208,37 @@ def plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, sav
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    #save_dir = '../../../results/server_17_12_04/2017-12-26_08:17:19/473/L-BFGS-B'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
+    step_idx_dict = {-0.1: 0, 0: 1, 0.1: 2}
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     dt = 0.01
-    tstop = 500
-    len_step = 125
+    tstop = 691.99  #500
+    len_step = 250  #125
     ramp_amp = 4.0
     ramp3_times = get_ramp3_times(3, 2, 10)
+    ramp3_amps = np.arange(1.0, 4.0+0.05, 0.05)
+    step_amps = [0, 0.1, -0.1]
 
-    i_inj_mats = []
-    v_mats = []
-    for step_amp in [0, 0.1, -0.1]:
-        for ramp3_amp in np.arange(1.5, 4.0+0.05, 0.05):
-            t, v_mat, i_inj_mat, ramp3_times, currents, channel_list, _ = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times,
-                                                                                      step_amp, len_step, dt, tstop)
-            if ramp3_amp == 1.5:
-                i_inj_mats.append(i_inj_mat)
-                v_mats.append(v_mat)
+    v_mat = np.zeros((len(ramp3_amps), len(ramp3_times), int(tstop/dt+1), len(step_amps)))
+    for step_amp in step_amps:
+        step_str = 'step_%.1f(nA)' % step_amp
+        for ramp3_amp_idx, ramp3_amp in enumerate(ramp3_amps):
+            t, v_mat[ramp3_amp_idx, :, :, step_idx_dict[step_amp]], i_inj_mat, \
+            ramp3_times, currents, channel_list, _ = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times,
+                                                                 step_amp, len_step, dt, tstop)
 
-            save_dir_img = os.path.join(save_dir, 'img', 'PP', '125', 'step' + str(step_amp))
-            if not os.path.exists(save_dir_img):
-                os.makedirs(save_dir_img)
-
-            plot_double_ramp(t, v_mat, ramp3_times, save_dir_img)
+            # save_dir_img = os.path.join(save_dir, 'img', 'PP', str(len_step), step_str)
+            # if not os.path.exists(save_dir_img):
+            #     os.makedirs(save_dir_img)
+            #plot_double_ramp(t, v_mat[i, :, :], ramp3_times, save_dir_img)
             #plot_double_ramp_currents(t, v, currents, ramp3_times, channel_list, save_dir_img)
             #plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, save_dir_img)
 
-    # save_dir_img = os.path.join(save_dir, 'img', 'PP', '125', 'explanation')
-    # if not os.path.exists(save_dir_img):
-    #     os.makedirs(save_dir_img)
-    # plot_double_ramp_explanation_img(t, v_mats, i_inj_mats, ramp3_times, save_dir_img)
+    # save
+    save_dir_model = os.path.join(save_dir, 'img', 'PP', str(len_step))
+    np.save(os.path.join(save_dir_model, 'v_mat.npy'), v_mat)

@@ -104,10 +104,8 @@ if __name__ == '__main__':
         pl.show()
 
         # save
-        if not os.path.exists(os.path.join(save_dir, cell_id)):
-            os.makedirs(os.path.join(save_dir, cell_id))
         fi_dict = dict(amps=list(amps_greater0), firing_rates=list(firing_rates_data))
-        with open(os.path.join(save_dir, cell_id, 'fi_dict.json'), 'w') as f:
+        with open(os.path.join(save_dir_img, 'fi_dict.json'), 'w') as f:
             json.dump(fi_dict, f)
 
         pl.figure()

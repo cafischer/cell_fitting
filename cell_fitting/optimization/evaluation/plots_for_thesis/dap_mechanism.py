@@ -78,7 +78,7 @@ if __name__ == '__main__':
     fig.add_subplot(ax0)
 
     channel_list.remove('pas')
-    percent_block = 10
+    percent_block = 50
     v_after_block = np.zeros((len(channel_list), len(t_model)))
     for i, channel_name in enumerate(channel_list):
         cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))

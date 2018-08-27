@@ -32,8 +32,8 @@ def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_t
     h0 = 0
     star = get_star_from_ttest(percentage_difference, h0)
 
-    ax.errorbar(0.1, np.mean(percentage_difference), yerr=np.std(percentage_difference), color='k', marker='o', capsize=3)
-    ax.plot(np.zeros(len(percentage_difference))-0.2, percentage_difference, 'ok', alpha=0.5)
+    ax.errorbar(0.0, np.mean(percentage_difference), yerr=np.std(percentage_difference), color='k', marker='o', capsize=3)
+    ax.plot(np.zeros(len(percentage_difference))-0.4, percentage_difference, 'ok')
     vertical_square_bracket(ax, star, x1=0.35, x2=0.4, y1=np.mean(percentage_difference), y2=h0)
     ax.set_xticks([])
     ax.set_ylabel('Decrease current thresh. (%)')

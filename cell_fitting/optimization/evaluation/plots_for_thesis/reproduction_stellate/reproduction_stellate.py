@@ -73,9 +73,10 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_data_plots, 'PP', '2015_08_06d', 'current_threshold_dict.json'), 'r') as f:  # using different cell here! 2014_07_10b
         current_threshold_dict_data = json.load(f)
 
-    plot_current_threshold_on_ax(ax0, color_lines=color_model, label=False, plot_range=False,
-                                 **current_threshold_dict_model)
-    plot_current_threshold_on_ax(ax0, color_lines='k', label=True, **current_threshold_dict_data)
+    plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_model, 0.0: color_model, 0.1: color_model},
+                                 label=False, plot_range=False, **current_threshold_dict_model)
+    plot_current_threshold_on_ax(ax0, colors_dict={-0.1: 'k', 0.0: 'k', 0.1: 'k'}, label=True,
+                                 **current_threshold_dict_data)
     ax0.get_yaxis().set_label_coords(-0.25, 0.5)
 
     # sag
@@ -150,7 +151,7 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_model, model, 'img', 'IV', 'fi_curve', 'fi_dict.json'), 'r') as f:
         fi_dict_model = json.load(f)
 
-    with open(os.path.join(save_dir_data_plots, 'IV', 'fi_curve', exp_cell, 'fi_dict.json'), 'r') as f:
+    with open(os.path.join(save_dir_data_plots, 'IV', 'fi_curve', 'rat', exp_cell, 'fi_dict.json'), 'r') as f:
         fi_dict_data = json.load(f)
 
     plot_fi_curve_on_ax(ax0, color_line=color_model, **fi_dict_model)

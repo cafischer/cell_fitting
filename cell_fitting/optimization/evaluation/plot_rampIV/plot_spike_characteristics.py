@@ -2,7 +2,7 @@ from __future__ import division
 import os
 import numpy as np
 import matplotlib.pyplot as pl
-from cell_fitting.optimization.evaluation.rampIV import simulate_rampIV
+from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
 from nrn_wrapper import Cell, load_mechanism_dir
 from cell_characteristics.analyze_APs import get_AP_onset_idxs, get_spike_characteristics
 from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
@@ -40,11 +40,9 @@ for model_id in model_ids:
             # get spike characteristics
             print model_id, ramp_amp
             start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
-            std_idx_times = (0, start_i_inj * dt)
             v_rest = np.mean(v[0:start_i_inj])
-            spike_characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest,
-                                                                       std_idx_times=std_idx_times, check=False,
-                                                                       **get_spike_characteristics_dict()), dtype=float)
+            spike_characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest, check=True,
+                                                              **get_spike_characteristics_dict()), dtype=float)
             spike_characteristics_list.append(spike_characteristics)
             v_list.append(v)
             break
@@ -52,8 +50,7 @@ characteristics_mat_models = np.vstack(spike_characteristics_list)  # candidates
 AP_matrix_models = np.vstack(v_list)  # candidates vs t
 
 # for exp. cells
-characteristics_mat = np.load(os.path.join(data_dir, 'characteristics_mat.npy'))
-candidate_mat = np.load(os.path.join(data_dir, 'AP_mat.npy'))
+characteristics_mat = np.load(os.path.join(data_dir, 'characteristics_mat.npy')).astype(float)
 
 for i, characteristic in enumerate(return_characteristics):
     min_val = min(np.nanmin(characteristics_mat[:, i]), np.nanmin(characteristics_mat_models[:, i]))

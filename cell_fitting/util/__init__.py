@@ -136,6 +136,7 @@ def characteristics_dict_for_plotting():
         'DAP_amp': 'DAP amp.',
         'DAP_width': 'DAP width',
         'DAP_deflection': 'DAP deflection',
+        'DAP_time': 'DAP time',
         'fAHP_amp': 'fAHP amp.',
     }
 
