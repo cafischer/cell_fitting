@@ -166,10 +166,10 @@ if __name__ == '__main__':
     fig.add_subplot(ax0)
     fig.add_subplot(ax1)
 
-    step_amp = 0.1
-    v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'Zap20', step_amp)
+    zap_amp = 0.1
+    v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'Zap20', zap_amp)
     # v_data += - v_data[0] + v_init
-    v_model, t_model, _ = simulate_model(cell, 'Zap20', step_amp, t_data[-1], v_init=v_init, dt=0.025)
+    v_model, t_model, _ = simulate_model(cell, 'Zap20', zap_amp, t_data[-1], v_init=v_init, dt=0.025)
 
     ax0.plot(t_data, v_data, 'k', label='Exp. cell')
     ax0.plot(t_model, v_model, color_model, label='Model')

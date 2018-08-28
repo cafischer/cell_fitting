@@ -4,8 +4,9 @@ import matplotlib.pyplot as pl
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from cell_fitting.optimization.evaluation.plot_zap.plot_zap import apply_zap_stimulus
+from cell_fitting.optimization.evaluation.plot_zap import simulate_and_compute_zap_characteristics
 from nrn_wrapper import Cell, load_mechanism_dir
+from cell_fitting.read_heka import get_i_inj_standard_params
 
 pl.style.use('paper')
 
@@ -14,10 +15,12 @@ if __name__ == '__main__':
     # parameters
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     model_ids = range(1, 7)
-    save_dir_data = '../../data/plots/Zap20/rat/summary'
-    mechanism_dir = '../../model/channels/vavoulis'
+    save_dir_data = '../../../data/plots/Zap20/rat/summary'
+    mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     cell_id = '2015_08_26b'
+    zap_params = get_i_inj_standard_params('Zap20')
+    # zap_params['dt'] = 0.01
 
     load_mechanism_dir(mechanism_dir)
 
@@ -26,13 +29,12 @@ if __name__ == '__main__':
     q_values_model = np.zeros(len(model_ids))
     for i, model_id in enumerate(model_ids):
         # load model
-        model_dir = os.path.join(save_dir, str(model_id), 'cell.json')
-        cell = Cell.from_modeldir(model_dir)
-
         save_dir_model = os.path.join(save_dir, str(model_id))
-        amp = 0.1 if model_id != 4 else 0.06  # model 4 spikes when amp too high
-        res_freqs_model[i], q_values_model[i] = apply_zap_stimulus(cell, amp=amp, freq0=0, freq1=20, onset_dur=2000,
-                                                                   offset_dur=2000, zap_dur=30000, tstop=34000, dt=0.1)
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, 'cell.json'))
+
+        zap_params['amp'] = 0.1 if model_id != 4 else 0.06  # model 4 spikes when amp too high
+        _, _, _, _, _, res_freqs_model[i], q_values_model[i] = simulate_and_compute_zap_characteristics(cell,
+                                                                                                        zap_params)
 
     # read data
     res_freqs_data = np.load(os.path.join(save_dir_data, 'res_freqs.npy'))

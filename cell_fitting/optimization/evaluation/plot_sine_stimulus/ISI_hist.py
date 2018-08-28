@@ -1,7 +1,7 @@
 from __future__ import division
 import os
 import numpy as np
-from grid_cell_stimuli.ISI_hist import get_ISI_hist, get_ISI_hists_into_outof_field, plot_ISI_hist, \
+from grid_cell_stimuli.ISI_hist import get_ISIs, get_ISI_hist, get_ISI_hists_into_outof_field, plot_ISI_hist, \
     plot_ISI_hist_into_outof_field
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 import matplotlib.pyplot as pl
@@ -53,7 +53,9 @@ if __name__ == '__main__':
         theta = np.concatenate((onset, theta, offset))
 
         # ISI histogram
-        ISI_hist, ISIs = get_ISI_hist(v, t, AP_threshold, bins)
+        AP_idxs = get_AP_onset_idxs(v, AP_threshold)
+        ISIs = get_ISIs(AP_idxs, t)
+        ISI_hist = get_ISI_hist(ISIs, bins)
 
         # in and out field ISIs
         position = t * speed
@@ -121,7 +123,7 @@ if __name__ == '__main__':
         pl.legend(fontsize=6, title='Period')
         pl.tight_layout()
         pl.savefig(os.path.join(save_dir_img, 'periods.png'))
-        #pl.show()
+        pl.show()
 
         # see how many spikes on each side
         n_periods = len(period_starts) if len(period_starts) % 2 == 0 else len(period_starts) - 1

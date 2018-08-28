@@ -19,7 +19,7 @@ if __name__ == '__main__':
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    cell_id = '2015_08_26b'
+    cell_id = '2013_11_28b'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)

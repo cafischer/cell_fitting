@@ -137,6 +137,82 @@ def get_i_inj_from_function(protocol, sweep_idxs, tstop, dt, return_discontinuit
     return i_inj
 
 
+def get_i_inj_standard_params(protocol, sweep_idxs=None):
+    if protocol == 'IV':
+        params = {
+            'step_amp': [np.round(-0.15 + sweep_idx * 0.05, 2) for sweep_idx in sweep_idxs],  # nA
+            'start_step': 250,  # ms
+            'end_step': 750,  # ms
+            'tstop': 1149.95,  # ms
+            'dt': 0.05  # ms
+        }
+    elif protocol == 'hypTester':
+        params = {
+            'step_amp': -0.005,  # nA
+            'start_step': 200,  # ms
+            'end_step': 600,  # ms
+            'tstop': 999.95,  # ms
+            'dt': 0.05  # ms
+        }
+    elif protocol == 'rampIV':
+        params = {
+            'ramp_amp': [np.round(0.1 + sweep_idx * 0.1, 2) for sweep_idx in sweep_idxs],  # nA
+            'ramp_start': 10.0,  # ms
+            'ramp_peak': 10.8,  # ms
+            'ramp_end': 12.0,  # ms
+            'amp_before': 0.0,  # nA
+            'amp_after': 0.0,  # nA
+            'tstop': 161.99,  # ms
+            'dt': 0.01  # ms
+        }
+    elif protocol == 'Zap20':
+        params = {
+            'amp': 0.1,
+            'freq0': 0,
+            'freq1': 20,
+            'onset_dur': 2000,
+            'offset_dur': 2000 - 0.025,
+            'zap_dur': 30000,
+            'tstop': 33999.975,
+            'dt': 0.025
+        }
+    elif 'hyperRampTester' in protocol:
+        p_idx = int(protocol[-2:-1])
+        params = {
+            'step_amp': -0.05 + p_idx * -0.05,
+            'step_start': 200,
+            'step_end': 600,
+            'ramp_len': 2,
+            'tstop': 1001.95,
+            'dt': 0.05
+        }
+    elif 'depoRampTester' in protocol:
+        p_idx = int(protocol[-2:-1])
+        params = {
+            'step_amp': 0.05 + p_idx * 0.05,
+            'step_start': 200,
+            'step_end': 600,
+            'ramp_len': 2,
+            'tstop': 1001.95,
+            'dt': 0.05
+        }
+    elif protocol == 'PP':
+        params = {
+            'ramp_amp': 4.0,  # nA
+            'ramp3_amp': 1.0,  # nA
+            'ramp3_time': get_ramp3_times()[0],  # ms
+            'step_amp': 0,  # nA
+            'len_step': 250,  # ms
+            'len_ramp': 2,  # ms
+            'start_ramp1': 20,  # ms
+            'tstop': 691.99,  # ms
+            'dt': 0.01  # ms
+        }
+    else:
+        raise ValueError('No function saved for this protocol!')
+    return params
+
+
 def get_sweep_index_for_amp(amp, protocol):
     if protocol == 'IV':
         sweep_idx = np.round((amp + 0.15) / 0.05, 10)  # rounding necessary for integer recognition and conversion

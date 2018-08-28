@@ -1,6 +1,7 @@
 from __future__ import division
 import os
 import numpy as np
+import matplotlib.pyplot as pl
 import json
 from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
@@ -79,3 +80,5 @@ if __name__ == '__main__':
 
         slope, intercept, best_shift = compute_phase_precession(phases, phases_pos)
         plot_phase_precession(phases, phases_pos, slope, intercept, best_shift, save_dir_img)
+
+        pl.show()

@@ -18,10 +18,10 @@ def block_channel(cell, channel_name, percent_block):
         cell.update_attr(['soma', '0.5', channel_name, 'gbar'], new_gbar)
 
 
-def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block, percent_block):
+def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block, percent_block, color='k'):
     channel_dict = get_channel_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()
-    ax.plot(t, v_before_block, 'k', label='without block')
+    ax.plot(t, v_before_block, color, label='without block')
     for i, channel_name in enumerate(channel_list):
         if channel_name == 'hcn_slow':
             channel_name = 'hcn'

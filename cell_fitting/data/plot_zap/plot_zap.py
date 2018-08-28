@@ -20,9 +20,9 @@ if __name__ == '__main__':
     protocol = 'Zap20'
     animal = 'rat'
     cell_ids = get_cells_for_protocol(data_dir, protocol)
-    cell_ids = ['2015_08_10g']  #['2015_08_26b']
+    #cell_ids = ['2015_08_10g']  #['2015_08_26b']
     cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
-    save_dir = os.path.join(save_dir, protocol)
+    save_dir = os.path.join(save_dir, protocol, animal)
 
     # frequencies
     freq0 = 0
@@ -39,9 +39,6 @@ if __name__ == '__main__':
     q_values = np.zeros(len(cell_ids))
 
     for ci, cell_id in enumerate(cell_ids):
-        # if not '2015' in cell_id:
-        #     continue
-
         v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                          return_sweep_idxs=True)
         v = shift_v_rest(v_mat[0], v_shift)
@@ -149,7 +146,7 @@ if __name__ == '__main__':
         pl.tight_layout()
         pl.subplots_adjust(left=0.18, right=0.86, bottom=0.14, top=0.88)
         pl.savefig(os.path.join(save_dir_img, 'v_impedance.png'))
-        pl.show()
+        #pl.show()
         pl.close()
 
     save_dir_summary = os.path.join(save_dir, 'summary')
