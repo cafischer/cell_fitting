@@ -107,6 +107,16 @@ def change_color_brightness(color, percent, direction='brighter'):
     return color * (1 - percent/100.) + comp_color * (percent/100.0)
 
 
+def get_gates_of_channel():
+    return {
+        'nat': ['m', 'h'],
+        'nap': ['m', 'h'],
+        'hcn': ['n'],
+        'kdr': ['n'],
+        'pas': []
+    }
+
+
 def get_channel_dict_for_plotting():
     return {
         'nat': '$Na_T$',
@@ -126,18 +136,6 @@ def get_gate_dict_for_plotting():
         'hcn_n': '$inact.$',
         'kdr_n': '$act.$',
         'pas': ''
-    }
-
-
-def characteristics_dict_for_plotting():
-    return {
-        'AP_amp': 'AP amp.',
-        'AP_width': 'AP width',
-        'DAP_amp': 'DAP amp.',
-        'DAP_width': 'DAP width',
-        'DAP_deflection': 'DAP deflection',
-        'DAP_time': 'DAP time',
-        'fAHP_amp': 'fAHP amp.',
     }
 
 
@@ -163,4 +161,16 @@ def get_channel_color_for_plotting():
         'hcn': 'y',
         'kdr': 'g',
         'pas': 'orange'
+    }
+
+
+def characteristics_dict_for_plotting():
+    return {
+        'AP_amp': 'AP amp.',
+        'AP_width': 'AP width',
+        'DAP_amp': 'DAP amp.',
+        'DAP_width': 'DAP width',
+        'DAP_deflection': 'DAP deflection',
+        'DAP_time': 'DAP time',
+        'fAHP_amp': 'fAHP amp.',
     }

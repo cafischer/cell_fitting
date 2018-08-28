@@ -26,7 +26,7 @@ def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block,
         if channel_name == 'hcn_slow':
             channel_name = 'hcn'
         ax.plot(t, v_after_block[i, :], color=channel_color[channel_name],
-                label=str(percent_block) + ' % block of ' + channel_dict[channel_name])
+                label=str(percent_block) + '% block of ' + channel_dict[channel_name])
     ax.set_xlabel('Time (ms)')
     ax.set_ylabel('Mem. pot. (mV)')
     ax.legend(loc='upper right')

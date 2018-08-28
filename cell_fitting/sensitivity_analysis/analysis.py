@@ -2,30 +2,22 @@ import os
 import json
 import numpy as np
 from cell_characteristics.analyze_APs import get_v_rest, get_spike_characteristics, get_AP_onset_idxs
+from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
 from cell_fitting.util import init_nan
 from cell_characteristics import to_idx
 
 
 # save dir
-folder = '../results/sensitivity_analysis/mean3_std6models'
+folder = '../results/sensitivity_analysis/mean_2std_6models'
 #dates = ['2017-10-26_14:13:11']
+save_dir_analysis = os.path.join(folder, 'analysis')
 dates = filter(lambda x: os.path.isdir(os.path.join(save_dir_analysis, x)), os.listdir(save_dir_analysis))
 save_dirs = [os.path.join(folder, date) for date in dates]
-save_dir_analysis = os.path.join(folder, 'analysis')
 return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_deflection', 'DAP_width', 'DAP_time']
 characteristics_valid_ranges = [(50, 150), (0.1, 2.0), (0, 40), (0, 40), (0, 20), (0, 70), (0, 20)]
 v_rest_valid_range = (-90, -60)
 
-AP_threshold = 0  # mV
-AP_interval = 2.5  # ms (also used as interval for fAHP)
-AP_width_before_onset = 2  # ms
-fAHP_interval = 4.0  # ms
-DAP_interval = 10  # ms
-order_fAHP_min = 1.0  # ms (how many points to consider for the minimum)
-order_DAP_max = 1.0  # ms (how many points to consider for the minimum)
-min_dist_to_DAP_max = 0.5  # ms
-k_splines = 3
-s_splines = 0  # there is no noise here
+spike_characteristics_dict = get_spike_characteristics_dict()
 
 # load params, t, i_inj
 with open(os.path.join(save_dirs[0], 'params.json'), 'r') as f:
@@ -57,7 +49,7 @@ for i_dir, save_dir in enumerate(save_dirs):
         # compute features
         dt = t[1] - t[0]
         v_rest = get_v_rest(v, i_inj)
-        onsets = get_AP_onset_idxs(v, AP_threshold)
+        onsets = get_AP_onset_idxs(v, spike_characteristics_dict['AP_threshold'])
         stim_on = 10
         time_to_AP = 3
 
@@ -70,11 +62,8 @@ for i_dir, save_dir in enumerate(save_dirs):
                 to_current = nonzero[0] - 1
             std_idx_times = (0, to_current * dt)
 
-            characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest, AP_threshold,
-                                                                 AP_interval, AP_width_before_onset, fAHP_interval,
-                                                                 std_idx_times, k_splines, s_splines, order_fAHP_min,
-                                                                 DAP_interval, order_DAP_max, min_dist_to_DAP_max,
-                                                                 check=False))
+            characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest, check=False
+                                                                 **get_spike_characteristics_dict()))
 
             for i_c, characteristic in enumerate(characteristics):
                 if not characteristics_valid_ranges[i_c][0] <= characteristic <= characteristics_valid_ranges[i_c][1]:

@@ -4,7 +4,7 @@ import numpy as np
 
 
 # save dir
-folder = '/home/cfischer/results/sensitivity_analysis/mean_std_6models'
+folder = '/home/cfischer/results/sensitivity_analysis/mean_2std_6models'
 save_dir_analysis = os.path.join(folder, 'analysis')
 dates = filter(lambda x: os.path.isdir(os.path.join(save_dir_analysis, x)), os.listdir(save_dir_analysis))
 print dates

@@ -1,12 +1,9 @@
 import copy
 import re
-
 import matplotlib.pyplot as pl
 import numpy as np
 from nrn_wrapper import iclamp, iclamp_adaptive, vclamp
-
 from cell_fitting.optimization.helpers import get_channel_list, get_ionlist
-
 __author__ = 'caro'
 
 

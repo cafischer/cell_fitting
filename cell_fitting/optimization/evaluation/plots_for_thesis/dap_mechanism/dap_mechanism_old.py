@@ -114,5 +114,5 @@ if __name__ == '__main__':
     # corrected for multiple testing with bonferroni
 
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'dap_mechanism.png'))
+    pl.savefig(os.path.join(save_dir_img, 'dap_mechanism_old.png'))
     pl.show()

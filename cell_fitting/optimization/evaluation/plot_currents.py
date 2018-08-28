@@ -12,10 +12,12 @@ pl.style.use('paper')
 
 def plot_currents_on_ax(ax1, channel_list, currents, t, v):
     new_channel_list = copy.copy(channel_list)
-    new_channel_list[channel_list.index('nap')] = 'nat'
-    new_channel_list[channel_list.index('nat')] = 'nap'
+    index_nap = channel_list.index('nap')
+    index_nat = channel_list.index('nat')
     new_channel_list[channel_list.index('hcn_slow')] = 'hcn'
-    new_channel_list.sort(reverse=True)
+    current_nat = currents[index_nat]
+    currents[index_nat] = currents[index_nap]
+    currents[index_nap] = current_nat
 
     channel_dict = get_channel_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()
