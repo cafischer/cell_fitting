@@ -2,12 +2,11 @@ import os
 import json
 import numpy as np
 
-
 # save dir
-folder = '/home/cfischer/results/sensitivity_analysis/mean_2std_6models'
+folder = '../results/sensitivity_analysis/mean_std_1order_of_mag_model2'
 save_dir_analysis = os.path.join(folder, 'analysis')
 dates = filter(lambda x: os.path.isdir(os.path.join(save_dir_analysis, x)), os.listdir(save_dir_analysis))
-print dates
+if 'analysis' in dates: dates.remove('analysis')
 save_dirs = [os.path.join(folder, date) for date in dates]
 save_dir_plots = os.path.join(save_dir_analysis, 'plots')
 
@@ -45,6 +44,6 @@ candidate_idxs = np.array(candidate_idxs_all)[candidates_not_nan]
 np.save(os.path.join(save_dir_analysis, 'characteristics_mat.npy'), characteristics_mat)
 np.save(os.path.join(save_dir_analysis, 'candidate_mat.npy'), candidate_mat)
 np.save(os.path.join(save_dir_analysis, 'candidate_idxs.npy'), candidate_idxs)
-np.savetxt(os.path.join(save_dir_analysis, 'n_candidates_not_nan.txt'), np.array([np.shape(candidate_mat)[0]]))
+np.savetxt(os.path.join(save_dir_analysis, 'n_candidates_not_nan.txt'), np.array([np.shape(candidate_mat)[0]], dtype=int))
 with open(os.path.join(save_dir_analysis, 'params.json'), 'w') as f:
     json.dump(params, f, indent=4)

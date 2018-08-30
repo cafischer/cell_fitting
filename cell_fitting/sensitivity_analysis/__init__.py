@@ -1,12 +1,12 @@
 import os
 import numpy as np
-import pandas as pd
 from nrn_wrapper import Cell
 from cell_fitting.optimization import create_pseudo_random_number_generator
 from cell_fitting.optimization.bio_inspired.generators import get_random_numbers_in_bounds
 from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
 from cell_fitting.optimization.simulate import iclamp_handling_onset, extract_simulation_params
 from cell_fitting.util import merge_dicts
+from cell_fitting.optimization.fitter.read_data import read_data
 
 
 def rename_nat_and_nap(variable_names):
@@ -33,7 +33,7 @@ def update_cell(cell, candidate, variable_keys):
             cell.update_attr(path, candidate[i])
 
 
-def simulate_random_candidates(save_dir, n_candidates, seed, model_dir, mechanism_dir, variables, data_dir,
+def simulate_random_candidates(save_dir, n_candidates, seed, model_dir, mechanism_dir, variables, data_read_dict,
                                init_simulation_params):
 
     # get lower upper bounds
@@ -46,8 +46,8 @@ def simulate_random_candidates(save_dir, n_candidates, seed, model_dir, mechanis
     cell = get_cell(model_dir, mechanism_dir, variable_keys)
 
     # get simulation params
-    data = pd.read_csv(data_dir)
-    simulation_params = merge_dicts(extract_simulation_params(data.v.values, data.t.values, data.i.values),
+    data = read_data(**data_read_dict)
+    simulation_params = merge_dicts(extract_simulation_params(data['v'], data['t'], data['i_inj']),
                                     init_simulation_params)
 
     for i_candidate in range(n_candidates):

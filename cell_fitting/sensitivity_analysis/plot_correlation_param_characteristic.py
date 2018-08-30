@@ -7,8 +7,7 @@ from cell_fitting.sensitivity_analysis import rename_nat_and_nap
 import types
 import matplotlib
 import matplotlib.pyplot as pl
-from cell_fitting.util import characteristics_dict_for_plotting, get_channel_dict_for_plotting, \
-    get_gate_dict_for_plotting, parameter_dict_for_plotting
+from cell_fitting.util import characteristics_dict_for_plotting, get_variable_names_for_plotting
 from statsmodels.sandbox.stats.multicomp import multipletests
 pl.style.use('paper')
 
@@ -73,7 +72,7 @@ def plot_corr(corr, sig_level, return_characteristics, variable_names, correlati
 
 
 def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names, correlation_measure):
-    X, Y = np.meshgrid(np.arange(np.size(corr_mat, 1)), np.arange(np.size(corr_mat, 0)))
+    X, Y = np.meshgrid(np.arange(np.size(corr_mat, 1)+1), np.arange(np.size(corr_mat, 0)+1))  # +1 because otherwise pcolor misses the last row
     pl.pcolor(X, Y, corr_mat, vmin=-1, vmax=1, cmap=pl.cm.get_cmap('gray'))
 
     # p-values
@@ -91,28 +90,7 @@ def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_na
     ax.set_ylabel('Characteristic')
     ax.set_xticks(np.arange(len(variable_names)) + 0.5)
 
-    channel_dict = get_channel_dict_for_plotting()
-    gate_dict = get_gate_dict_for_plotting()
-    parameter_dict = parameter_dict_for_plotting()
-
-    new_variable_names = np.zeros(len(variable_names), dtype=object)
-    for i, v in enumerate(variable_names):
-        v_split = v.split(' ')
-        if 'soma' in v:
-            new_variable_names[i] = 'Soma ' + parameter_dict[v_split[1]]
-            continue
-
-        if v_split[0] == 'hcn_slow':
-            v_split[0] = 'hcn'
-        if '_' in v_split[1]:
-            v_s2 = v_split[1].split('_')
-            if len(v_s2) == 3:
-                param = v_s2[1] + '_' + v_s2[2]
-            else:
-                param = v_s2[1]
-            new_variable_names[i] = channel_dict[v_split[0]] + ' ' + gate_dict[v_split[0]+'_'+v_s2[0]] + ' ' + parameter_dict[param]
-        else:
-            new_variable_names[i] = channel_dict[v_split[0]] + ' ' + parameter_dict[v_split[1]]
+    new_variable_names = get_variable_names_for_plotting(variable_names)
 
     ax.set_xticklabels(new_variable_names, rotation='40', ha='right')
     ax.set_yticks(np.arange(len(return_characteristics)) + 0.5)
@@ -175,7 +153,8 @@ def compute_and_plot_correlations(candidate_mat, characteristics_mat, correlatio
 
 if __name__ == '__main__':
     # save dir
-    save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'mean_2std_6models', 'analysis')
+    save_dir = os.path.join('../results/sensitivity_analysis/', 'mean_std_1order_of_mag_model2')
+    save_dir_analysis = os.path.join(save_dir, 'analysis')
     save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'parameter_characteristic', 'all')
 
     correlation_types = ['kendalltau', 'spearman', 'pearson']  # 'spearman  # 'kendalltau  # 'pearson'
@@ -183,7 +162,7 @@ if __name__ == '__main__':
     sig2 = 0.001
 
     # load
-    with open(os.path.join(save_dir_analysis, 'params.json'), 'r') as f:
+    with open(os.path.join(save_dir, 'params.json'), 'r') as f:
         params = json.load(f)
     variable_names = [p[2][0][-2] + ' ' + p[2][0][-1] for p in params['variables']]
     variable_names = rename_nat_and_nap(variable_names)

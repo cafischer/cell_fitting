@@ -96,31 +96,11 @@ if __name__ == '__main__':
     cell_id = '2015-08-26e'
     file_name = cell_id + '_Sinus_variables.mat'
     repetition = 0
-
-    # save_dir = os.path.join(save_dir, file_name)
-    #
-    # v, t, i_inj, t_i_inj, amp1, amp2, freq1, freq2 = get_sinus_data_from_mat(save_dir)
-    #
-    # print amp2
-    # for i in range(len(amp1)):
-    #
-    #     pl.figure()
-    #     pl.title('amp1: ' + str(amp1[i]) + ' ' + 'amp2: ' + str(amp2[i]) + ' ' +
-    #              'freq1: ' + str(freq1[i]) + ' ' + 'freq2: ' + str(freq2[i]) + ' ')
-    #     pl.plot(t[0, i][:, repetition], v[0, i][:, repetition], 'k', linewidth=1.0)
-    #     pl.show()
-    #
-    #     # pl.figure()
-    #     # # pl.title('amp1: '+str(amp1[i])+' '+'amp2: '+str(amp2[i])+' '+
-    #     # #          'freq1: '+str(freq1[i])+' '+'freq2: '+str(freq2[i])+' ')
-    #     # pl.plot(t_i_inj[0, i][0, :], i_inj[0, i][0, :], 'k')
-    #     # pl.xlabel('Time (s)')
-    #     # pl.ylabel('Current (nA)')
-    #     # pl.tight_layout()
-    #     # pl.show()
+    freq1 = 0.25
+    freq2 = 5
 
     # example find_traces
-    v_mat, t_mat, amp1s, amp2s, _, _ = find_sine_trace_of_cell(cell_id, None, None, 0.25, 5, 0, save_dir)
+    v_mat, t_mat, amp1s, amp2s, _, _ = find_sine_trace_of_cell(cell_id, None, None, freq1, freq2, repetition, save_dir)
 
     print amp1s[0], amp2s[0]
     pl.figure()

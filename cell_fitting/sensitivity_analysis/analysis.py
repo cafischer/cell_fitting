@@ -8,10 +8,10 @@ from cell_characteristics import to_idx
 
 
 # save dir
-folder = '../results/sensitivity_analysis/mean_2std_6models'
-#dates = ['2017-10-26_14:13:11']
+folder = '../results/sensitivity_analysis/mean_std_1order_of_mag_model2'
 save_dir_analysis = os.path.join(folder, 'analysis')
-dates = filter(lambda x: os.path.isdir(os.path.join(save_dir_analysis, x)), os.listdir(save_dir_analysis))
+dates = filter(lambda x: os.path.isdir(os.path.join(folder, x)), os.listdir(folder))
+if 'analysis' in dates: dates.remove('analysis')  # if run more than once the analysis folder is detected wrongly as data folder
 save_dirs = [os.path.join(folder, date) for date in dates]
 return_characteristics = ['AP_amp', 'AP_width', 'fAHP_amp', 'DAP_amp', 'DAP_deflection', 'DAP_width', 'DAP_time']
 characteristics_valid_ranges = [(50, 150), (0.1, 2.0), (0, 40), (0, 40), (0, 20), (0, 70), (0, 20)]
@@ -20,7 +20,7 @@ v_rest_valid_range = (-90, -60)
 spike_characteristics_dict = get_spike_characteristics_dict()
 
 # load params, t, i_inj
-with open(os.path.join(save_dirs[0], 'params.json'), 'r') as f:
+with open(os.path.join(folder, 'params.json'), 'r') as f:
     params = json.load(f)
 with open(os.path.join(save_dirs[0], 't.npy'), 'r') as f:
     t = np.load(f)
@@ -62,7 +62,7 @@ for i_dir, save_dir in enumerate(save_dirs):
                 to_current = nonzero[0] - 1
             std_idx_times = (0, to_current * dt)
 
-            characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest, check=False
+            characteristics = np.array(get_spike_characteristics(v, t, return_characteristics, v_rest, check=False,
                                                                  **get_spike_characteristics_dict()))
 
             for i_c, characteristic in enumerate(characteristics):

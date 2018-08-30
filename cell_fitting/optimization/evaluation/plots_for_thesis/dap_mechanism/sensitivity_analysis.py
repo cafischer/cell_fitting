@@ -5,12 +5,13 @@ import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
 from nrn_wrapper import Cell
 from cell_fitting.sensitivity_analysis.plot_correlation_param_characteristic import plot_corr_on_ax
+from cell_fitting.util import characteristics_dict_for_plotting, get_variable_names_for_plotting
 pl.style.use('paper_subplots')
 
 
 # TODO: colors
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Phd/DAP-Project/thesis/figures'
+    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
     save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
@@ -34,33 +35,39 @@ if __name__ == '__main__':
     mean_mat = np.load(os.path.join(s_, 'sampled', correlation_measure, 'mean_mat.npy'))
     std_mat = np.load(os.path.join(s_, 'sampled', correlation_measure, 'std_mat.npy'))
 
-    characteristic_idxs = [np.where(characteristic==return_characteristics)[0] for characteristic in characteristics]
+    characteristic_idxs = np.array([np.where(characteristic==return_characteristics)[0][0]
+                                    for characteristic in characteristics], dtype=int)
 
     # plot
     fig = pl.figure(figsize=(12, 8))
-    outer = gridspec.GridSpec(5, 1)
+    outer = gridspec.GridSpec(5, 1, hspace=0.15)
 
     # resampled mean and std of correlations
+    characteristics_dict = characteristics_dict_for_plotting()
+    new_parameter_names = get_variable_names_for_plotting(parameters)
     axes = [outer[0, 0], outer[1, 0], outer[2, 0], outer[3, 0]]
     for i, (characteristic_idx, characteristic) in enumerate(zip(characteristic_idxs, characteristics)):
         ax = pl.Subplot(fig, axes[i])
         fig.add_subplot(ax)
 
-        ax.errorbar(range(len(parameters)), mean_mat[characteristic_idx, :][0], yerr=std_mat[characteristic_idx, :][0],
+        ax.errorbar(range(len(parameters)), mean_mat[characteristic_idx, :], yerr=std_mat[characteristic_idx, :],
                     fmt='o', color='k', capsize=3)
         ax.axhline(0.5, color='0.5', linestyle='--')
         ax.axhline(0.0, color='0.5', linestyle='--')
         ax.axhline(-0.5, color='0.5', linestyle='--')
-        ax.set_xticks(range(len(parameters)))
-        ax.set_xticklabels(parameters, rotation='40', ha='right')
-        ax.set_ylabel(characteristic)  # TODO
+        ax.set_xticks([])
+        ax.set_ylabel(characteristics_dict[characteristic])  # TODO
         ax.set_ylim(-1, 1)
-        pl.xlabel('Parameter')
+    ax.set_xticks(range(len(parameters)))
+    ax.set_xticklabels(new_parameter_names, rotation='40', ha='right')
+    ax.set_xlabel('Parameter')
 
     # sensitivity analysis
     ax = pl.Subplot(fig, outer[4, 0])
     fig.add_subplot(ax)
 
+    corr_mat = corr_mat[characteristic_idxs, :]
+    p_val_mat = p_val_mat[characteristic_idxs, :]
     plot_corr_on_ax(ax, corr_mat, p_val_mat, characteristics, parameters, correlation_measure)
     # corrected for multiple testing with bonferroni
 

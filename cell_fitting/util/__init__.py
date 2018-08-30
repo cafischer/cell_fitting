@@ -174,3 +174,29 @@ def characteristics_dict_for_plotting():
         'DAP_time': 'DAP time',
         'fAHP_amp': 'fAHP amp.',
     }
+
+
+def get_variable_names_for_plotting(variable_names):
+    channel_dict = get_channel_dict_for_plotting()
+    gate_dict = get_gate_dict_for_plotting()
+    parameter_dict = parameter_dict_for_plotting()
+    new_variable_names = np.zeros(len(variable_names), dtype=object)
+    for i, v in enumerate(variable_names):
+        v_split = v.split(' ')
+        if 'soma' in v:
+            new_variable_names[i] = 'Soma ' + parameter_dict[v_split[1]]
+            continue
+
+        if v_split[0] == 'hcn_slow':
+            v_split[0] = 'hcn'
+        if '_' in v_split[1]:
+            v_s2 = v_split[1].split('_')
+            if len(v_s2) == 3:
+                param = v_s2[1] + '_' + v_s2[2]
+            else:
+                param = v_s2[1]
+            new_variable_names[i] = channel_dict[v_split[0]] + ' ' + gate_dict[v_split[0] + '_' + v_s2[0]] + ' ' + \
+                                    parameter_dict[param]
+        else:
+            new_variable_names[i] = channel_dict[v_split[0]] + ' ' + parameter_dict[v_split[1]]
+    return new_variable_names
