@@ -10,7 +10,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     #save_dir = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/2017-10-10_14:00:01/3519'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
@@ -58,3 +58,4 @@ if __name__ == '__main__':
     pl.savefig(os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp, 'rampIV_with_data.png'))
 
     plot_rampIV(t, v, os.path.join(save_dir_img, '%.2f(nA)' % ramp_amp))
+    pl.show()

@@ -16,6 +16,8 @@ if __name__ == '__main__':
     # save model parameters
     param_key_dict = {
         '$c_m$': ['soma', 'cm'],
+        '$length$': ['soma', 'L'],
+        '$diameter$': ['soma', 'diam'],
         '$E_{Leak}$': ['soma', '0.5', 'pas', 'e'],
         '$E_{HCN}$': ['soma', '0.5', 'hcn_slow', 'ehcn'],
         '$E_{Na}$': ['soma', '0.5', 'ena'],
@@ -117,9 +119,11 @@ if __name__ == '__main__':
     table = reduce(lambda a, b: a + '\n' + b, table_lines)
     print table
 
-    other_params = ['$c_m$', '$E_{Leak}$', '$E_{HCN}$', '$E_{Na}$', '$E_{K}$']
+    other_params = ['$c_m$', '$length$', '$diameter$', '$E_{Leak}$', '$E_{HCN}$', '$E_{Na}$', '$E_{K}$']
     other_param_unit = {
-        '$c_m$': '$uF/cm^2$',
+        '$c_m$': '$\mu F/cm^2$',
+        '$length$': '$\mu m$',
+        '$diameter$': '$\mu m$',
         '$E_{Leak}$': '$mV$',
         '$E_{HCN}$': '$mV$',
         '$E_{Na}$': '$mV$',

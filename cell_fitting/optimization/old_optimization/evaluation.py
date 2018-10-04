@@ -9,11 +9,11 @@ from pandas.tools.plotting import table
 import os
 from itertools import combinations
 import numpy.ma as ma
-from optimization.simulate import extract_simulation_params
-from optimization.errfuns import rms
-from optimization.helpers import get_lowerbound_upperbound_keys
+from cell_fitting.optimization.simulate import extract_simulation_params
+from cell_fitting.optimization.errfuns import rms
+from cell_fitting.optimization.helpers import get_lowerbound_upperbound_keys
 from nrn_wrapper import *
-
+pl.style.use('paper')
 __author__ = 'caro'
 
 
@@ -127,9 +127,6 @@ class Evaluator:
         statistics.sortlevel(axis=1, inplace=True, sort_remaining=True)
         statistics[statistics == np.inf] = np.nan
 
-        # index for sorting dataframe methods
-        idx = np.argsort(np.argsort(self.methods))  # second argsort do get idx for undoing sorting
-
         # change color cycle
         cmap = pl.get_cmap('jet')
         colors = cmap(np.linspace(0.1, 0.9, len(self.methods)))
@@ -141,8 +138,8 @@ class Evaluator:
             if statistic == 'min':
                 statistic_min = statistics.loc[(slice(None)), (slice(None), error, statistic)]
                 ax.plot(statistics.index, statistic_min[method], label=method)
-                table(ax, statistic_min[idx].transpose().apply(lambda x: x.map(lambda y: "%.6f" % y)),
-                  rowLabels=self.methods, loc='bottom', bbox=[0, -0.7, 1, 0.55])
+                table(ax, statistic_min.transpose().apply(lambda x: x.map(lambda y: "%.6f" % y)),
+                  rowLabels=statistic_mean.columns.levels[0].values, loc='bottom', bbox=[0, -0.7, 1, 0.55])
             elif statistic == 'mean':
                 statistic_mean = statistics.loc[(slice(None)), (slice(None), error, statistic)]
                 statistic_std = np.sqrt(statistics.loc[(slice(None)), (slice(None), error, 'var')])
@@ -152,8 +149,8 @@ class Evaluator:
                                 (statistic_mean[method].values - statistic_std[method].values).flatten(),
                                 (statistic_mean[method].values + statistic_std[method].values).flatten(),
                                 facecolor=base_line.get_color(), alpha=0.05)
-                table(ax, statistic_mean[idx].transpose().apply(lambda x: x.map(lambda y: "%.6f" % y)),
-                  rowLabels=self.methods, loc='bottom', bbox=[0, -0.7, 1, 0.55])
+                table(ax, statistic_mean.transpose().apply(lambda x: x.map(lambda y: "%.6f" % y)),
+                  rowLabels=statistic_mean.columns.levels[0].values, loc='bottom', bbox=[0, -0.7, 1, 0.55])
         pl.tight_layout(rect=[0.15, 0.36, 1.0, 1.0])
         ax.set_xticks(statistics.index)
         ax.set_xticklabels(statistics.index)
@@ -165,6 +162,47 @@ class Evaluator:
         #pl.ylabel('$mean_{trials}[rms(param_{to fit}, param_{best})]$', fontsize=18)
         pl.ylabel('$mean_{trials}[rms(V_{to fit}, V_{best})]$', fontsize=18)
         pl.savefig(self.save_dir_statistics+'/plot_'+error+'_'+statistic+'.png')
+        pl.show()
+
+    def plot_statistic_without_table(self, errors=None, statistic='mean'):
+        errors = ['rms(param)', 'rms(v)'] if errors is None else errors
+        statistics = pd.read_csv(self.save_dir_statistics+'cell_characteristics.csv', header=[0, 1, 2], index_col=[0])
+        statistics.sortlevel(axis=0, inplace=True, sort_remaining=True)
+        statistics.sortlevel(axis=1, inplace=True, sort_remaining=True)
+        statistics[statistics == np.inf] = np.nan
+
+        # change color cycle
+        cmap = pl.get_cmap('jet')
+        colors = cmap(np.linspace(0.1, 0.9, len(self.methods)))
+
+        fig, axes = pl.subplots(1, 2, figsize=(11, 5))
+        for error_idx, error in enumerate(errors):
+            ax = axes[error_idx]
+            ax.set_prop_cycle(cycler('color', colors))
+            for method in self.methods:
+                if statistic == 'min':
+                    statistic_min = statistics.loc[(slice(None)), (slice(None), error, statistic)]
+                    ax.plot(statistics.index, statistic_min[method], label=method)
+                elif statistic == 'mean':
+                    statistic_mean = statistics.loc[(slice(None)), (slice(None), error, statistic)]
+                    statistic_std = np.sqrt(statistics.loc[(slice(None)), (slice(None), error, 'var')])
+                    base_line, = ax.plot(statistics.index, statistic_mean[method], label=method, linewidth=1.5)
+
+                    ax.fill_between(statistics.index.values,
+                                    (statistic_mean[method].values - statistic_std[method].values).flatten(),
+                                    (statistic_mean[method].values + statistic_std[method].values).flatten(),
+                                    facecolor=base_line.get_color(), alpha=0.05)
+                ax.set_xticks(statistics.index)
+                ax.set_xticklabels(statistics.index)
+                ax.set_ylim([0, None])
+                ax.set_xlabel('# Parameter')
+                if error == 'rms(v)':
+                    ax.set_ylabel('RMSE mem. pot. (mV)')
+                elif error == 'rms(param)':
+                    ax.set_ylabel('RMSE parameters (norm.)')
+        axes[0].legend(loc='upper left')
+        pl.tight_layout()
+        pl.savefig(os.path.join(self.save_dir_statistics, 'plot_rmse_'+statistic+'.png'))
         pl.show()
 
     def get_candidate_and_fitness(self, save_dir, trial):
@@ -378,10 +416,11 @@ if __name__ == '__main__':
     #evaluator.plot_statistic('rms(v)', 'min')
     #evaluator.hist_mean_error_variable_comb(save_dirs[0], 1)
     #evaluator.plot_2d_mean_error_variable_comb()
+    evaluator.plot_statistic_without_table()
 
     #save_dir_fitness_by_generation = save_dir_statistics + 'fitness_by_generation/'
     #p = 10
     #trial = 4
     #evaluator.plot_fitness_by_generation(save_dirs, p, trial, save_dir_fitness_by_generation)
 
-    evaluator.plot_candidate(10, 4, 'L-BFGS-B')
+    #evaluator.plot_candidate(10, 4, 'L-BFGS-B')

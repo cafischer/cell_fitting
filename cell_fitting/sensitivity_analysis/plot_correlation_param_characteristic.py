@@ -156,7 +156,7 @@ if __name__ == '__main__':
     save_dir = os.path.join('../results/sensitivity_analysis/', 'mean_std_1order_of_mag_model2')
     save_dir_analysis = os.path.join(save_dir, 'analysis')
     save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'parameter_characteristic', 'all')
-
+    characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_width', 'DAP_time']
     correlation_types = ['kendalltau', 'spearman', 'pearson']  # 'spearman  # 'kendalltau  # 'pearson'
     sig1 = 0.01
     sig2 = 0.001
@@ -172,6 +172,8 @@ if __name__ == '__main__':
     n_variables = np.shape(candidate_mat)[1]
     if not os.path.exists(save_dir_plots):
         os.makedirs(save_dir_plots)
+    characteristic_idxs = np.array([np.where(characteristic == return_characteristics)[0][0]
+                                    for characteristic in characteristics], dtype=int)
 
-    compute_and_plot_correlations(candidate_mat, characteristics_mat[:, :-2], correlation_types, sig1, sig2,
-                                  variable_names, return_characteristics[:-2], plot_corr, save_dir_plots)
+    compute_and_plot_correlations(candidate_mat, characteristics_mat[:, characteristic_idxs], correlation_types, sig1, sig2,
+                                  variable_names, return_characteristics[characteristic_idxs], plot_corr, save_dir_plots)

@@ -48,7 +48,7 @@ if __name__ == '__main__':
     PP_params_dir = '/home/cf/Phd/DAP-Project/cell_data/PP_params2.csv'
     protocol = 'PP'
     v_rest_shift = -16
-    cell_id = '2015_08_06d'
+    cell_id = '2015_08_11f'
     run_idx = 0
     step_idx_dict = {-0.1: 0, 0: 1, 0.1: 2}
     step_amps = [0, -0.1, 0.1]

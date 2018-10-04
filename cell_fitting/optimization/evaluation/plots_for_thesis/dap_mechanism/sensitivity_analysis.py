@@ -19,7 +19,7 @@ if __name__ == '__main__':
     model = '2'
     exp_cell = '2015_08_26b'
     v_init = -75
-    characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_width', 'DAP_time'][:2]
+    characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_width', 'DAP_time']
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # load
     correlation_measure = 'kendalltau'  # non-parametric, robust
     s_ = os.path.join('/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/sensitivity_analysis',
-                      'mean_2std_6models', 'analysis', 'plots', 'correlation', 'parameter_characteristic')
+                      'mean_std_1order_of_mag_model2', 'analysis', 'plots', 'correlation', 'parameter_characteristic')
     corr_mat = np.load(os.path.join(s_, 'all', 'correlation_' + correlation_measure + '.npy'))
     p_val_mat = np.load(os.path.join(s_, 'all', 'p_val_' + correlation_measure + '.npy'))
     return_characteristics = np.load(os.path.join(s_, 'all', 'return_characteristics_' + correlation_measure + '.npy'))
@@ -35,17 +35,18 @@ if __name__ == '__main__':
     mean_mat = np.load(os.path.join(s_, 'sampled', correlation_measure, 'mean_mat.npy'))
     std_mat = np.load(os.path.join(s_, 'sampled', correlation_measure, 'std_mat.npy'))
 
-    characteristic_idxs = np.array([np.where(characteristic==return_characteristics)[0][0]
+    characteristic_idxs = np.array([np.where(characteristic == return_characteristics)[0][0]
                                     for characteristic in characteristics], dtype=int)
 
     # plot
     fig = pl.figure(figsize=(12, 8))
-    outer = gridspec.GridSpec(5, 1, hspace=0.15)
+    outer = gridspec.GridSpec(2, 1, hspace=-0.07)
 
     # resampled mean and std of correlations
     characteristics_dict = characteristics_dict_for_plotting()
     new_parameter_names = get_variable_names_for_plotting(parameters)
-    axes = [outer[0, 0], outer[1, 0], outer[2, 0], outer[3, 0]]
+    inner = gridspec.GridSpecFromSubplotSpec(4, 1, subplot_spec=outer[0, 0], hspace=0.25)
+    axes = [inner[0, 0], inner[1, 0], inner[2, 0], inner[3, 0]]
     for i, (characteristic_idx, characteristic) in enumerate(zip(characteristic_idxs, characteristics)):
         ax = pl.Subplot(fig, axes[i])
         fig.add_subplot(ax)
@@ -55,15 +56,17 @@ if __name__ == '__main__':
         ax.axhline(0.5, color='0.5', linestyle='--')
         ax.axhline(0.0, color='0.5', linestyle='--')
         ax.axhline(-0.5, color='0.5', linestyle='--')
-        ax.set_xticks([])
-        ax.set_ylabel(characteristics_dict[characteristic])  # TODO
+        ax.set_xticks(range(len(parameters)))
+        ax.set_xticklabels([])
+        ax.set_ylabel(characteristics_dict[characteristic])
         ax.set_ylim(-1, 1)
     ax.set_xticks(range(len(parameters)))
     ax.set_xticklabels(new_parameter_names, rotation='40', ha='right')
     ax.set_xlabel('Parameter')
+    ax.set_xlim(-0.5, len(parameters)+0.5)
 
     # sensitivity analysis
-    ax = pl.Subplot(fig, outer[4, 0])
+    ax = pl.Subplot(fig, outer[1, 0])
     fig.add_subplot(ax)
 
     corr_mat = corr_mat[characteristic_idxs, :]
@@ -72,5 +75,6 @@ if __name__ == '__main__':
     # corrected for multiple testing with bonferroni
 
     pl.tight_layout()
+    pl.subplots_adjust(top=0.97, right=0.94, left=0.12, bottom=-0.05)
     pl.savefig(os.path.join(save_dir_img, 'sensitivity_analysis.png'))
     pl.show()

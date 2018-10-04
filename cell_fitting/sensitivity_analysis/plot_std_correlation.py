@@ -10,7 +10,7 @@ import matplotlib.pyplot as pl
 pl.style.use('paper')
 
 # save dir
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'mean_2std_6models', 'analysis')
+save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'mean_std_1order_of_mag_model2', 'analysis')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'parameter_characteristic', 'sampled')
 
 n_chunks = 100

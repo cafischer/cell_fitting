@@ -29,7 +29,7 @@ def get_spike_characteristics_dict(for_data=False):
 
 def get_characteristic_name_dict():
     return {'DAP_amp': 'DAP Amplitude', 'DAP_deflection': 'DAP Deflection', 'DAP_width': 'DAP Width',
-            'DAP_time': 'DAP Time', 'fAHP_amp': 'fAHP Amplitude'}
+            'DAP_time': '$Time_{AP-DAP}$', 'fAHP_amp': 'fAHP Amplitude'}
 
 
 def get_characteristic_unit_dict():

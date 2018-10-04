@@ -7,12 +7,11 @@ from cell_fitting.optimization.evaluation.plot_double_ramp import plot_current_t
 from cell_fitting.data.plot_doubleramp import get_inj_doubleramp_params, get_i_inj_double_ramp_full
 from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp_summary import plot_current_threshold_all_cells_on_ax
 from nrn_wrapper import Cell
+from matplotlib.lines import Line2D
 pl.style.use('paper_subplots')
 
 
 # TODO: colors
-# TODO: check simulation_params (e.g. dt)
-# TODO: check all exp. data are v_shifted
 # TODO: check same protocol used for double ramp
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
@@ -24,7 +23,8 @@ if __name__ == '__main__':
     exp_cell = '2015_08_26b'
     exp_cell_dr = '2015_08_06d'
     v_init = -75
-    color_model = '0.5'
+    color_exp = '#0099cc'
+    color_model = 'k'
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
     ramp3_amp_idx_exp = 0
     for ramp3_times_idx in range(len(ramp3_times)):
-        ax0.plot(t_exp, v_mat_exp[ramp3_amp_idx_exp, ramp3_times_idx, :, 1], 'k',
+        ax0.plot(t_exp, v_mat_exp[ramp3_amp_idx_exp, ramp3_times_idx, :, 1], color_exp,
                  label='Exp. cell' if ramp3_times_idx == 0 else '')
     ax0.set_xlim(470, 530)
     ax0.set_xticks([])
@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
     for ramp3_times_idx in range(len(ramp3_times)):
         ax1.plot(t_exp, i_inj_mat[np.where(np.isclose(ramp3_amp_exp + ramp3_amp_idx_exp * 0.05, double_ramp_params['ramp3_amps']))[0][0],
-                        ramp3_times_idx, :, 1], 'k')
+                        ramp3_times_idx, :, 1], color_exp)
         ax1.plot(t_exp, i_inj_mat[np.where(np.isclose(ramp3_amp_model + ramp3_amp_idx_model * 0.05, double_ramp_params['ramp3_amps']))[0][0],
                         ramp3_times_idx, :, 1], color_model)
     ax1.set_xlim(470, 530)
@@ -89,7 +89,8 @@ if __name__ == '__main__':
     ax0 = pl.Subplot(fig, outer[0, 1])
     fig.add_subplot(ax0)
 
-    with open(os.path.join(save_dir_model, model, 'img', 'PP', '125', 'current_threshold_dict.json'), 'r') as f:
+    with open(os.path.join(save_dir_model, model, 'img', 'PP', str(int(double_ramp_params['len_step'])), 
+                           'current_threshold_dict.json'), 'r') as f:
         current_threshold_dict_model = json.load(f)
 
     with open(os.path.join(save_dir_data_plots, 'PP', exp_cell_dr, 'current_threshold_dict.json'), 'r') as f:
@@ -97,11 +98,19 @@ if __name__ == '__main__':
 
     plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_model, 0.0: color_model, 0.1: color_model},
                                  label=False, plot_range=False, **current_threshold_dict_model)
-    plot_current_threshold_on_ax(ax0, colors_dict={-0.1: 'k', 0.0: 'k', 0.1: 'k'}, label=True, legend_loc='upper right',
+    plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_exp, 0.0: color_exp, 0.1: color_exp}, label=False,
                                  **current_threshold_dict_data)
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
 
+    # legend
+    custom_lines = [Line2D([0], [0], marker='v', color='k', facecolor='None', lw=1.0),
+                    Line2D([0], [0], color='o', facecolor='None', lw=1.0),
+                    Line2D([0], [0], color='^', facecolor='None', lw=1.0)]
+    ax0.legend(custom_lines, ['Amp.: 0.1', 'Amp.: 0', 'Amp.: -0.1'])
+
     # comparison current threshold DAP - rest all cells
+    with open(os.path.join(save_dir_model, model, 'img', 'PP', '125', 'current_threshold_dict.json'), 'r') as f:
+        current_threshold_dict_model_short_step = json.load(f)
     ax = pl.Subplot(fig, outer[0, 2])
     fig.add_subplot(ax)
     cell_ids = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
@@ -112,13 +121,15 @@ if __name__ == '__main__':
                                                                        'current_threshold_DAP.txt')))
         current_thresholds_rest[cell_idx] = float(np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
                                                                        'current_threshold_rest.txt')))
-    plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, plot_sig=False)
+    plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, color=color_exp,
+                                           plot_sig=False)
 
-    current_threshold_DAP_model = np.nanmin(current_threshold_dict_model['current_thresholds'][1])
-    current_threshold_rest_model = current_threshold_dict_model['current_threshold_rampIV']
+    current_threshold_DAP_model = np.nanmin(current_threshold_dict_model_short_step['current_thresholds'][1])
+    current_threshold_rest_model = current_threshold_dict_model_short_step['current_threshold_rampIV']
     percentage_difference = 100 - (current_threshold_DAP_model / current_threshold_rest_model * 100)
     ax.plot(-0.4, percentage_difference, 'o', color=color_model)
     ax.get_yaxis().set_label_coords(-0.55, 0.5)
+    ax.set_ylim(0, 100)
 
 
     pl.tight_layout()

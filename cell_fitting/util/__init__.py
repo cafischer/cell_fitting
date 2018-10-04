@@ -160,7 +160,7 @@ def get_channel_color_for_plotting():
         'nap': 'b',
         'hcn': 'y',
         'kdr': 'g',
-        'pas': 'orange'
+        'pas': '0.5'
     }
 
 
@@ -171,7 +171,7 @@ def characteristics_dict_for_plotting():
         'DAP_amp': 'DAP amp.',
         'DAP_width': 'DAP width',
         'DAP_deflection': 'DAP deflection',
-        'DAP_time': 'DAP time',
+        'DAP_time': '$Time_{AP-DAP}$',
         'fAHP_amp': 'fAHP amp.',
     }
 

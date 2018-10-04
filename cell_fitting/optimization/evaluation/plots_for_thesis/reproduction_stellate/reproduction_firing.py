@@ -26,7 +26,7 @@ if __name__ == '__main__':
     model = '2'
     exp_cell = '2015_08_26b'
     v_init = -75
-    color_model = '0.5'
+    color_model = '#ffcc00'
     step_amp = 0.4
 
     # create model cell
@@ -104,5 +104,6 @@ if __name__ == '__main__':
     ax.view_init(azim=-50, elev=38)
 
     pl.tight_layout()
+    pl.subplots_adjust(right=0.95)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_firing.png'))
     pl.show()

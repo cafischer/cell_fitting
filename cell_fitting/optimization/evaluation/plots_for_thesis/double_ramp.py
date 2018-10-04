@@ -127,8 +127,9 @@ if __name__ == '__main__':
         current_thresholds_rest[cell_idx] = float(np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
                                                                        'current_threshold_rest.txt')))
     plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest)
-
-    ax.text(-2.5, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
+    ax.set_ylim(0, 100)
+    ax.set_aspect(0.05)
+    ax.text(-1.7, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'double_ramp.png'))

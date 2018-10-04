@@ -25,7 +25,8 @@ if __name__ == '__main__':
     model = '2'
     exp_cell = '2015_08_26b'
     v_init = -75
-    color_model = '0.5'
+    color_exp = '#0099cc'
+    color_model = 'k'
     step_amp = -0.1
 
     # create model cell
@@ -44,7 +45,7 @@ if __name__ == '__main__':
     v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
     v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], v_init=v_init)
 
-    ax0.plot(t_data, v_data, 'k', label='Exp. cell')
+    ax0.plot(t_data, v_data, color_exp, label='Exp. cell')
     ax0.plot(t_model, v_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
@@ -68,7 +69,7 @@ if __name__ == '__main__':
         sag_dict_data = json.load(f)
 
     plot_sag_vs_steady_state_on_ax(ax, color_lines=color_model, label=False, **sag_dict_model)
-    plot_sag_vs_steady_state_on_ax(ax, color_lines='k', label=True, **sag_dict_data)
+    plot_sag_vs_steady_state_on_ax(ax, color_lines=color_exp, label=True, **sag_dict_data)
 
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
 
@@ -92,7 +93,7 @@ if __name__ == '__main__':
                                                       'sag_amps.npy'))
     v_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag_hist', 'rat', str(step_amp),
                                               'v_deflections.npy'))
-    ax.plot(sag_amps_data, v_deflections_data, 'o', color='k', alpha=0.5)
+    ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5)
 
     start_step_idx = np.nonzero(i_inj_model)[0][0]
     end_step_idx = np.nonzero(i_inj_model)[0][-1] + 1
