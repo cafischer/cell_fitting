@@ -1,0 +1,13 @@
+#!/bin/sh
+if test "x${NRNHOME}" = "x" ; then
+	NRNHOME="/home/cf/programs/nrn"
+fi
+if test "x${NRNBIN}" = "x" ; then
+	NRNBIN="/home/cf/programs/nrn/x86_64/bin/"
+fi
+if test "" = "yes" ; then
+	NRNIV="${NRNBIN}nrniv.app/Contents/MacOS/nrniv"
+else
+	NRNIV="${NRNBIN}nrniv"
+fi
+"${NRNIV}" -dll "/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/hodgkinhuxley/x86_64/.libs/libnrnmech.so" "$@"
