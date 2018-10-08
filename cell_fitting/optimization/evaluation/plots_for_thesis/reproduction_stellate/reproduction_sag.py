@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import json
+import matplotlib
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
 from cell_fitting.read_heka import load_data
@@ -9,10 +10,11 @@ from nrn_wrapper import Cell
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import plot_sag_vs_steady_state_on_ax
 from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel, plot_channel_block_on_ax
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
+from matplotlib.lines import Line2D
+from cell_fitting.util import change_color_brightness, get_channel_color_for_plotting
 pl.style.use('paper_subplots')
 
 
-# TODO: colors
 # TODO: check simulation_params (e.g. dt)
 # TODO: check all exp. data are v_shifted
 # TODO: check sag_amps and v_deflection data
@@ -45,7 +47,7 @@ if __name__ == '__main__':
     v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
     v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], v_init=v_init)
 
-    ax0.plot(t_data, v_data, color_exp, label='Exp. cell')
+    ax0.plot(t_data, v_data, color_exp, label='Data')
     ax0.plot(t_model, v_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
@@ -57,6 +59,8 @@ if __name__ == '__main__':
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
     ax0.legend()
+    # letter
+    ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
     # sag vs. steady-state
     ax = pl.Subplot(fig, outer[0, 1])
@@ -69,9 +73,15 @@ if __name__ == '__main__':
         sag_dict_data = json.load(f)
 
     plot_sag_vs_steady_state_on_ax(ax, color_lines=color_model, label=False, **sag_dict_model)
-    plot_sag_vs_steady_state_on_ax(ax, color_lines=color_exp, label=True, **sag_dict_data)
+    plot_sag_vs_steady_state_on_ax(ax, color_lines=color_exp, label=False, **sag_dict_data)
 
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    # legend
+    custom_lines = [Line2D([0], [0], marker='s', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
+                    Line2D([0], [0], marker='$\cup$', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
+    ax.legend(custom_lines, ['Steady state', 'Sag'], loc='upper left')
+    # letter
+    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # block HCN
     ax = pl.Subplot(fig, outer[1, 0])
@@ -84,6 +94,12 @@ if __name__ == '__main__':
 
     plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
                              color=color_model)
+    custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
+                    Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn'], lw=1.0)]
+    ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')
+    ax.set_ylim(-85, -70)
+    # letter
+    ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # sag amp. vs voltage deflection for all cells
     ax = pl.Subplot(fig, outer[1, 1])
@@ -93,7 +109,7 @@ if __name__ == '__main__':
                                                       'sag_amps.npy'))
     v_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag_hist', 'rat', str(step_amp),
                                               'v_deflections.npy'))
-    ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5)
+    ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
 
     start_step_idx = np.nonzero(i_inj_model)[0][0]
     end_step_idx = np.nonzero(i_inj_model)[0][-1] + 1
@@ -103,11 +119,14 @@ if __name__ == '__main__':
     sag_amp_model = v_steady_states[0] - v_sags[0]
     vrest = np.mean(v_model[:start_step_idx])
     v_deflection_model = vrest - v_steady_states[0]
-    ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5)
+    ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5, label='Model')
 
     ax.set_xlabel('Sag amp.')
     ax.set_ylabel('Voltage deflection')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    #ax.legend()
+    # letter
+    ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_sag.png'))

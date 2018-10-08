@@ -13,7 +13,6 @@ from mpl_toolkits.mplot3d import Axes3D
 pl.style.use('paper_subplots')
 
 
-# TODO: colors
 # TODO: check simulation_params (e.g. dt)
 # TODO: check all exp. data are v_shifted
 # TODO: check sag_amps and v_deflection data
@@ -26,7 +25,8 @@ if __name__ == '__main__':
     model = '2'
     exp_cell = '2015_08_26b'
     v_init = -75
-    color_model = '#ffcc00'
+    color_exp = '#0099cc'
+    color_model = 'k'
     step_amp = 0.4
 
     # create model cell
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
     v_model, t_model, _ = simulate_model(cell, 'IV', step_amp, t_data[-1], v_init=v_init)
 
-    ax0.plot(t_data, v_data, 'k', label='Exp. cell')
+    ax0.plot(t_data, v_data, color_exp, label='Data')
     ax0.plot(t_model, v_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
@@ -57,6 +57,7 @@ if __name__ == '__main__':
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
     ax0.legend()
+    ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
     # f-I curve
     ax = pl.Subplot(fig, outer[0, 1])
@@ -69,22 +70,25 @@ if __name__ == '__main__':
         fi_dict_data = json.load(f)
 
     plot_fi_curve_on_ax(ax, color_line=color_model, **fi_dict_model)
-    plot_fi_curve_on_ax(ax, color_line='k', **fi_dict_data)
+    plot_fi_curve_on_ax(ax, color_line=color_exp, **fi_dict_data)
 
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # latency vs ISI1/2
     ax = pl.Subplot(fig, outer[1, 0])
     fig.add_subplot(ax)
     latency_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat/summary', 'latency.npy'))
     ISI12_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat/summary', 'ISI12.npy'))
-    ax.plot(latency_data, ISI12_data, 'o', color='k', alpha=0.5)
+    ax.plot(latency_data[latency_data>=0], ISI12_data[latency_data>=0], 'o', color=color_exp,
+            alpha=0.5, label='Data')
 
     latency_model, ISI12_model = get_latency_and_ISI12(cell)
-    ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5)
+    ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5, label='Model')
 
     ax.set_xlabel('Latency (ms)')
     ax.set_ylabel('ISI1/2 (ms)')
+    ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # fit fI-curve
     ax = pl.subplot(outer[1, 1], projection='3d')
@@ -92,16 +96,20 @@ if __name__ == '__main__':
     FI_a = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat/summary', 'FI_a.npy'))
     FI_b = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat/summary', 'FI_b.npy'))
     FI_c = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat/summary', 'FI_c.npy'))
-    ax.plot(FI_a, FI_b, FI_c, 'o', color='k', alpha=0.5)
+    RMSE = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat/summary', 'RMSE.npy'))
+    print 'RMSE over cells: ', np.min(RMSE), np.max(RMSE)
+    ax.plot(FI_a, FI_b, FI_c, 'o', color=color_exp, alpha=0.5)
 
     amps_greater0, firing_rates_model = simulate_and_compute_fI_curve(cell)
     FI_a_model, FI_b_model, FI_c_model, RMSE_model = fit_fI_curve(amps_greater0, firing_rates_model)
     ax.plot([FI_a_model], [FI_b_model], [FI_c_model], 'o', color=color_model, alpha=0.5)
+    print 'RMSE model: ', RMSE_model
 
     ax.set_xlabel('a')
     ax.set_ylabel('b')
     ax.set_zlabel('c')
-    ax.view_init(azim=-50, elev=38)
+    ax.view_init(azim=-48, elev=50)
+    ax.text2D(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
     pl.subplots_adjust(right=0.95)

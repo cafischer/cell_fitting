@@ -1,13 +1,10 @@
 from __future__ import division
-
 import os
-
 import matplotlib.pyplot as pl
 import numpy as np
 from neuron import h
 from nrn_wrapper import Cell
-
-from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp import double_ramp
+from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp import double_ramp, get_ramp3_times
 
 pl.style.use('paper')
 
@@ -38,13 +35,9 @@ class ChangeVmEvent(object):
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
-    #save_dir = '../../results/server/2017-07-27_09:18:59/22/L-BFGS-B/'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../results/hand_tuning/cell_2017-07-24_13:59:54_21_0/'
-    #model_dir = os.path.join(save_dir, 'cell.json')
-    mechanism_dir = '../../model/channels/vavoulis'
+    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
@@ -57,16 +50,23 @@ if __name__ == '__main__':
     #ramp_idx, t_event, v_new = 1, 493.5, -54
     t_event += onset
 
+    dt = 0.01
+    tstop = 600
     step_amp = 0
+    len_step = 250
+    ramp_amp = 4.0
     ramp3_amp = 1.0
+    ramp3_times = get_ramp3_times()
 
     # simulate normal
-    t, vs, i_inj, ramp3_times, currents, channel_list = double_ramp(cell, ramp3_amp, step_amp)
+    t, vs, i_inj, ramp3_times, currents, channel_list, start_ramp2 = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp,
+                                                                    len_step, dt, tstop)
 
     # simulate with event
     e = ChangeVmEvent(cell.soma, t_event, v_new)
 
-    t_e, vs_e, i_inj, ramp3_times, currents, channel_list = double_ramp(cell, ramp3_amp, step_amp)
+    t_e, vs_e, i_inj, ramp3_times, currents, channel_list, start_ramp2 = double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp,
+                                                                    len_step, dt, tstop)
 
     # plot
     pl.figure()

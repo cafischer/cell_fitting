@@ -227,6 +227,16 @@ def get_sweep_index_for_amp(amp, protocol):
     return sweep_idx
 
 
+def get_amp_for_sweep_index(sweep_idx, protocol):
+    if protocol == 'IV':
+        amp = np.round(-0.15 + sweep_idx * 0.05, 2)
+    elif protocol == 'rampIV':
+        amp = np.round(0.1 + sweep_idx * 0.1, 2)
+    else:
+        raise ValueError('Conversion not available for this protocol!')
+    return amp
+
+
 def get_cells_by_protocol(data_dir):
     cells_by_protocol = dict()
 

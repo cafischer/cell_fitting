@@ -71,13 +71,13 @@ def find_current_threshold(cell):
     return None
 
 
-def simulate_rampIV(cell, ramp_amp, v_init=-75, celsius=35, dt=0.01, tstop=161.99):
+def simulate_rampIV(cell, ramp_amp, v_init=-75, celsius=35, dt=0.01, tstop=161.99, onset=200):
     protocol = 'rampIV'
     sweep_idx = get_sweep_index_for_amp(ramp_amp, protocol)
     i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
 
     simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
-                         'dt': dt, 'celsius': celsius, 'onset': 200}
+                         'dt': dt, 'celsius': celsius, 'onset': onset}
 
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
     return v, t, i_inj

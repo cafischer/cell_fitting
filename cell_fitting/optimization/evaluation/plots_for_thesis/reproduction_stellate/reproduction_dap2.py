@@ -12,6 +12,7 @@ from cell_characteristics.analyze_APs import get_spike_characteristics
 from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
 from cell_fitting.util import characteristics_dict_for_plotting
 from matplotlib.lines import Line2D
+from cell_fitting.optimization.errfuns import rms
 pl.style.use('paper_subplots')
 
 
@@ -68,7 +69,9 @@ if __name__ == '__main__':
     v_exp, t_exp, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'rampIV', ramp_amp)
     v_model, t_model, _ = simulate_model(cell, 'rampIV', ramp_amp, t_exp[-1], v_init=-75, celsius=35, dt=0.01, onset=200)
 
-    ax0.plot(t_exp, v_exp, color_exp, label='Exp. cell')
+    print 'RMSE: ', rms(v_exp, v_model)
+
+    ax0.plot(t_exp, v_exp, color_exp, label='Data')
     ax0.plot(t_model, v_model, color_model, label='Model')
     ax1.plot(t_exp, i_inj, 'k')
 
@@ -158,6 +161,9 @@ if __name__ == '__main__':
     axins.spines['right'].set_visible(True)
     mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
 
+    # letter
+    ax.text(-0.16, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
+
     # distribution of DAP characteristics
     axes = [outer[0, 1], outer[0, 2], outer[1, 1], outer[1, 2]]
     characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_time', 'DAP_width']
@@ -182,16 +188,26 @@ if __name__ == '__main__':
         characteristic_idx_exp = np.where(characteristic == characteristics_exp)[0][0]
         not_nan_exp = ~np.isnan(characteristics_mat_exp[:, characteristic_idx_exp])
         ax.hist(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp], bins=100, color=color_exp,
-                label='Exp. cells')
+                label='Data')
         ax.axvline(characteristics_mat_model[characteristic_idx], 0, 1, color=color_model, linewidth=1.0, label='Model')
+
+        # inside std
+        std = np.std(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp])
+        mean = np.mean(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp])
+        print mean-std, mean+std
+        print characteristics_mat_model[characteristic_idx]
 
         ax.set_xlabel(characteristics_dict_plot[characteristic])
         ax.set_ylabel('Frequency')
-        # legend
+
         if characteristic_idx == 0:
+            # legend
             custom_lines = [Line2D([0], [0], color=color_exp, lw=1.0),
                             Line2D([0], [0], color=color_model, lw=1.0)]
-            ax.legend(custom_lines, ['Exp. cells', 'Model'])
+            ax.legend(custom_lines, ['Data', 'Model'])
+
+            # letter
+            ax.text(-0.37, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
 
     pl.tight_layout()

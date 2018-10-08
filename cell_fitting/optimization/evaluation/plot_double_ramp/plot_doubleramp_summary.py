@@ -31,12 +31,12 @@ def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_t
                                            plot_sig=True):
     percentage_difference = 100 - (current_thresholds_DAP / current_thresholds_rest * 100)
 
-    ax.errorbar(0.0, np.mean(percentage_difference), yerr=np.std(percentage_difference), color='k', marker='o', capsize=3)
-    ax.plot(np.zeros(len(percentage_difference))-0.4, percentage_difference, 'o', color=color)
+    ax.errorbar(0.0, np.mean(percentage_difference), yerr=np.std(percentage_difference), color=color, marker='o', capsize=3)
+    ax.plot(np.zeros(len(percentage_difference))-0.4, percentage_difference, 'o', color=color, label='Exp. cells')
     if plot_sig:
         h0 = 0
         star = get_star_from_ttest(percentage_difference, h0)
-        vertical_square_bracket(ax, star, x1=0.35, x2=0.4, y1=np.mean(percentage_difference), y2=h0, color=color)
+        vertical_square_bracket(ax, star, x1=0.35, x2=0.4, y1=np.mean(percentage_difference), y2=h0)
         ax.set_xlim([-1, 1])
     else:
         ax.set_xlim([-1.2, 0.8])
@@ -45,9 +45,9 @@ def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_t
     ax.set_ylabel('Decrease current thresh. (%)')
 
 
-def vertical_square_bracket(ax, star, x1, x2, y1, y2, color='k'):
+def vertical_square_bracket(ax, star, x1, x2, y1, y2):
     ax.plot([x1, x2, x2, x2 + 0.1, x2, x2, x1], [y1, y1, (y1 + y2) * 0.5, (y1 + y2) * 0.5, (y1 + y2) * 0.5, y2, y2],
-            lw=1.5, c=color)
+            lw=1.5, c='k')
     ax.text(x2 + 0.2, (y1 + y2) * 0.5, star, va='center', color='k', fontsize=12)
 
 

@@ -10,10 +10,11 @@ from cell_fitting.optimization.evaluation.plot_zap import plot_impedance_on_ax
 from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel, plot_channel_block_on_ax
 from cell_fitting.optimization.evaluation.plot_zap import simulate_and_compute_zap_characteristics, \
     compute_res_freq_and_q_val
+from matplotlib.lines import Line2D
+from cell_fitting.util import get_channel_color_for_plotting
 pl.style.use('paper_subplots')
 
 
-# TODO: colors
 # TODO: check simulation_params (e.g. dt)
 # TODO: check all exp. data are v_shifted
 if __name__ == '__main__':
@@ -25,7 +26,8 @@ if __name__ == '__main__':
     model = '2'
     exp_cell = '2015_08_26b'
     v_init = -75
-    color_model = '0.5'
+    color_exp = '#0099cc'
+    color_model = 'k'
     zap_amp = 0.1
 
     # create model cell
@@ -48,9 +50,9 @@ if __name__ == '__main__':
 
     v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'Zap20', zap_amp)
 
-    ax0.plot(t_data, v_data, 'k', label='Exp. cell')
-    ax0.plot(t_model, v_model, color_model, label='Model')
-    ax1.plot(t_data, i_inj, 'k')
+    ax0.plot(t_data, v_data, color_exp, linewidth=0.3, label='Data')
+    ax0.plot(t_model, v_model, color_model, linewidth=0.3, label='Model')
+    ax1.plot(t_data, i_inj, linewidth=0.3, color='k')
 
     ax0.set_xticks([])
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
@@ -59,7 +61,10 @@ if __name__ == '__main__':
     ax1.set_xlabel('Time (ms)')
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax0.legend()
+    custom_lines = [Line2D([0], [0], color=color_exp, lw=1.0),
+                    Line2D([0], [0], color=color_model, lw=1.0)]
+    ax0.legend(custom_lines, ['Data', 'Model'], loc='upper right')
+    ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
     # impedance
     ax = pl.Subplot(fig, outer[0, 1])
@@ -78,10 +83,10 @@ if __name__ == '__main__':
     #                      **impedance_dict_data)
 
     plot_impedance_on_ax(ax, frequencies_model, imp_smooth_model, color_line=color_model)
-    plot_impedance_on_ax(ax, color_line='k', **impedance_dict_data)
+    plot_impedance_on_ax(ax, color_line=color_exp, **impedance_dict_data)
 
-    #ax.legend()
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # block HCN
     ax = pl.Subplot(fig, outer[1, 0])
@@ -96,6 +101,10 @@ if __name__ == '__main__':
 
     plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
                              color=color_model)
+    custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
+                    Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn'], lw=1.0)]
+    ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')
+    ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # Q-value vs resonance frequency for all cells
     ax = pl.Subplot(fig, outer[1, 1])
@@ -104,12 +113,13 @@ if __name__ == '__main__':
     res_freqs_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'res_freqs.npy'))
     q_values_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'q_values.npy'))
 
-    ax.plot(res_freqs_data, q_values_data, 'o', color='k', alpha=0.5)
-    ax.plot(res_freq_model, q_value_model, 'o', color=color_model, alpha=0.5)
+    ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data')
+    ax.plot(res_freq_model, q_value_model, 'o', color=color_model, alpha=0.5, label='Model')
 
     ax.set_xlabel('Q-value')
     ax.set_ylabel('Res. freq. (Hz)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_resonance.png'))

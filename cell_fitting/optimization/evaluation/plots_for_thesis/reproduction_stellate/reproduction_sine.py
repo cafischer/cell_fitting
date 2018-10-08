@@ -12,7 +12,6 @@ from cell_characteristics import to_idx
 pl.style.use('paper_subplots')
 
 
-# TODO: colors
 # TODO: check simulation_params (e.g. dt)
 # TODO: check all exp. data are v_shifted
 # TODO: check data computation phase means, stds
@@ -25,7 +24,8 @@ if __name__ == '__main__':
     model = '2'
     exp_cell = '2015_08_26b'
     v_init = -75
-    color_model = '0.5'
+    color_exp = '#0099cc'
+    color_model = 'k'
     amp1 = 0.4
     amp2 = 0.2
     freq1 = 0.1
@@ -52,8 +52,8 @@ if __name__ == '__main__':
     v_model, t_model, i_inj = simulate_sine_stimulus(cell, amp1, amp2, 1./freq1*1000/2., freq2, 500, 500,
                                                      t_data[1]-t_data[0], v_init=-75, celsius=35, onset=200)
 
-    ax0.plot(t_data, v_data, 'k', label='Exp. cell')
-    ax0.plot(t_model, v_model, color_model, label='Model')
+    ax0.plot(t_data, v_data, color_exp, linewidth=0.5, label='Data')
+    ax0.plot(t_model, v_model, color_model, linewidth=0.5, label='Model')
     ax1.plot(t_model, i_inj, 'k')
 
     ax0.set_xticks([])
@@ -64,6 +64,7 @@ if __name__ == '__main__':
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.set_yticks([np.round(np.min(i_inj), 1), np.round(np.max(i_inj), 1)])
     ax0.legend()
+    ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
     # phase hist.
     ax = pl.Subplot(fig, outer[0, 1])
@@ -80,13 +81,14 @@ if __name__ == '__main__':
         sine_dict_data = json.load(f)
 
     plot_phase_hist_on_axes(ax, 0, [sine_dict_model['phases']], plot_mean=True, color_hist=color_model,
-                            alpha=0.6, color_lines=color_model)
-    plot_phase_hist_on_axes(ax, 0, [sine_dict_data['phases']], plot_mean=True, color_hist='k',
-                            alpha=0.3, color_lines='k')
+                            alpha=0.5, color_lines=color_model)
+    plot_phase_hist_on_axes(ax, 0, [sine_dict_data['phases']], plot_mean=True, color_hist=color_exp,
+                            alpha=0.5, color_lines=color_exp)
 
     ax.set_ylabel('Count')
     ax.set_xlabel('Phase (deg.)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # mem. pot. per period of fast sine
     ax = pl.Subplot(fig, outer[1, 0])
@@ -112,6 +114,7 @@ if __name__ == '__main__':
     ax.set_xlim(0, 200)
     ax.set_ylim(-325, -45)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # mean vs std phase for all cells
     ax = pl.Subplot(fig, outer[1, 1])
@@ -128,12 +131,13 @@ if __name__ == '__main__':
                                             str(amp1_data)+'_'+str(amp2_data)+'_'+str(freq1)+'_'+str(freq2),
                                             'phase_stds.npy'))
 
-    ax.plot(phase_means_data, phase_stds_data, 'o', color='k', alpha=0.5)
+    ax.plot(phase_means_data, phase_stds_data, 'o', color=color_exp, alpha=0.5)
     ax.plot(sine_dict_model['mean_phase'], sine_dict_model['std_phase'], 'o', color=color_model, alpha=0.5)
 
     ax.set_xlabel('Mean phase')
     ax.set_ylabel('Std. phase')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_sine.png'))

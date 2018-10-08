@@ -11,7 +11,6 @@ from matplotlib.lines import Line2D
 pl.style.use('paper_subplots')
 
 
-# TODO: colors
 # TODO: check same protocol used for double ramp
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
@@ -29,8 +28,8 @@ if __name__ == '__main__':
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
 
-    fig = pl.figure(figsize=(9, 4))
-    outer = gridspec.GridSpec(1, 3, width_ratios=[1, 1, 0.2])
+    fig = pl.figure(figsize=(10.5, 4))
+    outer = gridspec.GridSpec(1, 3, width_ratios=[1, 1, 0.3])
 
     # double-ramp: mem. pot.
     inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0, 0], hspace=0.1, height_ratios=[5, 1])
@@ -59,7 +58,7 @@ if __name__ == '__main__':
     ramp3_amp_idx_exp = 0
     for ramp3_times_idx in range(len(ramp3_times)):
         ax0.plot(t_exp, v_mat_exp[ramp3_amp_idx_exp, ramp3_times_idx, :, 1], color_exp,
-                 label='Exp. cell' if ramp3_times_idx == 0 else '')
+                 label='Data' if ramp3_times_idx == 0 else '')
     ax0.set_xlim(470, 530)
     ax0.set_xticks([])
 
@@ -85,6 +84,9 @@ if __name__ == '__main__':
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     ax0.legend()
 
+    # letter
+    ax0.text(-0.23, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
+
     # double-ramp: current threshold
     ax0 = pl.Subplot(fig, outer[0, 1])
     fig.add_subplot(ax0)
@@ -103,10 +105,14 @@ if __name__ == '__main__':
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
 
     # legend
-    custom_lines = [Line2D([0], [0], marker='v', color='k', facecolor='None', lw=1.0),
-                    Line2D([0], [0], color='o', facecolor='None', lw=1.0),
-                    Line2D([0], [0], color='^', facecolor='None', lw=1.0)]
-    ax0.legend(custom_lines, ['Amp.: 0.1', 'Amp.: 0', 'Amp.: -0.1'])
+    custom_lines = [
+                    Line2D([0], [0], marker='^', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
+                    Line2D([0], [0], marker='o', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
+                    Line2D([0], [0], marker='v', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
+    ax0.legend(custom_lines, ['Amp.: 0.1', 'Amp.: 0', 'Amp.: -0.1'], loc='upper right')
+
+    # letter
+    ax0.text(-0.24, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')
 
     # comparison current threshold DAP - rest all cells
     with open(os.path.join(save_dir_model, model, 'img', 'PP', '125', 'current_threshold_dict.json'), 'r') as f:
@@ -127,10 +133,12 @@ if __name__ == '__main__':
     current_threshold_DAP_model = np.nanmin(current_threshold_dict_model_short_step['current_thresholds'][1])
     current_threshold_rest_model = current_threshold_dict_model_short_step['current_threshold_rampIV']
     percentage_difference = 100 - (current_threshold_DAP_model / current_threshold_rest_model * 100)
-    ax.plot(-0.4, percentage_difference, 'o', color=color_model)
-    ax.get_yaxis().set_label_coords(-0.55, 0.5)
+    ax.plot(-0.4, percentage_difference, 'o', color=color_model, label='Model')
+    ax.get_yaxis().set_label_coords(-0.3, 0.5)
     ax.set_ylim(0, 100)
 
+    # letter
+    ax.text(-0.55, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_double_ramp.png'))

@@ -39,10 +39,9 @@ def compute_v_sag_and_steady_state(v_traces, amps, AP_threshold, start_step_idx,
 
 
 def plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags, color_lines='k', label=True):
-    ax.plot(amps_subtheshold, v_steady_states, linestyle='-', marker='o', c=color_lines, markersize=4,
+    ax.plot(amps_subtheshold, v_steady_states, linestyle='-', marker='s', c=color_lines, markersize=4,
             label='Steady State' if label else '')
-    ax.plot(amps_subtheshold, v_sags, linestyle='-', marker='o',
-            c=change_color_brightness(matplotlib.colors.to_rgb(color_lines), 50, 'brighter'), alpha=0.5, markersize=4,
+    ax.plot(amps_subtheshold, v_sags, linestyle='-', marker='$\cup$', c=color_lines, alpha=0.5, markersize=4,
             label='Sag' if label else '')
     ax.set_xlabel('Current (nA)', fontsize=12)
     ax.set_ylabel('Mem. pot. (mV)', fontsize=12)
