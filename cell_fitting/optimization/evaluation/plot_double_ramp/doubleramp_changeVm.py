@@ -16,7 +16,7 @@ class ChangeVmEvent(object):
         self.section = section
         self.t_event = t_event
         self.v_new = v_new
-        self.fih = h.FInitializeHandler(1, self.start_event)
+        self.fih = h.FInitializeHandler(1, self.start_event)  # necessary so that this works with run()
 
     def start_event(self):
         h.cvode.event(self.t_event, self.set_v)

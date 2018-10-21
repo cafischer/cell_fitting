@@ -74,7 +74,7 @@ def current_subtraction(sec, channel, celsius, amps, durs, v_steps, stepamp, pos
     :param durs: Duration of the three different amplitudes.
     :type durs: list (3 Elements)
     :param v_steps: Potential of the different voltage steps.
-    :type v_steps: list
+    :type v_steps: array_like
     :param stepamp: Number of the amplitude which will be stepped.
     :type stepamp: int
     :param pos: Position at which the VClamp will be inserted.
@@ -90,11 +90,13 @@ def current_subtraction(sec, channel, celsius, amps, durs, v_steps, stepamp, pos
     # create cell
     h.celsius = celsius
     i_steps_control, t = voltage_steps(sec, amps, durs, v_steps, stepamp, pos, dt)
+    gbar_channel = getattr(channel, 'gbar', 0.0)
     setattr(channel, 'gbar', 0.0)
     i_steps_blockade, t = voltage_steps(sec, amps, durs, v_steps, stepamp, pos, dt)
+    setattr(channel, 'gbar', gbar_channel)
 
     for i, v_step in enumerate(v_steps):
-        i_steps.append(i_steps_control[i]) # - i_steps_blockade[i])
+        i_steps.append(i_steps_control[i] - i_steps_blockade[i])
 
     return i_steps, t
 
@@ -149,7 +151,7 @@ def plot_i_steps(i_steps, v_steps, t):
     :param i_steps: List containing the current traces for each voltage step.
     :type i_steps: list
     :param v_steps: Potential of the different voltage steps.
-    :type v_steps: list
+    :type v_steps: array_like
     :param t: Time axis
     :type t: array
     """
@@ -162,3 +164,22 @@ def plot_i_steps(i_steps, v_steps, t):
     pl.ylabel('Current (nA)', fontsize=16)
     pl.tight_layout()
     pl.show()
+
+
+def plot_i_steps_on_ax(ax, i_steps, v_steps, t):
+    """
+    Plots the current traces from all coltage steps.
+
+    :param i_steps: List containing the current traces for each voltage step.
+    :type i_steps: list
+    :param v_steps: Potential of the different voltage steps.
+    :type v_steps: array_like
+    :param t: Time axis
+    :type t: array
+    """
+    cmap = pl.cm.get_cmap('plasma')
+    for i, v_step in enumerate(v_steps):
+        ax.plot(t, i_steps[i], label='%i (mV)' % v_step, color=cmap(float(i) / len(v_steps)))
+    ax.legend(loc='lower right')
+    ax.set_xlabel('Time (ms)')
+    ax.set_ylabel('Current (nA)')

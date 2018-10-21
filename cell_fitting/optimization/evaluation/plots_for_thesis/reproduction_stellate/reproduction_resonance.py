@@ -102,7 +102,7 @@ if __name__ == '__main__':
     plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
                              color=color_model)
     custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
-                    Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn'], lw=1.0)]
+                    Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]
     ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
@@ -120,6 +120,9 @@ if __name__ == '__main__':
     ax.set_ylabel('Res. freq. (Hz)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
+
+    print 'res. freq. model: ', res_freq_model
+    print 'q-val. model: ', q_value_model
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_resonance.png'))

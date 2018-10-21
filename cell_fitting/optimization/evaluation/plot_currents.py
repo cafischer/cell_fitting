@@ -11,14 +11,6 @@ pl.style.use('paper')
 
 
 def plot_currents_on_ax(ax1, channel_list, currents, t, v):
-    new_channel_list = copy.copy(channel_list)
-    index_nap = channel_list.index('nap')
-    index_nat = channel_list.index('nat')
-    new_channel_list[channel_list.index('hcn_slow')] = 'hcn'
-    current_nat = currents[index_nat]
-    currents[index_nat] = currents[index_nap]
-    currents[index_nap] = current_nat
-
     channel_dict = get_channel_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()
 
@@ -30,9 +22,9 @@ def plot_currents_on_ax(ax1, channel_list, currents, t, v):
     #ax2.spines['right'].set_visible(True)
     ax2.set_yticks([])
 
-    for i in range(len(new_channel_list)):
-        ax1.plot(t_plot, -1 * currents[i], color=channel_color[new_channel_list[i]],
-                 label=channel_dict[new_channel_list[i]])
+    for i in range(len(channel_list)):
+        ax1.plot(t_plot, -1 * currents[i], color=channel_color[channel_list[i]],
+                 label=channel_dict[channel_list[i]])
         ax1.set_ylabel('Current (mA/cm$^2$)')
         ax1.set_xlabel('Time (ms)')
     h1, l1 = ax1.get_legend_handles_labels()

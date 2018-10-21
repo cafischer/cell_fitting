@@ -70,9 +70,13 @@ if __name__ == '__main__':
     v_model, t_model, _ = simulate_model(cell, 'rampIV', ramp_amp, t_exp[-1], v_init=-75, celsius=35, dt=0.01, onset=200)
 
     print 'RMSE: ', rms(v_exp, v_model)
+    fAHP_min_idx = get_spike_characteristics(v_model, t_model, ['fAHP_min_idx'], v_model[0], check=False,
+                                             **get_spike_characteristics_dict(for_data=False))[0]
+    print 'RMSE: ', rms(v_exp[fAHP_min_idx:], v_model[fAHP_min_idx:])
 
     ax0.plot(t_exp, v_exp, color_exp, label='Data')
     ax0.plot(t_model, v_model, color_model, label='Model')
+    #ax0.plot(t_model[fAHP_min_idx:], v_model[fAHP_min_idx:], color='y')
     ax1.plot(t_exp, i_inj, 'k')
 
     ax0.legend()
@@ -104,7 +108,6 @@ if __name__ == '__main__':
                                                              std_idx_times=(0, 1), check=False,
                                                              **get_spike_characteristics_dict(for_data=True)),
                                    dtype=int)
-
     t_exp -= 8
     ax.plot(t_exp, v_exp, 'k')
     ax.annotate('', xy=(t_exp[characteristics_exp[0]], v_exp[characteristics_exp[0]]),
@@ -122,6 +125,7 @@ if __name__ == '__main__':
 
     axins = inset_axes(ax, width='60%', height='60%', loc=1)
     axins.plot(t_exp, v_exp, 'k')
+    ax.annotate('mAHP', xy=(63., -73), verticalalignment='top', horizontalalignment='center')
     axins.annotate('fAHP', xy=(t_exp[characteristics_exp[1]], v_exp[characteristics_exp[1]] - 0.5),
                    verticalalignment='top', horizontalalignment='center')
     axins.annotate('', xy=(t_exp[characteristics_exp[2]], v_exp[characteristics_exp[1]]),

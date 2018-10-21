@@ -87,7 +87,7 @@ if __name__ == '__main__':
     param_val_dict = {k: cell.get_attr(v) for k, v in param_key_dict.iteritems()}
 
     table = []
-    index = [p + ' (' + param_unit[p] + ')' for p in params]
+    index = [p + ' $($' + param_unit[p] + '$)$' for p in params]
     table.append(index)
     for channel in channels:
         keys_channel = filter(lambda x: x.split(' ')[0] == channel, param_val_dict.keys())
@@ -107,15 +107,17 @@ if __name__ == '__main__':
             table.append(column)
     table = np.array(table).T
 
-    header1 = ' & \multicolumn{2}{c}{Nat} & \multicolumn{2}{c}{Nap} & \multicolumn{1}{c}{Kdr} &  \multicolumn{1}{c}{HCN} \\'
-    header2 = ' & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} \\'
+    header1 = r' & \multicolumn{2}{c}{Nat} & \multicolumn{2}{c}{Nap} & \multicolumn{1}{c}{Kdr} &  \multicolumn{1}{c}{HCN} \\'
+    header2 = r' & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} \\'
     line_break = r'\hline'
+    powers = r' $p/q (1)$ & 3 & 1 & 3 & 1 & 4 & 1 \\'
     table = tabulate(table, tablefmt='latex_raw')
 
     table_lines = table.split('\n')
     table_lines.insert(1, line_break)
     table_lines.insert(2, header1)
     table_lines.insert(3, header2)
+    table_lines.insert(5, powers)
     table = reduce(lambda a, b: a + '\n' + b, table_lines)
     print table
 
@@ -129,7 +131,7 @@ if __name__ == '__main__':
         '$E_{Na}$': '$mV$',
         '$E_{K}$': '$mV$'
     }
-    index = [p + ' (' + other_param_unit[p] + ')' for p in other_params]
+    index = [p + ' $($' + other_param_unit[p] + '$)$' for p in other_params]
 
     table2 = tabulate(np.array([index,
                                 [param_val_dict[p] for p in other_params]]).T,

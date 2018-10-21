@@ -17,7 +17,6 @@ from cell_fitting.util import characteristics_dict_for_plotting
 pl.style.use('paper_subplots')
 
 
-# TODO: colors
 # TODO: check simulation_params (e.g. dt)
 # TODO: check all exp. data are v_shifted
 if __name__ == '__main__':

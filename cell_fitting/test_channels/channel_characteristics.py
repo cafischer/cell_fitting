@@ -7,7 +7,6 @@ from scipy.optimize import curve_fit
 def boltzmann_fun(v, vh, k):
     return 1 / (1+np.exp((v - vh)/k))
 
-
 def rate_constant(v, a, b, k):
     return (a * v + b) / (1 - np.exp((v + b / a) / k))
 
@@ -38,6 +37,7 @@ def compute_current_explicit_tau(v, t,
     return ((m_inf - (m_inf - m0) * np.exp(-t / tau_m)) ** p
             * (h_inf - (h_inf - h0) * np.exp(-t / tau_h)) ** q
             * (v - e_ion))
+
 
 def compute_current_sum_explicit_tau(v, t, g_frac,
                                      a_alpha_m, b_alpha_m, k_alpha_m, a_beta_m, b_beta_m, k_beta_m,

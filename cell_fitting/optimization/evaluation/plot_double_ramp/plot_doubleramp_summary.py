@@ -44,6 +44,8 @@ def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_t
     ax.set_ylim([0, None])
     ax.set_ylabel('Decrease current thresh. (%)')
 
+    return np.mean(percentage_difference)
+
 
 def vertical_square_bracket(ax, star, x1, x2, y1, y2):
     ax.plot([x1, x2, x2, x2 + 0.1, x2, x2, x1], [y1, y1, (y1 + y2) * 0.5, (y1 + y2) * 0.5, (y1 + y2) * 0.5, y2, y2],

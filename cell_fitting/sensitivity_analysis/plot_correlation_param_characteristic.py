@@ -71,31 +71,35 @@ def plot_corr(corr, sig_level, return_characteristics, variable_names, correlati
     #pl.show()
 
 
-def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names, correlation_measure):
+def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names, correlation_measure,
+                    cmap='gray'):
     X, Y = np.meshgrid(np.arange(np.size(corr_mat, 1)+1), np.arange(np.size(corr_mat, 0)+1))  # +1 because otherwise pcolor misses the last row
-    pl.pcolor(X, Y, corr_mat, vmin=-1, vmax=1, cmap=pl.cm.get_cmap('gray'))
+    pl.pcolor(X, Y, np.flipud(corr_mat), vmin=-1, vmax=1, cmap=pl.cm.get_cmap(cmap))
 
     # p-values
     sig_levels = [0.1, 0.01, 0.001, 0]
     markers = ['*', '**', '***']
     for i in range(len(sig_levels)-1):
-        reject, p_val_corrected, _, _ = multipletests(p_val_mat.flatten(), sig_levels[i], method='bonferroni')
-        reject = np.reshape(reject, np.shape(p_val_mat))
-        #reject = np.logical_and(p_val_mat.T < sig_levels[i], ~(p_val_mat.T < sig_levels[i+1]))
-        xs, ys = np.where(reject)
-        for x, y in zip(xs, ys):
-            ax.annotate(markers[i], xy=(x+0.5, y+0.5), ha='center', va='center', fontsize=8)
+        _, p_val_corrected, _, _ = multipletests(p_val_mat.flatten(), sig_levels[i], method='bonferroni')
+        p_val_corrected = np.reshape(p_val_corrected, np.shape(p_val_mat))
+
+        for i, sig in enumerate(sig_levels[:-1]):
+            reject = np.logical_and(p_val_corrected < sig_levels[i], ~(p_val_corrected < sig_levels[i+1]))
+
+            ys, xs = np.where(reject)
+            for x, y in zip(xs, ys):
+                ax.annotate(markers[i], xy=(x + 0.5, y + 0.5), ha='center', va='center', fontsize=10)
+
+
 
     ax.set_xlabel('Parameter')
     ax.set_ylabel('Characteristic')
     ax.set_xticks(np.arange(len(variable_names)) + 0.5)
-
     new_variable_names = get_variable_names_for_plotting(variable_names)
-
     ax.set_xticklabels(new_variable_names, rotation='40', ha='right')
     ax.set_yticks(np.arange(len(return_characteristics)) + 0.5)
     characteristics_dict = characteristics_dict_for_plotting()
-    ax.set_yticklabels([characteristics_dict[c] for c in return_characteristics])
+    ax.set_yticklabels([characteristics_dict[c] for c in return_characteristics[::-1]])  # flipped with pcolor
     ax = pl.gca()
     for label in ax.xaxis.get_majorticklabels():
         label.customShiftValue = -0.3

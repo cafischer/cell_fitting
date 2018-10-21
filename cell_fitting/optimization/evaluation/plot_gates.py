@@ -11,15 +11,6 @@ import copy
 
 
 def plot_gates_on_ax(ax1, gates, t, v, power_gates=None):
-    new_channel_names = dict()
-    new_channel_names['nap_m'] = 'nat_m'
-    new_channel_names['nap_h'] = 'nat_h'
-    new_channel_names['nat_m'] = 'nap_m'
-    new_channel_names['nat_h'] = 'nap_h'
-    new_channel_names['hcn_slow_n'] = 'hcn_n'
-    new_channel_names['kdr_n'] = 'kdr_n'
-    gates = {new_channel_names[k]: v for k, v in gates.iteritems()}
-
     channel_dict = get_channel_dict_for_plotting()
     gate_dict = get_gate_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()
@@ -34,7 +25,11 @@ def plot_gates_on_ax(ax1, gates, t, v, power_gates=None):
     ax2.set_ylim(-80, -40)
 
     for k in sorted(gates.keys(), reverse=True):
-        channel_name, gate_name = k.split('_')
+        if 'hcn' in k:
+            channel_name = 'hcn_slow'
+            gate_name = '$h$'
+        else:
+            channel_name, gate_name = k.split('_')
         color = channel_color[channel_name]
         if gate_name == 'm':
             color = change_color_brightness(to_rgb(color), 35, 'brighter')
@@ -56,18 +51,16 @@ def plot_gates_on_ax(ax1, gates, t, v, power_gates=None):
 def plot_product_gates_on_ax(ax1, channel_list, gates, t, v, power_gates):
     channel_list = copy.copy(channel_list)
     channel_list.remove('pas')
-    channel_list.remove('hcn_slow')
-    channel_list.append('hcn')
 
-    new_channel_names = dict()
-    new_channel_names['nap_m'] = 'nat_m'
-    new_channel_names['nap_h'] = 'nat_h'
-    new_channel_names['nat_m'] = 'nap_m'
-    new_channel_names['nat_h'] = 'nap_h'
-    new_channel_names['hcn_slow_n'] = 'hcn_n'
-    new_channel_names['kdr_n'] = 'kdr_n'
-    gates = {new_channel_names[k]: v for k, v in gates.iteritems()}
-    power_gates = {new_channel_names[k]: v for k, v in power_gates.iteritems()}
+    # new_channel_names = dict()
+    # new_channel_names['nap_m'] = 'nat_m'
+    # new_channel_names['nap_h'] = 'nat_h'
+    # new_channel_names['nat_m'] = 'nap_m'
+    # new_channel_names['nat_h'] = 'nap_h'
+    # new_channel_names['hcn_slow_n'] = 'hcn_n'
+    # new_channel_names['kdr_n'] = 'kdr_n'
+    # gates = {new_channel_names[k]: v for k, v in gates.iteritems()}
+    power_gates = {gates[k]: v for k, v in power_gates.iteritems()}
 
     channel_dict = get_channel_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()

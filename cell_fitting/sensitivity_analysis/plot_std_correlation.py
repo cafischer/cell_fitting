@@ -13,8 +13,8 @@ pl.style.use('paper')
 save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'mean_std_1order_of_mag_model2', 'analysis')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'correlation', 'parameter_characteristic', 'sampled')
 
-n_chunks = 100
-correlation_type = 'kendalltau' # 'spearman', 'pearson'
+n_chunks = 35
+correlation_type = 'pearson' # 'spearman', 'pearson'
 sig1 = 0.01
 sig2 = 0.001
 
@@ -30,6 +30,7 @@ n_variables = np.shape(candidate_mat)[1]
 
 # chunk up matrices
 size_chunk = int(np.floor(np.shape(candidate_mat)[0] / n_chunks))
+print size_chunk
 correlation_mats = np.zeros((len(return_characteristics), n_variables, n_chunks))
 for chunk_idx in range(n_chunks):
     #save_dir_chunk = os.path.join(save_dir_plots, 'true', str(chunk_idx))

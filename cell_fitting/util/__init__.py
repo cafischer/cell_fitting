@@ -111,7 +111,7 @@ def get_gates_of_channel():
     return {
         'nat': ['m', 'h'],
         'nap': ['m', 'h'],
-        'hcn': ['n'],
+        'hcn_slow': ['n'],
         'kdr': ['n'],
         'pas': []
     }
@@ -121,7 +121,7 @@ def get_channel_dict_for_plotting():
     return {
         'nat': '$Na_T$',
         'nap': '$Na_P$',
-        'hcn': '$HCN$',
+        'hcn_slow': '$HCN$',
         'kdr': '$K_{DR}$',
         'pas': 'Leak'
     }
@@ -129,12 +129,12 @@ def get_channel_dict_for_plotting():
 
 def get_gate_dict_for_plotting():
     return {
-        'nat_m': '$act.$',
-        'nat_h': '$inact.$',
-        'nap_m': '$act.$',
-        'nap_h': '$inact.$',
-        'hcn_n': '$inact.$',
-        'kdr_n': '$act.$',
+        'nat_m': '$m$',
+        'nat_h': '$h$',
+        'nap_m': '$m$',
+        'nap_h': '$h$',
+        'hcn_slow_n': '$h$',
+        'kdr_n': '$m$',
         'pas': ''
     }
 
@@ -158,7 +158,7 @@ def get_channel_color_for_plotting():
     return {
         'nat': 'r',
         'nap': 'b',
-        'hcn': 'y',
+        'hcn_slow': 'y',
         'kdr': 'g',
         'pas': '0.5'
     }
@@ -188,7 +188,7 @@ def get_variable_names_for_plotting(variable_names):
             continue
 
         if v_split[0] == 'hcn_slow':
-            v_split[0] = 'hcn'
+            v_split[0] = 'hcn_slow'
         if '_' in v_split[1]:
             v_s2 = v_split[1].split('_')
             if len(v_s2) == 3:

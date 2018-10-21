@@ -11,13 +11,23 @@ pl.style.use('paper')
 def block_channel(cell, channel_name, percent_block):
     if isinstance(channel_name, list):
         for p_b, c_n in zip(percent_block, channel_name):
-            old_gbar = cell.get_attr(['soma', '0.5', c_n, 'gbar'])
-            new_gbar = old_gbar * (100 - p_b) / 100
-            cell.update_attr(['soma', '0.5', c_n, 'gbar'], new_gbar)
+            if c_n == 'pas':
+                old_gbar = cell.get_attr(['soma', '0.5', c_n, 'g'])
+                new_gbar = old_gbar * (100 - p_b) / 100.
+                cell.update_attr(['soma', '0.5', c_n, 'g'], new_gbar)
+            else:
+                old_gbar = cell.get_attr(['soma', '0.5', c_n, 'gbar'])
+                new_gbar = old_gbar * (100 - p_b) / 100.
+                cell.update_attr(['soma', '0.5', c_n, 'gbar'], new_gbar)
     else:
-        old_gbar = cell.get_attr(['soma', '0.5', channel_name, 'gbar'])
-        new_gbar = old_gbar * (100 - percent_block) / 100
-        cell.update_attr(['soma', '0.5', channel_name, 'gbar'], new_gbar)
+        if channel_name == 'pas':
+            old_gbar = cell.get_attr(['soma', '0.5', channel_name, 'g'])
+            new_gbar = old_gbar * (100 - percent_block) / 100.
+            cell.update_attr(['soma', '0.5', channel_name, 'g'], new_gbar)
+        else:
+            old_gbar = cell.get_attr(['soma', '0.5', channel_name, 'gbar'])
+            new_gbar = old_gbar * (100 - percent_block) / 100.
+            cell.update_attr(['soma', '0.5', channel_name, 'gbar'], new_gbar)
 
 
 def block_channel_at_timepoint(cell, channel_name, percent_block, timepoint):
@@ -29,8 +39,6 @@ def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block,
     channel_color = get_channel_color_for_plotting()
     ax.plot(t, v_before_block, color, label='without block')
     for i, channel_name in enumerate(channel_list):
-        if channel_name == 'hcn_slow':
-            channel_name = 'hcn'
         ax.plot(t, v_after_block[i, :], color=channel_color[channel_name],
                 label=str(percent_block) + '% block of ' + channel_dict[channel_name])
     ax.set_xlabel('Time (ms)')
@@ -41,28 +49,17 @@ def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block,
 
 class ChangeConductanceEvent(object):
     def __init__(self, cell, channel_name, percent_block, t_event):
-        print 'init'
         self.cell = cell
         self.t_event = t_event
         self.channel_name = channel_name
         self.percent_block = percent_block
-        #self.fih = h.FInitializeHandler(1, self.start_event)
-        self.start_event()
+        self.fih = h.FInitializeHandler(1, self.start_event)
 
     def start_event(self):
-        print 't', self.t_event
-        h.cvode.event(self.t_event, self.set_gbar())
+        h.cvode.event(self.t_event, self.set_gbar)
 
     def set_gbar(self):
-        if isinstance(channel_name, list):
-            for p_b, c_n in zip(percent_block, channel_name):
-                old_gbar = cell.get_attr(['soma', '0.5', c_n, 'gbar'])
-                new_gbar = old_gbar * (100 - p_b) / 100.
-                cell.update_attr(['soma', '0.5', c_n, 'gbar'], new_gbar)
-        else:
-            old_gbar = cell.get_attr(['soma', '0.5', channel_name, 'gbar'])
-            new_gbar = old_gbar * (100 - percent_block) / 100.
-            cell.update_attr(['soma', '0.5', channel_name, 'gbar'], new_gbar)
+        block_channel(self.cell, self.channel_name, self.percent_block)
 
         if h.cvode.active():
             h.cvode.re_init()
@@ -73,12 +70,12 @@ class ChangeConductanceEvent(object):
 if __name__ == '__main__':
     # parameters
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    model_ids = range(1, 7)
+    model_ids = range(2, 3)
     mechanism_dir = '../../../model/channels/vavoulis'
     ramp_amp = 3.5
     onset = 200
     load_mechanism_dir(mechanism_dir)
-    channel_names = ['nat']  # ['hcn_slow', 'nat', 'nap', 'kdr']
+    channel_names = ['hcn_slow', 'nat', 'nap', 'kdr']  # ['hcn_slow', 'nat', 'nap', 'kdr']
     percent_blocks = [100]  # [5, 10, 20, 50, 100]
 
     for model_id in model_ids:
@@ -92,20 +89,12 @@ if __name__ == '__main__':
 
                 # blocking
                 # block_channel(cell, channel_name, percent_block)
-                block_channel_at_timepoint(cell, channel_name, percent_block, 30+onset)
-
-                # TODO
-                vec_gbar = h.Vector()
-                vec_gbar.record(getattr(getattr(cell.soma(.5), channel_name), '_ref_gbar'))
+                block_channel_at_timepoint(cell, channel_name, percent_block, 15+onset)
 
                 # simulation
                 v_after, t_after, _ = simulate_rampIV(cell, ramp_amp, v_init=-75, onset=onset)
 
                 # plot
-                # TODO
-                pl.figure()
-                pl.plot(np.arange(len(vec_gbar))*0.01, np.array(vec_gbar)) #[int(onset/0.01):]
-
                 save_dir_img = os.path.join(save_dir, str(model_id), 'img', 'blocking', 'rampIV', str(channel_name),
                                             str(percent_block))
                 if not os.path.exists(save_dir_img):

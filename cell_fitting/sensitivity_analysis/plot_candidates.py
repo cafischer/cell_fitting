@@ -9,7 +9,8 @@ pl.style.use('paper')
 
 # save dir
 save_dir_data = '/home/cf/Phd/server/cns/server/results/sensitivity_analysis/'
-save_dir_analysis = os.path.join('../results/sensitivity_analysis/', 'analysis_2017-10-10')
+save_dir_analysis = os.path.join('/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/sensitivity_analysis',
+                                 'mean_std_1order_of_mag_model2', 'analysis')
 save_dir_plots = os.path.join(save_dir_analysis, 'plots', 'distributions')
 
 if not os.path.exists(save_dir_plots):
@@ -29,8 +30,8 @@ range_candidates = [
     [3, 20, 'DAP_deflection'],
     [0, 70, 'DAP_width'],
     [0, 6, 'DAP_time'],
-    [-np.inf, np.inf, 'DAP_lin_slope'],
-    [-np.inf, np.inf, 'DAP_exp_slope']
+  #  [-np.inf, np.inf, 'DAP_lin_slope'],
+  #  [-np.inf, np.inf, 'DAP_exp_slope']
 ]
 # [50, 150, 'AP_amp'],
 # [0.1, 2.0, 'AP_width'],

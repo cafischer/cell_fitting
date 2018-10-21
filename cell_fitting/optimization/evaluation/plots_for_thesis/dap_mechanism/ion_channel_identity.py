@@ -1,0 +1,220 @@
+import numpy as np
+import os
+import matplotlib.pyplot as pl
+import matplotlib.gridspec as gridspec
+from matplotlib.colors import to_rgb
+from cell_fitting.util import change_color_brightness
+from nrn_wrapper import Cell
+from cell_fitting.test_channels.channel_characteristics import boltzmann_fun, time_constant_curve
+from cell_fitting.util import get_channel_dict_for_plotting, get_channel_color_for_plotting
+from cell_fitting.test_channels.test_ionchannel import current_subtraction, plot_i_steps_on_ax
+
+pl.style.use('paper_subplots')
+
+
+def plot_act_inact_on_ax(ax, v_range, steadystate_act, steadystate_inact, time_constanct_act, time_constanct_inact,
+                         channel_name):
+    channel_dict = get_channel_dict_for_plotting()
+    channel_color = get_channel_color_for_plotting()
+
+    ax_twin = ax.twinx()
+    ax.spines['right'].set_visible(True)
+
+    if steadystate_act is not None:
+        ax.plot(v_range, steadystate_act,
+                color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'brighter'),
+                label=channel_dict[channel_name] + ' m')
+    if steadystate_inact is not None:
+        ax.plot(v_range, steadystate_inact,
+                color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'darker'),
+                label=channel_dict[channel_name] + ' h')
+    if time_constanct_act is not None:
+        ax_twin.plot(v_range, time_constanct_act, linestyle=':',
+                color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'brighter'))
+    if time_constanct_inact is not None:
+        ax_twin.plot(v_range, time_constanct_inact, linestyle=':',
+                color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'darker'))
+    ax.set_xlabel('Mem. pot. (mV)')
+    ax.set_ylabel('Degree of opening')
+    ax_twin.set_ylabel(r'$\tau$ (ms)')
+    ax.legend()
+
+
+# TODO: check simulation params
+# TODO: do vstep protocols for method section
+# TODO: color steps
+if __name__ == '__main__':
+    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
+    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    model = '2'
+    exp_cell = '2015_08_26b'
+    v_init = -75
+    onset = 200
+    dt = 0.01
+    celsius = 35
+    pos = 0.5
+    ramp_amp = 3.5
+
+    # create model cell
+    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
+
+    # plot
+    fig = pl.figure(figsize=(8, 9))
+    outer = gridspec.GridSpec(4, 2)
+
+    # activation and inactivation
+
+    # NaT
+    ax = pl.Subplot(fig, outer[0, 0])
+    fig.add_subplot(ax)
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
+
+    # steady-state
+    v_range = np.arange(-95, 30, 0.1)
+    curve_act = boltzmann_fun(v_range, cell.soma(.5).nat.m_vh, -cell.soma(.5).nat.m_vs)
+    curve_inact = boltzmann_fun(v_range, cell.soma(.5).nat.h_vh, -cell.soma(.5).nat.h_vs)
+
+    # time constants
+    time_constanct_act = time_constant_curve(v_range, cell.soma(.5).nat.m_tau_min, cell.soma(.5).nat.m_tau_max,
+                                             cell.soma(.5).nat.m_tau_delta, curve_act,
+                                             cell.soma(.5).nat.m_vh, cell.soma(.5).nat.m_vs)
+    time_constanct_inact = time_constant_curve(v_range, cell.soma(.5).nat.h_tau_min, cell.soma(.5).nat.h_tau_max,
+                                               cell.soma(.5).nat.h_tau_delta, curve_inact,
+                                               cell.soma(.5).nat.h_vh, cell.soma(.5).nat.h_vs)
+
+    plot_act_inact_on_ax(ax, v_range, curve_act, curve_inact, time_constanct_act, time_constanct_inact, 'nat')
+    
+    # NaP
+    ax = pl.Subplot(fig, outer[1, 0])
+    fig.add_subplot(ax)
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
+
+    # steady-state
+    v_range = np.arange(-95, 30, 0.1)
+    curve_act = boltzmann_fun(v_range, cell.soma(.5).nap.m_vh, -cell.soma(.5).nap.m_vs)
+    curve_inact = boltzmann_fun(v_range, cell.soma(.5).nap.h_vh, -cell.soma(.5).nap.h_vs)
+
+    # time constants
+    time_constanct_act = time_constant_curve(v_range, cell.soma(.5).nap.m_tau_min, cell.soma(.5).nap.m_tau_max,
+                                             cell.soma(.5).nap.m_tau_delta, curve_act,
+                                             cell.soma(.5).nap.m_vh, cell.soma(.5).nap.m_vs)
+    time_constanct_inact = time_constant_curve(v_range, cell.soma(.5).nap.h_tau_min, cell.soma(.5).nap.h_tau_max,
+                                               cell.soma(.5).nap.h_tau_delta, curve_inact,
+                                               cell.soma(.5).nap.h_vh, cell.soma(.5).nap.h_vs)
+
+    plot_act_inact_on_ax(ax, v_range, curve_act, curve_inact, time_constanct_act, time_constanct_inact, 'nap')
+    
+    # Kdr
+    ax = pl.Subplot(fig, outer[2, 0])
+    fig.add_subplot(ax)
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
+
+    # steady-state
+    v_range = np.arange(-95, 30, 0.1)
+    curve_act = boltzmann_fun(v_range, cell.soma(.5).kdr.n_vh, -cell.soma(.5).kdr.n_vs)
+
+    # time constants
+    time_constanct_act = time_constant_curve(v_range, cell.soma(.5).kdr.n_tau_min, cell.soma(.5).kdr.n_tau_max,
+                                             cell.soma(.5).kdr.n_tau_delta, curve_act,
+                                             cell.soma(.5).kdr.n_vh, cell.soma(.5).kdr.n_vs)
+
+    plot_act_inact_on_ax(ax, v_range, curve_act, None, time_constanct_act, None, 'kdr')
+    
+    # HCN
+    ax = pl.Subplot(fig, outer[3, 0])
+    fig.add_subplot(ax)
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
+
+    # steady-state
+    v_range = np.arange(-95, 30, 0.1)
+    curve_inact = boltzmann_fun(v_range, cell.soma(.5).hcn_slow.n_vh, -cell.soma(.5).hcn_slow.n_vs)
+
+    # time constants
+    time_constanct_inact = time_constant_curve(v_range, cell.soma(.5).hcn_slow.n_tau_min, cell.soma(.5).hcn_slow.n_tau_max,
+                                               cell.soma(.5).hcn_slow.n_tau_delta, curve_inact,
+                                               cell.soma(.5).hcn_slow.n_vh, cell.soma(.5).hcn_slow.n_vs)
+
+    plot_act_inact_on_ax(ax, v_range, None, curve_inact, None, time_constanct_inact, 'hcn_slow')
+
+
+    # voltage step protocols
+
+    # NaT
+    ax = pl.Subplot(fig, outer[0, 1])
+    fig.add_subplot(ax)
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'E', transform=ax.transAxes, size=18, weight='bold')
+
+    amps = [-80, -80, -100]
+    durs = [10, 50, 0]
+    v_steps = np.arange(-60, 30, 20)
+    stepamp = 2
+
+    sec_channel = getattr(cell.soma(.5), 'nat')
+
+    # compute response to voltage steps
+    i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
+    plot_i_steps_on_ax(ax, i_steps, v_steps, t)
+
+    # NaP
+    ax = pl.Subplot(fig, outer[1, 1])
+    fig.add_subplot(ax)
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'F', transform=ax.transAxes, size=18, weight='bold')
+
+    amps = [-80, 0, -80]
+    durs = [20, 20, 100]
+    v_steps = np.arange(-80, 10, 20)
+    stepamp = 3
+    sec_channel = getattr(cell.soma(.5), 'nap')
+
+    # compute response to voltage steps
+    i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
+    plot_i_steps_on_ax(ax, i_steps, v_steps, t)
+    ax.set_xlim(15, None)
+
+    # Kdr
+    ax = pl.Subplot(fig, outer[2, 1])
+    fig.add_subplot(ax)
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'G', transform=ax.transAxes, size=18, weight='bold')
+
+    amps = [-110, -50, -100]
+    durs = [150, 50, 150]
+    v_steps = np.arange(-50, 40, 20)
+    stepamp = 3
+
+    sec_channel = getattr(cell.soma(.5), 'kdr')
+
+    # compute response to voltage steps
+    i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
+    plot_i_steps_on_ax(ax, i_steps, v_steps, t)
+    ax.set_xlim(195, 305)
+
+    # HCN
+    ax = pl.Subplot(fig, outer[3, 1])
+    fig.add_subplot(ax)
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.text(-0.25, 1.0, 'H', transform=ax.transAxes, size=18, weight='bold')
+
+    amps = [-60, -80, -60]
+    durs = [20, 1500, 0]
+    v_steps = np.arange(-120, -30, 20)
+    stepamp = 2
+
+    sec_channel = getattr(cell.soma(.5), 'hcn_slow')
+
+    # compute response to voltage steps
+    i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
+    plot_i_steps_on_ax(ax, i_steps, v_steps, t)
+
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'ion_channel_identity.png'))
+    pl.show()

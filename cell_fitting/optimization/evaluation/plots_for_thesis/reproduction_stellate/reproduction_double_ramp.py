@@ -127,18 +127,22 @@ if __name__ == '__main__':
                                                                        'current_threshold_DAP.txt')))
         current_thresholds_rest[cell_idx] = float(np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
                                                                        'current_threshold_rest.txt')))
-    plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, color=color_exp,
+    mean_percentage_difference_exp = plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, color=color_exp,
                                            plot_sig=False)
 
     current_threshold_DAP_model = np.nanmin(current_threshold_dict_model_short_step['current_thresholds'][1])
     current_threshold_rest_model = current_threshold_dict_model_short_step['current_threshold_rampIV']
-    percentage_difference = 100 - (current_threshold_DAP_model / current_threshold_rest_model * 100)
-    ax.plot(-0.4, percentage_difference, 'o', color=color_model, label='Model')
+    percentage_difference_model = 100 - (current_threshold_DAP_model / current_threshold_rest_model * 100)
+    ax.plot(-0.4, percentage_difference_model, 'o', color=color_model, label='Model')
     ax.get_yaxis().set_label_coords(-0.3, 0.5)
     ax.set_ylim(0, 100)
 
     # letter
     ax.text(-0.55, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
+
+
+    print 'percentage difference model: ', percentage_difference_model
+    print 'mean percentage difference real cells: ', mean_percentage_difference_exp
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_double_ramp.png'))

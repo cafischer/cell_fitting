@@ -165,7 +165,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
      _nrn_thread_reg(_mechtype, 2, _update_ion_pointer);
   hoc_register_prop_size(_mechtype, 8, 3);
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 nap_act_fast /home/cf/Phd/programming/projects/cell_fitting/model/channels/vavoulis/x86_64/nap_act_fast.mod\n");
+ 	ivoc_help("help ?1 nap_act_fast /home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis/x86_64/nap_act_fast.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }
