@@ -25,7 +25,7 @@ if __name__ == '__main__':
     color_model = 'k'
 
     # create model cell
-    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
+    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
 
     fig = pl.figure(figsize=(10.5, 4))
     outer = gridspec.GridSpec(1, 3, width_ratios=[1, 1, 0.3])

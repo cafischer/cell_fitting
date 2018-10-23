@@ -55,7 +55,7 @@ if __name__ == '__main__':
     standard_sim_params = get_standard_simulation_params()
 
     # create model cell
-    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
+    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
 
     # plot 1: DAP
     fig = pl.figure(figsize=(6, 4.5))

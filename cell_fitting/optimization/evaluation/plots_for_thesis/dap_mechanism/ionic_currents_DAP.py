@@ -2,21 +2,16 @@ import numpy as np
 import os
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
-from matplotlib.colors import to_rgb
-from cell_fitting.util import change_color_brightness
 from nrn_wrapper import Cell
 from cell_fitting.read_heka import load_data
 from cell_fitting.optimization.evaluation import simulate_model, simulate_model_currents, simulate_model_gates
 from cell_fitting.optimization.evaluation.plot_currents import plot_currents_on_ax
 from cell_fitting.optimization.evaluation.plot_gates import plot_product_gates_on_ax, plot_gates_on_ax
 from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel_at_timepoint
-from cell_fitting.test_channels.channel_characteristics import boltzmann_fun, time_constant_curve
-from cell_fitting.util import get_channel_dict_for_plotting, get_channel_color_for_plotting
+from cell_fitting.optimization.simulate import get_standard_simulation_params
 pl.style.use('paper_subplots')
 
 
-
-# TODO: check simulation params
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
@@ -25,24 +20,21 @@ if __name__ == '__main__':
     save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
-    v_init = -75
-    onset = 200
-    dt = 0.01
     ramp_amp = 3.5
+    standard_sim_params = get_standard_simulation_params()
+    standard_sim_params['tstop'] = 160
 
     # create model cell
-    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
+    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
 
     # plot 1
     fig = pl.figure(figsize=(8, 6))
     outer = gridspec.GridSpec(2, 2)
 
     # simulate ionic currents and gates (without block)
-    v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell+'.dat'), 'rampIV', ramp_amp)
-    v_data += - v_data[0] + v_init
-    v_model, t_model, _ = simulate_model(cell, 'rampIV', ramp_amp, t_data[-1], v_init=v_init, onset=200, dt=dt)
-    currents, channel_list = simulate_model_currents(cell, 'rampIV', ramp_amp, t_data[-1], v_init=v_init, onset=200, dt=dt)
-    gates, power_gates = simulate_model_gates(cell, 'rampIV', ramp_amp, t_data[-1], v_init=v_init, onset=200, dt=dt)
+    v_model, t_model, _ = simulate_model(cell, 'rampIV', ramp_amp, **standard_sim_params)
+    currents, channel_list = simulate_model_currents(cell, 'rampIV', ramp_amp, **standard_sim_params)
+    gates, power_gates = simulate_model_gates(cell, 'rampIV', ramp_amp, **standard_sim_params)
 
     # ionic currents
     ax = pl.Subplot(fig, outer[0, 0])
@@ -64,20 +56,19 @@ if __name__ == '__main__':
 
     # simulate for ionic currents and gates (with block)
     t_block_idx = 1398
-    block_channel_at_timepoint(cell, 'hcn_slow', 100, t_model[t_block_idx] + onset)
-    block_channel_at_timepoint(cell, 'nat', 100, t_model[t_block_idx] + onset)
-    v_model, t_model, _ = simulate_model(cell, 'rampIV', ramp_amp, t_data[-1], v_init=v_init, onset=200, dt=dt)
+    block_channel_at_timepoint(cell, 'hcn_slow', 100, t_model[t_block_idx] + standard_sim_params['onset'])
+    block_channel_at_timepoint(cell, 'nat', 100, t_model[t_block_idx] + standard_sim_params['onset'])
+    v_model, t_model, _ = simulate_model(cell, 'rampIV', ramp_amp, **standard_sim_params)
 
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
-    block_channel_at_timepoint(cell, 'hcn_slow', 100, t_model[t_block_idx] + onset)
-    block_channel_at_timepoint(cell, 'nat', 100, t_model[t_block_idx] + onset)
-    currents, channel_list = simulate_model_currents(cell, 'rampIV', ramp_amp, t_data[-1],
-                                                     v_init=v_init, onset=200, dt=dt)
+    block_channel_at_timepoint(cell, 'hcn_slow', 100, t_model[t_block_idx] + standard_sim_params['onset'])
+    block_channel_at_timepoint(cell, 'nat', 100, t_model[t_block_idx] + standard_sim_params['onset'])
+    currents, channel_list = simulate_model_currents(cell, 'rampIV', ramp_amp, **standard_sim_params)
 
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
-    block_channel_at_timepoint(cell, 'hcn_slow', 100, t_model[t_block_idx] + onset)
-    block_channel_at_timepoint(cell, 'nat', 100, t_model[t_block_idx] + onset)
-    gates, power_gates = simulate_model_gates(cell, 'rampIV', ramp_amp, t_data[-1], v_init=v_init, onset=200, dt=dt)
+    block_channel_at_timepoint(cell, 'hcn_slow', 100, t_model[t_block_idx] + standard_sim_params['onset'])
+    block_channel_at_timepoint(cell, 'nat', 100, t_model[t_block_idx] + standard_sim_params['onset'])
+    gates, power_gates = simulate_model_gates(cell, 'rampIV', ramp_amp, **standard_sim_params)
 
     # ionic currents
     ax = pl.Subplot(fig, outer[1, 0])

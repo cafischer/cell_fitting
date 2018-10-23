@@ -79,7 +79,8 @@ def simulate_model(cell, protocol, amp, tstop, sec=('soma', None), v_init=-75, c
     return v, t, i_inj
 
 
-def simulate_model_currents(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, onset=200):
+def simulate_model_currents(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, onset=200, sec=('soma', None),
+                            pos_v=0.5, pos_i=0.5):
     if protocol == 'Zap20':
         sweep_idx = 0
         print 'amp not used!'
@@ -87,14 +88,15 @@ def simulate_model_currents(cell, protocol, amp, tstop, v_init=-75, celsius=35, 
         sweep_idx = get_sweep_index_for_amp(amp, protocol)
     i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
 
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
-                         'dt': dt, 'celsius': celsius, 'onset': onset}
+    simulation_params = {'sec': sec, 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
+                         'dt': dt, 'celsius': celsius, 'onset': onset, 'pos_v': pos_v, 'pos_i': pos_i}
 
     currents, channel_list = simulate_currents(cell, simulation_params)
     return currents, channel_list
 
 
-def simulate_model_gates(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, onset=200):
+def simulate_model_gates(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, onset=200, sec=('soma', None),
+                         pos_v=0.5, pos_i=0.5):
     if protocol == 'Zap20':
         sweep_idx = 0
         print 'amp not used!'
@@ -102,8 +104,8 @@ def simulate_model_gates(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=
         sweep_idx = get_sweep_index_for_amp(amp, protocol)
     i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
 
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
-                         'dt': dt, 'celsius': celsius, 'onset': onset}
+    simulation_params = {'sec': sec, 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
+                         'dt': dt, 'celsius': celsius, 'onset': onset, 'pos_v': pos_v, 'pos_i': pos_i}
 
     gates, power_gates = simulate_gates(cell, simulation_params)
     return gates, power_gates

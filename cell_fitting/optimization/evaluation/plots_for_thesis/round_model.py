@@ -1,11 +1,11 @@
 import os
 import numpy as np
-from tabulate import tabulate
+import json
 from nrn_wrapper import Cell
+import re
 
 
 if __name__ == '__main__':
-    save_dir_table = '/home/cf/Phd/DAP-Project/thesis/tables'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
     model = '2'
@@ -84,65 +84,19 @@ if __name__ == '__main__':
         '$\\tau_{delta}$': '%.3f',
     }
 
-    param_unit = {
-        '$g_{max}$': '$S/cm^2$',
-        '$V_h$': '$mV$',
-        '$V_s$': '$mV$',
-        '$\\tau_{min}$': '$ms$',
-        '$\\tau_{max}$': '$ms$',
-        '$\\tau_{delta}$': '$1$',
-        '$c_m$': '$\mu F/cm^2$',
-        '$length$': '$\mu m$',
-        '$diameter$': '$\mu m$',
-        '$g_{Leak}$': '$S/cm^2$',
-        '$E_{Leak}$': '$mV$',
-        '$E_{HCN}$': '$mV$',
-        '$E_{Na}$': '$mV$',
-        '$E_{K}$': '$mV$'
-    }
-
     param_val_dict = {k: cell.get_attr(v) for k, v in param_key_dict.iteritems()}
 
-    table = []
-    index = [p + ' $($' + param_unit[p] + '$)$' for p in params]
-    table.append(index)
-    for channel in channels:
-        keys_channel = filter(lambda x: x.split(' ')[0] == channel, param_val_dict.keys())
+    for param_name, param_path in param_key_dict.iteritems():
+        param_val = cell.get_attr(param_path)
+        split_name = param_name.split(' ')
+        if len(split_name) == 2:
+            param_name = split_name[1]
+        elif len(split_name) == 3:
+            param_name = split_name[2]
+        round_by = param_format[param_name]
+        round_by = re.findall(r'\d+', round_by)
+        round_by = int(round_by[0])
+        cell.update_attr(param_path, np.round(param_val, round_by))
 
-        for gate in gates:
-            if channel == 'Kdr' and gate == 'h' \
-                    or channel == 'HCN' and gate == 'm':
-                continue
-            keys_gate = filter(lambda x: x.split(' ')[1] == gate, keys_channel)
-
-            column = np.zeros(len(params))
-            for row, param in enumerate(params):
-                if param == '$g_{max}$':
-                    column[row] = param_format[param] % param_val_dict[channel + ' ' + param]
-                else:
-                    column[row] = param_format[param] % param_val_dict[channel + ' ' + gate + ' ' + param]
-            table.append(column)
-    table = np.array(table).T
-
-    header1 = r' & \multicolumn{2}{c}{Nat} & \multicolumn{2}{c}{Nap} & \multicolumn{1}{c}{Kdr} &  \multicolumn{1}{c}{HCN} \\'
-    header2 = r' & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} \\'
-    line_break = r'\hline'
-    powers = r' $p/q\ (1)$ & 3 & 1 & 3 & 1 & 4 & 1 \\'
-    table = tabulate(table, tablefmt='latex_raw')
-
-    table_lines = table.split('\n')
-    table_lines.insert(1, line_break)
-    table_lines.insert(2, header1)
-    table_lines.insert(3, header2)
-    table_lines.insert(5, powers)
-    table = reduce(lambda a, b: a + '\n' + b, table_lines)
-    print table
-
-    other_params = ['$c_m$', '$length$', '$diameter$', '$g_{Leak}$', '$E_{Leak}$', '$E_{HCN}$', '$E_{Na}$', '$E_{K}$']
-    index = [p + ' $($' + param_unit[p] + '$)$' for p in other_params]
-
-    table2 = tabulate(np.array([index,
-                                [param_val_dict[p] for p in other_params]]).T,
-                      headers=['General Parameter'], tablefmt='latex_raw', floatfmt='.2f')
-    print table2
-    print 'g Leak: ', cell.soma(.5).pas.g
+    with open(os.path.join(save_dir_model, model, 'cell_rounded.json'), 'w') as f:
+        json.dump(cell.get_dict(), f, indent=4)

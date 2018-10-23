@@ -3,11 +3,12 @@ import os
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
 from matplotlib.colors import to_rgb
-from cell_fitting.util import change_color_brightness
 from nrn_wrapper import Cell
+from cell_fitting.util import change_color_brightness
 from cell_fitting.test_channels.channel_characteristics import boltzmann_fun, time_constant_curve
 from cell_fitting.util import get_channel_dict_for_plotting, get_channel_color_for_plotting
 from cell_fitting.test_channels.test_ionchannel import current_subtraction, plot_i_steps_on_ax
+from cell_fitting.optimization.simulate import get_standard_simulation_params
 
 pl.style.use('paper_subplots')
 
@@ -40,7 +41,6 @@ def plot_act_inact_on_ax(ax, v_range, steadystate_act, steadystate_inact, time_c
     ax.legend()
 
 
-# TODO: check simulation params
 # TODO: do vstep protocols for method section
 # TODO: color steps
 if __name__ == '__main__':
@@ -51,15 +51,11 @@ if __name__ == '__main__':
     save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
-    v_init = -75
-    onset = 200
-    dt = 0.01
-    celsius = 35
-    pos = 0.5
     ramp_amp = 3.5
+    standard_sim_params = get_standard_simulation_params()
 
     # create model cell
-    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
+    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
 
     # plot
     fig = pl.figure(figsize=(8, 9))
@@ -175,7 +171,8 @@ if __name__ == '__main__':
     sec_channel = getattr(cell.soma(.5), 'nat')
 
     # compute response to voltage steps
-    i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
+    i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
+                                     stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
 
     # NaP
@@ -191,7 +188,8 @@ if __name__ == '__main__':
     sec_channel = getattr(cell.soma(.5), 'nap')
 
     # compute response to voltage steps
-    i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
+    i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
+                                     stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
     ax.set_xlim(15, None)
 
@@ -209,7 +207,8 @@ if __name__ == '__main__':
     sec_channel = getattr(cell.soma(.5), 'kdr')
 
     # compute response to voltage steps
-    i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
+    i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
+                                     stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
     ax.set_xlim(195, 305)
 
@@ -227,7 +226,8 @@ if __name__ == '__main__':
     sec_channel = getattr(cell.soma(.5), 'hcn_slow')
 
     # compute response to voltage steps
-    i_steps, t = current_subtraction(cell.soma, sec_channel, celsius, amps, durs, v_steps, stepamp, pos, dt)
+    i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
+                                     stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
 
     pl.tight_layout()

@@ -31,7 +31,7 @@ if __name__ == '__main__':
     standard_sim_params = get_standard_simulation_params()
 
     # create model cell
-    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
+    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
 
     # simulate ZAP
     zap_params = get_i_inj_standard_params('Zap20')
