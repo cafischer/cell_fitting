@@ -10,6 +10,8 @@ from cell_fitting.data.plot_IV.plot_fI_curve_fit_distribution import fit_fun
 from scipy.optimize import curve_fit
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
 from cell_fitting.optimization.evaluation import plot_v, joint_plot_data_and_model
+from cell_fitting.optimization.simulate import get_standard_simulation_params
+from cell_fitting.util import merge_dicts
 pl.style.use('paper')
 
 
@@ -198,12 +200,14 @@ def get_step(start_idx, end_idx, len_idx, step_amp):
     return i_exp
 
 
-def get_IV(cell, step_amp, step_fun, step_st_ms, step_end_ms, tstop, v_init=-75, dt=0.001):
+def get_IV(cell, step_amp, step_fun, step_st_ms, step_end_ms, tstop, dt, simulation_params=None):
     i_exp = step_fun(to_idx(step_st_ms, dt), to_idx(step_end_ms, dt), to_idx(tstop, dt)+1, step_amp)
 
     # get simulation parameters
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': v_init, 'tstop': tstop,
-                         'dt': dt, 'celsius': 35, 'onset': 200}
+    if simulation_params is None:
+        simulation_params = get_standard_simulation_params()
+    simulation_params = merge_dicts(simulation_params,
+                                    {'i_inj': i_exp, 'tstop': tstop, 'dt': dt})
 
     # record v
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)

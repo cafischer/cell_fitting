@@ -140,7 +140,7 @@ def get_i_inj_from_function(protocol, sweep_idxs, tstop, dt, return_discontinuit
 def get_i_inj_standard_params(protocol, sweep_idxs=None):
     if protocol == 'IV':
         params = {
-            'step_amp': [np.round(-0.15 + sweep_idx * 0.05, 2) for sweep_idx in sweep_idxs],  # nA
+            'step_amp': np.array([np.round(-0.15 + sweep_idx * 0.05, 2) for sweep_idx in sweep_idxs]),  # nA
             'start_step': 250,  # ms
             'end_step': 750,  # ms
             'tstop': 1149.95,  # ms
@@ -156,7 +156,7 @@ def get_i_inj_standard_params(protocol, sweep_idxs=None):
         }
     elif protocol == 'rampIV':
         params = {
-            'ramp_amp': [np.round(0.1 + sweep_idx * 0.1, 2) for sweep_idx in sweep_idxs],  # nA
+            'ramp_amp': np.array([np.round(0.1 + sweep_idx * 0.1, 2) for sweep_idx in sweep_idxs]),  # nA
             'ramp_start': 10.0,  # ms
             'ramp_peak': 10.8,  # ms
             'ramp_end': 12.0,  # ms

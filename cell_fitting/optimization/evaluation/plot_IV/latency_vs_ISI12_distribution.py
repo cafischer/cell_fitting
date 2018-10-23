@@ -23,7 +23,7 @@ def get_latency_and_ISI12(cell):
     latency_found = False
     ISI12_found = False
     for step_amp in step_amps:
-        v, t, i_inj = get_IV(cell, step_amp, get_step, start_step, end_step, tstop, v_init=-75, dt=dt)
+        v, t, i_inj = get_IV(cell, step_amp, get_step, start_step, end_step, tstop, dt)
         AP_onsets = get_AP_onset_idxs(v, AP_threshold)
 
         # get latency and ISI1/2

@@ -60,6 +60,10 @@ def extract_simulation_params(v, t, i_inj, sec=('soma', None), celsius=35, pos_i
             'pos_v': pos_v, 'sec': sec, 'celsius': celsius, 'onset': onset}
 
 
+def get_standard_simulation_params():
+    return {'v_init': -75, 'dt': 0.01, 'pos_i': 0.5, 'pos_v': 0.5, 'sec': ('soma', None), 'celsius': 35, 'onset': 200}
+
+
 def currents_given_v(v, t, sec, channel_list, ion_list, celsius, plot=False):
     """
     Records currents from sec elicited by clamping v.

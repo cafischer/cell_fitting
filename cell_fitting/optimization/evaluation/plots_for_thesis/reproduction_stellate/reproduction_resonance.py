@@ -3,7 +3,7 @@ import os
 import json
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
-from cell_fitting.read_heka import load_data
+from cell_fitting.read_heka import load_data, get_i_inj_standard_params
 from cell_fitting.optimization.evaluation import simulate_model
 from nrn_wrapper import Cell
 from cell_fitting.optimization.evaluation.plot_zap import plot_impedance_on_ax
@@ -12,10 +12,10 @@ from cell_fitting.optimization.evaluation.plot_zap import simulate_and_compute_z
     compute_res_freq_and_q_val
 from matplotlib.lines import Line2D
 from cell_fitting.util import get_channel_color_for_plotting
+from cell_fitting.optimization.simulate import get_standard_simulation_params
 pl.style.use('paper_subplots')
 
 
-# TODO: check simulation_params (e.g. dt)
 # TODO: check all exp. data are v_shifted
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
@@ -25,17 +25,21 @@ if __name__ == '__main__':
     save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
-    v_init = -75
     color_exp = '#0099cc'
     color_model = 'k'
     zap_amp = 0.1
+    standard_sim_params = get_standard_simulation_params()
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
 
-    #
+    # simulate ZAP
+    zap_params = get_i_inj_standard_params('Zap20')
+    zap_params['tstop'] = 34000 - standard_sim_params['dt']
+    zap_params['dt'] = standard_sim_params['dt']
+    zap_params['offset_dur'] = zap_params['onset_dur'] - standard_sim_params['dt']
     v_model, t_model, i_inj_model, imp_smooth_model, frequencies_model, \
-        res_freq_model, q_value_model = simulate_and_compute_zap_characteristics(cell)
+        res_freq_model, q_value_model = simulate_and_compute_zap_characteristics(cell, zap_params)
 
     # plot
     fig = pl.figure(figsize=(8, 6))
@@ -95,7 +99,8 @@ if __name__ == '__main__':
     percent_block = 100
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
     block_channel(cell, 'hcn_slow', percent_block)
-    v_after_block, _, _ = simulate_model(cell, 'Zap20', zap_amp, t_data[-1], v_init=v_init, dt=0.025)
+    v_after_block, _, _ = simulate_model(cell, 'Zap20', zap_amp, 34000 - standard_sim_params['dt'],
+                                         **standard_sim_params)
     # imp_smooth, frequencies = compute_smoothed_impedance(v_after_block, freq0=0, freq1=20, i_inj=i_inj,
     #                                                      offset_dur=2000, onset_dur=2000, tstop=34000, dt=0.01)
 

@@ -7,6 +7,8 @@ from nrn_wrapper import Cell
 from cell_fitting.read_heka.i_inj_functions import get_i_inj_double_ramp
 from cell_fitting.optimization.simulate import iclamp_handling_onset, simulate_currents
 from cell_fitting.data.plot_doubleramp import get_ramp3_times
+from cell_fitting.optimization.simulate import get_standard_simulation_params
+from cell_fitting.util import merge_dicts
 pl.style.use('paper')
 __author__ = 'caro'
 
@@ -50,8 +52,8 @@ def double_ramp(cell, ramp_amp, ramp3_amp, ramp3_times, step_amp, len_step, dt, 
                                       len_step2ramp=len_step2ramp, tstop=tstop, dt=dt)
 
         # get simulation parameters
-        simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': t_exp[-1],
-                             'dt': dt, 'celsius': 35, 'onset': 200}
+        simulation_params = merge_dicts(get_standard_simulation_params(),
+                                        {'i_inj': i_exp, 'tstop': t_exp[-1], 'dt': dt})
 
         # record v
         v_mat[j], t, i_inj_mat[j] = iclamp_handling_onset(cell, **simulation_params)

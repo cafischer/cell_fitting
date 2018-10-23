@@ -39,7 +39,7 @@ def get_i_inj_step(start_step, end_step, step_amp, tstop, dt):
 
 
 def get_i_inj_zap(amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, zap_dur=30000, tstop=34000, dt=0.01):
-    t = np.arange(0, zap_dur+dt/2, dt)
+    t = np.arange(0, zap_dur+dt/2., dt)
     assert onset_dur + offset_dur + zap_dur == tstop
     zap = amp * np.sin(2 * np.pi * ((freq1 - freq0) / 1000 * t / (2 * t[-1]) + freq0/1000) * t)
     onset = np.zeros(to_idx(onset_dur, dt, 4))

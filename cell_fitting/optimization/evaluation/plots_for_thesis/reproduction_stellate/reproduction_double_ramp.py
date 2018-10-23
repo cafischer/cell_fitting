@@ -3,11 +3,11 @@ import os
 import json
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
+from matplotlib.lines import Line2D
+from nrn_wrapper import Cell
 from cell_fitting.optimization.evaluation.plot_double_ramp import plot_current_threshold_on_ax
 from cell_fitting.data.plot_doubleramp import get_inj_doubleramp_params, get_i_inj_double_ramp_full
 from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp_summary import plot_current_threshold_all_cells_on_ax
-from nrn_wrapper import Cell
-from matplotlib.lines import Line2D
 pl.style.use('paper_subplots')
 
 
@@ -21,7 +21,6 @@ if __name__ == '__main__':
     model = '2'
     exp_cell = '2015_08_26b'
     exp_cell_dr = '2015_08_06d'
-    v_init = -75
     color_exp = '#0099cc'
     color_model = 'k'
 
@@ -83,8 +82,6 @@ if __name__ == '__main__':
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     ax0.legend()
-
-    # letter
     ax0.text(-0.23, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
     # double-ramp: current threshold
@@ -110,8 +107,6 @@ if __name__ == '__main__':
                     Line2D([0], [0], marker='o', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
                     Line2D([0], [0], marker='v', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
     ax0.legend(custom_lines, ['Amp.: 0.1', 'Amp.: 0', 'Amp.: -0.1'], loc='upper right')
-
-    # letter
     ax0.text(-0.24, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')
 
     # comparison current threshold DAP - rest all cells

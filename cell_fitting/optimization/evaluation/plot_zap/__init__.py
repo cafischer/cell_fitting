@@ -3,11 +3,12 @@ import numpy as np
 import matplotlib.pyplot as pl
 from cell_fitting.read_heka.i_inj_functions import get_i_inj_zap
 from cell_fitting.read_heka import shift_v_rest, get_v_and_t_from_heka, get_i_inj_standard_params
-from cell_fitting.optimization.simulate import iclamp_handling_onset
+from cell_fitting.optimization.simulate import iclamp_handling_onset, get_standard_simulation_params
 from cell_fitting.optimization.fitfuns import impedance
 from cell_characteristics import to_idx
 from cell_fitting.read_heka import set_v_rest
 from cell_fitting.optimization.evaluation import joint_plot_data_and_model
+from cell_fitting.util import merge_dicts
 
 
 def evaluate_zap(pdf, cell, data_dir_resonance, save_dir):
@@ -45,11 +46,12 @@ def evaluate_zap(pdf, cell, data_dir_resonance, save_dir):
 
 
 def simulate_zap(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=2000, zap_dur=30000,
-                 tstop = 34000, dt=0.01, v_init=-75, celsius=35, onset=200):
+                 tstop=34000, dt=0.01, simulation_params=None):
     i_exp = get_i_inj_zap(amp=amp, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur,
                           zap_dur=zap_dur, tstop=tstop, dt=dt)
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': v_init, 'tstop': tstop,
-                         'dt': dt, 'celsius': celsius, 'onset': onset}
+    if simulation_params is None:
+        simulation_params = get_standard_simulation_params()
+    simulation_params = merge_dicts(simulation_params, {'i_inj': i_exp, 'tstop': tstop, 'dt': dt})
     v, t, i_inj = iclamp_handling_onset(cell, **simulation_params)
     return v, t, i_inj
 

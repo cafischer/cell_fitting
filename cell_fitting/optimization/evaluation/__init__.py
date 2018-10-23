@@ -63,7 +63,8 @@ def joint_plot_data_and_model(x_data, y_data, x_model, y_model, x_name, y_name, 
     return jp.fig
 
 
-def simulate_model(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, onset=200):
+def simulate_model(cell, protocol, amp, tstop, sec=('soma', None), v_init=-75, celsius=35, dt=0.01, onset=200,
+                   pos_v=0.5, pos_i=0.5):
     if protocol == 'Zap20':
         sweep_idx = 0
         print 'amp not used!'
@@ -71,8 +72,8 @@ def simulate_model(cell, protocol, amp, tstop, v_init=-75, celsius=35, dt=0.01, 
         sweep_idx = get_sweep_index_for_amp(amp, protocol)
     i_inj = get_i_inj_from_function(protocol, [sweep_idx], tstop, dt)[0]
 
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
-                         'dt': dt, 'celsius': celsius, 'onset': onset}
+    simulation_params = {'sec': sec, 'i_inj': i_inj, 'v_init': v_init, 'tstop': tstop,
+                         'dt': dt, 'celsius': celsius, 'onset': onset, 'pos_v': pos_v, 'pos_i': pos_i}
 
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
     return v, t, i_inj

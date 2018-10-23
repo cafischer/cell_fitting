@@ -3,9 +3,9 @@ import os
 import json
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
-from cell_fitting.read_heka import load_data
-from cell_fitting.optimization.evaluation import simulate_model
 from nrn_wrapper import Cell
+from cell_fitting.read_heka import load_data
+from cell_fitting.optimization.simulate import get_standard_simulation_params
 from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
 from grid_cell_stimuli.spike_phase import plot_phase_hist_on_axes
 from cell_characteristics import to_idx
@@ -23,13 +23,13 @@ if __name__ == '__main__':
     save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
-    v_init = -75
     color_exp = '#0099cc'
     color_model = 'k'
     amp1 = 0.4
     amp2 = 0.2
     freq1 = 0.1
     freq2 = 5
+    standard_sim_params = get_standard_simulation_params()
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
@@ -48,9 +48,8 @@ if __name__ == '__main__':
                       str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2))
     v_data = np.load(os.path.join(s_, 'v.npy'))
     t_data = np.load(os.path.join(s_, 't.npy'))
-    # v_data += - v_data[0] + v_init
     v_model, t_model, i_inj = simulate_sine_stimulus(cell, amp1, amp2, 1./freq1*1000/2., freq2, 500, 500,
-                                                     t_data[1]-t_data[0], v_init=-75, celsius=35, onset=200)
+                                                     **standard_sim_params)
 
     ax0.plot(t_data, v_data, color_exp, linewidth=0.5, label='Data')
     ax0.plot(t_model, v_model, color_model, linewidth=0.5, label='Model')

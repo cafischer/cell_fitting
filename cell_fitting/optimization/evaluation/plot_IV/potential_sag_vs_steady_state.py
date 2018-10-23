@@ -1,13 +1,12 @@
 import os
 import matplotlib.pyplot as pl
-import matplotlib
 import numpy as np
 import json
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from nrn_wrapper import Cell
-from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function
-from cell_fitting.util import change_color_brightness
+from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset, get_standard_simulation_params
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function, get_i_inj_standard_params
+from cell_characteristics import to_idx
 pl.style.use('paper')
 
 
@@ -52,63 +51,44 @@ def plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
-    #save_dir = '../../../results/server/2017-07-27_09:18:59/22/L-BFGS-B'
-    #model_dir = os.path.join(save_dir, 'model', 'cell.json')
-    #save_dir = '../../../results/hand_tuning/test0'
-    #model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
-
     AP_threshold = -30
     v_shift = -16
+    protocol = 'IV'
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
-    # discontinuities for plot_IV
-    dt = 0.05
-    start_step = int(round(250 / dt))
-    end_step = int(round(750 / dt))
-    discontinuities_IV = [start_step, end_step]
-
     # read data
     v_mat_data, t_mat_data, sweep_idxs = get_v_and_t_from_heka(data_dir, 'IV', return_sweep_idxs=True)
-    i_inj_mat = get_i_inj_from_function('IV', sweep_idxs, t_mat_data[0][-1], t_mat_data[0][1]-t_mat_data[0][0])
+    params_IV = get_i_inj_standard_params(protocol, sweep_idxs)
+    amps = params_IV['step_amp']
+    start_step = params_IV['start_step']
+    end_step = params_IV['end_step']
 
-    # VI for model
-    simulation_params = {'sec': ('soma', None), 'celsius': 35, 'onset': 200, 'atol': 1e-6, 'continuous': True,
-                         'discontinuities': discontinuities_IV, 'interpolate': True,
-                         'v_init': v_mat_data[0, 0] + v_shift, 'tstop': t_mat_data[0, -1],
-                         'dt': t_mat_data[0, 1] - t_mat_data[0, 0]}
-    #simulation_params = {'celsius': 35, 'onset': 200}
-
+    # IV for model
+    simulation_params = get_standard_simulation_params()
+    simulation_params['tstop'] = np.round(t_mat_data[0, -1])
+    i_inj_mat = get_i_inj_from_function('IV', sweep_idxs, simulation_params['tstop'], simulation_params['dt'])
     v_traces_model = []
-    for i in range(len(v_mat_data)):
+    for i in range(len(i_inj_mat)):
         simulation_params['i_inj'] = i_inj_mat[i]
         v_model, t_model, _ = iclamp_adaptive_handling_onset(cell, **simulation_params)
         v_traces_model.append(v_model)
 
-    # compute amplitudes
-    start_step = np.nonzero(i_inj_mat[0])[0][0]
-    end_step = np.nonzero(i_inj_mat[0])[0][-1] + 1
-    amps = np.array([i_inj[start_step] for i_inj in i_inj_mat])
-
-    # sort according to amplitudes
-    idx_sort = np.argsort(amps)
-    amps = amps[idx_sort]
-    v_traces_model = np.array(v_traces_model)[idx_sort]
-
     v_sags, v_steady_states, amps_subtheshold = compute_v_sag_and_steady_state(v_traces_model, amps, AP_threshold,
-                                                                               start_step, end_step)
+                                                                               to_idx(start_step, simulation_params['dt']),
+                                                                               to_idx(end_step, simulation_params['dt']))
 
     # save
     max_amp = 0.15
-    amps_subtheshold_range = np.array(amps_subtheshold) < max_amp + 0.05
-    amps_subtheshold = np.array(amps_subtheshold)[amps_subtheshold_range]
-    v_steady_states = np.array(v_steady_states)[amps_subtheshold_range]
-    v_sags = np.array(v_sags)[amps_subtheshold_range]
+    amps_subtheshold_bool = np.array(amps_subtheshold) < max_amp + 0.05
+    amps_subtheshold = np.array(amps_subtheshold)[amps_subtheshold_bool]
+    v_steady_states = np.array(v_steady_states)[amps_subtheshold_bool]
+    v_sags = np.array(v_sags)[amps_subtheshold_bool]
 
     sag_dict = dict(amps_subtheshold=list(amps_subtheshold), v_steady_states=list(v_steady_states), v_sags=list(v_sags))
     with open(os.path.join(save_dir, 'img', 'IV', 'sag', 'sag_dict.json'), 'w') as f:
@@ -120,6 +100,7 @@ if __name__ == '__main__':
         os.makedirs(save_dir_img)
 
     fig, ax = pl.subplots()
-    plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold_range, v_steady_states, v_sags)
+    plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags)
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'sag_vs_steady_state.png'))
+    pl.show()

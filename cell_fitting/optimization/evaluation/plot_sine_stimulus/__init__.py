@@ -63,13 +63,13 @@ def get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt):
 
 
 def simulate_sine_stimulus(cell, amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt, shift=0, v_init=-75,
-                           celsius=35, onset=200):
+                           celsius=35, onset=200, pos_v=0.5, pos_i=0.5, sec=('soma', None)):
 
     i_exp = get_sine_stimulus(amp1, amp2, sine1_dur, freq2, onset_dur, offset_dur, dt) + shift
 
     # get simulation parameters
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': v_init, 'tstop': sine1_dur+1000,
-                         'dt': dt, 'celsius': celsius, 'onset': onset}
+    simulation_params = {'sec': sec, 'i_inj': i_exp, 'v_init': v_init, 'tstop': sine1_dur+1000,
+                         'dt': dt, 'celsius': celsius, 'onset': onset, 'pos_v': pos_v, 'pos_i': pos_i}
 
     # record v
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)

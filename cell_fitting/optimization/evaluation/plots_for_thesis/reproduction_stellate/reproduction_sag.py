@@ -1,24 +1,24 @@
 import numpy as np
 import os
 import json
-import matplotlib
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
+from matplotlib.lines import Line2D
+from nrn_wrapper import Cell
 from cell_fitting.read_heka import load_data
 from cell_fitting.optimization.evaluation import simulate_model
-from nrn_wrapper import Cell
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import plot_sag_vs_steady_state_on_ax
 from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel, plot_channel_block_on_ax
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
-from matplotlib.lines import Line2D
-from cell_fitting.util import change_color_brightness, get_channel_color_for_plotting
+from cell_fitting.optimization.simulate import get_standard_simulation_params
+from cell_fitting.util import get_channel_color_for_plotting
 pl.style.use('paper_subplots')
 
 
-# TODO: check simulation_params (e.g. dt)
 # TODO: check all exp. data are v_shifted
 # TODO: check sag_amps and v_deflection data
 if __name__ == '__main__':
+
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
@@ -26,10 +26,10 @@ if __name__ == '__main__':
     save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
-    v_init = -75
     color_exp = '#0099cc'
     color_model = 'k'
     step_amp = -0.1
+    standard_sim_params = get_standard_simulation_params()
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
@@ -45,7 +45,7 @@ if __name__ == '__main__':
     fig.add_subplot(ax1)
 
     v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
-    v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], v_init=v_init)
+    v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
 
     ax0.plot(t_data, v_data, color_exp, label='Data')
     ax0.plot(t_model, v_model, color_model, label='Model')
@@ -80,7 +80,6 @@ if __name__ == '__main__':
     custom_lines = [Line2D([0], [0], marker='s', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
                     Line2D([0], [0], marker='$\cup$', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
     ax.legend(custom_lines, ['Steady state', 'Sag'], loc='upper left')
-    # letter
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # block HCN
@@ -90,15 +89,14 @@ if __name__ == '__main__':
     percent_block = 100
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
     block_channel(cell, 'hcn_slow', percent_block)
-    v_after_block, _, _ = simulate_model(cell, 'IV', step_amp, t_data[-1], v_init=v_init)
+    v_after_block, _, _ = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
 
     plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
                              color=color_model)
     custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
-                    Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn'], lw=1.0)]
+                    Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]
     ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')
     ax.set_ylim(-85, -70)
-    # letter
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # sag amp. vs voltage deflection for all cells
@@ -125,7 +123,6 @@ if __name__ == '__main__':
     ax.set_ylabel('Voltage deflection')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     #ax.legend()
-    # letter
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
