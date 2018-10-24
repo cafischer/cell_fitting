@@ -19,7 +19,7 @@ pl.style.use('paper_subplots')
 # TODO: check all exp. data are v_shifted
 # TODO: check same protocol used for double ramp
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Phd/DAP-Project/thesis/figures'
+    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
     save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
 
-    fig = pl.figure(figsize=(11, 6.0))
+    fig = pl.figure(figsize=(15, 6.0))
     outer = gridspec.GridSpec(2, 5)
 
     # DAP
@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
     plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_model, 0.0: color_model, 0.1: color_model},
                                  label=False, plot_range=False, **current_threshold_dict_model)
-    plot_current_threshold_on_ax(ax0, colors_dict={-0.1: 'k', 0.0: 'k', 0.1: 'k'}, label=True,
+    plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_exp, 0.0: color_exp, 0.1: color_exp}, label=True,
                                  **current_threshold_dict_data)
     ax0.get_yaxis().set_label_coords(-0.25, 0.5)
 

@@ -12,7 +12,6 @@ from cell_characteristics import to_idx
 pl.style.use('paper_subplots')
 
 
-# TODO: check simulation_params (e.g. dt)
 # TODO: check all exp. data are v_shifted
 # TODO: check data computation phase means, stds
 if __name__ == '__main__':
