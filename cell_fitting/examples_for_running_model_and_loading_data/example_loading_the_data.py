@@ -7,11 +7,11 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2015_08_11d.dat'
+    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
 
     # load
     protocol = 'rampIV' #'IV'
-    amp = 2.8
+    amp = 3.1
     v_shift = -16  # shift for accounting for the liquid junction potential
     if protocol == 'Zap20':
         sweep_idx = 0
@@ -33,7 +33,9 @@ if __name__ == '__main__':
     # extract AP/DAP characteristics
     return_characteristics = ['AP_amp', 'AP_width', 'DAP_amp', 'DAP_width', 'DAP_deflection', 'DAP_time']
     get_spike_characteristics_dict = get_spike_characteristics_dict(for_data=True)  # standard parameters to use
-    AP_amp, AP_width, DAP_amp, DAP_width, DAP_deflection = get_spike_characteristics(v, t, return_characteristics,
-                                                                                     v_rest=v[0], std_idx_times=(0, 1),
-                                                                                     check=True,
-                              **get_spike_characteristics_dict)
+    AP_amp, AP_width, DAP_amp, DAP_width, DAP_deflection, DAP_time = get_spike_characteristics(v, t,
+                                                                                               return_characteristics,
+                                                                                               v_rest=v[0],
+                                                                                               std_idx_times=(0, 1),
+                                                                                               check=True,
+                                                                                               **get_spike_characteristics_dict)

@@ -4,14 +4,16 @@ import matplotlib.pyplot as pl
 from bac_project.connectivity.connection import synaptic_input
 from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.optimization.simulate import iclamp_adaptive_handling_onset
-from cell_characteristics.analyze_APs import get_AP_onsets_idxs
+from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from neuron import h
 import os
 
 load_mechanism_dir("/home/cf/Phd/programming/projects/bac_project/bac_project/connectivity/vecstim")
 
-save_dir = os.path.join('../results/server/2017-07-06_13:50:52/434/L-BFGS-B', 'img', 'ISI_hist')
-model_dir = '../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/cell.json'
+#save_dir = os.path.join('../results/server/2017-07-06_13:50:52/434/L-BFGS-B', 'img', 'ISI_hist')
+save_dir = './results'
+#model_dir = '../results/server/2017-07-06_13:50:52/434/L-BFGS-B/model/cell.json'
+model_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2/cell.json'
 mechanism_dir = '../model/channels/vavoulis'
 
 if not os.path.exists(save_dir):
@@ -97,7 +99,7 @@ pl.legend()
 pl.show()
 
 # check for doublets
-AP_onsets = get_AP_onsets_idxs(v, 0)
+AP_onsets = get_AP_onset_idxs(v, 0)
 
 # ISI hist
 bins = np.arange(0, 1000+10, 10)

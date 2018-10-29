@@ -25,10 +25,11 @@ def ou_noise_input(cell, g_e0=0.01, g_i0=0.07, std_e=0.003, std_i=0.005, tau_e=2
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     load_mechanism_dir(mechanism_dir)
+    load_mechanism_dir('/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/OU_process')
 
     onset = 200
     dt = 0.01
@@ -51,8 +52,8 @@ if __name__ == '__main__':
     t_traces = []
     for n in range(n_trials):
         ou_process.new_seed(n)
-        simulation_params = {'sec': ('soma', None), 'i_inj': np.zeros(to_idx(tstop, dt)), 'v_init': v_init, 'tstop': tstop,
-                             'dt': dt, 'celsius': celsius, 'onset': onset}
+        simulation_params = {'sec': ('soma', None), 'i_inj': np.zeros(to_idx(tstop, dt)), 'v_init': v_init,
+                             'tstop': tstop, 'dt': dt, 'celsius': celsius, 'onset': onset}
         v, t, _ = iclamp_handling_onset(cell, **simulation_params)
         medians[n] = np.median(v)
         means[n] = np.mean(v)

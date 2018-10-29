@@ -159,7 +159,7 @@ if __name__ == '__main__':
     save_dir = './results/'+folder+'/data'
     #save_dir_model = '../results/server/2017-07-06_13:50:52/434/L-BFGS-B/'
     #model_dir = os.path.join(save_dir_model, 'model', 'cell.json')
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir_model, 'cell.json')
     mechanism_dir = '../model/channels/vavoulis'
 
