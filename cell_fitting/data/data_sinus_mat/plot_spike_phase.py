@@ -16,8 +16,8 @@ from cell_fitting.read_heka import shift_v_rest
 if __name__ == '__main__':
     animal = 'rat'
     save_dir = os.path.join('../plots/sine_stimulus/traces/', animal)
-    amp1_use = None #0.6
-    amp2_use = None #0.2
+    amp1_use = None
+    amp2_use = None
     freq1 = 0.1
     freq2 = 5
     onset_dur = offset_dur = 500

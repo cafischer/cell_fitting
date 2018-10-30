@@ -14,7 +14,7 @@ from grid_cell_stimuli.spike_phase import get_spike_phases_by_min, plot_phase_hi
 
 if __name__ == '__main__':
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/'
-    model_ids = range(1, 7)
+    model_ids = [2] #range(1, 7)
     mechanism_dir = '../../../model/channels/vavoulis'
     load_mechanism_dir(mechanism_dir)
 
@@ -42,7 +42,7 @@ if __name__ == '__main__':
         # parameter
         AP_threshold = 0
         order = to_idx(20, dt)
-        dist_to_AP = to_idx(250, dt)
+        dist_to_AP = to_idx(1./freq2 * 1000, dt)
 
         # rebuild theta stim (sine2)
         x = np.arange(0, sine1_dur + dt, dt)
@@ -68,7 +68,6 @@ if __name__ == '__main__':
         # parameter
         AP_threshold = 0
         order = to_idx(20, dt)
-        dist_to_AP = to_idx(250, dt)
         speed = 0.040  # cm/ms
 
         # phase precession
@@ -79,6 +78,10 @@ if __name__ == '__main__':
         plot_phase_vs_position_per_run(phases, phases_pos, AP_onsets, track_len, run_start_idx, save_dir_img)
 
         slope, intercept, best_shift = compute_phase_precession(phases, phases_pos)
+        print slope
         plot_phase_precession(phases, phases_pos, slope, intercept, best_shift, save_dir_img)
+
+        pl.figure()
+        pl.plot(t, v)
 
         pl.show()

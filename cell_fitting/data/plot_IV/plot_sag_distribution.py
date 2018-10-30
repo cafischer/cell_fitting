@@ -2,7 +2,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import os
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function, get_cells_for_protocol, \
-    get_sweep_index_for_amp
+    get_sweep_index_for_amp, shift_v_rest
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 pl.style.use('paper')
@@ -31,23 +31,25 @@ if __name__ == '__main__':
 
         # read data
         try:
-            v_mat_data, t_mat_data = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), 'IV',
-                                                                       sweep_idxs=[sweep_idx])
+            v_mat, t_mat = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), 'IV',
+                                                 sweep_idxs=[sweep_idx])
+            for i in range(len(v_mat)):
+                v_mat[i] = shift_v_rest(v_mat[i], v_shift)
         except IndexError:  # if amplitude was not tested, raises IndexError
             continue
-        i_inj_mat = get_i_inj_from_function('IV', [sweep_idx], t_mat_data[0][-1], t_mat_data[0][1]-t_mat_data[0][0])
+        i_inj_mat = get_i_inj_from_function('IV', [sweep_idx], t_mat[0][-1], t_mat[0][1] - t_mat[0][0])
         start_step_idx = np.nonzero(i_inj_mat[0])[0][0]
         end_step_idx = np.nonzero(i_inj_mat[0])[0][-1] + 1
 
         # compute sag
-        v_sags, v_steady_states, _ = compute_v_sag_and_steady_state(v_mat_data, [amp], AP_threshold,
-                                                                                   start_step_idx, end_step_idx)
+        v_sags, v_steady_states, _ = compute_v_sag_and_steady_state(v_mat, [amp], AP_threshold,
+                                                                    start_step_idx, end_step_idx)
         try:
             sag_amp = v_steady_states[0] - v_sags[0]
             if sag_amp >= 0:
                 sag_amps.append(sag_amp)
 
-                vrest = np.mean(v_mat_data[0, :start_step_idx])
+                vrest = np.mean(v_mat[0, :start_step_idx])
                 v_deflection = vrest - v_steady_states[0]
                 v_deflections.append(v_deflection)
 

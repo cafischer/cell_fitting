@@ -11,7 +11,6 @@ from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp_summa
 pl.style.use('paper_subplots')
 
 
-# TODO: check same protocol used for double ramp
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'

@@ -15,8 +15,6 @@ from cell_fitting.util import get_channel_color_for_plotting
 pl.style.use('paper_subplots')
 
 
-# TODO: check all exp. data are v_shifted
-# TODO: check sag_amps and v_deflection data
 if __name__ == '__main__':
 
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
@@ -76,7 +74,6 @@ if __name__ == '__main__':
     plot_sag_vs_steady_state_on_ax(ax, color_lines=color_exp, label=False, **sag_dict_data)
 
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    # legend
     custom_lines = [Line2D([0], [0], marker='s', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
                     Line2D([0], [0], marker='$\cup$', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
     ax.legend(custom_lines, ['Steady state', 'Sag'], loc='upper left')

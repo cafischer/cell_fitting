@@ -12,8 +12,6 @@ from cell_characteristics import to_idx
 pl.style.use('paper_subplots')
 
 
-# TODO: check all exp. data are v_shifted
-# TODO: check data computation phase means, stds
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'

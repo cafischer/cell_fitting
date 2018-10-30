@@ -14,8 +14,6 @@ from cell_fitting.optimization.simulate import get_standard_simulation_params
 pl.style.use('paper_subplots')
 
 
-# TODO: check all exp. data are v_shifted
-# TODO: check sag_amps and v_deflection data
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
