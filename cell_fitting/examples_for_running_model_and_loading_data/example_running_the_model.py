@@ -9,13 +9,16 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    #model_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
-    model_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/cells'
-    #mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/hodgkinhuxley'
+    model_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    #model_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/cells'
+    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    #mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/hodgkinhuxley'
 
     # load model
-    cell = Cell.from_modeldir(os.path.join(model_dir, 'hhCell.json'), mechanism_dir)
+    cell = Cell.from_modeldir(os.path.join(model_dir, 'cell.json'), mechanism_dir)
+
+    cell.soma(.5).nap.m_tau_max = 0.00001
+    cell.soma(.5).nap.m_vs = 100
 
     # get trace of injected current
     protocol = 'rampIV'

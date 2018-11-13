@@ -100,9 +100,9 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[1, 1])
     fig.add_subplot(ax)
 
-    sag_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag_hist', 'rat', str(step_amp),
+    sag_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                                       'sag_amps.npy'))
-    v_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag_hist', 'rat', str(step_amp),
+    v_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                               'v_deflections.npy'))
     ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
 

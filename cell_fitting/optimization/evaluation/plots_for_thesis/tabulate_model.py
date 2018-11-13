@@ -124,7 +124,7 @@ if __name__ == '__main__':
             table.append(column)
     table = np.array(table).T
 
-    header1 = r' & \multicolumn{2}{c}{Nat} & \multicolumn{2}{c}{Nap} & \multicolumn{1}{c}{Kdr} &  \multicolumn{1}{c}{HCN} \\'
+    header1 = r' & \multicolumn{2}{c}{$Na_T$} & \multicolumn{2}{c}{$Na_P$} & \multicolumn{1}{c}{$K_{DR}$} &  \multicolumn{1}{c}{$HCN$} \\'
     header2 = r' & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} & \multicolumn{1}{c}{m} & \multicolumn{1}{c}{h} \\'
     line_break = r'\hline'
     powers = r' $p/q\ (1)$ & 3 & 1 & 3 & 1 & 4 & 1 \\'

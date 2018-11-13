@@ -5,6 +5,7 @@ from nrn_wrapper import Cell
 from cell_fitting.optimization.evaluation.plot_IV import get_step, get_IV
 import matplotlib.pyplot as pl
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
+from cell_characteristics.analyze_step_current_data import get_latency_to_first_spike, get_ISI12
 pl.style.use('paper')
 
 
@@ -19,35 +20,27 @@ def get_latency_and_ISI12(cell):
     AP_threshold = 0
     dt = 0.01
 
-    # main
-    latency_found = False
-    ISI12_found = False
-    for step_amp in step_amps:
-        v, t, i_inj = get_IV(cell, step_amp, get_step, start_step, end_step, tstop, dt)
+    # simulate
+    v_mat = np.zeros((len(step_amps), int(tstop/dt)+1))
+    for i, step_amp in enumerate(step_amps):
+        v_mat[i, :], t, i_inj = get_IV(cell, step_amp, get_step, start_step, end_step, tstop, dt)
+
+    # get latency and ISI12
+    latency = None
+    for v in v_mat:
         AP_onsets = get_AP_onset_idxs(v, AP_threshold)
+        latency = get_latency_to_first_spike(v, t, AP_onsets, start_step, end_step)
+        if latency is not None:
+            break
 
-        # get latency and ISI1/2
-        if latency_found == False and len(AP_onsets) >= 1:
-            latency = t[AP_onsets[0]] - start_step
-            latency_found = True
-            # print 'Latency (ms)', latency
-            # pl.figure()
-            # pl.plot(t, v)
-            # pl.show()
+    ISI12 = None
+    for v in v_mat:
+        AP_onsets = get_AP_onset_idxs(v, AP_threshold)
+        ISI12 = get_ISI12(v, t, AP_onsets, start_step, end_step)
+        if ISI12 is not None:
+            break
 
-        if ISI12_found == False and len(AP_onsets) >= 4:
-            ISIs = np.diff(AP_onsets) * dt
-            ISI12 = ISIs[0] / ISIs[1]
-            ISI12_found = True
-            # print 'ISI1/2 (ms): ', ISI12
-            # pl.figure()
-            # pl.plot(t, v)
-            # pl.show()
-
-        if latency_found and ISI12_found:
-            return latency, ISI12
-
-    return None, None
+    return latency, ISI12
 
 
 if __name__ == '__main__':

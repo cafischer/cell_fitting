@@ -5,8 +5,8 @@ from cell_fitting.optimization.simulate import iclamp_handling_onset, extract_si
 from cell_characteristics import to_idx
 from cell_fitting.util import merge_dicts
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_function, get_sweep_index_for_amp
-from cell_characteristics.fIcurve import compute_fIcurve
-from cell_fitting.data.plot_IV.plot_fI_curve_fit_distribution import fit_fun
+from cell_characteristics.analyze_step_current_data import compute_fIcurve
+from cell_fitting.data.plot_IV.fit_FI_curve import fit_fun
 from scipy.optimize import curve_fit
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
 from cell_fitting.optimization.evaluation import plot_v, joint_plot_data_and_model

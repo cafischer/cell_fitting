@@ -42,14 +42,15 @@ def plot_double_ramp():
     # pl.show()
     pl.close()
 
+
 if __name__ == '__main__':
     save_dir = '../plots'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     PP_params_dir = '/home/cf/Phd/DAP-Project/cell_data/PP_params2.csv'
     protocol = 'PP'
     v_rest_shift = -16
-    cell_id = '2015_08_11f'
-    run_idx = 0
+    cell_id = '2014_07_10d'
+    run_idx = 5
     step_idx_dict = {-0.1: 0, 0: 1, 0.1: 2}
     step_amps = [0, -0.1, 0.1]
 
@@ -114,5 +115,6 @@ if __name__ == '__main__':
             plot_double_ramp()
 
     np.save(os.path.join(save_dir, 'PP', cell_id, str(run_idx), 'v_mat.npy'), v_mat)
+    np.save(os.path.join(save_dir, 'PP', cell_id, str(run_idx), 't.npy'), t)
 
 # Series number = 2nd number in Igor (sweep number is 3rd) = current number Franzi writes down

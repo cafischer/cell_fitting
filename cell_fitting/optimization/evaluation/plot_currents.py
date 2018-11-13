@@ -7,6 +7,7 @@ from nrn_wrapper import Cell
 from cell_fitting.optimization.simulate import extract_simulation_params, simulate_currents, iclamp_handling_onset
 from cell_fitting.util import merge_dicts, get_channel_dict_for_plotting, get_channel_color_for_plotting
 from cell_fitting.read_heka.i_inj_functions import get_i_inj_double_ramp
+from cell_fitting.read_heka import get_i_inj_from_function
 pl.style.use('paper')
 
 
@@ -48,24 +49,30 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # get simulation_params
-    data = pd.read_csv(data_dir)
+    # data = pd.read_csv(data_dir)
     # sim_params = {'onset': 200, 'v_init': -75}
     # simulation_params = merge_dicts(extract_simulation_params(data.v.values, data.t.values, data.i.values), sim_params)
 
-    i_exp = get_i_inj_double_ramp(1.0, 1.0, 7.0, 0.0, 125, -0.05, 2, 15, tstop=500, dt=0.05)
-    simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': 500,
-                         'dt': 0.05, 'celsius': 35, 'onset': 200}
+    #i_exp = get_i_inj_double_ramp(1.0, 1.0, 7.0, 0.0, 125, -0.05, 2, 15, tstop=500, dt=0.05)
+    i_exp = get_i_inj_from_function('IV', [0], 1000, 0.01)[0]
+    simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': 1000,
+                         'dt': 0.01, 'celsius': 35, 'onset': 200}
+
+    #cell.soma(.5).hcn_slow.gbar = 0
+    #cell.soma(.5).nap.gbar = 0
+    cell.soma(.5).nat.gbar = 0
+    #cell.soma(.5).kdr.gbar = 0
 
     # plot currents
     currents, channel_list = simulate_currents(cell, simulation_params, plot=False)
-    new_channel_list = copy.copy(channel_list)
-    new_channel_list[channel_list.index('nap')] = 'nat'
-    new_channel_list[channel_list.index('nat')] = 'nap'
+    # new_channel_list = copy.copy(channel_list)
+    # new_channel_list[channel_list.index('nap')] = 'nat'
+    # new_channel_list[channel_list.index('nat')] = 'nap'
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
 
     fig, ax1 = pl.subplots()
     for i in range(len(channel_list)):
-        ax1.plot(t, -1 * currents[i], label=new_channel_list[i])
+        ax1.plot(t, -1 * currents[i], label=channel_list[i])
         ax1.set_ylabel('Current (mA/cm$^2$)')
         ax1.set_xlabel('Time (ms)')
     ax2 = ax1.twinx()
@@ -75,7 +82,7 @@ if __name__ == '__main__':
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
     ax1.legend(h1 + h2, l1 + l2)
-    ax2.set_ylim(-80, -40)
+    #ax2.set_ylim(-80, -40)
     ax1.set_ylim(-0.1, 0.1)
     pl.tight_layout()
     pl.show()

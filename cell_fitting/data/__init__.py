@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+import os
 __author__ = 'caro'
 
 
@@ -32,3 +32,12 @@ def change_dt(dt_new, data):
     v = np.interp(t, data.t.values, data.v.values)
 
     return pd.DataFrame({'t': t, 'i': i, 'v': v})
+
+
+def check_cell_has_DAP(cell_id):
+    save_dir = '../plots/spike_characteristics/rat'
+    cell_id_list = np.load(os.path.join(save_dir, 'cell_ids.npy'))
+    if cell_id in cell_id_list:
+        return True
+    else:
+        return False

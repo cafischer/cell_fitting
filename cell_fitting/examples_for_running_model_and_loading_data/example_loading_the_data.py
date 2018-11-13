@@ -7,11 +7,11 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
+    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2014_03_06e.dat'
 
     # load
     protocol = 'rampIV' #'IV'
-    amp = 3.1
+    amp = 3.7
     v_shift = -16  # shift for accounting for the liquid junction potential
     if protocol == 'Zap20':
         sweep_idx = 0
@@ -23,12 +23,12 @@ if __name__ == '__main__':
     i_inj = get_i_inj_from_function(protocol, [sweep_idx], t[-1], t[1]-t[0])[0]
 
     # plot
-    # pl.figure()
-    # pl.plot(t, v, 'k', label='Exp. Data')
-    # pl.xlabel('Time (ms)')
-    # pl.ylabel('Membrane Potential (mV)')
-    # pl.tight_layout()
-    # pl.show()
+    pl.figure()
+    pl.plot(t, v, 'k', label='Exp. Data')
+    pl.xlabel('Time (ms)')
+    pl.ylabel('Membrane Potential (mV)')
+    pl.tight_layout()
+    pl.show()
 
     # extract AP/DAP characteristics
     return_characteristics = ['AP_amp', 'AP_width', 'DAP_amp', 'DAP_width', 'DAP_deflection', 'DAP_time']

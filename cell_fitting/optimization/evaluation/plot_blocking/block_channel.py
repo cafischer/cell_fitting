@@ -5,7 +5,21 @@ from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
 from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.util import get_channel_dict_for_plotting, get_channel_color_for_plotting
 from neuron import h
+import matplotlib.patches as mpatches
+from matplotlib.legend_handler import HandlerPatch
 pl.style.use('paper')
+
+
+class HandlerEllipse(HandlerPatch):
+    def create_artists(self, legend, orig_handle, xdescent, ydescent, width, height, fontsize, trans):
+        height = 6
+        width = 2
+        xdescent = 19
+        center = 0.5 * width + 0.5 * xdescent, 0.5 * height + 0.5 * ydescent
+        p = mpatches.Ellipse(xy=center, width=width, height=height)
+        self.update_prop(p, orig_handle, legend)
+        p.set_transform(trans)
+        return [p]
 
 
 def block_channel(cell, channel_name, percent_block):
@@ -37,14 +51,26 @@ def block_channel_at_timepoint(cell, channel_name, percent_block, timepoint):
 def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block, percent_block, label=True, color='k'):
     channel_dict = get_channel_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()
-    ax.plot(t, v_before_block, color, label='without block')
+    h1, = ax.plot(t, v_before_block, color, label='without block') #, markevery=1000, marker='|')
+
+    p = np.arange(0, len(t), 500)
+    x = t[p]
+    y = v_before_block[p]
+    ells = [mpatches.Ellipse(xy=(x[i], y[i]), width=0.6, height=2.6, angle=0, color='k') for i in range(len(x))]
+    for e in ells:
+        ax.add_artist(e)
+        e.set_clip_box(ax.bbox)
+    handles = np.zeros(len(channel_list), dtype=object)
+    labels = np.zeros(len(channel_list), dtype=object)
     for i, channel_name in enumerate(channel_list):
-        ax.plot(t, v_after_block[i, :], color=channel_color[channel_name],
+        handles[i], = ax.plot(t, v_after_block[i, :], color=channel_color[channel_name],
                 label=str(percent_block) + '% block of ' + channel_dict[channel_name])
+        labels[i] = str(percent_block) + '% block of ' + channel_dict[channel_name]
     ax.set_xlabel('Time (ms)')
     ax.set_ylabel('Mem. pot. (mV)')
     if label:
-        ax.legend(loc='upper right')
+        ax.legend([(h1, e)]+handles.tolist(), ['without block']+labels.tolist(), loc='upper right',
+                  handler_map={mpatches.Ellipse: HandlerEllipse()})
 
 
 class ChangeConductanceEvent(object):

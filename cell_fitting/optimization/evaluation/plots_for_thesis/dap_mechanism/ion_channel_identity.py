@@ -182,7 +182,7 @@ if __name__ == '__main__':
     ax.text(-0.25, 1.0, 'F', transform=ax.transAxes, size=18, weight='bold')
 
     amps = [-80, 0, -80]
-    durs = [20, 20, 100]
+    durs = [10, 20, 100]
     v_steps = np.arange(-80, 10, 20)
     stepamp = 3
     sec_channel = getattr(cell.soma(.5), 'nap')
@@ -191,7 +191,7 @@ if __name__ == '__main__':
     i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
                                      stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
-    ax.set_xlim(15, None)
+    #ax.set_xlim(15, None)
 
     # Kdr
     ax = pl.Subplot(fig, outer[2, 1])

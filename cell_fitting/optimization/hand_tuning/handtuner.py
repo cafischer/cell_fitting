@@ -38,7 +38,7 @@ if __name__ == '__main__':
         # [-100, 0, [['soma', '0.5', 'nat', 'h_vh']]],
         # [-100, 0, [['soma', '0.5', 'kdr', 'n_vh']]],
         # [-100, 0, [['soma', '0.5', 'nap', 'm_vh']]],
-        # [-100, 0, [['soma', '0.5', 'nap', 'h_vh']]],
+        [-100, 0, [['soma', '0.5', 'nap', 'h_vh']]],
         # [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_vh']]],
         #
         [1, 30, [['soma', '0.5', 'nat', 'm_vs']]],
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     mechanism_dir = '../../model/channels/vavoulis'
     init_var = get_init_var_from_model(model_dir, mechanism_dir, variables, variable_keys)
     data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
-                      'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(amp=3.1, protocol='rampIV'),
+                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(amp=-0.15, protocol='IV'),
                       'v_rest_shift': -16, 'file_type': 'dat'}
 
     fitter_params = {

@@ -19,12 +19,16 @@ def vertical_square_bracket(ax, star, x1, x2, y1, y2):
 
 def get_star_from_ttest(data, h0=0):
     t, p = ttest_1samp(data[~np.isnan(data)], h0)
+    return get_star_from_p_val(p)
+
+
+def get_star_from_p_val(p):
     star_idx = np.where([p < 0.01, p < 0.001, p < 0.0001])[0]
     if len(star_idx) == 0:
         star_idx = 0
     else:
         star_idx = star_idx[-1] + 1
-    stars = ['', '*', '**', '***']
+    stars = ['n.s.', '*', '**', '***']
     star = stars[star_idx]
     return star
 

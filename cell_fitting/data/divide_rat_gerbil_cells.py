@@ -16,8 +16,8 @@ def check_rat_or_gerbil(cell_id):
         return 'gerbil'
     elif cell_id in cells_rat:
         return 'rat'
-    else:
-        print 'Neither in rat nor gerbil database!'
+   # else:
+        #print 'Neither in rat nor gerbil database!'
         #raise ValueError('Neither in rat nor gerbil database!')
 
 

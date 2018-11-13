@@ -1,8 +1,19 @@
 import numpy as np
 import os
 import matplotlib.pyplot as pl
-from cell_fitting.optimization.evaluation.plot_hyper_depo.plot_hyper_depo_summary import get_star_from_ttest
+from cell_fitting.optimization.evaluation.plot_hyper_depo.plot_hyper_depo_summary import get_star_from_ttest#, get_star_from_p_val
 pl.style.use('paper')
+
+
+def get_star_from_p_val(p):
+    star_idx = np.where([p < 0.01, p < 0.001, p < 0.0001])[0]
+    if len(star_idx) == 0:
+        star_idx = 0
+    else:
+        star_idx = star_idx[-1] + 1
+    stars = ['n.s.', '*', '**', '***']
+    star = stars[star_idx]
+    return star
 
 
 def plot_current_threshold(diff_current_data, diff_current_model, save_dir):
@@ -27,30 +38,67 @@ def plot_current_threshold(diff_current_data, diff_current_model, save_dir):
     pl.show()
 
 
-def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, color='k',
-                                           plot_sig=True):
-    percentage_difference = 100 - (current_thresholds_DAP / current_thresholds_rest * 100)
+def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, step_amps, color='k',
+                                           plot_sig=True, p_groups=None):
+    percentage_difference = 100 - (current_thresholds_DAP / np.repeat(np.array([current_thresholds_rest]).T, 3, 1) * 100)
 
-    ax.errorbar(0.0, np.mean(percentage_difference), yerr=np.std(percentage_difference), color=color, marker='o', capsize=3)
-    ax.plot(np.zeros(len(percentage_difference))-0.4, percentage_difference, 'o', color=color, label='Exp. cells')
     if plot_sig:
+        ax.errorbar([0, 2.0, 4.0], np.mean(percentage_difference, 0), yerr=np.std(percentage_difference, 0),
+                    color=color, marker='o', capsize=3, linestyle='')
+        ax.plot(np.zeros(len(percentage_difference)) - 0.4, percentage_difference[:, 0], 'o', color=color, alpha=0.5)
+        ax.plot(np.zeros(len(percentage_difference)) + 1.6, percentage_difference[:, 1], 'o', color=color, alpha=0.5)
+        ax.plot(np.zeros(len(percentage_difference)) + 3.6, percentage_difference[:, 2], 'o', color=color, alpha=0.5)
+
         h0 = 0
-        star = get_star_from_ttest(percentage_difference, h0)
-        vertical_square_bracket(ax, star, x1=0.35, x2=0.4, y1=np.mean(percentage_difference), y2=h0)
-        ax.set_xlim([-1, 1])
+        star = get_star_from_ttest(percentage_difference[:, 0], h0)
+        vertical_square_bracket(ax, star, x1=0.35, x2=0.4, y1=np.mean(percentage_difference[:, 0]), y2=h0, dtext=0.1)
+        star = get_star_from_ttest(percentage_difference[:, 1], h0)
+        vertical_square_bracket(ax, star, x1=2.35, x2=2.4, y1=np.mean(percentage_difference[:, 1]), y2=h0, dtext=0.1)
+        star = get_star_from_ttest(percentage_difference[:, 2], h0)
+        vertical_square_bracket(ax, star, x1=4.35, x2=4.4, y1=np.mean(percentage_difference[:, 2]), y2=h0, dtext=0.1)
+        ax.set_xlim([-1, 5.0])
+        ax.set_xticks(np.array([0, 2, 4]) - 0.4)
+
+        # group comparisons
+        if p_groups is not None:
+            star = get_star_from_p_val(p_groups[0])
+            horizontal_square_bracket(ax, star, x1=0, x2=1.9, y1=76, y2=77, dtext=1.0)
+            star =  get_star_from_p_val(p_groups[1])
+            horizontal_square_bracket(ax, star, x1=2.1, x2=4, y1=76, y2=77, dtext=1.0)
+            star =  get_star_from_p_val(p_groups[2])
+            horizontal_square_bracket(ax, star, x1=0, x2=4, y1=82, y2=84, dtext=0.1)
     else:
-        ax.set_xlim([-1.2, 0.8])
-    ax.set_xticks([])
-    ax.set_ylim([0, None])
-    ax.set_ylabel('Decrease current thresh. (%)')
+        ax.errorbar([0, 1, 2], np.mean(percentage_difference, 0), yerr=np.std(percentage_difference, 0),
+                    color=color, marker='o', capsize=3, linestyle='')
+        ax.plot(np.zeros(len(percentage_difference)) - 0.4, percentage_difference[:, 0], 'o', color=color, alpha=0.5)
+        ax.plot(np.zeros(len(percentage_difference)) + 0.6, percentage_difference[:, 1], 'o', color=color, alpha=0.5)
+        ax.plot(np.zeros(len(percentage_difference)) + 1.6, percentage_difference[:, 2], 'o', color=color, alpha=0.5)
+        ax.set_xlim([-1.0, 2.2])
+        ax.set_xticks(np.array([0, 1, 2])-0.4)
+    ax.set_xticklabels(step_amps)
+    ax.set_ylim([0, 100])
+    ax.set_ylabel('Decrease current \nthresh. (%)')
+    ax.set_xlabel('Amp. (nA)')
+    return np.mean(percentage_difference, 0)
 
-    return np.mean(percentage_difference)
+
+def vertical_square_bracket(ax, star, x1, x2, y1, y2, dtext):
+    ax.plot([x1, x2, x2, x1], [y1, y1, y2, y2], lw=1.5, c='k')
+
+    if star == 'n.s.':
+        fontsize = 10
+    else:
+        fontsize = 12
+    ax.text(x2 + dtext, (y1 + y2) * 0.5, star, va='center', color='k', fontsize=fontsize)
 
 
-def vertical_square_bracket(ax, star, x1, x2, y1, y2):
-    ax.plot([x1, x2, x2, x2 + 0.1, x2, x2, x1], [y1, y1, (y1 + y2) * 0.5, (y1 + y2) * 0.5, (y1 + y2) * 0.5, y2, y2],
-            lw=1.5, c='k')
-    ax.text(x2 + 0.2, (y1 + y2) * 0.5, star, va='center', color='k', fontsize=12)
+def horizontal_square_bracket(ax, star, x1, x2, y1, y2, dtext):
+    ax.plot([x1, x1, x2, x2], [y1, y2, y2, y1], lw=1.5, c='k')
+    if star == 'n.s.':
+        fontsize = 10
+    else:
+        fontsize = 12
+    ax.text((x1 + x2) * 0.5, y2 + dtext, star, ha='center', color='k', fontsize=fontsize)
 
 
 if __name__ == '__main__':

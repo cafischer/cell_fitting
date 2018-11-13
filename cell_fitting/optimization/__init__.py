@@ -1,7 +1,6 @@
 import json
 import os
 from random import Random
-
 from cell_fitting.optimization.bio_inspired import generators
 from cell_fitting.optimization.fitter import FitterFactory
 

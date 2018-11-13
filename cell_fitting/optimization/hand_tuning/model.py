@@ -22,7 +22,7 @@ class Model:
         dvdt = np.concatenate((np.array([(v_exp[1]-v_exp[0])/dt]), np.diff(v_exp) / dt))  # V/m
 
         # convert units
-        cell_area = get_cellaion_channel_identityrea(convert_from_unit('u', self.fitter.cell.soma.L),
+        cell_area = get_cellarea(convert_from_unit('u', self.fitter.cell.soma.L),
                                  convert_from_unit('u', self.fitter.cell.soma.diam))  # m**2
         Cm = convert_from_unit('c', self.fitter.cell.soma.cm) * cell_area  # F
         i_inj = convert_from_unit('n', self.fitter.simulation_params[0]['i_inj'])  # A

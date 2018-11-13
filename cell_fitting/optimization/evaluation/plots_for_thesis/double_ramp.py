@@ -7,12 +7,46 @@ import json
 from cell_fitting.data.plot_doubleramp import get_inj_doubleramp_params, get_i_inj_double_ramp_full
 from cell_fitting.optimization.evaluation.plot_double_ramp import plot_current_threshold_on_ax
 from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp_summary import plot_current_threshold_all_cells_on_ax
+import pandas as pd
+from statsmodels.stats.anova import AnovaRM
+from scipy.stats import ttest_rel
 pl.style.use('paper_subplots')
 
 
-# TODO: ramp3amp same for current and v
-# TODO: include also 2015 cells !
-# TODO: could do plot in lower right also for hyper/depolarization
+def compute_repeated_ANOVA_and_posthoc_paired_test_with_Bonferroni(data):
+    """
+    Subjects measured in each group should be the same.
+    :param data: rows: subjects, columns: different measurements
+    :return:
+    """
+    n_subjects = np.shape(data)[0]
+    n_groups = np.shape(data)[1]
+
+    # rearrange data for the repeated measures ANOVA
+    subject_ids = np.tile(np.arange(n_subjects, dtype=int), n_groups)
+    group_indicator = np.array([0] * n_subjects + [1] * n_subjects + [2] * n_subjects)
+    data_concatenated = np.concatenate(data.T)
+
+    df = pd.DataFrame({'subject_ids': subject_ids, 'group_indicator': group_indicator,
+                       'data_concatenated': data_concatenated})
+
+    # repeated measured ANOVA
+    aovrm = AnovaRM(df, 'data_concatenated', 'subject_ids', within=['group_indicator'])
+    res = aovrm.fit()
+    print(res)
+
+    # post-hoc: paired-t-test with Bonferroni correction
+    _, p12 = ttest_rel(data[:, 0], data[:, 1])
+    _, p23 = ttest_rel(data[:, 1], data[:, 2])
+    _, p31 = ttest_rel(data[:, 2], data[:, 0])
+
+    print 'P 1-2: ', p12 * 3.
+    print 'P 2-3: ', p23 * 3.
+    print 'P 3-1: ', p31 * 3.
+
+    return p12 * 3., p23 * 3., p31 * 3.
+
+
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_introduction'
     cell_id = '2015_08_06d'
@@ -111,25 +145,30 @@ if __name__ == '__main__':
         current_threshold_dict_data = json.load(f)
 
     plot_current_threshold_on_ax(ax, colors_dict = {-0.1: 'b', 0.0: 'k', 0.1: 'r'},
-                                 label=True, **current_threshold_dict_data)
+                                 label=True, legend_loc='lower right', **current_threshold_dict_data)
 
-    ax.text(-0.24, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.35, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # comparison current threshold DAP - rest all cells
     ax = pl.Subplot(fig, outer[1, 2])
     fig.add_subplot(ax)
     cell_ids = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
-    current_thresholds_DAP = np.zeros(len(cell_ids))
+    current_thresholds_DAP = np.zeros((len(cell_ids), 3))
     current_thresholds_rest = np.zeros(len(cell_ids))
     for cell_idx, cell_id in enumerate(cell_ids):
-        current_thresholds_DAP[cell_idx] = float(np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
-                                                                       'current_threshold_DAP.txt')))
+        current_thresholds_DAP[cell_idx, :] = np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
+                                                                      'current_threshold_DAP.txt'))
         current_thresholds_rest[cell_idx] = float(np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
                                                                        'current_threshold_rest.txt')))
-    plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest)
+
+    # ANOVA + posthoc paired t-test with Bonferroni correction
+    p12, p23, p31 = compute_repeated_ANOVA_and_posthoc_paired_test_with_Bonferroni(current_thresholds_DAP)
+
+    plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest,
+                                           current_threshold_dict_data['step_amps'], p_groups=[p12, p23, p31])
     ax.set_ylim(0, 100)
     ax.set_aspect(0.05)
-    ax.text(-1.7, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.35, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'double_ramp.png'))

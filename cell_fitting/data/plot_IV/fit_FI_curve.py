@@ -2,12 +2,16 @@ from __future__ import division
 import matplotlib.pyplot as pl
 import numpy as np
 import os
-from scipy.optimize import curve_fit
-from cell_characteristics.fIcurve import compute_fIcurve
-from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj_from_function, get_amp_for_sweep_index
-from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 import seaborn as sns
 import pandas as pd
+from scipy.optimize import curve_fit
+from cell_characteristics.analyze_step_current_data import compute_fIcurve
+from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj_from_function, \
+    get_amp_for_sweep_index, get_i_inj_standard_params
+from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
+from cell_fitting.data import check_cell_has_DAP
+from cell_fitting.data.plot_IV import check_v_at_i_inj_0_is_at_right_sweep_idx
+from cell_characteristics import to_idx
 pl.style.use('paper')
 
 
@@ -20,32 +24,40 @@ def fit_fun(x, a, b, c):
 if __name__ == '__main__':
 
     # parameters
-    save_dir_img = '../plots/IV/fi_curve/rat/summary'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'IV'
-    cell_ids = get_cells_for_protocol(data_dir, protocol)
     animal = 'rat'
+    save_dir_img = os.path.join('../plots', protocol, 'fi_curve', animal)
+
+    # get cell_ids
+    cell_ids = get_cells_for_protocol(data_dir, protocol)
+    cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
+    cell_ids = filter(lambda id: check_cell_has_DAP(id), cell_ids)
+
     FI_a = []
     FI_b = []
     FI_c = []
     cell_ids_used = []
     RMSE = []
-
     for cell_id in cell_ids:
-        if not check_rat_or_gerbil(cell_id) == animal:
-            continue
-
-        # fI-curve for data
         v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                          return_sweep_idxs=True)
         t = t_mat[0, :]
+        dt = t[1] -t [0]
         i_inj_mat = get_i_inj_from_function(protocol, sweep_idxs, t[-1], t[1]-t[0])
-        amps = np.array([get_amp_for_sweep_index(sweep_idx, 'IV') for sweep_idx in sweep_idxs])
+        params = get_i_inj_standard_params(protocol, sweep_idxs=sweep_idxs)
+        amps = params['step_amp']
+        start_step = params['start_step']
+        end_step = params['end_step']
 
         try:
-            firing_rates_data = compute_fIcurve(v_mat, t, amps, start_step=250, end_step=750)
+            check_v_at_i_inj_0_is_at_right_sweep_idx(v_mat, i_inj_mat, to_idx(start_step, dt), to_idx(end_step, dt))
         except AssertionError:
             continue
+        if get_amp_for_sweep_index(sweep_idxs[-1], protocol) < 1.0:  # not enough positive amplitudes tested
+            continue
+
+        firing_rates_data = compute_fIcurve(v_mat, t, amps, start_step=start_step, end_step=end_step)
 
         # sort according to amplitudes
         idx_sort = np.argsort(amps)
@@ -59,23 +71,38 @@ if __name__ == '__main__':
         firing_rates_data = firing_rates_data[amps_greater0_idx]
 
         # fit square root to FI-curve
-        if len(firing_rates_data) < 21 or firing_rates_data[-1] < 3/4 * np.max(firing_rates_data):
-            continue
-        firing_rates_data = firing_rates_data[:21]  # go to 1 nA
-        amps_greater0 = amps_greater0[:21]
+        # if firing_rates_data[-1] < 3/4 * np.max(firing_rates_data):
+        #     pl.figure()
+        #     pl.plot(amps_greater0, firing_rates_data)
+        #
+        #     pl.figure()
+        #     pl.plot(t_mat[-3], v_mat[-3])
+        #
+        #     pl.figure()
+        #     pl.plot(t_mat[20], v_mat[20])
+        #     pl.show()
+        #     continue
+        firing_rates_data = firing_rates_data[:20]  # go up to 1 nA
+        amps_greater0 = amps_greater0[:20]
+
         try:
             b0 = amps_greater0[np.where(firing_rates_data > 0)[0][0]]
-        except IndexError:
-            continue
-        try:
             p_opt, _ = curve_fit(fit_fun, amps_greater0, firing_rates_data, p0=[50, b0, 0.5])
         except RuntimeError:
             continue
         if p_opt[0] <= 0:
+            print 'a <= 0'
             continue
         rmse = np.sqrt(np.sum((firing_rates_data - fit_fun(amps_greater0, p_opt[0], p_opt[1], p_opt[2])) ** 2))
-        if rmse > 10:
+        if rmse > 20:
             continue
+        # print 'a: ', p_opt[0]
+        # print 'b: ', p_opt[1]
+        # print 'c: ', p_opt[2]
+        # pl.figure()
+        # pl.plot(amps_greater0, firing_rates_data, color='k')
+        # pl.plot(amps_greater0, fit_fun(amps_greater0, *p_opt), color='r')
+        # pl.show()
 
         FI_a.append(p_opt[0])
         FI_b.append(p_opt[1])
@@ -83,7 +110,7 @@ if __name__ == '__main__':
         cell_ids_used.append(cell_id)
         RMSE.append(rmse)
 
-        print 'RMSE: %.5f' % RMSE[-1]
+        # print 'RMSE: %.5f' % RMSE[-1]
         # pl.figure()
         # pl.plot(amps_greater0, firing_rates_data, '-ok', label='Exp. Data')
         # pl.plot(amps_greater0, fit_fun(amps_greater0, p_opt[0], p_opt[1], p_opt[2]), 'b')

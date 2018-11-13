@@ -37,11 +37,13 @@ if __name__ == '__main__':
     outer = gridspec.GridSpec(2, 2)
 
     # sine: mem. pot.
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0, 0], hspace=0.15, height_ratios=[5, 1])
+    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 0], hspace=0.15, height_ratios=[5, 5, 1])
     ax0 = pl.Subplot(fig, inner[0])
     ax1 = pl.Subplot(fig, inner[1])
+    ax2 = pl.Subplot(fig, inner[2])
     fig.add_subplot(ax0)
     fig.add_subplot(ax1)
+    fig.add_subplot(ax2)
 
     s_ = os.path.join(save_dir_data_plots, 'sine_stimulus/traces/rat', '2015_08_20d',  # using different cell here!
                       str(amp1_data)+'_'+str(amp2_data)+'_'+str(freq1)+'_'+str(freq2))
@@ -53,23 +55,30 @@ if __name__ == '__main__':
                                                            **standard_sim_params)
 
     ax0.plot(t_data, v_data, color_exp, linewidth=0.5, label='Data')
-    ax0.plot(t_model, v_model, color_model, linewidth=0.5, label='Model')
-    ax1.plot(t_data, i_inj_data, color_exp)
-    ax1.plot(t_model, i_inj_model, color_model)
+    ax1.plot(t_model, v_model, color_model, linewidth=0.5, label='Model')
+    ax2.plot(t_data, i_inj_data, color_exp)
+    ax2.plot(t_model, i_inj_model, color_model)
 
     ax0.set_xticks([])
+    ax1.set_xticks([])
+    ax0.set_ylim(-100, 50)
+    ax1.set_ylim(-100, 50)
     ax0.set_ylabel('Mem. pot. (mV)')
-    ax1.set_ylabel('Current (nA)')
-    ax1.set_xlabel('Time (ms)')
-    ax0.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax1.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax1.set_yticks([np.round(np.min(i_inj_model), 1), np.round(np.max(i_inj_model), 1)])
-    ax0.legend()
+    ax2.set_ylabel('Current (nA)')
+    ax2.set_xlabel('Time (ms)')
+    ax0.get_yaxis().set_label_coords(-0.15, 0.2)
+    ax2.get_yaxis().set_label_coords(-0.15, 0.9)
+    ax2.set_yticks([np.round(np.min(i_inj_model), 1), np.round(np.max(i_inj_model), 1)])
+    ax0 .legend()
+    ax1.legend()
     ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
     # phase hist.
-    ax = pl.Subplot(fig, outer[0, 1])
-    fig.add_subplot(ax)
+    inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0, 1], hspace=0.15)
+    ax0 = pl.Subplot(fig, inner[0])
+    ax1 = pl.Subplot(fig, inner[1])
+    fig.add_subplot(ax0)
+    fig.add_subplot(ax1)
 
     with open(os.path.join(save_dir_model, model, 'img', 'sine_stimulus/traces',
                            str(amp1) + '_' + str(amp2) + '_' + str(freq1) + '_' + str(freq2), 'phase_hist',
@@ -81,15 +90,19 @@ if __name__ == '__main__':
                            'spike_phase', 'sine_dict.json'), 'r') as f:
         sine_dict_data = json.load(f)
 
-    plot_phase_hist_on_axes(ax, 0, [sine_dict_model['phases']], plot_mean=True, color_hist=color_model,
-                            alpha=0.45, color_lines=color_model)
-    plot_phase_hist_on_axes(ax, 0, [sine_dict_data['phases']], plot_mean=True, color_hist=color_exp,
-                            alpha=0.55, color_lines=color_exp)
-    ax.set_ylim(0, 12)
-    ax.set_ylabel('Count')
-    ax.set_xlabel('Phase (deg.)')
-    ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
+    plot_phase_hist_on_axes(ax0, 0, [sine_dict_data['phases']], plot_mean=True, color_hist=color_exp,
+                            alpha=0.5, color_lines=color_exp)
+    plot_phase_hist_on_axes(ax1, 0, [sine_dict_model['phases']], plot_mean=True, color_hist=color_model,
+                            alpha=0.5, color_lines=color_model)
+
+    ax0.set_ylim(0, 11)
+    ax1.set_ylim(0, 11)
+    ax0.set_ylabel('Count')
+    ax1.set_ylabel('Count')
+    ax1.set_xlabel('Phase (deg.)')
+    ax0.set_xticks([])
+    ax0.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax0.text(-0.25, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')
 
     # # mem. pot. per period of fast sine
     # ax = pl.Subplot(fig, outer[1, 0])

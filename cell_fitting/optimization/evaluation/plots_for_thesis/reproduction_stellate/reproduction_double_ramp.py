@@ -109,31 +109,34 @@ if __name__ == '__main__':
     ax0.text(-0.24, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')
 
     # comparison current threshold DAP - rest all cells
-    with open(os.path.join(save_dir_model, model, 'img', 'PP', '125', 'current_threshold_dict.json'), 'r') as f:
-        current_threshold_dict_model_short_step = json.load(f)
     ax = pl.Subplot(fig, outer[0, 2])
     fig.add_subplot(ax)
+
+    with open(os.path.join(save_dir_model, model, 'img', 'PP', '125', 'current_threshold_dict.json'), 'r') as f:
+        current_threshold_dict_model_short_step = json.load(f)
+
     cell_ids = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f', '2014_07_10d']
-    current_thresholds_DAP = np.zeros(len(cell_ids))
+    current_thresholds_DAP = np.zeros((len(cell_ids), 3))
     current_thresholds_rest = np.zeros(len(cell_ids))
     for cell_idx, cell_id in enumerate(cell_ids):
-        current_thresholds_DAP[cell_idx] = float(np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
-                                                                       'current_threshold_DAP.txt')))
+        current_thresholds_DAP[cell_idx, :] = np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
+                                                                       'current_threshold_DAP.txt'))
         current_thresholds_rest[cell_idx] = float(np.loadtxt(os.path.join(save_dir_data_plots, 'PP', cell_id,
                                                                        'current_threshold_rest.txt')))
-    mean_percentage_difference_exp = plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, color=color_exp,
-                                           plot_sig=False)
+    mean_percentage_difference_exp = plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP,
+                                                                            current_thresholds_rest,
+                                                                            current_threshold_dict_data['step_amps'],
+                                                                            color=color_exp,
+                                                                            plot_sig=False)
 
-    current_threshold_DAP_model = np.nanmin(current_threshold_dict_model_short_step['current_thresholds'][1])
+    current_threshold_DAP_model = np.nanmin(current_threshold_dict_model_short_step['current_thresholds'], axis=1)
     current_threshold_rest_model = current_threshold_dict_model_short_step['current_threshold_rampIV']
     percentage_difference_model = 100 - (current_threshold_DAP_model / current_threshold_rest_model * 100)
-    ax.plot(-0.4, percentage_difference_model, 'o', color=color_model, label='Model')
+    ax.plot(-0.4, percentage_difference_model[0], 'o', color=color_model, alpha=0.5)
+    ax.plot(0.6, percentage_difference_model[1], 'o', color=color_model, alpha=0.5)
+    ax.plot(1.6, percentage_difference_model[2], 'o', color=color_model, alpha=0.5)
     ax.get_yaxis().set_label_coords(-0.3, 0.5)
-    ax.set_ylim(0, 100)
-
-    # letter
-    ax.text(-0.55, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
-
+    ax.text(-0.60, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     print 'percentage difference model: ', percentage_difference_model
     print 'mean percentage difference real cells: ', mean_percentage_difference_exp

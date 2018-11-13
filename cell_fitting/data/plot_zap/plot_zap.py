@@ -8,21 +8,23 @@ from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 from cell_fitting.optimization.evaluation.plot_zap import get_i_inj_zap
 from cell_fitting.optimization.fitfuns import impedance
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, shift_v_rest, set_v_rest
+from cell_fitting.data import check_cell_has_DAP
+from cell_fitting.util import init_nan
 pl.style.use('paper')
 
 
 if __name__ == '__main__':
-
-    save_dir = '../plots'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     v_rest = None
     v_shift = -16
     protocol = 'Zap20'
     animal = 'rat'
+    save_dir = os.path.join('../plots', protocol, animal)
+
+    # get cell_ids
     cell_ids = get_cells_for_protocol(data_dir, protocol)
-    #cell_ids = ['2015_08_10g']  #['2015_08_26b']
     cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
-    save_dir = os.path.join(save_dir, protocol, animal)
+    cell_ids = filter(lambda id: check_cell_has_DAP(id), cell_ids)
 
     # frequencies
     freq0 = 0
@@ -35,17 +37,16 @@ if __name__ == '__main__':
     heavy_freqs = lambda x: freqs(x) if onset_dur < x < t[-1]-offset_dur else 0
     freqs_out = lambda x: "%.2f" % heavy_freqs(x)
 
-    res_freqs = np.zeros(len(cell_ids))
-    q_values = np.zeros(len(cell_ids))
-
-    for ci, cell_id in enumerate(cell_ids):
+    res_freqs = init_nan(len(cell_ids))
+    q_values = init_nan(len(cell_ids))
+    for cell_idx, cell_id in enumerate(cell_ids):
         v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                          return_sweep_idxs=True)
         v = shift_v_rest(v_mat[0], v_shift)
         t = t_mat[0]
         dt = t[1]-t[0]
         tstop = t[-1]
-        i_inj = get_i_inj_zap(0.1, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur, dt=dt) #, tstop=tstop)
+        i_inj = get_i_inj_zap(0.1, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur, dt=dt)
 
         # cut off onset and offset and downsample
         ds = 1000  # number of steps skipped (in t, i, v) for the impedance computation
@@ -58,8 +59,8 @@ if __name__ == '__main__':
 
         # resonance frequency and q value
         res_freq_idx = np.argmax(imp_smooth)
-        res_freqs[ci] = frequencies[res_freq_idx]
-        q_values[ci] = imp_smooth[res_freq_idx] / imp_smooth[np.where(frequencies == 0)[0][0]]
+        res_freqs[cell_idx] = frequencies[res_freq_idx]
+        q_values[cell_idx] = imp_smooth[res_freq_idx] / imp_smooth[np.where(frequencies == 0)[0][0]]
 
         # plot
         save_dir_img = os.path.join(save_dir, animal, cell_id)
@@ -106,10 +107,8 @@ if __name__ == '__main__':
 
 
         # plot v and impedance
-
-        # use same v_rest
         v_rest = -75
-        v = set_v_rest(v, v[0], v_rest)
+        v = set_v_rest(v, v[0], v_rest)  # use same v_rest
 
         fig, ax1 = pl.subplots()
         ax2 = ax1.twinx().twiny()  # need two twins for labeling new x and y axis
@@ -119,7 +118,7 @@ if __name__ == '__main__':
         #ax1.set_ylim(ylim[0]-2, ylim[1]+2)
         ax1.set_ylim(v_rest-10, v_rest+10)
         ax1.set_xlim(0, (tstop-offset_dur-onset_dur)/1000)
-        ax2.plot(frequencies, imp_smooth, c='r', label='Res. Freq.: %.2f (Hz)' % res_freqs[ci] + '\nQ-Value: %.2f' % q_values[ci])
+        ax2.plot(frequencies, imp_smooth, c='r', label='Res. Freq.: %.2f (Hz)' % res_freqs[cell_idx] + '\nQ-Value: %.2f' % q_values[cell_idx])
         ax3.plot(frequencies, imp_smooth, c='r')
         ax2.set_yticks([])
         ax3.set_xticks([])
@@ -147,7 +146,7 @@ if __name__ == '__main__':
         pl.subplots_adjust(left=0.18, right=0.86, bottom=0.14, top=0.88)
         pl.savefig(os.path.join(save_dir_img, 'v_impedance.png'))
         #pl.show()
-        pl.close()
+        pl.close('all')
 
     save_dir_summary = os.path.join(save_dir, 'summary')
     if not os.path.exists(save_dir_summary):

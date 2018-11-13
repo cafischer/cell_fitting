@@ -7,6 +7,7 @@ from nrn_wrapper import Cell
 from cell_fitting.optimization.simulate import extract_simulation_params, simulate_gates
 from cell_fitting.util import merge_dicts, change_color_brightness, get_channel_dict_for_plotting, \
     get_gate_dict_for_plotting, get_channel_color_for_plotting, get_gates_of_channel
+from cell_fitting.read_heka import get_i_inj_from_function
 import copy
 
 
@@ -90,7 +91,7 @@ def plot_product_gates_on_ax(ax1, channel_list, gates, t, v, power_gates):
 if __name__ == '__main__':
     # parameters
     data_dir = '../../data/cell_csv_data/2015_08_26b/rampIV/3.1(nA).csv'
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/5'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
 
@@ -98,9 +99,12 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
 
     # get simulation_params
-    data = pd.read_csv(data_dir)
-    sim_params = {'onset': 200, 'v_init': -75}
-    simulation_params = merge_dicts(extract_simulation_params(data.v.values, data.t.values, data.i.values), sim_params)
+    # data = pd.read_csv(data_dir)
+    # sim_params = {'onset': 200, 'v_init': -75}
+    # simulation_params = merge_dicts(extract_simulation_params(data.v.values, data.t.values, data.i.values), sim_params)
+    i_exp = get_i_inj_from_function('IV', [0], 1000, 0.01)[0]
+    simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': 1000,
+                         'dt': 0.01, 'celsius': 35, 'onset': 200}
 
     # plot gates
     simulate_gates(cell, simulation_params, plot=True)

@@ -60,7 +60,7 @@ def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampI
     # plot current threshold
     ax2 = ax.twinx()
     v_dap = np.array(v_dap) - v_dap[0] + v_init
-    ax2.plot(t_dap, v_dap, color=colors_dict[0.0])
+    ax2.plot(t_dap, v_dap, color=colors_dict[0.0], linestyle=':')
     #ax2.set_ylabel('Mem. pot. (mV)')
     #ax2.spines['right'].set_visible(True)
     ax2.set_ylim(-80, 20)
@@ -70,12 +70,13 @@ def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampI
         ax.axhline(ramp3_amps[0], linestyle='--', c='0.5')
         ax.axhline(ramp3_amps[-1], linestyle='--', c='0.5')
     ax.plot(0, current_threshold_rampIV, 'o', color=colors_dict[0.0])
+    ramp3_peak_times = np.array(ramp3_times) + 1.0
     for i, current_threshold in enumerate(current_thresholds):
-        ax.plot(ramp3_times, current_threshold, linestyle='-', marker=markers[i], color=colors[i],
+        ax.plot(ramp3_peak_times, current_threshold, linestyle='-', marker=markers[i], color=colors[i],
                 label=labels[i])
-    ax.set_xlabel('Start 2nd pulse (ms)')
+    ax.set_xlabel('Midpoint 2nd pulse (ms)')
     ax.set_ylabel('Current thresh. (nA)')
-    ax.set_xticks(np.insert(ramp3_times, 0, [0]))
-    ax.set_xlim(-0.5, ramp3_times[-1] + 2)
+    ax.set_xticks(np.insert(ramp3_peak_times, 0, [0]))
+    ax.set_xlim(-0.5, ramp3_peak_times[-1] + 2)
     ax.set_ylim(0, 3.5)
     ax.legend(loc=legend_loc)

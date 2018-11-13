@@ -20,8 +20,8 @@ cell_ids = ['2014_07_10b', '2014_07_03a', '2014_07_08d', '2014_07_09c', '2014_07
 run_idxs = [3, 7, 4, 5, 8, 1, 5]
 #cell_ids = ['2015_08_11f']
 #run_idxs = [0]
-cell_id = cell_ids[0]
-run_idx = run_idxs[0]
+cell_id = cell_ids[6]
+run_idx = run_idxs[6]
 
 # load current threshold
 current_threshold_rampIV = float(np.loadtxt(os.path.join(save_dir, 'rampIV', 'rat', cell_id, 'current_threshold.txt')))
@@ -43,9 +43,9 @@ current_thresholds = [0] * len(step_amps)
 
 # get amps
 v_mat = np.load(os.path.join(save_dir_cell, 'v_mat.npy'))
+t = np.load(os.path.join(save_dir_cell, 't.npy'))
 for step_amp in step_amps:
-    step_str = 'step_%.1f(nA)' % step_amp
-    t = np.load(os.path.join(save_dir_cell, step_str, 't.npy'))
+    #step_str = 'step_%.1f(nA)' % step_amp
     dt = t[1] - t[0]
     start_amp = PP_params_cell['ramp3_amp']
     ramp3_amps = start_amp + np.arange(len(v_mat[:, 0, 0, step_idx_dict[step_amp]])) * 0.05
@@ -72,7 +72,7 @@ with open(os.path.join(save_dir, 'PP', cell_id, 'current_threshold_dict.json'), 
 save_diff_current_threshold(current_threshold_rampIV, current_thresholds,
                             os.path.join(save_dir, 'PP', cell_id, 'diff_current_threshold.txt'))
 np.savetxt(os.path.join(save_dir, 'PP', cell_id, 'current_threshold_DAP.txt'),
-           np.array([np.nanmin(current_thresholds[1])]))
+           np.array([np.nanmin(current_thresholds, axis=1)]))
 np.savetxt(os.path.join(save_dir, 'PP', cell_id, 'current_threshold_rest.txt'),
            np.array([current_threshold_rampIV]))
 

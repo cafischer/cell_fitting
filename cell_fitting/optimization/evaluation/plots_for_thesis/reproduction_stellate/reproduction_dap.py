@@ -108,7 +108,8 @@ if __name__ == '__main__':
                                                              std_idx_times=(0, 1), check=False,
                                                              **get_spike_characteristics_dict(for_data=True)),
                                    dtype=int)
-    t_exp -= 8
+    t_shift = -8
+    t_exp += t_shift
     ax.plot(t_exp, v_exp, 'k')
     ax.annotate('', xy=(t_exp[characteristics_exp[0]], v_exp[characteristics_exp[0]]),
                 xytext=(t_exp[characteristics_exp[2]], v_exp[characteristics_exp[0]]),
@@ -128,11 +129,12 @@ if __name__ == '__main__':
     ax.annotate('mAHP', xy=(63., -73), verticalalignment='top', horizontalalignment='center')
     axins.annotate('fAHP', xy=(t_exp[characteristics_exp[1]], v_exp[characteristics_exp[1]] - 0.5),
                    verticalalignment='top', horizontalalignment='center')
-    axins.annotate('', xy=(t_exp[characteristics_exp[2]], v_exp[characteristics_exp[1]]),
-                   xytext=(t_exp[characteristics_exp[2]], v_exp[characteristics_exp[2]]),
+    axins.annotate('', xy=(21+t_shift, v_exp[characteristics_exp[1]]),
+                   xytext=(21+t_shift, v_exp[characteristics_exp[2]]),
                    arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
-    axins.annotate('DAP deflection', xy=(t_exp[characteristics_exp[2]] + 1.0, v_exp[characteristics_exp[2]]),
-                   verticalalignment='bottom', horizontalalignment='left')
+    axins.annotate('DAP deflection', xy=(21+t_shift + 1.0,
+                                         (v_exp[characteristics_exp[2]]+v_exp[characteristics_exp[1]])/2.),
+                   verticalalignment='center', horizontalalignment='left')
     axins.annotate('', xy=(t_exp[characteristics_exp[2]], v_rest),
                    xytext=(t_exp[characteristics_exp[2]], v_exp[characteristics_exp[2]]),
                    arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
@@ -146,19 +148,17 @@ if __name__ == '__main__':
                    verticalalignment='bottom', horizontalalignment='center')
     axins.plot([t_exp[characteristics_exp[1]], t_exp[characteristics_exp[1]]], [v_rest, v_exp[characteristics_exp[1]]],
                '--', color='0.5')  # helper line fAHP vertical
-    axins.plot([t_exp[characteristics_exp[1]], 21-8],
+    axins.plot([t_exp[characteristics_exp[1]], 21+t_shift],
                [v_exp[characteristics_exp[1]], v_exp[characteristics_exp[1]]],
                '--', color='0.5')  # helper line fAHP horizontal
-
-    # annotate: fAHP, DAP, mAHP
-    # rectangle_with_text(ax, 6, -82.5, 2,   5, 'fAHP', fc='0.8')
-    # rectangle_with_text(ax, 23, -82.5, 32, 5, 'DAP', fc='0.6')
-    # rectangle_with_text(ax, 65, -82.5, 53, 5, 'mAHP', fc='0.8')
-    # ax.set_ylim(-90, None)
+    axins.plot([t_exp[characteristics_exp[2]], 21+t_shift],
+               [v_exp[characteristics_exp[2]], v_exp[characteristics_exp[2]]],
+               '--', color='0.5')  # helper line DAP max horizontal
+    axins.axhline(v_rest, linestyle='--', color='0.5')  # helper line v_rest
 
     # inset
-    axins.set_ylim(v_rest, -50)
-    axins.set_xlim(10-8, 35-8)
+    axins.set_ylim(v_rest - 2, -50)
+    axins.set_xlim(8.5+t_shift, 35+t_shift)
     axins.set_xticks([])
     axins.set_yticks([])
     axins.spines['top'].set_visible(True)
@@ -216,4 +216,35 @@ if __name__ == '__main__':
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_dap2.png'))
+
+
+    # 2d scatter plots
+    fig, axes = pl.subplots(4, 4, figsize=(9, 9))
+
+    dtick = {'DAP_deflection': 2.5, 'DAP_amp': 10, 'DAP_width': 15, 'DAP_time': 2.5}
+
+    for i, characteristic1 in enumerate(characteristics):
+        for j, characteristic2 in enumerate(characteristics):
+            ax = axes[i, j]
+
+            characteristic_idx1 = np.where(characteristic1 == characteristics_exp)[0][0]
+            characteristic_idx2 = np.where(characteristic2 == characteristics_exp)[0][0]
+            not_nan_exp = np.logical_and(~np.isnan(characteristics_mat_exp[:, characteristic_idx1]),
+                                         ~np.isnan(characteristics_mat_exp[:, characteristic_idx2]))
+            ax.scatter(characteristics_mat_exp[:, characteristic_idx1][not_nan_exp],
+                       characteristics_mat_exp[:, characteristic_idx2][not_nan_exp], color=color_exp,
+                       label='Data', alpha=0.5)
+            ax.scatter(characteristics_mat_model[i], characteristics_mat_model[j], color=color_model, label='Model',
+                       alpha=0.5)
+
+            ax.set_xticks(np.arange(0, np.max(characteristics_mat_exp[:, characteristic_idx1][not_nan_exp]),
+                                    dtick[characteristic1]))
+            ax.set_yticks(np.arange(0, np.max(characteristics_mat_exp[:, characteristic_idx2][not_nan_exp]),
+                                    dtick[characteristic2]))
+            ax.set_xlim(0, None)
+            ax.set_ylim(0, None)
+            ax.set_xlabel(characteristics_dict_plot[characteristic1])
+            ax.set_ylabel(characteristics_dict_plot[characteristic2])
+    pl.tight_layout()
+    pl.savefig(os.path.join(save_dir_img, 'reproduction_dap2_scatter.png'))
     pl.show()
