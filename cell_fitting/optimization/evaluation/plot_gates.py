@@ -19,7 +19,7 @@ def plot_gates_on_ax(ax1, gates, t, v, power_gates=None):
     t_plot = t - 7
 
     ax2 = ax1.twinx()
-    ax2.plot(t_plot, v, 'k')
+    ax2.plot(t_plot, v, 'k', linestyle=':')
     #ax2.set_ylabel('Mem. pot. (mV)')
     #ax2.spines['right'].set_visible(True)
     ax2.set_yticks([])
@@ -43,6 +43,12 @@ def plot_gates_on_ax(ax1, gates, t, v, power_gates=None):
         else:
             ax1.plot(t_plot, gates[k] ** power_gates[k],
                      label=channel_dict[channel_name]+' '+gate_dict[k], color=color)
+        nan = np.isnan(gates[k])
+        if np.any(nan):
+            idx_first_nan = np.where(nan)[0][0]
+            ax1.plot(np.insert(t_plot[nan], 0, t_plot[idx_first_nan-1]),
+                     np.insert(np.zeros(sum(nan)), 0, gates[k][idx_first_nan-1]),
+                     linestyle='--', color=color)
     ax1.set_ylabel('Degree of opening')
     ax1.set_xlabel('Time (ms)')
     ax1.set_xlim(0, 55)

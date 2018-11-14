@@ -18,7 +18,7 @@ def plot_currents_on_ax(ax1, channel_list, currents, t, v):
     t_plot = t - 7
 
     ax2 = ax1.twinx()
-    ax2.plot(t_plot, v, 'k')
+    ax2.plot(t_plot, v, 'k', linestyle=':')
     #ax2.set_ylabel('Mem. pot. (mV)')
     #ax2.spines['right'].set_visible(True)
     ax2.set_yticks([])
@@ -26,6 +26,12 @@ def plot_currents_on_ax(ax1, channel_list, currents, t, v):
     for i in range(len(channel_list)):
         ax1.plot(t_plot, -1 * currents[i], color=channel_color[channel_list[i]],
                  label=channel_dict[channel_list[i]])
+        nan = np.isnan(currents[i])
+        if np.any(nan):
+            idx_first_nan = np.where(nan)[0][0]
+            ax1.plot(np.insert(t_plot[nan], 0, t_plot[idx_first_nan-1]),
+                     np.insert(np.zeros(sum(nan)), 0, -1 * currents[i][idx_first_nan-1]),
+                     linestyle='--', color=channel_color[channel_list[i]])
         ax1.set_ylabel('Current (mA/cm$^2$)')
         ax1.set_xlabel('Time (ms)')
     h1, l1 = ax1.get_legend_handles_labels()

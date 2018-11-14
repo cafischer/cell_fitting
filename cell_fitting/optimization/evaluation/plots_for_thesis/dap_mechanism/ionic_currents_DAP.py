@@ -76,17 +76,16 @@ if __name__ == '__main__':
 
     nat_idx = np.where(np.array(channel_list) == 'nat')[0][0]
     hcn_idx = np.where(np.array(channel_list) == 'hcn_slow')[0][0]
+    # currents[nat_idx][t_block_idx:] = 0  # np.nan
+    # currents[hcn_idx][t_block_idx:] = 0  # np.nan
+    # gates['nat_m'][t_block_idx:] = 0 #  np.nan
+    # gates['nat_h'][t_block_idx:] = 0  # np.nan
+    # gates['hcn_slow_n'][t_block_idx:] = 0  # np.nan
     currents[nat_idx][t_block_idx:] = np.nan
     currents[hcn_idx][t_block_idx:] = np.nan
     gates['nat_m'][t_block_idx:] = np.nan
     gates['nat_h'][t_block_idx:] = np.nan
     gates['hcn_slow_n'][t_block_idx:] = np.nan
-    # channel_list.remove('nat')
-    # channel_list.remove('hcn_slow')
-    # currents = np.delete(currents, (nat_idx, hcn_idx), axis=0)
-    # gates.pop('nat_m')
-    # gates.pop('nat_h')
-    # gates.pop('hcn_slow_n')
 
     plot_currents_on_ax(ax, channel_list, currents, t_model, v_model)
     # ax.plot(t_model - 7, -1 * (currents[np.array(channel_list) == 'nap'][0]
