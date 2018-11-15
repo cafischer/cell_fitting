@@ -29,10 +29,10 @@ if __name__ == '__main__':
         # [-30, -10, [['soma', '0.5', 'hcn_slow', 'ehcn']]],
         #
         [-0.1, 0.5, [['soma', '0.5', 'pas', 'g']]],
-        # [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
+        [0, 0.5, [['soma', '0.5', 'nat', 'gbar']]],
         # [-0.01, 0.1, [['soma', '0.5', 'kdr', 'gbar']]],
         # [0, 1.0, [['soma', '0.5', 'nap', 'gbar']]],
-        # [0, 0.5, [['soma', '0.5', 'hcn_slow', 'gbar']]],
+        [0, 0.001, [['soma', '0.5', 'hcn_slow', 'gbar']]],
         #
         # [-100, 0, [['soma', '0.5', 'nat', 'm_vh']]],
         # [-100, 0, [['soma', '0.5', 'nat', 'h_vh']]],
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     mechanism_dir = '../../model/channels/vavoulis'
     init_var = get_init_var_from_model(model_dir, mechanism_dir, variables, variable_keys)
     data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
-                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(amp=-0.15, protocol='IV'),
+                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(amp=0.4, protocol='IV'),
                       'v_rest_shift': -16, 'file_type': 'dat'}
 
     fitter_params = {
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     }
 
     # create widget
-    precision_slds = [1e-5, 1e-6] + [1e-3] * (len(variables) - 2)
+    precision_slds = [1e-5, 1e-6] + [1e-6] * (len(variables) - 2)
     save_dir = '../../results/hand_tuning/model3_0'
     ex = HandTuner(save_dir, fitter_params, precision_slds, lower_bounds, upper_bounds, init_var)
     sys.exit(app.exec_())

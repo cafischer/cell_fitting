@@ -94,10 +94,20 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_data_plots, 'PP', exp_cell_dr, 'current_threshold_dict.json'), 'r') as f:
         current_threshold_dict_data = json.load(f)
 
+    # # transform to percentages
+    # current_threshold_dict_model['current_thresholds'] = np.array(current_threshold_dict_model['current_thresholds']) \
+    #                                                      / current_threshold_dict_model['current_threshold_rampIV'] * 100
+    # current_threshold_dict_model['current_threshold_rampIV'] = 100
+    #
+    # current_threshold_dict_data['current_thresholds'] = np.array(current_threshold_dict_data['current_thresholds']) \
+    #                                                      / current_threshold_dict_data['current_threshold_rampIV'] * 100
+    # current_threshold_dict_data['current_threshold_rampIV'] = 100
+
     plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_model, 0.0: color_model, 0.1: color_model},
-                                 label=False, plot_range=False, **current_threshold_dict_model)
+                                 label=False, plot_range=False, with_right_spine=False, shift_to_rest=True,
+                                 **current_threshold_dict_model)
     plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_exp, 0.0: color_exp, 0.1: color_exp}, label=False,
-                                 **current_threshold_dict_data)
+                                 with_right_spine=False, shift_to_rest=True, **current_threshold_dict_data)
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
 
     # legend

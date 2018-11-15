@@ -41,8 +41,6 @@ def plot_act_inact_on_ax(ax, v_range, steadystate_act, steadystate_inact, time_c
     ax.legend()
 
 
-# TODO: do vstep protocols for method section
-# TODO: color steps
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
@@ -153,7 +151,6 @@ if __name__ == '__main__':
 
     print 'HCN h min tau: ', np.min(time_constanct_inact)
     print 'HCN h max tau: ', np.max(time_constanct_inact)
-
 
     # voltage step protocols
 

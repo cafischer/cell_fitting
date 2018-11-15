@@ -48,18 +48,19 @@ def block_channel_at_timepoint(cell, channel_name, percent_block, timepoint):
     event = ChangeConductanceEvent(cell, channel_name, percent_block, timepoint)
 
 
-def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block, percent_block, label=True, color='k'):
+def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block, percent_block, label=True, color='k',
+                             plot_with_ellipses=False):
     channel_dict = get_channel_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()
-    h1, = ax.plot(t, v_before_block, color, label='without block') #, markevery=1000, marker='|')
-
-    p = np.arange(0, len(t), 500)
-    x = t[p]
-    y = v_before_block[p]
-    ells = [mpatches.Ellipse(xy=(x[i], y[i]), width=0.6, height=2.6, angle=0, color='k') for i in range(len(x))]
-    for e in ells:
-        ax.add_artist(e)
-        e.set_clip_box(ax.bbox)
+    h1, = ax.plot(t, v_before_block, color, label='without block')
+    if plot_with_ellipses:
+        p = np.arange(0, len(t), 500)
+        x = t[p]
+        y = v_before_block[p]
+        ells = [mpatches.Ellipse(xy=(x[i], y[i]), width=0.6, height=2.6, angle=0, color='k') for i in range(len(x))]
+        for e in ells:
+            ax.add_artist(e)
+            e.set_clip_box(ax.bbox)
     handles = np.zeros(len(channel_list), dtype=object)
     labels = np.zeros(len(channel_list), dtype=object)
     for i, channel_name in enumerate(channel_list):
@@ -69,8 +70,11 @@ def plot_channel_block_on_ax(ax, channel_list, t, v_before_block, v_after_block,
     ax.set_xlabel('Time (ms)')
     ax.set_ylabel('Mem. pot. (mV)')
     if label:
-        ax.legend([(h1, e)]+handles.tolist(), ['without block']+labels.tolist(), loc='upper right',
+        if plot_with_ellipses:
+            ax.legend([(h1, e)]+handles.tolist(), ['without block']+labels.tolist(), loc='upper right',
                   handler_map={mpatches.Ellipse: HandlerEllipse()})
+        else:
+            ax.legend([h1] + handles.tolist(), ['without block'] + labels.tolist(), loc='upper right')
 
 
 class ChangeConductanceEvent(object):

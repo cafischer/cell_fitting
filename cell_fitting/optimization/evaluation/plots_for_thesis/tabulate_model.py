@@ -29,40 +29,40 @@ if __name__ == '__main__':
         'Kdr $g_{max}$': ['soma', '0.5', 'kdr', 'gbar'],
         'HCN $g_{max}$': ['soma', '0.5', 'hcn_slow', 'gbar'],
 
-        'Nap m $V_h$': ['soma', '0.5', 'nap', 'm_vh'],
-        'Nap h $V_h$': ['soma', '0.5', 'nap', 'h_vh'],
-        'Nat m $V_h$': ['soma', '0.5', 'nat', 'm_vh'],
-        'Nat h $V_h$': ['soma', '0.5', 'nat', 'h_vh'],
-        'Kdr m $V_h$': ['soma', '0.5', 'kdr', 'n_vh'],
-        'HCN h $V_h$': ['soma', '0.5', 'hcn_slow', 'n_vh'],
+        'Nap $V_{h, m}$': ['soma', '0.5', 'nap', 'm_vh'],
+        'Nap $V_{h, h}$': ['soma', '0.5', 'nap', 'h_vh'],
+        'Nat $V_{h, m}$': ['soma', '0.5', 'nat', 'm_vh'],
+        'Nat $V_{h, h}$': ['soma', '0.5', 'nat', 'h_vh'],
+        'Kdr $V_{h, m}$': ['soma', '0.5', 'kdr', 'n_vh'],
+        'HCN $V_{h, h}$': ['soma', '0.5', 'hcn_slow', 'n_vh'],
 
-        'Nap m $V_s$': ['soma', '0.5', 'nap', 'm_vs'],
-        'Nap h $V_s$': ['soma', '0.5', 'nap', 'h_vs'],
-        'Nat m $V_s$': ['soma', '0.5', 'nat', 'm_vs'],
-        'Nat h $V_s$': ['soma', '0.5', 'nat', 'h_vs'],
-        'Kdr m $V_s$': ['soma', '0.5', 'kdr', 'n_vs'],
-        'HCN h $V_s$': ['soma', '0.5', 'hcn_slow', 'n_vs'],
+        'Nap $V_{s, m}$': ['soma', '0.5', 'nap', 'm_vs'],
+        'Nap $V_{s, h}$': ['soma', '0.5', 'nap', 'h_vs'],
+        'Nat $V_{s, m}$': ['soma', '0.5', 'nat', 'm_vs'],
+        'Nat $V_{s, h}$': ['soma', '0.5', 'nat', 'h_vs'],
+        'Kdr $V_{s, m}$': ['soma', '0.5', 'kdr', 'n_vs'],
+        'HCN $V_{s, h}$': ['soma', '0.5', 'hcn_slow', 'n_vs'],
 
-        'Nap m $\\tau_{min}$': ['soma', '0.5', 'nap', 'm_tau_min'],
-        'Nap h $\\tau_{min}$': ['soma', '0.5', 'nap', 'h_tau_min'],
-        'Nat m $\\tau_{min}$': ['soma', '0.5', 'nat', 'm_tau_min'],
-        'Nat h $\\tau_{min}$': ['soma', '0.5', 'nat', 'h_tau_min'],
-        'Kdr m $\\tau_{min}$': ['soma', '0.5', 'kdr', 'n_tau_min'],
-        'HCN h $\\tau_{min}$': ['soma', '0.5', 'hcn_slow', 'n_tau_min'],
+        'Nap $\\tau_{min, m}$': ['soma', '0.5', 'nap', 'm_tau_min'],
+        'Nap $\\tau_{min, h}$': ['soma', '0.5', 'nap', 'h_tau_min'],
+        'Nat $\\tau_{min, m}$': ['soma', '0.5', 'nat', 'm_tau_min'],
+        'Nat $\\tau_{min, h}$': ['soma', '0.5', 'nat', 'h_tau_min'],
+        'Kdr $\\tau_{min, m}$': ['soma', '0.5', 'kdr', 'n_tau_min'],
+        'HCN $\\tau_{min, h}$': ['soma', '0.5', 'hcn_slow', 'n_tau_min'],
 
-        'Nap m $\\tau_{max}$': ['soma', '0.5', 'nap', 'm_tau_max'],
-        'Nap h $\\tau_{max}$': ['soma', '0.5', 'nap', 'h_tau_max'],
-        'Nat m $\\tau_{max}$': ['soma', '0.5', 'nat', 'm_tau_max'],
-        'Nat h $\\tau_{max}$': ['soma', '0.5', 'nat', 'h_tau_max'],
-        'Kdr m $\\tau_{max}$': ['soma', '0.5', 'kdr', 'n_tau_max'],
-        'HCN h $\\tau_{max}$': ['soma', '0.5', 'hcn_slow', 'n_tau_max'],
+        'Nap $\\tau_{max, m}$': ['soma', '0.5', 'nap', 'm_tau_max'],
+        'Nap $\\tau_{max, h}$': ['soma', '0.5', 'nap', 'h_tau_max'],
+        'Nat $\\tau_{max, m}$': ['soma', '0.5', 'nat', 'm_tau_max'],
+        'Nat $\\tau_{max, h}$': ['soma', '0.5', 'nat', 'h_tau_max'],
+        'Kdr $\\tau_{max, m}$': ['soma', '0.5', 'kdr', 'n_tau_max'],
+        'HCN $\\tau_{max, h}$': ['soma', '0.5', 'hcn_slow', 'n_tau_max'],
 
-        'Nap m $\\tau_{delta}$': ['soma', '0.5', 'nap', 'm_tau_delta'],
-        'Nap h $\\tau_{delta}$': ['soma', '0.5', 'nap', 'h_tau_delta'],
-        'Nat m $\\tau_{delta}$': ['soma', '0.5', 'nat', 'm_tau_delta'],
-        'Nat h $\\tau_{delta}$': ['soma', '0.5', 'nat', 'h_tau_delta'],
-        'Kdr m $\\tau_{delta}$': ['soma', '0.5', 'kdr', 'n_tau_delta'],
-        'HCN h $\\tau_{delta}$': ['soma', '0.5', 'hcn_slow', 'n_tau_delta'],
+        'Nap $\\tau_{delta, m}$': ['soma', '0.5', 'nap', 'm_tau_delta'],
+        'Nap $\\tau_{delta, h}$': ['soma', '0.5', 'nap', 'h_tau_delta'],
+        'Nat $\\tau_{delta, m}$': ['soma', '0.5', 'nat', 'm_tau_delta'],
+        'Nat $\\tau_{delta, h}$': ['soma', '0.5', 'nat', 'h_tau_delta'],
+        'Kdr $\\tau_{delta, m}$': ['soma', '0.5', 'kdr', 'n_tau_delta'],
+        'HCN $\\tau_{delta, h}$': ['soma', '0.5', 'hcn_slow', 'n_tau_delta'],
     }
     channels = ['Nat', 'Nap', 'Kdr', 'HCN']
     gates = ['m', 'h']
@@ -119,6 +119,10 @@ if __name__ == '__main__':
             for row, param in enumerate(params):
                 if param == '$g_{max}$':
                     column[row] = param_format[param] % param_val_dict[channel + ' ' + param]
+                elif param == '$V_h$' or param == '$V_s$' or param == '$\\tau_{min}$' or param == '$\\tau_{max}$' or param == '$\\tau_{delta}$':
+                    param_ = param.replace('$', '').replace('{', '').replace('}', '')
+                    p1, p2 = param_.split('_')
+                    column[row] = param_format[param] % param_val_dict[channel + ' ' + '$'+p1+'_{'+p2+', '+gate+'}$']
                 else:
                     column[row] = param_format[param] % param_val_dict[channel + ' ' + gate + ' ' + param]
             table.append(column)

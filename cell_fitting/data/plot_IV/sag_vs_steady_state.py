@@ -6,6 +6,7 @@ from cell_fitting.read_heka import get_v_and_t_from_heka, get_i_inj_from_functio
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import plot_sag_vs_steady_state_on_ax
+from cell_fitting.data import check_cell_has_DAP
 pl.style.use('paper')
 
 
@@ -16,18 +17,18 @@ if __name__ == '__main__':
     AP_threshold = -30
     v_shift = -16
     animal = 'rat'
-    save_dir = os.path.join('../plots/', 'IV', 'sag', animal)
+    protocol = 'IV'
+    save_dir = os.path.join('../plots', protocol, 'sag', animal)
 
-    #cells = get_cells_for_protocol(data_dir, 'IV')
-    #cells = ['2015_05_26d', '2015_06_08a', '2015_06_09f', '2015_06_19i', '2015_08_10g', '2015_08_26b']
-    cells = ['2015_08_26b']
+    # get cell_ids
+    cell_ids = get_cells_for_protocol(data_dir, protocol)
+    cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
+    cell_ids = filter(lambda id: check_cell_has_DAP(id), cell_ids)
 
-    for cell_id in cells:
-        if not '2015' in cell_id:
-            continue
-        if not check_rat_or_gerbil(cell_id) == animal:
-            continue
+    #cell_ids = ['2015_05_26d', '2015_06_08a', '2015_06_09f', '2015_06_19i', '2015_08_10g', '2015_08_26b']
+    cell_ids = ['2015_08_26b']
 
+    for cell_id in cell_ids:
         # read data
         v_mat_data, t_mat_data, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), 'IV',
                                                                    return_sweep_idxs=True)

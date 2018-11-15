@@ -101,7 +101,7 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
 
     sag_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
-                                                      'sag_amps.npy'))
+                                         'sag_amps.npy'))
     v_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                               'v_deflections.npy'))
     ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
@@ -116,8 +116,8 @@ if __name__ == '__main__':
     v_deflection_model = vrest - v_steady_states[0]
     ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5, label='Model')
 
-    ax.set_xlabel('Sag amp.')
-    ax.set_ylabel('Voltage deflection')
+    ax.set_xlabel('Sag deflection')
+    ax.set_ylabel('Amp. at steady state')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     #ax.legend()
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')

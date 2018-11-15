@@ -129,12 +129,12 @@ def get_channel_dict_for_plotting():
 
 def get_gate_dict_for_plotting():
     return {
-        'nat_m': '$m$',
-        'nat_h': '$h$',
-        'nap_m': '$m$',
-        'nap_h': '$h$',
-        'hcn_slow_n': '$h$',
-        'kdr_n': '$m$',
+        'nat_m': 'm',
+        'nat_h': 'h',
+        'nap_m': 'm',
+        'nap_h': 'h',
+        'hcn_slow_n': 'h',
+        'kdr_n': 'm',
         'pas': ''
     }
 
@@ -197,6 +197,12 @@ def get_variable_names_for_plotting(variable_names):
                 param = v_s2[1]
             new_variable_names[i] = channel_dict[v_split[0]] + ' ' + gate_dict[v_split[0] + '_' + v_s2[0]] + ' ' + \
                                     parameter_dict[param]
+
+            param = parameter_dict[param]
+            param_ = param.replace('$', '').replace('{', '').replace('}', '')
+            p1, p2 = param_.split('_')
+            gate = gate_dict[v_split[0] + '_' + v_s2[0]]
+            new_variable_names[i] = channel_dict[v_split[0]] + ' ' + '$' + p1 + '_{' + p2 + ', ' + gate + '}$'
         else:
             new_variable_names[i] = channel_dict[v_split[0]] + ' ' + parameter_dict[v_split[1]]
     return new_variable_names
