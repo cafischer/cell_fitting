@@ -107,9 +107,13 @@ def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_na
                                        label, matplotlib.text.Text)
     ax.tick_params(axis='x', which='major', pad=0)
     ax.axis('scaled')
-    cb = pl.colorbar(fraction=0.0055, ticks=[-1, -0.5, 0, 0.5, 1.0])
+    cb = pl.colorbar(fraction=0.0055, ticks=[-1, -0.5, 0, 0.5, 1])
     if correlation_measure == 'kendalltau':
         correlation_measure = 'Kendalls tau'
+    elif correlation_measure == 'spearman':
+        correlation_measure = 'Spearman'
+    elif correlation_measure == 'pearson':
+        correlation_measure = 'Pearson'
     cb.set_label(correlation_measure, rotation=-90, labelpad=13)
     cb.ax.set_yticklabels([-1, -0.5, 0, 0.5, 1.0])
 

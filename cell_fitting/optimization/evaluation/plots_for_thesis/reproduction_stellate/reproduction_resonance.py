@@ -53,8 +53,14 @@ if __name__ == '__main__':
 
     v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'Zap20', zap_amp)
 
-    ax0.plot(t_data, v_data, color_exp, linewidth=0.3, label='Data')
-    ax0.plot(t_model, v_model, color_model, linewidth=0.3, label='Model')
+    start_i_inj = np.where(i_inj)[0][0]
+    vrest_data = np.mean(v_data[:start_i_inj])
+    vrest_model = np.mean(v_model[:start_i_inj])
+
+    # ax0.plot(t_data, v_data, color_exp, linewidth=0.3, label='Data')
+    # ax0.plot(t_model, v_model, color_model, linewidth=0.3, label='Model')
+    ax0.plot(t_data, v_data - vrest_data, color_exp, linewidth=0.3, label='Data')
+    ax0.plot(t_model, v_model - vrest_model, color_model, linewidth=0.3, label='Model')
     ax1.plot(t_data, i_inj, linewidth=0.3, color='k')
 
     ax0.set_xticks([])
@@ -73,7 +79,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[0, 1])
     fig.add_subplot(ax)
 
-    with open(os.path.join(save_dir_data_plots, 'Zap20', exp_cell, 'impedance_dict.json'), 'r') as f:
+    with open(os.path.join(save_dir_data_plots, 'Zap20/rat', exp_cell, 'impedance_dict.json'), 'r') as f:
         impedance_dict_data = json.load(f)
     res_freq_data, q_value_data = compute_res_freq_and_q_val(np.array(impedance_dict_data['impedance']),
                                                                np.array(impedance_dict_data['frequencies']))
@@ -103,7 +109,11 @@ if __name__ == '__main__':
     # imp_smooth, frequencies = compute_smoothed_impedance(v_after_block, freq0=0, freq1=20, i_inj=i_inj,
     #                                                      offset_dur=2000, onset_dur=2000, tstop=34000, dt=0.01)
 
-    plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
+    # plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
+    #                          color=color_model)
+    vrest_after_block = np.mean(v_after_block[:start_i_inj])
+    plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model - vrest_model,
+                             np.array([v_after_block - vrest_after_block]), percent_block,
                              color=color_model)
     custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
                     Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]

@@ -53,16 +53,23 @@ if __name__ == '__main__':
     v_mat_model = np.load(os.path.join(save_dir_model, model, 'img', 'PP', str(int(double_ramp_params['len_step'])),
                                        'v_mat.npy'))
 
+    start_i_inj = np.where(i_inj_mat[0, 0, :, 0] > -0.05)[0][0]
     ramp3_amp_idx_exp = 0
     for ramp3_times_idx in range(len(ramp3_times)):
-        ax0.plot(t_exp, v_mat_exp[ramp3_amp_idx_exp, ramp3_times_idx, :, 1], color_exp,
+        # ax0.plot(t_exp, v_mat_exp[ramp3_amp_idx_exp, ramp3_times_idx, :, 1], color_exp,
+        #          label='Data' if ramp3_times_idx == 0 else '')
+        vrest_data = np.mean(v_mat_exp[ramp3_amp_idx_exp, ramp3_times_idx, :start_i_inj, 1])
+        ax0.plot(t_exp, v_mat_exp[ramp3_amp_idx_exp, ramp3_times_idx, :, 1] - vrest_data, color_exp,
                  label='Data' if ramp3_times_idx == 0 else '')
     ax0.set_xlim(470, 530)
     ax0.set_xticks([])
 
     ramp3_amp_idx_model = 8
     for ramp3_times_idx in range(len(ramp3_times)):
-        ax0.plot(t_exp, v_mat_model[ramp3_amp_idx_model, ramp3_times_idx, :, 1], color_model,
+        # ax0.plot(t_exp, v_mat_model[ramp3_amp_idx_model, ramp3_times_idx, :, 1], color_model,
+        #          label='Model' if ramp3_times_idx == 0 else '')
+        vrest_model = np.mean(v_mat_model[ramp3_amp_idx_model, ramp3_times_idx, :start_i_inj, 1])
+        ax0.plot(t_exp, v_mat_model[ramp3_amp_idx_model, ramp3_times_idx, :, 1] - vrest_model, color_model,
                  label='Model' if ramp3_times_idx == 0 else '')
     ax0.set_xlim(470, 530)
     ax0.set_xticks([])

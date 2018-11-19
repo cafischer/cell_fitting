@@ -74,14 +74,21 @@ if __name__ == '__main__':
                                              **get_spike_characteristics_dict(for_data=False))[0]
     print 'RMSE: ', rms(v_exp[fAHP_min_idx:], v_model[fAHP_min_idx:])
 
-    ax0.plot(t_exp, v_exp, color_exp, label='Data')
-    ax0.plot(t_model, v_model, color_model, label='Model')
+    start_i_inj = np.where(i_inj)[0][0]
+    vrest_data = np.mean(v_exp[:start_i_inj])
+    vrest_model = np.mean(v_model[:start_i_inj])
+
+    # ax0.plot(t_exp, v_exp, color_exp, label='Data')
+    # ax0.plot(t_model, v_model, color_model, label='Model')
+    ax0.plot(t_exp, v_exp-vrest_data, color_exp, label='Data')
+    ax0.plot(t_model, v_model-vrest_model, color_model, label='Model')
     #ax0.plot(t_model[fAHP_min_idx:], v_model[fAHP_min_idx:], color='y')
     ax1.plot(t_exp, i_inj, 'k')
 
     ax0.legend()
     ax0.set_xticks([])
-    ax0.set_ylabel('Mem. pot. (mV)')
+    #ax0.set_ylabel('Mem. pot. $-V_{rest}$ (mV)')
+    ax0.set_ylabel('Mem. pot. amp. (mV)')
     ax1.set_ylabel('Current (nA)')
     ax1.set_xlabel('Time (ms)')
     ax0.get_yaxis().set_label_coords(-0.1, 0.5)
@@ -180,9 +187,9 @@ if __name__ == '__main__':
                                                                    **get_spike_characteristics_dict()),
                                            dtype=float)
 
-    characteristics_mat_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/distributions/rat',
+    characteristics_mat_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
                                                    'characteristics_mat.npy')).astype(float)
-    characteristics_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/distributions/rat',
+    characteristics_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
                                                'return_characteristics.npy'))
 
     for characteristic_idx, characteristic in enumerate(characteristics):

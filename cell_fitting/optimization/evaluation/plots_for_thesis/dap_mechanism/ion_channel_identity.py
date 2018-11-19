@@ -170,7 +170,9 @@ if __name__ == '__main__':
     # compute response to voltage steps
     i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
                                      stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
+    i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
+    ax.set_ylabel('Current (norm.)')
 
     # NaP
     ax = pl.Subplot(fig, outer[1, 1])
@@ -187,7 +189,9 @@ if __name__ == '__main__':
     # compute response to voltage steps
     i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
                                      stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
+    i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
+    ax.set_ylabel('Current (norm.)')
     #ax.set_xlim(15, None)
 
     # Kdr
@@ -200,13 +204,14 @@ if __name__ == '__main__':
     durs = [150, 50, 150]
     v_steps = np.arange(-50, 40, 20)
     stepamp = 3
-
     sec_channel = getattr(cell.soma(.5), 'kdr')
 
     # compute response to voltage steps
     i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
                                      stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
+    i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
+    ax.set_ylabel('Current (norm.)')
     ax.set_xlim(195, 305)
 
     # HCN
@@ -219,13 +224,14 @@ if __name__ == '__main__':
     durs = [20, 1500, 0]
     v_steps = np.arange(-120, -30, 20)
     stepamp = 2
-
     sec_channel = getattr(cell.soma(.5), 'hcn_slow')
 
     # compute response to voltage steps
     i_steps, t = current_subtraction(cell.soma, sec_channel, standard_sim_params['celsius'], amps, durs, v_steps,
                                      stepamp, standard_sim_params['pos_i'], standard_sim_params['dt'])
+    i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t)
+    ax.set_ylabel('Current (norm.)')
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'ion_channel_identity.png'))

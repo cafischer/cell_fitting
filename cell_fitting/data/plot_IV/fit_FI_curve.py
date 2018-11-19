@@ -37,6 +37,7 @@ if __name__ == '__main__':
     FI_a = []
     FI_b = []
     FI_c = []
+    max_diff_f = []
     cell_ids_used = []
     RMSE = []
     for cell_id in cell_ids:
@@ -99,8 +100,9 @@ if __name__ == '__main__':
         # print 'a: ', p_opt[0]
         # print 'b: ', p_opt[1]
         # print 'c: ', p_opt[2]
+        # print 'max_diff: ', np.max(np.diff(firing_rates_data))
         # pl.figure()
-        # pl.plot(amps_greater0, firing_rates_data, color='k')
+        # pl.plot(amps_greater0, firing_rates_data, 'ok')
         # pl.plot(amps_greater0, fit_fun(amps_greater0, *p_opt), color='r')
         # pl.show()
 
@@ -109,6 +111,7 @@ if __name__ == '__main__':
         FI_c.append(p_opt[2])
         cell_ids_used.append(cell_id)
         RMSE.append(rmse)
+        max_diff_f.append(np.max(np.diff(firing_rates_data)))
 
         # print 'RMSE: %.5f' % RMSE[-1]
         # pl.figure()
@@ -128,6 +131,7 @@ if __name__ == '__main__':
     np.save(os.path.join(save_dir_img, 'FI_b.npy'), FI_b)
     np.save(os.path.join(save_dir_img, 'FI_c.npy'), FI_c)
     np.save(os.path.join(save_dir_img, 'RMSE.npy'), RMSE)
+    np.save(os.path.join(save_dir_img, 'max_diff_f.npy'), max_diff_f)
     np.save(os.path.join(save_dir_img, 'cells.npy'), cell_ids_used)
 
     pl.figure()

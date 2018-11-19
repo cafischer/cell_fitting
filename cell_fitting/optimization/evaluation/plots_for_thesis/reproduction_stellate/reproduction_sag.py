@@ -45,8 +45,14 @@ if __name__ == '__main__':
     v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
     v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
 
-    ax0.plot(t_data, v_data, color_exp, label='Data')
-    ax0.plot(t_model, v_model, color_model, label='Model')
+    start_i_inj = np.where(i_inj)[0][0]
+    vrest_data = np.mean(v_data[:start_i_inj])
+    vrest_model = np.mean(v_model[:start_i_inj])
+
+    # ax0.plot(t_data, v_data, color_exp, label='Data')
+    # ax0.plot(t_model, v_model, color_model, label='Model')
+    ax0.plot(t_data, v_data - vrest_data, color_exp, label='Data')
+    ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
     ax0.set_xticks([])
@@ -88,12 +94,17 @@ if __name__ == '__main__':
     block_channel(cell, 'hcn_slow', percent_block)
     v_after_block, _, _ = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
 
-    plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
-                             color=color_model)
+    # plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
+    #                          color=color_model)
+    # ax.set_ylim(-85, -70)
+    vrest_after_block = np.mean(v_after_block[:start_i_inj])
+    plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model - vrest_model,
+                             np.array([v_after_block - vrest_after_block]), percent_block,
+                             color=color_model)  # TODO: maybe shift in rest also interesting to see?!
+    ax.set_ylim(-4, 2.5)
     custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
                     Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]
     ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')
-    ax.set_ylim(-85, -70)
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # sag amp. vs voltage deflection for all cells

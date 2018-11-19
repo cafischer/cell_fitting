@@ -82,5 +82,31 @@ if __name__ == '__main__':
 
     pl.tight_layout()
     pl.subplots_adjust(top=0.97, right=0.94, left=0.13, bottom=-0.1)
-    pl.savefig(os.path.join(save_dir_img, 'sensitivity_analysis.png'))
+    pl.savefig(os.path.join(save_dir_img, 'sensitivity_analysis_'+correlation_measure+'.png'))
+    #pl.show()
+
+    # plot for supplement
+    fig = pl.figure(figsize=(12, 5))
+    outer = gridspec.GridSpec(3, 1, hspace=-0.15)
+
+    correlation_measures = ['kendalltau', 'spearman', 'pearson']
+    letters = ['A', 'B', 'C']
+
+    for i, correlation_measure in enumerate(correlation_measures):
+        ax = pl.Subplot(fig, outer[i, 0])
+        fig.add_subplot(ax)
+
+        corr_mat = np.load(os.path.join(s_, 'all', 'correlation_' + correlation_measure + '.npy'))
+        p_val_mat = np.load(os.path.join(s_, 'all', 'p_val_' + correlation_measure + '.npy'))
+        corr_mat = corr_mat[characteristic_idxs, :]
+        p_val_mat = p_val_mat[characteristic_idxs, :]
+        plot_corr_on_ax(ax, corr_mat, p_val_mat, characteristics, parameters, correlation_measure, cmap='seismic')
+        if i == 0 or i == 1:
+            ax.set_xticks([])
+            ax.set_xlabel('')
+        ax.text(-0.18, 1.0, letters[i], transform=ax.transAxes, size=18, weight='bold')
+
+    pl.tight_layout()
+    pl.subplots_adjust(top=1.0, left=0.14, right=0.95, bottom=0.12)
+    pl.savefig(os.path.join(save_dir_img, 'sensitivity_analysis_comparison.png'))
     pl.show()

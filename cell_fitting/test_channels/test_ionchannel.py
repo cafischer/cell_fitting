@@ -182,4 +182,4 @@ def plot_i_steps_on_ax(ax, i_steps, v_steps, t):
         ax.plot(t, i_steps[i], label='%i (mV)' % v_step, color=cmap(float(i) / len(v_steps)))
     ax.legend(loc='lower right')
     ax.set_xlabel('Time (ms)')
-    ax.set_ylabel('Current (nA)')
+    #ax.set_ylabel('Current (nA)')

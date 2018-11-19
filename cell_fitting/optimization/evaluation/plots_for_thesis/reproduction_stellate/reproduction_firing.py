@@ -43,8 +43,12 @@ if __name__ == '__main__':
     v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
     v_model, t_model, _ = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
 
-    ax0.plot(t_data, v_data, color_exp, label='Data')
-    ax0.plot(t_model, v_model, color_model, label='Model')
+    start_i_inj = np.where(i_inj)[0][0]
+    vrest_data = np.mean(v_data[:start_i_inj])
+    vrest_model = np.mean(v_model[:start_i_inj])
+
+    ax0.plot(t_data, v_data - vrest_data, color_exp, label='Data')
+    ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
     ax0.set_xticks([])
@@ -72,6 +76,7 @@ if __name__ == '__main__':
 
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
+    # np.max(np.diff(fi_dict_model['firing_rates']))
 
     # latency vs ISI1/2
     ax = pl.Subplot(fig, outer[2, 0])

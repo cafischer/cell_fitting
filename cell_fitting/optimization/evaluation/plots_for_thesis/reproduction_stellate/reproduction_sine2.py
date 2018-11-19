@@ -54,15 +54,23 @@ if __name__ == '__main__':
     v_model, t_model, i_inj_model = simulate_sine_stimulus(cell, amp1, amp2, 1./freq1*1000/2., freq2, 500, 500,
                                                            **standard_sim_params)
 
-    ax0.plot(t_data, v_data, color_exp, linewidth=0.5, label='Data')
-    ax1.plot(t_model, v_model, color_model, linewidth=0.5, label='Model')
+    start_i_inj_data = np.where(i_inj_data)[0][0]
+    start_i_inj_model = np.where(i_inj_model)[0][0]
+    vrest_data = np.mean(v_data[:start_i_inj_data])
+    vrest_model = np.mean(v_model[:start_i_inj_model])
+    # ax0.plot(t_data, v_data, color_exp, linewidth=0.5, label='Data')
+    # ax1.plot(t_model, v_model, color_model, linewidth=0.5, label='Model')
+    # ax0.set_ylim(-100, 50)
+    # ax1.set_ylim(-100, 50)
+    ax0.plot(t_data, v_data - vrest_data, color_exp, linewidth=0.5, label='Data')
+    ax1.plot(t_model, v_model - vrest_model, color_model, linewidth=0.5, label='Model')
     ax2.plot(t_data, i_inj_data, color_exp)
     ax2.plot(t_model, i_inj_model, color_model)
+    ax0.set_ylim(-25, 135)
+    ax1.set_ylim(-25, 135)
 
     ax0.set_xticks([])
     ax1.set_xticks([])
-    ax0.set_ylim(-100, 50)
-    ax1.set_ylim(-100, 50)
     ax0.set_ylabel('Mem. pot. (mV)')
     ax2.set_ylabel('Current (nA)')
     ax2.set_xlabel('Time (ms)')
