@@ -71,6 +71,7 @@ if __name__ == '__main__':
     v_range = np.arange(-95, 30, 0.1)
     curve_act = boltzmann_fun(v_range, cell.soma(.5).nat.m_vh, -cell.soma(.5).nat.m_vs)
     curve_inact = boltzmann_fun(v_range, cell.soma(.5).nat.h_vh, -cell.soma(.5).nat.h_vs)
+    #ax.plot(v_range, curve_act*curve_inact, 'k') # TODO
 
     # time constants
     time_constanct_act = time_constant_curve(v_range, cell.soma(.5).nat.m_tau_min, cell.soma(.5).nat.m_tau_max,
@@ -96,6 +97,7 @@ if __name__ == '__main__':
     v_range = np.arange(-95, 30, 0.1)
     curve_act = boltzmann_fun(v_range, cell.soma(.5).nap.m_vh, -cell.soma(.5).nap.m_vs)
     curve_inact = boltzmann_fun(v_range, cell.soma(.5).nap.h_vh, -cell.soma(.5).nap.h_vs)
+    #ax.plot(v_range, curve_act * curve_inact, 'k')  # TODO
 
     # time constants
     time_constanct_act = time_constant_curve(v_range, cell.soma(.5).nap.m_tau_min, cell.soma(.5).nap.m_tau_max,

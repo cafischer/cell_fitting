@@ -64,9 +64,9 @@ if __name__ == '__main__':
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': 1000,
                          'dt': 0.01, 'celsius': 35, 'onset': 200}
 
-    #cell.soma(.5).hcn_slow.gbar = 0
+    cell.soma(.5).hcn_slow.gbar = 0
     #cell.soma(.5).nap.gbar = 0
-    cell.soma(.5).nat.gbar = 0
+    #cell.soma(.5).nat.gbar = 0
     #cell.soma(.5).kdr.gbar = 0
 
     # plot currents
@@ -94,20 +94,25 @@ if __name__ == '__main__':
     pl.show()
 
 
-    # from itertools import combinations
-    # from cell_fitting.optimization.helpers import get_channel_list
-    #
-    # channel_list = get_channel_list(cell, 'soma')
-    # len_comb = 2
-    #
-    # pl.figure()
-    # scale_fac = np.max(np.abs(-1*np.sum(currents))) / np.max(np.abs(np.diff(data.v)))
-    # pl.plot(data.t[1:], np.diff(data.v) * scale_fac, 'k', label='dV/dt')
-    # pl.plot(data.t, -1*np.sum(currents), 'r', label='$-\sum I_{ion}$', linewidth=3)
-    # for comb in combinations(range(len(channel_list)), len_comb):
-    #     pl.plot(data.t, -1 * np.sum(np.array([currents[i] for i in comb]), 0),
-    #             label=str([channel_list[i] for i in comb]))
-    # pl.ylabel('Current', fontsize=16)
-    # pl.xlabel('Time (ms)', fontsize=16)
-    # pl.legend(fontsize=10)
-    # pl.show()
+    from itertools import combinations
+    from cell_fitting.optimization.helpers import get_channel_list
+
+    channel_list = get_channel_list(cell, 'soma')
+    len_comb = 2
+
+    pl.figure()
+    scale_fac = np.max(np.abs(-1*np.sum(currents))) / np.max(np.abs(np.diff(v)))
+    pl.plot(t[1:], np.diff(v) * scale_fac, 'k', label='dV/dt')
+    pl.plot(t, -1*np.sum(currents), 'r', label='$-\sum I_{ion}$', linewidth=3)
+    for comb in combinations(range(len(channel_list)), len_comb):
+        pl.plot(t, -1 * np.sum(np.array([currents[i] for i in comb]), 0),
+                label=str([channel_list[i] for i in comb]))
+    pl.ylabel('Current', fontsize=16)
+    pl.xlabel('Time (ms)', fontsize=16)
+    pl.legend(fontsize=10)
+    pl.show()
+
+    idx_nap = np.where(np.array(channel_list) == 'nap')[0][0]
+    idx_nat = np.where(np.array(channel_list) == 'nat')[0][0]
+    idx_kdr = np.where(np.array(channel_list) == 'kdr')[0][0]
+    print -1 * (currents[idx_nap] + currents[idx_nat] + currents[idx_kdr])

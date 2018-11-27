@@ -1,24 +1,11 @@
 import numpy as np
 import os
-import json
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
-
-from nrn_wrapper import Cell
 from cell_fitting.read_heka import load_data
-from cell_fitting.optimization.evaluation import simulate_model
-from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import plot_sag_vs_steady_state_on_ax
-from cell_fitting.optimization.evaluation.plot_double_ramp import plot_current_threshold_on_ax
-from cell_fitting.optimization.evaluation.plot_IV import plot_fi_curve_on_ax
-from cell_fitting.optimization.evaluation.plot_zap import plot_impedance_on_ax
-from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus
-from grid_cell_stimuli.spike_phase import plot_phase_hist_on_axes
 pl.style.use('paper_subplots')
 
 
-# TODO: colors
-# TODO: check all exp. data are v_shifted
-# TODO: add letters: A, B, C, ...
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_introduction'
     save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
@@ -26,11 +13,11 @@ if __name__ == '__main__':
     exp_cell_stellate = '2015_08_26b'
     exp_cell_pyramidal = '2015_08_20c'
 
-    fig = pl.figure(figsize=(11, 6.0))
+    fig = pl.figure(figsize=(11, 6.5))
     outer = gridspec.GridSpec(1, 4)
 
     # DAP
-    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 0], hspace=0.2, height_ratios=[5, 5, 1])
+    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 0], hspace=0.35, height_ratios=[5, 5, 1])
     ax0 = pl.Subplot(fig, inner[0])
     ax1 = pl.Subplot(fig, inner[1])
     ax2 = pl.Subplot(fig, inner[2])
@@ -59,8 +46,11 @@ if __name__ == '__main__':
     ax2.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.set_yticks([np.min(i_inj_pyramidal), np.max(i_inj_pyramidal)])
 
+    ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
+    ax1.text(-0.25, 1.0, 'E', transform=ax1.transAxes, size=18, weight='bold')
+
     # sag
-    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 1], hspace=0.2, height_ratios=[5, 5, 1])
+    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 1], hspace=0.35, height_ratios=[5, 5, 1])
     ax0 = pl.Subplot(fig, inner[0])
     ax1 = pl.Subplot(fig, inner[1])
     ax2 = pl.Subplot(fig, inner[2])
@@ -84,8 +74,11 @@ if __name__ == '__main__':
     ax2.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.set_yticks([np.min(i_inj), np.max(i_inj)])
 
+    ax0.text(-0.25, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')
+    ax1.text(-0.25, 1.0, 'F', transform=ax1.transAxes, size=18, weight='bold')
+
     # pos. step
-    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 2], hspace=0.2, height_ratios=[5, 5, 1])
+    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 2], hspace=0.35, height_ratios=[5, 5, 1])
     ax0 = pl.Subplot(fig, inner[0])
     ax1 = pl.Subplot(fig, inner[1])
     ax2 = pl.Subplot(fig, inner[2])
@@ -109,8 +102,11 @@ if __name__ == '__main__':
     ax2.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.set_yticks([np.min(i_inj), np.max(i_inj)])
 
+    ax0.text(-0.25, 1.0, 'C', transform=ax0.transAxes, size=18, weight='bold')
+    ax1.text(-0.25, 1.0, 'G', transform=ax1.transAxes, size=18, weight='bold')
+
     # zap
-    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 3], hspace=0.22, height_ratios=[5, 5, 1])
+    inner = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=outer[0, 3], hspace=0.35, height_ratios=[5, 5, 1])
     ax0 = pl.Subplot(fig, inner[0])
     ax1 = pl.Subplot(fig, inner[1])
     ax2 = pl.Subplot(fig, inner[2])
@@ -134,13 +130,16 @@ if __name__ == '__main__':
     ax2.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.set_yticks([np.min(i_inj), np.max(i_inj)])
 
+    ax0.text(-0.25, 1.0, 'D', transform=ax0.transAxes, size=18, weight='bold')
+    ax1.text(-0.25, 1.0, 'H', transform=ax1.transAxes, size=18, weight='bold')
+
     # title
     ax0.annotate('Put. stellate cell', xy=(0.54, 0.96), xycoords='figure fraction', fontsize=14,
                  horizontalalignment='center')
-    ax1.annotate('Put. pyramidal cell', xy=(0.54, 0.56), xycoords='figure fraction', fontsize=14,
+    ax1.annotate('Put. pyramidal cell', xy=(0.54, 0.57), xycoords='figure fraction', fontsize=14,
                  horizontalalignment='center')
 
     pl.tight_layout()
-    pl.subplots_adjust(top=0.94, bottom=0.09)
+    pl.subplots_adjust(top=0.92, bottom=0.08)
     pl.savefig(os.path.join(save_dir_img, 'comp_stellate_pyramidal.png'))
     pl.show()

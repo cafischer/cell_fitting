@@ -4,7 +4,8 @@ import os
 from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj_from_function
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
-pl.style.use('paper')
+from cell_fitting.data import check_cell_has_DAP
+pl.style.use('paper_subplots')
 
 
 def find_current_threshold_data(v_mat, i_inj_mat, AP_threshold):
@@ -21,21 +22,25 @@ def find_current_threshold_data(v_mat, i_inj_mat, AP_threshold):
 if __name__ == '__main__':
 
     # parameters
-    save_dir = './plots/rampIV/rat'
+    save_dir = '../plots/rampIV/rat'
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'rampIV'
     v_rest_shift = -16
     AP_threshold = -10
-    #cells = get_cells_for_protocol(data_dir, protocol)
-    # cells = ['2014_07_10b', '2014_07_02a', '2014_07_03a', '2017_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f',
-    #          '2014_07_10d']
-    cells = ['2015_08_26b']
     animal = 'rat'
 
-    for cell_id in cells:
+    # get cell_ids
+    cell_ids = get_cells_for_protocol(data_dir, protocol)
+    cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
+    cell_ids = filter(lambda id: check_cell_has_DAP(id), cell_ids)
+    # cell_ids = ['2014_07_10b', '2014_07_02a', '2014_07_03a', '2017_07_08d', '2014_07_09c', '2014_07_09e', '2014_07_09f',
+    #          '2014_07_10d']
+    #cell_ids = ['2015_08_26b']
+
+    current_thresholds = np.zeros(len(cell_ids))
+
+    for cell_idx, cell_id in enumerate(cell_ids):
         print cell_id
-        if not check_rat_or_gerbil(cell_id) == animal:
-            continue
 
         v_mat, t_mat, sweep_idxs = get_v_and_t_from_heka(os.path.join(data_dir, cell_id + '.dat'), protocol,
                                                          return_sweep_idxs=True)
@@ -51,15 +56,16 @@ if __name__ == '__main__':
                 os.makedirs(save_dir_img)
 
             np.savetxt(os.path.join(save_dir_img, 'current_threshold.txt'), np.array([current_threshold]))
+            current_thresholds[cell_idx] = current_threshold
 
-            pl.figure()
-            pl.plot(t, v_mat[idx], 'k', label='Exp. Data')
-            pl.xlabel('Time (ms)')
-            pl.ylabel('Membrane Potential (mV)')
-            #pl.legend()
-            pl.tight_layout()
-            pl.savefig(os.path.join(save_dir_img, 'v.png'))
-            pl.show()
+            # pl.figure()
+            # pl.plot(t, v_mat[idx], 'k', label='Exp. Data')
+            # pl.xlabel('Time (ms)')
+            # pl.ylabel('Membrane Potential (mV)')
+            # #pl.legend()
+            # pl.tight_layout()
+            # pl.savefig(os.path.join(save_dir_img, 'v.png'))
+            # pl.show()
 
             # fig, ax = pl.subplots(2, 1, sharex=True)
             # ax[0].plot(t, v_mat[idx], 'k')
@@ -74,3 +80,8 @@ if __name__ == '__main__':
             # import pandas as pd
             # data = pd.DataFrame(np.vstack((t, v_mat[idx], i_inj_mat[idx])).T, columns=['t', 'v', 'i'])
             # data.to_csv(os.path.join(save_dir_img, cell_id+'_rampIV.csv'))
+
+
+    pl.figure()
+    pl.hist(current_thresholds)
+    pl.show()

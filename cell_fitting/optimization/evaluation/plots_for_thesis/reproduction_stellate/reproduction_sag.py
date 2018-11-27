@@ -94,14 +94,14 @@ if __name__ == '__main__':
     block_channel(cell, 'hcn_slow', percent_block)
     v_after_block, _, _ = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
 
-    # plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
-    #                          color=color_model)
-    # ax.set_ylim(-85, -70)
-    vrest_after_block = np.mean(v_after_block[:start_i_inj])
-    plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model - vrest_model,
-                             np.array([v_after_block - vrest_after_block]), percent_block,
-                             color=color_model)  # TODO: maybe shift in rest also interesting to see?!
-    ax.set_ylim(-4, 2.5)
+    plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
+                             color=color_model)
+    ax.set_ylim(-85, -70)
+    # vrest_after_block = np.mean(v_after_block[:start_i_inj])
+    # plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model - vrest_model,
+    #                          np.array([v_after_block - vrest_after_block]), percent_block,
+    #                          color=color_model)  # TODO: maybe shift in rest also interesting to see?!
+    # ax.set_ylim(-4, 2.5)
     custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
                     Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]
     ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')

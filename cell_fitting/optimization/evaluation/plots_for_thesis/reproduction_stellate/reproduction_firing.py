@@ -61,8 +61,23 @@ if __name__ == '__main__':
     ax0.legend()
     ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
-    # f-I curve
+    # latency vs ISI1/2
     ax = pl.Subplot(fig, outer[1, 0])
+    fig.add_subplot(ax)
+    latency_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'latency.npy'))
+    ISI12_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'ISI12.npy'))
+    ax.plot(latency_data[latency_data>=0], ISI12_data[latency_data>=0], 'o', color=color_exp,
+            alpha=0.5, label='Data')
+
+    latency_model, ISI12_model = get_latency_and_ISI12(cell)
+    ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5, label='Model')
+
+    ax.set_xlabel('Latency (ms)')
+    ax.set_ylabel('$ISI_{1/2}$ (ms)')
+    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
+
+    # f-I curve
+    ax = pl.Subplot(fig, outer[2, 0])
     fig.add_subplot(ax)
 
     with open(os.path.join(save_dir_model, model, 'img', 'IV', 'fi_curve', 'fi_dict.json'), 'r') as f:
@@ -75,23 +90,8 @@ if __name__ == '__main__':
     plot_fi_curve_on_ax(ax, color_line=color_exp, **fi_dict_data)
 
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
-    # np.max(np.diff(fi_dict_model['firing_rates']))
-
-    # latency vs ISI1/2
-    ax = pl.Subplot(fig, outer[2, 0])
-    fig.add_subplot(ax)
-    latency_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'latency.npy'))
-    ISI12_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'ISI12.npy'))
-    ax.plot(latency_data[latency_data>=0], ISI12_data[latency_data>=0], 'o', color=color_exp,
-            alpha=0.5, label='Data')
-
-    latency_model, ISI12_model = get_latency_and_ISI12(cell)
-    ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5, label='Model')
-
-    ax.set_xlabel('Latency (ms)')
-    ax.set_ylabel('$ISI_{1/2}$ (ms)')
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
+    # np.max(np.diff(fi_dict_model['firing_rates']))
 
     # fit fI-curve
     FI_a = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'FI_a.npy'))
