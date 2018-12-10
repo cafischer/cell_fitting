@@ -210,7 +210,7 @@ def plot_double_ramp_currents_tmp(t, v, currents, ramp3_times, channel_list, sav
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     step_idx_dict = {-0.1: 0, 0: 1, 0.1: 2}
@@ -243,4 +243,6 @@ if __name__ == '__main__':
 
     # save
     save_dir_model = os.path.join(save_dir, 'img', 'PP', str(len_step))
+    if not os.path.exists(save_dir_model):
+        os.makedirs(save_dir_model)
     np.save(os.path.join(save_dir_model, 'v_mat.npy'), v_mat)

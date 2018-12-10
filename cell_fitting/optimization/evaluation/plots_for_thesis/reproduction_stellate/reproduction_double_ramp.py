@@ -4,7 +4,6 @@ import json
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
 from matplotlib.lines import Line2D
-from nrn_wrapper import Cell
 from cell_fitting.optimization.evaluation.plot_double_ramp import plot_current_threshold_on_ax
 from cell_fitting.data.plot_doubleramp import get_inj_doubleramp_params, get_i_inj_double_ramp_full
 from cell_fitting.optimization.evaluation.plot_double_ramp.plot_doubleramp_summary import plot_current_threshold_all_cells_on_ax
@@ -23,9 +22,7 @@ if __name__ == '__main__':
     color_exp = '#0099cc'
     color_model = 'k'
 
-    # create model cell
-    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
-
+    # plot
     fig = pl.figure(figsize=(10.5, 4))
     outer = gridspec.GridSpec(1, 3, width_ratios=[1, 1, 0.3])
 

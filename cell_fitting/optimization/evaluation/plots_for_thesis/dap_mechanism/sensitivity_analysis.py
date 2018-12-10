@@ -52,6 +52,8 @@ if __name__ == '__main__':
     inner = gridspec.GridSpecFromSubplotSpec(4, 1, subplot_spec=outer[0, 0], hspace=0.25)
     axes = [inner[0, 0], inner[1, 0], inner[2, 0], inner[3, 0]]
     for i, (characteristic_idx, characteristic) in enumerate(zip(characteristic_idxs_std, characteristics)):
+        print 'max std: ', np.max(std_mat[characteristic_idx, :])
+
         ax = pl.Subplot(fig, axes[i])
         fig.add_subplot(ax)
 

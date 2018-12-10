@@ -38,16 +38,20 @@ def plot_current_threshold(diff_current_data, diff_current_model, save_dir):
     pl.show()
 
 
-def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, step_amps, color='k',
-                                           plot_sig=True, p_groups=None):
+def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest, step_amps,
+                                           color=('k', 'k', 'k'), plot_sig=True, p_groups=None):
     percentage_difference = 100 - (current_thresholds_DAP / np.repeat(np.array([current_thresholds_rest]).T, 3, 1) * 100)
 
     if plot_sig:
-        ax.errorbar([0, 2.0, 4.0], np.mean(percentage_difference, 0), yerr=np.std(percentage_difference, 0),
-                    color=color, marker='o', capsize=3, linestyle='')
-        ax.plot(np.zeros(len(percentage_difference)) - 0.4, percentage_difference[:, 0], 'o', color=color, alpha=0.5)
-        ax.plot(np.zeros(len(percentage_difference)) + 1.6, percentage_difference[:, 1], 'o', color=color, alpha=0.5)
-        ax.plot(np.zeros(len(percentage_difference)) + 3.6, percentage_difference[:, 2], 'o', color=color, alpha=0.5)
+        ax.errorbar([0], np.mean(percentage_difference, 0)[0], yerr=np.std(percentage_difference, 0)[0],
+                    color=color[0], marker='o', capsize=3, linestyle='')
+        ax.errorbar([2.0], np.mean(percentage_difference, 0)[1], yerr=np.std(percentage_difference, 0)[1],
+                    color=color[1], marker='o', capsize=3, linestyle='')
+        ax.errorbar([4.0], np.mean(percentage_difference, 0)[2], yerr=np.std(percentage_difference, 0)[2],
+                    color=color[2], marker='o', capsize=3, linestyle='')
+        ax.plot(np.zeros(len(percentage_difference)) - 0.4, percentage_difference[:, 0], 'o', color=color[0], alpha=0.5)
+        ax.plot(np.zeros(len(percentage_difference)) + 1.6, percentage_difference[:, 1], 'o', color=color[1], alpha=0.5)
+        ax.plot(np.zeros(len(percentage_difference)) + 3.6, percentage_difference[:, 2], 'o', color=color[2], alpha=0.5)
 
         h0 = 0
         star = get_star_from_ttest(percentage_difference[:, 0], h0)
@@ -68,16 +72,20 @@ def plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_t
             star =  get_star_from_p_val(p_groups[2])
             horizontal_square_bracket(ax, star, x1=0, x2=4, y1=82, y2=84, dtext=0.1)
     else:
-        ax.errorbar([0, 1, 2], np.mean(percentage_difference, 0), yerr=np.std(percentage_difference, 0),
-                    color=color, marker='o', capsize=3, linestyle='')
-        ax.plot(np.zeros(len(percentage_difference)) - 0.4, percentage_difference[:, 0], 'o', color=color, alpha=0.5)
-        ax.plot(np.zeros(len(percentage_difference)) + 0.6, percentage_difference[:, 1], 'o', color=color, alpha=0.5)
-        ax.plot(np.zeros(len(percentage_difference)) + 1.6, percentage_difference[:, 2], 'o', color=color, alpha=0.5)
+        ax.errorbar([0], np.mean(percentage_difference, 0)[0], yerr=np.std(percentage_difference, 0)[0],
+                    color=color[0], marker='o', capsize=3, linestyle='')
+        ax.errorbar([1.0], np.mean(percentage_difference, 0)[1], yerr=np.std(percentage_difference, 0)[1],
+                    color=color[1], marker='o', capsize=3, linestyle='')
+        ax.errorbar([2.0], np.mean(percentage_difference, 0)[2], yerr=np.std(percentage_difference, 0)[2],
+                    color=color[2], marker='o', capsize=3, linestyle='')
+        ax.plot(np.zeros(len(percentage_difference)) - 0.4, percentage_difference[:, 0], 'o', color=color[0], alpha=0.5)
+        ax.plot(np.zeros(len(percentage_difference)) + 0.6, percentage_difference[:, 1], 'o', color=color[1], alpha=0.5)
+        ax.plot(np.zeros(len(percentage_difference)) + 1.6, percentage_difference[:, 2], 'o', color=color[2], alpha=0.5)
         ax.set_xlim([-1.0, 2.2])
         ax.set_xticks(np.array([0, 1, 2])-0.4)
     ax.set_xticklabels(step_amps)
     ax.set_ylim([0, 100])
-    ax.set_ylabel('Decrease current \nthresh. (%)')
+    #ax.set_ylabel('Decrease current \nthresh. (%)')
     ax.set_xlabel('Amp. (nA)')
     return np.mean(percentage_difference, 0)
 

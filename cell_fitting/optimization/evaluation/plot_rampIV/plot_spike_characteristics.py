@@ -12,7 +12,7 @@ pl.style.use('paper')
 # save dir
 save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/'
 mechanism_dir = '../../../model/channels/vavoulis'
-data_dir = '../../../data/plots/spike_characteristics/distributions/rat'
+data_dir = '../../../data/plots/spike_characteristics/rat'
 
 # for models
 protocol = 'rampIV'

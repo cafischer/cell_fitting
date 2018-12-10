@@ -42,9 +42,9 @@ def plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags
             label='Steady State' if label else '')
     ax.plot(amps_subtheshold, v_sags, linestyle='-', marker='$\cup$', c=color_lines, alpha=0.5, markersize=4,
             label='Sag' if label else '')
-    ax.set_xlabel('Current (nA)', fontsize=12)
-    ax.set_ylabel('Mem. pot. (mV)', fontsize=12)
-    ax.legend(loc='upper left', fontsize=10)
+    ax.set_xlabel('Current (nA)')
+    #ax.set_ylabel('Mem. pot. (mV)')
+    #ax.legend(loc='upper left')
     ax.set_xticks(np.arange(-0.15, 0.15+0.1, 0.1))
 
 

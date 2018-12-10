@@ -155,12 +155,12 @@ def plot_double_ramp(v_mat, t, ramp3_times, ramp3_amps, save_dir_img):
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     AP_threshold = 0
     step_amps = [-0.1, 0, 0.1]
-    save_dir_img = os.path.join(save_dir, 'img', 'PP', '125')
+    save_dir_img = os.path.join(save_dir, 'img', 'PP', '250')
     load_mechanism_dir("/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/OU_process")
 
     if not os.path.exists(save_dir_img):

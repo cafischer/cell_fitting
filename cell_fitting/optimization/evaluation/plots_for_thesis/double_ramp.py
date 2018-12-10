@@ -144,7 +144,7 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_data_plots, 'PP', '2015_08_06d', 'current_threshold_dict.json'), 'r') as f:
         current_threshold_dict_data = json.load(f)
 
-    plot_current_threshold_on_ax(ax, colors_dict = {-0.1: 'b', 0.0: 'k', 0.1: 'r'},
+    plot_current_threshold_on_ax(ax, colors_dict={-0.1: 'b', 0.0: 'k', 0.1: 'r'},
                                  label=True, legend_loc='lower right', **current_threshold_dict_data)
 
     ax.text(-0.35, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
@@ -165,7 +165,8 @@ if __name__ == '__main__':
     p12, p23, p31 = compute_repeated_ANOVA_and_posthoc_paired_test_with_Bonferroni(current_thresholds_DAP)
 
     plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP, current_thresholds_rest,
-                                           current_threshold_dict_data['step_amps'], p_groups=[p12, p23, p31])
+                                           current_threshold_dict_data['step_amps'], p_groups=[p12, p23, p31],
+                                           color=('b', 'k', 'r'))
     ax.set_ylim(0, 100)
     ax.set_aspect(0.05)
     ax.text(-0.35, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
