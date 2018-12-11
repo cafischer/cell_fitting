@@ -105,17 +105,16 @@ if __name__ == '__main__':
         plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_exp, 0.0: color_exp, 0.1: color_exp}, label=False,
                                      with_right_spine=False, shift_to_rest=True, legend_loc=None,
                                      **current_threshold_dict_data)
-
-        # legend
-        custom_lines = [
-                        Line2D([0], [0], marker='^', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
-                        Line2D([0], [0], marker='o', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
-                        Line2D([0], [0], marker='v', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
-        ax0.get_yaxis().set_label_coords(-0.2, 0.5)
+        ax0.set_xticklabels(['0', '4', '', '8', '', '12', '', '16', '', '20', ''])
         if model_idx == 0:
+            custom_lines = [
+                Line2D([0], [0], marker='^', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
+                Line2D([0], [0], marker='o', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
+                Line2D([0], [0], marker='v', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
             ax0.legend(custom_lines, ['Amp.: 0.1', 'Amp.: 0', 'Amp.: -0.1'], loc='upper right')
             ax0.text(-0.4, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')
             ax0.set_ylabel('Current thresh. (nA)')
+            ax0.get_yaxis().set_label_coords(-0.2, 0.5)
 
         # comparison current threshold DAP - rest all cells
         ax = pl.Subplot(fig, outer[2, model_idx])

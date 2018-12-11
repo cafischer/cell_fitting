@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
     # plot 1: DAP
     fig = pl.figure(figsize=(12, 4.0))
-    outer = gridspec.GridSpec(1, 5, wspace=0.15)
+    outer = gridspec.GridSpec(1, 5, wspace=0.2)
 
     for model_idx, model in enumerate(models):
         inner = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0, model_idx], hspace=0.1,
@@ -91,59 +91,10 @@ if __name__ == '__main__':
             ax0.legend()
             ax0.set_ylabel('Mem. pot. amp. (mV)')
             ax1.set_ylabel('Current (nA)')
-            ax0.get_yaxis().set_label_coords(-0.3, 0.5)
-            ax1.get_yaxis().set_label_coords(-0.3, 0.5)
+            ax0.get_yaxis().set_label_coords(-0.25, 0.5)
+            ax1.get_yaxis().set_label_coords(-0.25, 0.5)
             ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
 
     pl.tight_layout()
+    pl.subplots_adjust(top=0.97, bottom=0.12, left=0.06, right=0.99)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_dap1_models.png'))
-
-    # plot 2
-    fig = pl.figure(figsize=(8, 6))
-    outer = gridspec.GridSpec(2, 2)
-
-    # distribution of DAP characteristics
-    axes = [outer[0, 0], outer[0, 1], outer[1, 0], outer[1, 1]]
-    characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_time', 'DAP_width']
-    characteristics_dict_plot = characteristics_dict_for_plotting()
-
-    characteristics_mat_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
-                                                   'characteristics_mat.npy')).astype(float)
-    characteristics_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
-                                               'return_characteristics.npy'))
-
-    for characteristic_idx, characteristic in enumerate(characteristics):
-        ax = pl.Subplot(fig, axes[characteristic_idx])
-        fig.add_subplot(ax)
-
-        characteristic_idx_exp = np.where(characteristic == characteristics_exp)[0][0]
-        not_nan_exp = ~np.isnan(characteristics_mat_exp[:, characteristic_idx_exp])
-        ax.hist(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp], bins=100, color=color_exp,
-                label='Data')
-
-        for model_idx, model in enumerate(models):
-            cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
-            v, t, i_inj = simulate_rampIV(cell, ramp_amp, v_init=-75)
-            start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
-            v_rest = np.mean(v[0:start_i_inj])
-            characteristics_mat_model = np.array(get_spike_characteristics(v, t, characteristics, v_rest, check=False,
-                                                                           **get_spike_characteristics_dict()),
-                                                 dtype=float)
-            ax.axvline(characteristics_mat_model[characteristic_idx], 0, 1, color=color_model, linewidth=1.0, label='Model')
-            ax.annotate(str(model_idx+1),
-                        xy=(characteristics_mat_model[characteristic_idx], ax.get_ylim()[1] + 0.01),
-                        color=color_model, fontsize=8, ha='center')
-
-        ax.set_xlabel(characteristics_dict_plot[characteristic])
-        ax.set_ylabel('Frequency')
-        ax.get_yaxis().set_label_coords(-0.15, 0.5)
-
-        if characteristic_idx == 0:
-            # legend
-            custom_lines = [Line2D([0], [0], color=color_exp, lw=1.0),
-                            Line2D([0], [0], color=color_model, lw=1.0)]
-            ax.legend(custom_lines, ['Data', 'Model'])
-
-    pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'reproduction_dap2_models.png'))
-    pl.show()

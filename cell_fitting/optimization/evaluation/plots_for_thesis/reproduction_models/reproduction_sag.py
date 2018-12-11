@@ -9,7 +9,6 @@ from cell_fitting.read_heka import load_data
 from cell_fitting.optimization.evaluation import simulate_model
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import plot_sag_vs_steady_state_on_ax
 from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel, plot_channel_block_on_ax
-from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
 from cell_fitting.optimization.simulate import get_standard_simulation_params
 from cell_fitting.util import get_channel_color_for_plotting
 pl.style.use('paper_subplots')
@@ -103,51 +102,18 @@ if __name__ == '__main__':
 
         plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
                                  color=color_model, label=False)
-        ax.set_ylim(-85, -70)
+        ax.set_ylim(-85, -74)
+        ax.set_yticks(np.arange(-85, -71, 5))
         if model_idx == 0:
             ax.get_yaxis().set_label_coords(-0.25, 0.5)
             custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
                             Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]
-            ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')
+            ax.legend(custom_lines, ['Without block \n(model)', '100% block of \nHCN (model)'], loc='center left')
             ax.text(-0.4, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
         else:
             ax.set_ylabel('')
 
     pl.tight_layout()
-    pl.subplots_adjust(right=0.99, left=0.06, top=0.96, bottom=0.09)
+    pl.subplots_adjust(right=0.99, left=0.06, top=0.97, bottom=0.06)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_sag_models.png'))
-    #pl.show()
-
-    # plot: sag amp. vs voltage deflection for all cells
-    fig, ax = pl.subplots()
-
-    sag_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
-                                         'sag_amps.npy'))
-    v_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
-                                              'v_deflections.npy'))
-    ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
-
-    for model_idx, model in enumerate(models):
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
-        v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
-        start_step_idx = np.nonzero(i_inj_model)[0][0]
-        end_step_idx = np.nonzero(i_inj_model)[0][-1] + 1
-        v_sags, v_steady_states, _ = compute_v_sag_and_steady_state([v_model], [step_amp], AP_threshold=0,
-                                                                    start_step_idx=start_step_idx,
-                                                                    end_step_idx=end_step_idx)
-        sag_amp_model = v_steady_states[0] - v_sags[0]
-        vrest = np.mean(v_model[:start_step_idx])
-        v_deflection_model = vrest - v_steady_states[0]
-        ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5,
-                label='Model' if model_idx == 0 else '')
-        #ax.annotate(str(model_idx+1), xy=(sag_amp_model+0.005, v_deflection_model+0.05))
-
-    ax.set_xlabel('Sag deflection')
-    ax.set_ylabel('Amp. at steady state')
-    ax.legend()
-
-    pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'reproduction_sag_distribution_models.png'))
     pl.show()
-
-    # TODO: inset with zoom and annotation?

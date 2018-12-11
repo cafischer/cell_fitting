@@ -42,6 +42,8 @@ if __name__ == '__main__':
         zap_params['dt'] = standard_sim_params['dt']
         zap_params['offset_dur'] = zap_params['onset_dur'] - standard_sim_params['dt']
         cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        if model == '4':
+            zap_params['amp'] = 0.08
         v_model, t_model, i_inj_model, imp_smooth_model, frequencies_model, \
             res_freq_model, q_value_model = simulate_and_compute_zap_characteristics(cell, zap_params)
 
@@ -60,19 +62,21 @@ if __name__ == '__main__':
 
         ax0.plot(t_data, v_data - vrest_data, color_exp, linewidth=0.3, label='Data')
         ax0.plot(t_model, v_model - vrest_model, color_model, linewidth=0.3, label='Model')
-        ax1.plot(t_data, i_inj, linewidth=0.3, color='k')
+        ax1.plot(t_model, i_inj_model, linewidth=0.3, color='k')
 
         ax0.set_xticks([])
         ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
-        ax0.set_ylabel('Mem. pot. (mV)')
-        ax1.set_ylabel('Current (nA)')
         ax1.set_xlabel('Time (ms)')
-        ax0.get_yaxis().set_label_coords(-0.15, 0.5)
-        ax1.get_yaxis().set_label_coords(-0.15, 0.5)
-        custom_lines = [Line2D([0], [0], color=color_exp, lw=1.0),
-                        Line2D([0], [0], color=color_model, lw=1.0)]
-        ax0.legend(custom_lines, ['Data', 'Model'], loc='upper right')
-        ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
+        ax0.set_ylim(-6.5, 6.5)
+        if model_idx == 0:
+            ax0.set_ylabel('Mem. pot. (mV)')
+            ax1.set_ylabel('Current (nA)')
+            ax0.get_yaxis().set_label_coords(-0.25, 0.5)
+            ax1.get_yaxis().set_label_coords(-0.25, 0.5)
+            custom_lines = [Line2D([0], [0], color=color_exp, lw=1.0),
+                            Line2D([0], [0], color=color_model, lw=1.0)]
+            ax0.legend(custom_lines, ['Data', 'Model'], loc='upper right')
+            ax0.text(-0.4, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
         # impedance
         ax = pl.Subplot(fig, outer[1, model_idx])
@@ -86,11 +90,15 @@ if __name__ == '__main__':
         plot_impedance_on_ax(ax, frequencies_model, imp_smooth_model, color_line=color_model)
         plot_impedance_on_ax(ax, color_line=color_exp, **impedance_dict_data)
 
-        ax.get_yaxis().set_label_coords(-0.15, 0.5)
-        ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
+        ax.set_ylim(5, 60)
+        if model_idx == 0:
+            ax.get_yaxis().set_label_coords(-0.25, 0.5)
+            ax.text(-0.4, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
+        else:
+            ax.set_ylabel('')
 
         # block HCN
-        ax = pl.Subplot(fig, outer[2, 0])
+        ax = pl.Subplot(fig, outer[2, model_idx])
         fig.add_subplot(ax)
 
         percent_block = 100
@@ -101,30 +109,18 @@ if __name__ == '__main__':
         vrest_after_block = np.mean(v_after_block[:start_i_inj])
         plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model - vrest_model,
                                  np.array([v_after_block - vrest_after_block]), percent_block,
-                                 color=color_model)
-        custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
-                        Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]
-        ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')
-        ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
-
-        # # Q-value vs resonance frequency for all cells
-        # ax = pl.Subplot(fig, outer[3, model_idx])
-        # fig.add_subplot(ax)
-        #
-        # res_freqs_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'res_freqs.npy'))
-        # q_values_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'q_values.npy'))
-        #
-        # ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data')
-        # ax.plot(res_freq_model, q_value_model, 'o', color=color_model, alpha=0.5, label='Model')
-        #
-        # ax.set_xlabel('Q-value')
-        # ax.set_ylabel('Res. freq. (Hz)')
-        # ax.get_yaxis().set_label_coords(-0.15, 0.5)
-        # ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
-        #
-        # print 'res. freq. model: ', res_freq_model
-        # print 'q-val. model: ', q_value_model
+                                 color=color_model, label=False)
+        ax.set_ylim(-6.5, 6.5)
+        if model_idx == 0:
+            ax.get_yaxis().set_label_coords(-0.25, 0.5)
+            custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
+                            Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]
+            ax.legend(custom_lines, ['Without block \n(model)', '100% block of \nHCN (model)'], loc='lower right')
+            ax.text(-0.4, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
+        else:
+            ax.set_ylabel('')
 
     pl.tight_layout()
+    pl.subplots_adjust(top=0.97, bottom=0.06, right=0.99)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_resonance_models.png'))
     pl.show()

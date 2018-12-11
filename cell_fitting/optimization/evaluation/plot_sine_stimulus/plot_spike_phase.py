@@ -14,12 +14,12 @@ from grid_cell_stimuli.spike_phase import get_spike_phases_by_min, plot_phase_hi
 
 if __name__ == '__main__':
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/'
-    model_ids = [2] #range(1, 7)
+    model_ids = [6] #range(1, 7)
     mechanism_dir = '../../../model/channels/vavoulis'
     load_mechanism_dir(mechanism_dir)
 
-    amp1 = 0.4  # 0.5
-    amp2 = 0.4  # 0.2
+    amp1 = 0.7  # 0.5
+    amp2 = 0.5  # 0.2
     freq1 = 0.1  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
     sine1_dur = 1./freq1 * 1000 / 2.
     freq2 = 5  # 5  # 20
@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     for model_id in model_ids:
         # load model
-        model_dir = os.path.join(save_dir, str(model_id), 'cell_rounded.json')
+        model_dir = os.path.join(save_dir, str(model_id), 'cell.json') # TODO cell_rounded
         cell = Cell.from_modeldir(model_dir)
 
         save_dir_img = os.path.join(save_dir, str(model_id), 'img', 'sine_stimulus', 'traces',
@@ -55,6 +55,7 @@ if __name__ == '__main__':
         AP_onset_idxs = get_AP_onset_idxs(v, threshold=AP_threshold)
         AP_onset_idxs = np.concatenate((AP_onset_idxs, np.array([-1])))
         AP_max_idxs = np.array([get_AP_max_idx(v, i, j) for i, j in zip(AP_onset_idxs[:-1], AP_onset_idxs[1:])])
+        phases = get_spike_phases_by_min(AP_max_idxs, t, theta, order, dist_to_AP)
         phases = get_spike_phases_by_min(AP_max_idxs, t, theta, order, dist_to_AP)
         t_phases = t[AP_max_idxs]
         not_nan = np.logical_not(np.isnan(phases))
