@@ -20,8 +20,6 @@ from cell_fitting.optimization.evaluation.plot_zap import simulate_and_compute_z
 pl.style.use('paper_subplots')
 
 
-# TODO: different models with different colors?
-
 if __name__ == '__main__':
     save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
@@ -60,19 +58,23 @@ if __name__ == '__main__':
         ax.hist(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp], bins=100, color=color_exp,
                 label='Data')
 
+        characteristics_each_model = np.zeros(len(models))
         for model_idx, model in enumerate(models):
-            cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+            cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
             v, t, i_inj = simulate_rampIV(cell, 3.5, v_init=-75)
             start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
             v_rest = np.mean(v[0:start_i_inj])
             characteristics_mat_model = np.array(get_spike_characteristics(v, t, characteristics, v_rest, check=False,
                                                                            **get_spike_characteristics_dict()),
                                                  dtype=float)
-            ax.axvline(characteristics_mat_model[characteristic_idx], 0, 1, color=color_model, linewidth=1.0,
+            ax.axvline(characteristics_mat_model[characteristic_idx], 0, 0.95, color=color_model, linewidth=1.0,
                        label='Model')
-            ax.annotate(str(model_idx + 1),
-                        xy=(characteristics_mat_model[characteristic_idx], ax.get_ylim()[1] + 0.01),
-                        color=color_model, fontsize=8, ha='center')
+            characteristics_each_model[model_idx] = characteristics_mat_model[characteristic_idx]
+
+        order_models = np.argsort(characteristics_each_model) + 1
+        ax.annotate(str(order_models).replace('[', '').replace(']', ''),
+                    xy=(characteristics_mat_model[characteristic_idx], ax.get_ylim()[1]+0.1),
+                    color=color_model, fontsize=8, ha='center')
 
         ax.set_xlabel(characteristics_dict_plot[characteristic])
         ax.set_ylabel('Frequency')
@@ -93,8 +95,11 @@ if __name__ == '__main__':
                                               'v_deflections.npy'))
     ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
 
+    axins = inset_axes(ax, width='60%', height='50%', loc=1)
+    axins.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
+
     for model_idx, model in enumerate(models):
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, 1149.95, **standard_sim_params)
         start_step_idx = np.nonzero(i_inj_model)[0][0]
         end_step_idx = np.nonzero(i_inj_model)[0][-1] + 1
@@ -106,11 +111,17 @@ if __name__ == '__main__':
         v_deflection_model = vrest - v_steady_states[0]
         ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5,
                 label='Model' if model_idx == 0 else '')
-        ax.annotate(str(model_idx+1), xy=(sag_amp_model+0.005, v_deflection_model+0.05))
+        #ax.annotate(str(model_idx+1), xy=(sag_amp_model+0.005, v_deflection_m  odel+0.05))
+        axins.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5,
+                label='Model' if model_idx == 0 else '')
+        axins.annotate(str(model_idx + 1), xy=(sag_amp_model + 0.01, v_deflection_model - 0.15), va='top', fontsize=8,)
+    axins.set_ylim(1.1, 4.8)
+    axins.set_xlim(0.25, 1.5)
+    axins.set_xticks([])
+    axins.set_yticks([])
 
     ax.set_xlabel('Sag deflection')
     ax.set_ylabel('Amp. at steady state')
-    ax.legend()
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
@@ -124,11 +135,13 @@ if __name__ == '__main__':
                     alpha=0.5, label='Data')
 
     for model_idx, model in enumerate(models):
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         latency_model, ISI12_model = get_latency_and_ISI12(cell)
-        ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5,
-                        label='Model' if model_idx == 0 else '')
-        ax.annotate(str(model_idx + 1), xy=(latency_model + 1, ISI12_model + 0.1), fontsize=8)
+        ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5)
+        if model_idx == 0:
+            ax.annotate(str(model_idx + 1), xy=(latency_model + 9, ISI12_model + 0.0), fontsize=8)
+        else:
+            ax.annotate(str(model_idx + 1), xy=(latency_model + 1, ISI12_model + 0.1), fontsize=8)
 
     ax.set_xlabel('Latency (ms)')
     ax.set_ylabel('$ISI_{1/2}$ (ms)')
@@ -152,17 +165,21 @@ if __name__ == '__main__':
     ax3.plot(FI_c, FI_a, 'o', color=color_exp, alpha=0.5)
 
     for model_idx, model in enumerate(models):
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         amps_greater0, firing_rates_model = simulate_and_compute_fI_curve(cell)
         FI_a_model, FI_b_model, FI_c_model, RMSE_model = fit_fI_curve(amps_greater0, firing_rates_model)
 
-        ax1.plot([FI_a_model], [FI_b_model], 'o', color=color_model, alpha=0.5)
-        ax1.annotate(str(model_idx + 1), xy=(FI_a_model + 1, FI_b_model + 0.01), fontsize=8)
+        ax1.plot(-1000, -1000, 'o', color=color_exp, alpha=0.5, label='Data' if model_idx == 0 else '')  # fake plot for legend
+        ax1.plot([FI_a_model], [FI_b_model], 'o', color=color_model, alpha=0.5, label='Model' if model_idx == 0 else '')
+        ax1.annotate(str(model_idx + 1), xy=(FI_a_model + 4, FI_b_model + 0.01), fontsize=8)
+        ax1.set_xlim(0, 380)
+        ax1.set_ylim(0, 0.75)
         if model_idx == 0:
             ax1.set_xlabel('a')
             ax1.set_ylabel('b')
             ax1.get_yaxis().set_label_coords(-0.15, 0.5)
             ax1.text(-0.25, 1.0, 'D', transform=ax1.transAxes, size=18, weight='bold')
+            ax1.legend()
 
         ax2.plot([FI_b_model], [FI_c_model], 'o', color=color_model, alpha=0.5)
         ax2.annotate(str(model_idx + 1), xy=(FI_b_model + 0.01, FI_c_model + 0.01), fontsize=8)
@@ -173,7 +190,7 @@ if __name__ == '__main__':
             ax2.text(-0.25, 1.0, 'E', transform=ax2.transAxes, size=18, weight='bold')
 
         ax3.plot([FI_c_model], [FI_a_model], 'o', color=color_model, alpha=0.5)
-        ax3.annotate(str(model_idx + 1), xy=(FI_c_model + 0.01, FI_a_model + 1), fontsize=8)
+        ax3.annotate(str(model_idx + 1), xy=(FI_c_model + 0.016, FI_a_model + 0.8), fontsize=8)
         if model_idx == 0:
             ax3.set_xlabel('c')
             ax3.set_ylabel('a')
@@ -194,13 +211,16 @@ if __name__ == '__main__':
         zap_params['tstop'] = 34000 - standard_sim_params['dt']
         zap_params['dt'] = standard_sim_params['dt']
         zap_params['offset_dur'] = zap_params['onset_dur'] - standard_sim_params['dt']
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         if model == '4':
             zap_params['amp'] = 0.08
         v_model, t_model, i_inj_model, imp_smooth_model, frequencies_model, \
         res_freq_model, q_value_model = simulate_and_compute_zap_characteristics(cell, zap_params)
         ax.plot(res_freq_model, q_value_model, 'o', color=color_model, alpha=0.5, label='Model')
-        ax.annotate(str(model_idx + 1), xy=(res_freq_model + 0.1, q_value_model + 0.1))
+        if model_idx == 0:
+            ax.annotate(str(model_idx + 1), xy=(res_freq_model + -0.13, q_value_model + 0.07), fontsize=8)
+        else:
+            ax.annotate(str(model_idx + 1), xy=(res_freq_model + 0.1, q_value_model + 0.07), fontsize=8)
 
     ax.set_xlabel('Q-value')
     ax.set_ylabel('Res. freq. (Hz)')
@@ -233,7 +253,7 @@ if __name__ == '__main__':
                                'phase_hist', 'sine_dict.json'), 'r') as f:
             sine_dict_model = json.load(f)
         ax.plot(sine_dict_model['mean_phase'], sine_dict_model['std_phase'], 'o', color=color_model, alpha=0.5)
-        ax.annotate(str(model_idx + 1), xy=(sine_dict_model['mean_phase'][0] + 0.1, sine_dict_model['std_phase'][0] + 0.1))
+        ax.annotate(str(model_idx + 1), xy=(sine_dict_model['mean_phase'][0] + 0.15, sine_dict_model['std_phase'][0] + 1.2), fontsize=8)
     ax.set_ylabel('Std. phase')
     ax.set_xlabel('Mean phase')
     ax.set_xlim(120, 190)

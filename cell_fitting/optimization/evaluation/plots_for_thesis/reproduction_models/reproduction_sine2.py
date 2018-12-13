@@ -54,7 +54,7 @@ if __name__ == '__main__':
         dt_data = t_data[1]-t_data[0]
         i_inj_data = get_sine_stimulus(amp1_data, amp2_data, 1./freq1*1000/2., freq2, 500, 500-dt_data, dt_data)
 
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         v_model, t_model, i_inj_model = simulate_sine_stimulus(cell, amp1s[model_idx], amp2s[model_idx],
                                                                1./freq1*1000/2., freq2, 500, 500,
                                                                **standard_sim_params)
@@ -112,7 +112,8 @@ if __name__ == '__main__':
         ax0.set_ylim(0, 11)
         ax1.set_ylim(0, 11)
         ax1.set_xlabel('Phase (deg.)')
-        ax0.set_xticks([])
+        ax0.set_xticks([0, 180, 360])
+        ax0.set_xticklabels([])
         if model_idx == 0:
             ax0.set_ylabel('Count')
             ax1.set_ylabel('Count')

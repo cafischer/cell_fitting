@@ -14,7 +14,7 @@ from grid_cell_stimuli.spike_phase import get_spike_phases_by_min, plot_phase_hi
 
 if __name__ == '__main__':
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/'
-    model_ids = [6] #range(1, 7)
+    model_ids = [6]  #range(1, 7)
     mechanism_dir = '../../../model/channels/vavoulis'
     load_mechanism_dir(mechanism_dir)
 
@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     for model_id in model_ids:
         # load model
-        model_dir = os.path.join(save_dir, str(model_id), 'cell.json') # TODO cell_rounded
+        model_dir = os.path.join(save_dir, str(model_id), 'cell_rounded.json')
         cell = Cell.from_modeldir(model_dir)
 
         save_dir_img = os.path.join(save_dir, str(model_id), 'img', 'sine_stimulus', 'traces',

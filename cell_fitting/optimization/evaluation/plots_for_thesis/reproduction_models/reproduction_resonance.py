@@ -41,7 +41,7 @@ if __name__ == '__main__':
         zap_params['tstop'] = 34000 - standard_sim_params['dt']
         zap_params['dt'] = standard_sim_params['dt']
         zap_params['offset_dur'] = zap_params['onset_dur'] - standard_sim_params['dt']
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         if model == '4':
             zap_params['amp'] = 0.08
         v_model, t_model, i_inj_model, imp_smooth_model, frequencies_model, \
@@ -102,7 +102,7 @@ if __name__ == '__main__':
         fig.add_subplot(ax)
 
         percent_block = 100
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         block_channel(cell, 'hcn_slow', percent_block)
         v_after_block, _, _ = simulate_model(cell, 'Zap20', zap_amp, 34000 - standard_sim_params['dt'],
                                              **standard_sim_params)

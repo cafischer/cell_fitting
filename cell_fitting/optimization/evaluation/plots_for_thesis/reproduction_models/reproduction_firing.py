@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
         v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
 
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         v_model, t_model, _ = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
 
         start_i_inj = np.where(i_inj)[0][0]

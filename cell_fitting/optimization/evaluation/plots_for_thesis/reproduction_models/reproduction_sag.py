@@ -48,7 +48,7 @@ if __name__ == '__main__':
         ax0.plot(t_data, v_data - vrest_data, color_exp, label='Data')
         ax1.plot(t_data, i_inj, 'k')
 
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
         vrest_model = np.mean(v_model[:start_i_inj])
         ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
@@ -96,7 +96,7 @@ if __name__ == '__main__':
         fig.add_subplot(ax)
 
         percent_block = 100
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         block_channel(cell, 'hcn_slow', percent_block)
         v_after_block, _, _ = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
 

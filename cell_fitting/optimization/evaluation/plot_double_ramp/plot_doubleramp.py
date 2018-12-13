@@ -211,7 +211,7 @@ if __name__ == '__main__':
 
     # parameters
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/6'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    model_dir = os.path.join(save_dir, 'cell_rounded.json')
     mechanism_dir = '../../../model/channels/vavoulis'
     step_idx_dict = {-0.1: 0, 0: 1, 0.1: 2}
 

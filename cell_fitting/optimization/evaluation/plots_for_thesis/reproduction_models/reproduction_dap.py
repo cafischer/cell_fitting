@@ -68,7 +68,7 @@ if __name__ == '__main__':
         fig.add_subplot(ax1)
 
         v_exp, t_exp, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'rampIV', ramp_amp)
-        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))  # TODO: cell_rounded
+        cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
         v_model, t_model, _ = simulate_model(cell, 'rampIV', ramp_amp, t_exp[-1], **standard_sim_params)
 
         fAHP_min_idx = get_spike_characteristics(v_model, t_model, ['fAHP_min_idx'], v_model[0], check=False,
@@ -98,3 +98,4 @@ if __name__ == '__main__':
     pl.tight_layout()
     pl.subplots_adjust(top=0.97, bottom=0.12, left=0.06, right=0.99)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_dap1_models.png'))
+    pl.show()
