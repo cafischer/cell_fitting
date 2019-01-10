@@ -166,7 +166,7 @@ def plot_i_steps(i_steps, v_steps, t):
     pl.show()
 
 
-def plot_i_steps_on_ax(ax, i_steps, v_steps, t):
+def plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors=None):
     """
     Plots the current traces from all coltage steps.
 
@@ -177,9 +177,12 @@ def plot_i_steps_on_ax(ax, i_steps, v_steps, t):
     :param t: Time axis
     :type t: array
     """
-    cmap = pl.cm.get_cmap('plasma')
+    if colors is None:
+        cmap = pl.cm.get_cmap('plasma')
+        colors = [cmap(float(i) / len(v_steps)) for i in range(len(v_steps))]
+
     for i, v_step in enumerate(v_steps):
-        ax.plot(t, i_steps[i], label='%i (mV)' % v_step, color=cmap(float(i) / len(v_steps)))
+        ax.plot(t, i_steps[i], label='%i (mV)' % v_step, color=colors[i])
     ax.legend(loc='lower right')
     ax.set_xlabel('Time (ms)')
     #ax.set_ylabel('Current (nA)')

@@ -19,9 +19,10 @@ def get_order_of_magnitude(x):
 if __name__ == '__main__':
     # parameters
     save_dir = os.path.join('../results/sensitivity_analysis/variable_ranges')
-    variable_range_name = 'mean_std_1order_of_mag_model2'
+    variable_range_name = 'mean_std_5percent_model2'
     n_times_std = 1
-    std_method = 'order_of_magnitude'
+    percentage = 5
+    std_method = 'percent'
 
     model_dir = '../model/cells/dapmodel_simpel.json'
     mechanism_dir = '../model/channels/vavoulis'
@@ -85,6 +86,8 @@ if __name__ == '__main__':
         std_parameter = 10.**order
     elif std_method == 'std_over_models':
         std_parameter = np.std(parameter_models, 0)
+    elif std_method == 'percent':
+        std_parameter = np.abs(mean_parameter * percentage/100.)
     lower_bounds = mean_parameter - n_times_std * std_parameter
     upper_bounds = mean_parameter + n_times_std * std_parameter
 

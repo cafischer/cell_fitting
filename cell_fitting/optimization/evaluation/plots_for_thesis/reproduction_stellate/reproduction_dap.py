@@ -88,7 +88,7 @@ if __name__ == '__main__':
     ax0.legend()
     ax0.set_xticks([])
     #ax0.set_ylabel('Mem. pot. $-V_{rest}$ (mV)')
-    ax0.set_ylabel('Mem. pot. amp. (mV)')
+    ax0.set_ylabel('Mem. pot. (mV)')
     ax1.set_ylabel('Current (nA)')
     ax1.set_xlabel('Time (ms)')
     ax0.get_yaxis().set_label_coords(-0.1, 0.5)

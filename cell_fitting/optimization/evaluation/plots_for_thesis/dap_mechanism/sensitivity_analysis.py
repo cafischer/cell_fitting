@@ -58,7 +58,7 @@ if __name__ == '__main__':
         fig.add_subplot(ax)
 
         ax.errorbar(range(len(parameters)), mean_mat[characteristic_idx, :], yerr=std_mat[characteristic_idx, :],
-                    fmt='o', color='k', capsize=3)
+                    fmt='o', color='k', capsize=3, markersize=0)
         ax.axhline(0.5, color='0.5', linestyle='--')
         ax.axhline(0.0, color='0.5', linestyle='--')
         ax.axhline(-0.5, color='0.5', linestyle='--')

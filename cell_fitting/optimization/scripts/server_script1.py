@@ -12,7 +12,7 @@ import json
 save_dir = sys.argv[1]
 process_number = int(sys.argv[2])
 batch_size = int(sys.argv[3])
-n_generations = 1000
+n_generations = 500
 
 variables = [
             [0.3, 2, [['soma', 'cm']]],
@@ -39,6 +39,20 @@ variables = [
             [1, 30, [['soma', '0.5', 'kdr', 'n_vs']]],
             [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_vs']]],
 
+            [-100, 0, [['soma', '0.5', 'nat', 'm_tau_vh']]],
+            [-100, 0, [['soma', '0.5', 'nat', 'h_tau_vh']]],
+            [-100, 0, [['soma', '0.5', 'nap', 'm_tau_vh']]],
+            [-100, 0, [['soma', '0.5', 'nap', 'h_tau_vh']]],
+            [-100, 0, [['soma', '0.5', 'kdr', 'n_tau_vh']]],
+            [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_tau_vh']]],
+
+            [1, 30, [['soma', '0.5', 'nat', 'm_tau_vs']]],
+            [-30, -1, [['soma', '0.5', 'nat', 'h_tau_vs']]],
+            [1, 30, [['soma', '0.5', 'nap', 'm_tau_vs']]],
+            [-30, -1, [['soma', '0.5', 'nap', 'h_tau_vs']]],
+            [1, 30, [['soma', '0.5', 'kdr', 'n_tau_vs']]],
+            [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_tau_vs']]],
+
             [0, 50, [['soma', '0.5', 'nat', 'm_tau_min']]],
             [0, 50, [['soma', '0.5', 'nat', 'h_tau_min']]],
             [0, 50, [['soma', '0.5', 'nap', 'm_tau_min']]],
@@ -61,10 +75,27 @@ variables = [
             [0, 1, [['soma', '0.5', 'hcn_slow', 'n_tau_delta']]]
             ]
 
-variable_range_name = 'mean_std_6models'
+new_variables = [
+                [-100, 0, [['soma', '0.5', 'nat', 'm_tau_vh']]],
+                [-100, 0, [['soma', '0.5', 'nat', 'h_tau_vh']]],
+                [-100, 0, [['soma', '0.5', 'nap', 'm_tau_vh']]],
+                [-100, 0, [['soma', '0.5', 'nap', 'h_tau_vh']]],
+                [-100, 0, [['soma', '0.5', 'kdr', 'n_tau_vh']]],
+                [-100, 0, [['soma', '0.5', 'hcn_slow', 'n_tau_vh']]],
+
+                [1, 30, [['soma', '0.5', 'nat', 'm_tau_vs']]],
+                [-30, -1, [['soma', '0.5', 'nat', 'h_tau_vs']]],
+                [1, 30, [['soma', '0.5', 'nap', 'm_tau_vs']]],
+                [-30, -1, [['soma', '0.5', 'nap', 'h_tau_vs']]],
+                [1, 30, [['soma', '0.5', 'kdr', 'n_tau_vs']]],
+                [-30, -1, [['soma', '0.5', 'hcn_slow', 'n_tau_vs']]]
+                ]
+
+variable_range_name = 'mean_std_1order_of_mag_model2'
 save_dir_range = os.path.join('../../results/sensitivity_analysis/', 'variable_ranges')
 with open(os.path.join(save_dir_range, variable_range_name + '.json'), 'r') as f:
     variables_init = json.load(f)
+variables_init = variables_init[:20] + variables_init[8:20] + variables_init[20:]
 
 lower_bounds, upper_bounds, variable_keys = get_lowerbound_upperbound_keys(variables)
 bounds = {'lower_bounds': list(lower_bounds), 'upper_bounds': list(upper_bounds)}
@@ -79,16 +110,13 @@ data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
 
 # dicts for fitting
 fitter_params = {
-                    #'name': 'HodgkinHuxleyFitter',
-                    'name': 'HodgkinHuxleyFitterFitfunFromSet',
+                    'name': 'HodgkinHuxleyFitter',
                     'variable_keys': variable_keys,
                     'errfun_name': 'rms',
                     'model_dir': '../../model/cells/dapmodel_simpel.json',
-                    'mechanism_dir': '../../model/channels/vavoulis',
-                    'fitfun_names_per_data_set': [['v_AP_v_DAP_DAP_time_DAP_deflection_current_threshold']],
-                    #'fitfun_names_per_data_set': [['get_v']],
-                    'fitnessweights_per_data_set': [[0.5, 3, 1.5, 2, 3]],
-                    #'fitnessweights_per_data_set': [[1]],
+                    'mechanism_dir': '../../model/channels/vavoulis_independent_tau',
+                    'fitfun_names_per_data_set': [['get_v']],
+                    'fitnessweights_per_data_set': [[1]],
                     'data_read_dict_per_data_set': [data_read_dict],
                     'init_simulation_params': {'celsius': 35, 'onset': 200, 'v_init': -75},
                     'args': {'max_fitness_error': 50}

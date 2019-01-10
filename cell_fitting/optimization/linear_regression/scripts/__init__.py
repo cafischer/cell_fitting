@@ -76,12 +76,14 @@ def fit_with_linear_regression(v_exp, t_exp, i_exp, save_dir, model_dir, mechani
     np.savetxt(os.path.join(save_dir, 'error.txt'), np.array([residual]))
 
     # plot fit
-    plot_fit(y, X, weights, t_exp, channel_list, save_dir=save_dir)
+    # plot_fit(y, X, weights, t_exp, channel_list, save_dir=save_dir)
+    #
+    # pl.figure()
+    # pl.plot(t_exp, v_exp, 'k')
+    # pl.plot(t, v, 'r')
+    # pl.xlabel('Mem. pot. (mV)')
+    # pl.ylabel('Time (ms)')
+    # pl.savefig(os.path.join(save_dir, 'simulation.png'))
 
-    pl.figure()
-    pl.plot(t_exp, v_exp, 'k')
-    pl.plot(t, v, 'r')
-    pl.xlabel('Mem. pot. (mV)')
-    pl.ylabel('Time (ms)')
-    pl.savefig(os.path.join(save_dir, 'simulation.png'))
-    pl.show()
+    plot_fit2(y, X, weights, t_exp, v_exp, t, v, channel_list, save_dir='/home/cf/Dropbox/thesis/figures_discussion')
+

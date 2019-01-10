@@ -94,7 +94,7 @@ def plot_candidate(save_dir, candidate):
             #if np.size(fitter.data_sets_to_fit[i][j]) == len(t): TODO
                 #pl.plot(t, fitter.data_sets_to_fit[i][j], 'k', label='Exp. Data')
             if np.size(fitter.data_sets_to_fit[j]) == len(t):
-                pl.plot(t, fitter.data_sets_to_fit[j], 'k', label='Exp. Data')
+                pl.plot(t, fitter.data_sets_to_fit[j][0], 'k', label='Exp. Data')
             pl.plot(t, v_model, 'r', label='Model')
             pl.legend()
             pl.xlabel('Time (ms)')
@@ -115,7 +115,7 @@ def plot_candidate_on_other_data(save_dir, candidate, data_read_dict, plot_dir):
     with open(save_dir + '/optimization_settings.json', 'r') as f:
         optimization_settings = json.load(f)
 
-    optimization_settings['fitter_params']['data_read_dict_per_data_set'] = data_read_dict  # TODO: [data_read_dict]
+    optimization_settings['fitter_params']['data_read_dict_per_data_set'] = [data_read_dict]  # TODO: [data_read_dict]
     optimization_settings['fitter_params']['mechanism_dir'] = None
     fitter = FitterFactory().make_fitter(optimization_settings['fitter_params'])
     # use saved cell
@@ -232,14 +232,8 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 
 if __name__ == '__main__':
-    save_dir = '../../results/server_17_12_04/2018-01-16_11:02:23/483'
-    #save_dir = '../scripts/test/0/'
-    #2017-12-16_10:04:51 : 42, 20
-    #2017-12-20_10:24:47: [330, 129, 135]
-    # 2017-12-26_08:14:12: 185, 61, 446
-    # 2018-01-05_14:13:33: 154, 138, 142, 34
-    # 2018-01-11_13:42:29: [355]
-    # 2018-01-16_11:02:23: [20+]
+    #save_dir = '../../results/server_17_12_04/2018-01-16_11:02:23/483'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/optimization_vavoulis_channels/vavoulis_independent_tau/10_01_09/0'
 
     method = 'L-BFGS-B'
     save_dir = os.path.join(save_dir, method)
@@ -250,38 +244,38 @@ if __name__ == '__main__':
 
     save_cell(save_dir, best_candidate)
 
-    data_read_dict0 = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
-                      'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(0.5, 'rampIV'),
-                      'v_rest_shift': -8, 'file_type': 'dat'}
-    protocol = 'hyperRampTester(3)'
-    data_read_dict1 = {'data_dir': '../../data/dat_files', 'cell_id': '2013_12_11a',
-                       'protocol': protocol, 'sweep_idx': 0, 'v_rest_shift': -8, 'file_type': 'dat'}
-    protocol = 'depoRampTester(3)'
-    data_read_dict2 = {'data_dir': '../../data/dat_files', 'cell_id': '2013_12_11a',
-                       'protocol': protocol, 'sweep_idx': 0, 'v_rest_shift': -8, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, [data_read_dict1, data_read_dict1, data_read_dict2], 'img/rampIV/0.5(nA).png')
+    # data_read_dict0 = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2015_08_26b',
+    #                   'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(0.5, 'rampIV'),
+    #                   'v_rest_shift': -16, 'file_type': 'dat'}
+    # protocol = 'hyperRampTester(3)'
+    # data_read_dict1 = {'data_dir': '../../data/dat_files', 'cell_id': '2013_12_11a',
+    #                    'protocol': protocol, 'sweep_idx': 0, 'v_rest_shift': -8, 'file_type': 'dat'}
+    # protocol = 'depoRampTester(3)'
+    # data_read_dict2 = {'data_dir': '../../data/dat_files', 'cell_id': '2013_12_11a',
+    #                    'protocol': protocol, 'sweep_idx': 0, 'v_rest_shift': -8, 'file_type': 'dat'}
+    # plot_candidate_on_other_data(save_dir, best_candidate, [data_read_dict1, data_read_dict1, data_read_dict2], 'img/rampIV/0.5(nA).png')
 
     # data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
     #                   'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(3.1, 'rampIV'),
     #                   'v_rest_shift': -8, 'file_type': 'dat'}
     # plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/rampIV/3.1(nA).png')
 
-    data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
-                      'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(0.5, 'rampIV'),
-                      'v_rest_shift': -8, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/rampIV/0.5(nA).png')
+    # data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2015_08_26b',
+    #                   'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(0.5, 'rampIV'),
+    #                   'v_rest_shift': -16, 'file_type': 'dat'}
+    # plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/rampIV/0.5(nA).png')
 
-    data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
-                      'protocol': 'plot_IV', 'sweep_idx': get_sweep_index_for_amp(-0.15, 'plot_IV'),
-                      'v_rest_shift': -8, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/plot_IV/-0.15(nA).png')
+    data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2015_08_26b',
+                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(-0.15, 'IV'),
+                      'v_rest_shift': -16, 'file_type': 'dat'}
+    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/-0.15(nA).png')
 
-    data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
-                      'protocol': 'plot_IV', 'sweep_idx': get_sweep_index_for_amp(0.1, 'plot_IV'),
-                      'v_rest_shift': -8, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/plot_IV/0.4(nA).png')
+    data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2015_08_26b',
+                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(0.1, 'IV'),
+                      'v_rest_shift': -16, 'file_type': 'dat'}
+    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/0.4(nA).png')
 
-    data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2013_12_11a',
-                      'protocol': 'plot_IV', 'sweep_idx': get_sweep_index_for_amp(0.8, 'plot_IV'),
-                      'v_rest_shift': -8, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/plot_IV/0.8(nA).png')
+    data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2015_08_26b',
+                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(0.8, 'IV'),
+                      'v_rest_shift': -16, 'file_type': 'dat'}
+    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/0.8(nA).png')

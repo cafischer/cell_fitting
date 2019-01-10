@@ -62,7 +62,7 @@ if __name__ == '__main__':
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
-    ax0.legend()
+    ax0.legend(loc='lower right')
     # letter
     ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 

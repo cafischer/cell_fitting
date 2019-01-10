@@ -147,6 +147,7 @@ if __name__ == '__main__':
     plot_current_threshold_on_ax(ax, colors_dict={-0.1: 'b', 0.0: 'k', 0.1: 'r'},
                                  label=True, legend_loc='lower right', **current_threshold_dict_data)
 
+    ax.set_ylabel('Current thresh. (nA)')
     ax.text(-0.35, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # comparison current threshold DAP - rest all cells
@@ -169,6 +170,7 @@ if __name__ == '__main__':
                                            color=('b', 'k', 'r'))
     ax.set_ylim(0, 100)
     ax.set_aspect(0.05)
+    ax.set_ylabel('Decrease current thresh. (%)')
     ax.text(-0.35, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()

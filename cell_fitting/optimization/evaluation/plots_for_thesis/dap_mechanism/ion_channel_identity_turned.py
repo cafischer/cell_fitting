@@ -42,7 +42,7 @@ def plot_act_inact_on_ax(ax, v_range, steadystate_act, steadystate_inact, time_c
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
+    save_dir_img = '/home/cf/Dropbox/thesis/defense/results/reproduction_dap'
     save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
     save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
@@ -57,8 +57,8 @@ if __name__ == '__main__':
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
 
     # plot
-    fig = pl.figure(figsize=(8, 9))
-    outer = gridspec.GridSpec(4, 2)
+    fig = pl.figure(figsize=(14, 6))
+    outer = gridspec.GridSpec(2, 4)
 
     # activation and inactivation
 
@@ -90,7 +90,7 @@ if __name__ == '__main__':
     print 'Nat h max tau: ', np.max(time_constanct_inact)
     
     # NaP
-    ax = pl.Subplot(fig, outer[1, 0])
+    ax = pl.Subplot(fig, outer[0, 1])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     print 'Nap h max tau: ', np.max(time_constanct_inact)
 
     # Kdr
-    ax = pl.Subplot(fig, outer[2, 0])
+    ax = pl.Subplot(fig, outer[0, 2])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
@@ -139,7 +139,7 @@ if __name__ == '__main__':
     print 'Kdr m max tau: ', np.max(time_constanct_act)
     
     # HCN
-    ax = pl.Subplot(fig, outer[3, 0])
+    ax = pl.Subplot(fig, outer[0, 3])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
@@ -162,7 +162,7 @@ if __name__ == '__main__':
     # voltage step protocols
 
     # NaT
-    ax = pl.Subplot(fig, outer[0, 1])
+    ax = pl.Subplot(fig, outer[1, 0])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.18, 0.5)
     ax.text(-0.28, 1.0, 'E', transform=ax.transAxes, size=18, weight='bold')
@@ -202,7 +202,7 @@ if __name__ == '__main__':
     #ax.set_xlim(15, None)
 
     # Kdr
-    ax = pl.Subplot(fig, outer[2, 1])
+    ax = pl.Subplot(fig, outer[1, 2])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.18, 0.5)
     ax.text(-0.28, 1.0, 'G', transform=ax.transAxes, size=18, weight='bold')
@@ -222,7 +222,7 @@ if __name__ == '__main__':
     ax.set_xlim(195, 305)
 
     # HCN
-    ax = pl.Subplot(fig, outer[3, 1])
+    ax = pl.Subplot(fig, outer[1, 3])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.18, 0.5)
     ax.text(-0.28, 1.0, 'H', transform=ax.transAxes, size=18, weight='bold')
