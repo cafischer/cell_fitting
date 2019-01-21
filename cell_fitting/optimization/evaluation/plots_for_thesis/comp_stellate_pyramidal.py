@@ -3,6 +3,7 @@ import os
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
 from cell_fitting.read_heka import load_data
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
 pl.style.use('paper_subplots')
 
 
@@ -94,6 +95,16 @@ if __name__ == '__main__':
     ax1.plot(t_pyramidal, v_pyramidal, 'k', label='Put. pyramidal')
     ax2.plot(t_stellate, i_inj, 'k')
 
+    axins = inset_axes(ax0, width='20%', height='60%', loc=1)
+    axins.plot(t_stellate, v_stellate, 'k')
+    axins.set_xlim(250, 290)
+    axins.set_ylim(-78, 39)
+    axins.set_xticks([])
+    axins.set_yticks([])
+    axins.spines['top'].set_visible(True)
+    axins.spines['right'].set_visible(True)
+    mark_inset(ax0, axins, loc1=2, loc2=4, fc="none", ec="0.5")
+
     ax0.set_xticks([])
     ax1.set_xticks([])
     ax2.set_xlabel('Time (ms)')
@@ -118,13 +129,13 @@ if __name__ == '__main__':
     v_stellate, t_stellate, i_inj = load_data(os.path.join(save_dir_data, exp_cell_stellate + '.dat'), 'Zap20', step_amp)
     v_pyramidal, t_pyramidal, i_inj = load_data(os.path.join(save_dir_data, exp_cell_pyramidal + '.dat'), 'Zap20', step_amp)
 
-    ax0.plot(t_stellate, v_stellate, 'k', label='Put. stellate')
-    ax1.plot(t_pyramidal, v_pyramidal, 'k', label='Put. pyramidal')
-    ax2.plot(t_stellate, i_inj, 'k')
+    ax0.plot(t_stellate/1000., v_stellate, 'k', label='Put. stellate')
+    ax1.plot(t_pyramidal/1000., v_pyramidal, 'k', label='Put. pyramidal')
+    ax2.plot(t_stellate/1000., i_inj, 'k')
 
     ax0.set_xticks([])
     ax1.set_xticks([])
-    ax2.set_xlabel('Time (ms)')
+    ax2.set_xlabel('Time (s)')
     ax0.get_yaxis().set_label_coords(-0.25, 0.5)
     ax1.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.get_yaxis().set_label_coords(-0.25, 0.5)

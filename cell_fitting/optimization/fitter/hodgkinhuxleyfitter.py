@@ -126,7 +126,6 @@ class HodgkinHuxleyFitterAdaptive(HodgkinHuxleyFitter):
 
 
 class HodgkinHuxleyFitterFitfunFromSet(HodgkinHuxleyFitter):
-    # for now can just manage one fitfun
     def __init__(self, name, variable_keys, errfun_name, fitfun_names_per_data_set, fitnessweights_per_data_set,
                  data_read_dict_per_data_set, model_dir, mechanism_dir, init_simulation_params=None, args=None):
         # super(HodgkinHuxleyFitterFitfunFromSet, self).__init__(name, variable_keys, errfun_name,
@@ -166,7 +165,10 @@ class HodgkinHuxleyFitterFitfunFromSet(HodgkinHuxleyFitter):
 
         # new part
         args = merge_dicts(copy.deepcopy(self.args), {'is_data': True})
-        self.data_sets_to_fit = self.fitfuns[0][0](data_dicts, args=args)
+        self.data_sets_to_fit = []
+        for idx_data_set in range(len(self.fitfuns)):
+            self.data_sets_to_fit.append([fitfun(args=args, **data_dicts[idx_data_set])
+                                          for fitfun in self.fitfuns[idx_data_set]])
 
     def evaluate_fitness(self, candidate, args):
         fitness = 0
@@ -175,14 +177,18 @@ class HodgkinHuxleyFitterFitfunFromSet(HodgkinHuxleyFitter):
         for s, simulation_params in enumerate(self.simulation_params):
             v_candidate, t_candidate, i_inj_candidate = self.simulate_cell(candidate, simulation_params)
             model_dicts.append({'v': v_candidate, 't': t_candidate, 'i_inj': i_inj_candidate})
-        vars_to_fit = self.fitfuns[0][0](model_dicts, args=merge_dicts(copy.deepcopy(self.args), {'cell': self.cell}))
+        args = merge_dicts(copy.deepcopy(self.args), {'cell': self.cell})
+        vars_to_fit = []
+        for idx_data_set in range(len(self.fitfuns)):
+            vars_to_fit.append([fitfun(args=args, **model_dicts[idx_data_set]) for fitfun in self.fitfuns[idx_data_set]])
 
         for i in range(len(vars_to_fit)):
-            if vars_to_fit[i] is None:
-                fitness += max_fitness_error  # even when some or None, algorithm can still improve on others
-            else:
-                fitness += self.fitnessweights_per_data_set[0][i] * self.errfun(vars_to_fit[i],
-                                                                                self.data_sets_to_fit[i])
+            for j in range(len(vars_to_fit[i])):
+                if vars_to_fit[i][j] is None:
+                    fitness += max_fitness_error  # even when some or None, algorithm can still improve on others
+                else:
+                    fitness += self.fitnessweights_per_data_set[i][j] * self.errfun(vars_to_fit[i][j],
+                                                                                    self.data_sets_to_fit[i][j])
         if np.isnan(fitness):
             return len(vars_to_fit) * max_fitness_error
         return fitness

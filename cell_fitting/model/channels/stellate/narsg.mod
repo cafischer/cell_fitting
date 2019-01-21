@@ -65,8 +65,9 @@ PARAMETER {
 }
 
 ASSIGNED {
-	alfac   	: microscopic reversibility factors
-	btfac				
+	afac
+	:alfac   	: microscopic reversibility factors
+	:btfac				
 
 	: rates
 	f01  		(/ms)
@@ -184,24 +185,25 @@ LINEAR seqinitial { : sets initial equilibrium
 
 PROCEDURE rates(v(mV) )
 {
- alfac = (Oon/Con)^(1/4)
- btfac = (Ooff/Coff)^(1/4) 
+ afac = ((Coff * Oon)/(Ooff * Con))^(1/8)
+ :alfac = (Oon/Con)^(1/4)
+ :btfac = (Ooff/Coff)^(1/4) 
  f01 = 4 * alpha * exp(v/x1) * qt
  f02 = 3 * alpha * exp(v/x1) * qt
  f03 = 2 * alpha * exp(v/x1) * qt
  f04 = 1 * alpha * exp(v/x1) * qt
  f0O = gamma * exp(v/x3) * qt
  fip = epsilon * exp(v/x5) * qt
- f11 = 4 * alpha * alfac * exp(v/x1) * qt
- f12 = 3 * alpha * alfac * exp(v/x1) * qt
- f13 = 2 * alpha * alfac * exp(v/x1) * qt
- f14 = 1 * alpha * alfac * exp(v/x1) * qt
+ f11 = 4 * alpha * afac * exp(v/x1) * qt
+ f12 = 3 * alpha * afac * exp(v/x1) * qt
+ f13 = 2 * alpha * afac * exp(v/x1) * qt
+ f14 = 1 * alpha * afac * exp(v/x1) * qt
  f1n = gamma * exp(v/x3) * qt
  fi1 = Con * qt
- fi2 = Con * alfac * qt
- fi3 = Con * alfac^2 * qt
- fi4 = Con * alfac^3 * qt
- fi5 = Con * alfac^4 * qt
+ fi2 = Con * afac * qt
+ fi3 = Con * afac^2 * qt
+ fi4 = Con * afac^3 * qt
+ fi5 = Con * afac^4 * qt
  fin = Oon * qt
 
  b01 = 1 * beta * exp(v/x2) * qt
@@ -210,16 +212,16 @@ PROCEDURE rates(v(mV) )
  b04 = 4 * beta * exp(v/x2) * qt
  b0O = delta * exp(v/x4) * qt
  bip = zeta * exp(v/x6) * qt
- b11 = 1 * beta * btfac * exp(v/x2) * qt
- b12 = 2 * beta * btfac * exp(v/x2) * qt
- b13 = 3 * beta * btfac * exp(v/x2) * qt
- b14 = 4 * beta * btfac * exp(v/x2) * qt
+ b11 = 1 * beta / afac * exp(v/x2) * qt
+ b12 = 2 * beta / afac * exp(v/x2) * qt
+ b13 = 3 * beta / afac * exp(v/x2) * qt
+ b14 = 4 * beta / afac * exp(v/x2) * qt
  b1n = delta * exp(v/x4) * qt
  bi1 = Coff * qt
- bi2 = Coff * btfac * qt
- bi3 = Coff * btfac^2 * qt
- bi4 = Coff * btfac^3 * qt
- bi5 = Coff * btfac^4 * qt
+ bi2 = Coff / afac * qt
+ bi3 = Coff / afac^2 * qt
+ bi4 = Coff / afac^3 * qt
+ bi5 = Coff / afac^4 * qt
  bin = Ooff * qt
 }
 

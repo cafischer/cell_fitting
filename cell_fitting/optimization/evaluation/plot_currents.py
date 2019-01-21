@@ -2,12 +2,11 @@ import copy
 import os
 import matplotlib.pyplot as pl
 import numpy as np
-import pandas as pd
-from nrn_wrapper import Cell
+from nrn_wrapper import Cell, load_mechanism_dir
 from cell_fitting.optimization.simulate import extract_simulation_params, simulate_currents, iclamp_handling_onset
 from cell_fitting.util import merge_dicts, get_channel_dict_for_plotting, get_channel_color_for_plotting
 from cell_fitting.read_heka.i_inj_functions import get_i_inj_double_ramp
-from cell_fitting.read_heka import get_i_inj_from_function
+from cell_fitting.read_heka import get_i_inj_from_function, get_sweep_index_for_amp
 pl.style.use('paper')
 
 
@@ -60,7 +59,8 @@ if __name__ == '__main__':
     # simulation_params = merge_dicts(extract_simulation_params(data.v.values, data.t.values, data.i.values), sim_params)
 
     #i_exp = get_i_inj_double_ramp(1.0, 1.0, 7.0, 0.0, 125, -0.05, 2, 15, tstop=500, dt=0.05)
-    i_exp = get_i_inj_from_function('IV', [0], 1000, 0.01)[0]
+    #i_exp = get_i_inj_from_function('IV', [0], 1000, 0.01)[0]
+    i_exp = get_i_inj_from_function('rampIV', [get_sweep_index_for_amp(3.1, 'rampIV')], 150, 0.01)[0]
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': 1000,
                          'dt': 0.01, 'celsius': 35, 'onset': 200}
 

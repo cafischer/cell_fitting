@@ -233,7 +233,9 @@ def get_channel_params(channel_name, candidate, save_dir):
 
 if __name__ == '__main__':
     #save_dir = '../../results/server_17_12_04/2018-01-16_11:02:23/483'
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/optimization_vavoulis_channels/vavoulis_independent_tau/10_01_09/0'
+    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/server_19_01_09/2019-01-09_17:15:50/49'
+    # 2019-01-09_15:47:40 [61, 56]
+    # [49, 42, 47, 57, 2]
 
     method = 'L-BFGS-B'
     save_dir = os.path.join(save_dir, method)
@@ -271,11 +273,11 @@ if __name__ == '__main__':
     plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/-0.15(nA).png')
 
     data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2015_08_26b',
-                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(0.1, 'IV'),
+                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(0.5, 'IV'),
                       'v_rest_shift': -16, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/0.4(nA).png')
+    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/0.5(nA).png')
 
     data_read_dict = {'data_dir': '/home/cf/Phd/DAP-Project/cell_data/raw_data', 'cell_id': '2015_08_26b',
-                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(0.8, 'IV'),
+                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(1.0, 'IV'),
                       'v_rest_shift': -16, 'file_type': 'dat'}
-    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/0.8(nA).png')
+    plot_candidate_on_other_data(save_dir, best_candidate, data_read_dict, 'img/IV/1.0(nA).png')

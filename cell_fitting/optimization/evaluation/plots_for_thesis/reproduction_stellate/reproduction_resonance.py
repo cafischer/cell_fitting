@@ -130,8 +130,8 @@ if __name__ == '__main__':
     ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data')
     ax.plot(res_freq_model, q_value_model, 'o', color=color_model, alpha=0.5, label='Model')
 
-    ax.set_xlabel('Q-value')
-    ax.set_ylabel('Res. freq. (Hz)')
+    ax.set_xlabel('Res. freq. (Hz)')
+    ax.set_ylabel('Q-value')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
@@ -139,5 +139,6 @@ if __name__ == '__main__':
     print 'q-val. model: ', q_value_model
 
     pl.tight_layout()
+    pl.subplots_adjust(left=0.1, top=0.96)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_resonance.png'))
     pl.show()

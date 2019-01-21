@@ -6,6 +6,8 @@ from cell_characteristics import to_idx
 from cell_fitting.util import change_color_brightness
 from matplotlib.colors import to_rgb
 import matplotlib.gridspec as gridspec
+from cell_characteristics.analyze_APs import get_spike_characteristics
+from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
 pl.style.use('paper_subplots')
 
 
@@ -37,7 +39,7 @@ if __name__ == '__main__':
 
     v_diff = v_exp[to_idx(0, dt)] - v_exp_step[to_idx(660, dt_step)]
     ax0.plot(t_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)] - t_exp_step[to_idx(659, dt_step)],
-            v_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)] + v_diff,
+             v_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)] + v_diff,
              color=change_color_brightness(to_rgb(color_exp), 35, 'darker'), label='Step current')
 
     ax1.plot(t_exp[to_idx(0, dt):to_idx(60, dt)], i_inj[to_idx(0, dt):to_idx(60, dt)],
@@ -58,3 +60,16 @@ if __name__ == '__main__':
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'diminished_DAP_by_input.png'))
     pl.show()
+
+
+    # quantify difference in DAP
+    DAP_amp_ramp, DAP_deflection_ramp, DAP_max_idx_ramp = get_spike_characteristics(v_exp, t_exp, ['DAP_amp', 'DAP_deflection', 'DAP_max_idx'], v_exp[0],
+                                                                  check=False, **get_spike_characteristics_dict())
+    DAP_amp_step, DAP_deflection_step, DAP_max_idx_step = get_spike_characteristics(v_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)],
+                                             t_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)] - t_exp_step[to_idx(659, dt_step)],
+                                             ['DAP_amp', 'DAP_deflection', 'DAP_max_idx'], v_exp_step[to_idx(659, dt_step)], check=False,
+                                             **get_spike_characteristics_dict())
+
+    print v_exp[DAP_max_idx_ramp]
+    print v_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)][DAP_max_idx_step] + v_diff
+    print ''

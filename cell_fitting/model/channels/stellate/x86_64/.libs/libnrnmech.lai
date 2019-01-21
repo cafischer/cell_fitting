@@ -17,7 +17,7 @@ old_library=''
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/home/cf/programs/nrn/x86_64/lib /home/cf/programs/nrn/x86_64/lib/libnrnoc.la /home/cf/programs/nrn/x86_64/lib/liboc.la /home/cf/programs/nrn/x86_64/lib/libmemacs.la /home/cf/programs/nrn/x86_64/lib/libnrnmpi.la /home/cf/programs/nrn/x86_64/lib/libscopmath.la /home/cf/programs/nrn/x86_64/lib/libsparse13.la /home/cf/programs/nrn/x86_64/lib/libreadline.la -lncurses /home/cf/programs/nrn/x86_64/lib/libnrniv.la /home/cf/programs/nrn/x86_64/lib/libivoc.la /home/cf/programs/nrn/x86_64/lib/libneuron_gnu.la /home/cf/programs/nrn/x86_64/lib/libmeschach.la /home/cf/programs/nrn/x86_64/lib/libsundials.la /home/cf/programs/nrn/x86_64/lib/libivos.la -lm -ldl'
+dependency_libs=' -L/home/cf/programs/nrn/x86_64/lib /home/cf/programs/nrn/x86_64/lib/libnrnoc.la /home/cf/programs/nrn/x86_64/lib/liboc.la -lX11 /home/cf/programs/nrn/x86_64/lib/libmemacs.la /home/cf/programs/nrn/x86_64/lib/libnrnmpi.la /home/cf/programs/nrn/x86_64/lib/libscopmath.la /home/cf/programs/nrn/x86_64/lib/libsparse13.la -lreadline -lncurses /home/cf/programs/nrn/x86_64/lib/libnrniv.la /home/cf/programs/nrn/x86_64/lib/libivoc.la /home/cf/programs/nrn/x86_64/lib/libneuron_gnu.la /home/cf/programs/nrn/x86_64/lib/libmeschach.la /home/cf/programs/nrn/x86_64/lib/libsundials.la -lm -ldl'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

@@ -108,18 +108,32 @@ sweep_idx = get_sweep_index_for_amp(amp=3.1, protocol=protocol)
 data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
                   'protocol': protocol, 'sweep_idx': sweep_idx, 'v_rest_shift': -16, 'file_type': 'dat'}
 
+protocol = 'IV'
+sweep_idx = get_sweep_index_for_amp(amp=-0.15, protocol=protocol)
+data_read_dict1 = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
+                  'protocol': protocol, 'sweep_idx': sweep_idx, 'v_rest_shift': -16, 'file_type': 'dat'}
+
+protocol = 'IV'
+sweep_idx = get_sweep_index_for_amp(amp=1.0, protocol=protocol)
+data_read_dict2 = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
+                  'protocol': protocol, 'sweep_idx': sweep_idx, 'v_rest_shift': -16, 'file_type': 'dat'}
+
 # dicts for fitting
 fitter_params = {
-                    'name': 'HodgkinHuxleyFitter',
-                    'variable_keys': variable_keys,
-                    'errfun_name': 'rms',
-                    'model_dir': '../../model/cells/dapmodel_simpel.json',
-                    'mechanism_dir': '../../model/channels/vavoulis_independent_tau',
-                    'fitfun_names_per_data_set': [['get_v']],
-                    'fitnessweights_per_data_set': [[1]],
-                    'data_read_dict_per_data_set': [data_read_dict],
-                    'init_simulation_params': {'celsius': 35, 'onset': 200, 'v_init': -75},
-                    'args': {'max_fitness_error': 50}
+                #'name': 'HodgkinHuxleyFitter',
+                'name': 'HodgkinHuxleyFitterFitfunFromSet',
+                'variable_keys': variable_keys,
+                'errfun_name': 'rms',
+                'model_dir': '../../model/cells/dapmodel_simpel.json',
+                'mechanism_dir': '../../model/channels/vavoulis_independent_tau',
+                #'fitfun_names_per_data_set': [['get_v']],
+                #'fitnessweights_per_data_set': [[1]],
+                # 'data_read_dict_per_data_set': [data_read_dict],
+                'fitfun_names_per_data_set': [['get_v'], ['get_v'], ['get_n_spikes']],
+                'fitnessweights_per_data_set': [[1], [1], [1]],
+                'data_read_dict_per_data_set': [data_read_dict, data_read_dict1, data_read_dict2],
+                'init_simulation_params': {'celsius': 35, 'onset': 200, 'v_init': -75},
+                'args': {'max_fitness_error': 100}
                 }
 
 optimization_settings_dict = {
