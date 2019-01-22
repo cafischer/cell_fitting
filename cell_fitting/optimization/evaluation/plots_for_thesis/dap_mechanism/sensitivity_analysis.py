@@ -19,6 +19,7 @@ if __name__ == '__main__':
     exp_cell = '2015_08_26b'
     v_init = -75
     characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_width', 'DAP_time']
+    units = ['mV', 'mV', 'ms', 'ms']
     correlation_measure = 'kendalltau'  #kendalltau non-parametric, robust
 
     # create model cell
@@ -44,12 +45,12 @@ if __name__ == '__main__':
 
     # plot
     fig = pl.figure(figsize=(12, 8))
-    outer = gridspec.GridSpec(2, 1, hspace=-0.15)
+    outer = gridspec.GridSpec(2, 1, hspace=-0.2)
 
     # resampled mean and std of correlations
     characteristics_dict = characteristics_dict_for_plotting()
     new_parameter_names = get_variable_names_for_plotting(parameters)
-    inner = gridspec.GridSpecFromSubplotSpec(4, 1, subplot_spec=outer[0, 0], hspace=0.25)
+    inner = gridspec.GridSpecFromSubplotSpec(4, 1, subplot_spec=outer[0, 0], hspace=0.35)
     axes = [inner[0, 0], inner[1, 0], inner[2, 0], inner[3, 0]]
     for i, (characteristic_idx, characteristic) in enumerate(zip(characteristic_idxs_std, characteristics)):
         print 'max std: ', np.max(std_mat[characteristic_idx, :])
@@ -64,13 +65,12 @@ if __name__ == '__main__':
         ax.axhline(-0.5, color='0.5', linestyle='--')
         ax.set_xticks(range(len(parameters)))
         ax.set_xticklabels([])
-        ax.set_ylabel(characteristics_dict[characteristic])
+        ax.set_ylabel(characteristics_dict[characteristic] + ' ('+units[i]+')', fontsize=10)
         ax.set_ylim(-1, 1)
         ax.set_xlim(-0.5, len(parameters) - 0.5)
         if i == 0:
             ax.text(-0.16, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
     ax.set_xticklabels(new_parameter_names, rotation='40', ha='right')
-    ax.set_xlabel('Parameter')
 
     # sensitivity analysis
     ax = pl.Subplot(fig, outer[1, 0])
@@ -78,12 +78,13 @@ if __name__ == '__main__':
 
     corr_mat = corr_mat[characteristic_idxs, :]
     p_val_mat = p_val_mat[characteristic_idxs, :]
-    plot_corr_on_ax(ax, corr_mat, p_val_mat, characteristics, parameters, correlation_measure, cmap='seismic')
+    plot_corr_on_ax(ax, corr_mat, p_val_mat, characteristics, parameters, correlation_measure, units, cmap='seismic')
+    ax.set_xlabel('')
     # corrected for multiple testing with bonferroni
     ax.text(-0.17, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
-    pl.subplots_adjust(top=0.97, right=0.94, left=0.13, bottom=-0.1)
+    pl.subplots_adjust(top=0.97, right=0.94, left=0.13, bottom=-0.15)
     pl.savefig(os.path.join(save_dir_img, 'sensitivity_analysis_'+correlation_measure+'.png'))
     #pl.show()
 
@@ -102,7 +103,10 @@ if __name__ == '__main__':
         p_val_mat = np.load(os.path.join(s_, 'all', 'p_val_' + correlation_measure + '.npy'))
         corr_mat = corr_mat[characteristic_idxs, :]
         p_val_mat = p_val_mat[characteristic_idxs, :]
-        plot_corr_on_ax(ax, corr_mat, p_val_mat, characteristics, parameters, correlation_measure, cmap='seismic')
+        plot_corr_on_ax(ax, corr_mat, p_val_mat, characteristics, parameters, correlation_measure, units,
+                        cmap='seismic')
+        ax.set_ylabel('')
+        ax.set_xlabel('')
         if i == 0 or i == 1:
             ax.set_xticks([])
             ax.set_xlabel('')

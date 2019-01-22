@@ -101,7 +101,7 @@ if __name__ == '__main__':
     mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
 
     ax.set_xlabel('Time (ms)')
-    ax.set_ylabel('Mem. pot. (nA)')
+    ax.set_ylabel('Mem. pot. (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.23, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
 

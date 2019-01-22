@@ -105,11 +105,12 @@ if __name__ == '__main__':
 
     ax0.set_ylim(0, 11)
     ax1.set_ylim(0, 11)
-    ax0.set_ylabel('Count')
-    ax1.set_ylabel('Count')
+    ax0.set_ylabel('Frequency')
+    ax1.set_ylabel('Frequency')
     ax1.set_xlabel('Phase (deg.)')
     ax0.set_xticks([])
-    ax0.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax0.get_yaxis().set_label_coords(-0.1, 0.5)
+    ax1.get_yaxis().set_label_coords(-0.1, 0.5)
     ax0.text(-0.25, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')
 
     # # mem. pot. per period of fast sine
@@ -151,6 +152,7 @@ if __name__ == '__main__':
     ax.set_ylim(0, 360)
     ax.set_ylabel('Phase (deg.)')
     ax.set_xlabel('Time (ms)')
+    ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
     print 'slope model: ', sine_dict_model['slope']
     print 'slope data: ', sine_dict_data['slope']
@@ -173,11 +175,12 @@ if __name__ == '__main__':
     ax.plot(phase_means_data, phase_stds_data, 'o', color=color_exp, alpha=0.5)
     ax.plot(sine_dict_model['mean_phase'], sine_dict_model['std_phase'], 'o', color=color_model, alpha=0.5)
 
-    ax.set_xlabel('Mean phase')
-    ax.set_ylabel('Std. phase')
-    ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.set_xlabel('Mean phase (deg.)')
+    ax.set_ylabel('Std. phase (deg.)')
+    ax.get_yaxis().set_label_coords(-0.1, 0.5)
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
+    pl.subplots_adjust(left=0.1, top=0.96, bottom=0.08)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_sine.png'))
     pl.show()

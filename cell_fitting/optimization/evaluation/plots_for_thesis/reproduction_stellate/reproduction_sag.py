@@ -83,6 +83,7 @@ if __name__ == '__main__':
     custom_lines = [Line2D([0], [0], marker='s', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
                     Line2D([0], [0], marker='$\cup$', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
     ax.legend(custom_lines, ['Steady state', 'Sag'], loc='upper left')
+    ax.set_ylabel('Mem. Pot. (mV)')
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # block HCN
@@ -127,8 +128,8 @@ if __name__ == '__main__':
     v_deflection_model = vrest - v_steady_states[0]
     ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5, label='Model')
 
-    ax.set_xlabel('Sag deflection')
-    ax.set_ylabel('Amp. at steady state')
+    ax.set_xlabel('Sag deflection (mV)')
+    ax.set_ylabel('Amp. at steady state (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     #ax.legend()
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')

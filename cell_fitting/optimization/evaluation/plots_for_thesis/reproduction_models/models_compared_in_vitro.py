@@ -35,13 +35,14 @@ if __name__ == '__main__':
     load_mechanism_dir(mechanism_dir)
 
     # plot
-    fig = pl.figure(figsize=(7, 10))
+    fig = pl.figure(figsize=(8, 10))
     outer = gridspec.GridSpec(4, 2)
 
     # distribution of DAP characteristics
     inner = gridspec.GridSpecFromSubplotSpec(2, 2, subplot_spec=outer[0, 0], wspace=0.5, hspace=1.2)
     axes = [inner[0, 0], inner[0, 1], inner[1, 0], inner[1, 1]]
     characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_time', 'DAP_width']
+    units = ['mV', 'mV', 'ms', 'ms']
     characteristics_dict_plot = characteristics_dict_for_plotting()
 
     characteristics_mat_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
@@ -76,13 +77,13 @@ if __name__ == '__main__':
                     xy=(characteristics_mat_model[characteristic_idx], ax.get_ylim()[1]+0.1),
                     color=color_model, fontsize=8, ha='center')
 
-        ax.set_xlabel(characteristics_dict_plot[characteristic])
-        ax.set_ylabel('Frequency')
+        ax.set_xlabel(characteristics_dict_plot[characteristic] + ' ('+units[characteristic_idx]+')', fontsize=10)
+        ax.set_ylabel('Frequency', fontsize=10)
         ax.get_yaxis().set_label_coords(-0.25, 0.5)
         ax.get_xaxis().set_label_coords(0.5, -0.4)
 
         if characteristic_idx == 0:
-            ax.text(-0.63, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
+            ax.text(-0.74, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
 
     # sag
     ax = pl.Subplot(fig, outer[0, 1])
@@ -120,10 +121,10 @@ if __name__ == '__main__':
     axins.set_xticks([])
     axins.set_yticks([])
 
-    ax.set_xlabel('Sag deflection')
-    ax.set_ylabel('Amp. at steady state')
+    ax.set_xlabel('Sag deflection (mV)')
+    ax.set_ylabel('Amp. at steady state (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.3, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # latency vs ISI1/2
     ax = pl.Subplot(fig, outer[1, 0])
@@ -143,10 +144,10 @@ if __name__ == '__main__':
         else:
             ax.annotate(str(model_idx + 1), xy=(latency_model + 1, ISI12_model + 0.1), fontsize=8)
 
-    ax.set_xlabel('Latency (ms)')
+    ax.set_xlabel('Latency of the first spike (ms)')
     ax.set_ylabel('$ISI_{1/2}$ (ms)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.3, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # fit F-I curve
     ax1 = pl.Subplot(fig, outer[1, 1])
@@ -178,7 +179,7 @@ if __name__ == '__main__':
             ax1.set_xlabel('a')
             ax1.set_ylabel('b')
             ax1.get_yaxis().set_label_coords(-0.15, 0.5)
-            ax1.text(-0.25, 1.0, 'D', transform=ax1.transAxes, size=18, weight='bold')
+            ax1.text(-0.3, 1.0, 'D', transform=ax1.transAxes, size=18, weight='bold')
             ax1.legend()
 
         ax2.plot([FI_b_model], [FI_c_model], 'o', color=color_model, alpha=0.5)
@@ -187,7 +188,7 @@ if __name__ == '__main__':
             ax2.set_xlabel('b')
             ax2.set_ylabel('c')
             ax2.get_yaxis().set_label_coords(-0.15, 0.5)
-            ax2.text(-0.25, 1.0, 'E', transform=ax2.transAxes, size=18, weight='bold')
+            ax2.text(-0.3, 1.0, 'E', transform=ax2.transAxes, size=18, weight='bold')
 
         ax3.plot([FI_c_model], [FI_a_model], 'o', color=color_model, alpha=0.5)
         ax3.annotate(str(model_idx + 1), xy=(FI_c_model + 0.016, FI_a_model + 0.8), fontsize=8)
@@ -195,7 +196,7 @@ if __name__ == '__main__':
             ax3.set_xlabel('c')
             ax3.set_ylabel('a')
             ax3.get_yaxis().set_label_coords(-0.15, 0.5)
-            ax3.text(-0.25, 1.0, 'F', transform=ax3.transAxes, size=18, weight='bold')
+            ax3.text(-0.3, 1.0, 'F', transform=ax3.transAxes, size=18, weight='bold')
 
     # resonance
     ax = pl.Subplot(fig, outer[3, 0])
@@ -225,7 +226,7 @@ if __name__ == '__main__':
     ax.set_xlabel('Q-value')
     ax.set_ylabel('Res. freq. (Hz)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'G', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.3, 1.0, 'G', transform=ax.transAxes, size=18, weight='bold')
 
     # double sine
     ax = pl.Subplot(fig, outer[3, 1])
@@ -254,14 +255,14 @@ if __name__ == '__main__':
             sine_dict_model = json.load(f)
         ax.plot(sine_dict_model['mean_phase'], sine_dict_model['std_phase'], 'o', color=color_model, alpha=0.5)
         ax.annotate(str(model_idx + 1), xy=(sine_dict_model['mean_phase'][0] + 0.15, sine_dict_model['std_phase'][0] + 1.2), fontsize=8)
-    ax.set_ylabel('Std. phase')
-    ax.set_xlabel('Mean phase')
+    ax.set_ylabel('Std. phase (deg.)')
+    ax.set_xlabel('Mean phase (deg.)')
     ax.set_xlim(120, 190)
     ax.set_ylim(20, 70)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'H', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.3, 1.0, 'H', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
-    pl.subplots_adjust(bottom=0.05, top=0.98)
+    pl.subplots_adjust(bottom=0.05, top=0.98, left=0.11, wspace=0.35)
     pl.savefig(os.path.join(save_dir_img, 'models_compared_in_vitro.png'))
     pl.show()

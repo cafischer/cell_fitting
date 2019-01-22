@@ -115,8 +115,8 @@ if __name__ == '__main__':
         ax0.set_xticks([0, 180, 360])
         ax0.set_xticklabels([])
         if model_idx == 0:
-            ax0.set_ylabel('Count')
-            ax1.set_ylabel('Count')
+            ax0.set_ylabel('Frequency')
+            ax1.set_ylabel('Frequency')
             ax0.get_yaxis().set_label_coords(-0.25, 0.5)
             ax1.get_yaxis().set_label_coords(-0.25, 0.5)
             ax0.text(-0.4, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')

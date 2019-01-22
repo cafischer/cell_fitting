@@ -72,7 +72,7 @@ if __name__ == '__main__':
     latency_model, ISI12_model = get_latency_and_ISI12(cell)
     ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5, label='Model')
 
-    ax.set_xlabel('Latency (ms)')
+    ax.set_xlabel('Latency of the first spike (ms)')
     ax.set_ylabel('$ISI_{1/2}$ (ms)')
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 

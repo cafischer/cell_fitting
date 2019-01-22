@@ -73,3 +73,7 @@ if __name__ == '__main__':
     print v_exp[DAP_max_idx_ramp]
     print v_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)][DAP_max_idx_step] + v_diff
     print ''
+
+    pl.figure()
+    pl.plot(t_exp_step, v_exp_step)
+    pl.show()

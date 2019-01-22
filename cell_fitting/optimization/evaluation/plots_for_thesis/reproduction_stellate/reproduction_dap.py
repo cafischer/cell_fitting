@@ -53,6 +53,7 @@ if __name__ == '__main__':
     color_model = 'k'
     ramp_amp = 3.5
     standard_sim_params = get_standard_simulation_params()
+    units = ['mV', 'mV', 'ms', 'ms']
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
@@ -208,7 +209,7 @@ if __name__ == '__main__':
         print mean-std, mean+std
         print characteristics_mat_model[characteristic_idx]
 
-        ax.set_xlabel(characteristics_dict_plot[characteristic])
+        ax.set_xlabel(characteristics_dict_plot[characteristic] + ' ('+units[characteristic_idx]+')')
         ax.set_ylabel('Frequency')
 
         if characteristic_idx == 0:
@@ -219,7 +220,6 @@ if __name__ == '__main__':
 
             # letter
             ax.text(-0.37, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
-
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_dap2.png'))
@@ -250,8 +250,8 @@ if __name__ == '__main__':
                                     dtick[characteristic2]))
             ax.set_xlim(0, None)
             ax.set_ylim(0, None)
-            ax.set_xlabel(characteristics_dict_plot[characteristic1])
-            ax.set_ylabel(characteristics_dict_plot[characteristic2])
+            ax.set_xlabel(characteristics_dict_plot[characteristic1] + ' ('+units[i]+')')
+            ax.set_ylabel(characteristics_dict_plot[characteristic2] + ' ('+units[j]+')')
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'reproduction_dap2_scatter.png'))
     pl.show()

@@ -71,7 +71,7 @@ def plot_corr(corr, sig_level, return_characteristics, variable_names, correlati
     #pl.show()
 
 
-def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names, correlation_measure,
+def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_names, correlation_measure, units,
                     cmap='gray'):
     X, Y = np.meshgrid(np.arange(np.size(corr_mat, 1)+1), np.arange(np.size(corr_mat, 0)+1))  # +1 because otherwise pcolor misses the last row
     pl.pcolor(X, Y, np.flipud(corr_mat), vmin=-1, vmax=1, cmap=pl.cm.get_cmap(cmap))
@@ -99,7 +99,8 @@ def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_na
     ax.set_xticklabels(new_variable_names, rotation='40', ha='right')
     ax.set_yticks(np.arange(len(return_characteristics)) + 0.5)
     characteristics_dict = characteristics_dict_for_plotting()
-    ax.set_yticklabels([characteristics_dict[c] for c in return_characteristics[::-1]])  # flipped with pcolor
+    ax.set_yticklabels([characteristics_dict[c] + ' ('+units[len(units)-i-1]+')'
+                        for i, c in enumerate(return_characteristics[::-1])])  # flipped with pcolor
     ax = pl.gca()
     for label in ax.xaxis.get_majorticklabels():
         label.customShiftValue = -0.3
