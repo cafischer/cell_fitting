@@ -211,6 +211,7 @@ if __name__ == '__main__':
 
         ax.set_xlabel(characteristics_dict_plot[characteristic] + ' ('+units[characteristic_idx]+')')
         ax.set_ylabel('Frequency')
+        ax.set_xlim(0, None)
 
         if characteristic_idx == 0:
             # legend
@@ -222,6 +223,7 @@ if __name__ == '__main__':
             ax.text(-0.37, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
+    pl.subplots_adjust(top=0.95, bottom=0.12)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_dap2.png'))
 
 

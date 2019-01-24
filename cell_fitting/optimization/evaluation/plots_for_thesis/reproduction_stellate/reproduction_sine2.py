@@ -9,6 +9,7 @@ from cell_fitting.optimization.simulate import get_standard_simulation_params
 from cell_fitting.optimization.evaluation.plot_sine_stimulus import simulate_sine_stimulus, get_sine_stimulus
 from grid_cell_stimuli.spike_phase import plot_phase_hist_on_axes
 from cell_characteristics import to_idx
+from circular_statistics import circ_cmtest
 pl.style.use('paper_subplots')
 
 
@@ -102,6 +103,9 @@ if __name__ == '__main__':
                             alpha=0.5, color_lines=color_exp)
     plot_phase_hist_on_axes(ax1, 0, [sine_dict_model['phases']], plot_mean=True, color_hist=color_model,
                             alpha=0.5, color_lines=color_model)
+
+    p_val, _, _ = circ_cmtest([np.array(sine_dict_data['phases']), np.array(sine_dict_model['phases'])])
+    print 'P-val for H0: Medians are the same: ', p_val
 
     ax0.set_ylim(0, 11)
     ax1.set_ylim(0, 11)

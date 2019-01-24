@@ -93,6 +93,7 @@ if __name__ == '__main__':
 
     plot_impedance_on_ax(ax, frequencies_model, imp_smooth_model, color_line=color_model)
     plot_impedance_on_ax(ax, color_line=color_exp, **impedance_dict_data)
+    ax.set_ylim(0, None)
 
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
@@ -131,6 +132,8 @@ if __name__ == '__main__':
     ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data')
     ax.plot(res_freq_model, q_value_model, 'o', color=color_model, alpha=0.5, label='Model')
 
+    ax.set_ylim(-0.3, None)
+    ax.set_xlim(-0.3, None)
     ax.set_xlabel('Res. freq. (Hz)')
     ax.set_ylabel('Q-value')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)

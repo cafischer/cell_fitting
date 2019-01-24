@@ -12,6 +12,7 @@ from cell_fitting.optimization.evaluation.plot_blocking.block_channel import blo
 from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state import compute_v_sag_and_steady_state
 from cell_fitting.optimization.simulate import get_standard_simulation_params
 from cell_fitting.util import get_channel_color_for_plotting
+from cell_characteristics import to_idx
 pl.style.use('paper_subplots')
 
 
@@ -29,9 +30,38 @@ if __name__ == '__main__':
     step_amp = -0.1
     standard_sim_params = get_standard_simulation_params()
 
-    # create model cell
-    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
+    # load data
+    v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
+    dt = t_data[1] - t_data[0]
 
+    # simulate model cell
+    cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
+    v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
+
+    # compute v_rest
+    start_step_idx_data = np.nonzero(i_inj)[0][0]
+    end_step_idx_data = np.nonzero(i_inj)[0][-1] + 1
+    start_step_idx_model = np.nonzero(i_inj_model)[0][0]
+    end_step_idx_model = np.nonzero(i_inj_model)[0][-1] + 1
+    vrest_data = np.mean(v_data[:start_step_idx_data])
+    vrest_model = np.mean(v_model[:start_step_idx_model])
+
+    # compute sag deflection and amp. at steady-state in the data
+    v_sags, v_steady_states, _ = compute_v_sag_and_steady_state([v_data], [step_amp], AP_threshold=0,
+                                                                start_step_idx=start_step_idx_data,
+                                                                end_step_idx=end_step_idx_data)
+    v_sag_data = v_sags[0]
+    v_steady_state_data = v_steady_states[0]
+    sag_idx = np.argmin(v_data)
+
+    # compute sag deflection and amp. at steady-state in the model
+    v_sags, v_steady_states, _ = compute_v_sag_and_steady_state([v_model], [step_amp], AP_threshold=0,
+                                                                start_step_idx=start_step_idx_model,
+                                                                end_step_idx=end_step_idx_model)
+    sag_amp_model = v_steady_states[0] - v_sags[0]
+    v_deflection_model = vrest_model - v_steady_states[0]
+
+    # plot
     fig = pl.figure(figsize=(8, 6))
     outer = gridspec.GridSpec(2, 2)
 
@@ -42,18 +72,35 @@ if __name__ == '__main__':
     fig.add_subplot(ax0)
     fig.add_subplot(ax1)
 
-    v_data, t_data, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'IV', step_amp)
-    v_model, t_model, i_inj_model = simulate_model(cell, 'IV', step_amp, t_data[-1], **standard_sim_params)
-
-    start_i_inj = np.where(i_inj)[0][0]
-    vrest_data = np.mean(v_data[:start_i_inj])
-    vrest_model = np.mean(v_model[:start_i_inj])
-
-    # ax0.plot(t_data, v_data, color_exp, label='Data')
-    # ax0.plot(t_model, v_model, color_model, label='Model')
     ax0.plot(t_data, v_data - vrest_data, color_exp, label='Data')
     ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
+
+    # annotate sag characteristics
+    idx_steady_arrow = end_step_idx_data - to_idx(50, dt)
+    ax0.plot(t_data[start_step_idx_data:end_step_idx_data],
+             np.zeros(len(t_data[start_step_idx_data:end_step_idx_data])),
+             '--', color='0.5')
+    ax0.annotate('', xy=(t_data[idx_steady_arrow], vrest_data - vrest_data),
+                 xytext=(t_data[idx_steady_arrow], v_steady_state_data - vrest_data),
+                 arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
+    ax0.annotate('Steady state amp.',
+                 xy=(t_data[idx_steady_arrow] - 10, (v_steady_state_data - vrest_data) / 2.),
+                 verticalalignment='center', horizontalalignment='right', fontsize=6.5)
+
+    idx_sag_arrow = start_step_idx_data - to_idx(20, dt)
+    ax0.plot(t_data[idx_sag_arrow:to_idx(t_data[sag_idx], dt)],
+             np.ones(len(t_data[idx_sag_arrow:to_idx(t_data[sag_idx], dt)])) * v_sag_data - vrest_data,
+             '--', color='0.5')
+    ax0.plot(t_data[idx_sag_arrow:end_step_idx_data],
+             np.ones(len(t_data[idx_sag_arrow:end_step_idx_data])) * v_steady_state_data - vrest_data,
+             '--', color='0.5')
+    ax0.annotate('', xy=(t_data[idx_sag_arrow], v_sag_data - vrest_data),
+                 xytext=(t_data[idx_sag_arrow], v_steady_state_data - vrest_data),
+                 arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
+    ax0.annotate('Sag deflection',
+                 xy=(t_data[idx_sag_arrow] - 90, v_sag_data + (v_steady_state_data - v_sag_data) / 2.) - vrest_data,
+                 verticalalignment='center', horizontalalignment='right', fontsize=6.5)
 
     ax0.set_xticks([])
     ax0.set_ylabel('Mem. pot. (mV)')
@@ -83,7 +130,7 @@ if __name__ == '__main__':
     custom_lines = [Line2D([0], [0], marker='s', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0),
                     Line2D([0], [0], marker='$\cup$', color='None', markerfacecolor='0.5', markeredgecolor='0.5', lw=1.0)]
     ax.legend(custom_lines, ['Steady state', 'Sag'], loc='upper left')
-    ax.set_ylabel('Mem. Pot. (mV)')
+    ax.set_ylabel('Mem. pot. (mV)')
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # block HCN
@@ -118,18 +165,10 @@ if __name__ == '__main__':
                                               'v_deflections.npy'))
     ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
 
-    start_step_idx = np.nonzero(i_inj_model)[0][0]
-    end_step_idx = np.nonzero(i_inj_model)[0][-1] + 1
-    v_sags, v_steady_states, _ = compute_v_sag_and_steady_state([v_model], [step_amp], AP_threshold=0,
-                                                                start_step_idx=start_step_idx,
-                                                                end_step_idx=end_step_idx)
-    sag_amp_model = v_steady_states[0] - v_sags[0]
-    vrest = np.mean(v_model[:start_step_idx])
-    v_deflection_model = vrest - v_steady_states[0]
     ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5, label='Model')
 
     ax.set_xlabel('Sag deflection (mV)')
-    ax.set_ylabel('Amp. at steady state (mV)')
+    ax.set_ylabel('Steady state amp. (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     #ax.legend()
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')

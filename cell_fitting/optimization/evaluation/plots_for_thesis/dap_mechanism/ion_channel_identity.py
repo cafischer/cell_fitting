@@ -51,7 +51,7 @@ if __name__ == '__main__':
     exp_cell = '2015_08_26b'
     ramp_amp = 3.5
     standard_sim_params = get_standard_simulation_params()
-    colors = ['y', 'orange', 'r', 'm', 'b']
+    colors = ['y', 'xkcd:orange', 'xkcd:red', 'm', 'b']
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
@@ -180,6 +180,8 @@ if __name__ == '__main__':
     i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors)
     ax.set_ylabel('Current (norm.)')
+    ax.set_ylim(-1.05, 0)
+    ax.set_xlim(0, 61)
 
     # NaP
     ax = pl.Subplot(fig, outer[1, 1])
@@ -199,7 +201,8 @@ if __name__ == '__main__':
     i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors)
     ax.set_ylabel('Current (norm.)')
-    #ax.set_xlim(15, None)
+    ax.set_ylim(-1.05, 0)
+    ax.set_xlim(0, 130)
 
     # Kdr
     ax = pl.Subplot(fig, outer[2, 1])
@@ -219,6 +222,7 @@ if __name__ == '__main__':
     i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors)
     ax.set_ylabel('Current (norm.)')
+    ax.set_ylim(0, 1.05)
     ax.set_xlim(195, 305)
 
     # HCN
@@ -239,6 +243,8 @@ if __name__ == '__main__':
     i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors)
     ax.set_ylabel('Current (norm.)')
+    ax.set_ylim(-1.05, 0)
+    ax.set_xlim(0, 1510)
 
     pl.tight_layout()
     pl.savefig(os.path.join(save_dir_img, 'ion_channel_identity.png'))

@@ -81,6 +81,7 @@ if __name__ == '__main__':
         ax.set_ylabel('Frequency', fontsize=10)
         ax.get_yaxis().set_label_coords(-0.25, 0.5)
         ax.get_xaxis().set_label_coords(0.5, -0.4)
+        ax.set_xlim(0, None)
 
         if characteristic_idx == 0:
             ax.text(-0.74, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     axins.set_yticks([])
 
     ax.set_xlabel('Sag deflection (mV)')
-    ax.set_ylabel('Amp. at steady state (mV)')
+    ax.set_ylabel('Steady state amp. (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.3, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
