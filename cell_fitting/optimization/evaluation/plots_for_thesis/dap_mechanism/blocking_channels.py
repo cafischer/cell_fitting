@@ -55,6 +55,11 @@ if __name__ == '__main__':
         ax.get_yaxis().set_label_coords(-0.15, 0.5)
         ax.text(-0.25, 1.0, letters[percent_block_idx], transform=ax.transAxes, size=18, weight='bold')
 
+        # from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
+        # AP_width_before_block = get_spike_characteristics(v_after_block[4], t_model, ['AP_width'], -75, **get_spike_characteristics_dict())
+        # AP_width_block_HCN = get_spike_characteristics(v_after_block[4], t_model, ['AP_width'], -75, **get_spike_characteristics_dict())
+        # AP width is the same
+
     # blocking ion channels after AP
     axes = [outer[1, 0], outer[1, 1], outer[1, 2]]
     letters = ['D', 'E', 'F']

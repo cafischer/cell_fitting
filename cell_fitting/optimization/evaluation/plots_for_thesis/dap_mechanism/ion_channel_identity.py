@@ -38,6 +38,8 @@ def plot_act_inact_on_ax(ax, v_range, steadystate_act, steadystate_inact, time_c
     ax.set_xlabel('Mem. pot. (mV)')
     ax.set_ylabel('Degree of opening')
     ax_twin.set_ylabel(r'$\tau$ (ms)')
+    ax.set_ylim(0, 1)
+    ax_twin.set_ylim(0, None)
     ax.legend()
 
 
@@ -67,7 +69,6 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
-    ax.set_ylim(0, 1)
 
     # steady-state
     v_range = np.arange(-95, 30, 0.1)
@@ -94,7 +95,6 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
-    ax.set_ylim(0, 1)
 
     # steady-state
     v_range = np.arange(-95, 30, 0.1)
@@ -122,7 +122,6 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
-    ax.set_ylim(0, 1)
 
     # steady-state
     v_range = np.arange(-95, 30, 0.1)
@@ -143,7 +142,6 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
-    ax.set_ylim(0, 1)
 
     # steady-state
     v_range = np.arange(-95, 30, 0.1)
@@ -180,7 +178,7 @@ if __name__ == '__main__':
     i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors)
     ax.set_ylabel('Current (norm.)')
-    ax.set_ylim(-1.05, 0)
+    ax.set_ylim(-1.05, 0.01)
     ax.set_xlim(0, 61)
 
     # NaP
@@ -201,7 +199,7 @@ if __name__ == '__main__':
     i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors)
     ax.set_ylabel('Current (norm.)')
-    ax.set_ylim(-1.05, 0)
+    ax.set_ylim(-1.05, 0.01)
     ax.set_xlim(0, 130)
 
     # Kdr
@@ -222,7 +220,7 @@ if __name__ == '__main__':
     i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors)
     ax.set_ylabel('Current (norm.)')
-    ax.set_ylim(0, 1.05)
+    ax.set_ylim(-0.01, 1.05)
     ax.set_xlim(195, 305)
 
     # HCN
@@ -243,7 +241,7 @@ if __name__ == '__main__':
     i_steps = i_steps / np.max(np.max(np.abs(i_steps)))
     plot_i_steps_on_ax(ax, i_steps, v_steps, t, colors)
     ax.set_ylabel('Current (norm.)')
-    ax.set_ylim(-1.05, 0)
+    ax.set_ylim(-1.05, 0.01)
     ax.set_xlim(0, 1510)
 
     pl.tight_layout()

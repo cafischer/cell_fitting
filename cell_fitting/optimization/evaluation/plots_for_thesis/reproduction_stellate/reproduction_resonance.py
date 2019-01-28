@@ -63,6 +63,8 @@ if __name__ == '__main__':
     ax0.plot(t_model/1000., v_model - vrest_model, color_model, linewidth=0.3, label='Model')
     ax1.plot(t_data/1000., i_inj, linewidth=0.3, color='k')
 
+    ax0.set_xlim(0, t_data[-1]/1000.)
+    ax1.set_xlim(0, t_data[-1] / 1000.)
     ax0.set_xticks([])
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
     ax0.set_ylabel('Mem. pot. (mV)')
@@ -95,6 +97,7 @@ if __name__ == '__main__':
     plot_impedance_on_ax(ax, color_line=color_exp, **impedance_dict_data)
     ax.set_ylim(0, None)
 
+    ax.set_xlim(0, frequencies_model[-1])
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
@@ -116,6 +119,8 @@ if __name__ == '__main__':
     plot_channel_block_on_ax(ax, ['hcn_slow'], t_model/1000., v_model - vrest_model,
                              np.array([v_after_block - vrest_after_block]), percent_block,
                              color=color_model)
+
+    ax.set_xlim(0, t_data[-1]/1000.)
     ax.set_xlabel('Time (s)')
     custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),
                     Line2D([0], [0], marker='o', color=get_channel_color_for_plotting()['hcn_slow'], lw=1.0)]
@@ -129,11 +134,11 @@ if __name__ == '__main__':
     res_freqs_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'res_freqs.npy'))
     q_values_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'q_values.npy'))
 
-    ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data')
+    ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data', clip_on=False)
     ax.plot(res_freq_model, q_value_model, 'o', color=color_model, alpha=0.5, label='Model')
 
-    ax.set_ylim(-0.3, None)
-    ax.set_xlim(-0.3, None)
+    ax.set_ylim(0, None)
+    ax.set_xlim(0, None)
     ax.set_xlabel('Res. freq. (Hz)')
     ax.set_ylabel('Q-value')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)

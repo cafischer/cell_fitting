@@ -14,16 +14,17 @@ from cell_characteristics import to_idx
 
 if __name__ == '__main__':
     # parameters
-    model_ids = range(1, 7)
+    model_ids = [2] #range(1, 7)
     save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     mechanism_dir = '../model/channels/vavoulis'
     load_mechanism_dir("/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/OU_process")
     load_mechanism_dir(mechanism_dir)
 
-    noise_params = {'g_e0': 0.005, 'g_i0': 0.05, 'std_e': 0.007, 'std_i': 0.006, 'tau_e': 2.4, 'tau_i': 5.0}
+    # noise_params = {'g_e0': 0.005, 'g_i0': 0.05, 'std_e': 0.007, 'std_i': 0.006, 'tau_e': 2.4, 'tau_i': 5.0}
+    noise_params = {'g_e0': 0.01, 'g_i0': 0.08, 'std_e': 0.1, 'std_i': 0.07, 'tau_e': 2.4, 'tau_i': 5.0}
 
-    before_AP = 20
-    after_AP = 40
+    before_AP = 10
+    after_AP = 25
 
     onset = 200
     dt = 0.01
@@ -45,38 +46,41 @@ if __name__ == '__main__':
         # create cell
         cell = Cell.from_modeldir(os.path.join(save_dir, str(model_id), 'cell.json'))
 
-        # simulate animal position
-        positions = [0] * n_runs
-        speeds = [0] * n_runs
-        times = [0] * n_runs
-        for i_run in range(n_runs):
-            if speed_type == 'constant':
-                lower_bound = 0.01
-                upper_bound = 0.07
-                speed = random_generator.uniform(lower_bound, upper_bound)
-                positions[i_run] = np.arange(0, track_len+speed*dt, speed*dt)
-                speeds[i_run] = np.ones(len(positions[i_run])) * speed
-                times[i_run] = np.arange(0, len(positions[i_run])) * dt
-                speed_params = {'speed_type': speed_type, 'lower_bound': lower_bound, 'upper_bound': upper_bound}
+        # # simulate animal position
+        # positions = [0] * n_runs
+        # speeds = [0] * n_runs
+        # times = [0] * n_runs
+        # for i_run in range(n_runs):
+        #     if speed_type == 'constant':
+        #         lower_bound = 0.01
+        #         upper_bound = 0.07
+        #         speed = random_generator.uniform(lower_bound, upper_bound)
+        #         positions[i_run] = np.arange(0, track_len+speed*dt, speed*dt)
+        #         speeds[i_run] = np.ones(len(positions[i_run])) * speed
+        #         times[i_run] = np.arange(0, len(positions[i_run])) * dt
+        #         speed_params = {'speed_type': speed_type, 'lower_bound': lower_bound, 'upper_bound': upper_bound}
+        #
+        # # input
+        # sine_stims = [0] * n_runs
+        # for i_run in range(n_runs):
+        #     sine_params, sine_stims[i_run] = get_sines(random_generator, field_pos, positions[i_run], times[i_run], dt)
+        # sine_stimulus = np.concatenate(sine_stims)
 
-        # input
-        sine_stims = [0] * n_runs
-        for i_run in range(n_runs):
-            sine_params, sine_stims[i_run] = get_sines(random_generator, field_pos, positions[i_run], times[i_run], dt)
-        sine_stimulus = np.concatenate(sine_stims)
+        len_sine_stimulus = 7263978
 
-        tstop = (len(np.concatenate(positions))-1) * dt
+        #tstop = (len(np.concatenate(positions))-1) * dt  TODO
+        tstop = len_sine_stimulus * dt
         ou_process = ou_noise_input(cell, **noise_params)
         ou_process.new_seed(seed)
 
         # simulate
         tstop = 20000
-        simulation_params = {'sec': ('soma', None), 'i_inj': np.zeros(len(sine_stimulus)), 'v_init': v_init, 'tstop': tstop,  # TODO: sine_stimulus
+        simulation_params = {'sec': ('soma', None), 'i_inj': np.zeros(len_sine_stimulus), 'v_init': v_init, 'tstop': tstop,  # TODO: sine_stimulus
                              'dt': dt, 'celsius': celsius, 'onset': onset}
         v, t, _ = iclamp_handling_onset(cell, **simulation_params)
 
         # find all spikes
-        AP_threshold = np.min(v) + 2. / 3 * np.abs(np.min(v) - np.max(v)) - 5
+        AP_threshold = 0  #np.min(v) + 2. / 3 * np.abs(np.min(v) - np.max(v)) - 5
         onset_idxs = get_AP_onset_idxs(v, AP_threshold)
 
         # take window around each spike
@@ -106,7 +110,7 @@ if __name__ == '__main__':
         pl.plot(t, v, 'k')
         pl.ylabel('Membrane potential (mV)', fontsize=16)
         pl.xlabel('Time (ms)', fontsize=16)
-        pl.savefig(os.path.join(save_dir_img, 'v.svg'))
+        pl.savefig(os.path.join(save_dir_img, 'v.png'))
 
         pl.figure()
         for v_AP in v_APs:

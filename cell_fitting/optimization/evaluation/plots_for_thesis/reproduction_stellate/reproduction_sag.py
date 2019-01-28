@@ -75,6 +75,10 @@ if __name__ == '__main__':
     ax0.plot(t_data, v_data - vrest_data, color_exp, label='Data')
     ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
+    ax0.set_xlim(0, 1000.)
+    ax1.set_xlim(0, 1000.)
+    ax0.set_ylim(-5.55, 1.7)
+    ax1.set_ylim(-0.11, 0.01)
 
     # annotate sag characteristics
     idx_steady_arrow = end_step_idx_data - to_idx(50, dt)
@@ -85,7 +89,7 @@ if __name__ == '__main__':
                  xytext=(t_data[idx_steady_arrow], v_steady_state_data - vrest_data),
                  arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
     ax0.annotate('Steady state amp.',
-                 xy=(t_data[idx_steady_arrow] - 10, (v_steady_state_data - vrest_data) / 2.),
+                 xy=(t_data[idx_steady_arrow] - 9, (v_steady_state_data - vrest_data) / 2.),
                  verticalalignment='center', horizontalalignment='right', fontsize=6.5)
 
     idx_sag_arrow = start_step_idx_data - to_idx(20, dt)
@@ -99,7 +103,7 @@ if __name__ == '__main__':
                  xytext=(t_data[idx_sag_arrow], v_steady_state_data - vrest_data),
                  arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
     ax0.annotate('Sag deflection',
-                 xy=(t_data[idx_sag_arrow] - 90, v_sag_data + (v_steady_state_data - v_sag_data) / 2.) - vrest_data,
+                 xy=(t_data[idx_sag_arrow] - 85, v_sag_data + (v_steady_state_data - v_sag_data) / 2.) - vrest_data,
                  verticalalignment='center', horizontalalignment='right', fontsize=6.5)
 
     ax0.set_xticks([])
@@ -145,6 +149,7 @@ if __name__ == '__main__':
     plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
                              color=color_model)
     ax.set_ylim(-85, -70)
+    ax.set_xlim(0, 1000.)
     # vrest_after_block = np.mean(v_after_block[:start_i_inj])
     # plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model - vrest_model,
     #                          np.array([v_after_block - vrest_after_block]), percent_block,
@@ -170,9 +175,11 @@ if __name__ == '__main__':
     ax.set_xlabel('Sag deflection (mV)')
     ax.set_ylabel('Steady state amp. (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    #ax.legend()
+    ax.set_ylim(0, None)
+    ax.set_xlim(0, None)
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
+    pl.subplots_adjust(top=0.96, bottom=0.09)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_sag.png'))
     pl.show()

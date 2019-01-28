@@ -100,6 +100,7 @@ if __name__ == '__main__':
     axins.set_xlim(470, 530)
     mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
 
+    ax.set_xlim(0, t_exp[-1])
     ax.set_xlabel('Time (ms)')
     ax.set_ylabel('Mem. pot. (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
@@ -125,6 +126,7 @@ if __name__ == '__main__':
     axins.set_xlim(470, 530)
     mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
 
+    ax.set_xlim(0, t_exp[-1])
     ax.set_xlabel('Time (ms)')
     ax.set_ylabel('Current (nA)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
@@ -147,6 +149,7 @@ if __name__ == '__main__':
     plot_current_threshold_on_ax(ax, colors_dict={-0.1: 'b', 0.0: 'k', 0.1: 'r'},
                                  label=True, legend_loc='lower right', **current_threshold_dict_data)
 
+    ax.set_xlim(0, None)
     ax.set_ylabel('Current thresh. (nA)')
     ax.text(-0.35, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 

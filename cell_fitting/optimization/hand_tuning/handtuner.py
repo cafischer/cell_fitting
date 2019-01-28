@@ -58,8 +58,8 @@ if __name__ == '__main__':
         #[0, 100, [['soma', '0.5', 'nat', 'm_tau_max']]],
         #[0, 100, [['soma', '0.5', 'nat', 'h_tau_max']]],
         # [0, 100, [['soma', '0.5', 'kdr', 'n_tau_max']]],
-        [0, 100, [['soma', '0.5', 'nap', 'm_tau_max']]],
-        [0, 100, [['soma', '0.5', 'nap', 'h_tau_max']]],
+        #[0, 100, [['soma', '0.5', 'nap', 'm_tau_max']]],
+        #[0, 100, [['soma', '0.5', 'nap', 'h_tau_max']]],
         # [0, 500, [['soma', '0.5', 'hcn_slow', 'n_tau_max']]],
         #
         # [0, 10, [['soma', '0.5', 'nat', 'm_tau_delta']]],
@@ -77,8 +77,11 @@ if __name__ == '__main__':
     #model_dir = '../../results/hand_tuning/test0/cell.json'
     mechanism_dir = '../../model/channels/vavoulis'
     init_var = get_init_var_from_model(model_dir, mechanism_dir, variables, variable_keys)
+    # data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
+    #                   'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(amp=0.4, protocol='IV'),
+    #                   'v_rest_shift': -16, 'file_type': 'dat'}
     data_read_dict = {'data_dir': '../../data/dat_files', 'cell_id': '2015_08_26b',
-                      'protocol': 'IV', 'sweep_idx': get_sweep_index_for_amp(amp=0.4, protocol='IV'),
+                      'protocol': 'rampIV', 'sweep_idx': get_sweep_index_for_amp(amp=3.1, protocol='rampIV'),
                       'v_rest_shift': -16, 'file_type': 'dat'}
 
     fitter_params = {

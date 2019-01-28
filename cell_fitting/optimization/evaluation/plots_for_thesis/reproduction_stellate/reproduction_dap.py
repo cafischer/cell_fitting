@@ -86,6 +86,8 @@ if __name__ == '__main__':
     #ax0.plot(t_model[fAHP_min_idx:], v_model[fAHP_min_idx:], color='y')
     ax1.plot(t_exp, i_inj, 'k')
 
+    ax0.set_xlim(0, t_exp[-1])
+    ax1.set_xlim(0, t_exp[-1])
     ax0.legend()
     ax0.set_xticks([])
     #ax0.set_ylabel('Mem. pot. $-V_{rest}$ (mV)')
@@ -250,8 +252,11 @@ if __name__ == '__main__':
                                     dtick[characteristic1]))
             ax.set_yticks(np.arange(0, np.max(characteristics_mat_exp[:, characteristic_idx2][not_nan_exp]),
                                     dtick[characteristic2]))
-            ax.set_xlim(0, None)
-            ax.set_ylim(0, None)
+
+            # characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_time', 'DAP_width']
+            max_characteristics = [11., 35., 10., 68.]
+            ax.set_xlim(0, max_characteristics[i])
+            ax.set_ylim(0, max_characteristics[j])
             ax.set_xlabel(characteristics_dict_plot[characteristic1] + ' ('+units[i]+')')
             ax.set_ylabel(characteristics_dict_plot[characteristic2] + ' ('+units[j]+')')
     pl.tight_layout()

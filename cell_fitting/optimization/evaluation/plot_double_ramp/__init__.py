@@ -52,7 +52,7 @@ def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampI
     marker_dict = {-0.1: 'v', 0.0: 'o', 0.1: '^'}
     colors = [colors_dict[amp] for amp in step_amps]
     markers = [marker_dict[amp] for amp in step_amps]
-    if label == True:
+    if label is True:
         labels = ['Amp.: ' + str(amp) for amp in step_amps]
     else:
         labels = ['' for amp in step_amps]
@@ -75,7 +75,7 @@ def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampI
     if plot_range:
         ax.axhline(ramp3_amps[0], linestyle='--', c='0.5')
         ax.axhline(ramp3_amps[-1], linestyle='--', c='0.5')
-    ax.plot(0, current_threshold_rampIV, 'o', color=colors_dict[0.0])
+    ax.plot(0, current_threshold_rampIV, 'o', color=colors_dict[0.0], clip_on=False)
     ramp3_peak_times = np.array(ramp3_times) + 1.0
     for i, current_threshold in enumerate(current_thresholds):
         ax.plot(ramp3_peak_times, current_threshold, linestyle='-', marker=markers[i], color=colors[i],

@@ -113,6 +113,7 @@ if __name__ == '__main__':
     plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_exp, 0.0: color_exp, 0.1: color_exp}, label=False,
                                  with_right_spine=False, shift_to_rest=True, **current_threshold_dict_data)
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax0.set_xlim(0, None)
 
     # legend
     custom_lines = [
@@ -140,7 +141,7 @@ if __name__ == '__main__':
     mean_percentage_difference_exp = plot_current_threshold_all_cells_on_ax(ax, current_thresholds_DAP,
                                                                             current_thresholds_rest,
                                                                             current_threshold_dict_data['step_amps'],
-                                                                            color=color_exp,
+                                                                            color=(color_exp, color_exp, color_exp),
                                                                             plot_sig=False)
 
     current_threshold_DAP_model = np.nanmin(current_threshold_dict_model_short_step['current_thresholds'], axis=1)
@@ -156,5 +157,6 @@ if __name__ == '__main__':
     print 'mean percentage difference real cells: ', mean_percentage_difference_exp
 
     pl.tight_layout()
+    pl.subplots_adjust(left=0.08, bottom=0.13, right=0.99)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_double_ramp.png'))
     pl.show()

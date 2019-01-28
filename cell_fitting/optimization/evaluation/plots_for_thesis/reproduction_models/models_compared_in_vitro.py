@@ -91,14 +91,14 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
 
     step_amp = -0.1
-    sag_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
+    sag_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                          'sag_amps.npy'))
-    v_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
+    steady_state_amp = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                               'v_deflections.npy'))
-    ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
+    ax.plot(sag_deflections_data, steady_state_amp, 'o', color=color_exp, alpha=0.5, label='Data')
 
     axins = inset_axes(ax, width='60%', height='50%', loc=1)
-    axins.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
+    axins.plot(sag_deflections_data, steady_state_amp, 'o', color=color_exp, alpha=0.5, label='Data')
 
     for model_idx, model in enumerate(models):
         cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
@@ -108,20 +108,22 @@ if __name__ == '__main__':
         v_sags, v_steady_states, _ = compute_v_sag_and_steady_state([v_model], [step_amp], AP_threshold=0,
                                                                     start_step_idx=start_step_idx,
                                                                     end_step_idx=end_step_idx)
-        sag_amp_model = v_steady_states[0] - v_sags[0]
+        sag_deflection_model = v_steady_states[0] - v_sags[0]
         vrest = np.mean(v_model[:start_step_idx])
-        v_deflection_model = vrest - v_steady_states[0]
-        ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5,
+        steady_state_amp_model = vrest - v_steady_states[0]
+        ax.plot(sag_deflection_model, steady_state_amp_model, 'o', color=color_model, alpha=0.5,
                 label='Model' if model_idx == 0 else '')
         #ax.annotate(str(model_idx+1), xy=(sag_amp_model+0.005, v_deflection_m  odel+0.05))
-        axins.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5,
-                label='Model' if model_idx == 0 else '')
-        axins.annotate(str(model_idx + 1), xy=(sag_amp_model + 0.01, v_deflection_model - 0.15), va='top', fontsize=8,)
+        axins.plot(sag_deflection_model, steady_state_amp_model, 'o', color=color_model, alpha=0.5,
+                   label='Model' if model_idx == 0 else '')
+        axins.annotate(str(model_idx + 1), xy=(sag_deflection_model + 0.01, steady_state_amp_model - 0.15), va='top', fontsize=8, )
     axins.set_ylim(1.1, 4.8)
     axins.set_xlim(0.25, 1.5)
     axins.set_xticks([])
     axins.set_yticks([])
 
+    ax.set_ylim(0, None)
+    ax.set_xlim(0, None)
     ax.set_xlabel('Sag deflection (mV)')
     ax.set_ylabel('Steady state amp. (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
@@ -144,7 +146,8 @@ if __name__ == '__main__':
             ax.annotate(str(model_idx + 1), xy=(latency_model + 9, ISI12_model + 0.0), fontsize=8)
         else:
             ax.annotate(str(model_idx + 1), xy=(latency_model + 1, ISI12_model + 0.1), fontsize=8)
-
+    # ax.set_xlim(0, None)
+    # ax.set_ylim(0, None)
     ax.set_xlabel('Latency of the first spike (ms)')
     ax.set_ylabel('$ISI_{1/2}$ (ms)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
@@ -175,7 +178,9 @@ if __name__ == '__main__':
         ax1.plot([FI_a_model], [FI_b_model], 'o', color=color_model, alpha=0.5, label='Model' if model_idx == 0 else '')
         ax1.annotate(str(model_idx + 1), xy=(FI_a_model + 4, FI_b_model + 0.01), fontsize=8)
         ax1.set_xlim(0, 380)
-        ax1.set_ylim(0, 0.75)
+        ax1.set_xticks(np.arange(0, 380, 50))
+        ax1.set_ylim(0, 0.8)
+        ax1.set_yticks(np.arange(0, 0.9, 0.2))
         if model_idx == 0:
             ax1.set_xlabel('a')
             ax1.set_ylabel('b')
@@ -183,8 +188,13 @@ if __name__ == '__main__':
             ax1.text(-0.3, 1.0, 'D', transform=ax1.transAxes, size=18, weight='bold')
             ax1.legend()
 
+
         ax2.plot([FI_b_model], [FI_c_model], 'o', color=color_model, alpha=0.5)
         ax2.annotate(str(model_idx + 1), xy=(FI_b_model + 0.01, FI_c_model + 0.01), fontsize=8)
+        ax2.set_xlim(0, 0.8)
+        ax2.set_xticks(np.arange(0, 0.9, 0.2))
+        ax2.set_ylim(0, 1.0)
+        ax2.set_yticks(np.arange(0, 1.1, 0.2))
         if model_idx == 0:
             ax2.set_xlabel('b')
             ax2.set_ylabel('c')
@@ -193,6 +203,10 @@ if __name__ == '__main__':
 
         ax3.plot([FI_c_model], [FI_a_model], 'o', color=color_model, alpha=0.5)
         ax3.annotate(str(model_idx + 1), xy=(FI_c_model + 0.016, FI_a_model + 0.8), fontsize=8)
+        ax3.set_xlim(0, 1.0)
+        ax3.set_xticks(np.arange(0, 1.1, 0.2))
+        ax3.set_ylim(0, 380)
+        ax3.set_yticks(np.arange(0, 380, 50))
         if model_idx == 0:
             ax3.set_xlabel('c')
             ax3.set_ylabel('a')
@@ -224,6 +238,7 @@ if __name__ == '__main__':
         else:
             ax.annotate(str(model_idx + 1), xy=(res_freq_model + 0.1, q_value_model + 0.07), fontsize=8)
 
+    ax.set_ylim(0, None)
     ax.set_xlabel('Q-value')
     ax.set_ylabel('Res. freq. (Hz)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)

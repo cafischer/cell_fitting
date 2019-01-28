@@ -46,6 +46,9 @@ if __name__ == '__main__':
     ax1.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.set_yticks([np.min(i_inj_pyramidal), np.max(i_inj_pyramidal)])
+    ax0.set_xlim(0, t_stellate[-1])
+    ax1.set_xlim(0, t_pyramidal[-1])
+    ax2.set_xlim(0, t_stellate[-1])
 
     ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
     ax1.text(-0.25, 1.0, 'E', transform=ax1.transAxes, size=18, weight='bold')
@@ -74,6 +77,9 @@ if __name__ == '__main__':
     ax1.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.get_yaxis().set_label_coords(-0.25, 0.5)
     ax2.set_yticks([np.min(i_inj), np.max(i_inj)])
+    ax0.set_xlim(0, 1000)
+    ax1.set_xlim(0, 1000)
+    ax2.set_xlim(0, 1000)
 
     ax0.text(-0.25, 1.0, 'B', transform=ax0.transAxes, size=18, weight='bold')
     ax1.text(-0.25, 1.0, 'F', transform=ax1.transAxes, size=18, weight='bold')
@@ -105,6 +111,9 @@ if __name__ == '__main__':
     axins.spines['right'].set_visible(True)
     mark_inset(ax0, axins, loc1=2, loc2=4, fc="none", ec="0.5")
 
+    ax0.set_xlim(0, 1000)
+    ax1.set_xlim(0, 1000)
+    ax2.set_xlim(0, 1000)
     ax0.set_xticks([])
     ax1.set_xticks([])
     ax2.set_xlabel('Time (ms)')
@@ -133,6 +142,9 @@ if __name__ == '__main__':
     ax1.plot(t_pyramidal/1000., v_pyramidal, 'k', label='Put. pyramidal')
     ax2.plot(t_stellate/1000., i_inj, 'k')
 
+    ax0.set_xlim(0, t_stellate[-1]/1000.)
+    ax1.set_xlim(0, t_pyramidal[-1]/1000.)
+    ax2.set_xlim(0, t_stellate[-1]/1000.)
     ax0.set_xticks([])
     ax1.set_xticks([])
     ax2.set_xlabel('Time (s)')
