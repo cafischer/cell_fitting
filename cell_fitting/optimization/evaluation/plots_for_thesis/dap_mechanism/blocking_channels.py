@@ -52,6 +52,7 @@ if __name__ == '__main__':
 
         plot_channel_block_on_ax(ax, channel_list, t_model, v_model, v_after_block, percent_block)
         ax.set_ylim(-100, 60)
+        ax.set_xlim(0, t_model[-1])
         ax.get_yaxis().set_label_coords(-0.15, 0.5)
         ax.text(-0.25, 1.0, letters[percent_block_idx], transform=ax.transAxes, size=18, weight='bold')
 
@@ -82,9 +83,11 @@ if __name__ == '__main__':
 
         plot_channel_block_on_ax(ax, channel_list, t_model, v_model, v_after_block, percent_block)
         ax.set_ylim(-100, 60)
+        ax.set_xlim(0, t_model[-1])
         ax.get_yaxis().set_label_coords(-0.15, 0.5)
         ax.text(-0.25, 1.0, letters[percent_block_idx], transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
+    pl.subplots_adjust(left=0.07, bottom=0.07)
     pl.savefig(os.path.join(save_dir_img, 'block_channels.png'))
     pl.show()

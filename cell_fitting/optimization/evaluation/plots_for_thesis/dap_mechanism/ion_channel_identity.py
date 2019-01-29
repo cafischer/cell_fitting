@@ -85,6 +85,7 @@ if __name__ == '__main__':
                                                cell.soma(.5).nat.h_vh, cell.soma(.5).nat.h_vs)
 
     plot_act_inact_on_ax(ax, v_range, curve_act, curve_inact, time_constanct_act, time_constanct_inact, 'nat')
+    ax.set_xlim(-95, 30)
     print 'Nat m min tau: ', np.min(time_constanct_act)
     print 'Nat m max tau: ', np.max(time_constanct_act)
     print 'Nat h min tau: ', np.min(time_constanct_inact)
@@ -111,6 +112,7 @@ if __name__ == '__main__':
                                                cell.soma(.5).nap.h_vh, cell.soma(.5).nap.h_vs)
 
     plot_act_inact_on_ax(ax, v_range, curve_act, curve_inact, time_constanct_act, time_constanct_inact, 'nap')
+    ax.set_xlim(-95, 30)
 
     print 'Nap m min tau: ', np.min(time_constanct_act)
     print 'Nap m max tau: ', np.max(time_constanct_act)
@@ -133,6 +135,7 @@ if __name__ == '__main__':
                                              cell.soma(.5).kdr.n_vh, cell.soma(.5).kdr.n_vs)
 
     plot_act_inact_on_ax(ax, v_range, curve_act, None, time_constanct_act, None, 'kdr')
+    ax.set_xlim(-95, 30)
 
     print 'Kdr m min tau: ', np.min(time_constanct_act)
     print 'Kdr m max tau: ', np.max(time_constanct_act)
@@ -153,6 +156,7 @@ if __name__ == '__main__':
                                                cell.soma(.5).hcn_slow.n_vh, cell.soma(.5).hcn_slow.n_vs)
 
     plot_act_inact_on_ax(ax, v_range, None, curve_inact, None, time_constanct_inact, 'hcn_slow')
+    ax.set_xlim(-95, 30)
 
     print 'HCN h min tau: ', np.min(time_constanct_inact)
     print 'HCN h max tau: ', np.max(time_constanct_inact)

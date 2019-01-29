@@ -113,7 +113,7 @@ if __name__ == '__main__':
     print 'RMSE (Percentile: '+str(percentile)+')', test_val
     print 'RMSE (Percentile: ' + str(0.1) + ')', np.percentile(rmses, 0.1)
     print 'RMSE (Percentile: ' + str(0.01) + ')', np.percentile(rmses, 0.01)
-    print 'p-val: ', 1 - max(np.mean(rmse_model < rmses), 1./len(rmses))
+    print 'p-val: ', max(np.mean(rmse_model >= rmses), 1./len(rmses))
     print 'Significant: ', rmse_model < test_val
     print '# Phases (Poisson)', np.mean(n_phasess)
     print '# Phases (Data)', len(phases_data)

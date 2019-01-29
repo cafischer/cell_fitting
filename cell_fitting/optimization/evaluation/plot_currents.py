@@ -7,7 +7,7 @@ from cell_fitting.optimization.simulate import extract_simulation_params, simula
 from cell_fitting.util import merge_dicts, get_channel_dict_for_plotting, get_channel_color_for_plotting
 from cell_fitting.read_heka.i_inj_functions import get_i_inj_double_ramp
 from cell_fitting.read_heka import get_i_inj_from_function, get_sweep_index_for_amp
-pl.style.use('paper')
+pl.style.use('paper_subplots')
 
 
 def plot_currents_on_ax(ax1, channel_list, currents, t, v):
@@ -65,9 +65,9 @@ if __name__ == '__main__':
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': 1000,
                          'dt': 0.01, 'celsius': 35, 'onset': 200}
 
-    cell.soma(.5).hcn_slow.gbar = 0
-    cell.soma(.5).nap.gbar = 0
-    cell.soma(.5).nat.gbar = 0
+    #cell.soma(.5).hcn_slow.gbar = 0
+    #cell.soma(.5).nap.gbar = 0
+    #cell.soma(.5).nat.gbar = 0
     #cell.soma(.5).kdr.gbar = 0
     #cell.soma(.5).g_pas = 0  #0.000430116611589
 
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     plot_currents_on_ax(ax, channel_list, currents, t, v)
     ax.set_ylabel('Current (mA/cm$^2$)')
     pl.tight_layout()
-    pl.show()
+    #pl.show()
 
     fig, ax1 = pl.subplots()
     for i in range(len(channel_list)):
@@ -96,25 +96,33 @@ if __name__ == '__main__':
     #ax2.set_ylim(-80, -40)
     #ax1.set_ylim(-0.1, 0.1)
     pl.tight_layout()
-    pl.show()
+    #pl.show()
 
 
     from itertools import combinations
     from cell_fitting.optimization.helpers import get_channel_list
 
     channel_list = get_channel_list(cell, 'soma')
-    len_comb = 2
+    len_comb = 3
 
     pl.figure()
     scale_fac = np.max(np.abs(-1*np.sum(currents))) / np.max(np.abs(np.diff(v)))
     pl.plot(t[1:], np.diff(v) * scale_fac, 'k', label='dV/dt')
-    pl.plot(t, -1*np.sum(currents), 'r', label='$-\sum I_{ion}$', linewidth=3)
+    pl.plot(t, -1*np.sum(currents), 'r', label='$-\sum I_{ion}$', linewidth=2.)
     for comb in combinations(range(len(channel_list)), len_comb):
-        pl.plot(t, -1 * np.sum(np.array([currents[i] for i in comb]), 0),
-                label=str([channel_list[i] for i in comb]))
-    pl.ylabel('Current', fontsize=16)
-    pl.xlabel('Time (ms)', fontsize=16)
+        label = 'I_{'
+        for idx, i in enumerate(comb):
+            if idx != len(comb)-1:
+                label += channel_dict[channel_list[i]] + ' + '
+            else:
+                label += channel_dict[channel_list[i]] + '}'
+        label = label.replace('$', '')
+        label = '$' + label + '$'
+        pl.plot(t, -1 * np.sum(np.array([currents[i] for i in comb]), 0), label=label)
+    pl.ylabel('Current')
+    pl.xlabel('Time (ms)')
     pl.legend(fontsize=10)
+    pl.tight_layout()
     pl.show()
 
     idx_nap = np.where(np.array(channel_list) == 'nap')[0][0]

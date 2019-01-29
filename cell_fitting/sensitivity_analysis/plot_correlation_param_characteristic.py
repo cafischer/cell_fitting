@@ -116,7 +116,7 @@ def plot_corr_on_ax(ax, corr_mat, p_val_mat, return_characteristics, variable_na
     elif correlation_measure == 'pearson':
         correlation_measure = 'Pearson'
     cb.set_label(correlation_measure, rotation=-90, labelpad=13)
-    cb.ax.set_yticklabels([-1, -0.5, 0, 0.5, 1.0])
+    cb.ax.set_yticklabels([-1.0, -0.5, 0.0, 0.5, 1.0])
 
 
 def compute_and_plot_correlations(candidate_mat, characteristics_mat, correlation_types, sig1, sig2,
