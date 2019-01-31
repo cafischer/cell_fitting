@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     # plot
     fig = pl.figure(figsize=(12, 9))
-    outer = gridspec.GridSpec(3, 5, wspace=0.15, hspace=0.3)
+    outer = gridspec.GridSpec(3, 5, wspace=0.2, hspace=0.3)
 
     for model_idx, model in enumerate(models):
 
@@ -105,6 +105,7 @@ if __name__ == '__main__':
         plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_exp, 0.0: color_exp, 0.1: color_exp}, label=False,
                                      with_right_spine=False, shift_to_rest=True, legend_loc=None,
                                      **current_threshold_dict_data)
+        ax0.set_xlim(0, None)
         ax0.set_xticklabels(['0', '4', '', '8', '', '12', '', '16', '', '20', ''])
         if model_idx == 0:
             custom_lines = [

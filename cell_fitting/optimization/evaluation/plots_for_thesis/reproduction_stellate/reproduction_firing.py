@@ -51,8 +51,8 @@ if __name__ == '__main__':
     ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
-    ax0.set_xlim(0, t_data[-1])
-    ax1.set_xlim(0, t_data[-1])
+    ax0.set_xlim(0, 1000.)
+    ax1.set_xlim(0, 1000.)
     ax1.set_ylim(-0.01, 0.41)
     ax0.set_xticks([])
     ax0.set_ylabel('Mem. pot. (mV)')

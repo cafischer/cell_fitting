@@ -98,6 +98,7 @@ if __name__ == '__main__':
     ax.plot(sag_deflections_data, steady_state_amp, 'o', color=color_exp, alpha=0.5, label='Data')
 
     axins = inset_axes(ax, width='60%', height='50%', loc=1)
+    mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
     axins.plot(sag_deflections_data, steady_state_amp, 'o', color=color_exp, alpha=0.5, label='Data')
 
     for model_idx, model in enumerate(models):
@@ -119,11 +120,11 @@ if __name__ == '__main__':
         axins.annotate(str(model_idx + 1), xy=(sag_deflection_model + 0.01, steady_state_amp_model - 0.15), va='top', fontsize=8, )
     axins.set_ylim(1.1, 4.8)
     axins.set_xlim(0.25, 1.5)
-    axins.set_xticks([])
-    axins.set_yticks([])
+    axins.spines['top'].set_visible(True)
+    axins.spines['right'].set_visible(True)
 
-    ax.set_ylim(0, None)
-    ax.set_xlim(0, None)
+    ax.set_ylim(0, 47.8)
+    ax.set_xlim(0, 14.5)
     ax.set_xlabel('Sag deflection (mV)')
     ax.set_ylabel('Steady state amp. (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
@@ -136,7 +137,7 @@ if __name__ == '__main__':
     latency_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'latency.npy'))
     ISI12_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'ISI12.npy'))
     ax.plot(latency_data[latency_data >= 0], ISI12_data[latency_data >= 0], 'o', color=color_exp,
-                    alpha=0.5, label='Data')
+                    alpha=0.5, label='Data', clip_on=False)
 
     for model_idx, model in enumerate(models):
         cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
@@ -146,8 +147,8 @@ if __name__ == '__main__':
             ax.annotate(str(model_idx + 1), xy=(latency_model + 9, ISI12_model + 0.0), fontsize=8)
         else:
             ax.annotate(str(model_idx + 1), xy=(latency_model + 1, ISI12_model + 0.1), fontsize=8)
-    # ax.set_xlim(0, None)
-    # ax.set_ylim(0, None)
+    ax.set_xlim(0, None)
+    ax.set_ylim(0, None)
     ax.set_xlabel('Latency of the first spike (ms)')
     ax.set_ylabel('$ISI_{1/2}$ (ms)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
@@ -220,7 +221,7 @@ if __name__ == '__main__':
     res_freqs_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'res_freqs.npy'))
     q_values_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'q_values.npy'))
 
-    ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data')
+    ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data', clip_on=False)
 
     for model_idx, model in enumerate(models):
         zap_params = get_i_inj_standard_params('Zap20')
@@ -239,6 +240,7 @@ if __name__ == '__main__':
             ax.annotate(str(model_idx + 1), xy=(res_freq_model + 0.1, q_value_model + 0.07), fontsize=8)
 
     ax.set_ylim(0, None)
+    ax.set_xlim(0, None)
     ax.set_xlabel('Q-value')
     ax.set_ylabel('Res. freq. (Hz)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
@@ -263,6 +265,10 @@ if __name__ == '__main__':
 
     ax.plot(phase_means_data, phase_stds_data, 'o', color=color_exp, alpha=0.5)
 
+    axins = inset_axes(ax, width='60%', height='50%', loc=1)
+    mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
+    axins.plot(phase_means_data, phase_stds_data, 'o', color=color_exp, alpha=0.5, label='Data')
+
     for model_idx, model in enumerate(models):
         with open(os.path.join(save_dir_model, model, 'img', 'sine_stimulus/traces',
                                str(amp1s[model_idx]) + '_' + str(amp2s[model_idx]) + '_' + str(freq1) + '_' + str(
@@ -270,11 +276,19 @@ if __name__ == '__main__':
                                'phase_hist', 'sine_dict.json'), 'r') as f:
             sine_dict_model = json.load(f)
         ax.plot(sine_dict_model['mean_phase'], sine_dict_model['std_phase'], 'o', color=color_model, alpha=0.5)
-        ax.annotate(str(model_idx + 1), xy=(sine_dict_model['mean_phase'][0] + 0.15, sine_dict_model['std_phase'][0] + 1.2), fontsize=8)
+        axins.plot(sine_dict_model['mean_phase'], sine_dict_model['std_phase'], 'o', color=color_model, alpha=0.5)
+        axins.annotate(str(model_idx + 1), xy=(sine_dict_model['mean_phase'][0] + 0.15, sine_dict_model['std_phase'][0] + 1.2), fontsize=8)
+    axins.set_ylim(18, 72)
+    axins.set_xlim(115, 195)
+    axins.spines['top'].set_visible(True)
+    axins.spines['right'].set_visible(True)
+
+    ax.set_ylim(0, 360)
+    ax.set_xlim(0, 360)
+    ax.set_xticks([0, 90, 180, 270, 360])
+    ax.set_yticks([0, 90, 180, 270, 360])
     ax.set_ylabel('Std. phase (deg.)')
     ax.set_xlabel('Mean phase (deg.)')
-    ax.set_xlim(120, 190)
-    ax.set_ylim(20, 70)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.3, 1.0, 'H', transform=ax.transAxes, size=18, weight='bold')
 

@@ -51,7 +51,7 @@ if __name__ == '__main__':
     save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     bin_width = 10
     bins=np.arange(0, 360 + bin_width, bin_width)
-    n_poisson = 10000
+    n_poisson = 1000000
     np.random.seed(1)
 
     # get input stimulus
@@ -113,7 +113,7 @@ if __name__ == '__main__':
     print 'RMSE (Percentile: '+str(percentile)+')', test_val
     print 'RMSE (Percentile: ' + str(0.1) + ')', np.percentile(rmses, 0.1)
     print 'RMSE (Percentile: ' + str(0.01) + ')', np.percentile(rmses, 0.01)
-    print 'p-val: ', max(np.mean(rmse_model >= rmses), 1./len(rmses))
+    print 'p-val: ', np.mean(rmse_model >= rmses)
     print 'Significant: ', rmse_model < test_val
     print '# Phases (Poisson)', np.mean(n_phasess)
     print '# Phases (Data)', len(phases_data)

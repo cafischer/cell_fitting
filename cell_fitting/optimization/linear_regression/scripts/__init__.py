@@ -86,4 +86,4 @@ def fit_with_linear_regression(v_exp, t_exp, i_exp, save_dir, model_dir, mechani
     # pl.savefig(os.path.join(save_dir, 'simulation.png'))
 
     plot_fit2(y, X, weights, t_exp, v_exp, t, v, channel_list, save_dir='/home/cf/Dropbox/thesis/figures_discussion')
-
+    pl.show()

@@ -79,7 +79,7 @@ def plot_current_threshold_on_ax(ax, current_thresholds, current_threshold_rampI
     ramp3_peak_times = np.array(ramp3_times) + 1.0
     for i, current_threshold in enumerate(current_thresholds):
         ax.plot(ramp3_peak_times, current_threshold, linestyle='-', marker=markers[i], color=colors[i],
-                label=labels[i])
+                label=labels[i], clip_on=False)
     ax.set_xlabel('Midpoint 2nd pulse (ms)')
     #ax.set_ylabel('Current thresh. (nA)')
     ax.set_xticks(np.insert(ramp3_peak_times, 0, [0]))

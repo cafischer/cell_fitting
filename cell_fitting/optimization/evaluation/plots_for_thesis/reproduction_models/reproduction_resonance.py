@@ -60,10 +60,12 @@ if __name__ == '__main__':
         vrest_data = np.mean(v_data[:start_i_inj])
         vrest_model = np.mean(v_model[:start_i_inj])
 
-        ax0.plot(t_data, v_data - vrest_data, color_exp, linewidth=0.3, label='Data')
-        ax0.plot(t_model, v_model - vrest_model, color_model, linewidth=0.3, label='Model')
-        ax1.plot(t_model, i_inj_model, linewidth=0.3, color='k')
+        ax0.plot(t_data / 1000., v_data - vrest_data, color_exp, linewidth=0.3, label='Data')
+        ax0.plot(t_model / 1000., v_model - vrest_model, color_model, linewidth=0.3, label='Model')
+        ax1.plot(t_model / 1000., i_inj_model, linewidth=0.3, color='k')
 
+        ax0.set_xlim(0, t_data[-1] / 1000.)
+        ax1.set_xlim(0, t_data[-1] / 1000.)
         ax0.set_xticks([])
         ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
         ax1.set_xlabel('Time (ms)')
@@ -91,6 +93,7 @@ if __name__ == '__main__':
         plot_impedance_on_ax(ax, color_line=color_exp, **impedance_dict_data)
 
         ax.set_ylim(5, 60)
+        ax.set_xlim(frequencies_model[0], frequencies_model[-1])
         if model_idx == 0:
             ax.get_yaxis().set_label_coords(-0.25, 0.5)
             ax.text(-0.4, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
@@ -107,10 +110,12 @@ if __name__ == '__main__':
         v_after_block, _, _ = simulate_model(cell, 'Zap20', zap_amp, 34000 - standard_sim_params['dt'],
                                              **standard_sim_params)
         vrest_after_block = np.mean(v_after_block[:start_i_inj])
-        plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model - vrest_model,
+        plot_channel_block_on_ax(ax, ['hcn_slow'], t_model / 1000., v_model - vrest_model,
                                  np.array([v_after_block - vrest_after_block]), percent_block,
                                  color=color_model, label=False)
         ax.set_ylim(-6.5, 6.5)
+        ax.set_xlim(0, t_data[-1] / 1000.)
+        ax.set_xlabel('Time (s)')
         if model_idx == 0:
             ax.get_yaxis().set_label_coords(-0.25, 0.5)
             custom_lines = [Line2D([0], [0], marker='o', color='k', lw=1.0),

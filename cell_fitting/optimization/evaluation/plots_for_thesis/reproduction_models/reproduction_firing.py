@@ -50,6 +50,9 @@ if __name__ == '__main__':
         ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
         ax1.plot(t_data, i_inj, 'k')
 
+        ax0.set_xlim(0, 1000.)
+        ax1.set_xlim(0, 1000.)
+        ax1.set_ylim(-0.01, 0.41)
         ax0.set_xticks([])
         ax1.set_xlabel('Time (ms)')
         ax0.get_yaxis().set_label_coords(-0.25, 0.6)
@@ -76,11 +79,13 @@ if __name__ == '__main__':
 
         # plot_fi_curve_on_ax(ax, color_line=color_model, **fi_dict_model)
         # plot_fi_curve_on_ax(ax, color_line=color_exp, **fi_dict_data)
-        ax.plot(fi_dict_data['amps'], fi_dict_data['firing_rates'], '-o', color=color_exp, markersize=4)
-        ax.plot(fi_dict_model['amps'], fi_dict_model['firing_rates'], '-o', color=color_model, markersize=4)
+        ax.plot(fi_dict_data['amps'], fi_dict_data['firing_rates'], '-o', color=color_exp, markersize=4, clip_on=False)
+        ax.plot(fi_dict_model['amps'], fi_dict_model['firing_rates'], '-o', color=color_model, markersize=4,
+                clip_on=False)
 
         ax.set_xlabel('Current (nA)')
-        ax.set_ylim(-3, 95)
+        ax.set_ylim(0, 95)
+        ax.set_xlim(0, None)
         if model_idx == 0:
             ax.set_ylabel('Firing rate (Hz)')
             ax.get_yaxis().set_label_coords(-0.25, 0.5)

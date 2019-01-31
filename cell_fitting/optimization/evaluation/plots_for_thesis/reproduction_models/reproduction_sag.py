@@ -54,6 +54,9 @@ if __name__ == '__main__':
         ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
 
         ax0.set_xticks([])
+        ax0.set_xlim(0, 1000.)
+        ax1.set_xlim(0, 1000.)
+        ax1.set_ylim(-0.11, 0.01)
         ax1.set_xlabel('Time (ms)')
         ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
         if model_idx == 0:
@@ -103,6 +106,7 @@ if __name__ == '__main__':
         plot_channel_block_on_ax(ax, ['hcn_slow'], t_model, v_model, np.array([v_after_block]), percent_block,
                                  color=color_model, label=False)
         ax.set_ylim(-85, -74)
+        ax.set_xlim(0, 1000.)
         ax.set_yticks(np.arange(-85, -71, 5))
         if model_idx == 0:
             ax.get_yaxis().set_label_coords(-0.25, 0.5)

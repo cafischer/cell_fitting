@@ -86,10 +86,12 @@ if __name__ == '__main__':
 
         ax0.set_xticks([])
         ax0.set_ylim(-5, 140)
+        ax0.set_xlim(0, t_exp[-1])
+        ax1.set_xlim(0, t_exp[-1])
         ax1.set_xlabel('Time (ms)')
         if model_idx == 0:
             ax0.legend()
-            ax0.set_ylabel('Mem. pot. amp. (mV)')
+            ax0.set_ylabel('Mem. pot. (mV)')
             ax1.set_ylabel('Current (nA)')
             ax0.get_yaxis().set_label_coords(-0.25, 0.5)
             ax1.get_yaxis().set_label_coords(-0.25, 0.5)

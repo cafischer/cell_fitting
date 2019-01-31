@@ -69,31 +69,32 @@ def plot_fit2(y, X, weights, t_exp, v_exp, t_fit, v_fit, channel_list, i_pas=0, 
     # sum of currents
     axes[0].plot(t_exp, y, 'k', label=r'$c_m \cdot \frac{dV}{dt} - I_{inj} + I_{Leak}$'
                 if np.any(i_pas != 0) else r'$c_m \cdot \frac{dV}{dt} - I_{inj}$')
+    axes[0].plot(t_exp, np.zeros(len(y)), c='0.5', linestyle='--')
     axes[0].plot(t_exp, np.dot(X, weights).T, 'r', label='$-g_{max} \cdot \sum_{ion\ channel} I_{ion\ channel}$')
-    axes[0].plot(t_exp, np.zeros(len(y)), c='0.5')
     axes[0].set_ylabel('Current (A)')
     axes[0].set_ylim(-150, 150)
     axes[0].legend(loc='upper right')
     axes[0].text(-0.115, 1.0, 'A', transform=axes[0].transAxes, size=18, weight='bold')
 
     # current traces
-    color = iter(cmap.gist_rainbow(np.linspace(0, 1, len(channel_list))))
+    colors = ['y', 'xkcd:orange', 'xkcd:red', 'm', 'g', 'c', 'b', 'sienna']
+    #color = iter(cmap.gist_rainbow(np.linspace(0, 1, len(channel_list))))
     axes[1].plot(t_exp, y, 'k', label=r'$c_m \cdot \frac{dV}{dt} - I_{inj} + I_{Leak}$'
             if np.any(i_pas != 0) else r'$c_m \cdot \frac{dV}{dt} - I_{inj}$')
     for j, current in enumerate(channel_list):
         channel_name = r'$-g_{max} \cdot I_{'\
                        + channel_list[j].replace('_', '\ ').replace('sh', 'SH').replace('j', 'J').replace('pas', 'Leak')\
                        + '}$'
-        axes[1].plot(t_exp, (X.T[j]*weights[j]).T, c=next(color), label=channel_name)
+        axes[1].plot(t_exp, (X.T[j]*weights[j]).T, c=colors[j], label=channel_name)
     axes[1].plot(t_exp, np.zeros(len(y)), c='0.5')
     axes[1].set_ylabel('Current (A)')
     axes[1].set_ylim(-150, 150)
-    axes[1].legend(loc='upper right')
+    axes[1].legend(loc='lower right')
     axes[1].text(-0.115, 1.0, 'B', transform=axes[1].transAxes, size=18, weight='bold')
 
     # voltage trace
     axes[2].plot(t_exp, v_exp, 'k', label='Data')
-    axes[2].plot(t_fit, v_fit, 'r', label='Model')
+    axes[2].plot(t_fit, v_fit, 'r', label='$Model_{linear\ reg.}$')
     axes[2].set_ylabel('Mem. pot. (mV)')
     axes[2].set_xlabel('Time (ms)')
     axes[1].set_xlim(8, 60)

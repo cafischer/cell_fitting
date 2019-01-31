@@ -63,7 +63,7 @@ if __name__ == '__main__':
     ax0.plot(t_model/1000., v_model - vrest_model, color_model, linewidth=0.3, label='Model')
     ax1.plot(t_data/1000., i_inj, linewidth=0.3, color='k')
 
-    ax0.set_xlim(0, t_data[-1]/1000.)
+    ax0.set_xlim(0, t_data[-1] / 1000.)
     ax1.set_xlim(0, t_data[-1] / 1000.)
     ax0.set_xticks([])
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
@@ -96,7 +96,6 @@ if __name__ == '__main__':
     plot_impedance_on_ax(ax, frequencies_model, imp_smooth_model, color_line=color_model)
     plot_impedance_on_ax(ax, color_line=color_exp, **impedance_dict_data)
     ax.set_ylim(0, None)
-
     ax.set_xlim(0, frequencies_model[-1])
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
