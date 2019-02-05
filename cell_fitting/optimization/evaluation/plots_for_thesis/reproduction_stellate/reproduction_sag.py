@@ -58,8 +58,8 @@ if __name__ == '__main__':
     v_sags, v_steady_states, _ = compute_v_sag_and_steady_state([v_model], [step_amp], AP_threshold=0,
                                                                 start_step_idx=start_step_idx_model,
                                                                 end_step_idx=end_step_idx_model)
-    sag_amp_model = v_steady_states[0] - v_sags[0]
-    v_deflection_model = vrest_model - v_steady_states[0]
+    sag_deflection_model = v_steady_states[0] - v_sags[0]
+    steady_state_amp_model = vrest_model - v_steady_states[0]
 
     # plot
     fig = pl.figure(figsize=(8, 6))
@@ -160,17 +160,17 @@ if __name__ == '__main__':
     ax.legend(custom_lines, ['Without block (model)', '100% block of HCN (model)'], loc='upper right')
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
-    # sag amp. vs voltage deflection for all cells
+    # sag deflection vs steady-state amp. for all cells
     ax = pl.Subplot(fig, outer[1, 1])
     fig.add_subplot(ax)
 
-    sag_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
+    sag_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                          'sag_amps.npy'))
-    v_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
+    steady_state_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                               'v_deflections.npy'))
-    ax.plot(sag_amps_data, v_deflections_data, 'o', color=color_exp, alpha=0.5, label='Data')
+    ax.plot(sag_deflections_data, steady_state_amps_data, 'o', color=color_exp, alpha=0.5, label='Data')
 
-    ax.plot(sag_amp_model, v_deflection_model, 'o', color=color_model, alpha=0.5, label='Model')
+    ax.plot(sag_deflection_model, steady_state_amp_model, 'o', color=color_model, alpha=0.5, label='Model')
 
     ax.set_xlabel('Sag deflection (mV)')
     ax.set_ylabel('Steady state amp. (mV)')

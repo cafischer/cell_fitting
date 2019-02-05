@@ -172,8 +172,9 @@ class Evaluator:
         statistics[statistics == np.inf] = np.nan
 
         # change color cycle
-        cmap = pl.get_cmap('jet')
-        colors = cmap(np.linspace(0.1, 0.9, len(self.methods)))
+        # cmap = pl.get_cmap('Set2')  # jet
+        # colors = cmap(np.linspace(0.1, 0.9, len(self.methods)))
+        colors = ['xkcd:red', 'xkcd:orange', 'm', 'y', 'b', 'grey']
 
         fig, axes = pl.subplots(1, 2, figsize=(11, 5))
         for error_idx, error in enumerate(errors):
@@ -188,21 +189,26 @@ class Evaluator:
                     statistic_std = np.sqrt(statistics.loc[(slice(None)), (slice(None), error, 'var')])
                     base_line, = ax.plot(statistics.index, statistic_mean[method], label=method, linewidth=1.5)
 
+                    # TODO
+                    n_samples = 100
                     ax.fill_between(statistics.index.values,
-                                    (statistic_mean[method].values - statistic_std[method].values).flatten(),
-                                    (statistic_mean[method].values + statistic_std[method].values).flatten(),
-                                    facecolor=base_line.get_color(), alpha=0.05)
+                                    (statistic_mean[method].values - statistic_std[method].values / np.sqrt(n_samples)).flatten(),
+                                    (statistic_mean[method].values + statistic_std[method].values / np.sqrt(n_samples)).flatten(),
+                                    facecolor=base_line.get_color(), alpha=0.1)
                 ax.set_xticks(statistics.index)
                 ax.set_xticklabels(statistics.index)
-                ax.set_ylim([0, None])
                 ax.set_xlabel('# Parameter')
+                ax.set_xlim(1, len(statistic_mean[method].values))
                 if error == 'rms(v)':
                     ax.set_ylabel('RMSE mem. pot. (mV)')
+                    ax.set_ylim([0, 16.5])
                 elif error == 'rms(param)':
                     ax.set_ylabel('RMSE parameters (norm.)')
+                    ax.set_ylim([0, 0.35])
         axes[0].legend(loc='upper left')
         pl.tight_layout()
         pl.savefig(os.path.join(self.save_dir_statistics, 'plot_rmse_'+statistic+'.png'))
+        pl.savefig(os.path.join('/home/cf/Dropbox/thesis/figures_methods', 'comp_optimization_algorithms.png'))
         pl.show()
 
     def get_candidate_and_fitness(self, save_dir, trial):

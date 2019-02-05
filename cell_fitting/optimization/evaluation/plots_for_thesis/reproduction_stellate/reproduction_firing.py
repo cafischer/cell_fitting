@@ -69,7 +69,7 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
     latency_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'latency.npy'))
     ISI12_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'ISI12.npy'))
-    ax.plot(latency_data[latency_data>=0], ISI12_data[latency_data>=0], 'o', color=color_exp,
+    ax.plot(latency_data[latency_data >= 0], ISI12_data[latency_data >= 0], 'o', color=color_exp,
             alpha=0.5, label='Data', clip_on=False)
 
     latency_model, ISI12_model = get_latency_and_ISI12(cell)
@@ -105,7 +105,7 @@ if __name__ == '__main__':
     FI_b = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'FI_b.npy'))
     FI_c = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'FI_c.npy'))
     RMSE = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'RMSE.npy'))
-    #print 'RMSE over cells: ', np.min(RMSE), np.max(RMSE)
+    print 'RMSE over cells: ', np.min(RMSE), np.max(RMSE)
 
     amps_greater0, firing_rates_model = simulate_and_compute_fI_curve(cell)
     FI_a_model, FI_b_model, FI_c_model, RMSE_model = fit_fI_curve(amps_greater0, firing_rates_model)

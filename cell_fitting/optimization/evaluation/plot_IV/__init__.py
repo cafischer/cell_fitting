@@ -207,7 +207,7 @@ def get_IV(cell, step_amp, step_fun, step_st_ms, step_end_ms, tstop, dt, simulat
     if simulation_params is None:
         simulation_params = get_standard_simulation_params()
     simulation_params = merge_dicts(simulation_params,
-                                    {'i_inj': i_exp, 'tstop': tstop, 'dt': dt})
+                                    {'sec': ('soma', None), 'i_inj': i_exp, 'tstop': tstop, 'dt': dt})
 
     # record v
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
