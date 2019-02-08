@@ -68,7 +68,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[0, 0])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.25, 1.05, 'A', transform=ax.transAxes, size=18, weight='bold')
 
     # steady-state
     v_range = np.arange(-95, 30, 0.1)
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[1, 0])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.25, 1.05, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # steady-state
     v_range = np.arange(-95, 30, 0.1)
@@ -123,7 +123,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[2, 0])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.25, 1.05, 'C', transform=ax.transAxes, size=18, weight='bold')
 
     # steady-state
     v_range = np.arange(-95, 30, 0.1)
@@ -144,7 +144,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[3, 0])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
-    ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.25, 1.05, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     # steady-state
     v_range = np.arange(-95, 30, 0.1)
@@ -167,7 +167,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[0, 1])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.18, 0.5)
-    ax.text(-0.28, 1.0, 'E', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.28, 1.05, 'E', transform=ax.transAxes, size=18, weight='bold')
 
     amps = [-80, -80, -100]
     durs = [10, 50, 0]
@@ -189,7 +189,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[1, 1])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.18, 0.5)
-    ax.text(-0.28, 1.0, 'F', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.28, 1.05, 'F', transform=ax.transAxes, size=18, weight='bold')
 
     amps = [-80, 0, -80]
     durs = [10, 20, 100]
@@ -210,7 +210,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[2, 1])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.18, 0.5)
-    ax.text(-0.28, 1.0, 'G', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.28, 1.05, 'G', transform=ax.transAxes, size=18, weight='bold')
 
     amps = [-110, -50, -100]
     durs = [150, 50, 150]
@@ -231,7 +231,7 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[3, 1])
     fig.add_subplot(ax)
     ax.get_yaxis().set_label_coords(-0.18, 0.5)
-    ax.text(-0.28, 1.0, 'H', transform=ax.transAxes, size=18, weight='bold')
+    ax.text(-0.28, 1.05, 'H', transform=ax.transAxes, size=18, weight='bold')
 
     amps = [-60, -80, -60]
     durs = [20, 1500, 0]
@@ -249,5 +249,6 @@ if __name__ == '__main__':
     ax.set_xlim(0, 1510)
 
     pl.tight_layout()
+    pl.subplots_adjust(bottom=0.06, top=0.97)
     pl.savefig(os.path.join(save_dir_img, 'ion_channel_identity.png'))
     pl.show()
