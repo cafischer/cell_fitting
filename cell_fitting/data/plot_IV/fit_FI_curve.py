@@ -87,7 +87,7 @@ if __name__ == '__main__':
         amps_greater0 = amps_greater0[:20]
 
         try:
-            b0 = amps_greater0[np.where(firing_rates_data > 0)[0][0]]
+            b0 = amps_greater0[np.where(firing_rates_data > 0)[0][0]-1]
             p_opt, _ = curve_fit(fit_fun, amps_greater0, firing_rates_data, p0=[50, b0, 0.5])
         except RuntimeError:
             continue

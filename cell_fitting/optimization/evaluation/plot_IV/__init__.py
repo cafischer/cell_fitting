@@ -232,7 +232,7 @@ def simulate_IV(cell, step_amp, v_init=-75):
 
 
 def fit_fI_curve(amps, firing_rates):
-    b0 = amps[np.where(firing_rates > 0)[0][0]]
+    b0 = amps[np.where(firing_rates > 0)[0][0]-1]
     p_opt, _ = curve_fit(fit_fun, amps, firing_rates, p0=[50, b0, 0.5])
     FI_a, FI_b, FI_c = p_opt
     RMSE = np.sqrt(np.sum((firing_rates - fit_fun(amps, FI_a, FI_b, FI_c)) ** 2))
