@@ -112,6 +112,7 @@ if __name__ == '__main__':
                                  **current_threshold_dict_model)
     plot_current_threshold_on_ax(ax0, colors_dict={-0.1: color_exp, 0.0: color_exp, 0.1: color_exp}, label=False,
                                  with_right_spine=False, shift_to_rest=True, **current_threshold_dict_data)
+    ax0.set_ylabel('Current thresh. (nA)')
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
     ax0.set_xlim(0, None)
 
@@ -150,6 +151,7 @@ if __name__ == '__main__':
     ax.plot(-0.4, percentage_difference_model[0], 'o', color=color_model, alpha=0.5)
     ax.plot(0.6, percentage_difference_model[1], 'o', color=color_model, alpha=0.5)
     ax.plot(1.6, percentage_difference_model[2], 'o', color=color_model, alpha=0.5)
+    ax.set_ylabel('Decrease current thresh. (%)')
     ax.get_yaxis().set_label_coords(-0.3, 0.5)
     ax.text(-0.60, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 

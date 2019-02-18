@@ -13,6 +13,7 @@ import matplotlib.pyplot as pl
 from cell_fitting.read_heka import shift_v_rest
 from cell_fitting.data import check_cell_has_DAP
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
+from cell_fitting.optimization.evaluation.plot_sine_stimulus.plot_spike_phase import get_theta_and_phases
 
 
 if __name__ == '__main__':
@@ -22,6 +23,7 @@ if __name__ == '__main__':
     amp2_use = None
     freq1 = 0.1
     freq2 = 5
+    sine1_dur = 1. / freq1 * 1000 / 2.
     onset_dur = offset_dur = 500
     v_shift = -16
     save_dir = os.path.join('../plots', protocol, 'traces', animal)
@@ -29,6 +31,7 @@ if __name__ == '__main__':
     v_mat, t_mat, cell_ids, amp1s, amp2s, freq1s, freq2s = find_sine_trace(amp1_use, amp2_use, freq1, freq2)
     cell_ids_new = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
     cell_ids_new = filter(lambda id: check_cell_has_DAP(id), cell_ids_new)
+    cell_ids_new = np.unique(cell_ids_new)  # no doubles
     cell_id_idxs = np.array([np.where(c_id == np.array(cell_ids))[0][0] for c_id in cell_ids_new])
     v_mat = v_mat[cell_id_idxs]
     t_mat = t_mat[cell_id_idxs]
@@ -50,12 +53,7 @@ if __name__ == '__main__':
         dist_to_AP = to_idx(250, dt)
 
         # rebuild theta stim (sine2)
-        dur1 = 1./freq1 * 1000 / 2
-        x = np.arange(0, dur1 + dt, dt)
-        theta = amp2 * np.sin(2 * np.pi * x * freq2/1000)
-        onset = np.zeros(to_idx(onset_dur, dt))
-        offset = np.zeros(to_idx(offset_dur, dt))
-        theta = np.concatenate((onset, theta, offset))
+        theta, phases_theta = get_theta_and_phases(sine1_dur, amp2, freq2, onset_dur, offset_dur, dt)
 
         # save and plots
         save_dir_img = os.path.join(save_dir, cell_id, str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2),
@@ -63,14 +61,15 @@ if __name__ == '__main__':
         if not os.path.exists(save_dir_img):
             os.makedirs(save_dir_img)
 
-        plot_v(t, v, c='k',
-               save_dir_img=os.path.join(save_dir, cell_id, str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2)))
+        # plot_v(t, v, c='k',
+        #        save_dir_img=os.path.join(save_dir, cell_id, str(amp1)+'_'+str(amp2)+'_'+str(freq1)+'_'+str(freq2)))
 
         # spike phase
         AP_onset_idxs = get_AP_onset_idxs(v, threshold=AP_threshold)
         AP_onset_idxs = np.concatenate((AP_onset_idxs, np.array([-1])))
         AP_max_idxs = np.array([get_AP_max_idx(v, i, j) for i, j in zip(AP_onset_idxs[:-1], AP_onset_idxs[1:])])
-        phases = get_spike_phases_by_min(AP_max_idxs, t, theta, order, dist_to_AP)
+        phases = phases_theta[AP_max_idxs]
+        #phases = get_spike_phases_by_min(AP_max_idxs, t, theta, order, dist_to_AP)
         t_phases = t[AP_max_idxs]
         not_nan = np.logical_not(np.isnan(phases))
         phases = phases[not_nan]

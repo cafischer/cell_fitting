@@ -7,8 +7,13 @@
   <component name="ChangeListManager">
     <list default="true" id="47abebb1-230e-43a3-a76c-3708ac87ed5c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/data/plot_IV/fit_FI_curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/data/plot_IV/fit_FI_curve.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/spike_phase.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/spike_phase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_spike_phase.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_spike_phase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/double_sine_poisson_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/double_sine_poisson_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/models_compared_in_vitro.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/models_compared_in_vitro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_double_ramp.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_double_ramp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_sine2.py" beforeDir="false" afterPath="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_sine2.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="double_sine_poisson_test.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="double_sine_poisson_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/double_sine_poisson_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="72" column="50" lean-forward="true" selection-start-line="72" selection-start-column="50" selection-end-line="72" selection-end-column="50" />
+            <state relative-caret-position="582">
+              <caret line="131" column="25" selection-start-line="131" selection-start-column="25" selection-end-line="131" selection-end-column="25" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -31,38 +36,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plot_fIcurve.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_fIcurve.py">
+      <file leaf-file-name="blocking_channels.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-558">
-              <caret line="50" column="56" lean-forward="true" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="348">
+              <caret line="52" column="98" selection-start-line="52" selection-start-column="98" selection-end-line="52" selection-end-column="98" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="kde_firing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kde_firing.py">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="65" column="52" lean-forward="true" selection-start-line="65" selection-start-column="52" selection-end-line="65" selection-end-column="52" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reproduction_firing.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_firing.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="94" column="30" selection-start-line="94" selection-start-column="30" selection-end-line="94" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="389">
+              <caret line="67" column="29" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -70,11 +57,32 @@
       <file leaf-file-name="models_compared_in_vitro.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/models_compared_in_vitro.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="120" column="28" lean-forward="true" selection-start-line="120" selection-start-column="28" selection-end-line="120" selection-end-column="28" />
+            <state relative-caret-position="384">
+              <caret line="292" column="50" selection-start-line="292" selection-start-column="50" selection-end-line="292" selection-end-column="50" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reproduction_double_ramp.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_double_ramp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="153" column="46" selection-start-line="153" selection-start-column="46" selection-end-line="153" selection-end-column="46" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="492">
+              <caret line="83" column="5" lean-forward="true" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -90,16 +98,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>play</find>
-      <find>late</find>
-      <find>sag</find>
-      <find>'a'</find>
-      <find>latenc</find>
-      <find>sine_di</find>
-      <find>sine_d</find>
-      <find>dt</find>
-      <find>colors</find>
-      <find>inse</find>
       <find>ou_proc</find>
       <find>bar</find>
       <find>color</find>
@@ -120,6 +118,16 @@
       <find>'B</find>
       <find>amps_</find>
       <find>theta</find>
+      <find>spike_train</find>
+      <find>get_ph</find>
+      <find>print</find>
+      <find>sine_d</find>
+      <find>fit</find>
+      <find>fit_fI</find>
+      <find>bright</find>
+      <find>sin</find>
+      <find>get_sine_stimulus</find>
+      <find>ylabe</find>
     </findStrings>
     <replaceStrings>
       <replace>h_</replace>
@@ -158,8 +166,8 @@
       <dir>$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus</dir>
       <dir>$PROJECT_DIR$/cell_fitting/data</dir>
       <dir>$PROJECT_DIR$/cell_fitting/optimization</dir>
-      <dir>$PROJECT_DIR$/cell_fitting</dir>
       <dir>$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis</dir>
+      <dir>$PROJECT_DIR$/cell_fitting</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -168,8 +176,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_fIcurve.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/evaluate.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_rampIV/analyze_rampIV.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/fitter/hodgkinhuxleyfitter.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/scripts/server_script1.py" />
@@ -185,11 +191,8 @@
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/comp_stellate_pyramidal.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/double_ramp.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_dap.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_double_ramp.py" />
-        <option value="$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/spike_phase/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/change_leak_model.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels.py" />
         <option value="$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_correlation_param_characteristic.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/scripts/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/linear_regression/__init__.py" />
@@ -199,11 +202,8 @@
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_firing.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_resonance.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_resonance.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_sine2.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_sine2.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/models_compared_in_vitro.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_dap.py" />
-        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/double_sine_poisson_test.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/kde_data.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kde_data.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kde_double_sine.py" />
@@ -219,6 +219,14 @@
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/ion_channel_identity.py" />
         <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/__init__.py" />
         <option value="$PROJECT_DIR$/cell_fitting/data/plot_IV/fit_FI_curve.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/spike_phase.py" />
+        <option value="$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/spike_phase/__init__.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_spike_phase.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/double_sine_poisson_test.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_sine2.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/models_compared_in_vitro.py" />
+        <option value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_double_ramp.py" />
       </list>
     </option>
   </component>
@@ -254,7 +262,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -271,19 +278,6 @@
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="plot_IV" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="optimization" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -292,6 +286,14 @@
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="optimization" type="462c0819:PsiDirectoryNode" />
               <item name="evaluation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
+              <item name="optimization" type="462c0819:PsiDirectoryNode" />
+              <item name="evaluation" type="462c0819:PsiDirectoryNode" />
+              <item name="plot_sine_stimulus" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
@@ -330,102 +332,19 @@
             </path>
             <path>
               <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
               <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-              <item name="evaluation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-              <item name="evaluation" type="462c0819:PsiDirectoryNode" />
-              <item name="plot_IV" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-              <item name="evaluation" type="462c0819:PsiDirectoryNode" />
-              <item name="plots_for_thesis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-              <item name="evaluation" type="462c0819:PsiDirectoryNode" />
-              <item name="plots_for_thesis" type="462c0819:PsiDirectoryNode" />
-              <item name="dap_mechanism" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-              <item name="evaluation" type="462c0819:PsiDirectoryNode" />
-              <item name="plots_for_thesis" type="462c0819:PsiDirectoryNode" />
-              <item name="reproduction_stellate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cell_fitting" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 2.7.12 (/usr/bin/python2.7) &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="cell_fitting" type="462c0819:PsiDirectoryNode" />
-              <item name="optimization" type="462c0819:PsiDirectoryNode" />
-              <item name="old_optimization" type="462c0819:PsiDirectoryNode" />
+              <item name="read_heka" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../analyze_in_vivo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
   </component>
   <component name="RecentsManager">
@@ -456,8 +375,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.reproduction_firing">
-    <configuration name="fit_FI_curve" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.reproduction_double_ramp">
+    <configuration name="blocking_channels" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="cell_fitting" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -465,17 +384,17 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/data/plot_IV" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/data/plot_IV/fit_FI_curve.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="kde_dap" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="double_sine_poisson_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="cell_fitting" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -483,29 +402,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kde_dap.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="kde_firing" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="cell_fitting" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kde_firing.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/double_sine_poisson_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -529,7 +430,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="reproduction_firing" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="reproduction_double_ramp" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="cell_fitting" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -541,26 +442,44 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_firing.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_double_ramp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="reproduction_sine2 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="cell_fitting" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_sine2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
     <list>
-      <item itemvalue="Python.kde_dap" />
-      <item itemvalue="Python.fit_FI_curve" />
-      <item itemvalue="Python.reproduction_firing" />
-      <item itemvalue="Python.kde_firing" />
       <item itemvalue="Python.models_compared_in_vitro" />
+      <item itemvalue="Python.reproduction_sine2 (1)" />
+      <item itemvalue="Python.double_sine_poisson_test" />
+      <item itemvalue="Python.blocking_channels" />
+      <item itemvalue="Python.reproduction_double_ramp" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.reproduction_firing" />
+        <item itemvalue="Python.reproduction_double_ramp" />
         <item itemvalue="Python.models_compared_in_vitro" />
-        <item itemvalue="Python.kde_firing" />
-        <item itemvalue="Python.fit_FI_curve" />
-        <item itemvalue="Python.kde_dap" />
+        <item itemvalue="Python.blocking_channels" />
+        <item itemvalue="Python.double_sine_poisson_test" />
+        <item itemvalue="Python.reproduction_sine2 (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -574,13 +493,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1503167081855</updated>
-    </task>
-    <task id="LOCAL-00037" summary="some updates in STA and noise modeling">
-      <created>1518191176292</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1518191176292</updated>
     </task>
     <task id="LOCAL-00038" summary="updated sta/stc">
       <created>1519897319672</created>
@@ -918,7 +830,14 @@
       <option name="project" value="LOCAL" />
       <updated>1549647311741</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="changed b0 for F-I curve fitting">
+      <created>1549903861866</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1549903861866</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TodoView">
@@ -937,8 +856,7 @@
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.835703" visible="true" weight="0.1797575" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32919955" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5071165" side_tool="true" weight="0.22886133" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3145434" />
-      <window_info anchor="bottom" x="0" y="856" width="1920" height="224" id="Run" order="2" sideWeight="0.8924618" weight="0.25028184" />
+      <window_info active="true" anchor="bottom" x="0" y="856" width="1920" height="224" id="Run" order="2" sideWeight="0.8924618" visible="true" weight="0.28184894" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.24296963" />
       <window_info anchor="bottom" id="Python Console" order="9" sideWeight="0.4928835" weight="0.22886133" />
       <window_info id="Structure" order="1" sideWeight="0.164297" side_tool="true" weight="0.2003163" />
@@ -952,6 +870,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3145434" />
     </layout>
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -968,7 +887,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="plots current_threshold" />
     <MESSAGE value="plots for thesis" />
     <MESSAGE value="plots for thesis&#10;started dap_mechanism plot" />
     <MESSAGE value="plots for thesis&#10;dap_mechanism plot" />
@@ -993,7 +911,8 @@
     <MESSAGE value="update plots (checked units)" />
     <MESSAGE value="update plots" />
     <MESSAGE value="update plots (kde)" />
-    <option name="LAST_COMMIT_MESSAGE" value="update plots (kde)" />
+    <MESSAGE value="changed b0 for F-I curve fitting" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed b0 for F-I curve fitting" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1053,11 +972,6 @@
           <option name="timeStamp" value="1371" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cell_fitting/data/__init__.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="1399" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cell_fitting/investigate_grid_cell_stimuli/spike_triggered_average.py</url>
           <line>70</line>
           <option name="timeStamp" value="1427" />
@@ -1083,228 +997,132 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="1461" />
+      <option name="time" value="1472" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string>t_phase_idxs</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>t_phase_idxs = np.array([to_idx(tp, dt_data, 2) for tp in sine_dict_data['t_phases']])
-
-pl.figure()
-pl.plot(t_data, v_data - vrest_data, 'k')
-pl.plot(sine_dict_data['t_phases'], v_data[t_phase_idxs] - vrest_data, 'or')
+        <expression-string>pl.plot(theta*400+200)
+pl.plot(phases_theta)
 pl.show()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>t_phase_idxs = np.array([to_idx(tp, dt_data) for tp in sine_dict_data['t_phases']])
-
-pl.figure()
-pl.plot(t_data, v_data - vrest_data, 'k')
-pl.plot(sine_dict_data['t_phases'], v_data[t_phase_idxs] - vrest_data, 'or')
+        <expression-string>pl.plot(theta*400)
+pl.plot(phases_theta)
 pl.show()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>pl.figure()
-pl.plot(t_data, v_data - vrest_data, 'k')
-pl.plot(sine_dict_data['t_phases'], v_data[to_idx(sine_dict_data['t_phases'], dt_data)] - vrest_data, 'or')
+        <expression-string>pl.plot(theta*400+200)
+pl.plot(np.mod(phases_theta+90, 360))
 pl.show()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.c_[phase_means_data, phase_stds_data]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>np.r_[phase_means_data, phase_stds_data]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>ax.set_xlabel('Mean phase (deg.)')
-ax.set_ylabel('Std. phase (deg.)')
-pl.tight_layout()
+        <expression-string>pl.plot(theta)
+pl.plot(phases_theta)
 pl.show()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
         <expression-string>pl.figure()
-pl.plot(v_trace[start_step_idx:start_step_idx + int(np.round((end_step_idx - start_step_idx) / 4))])
+pl.plot(np.arange(len(theta))*dt_data, theta*600)
+pl.plot(np.arange(len(theta))*dt_data, phases_theta-180)
 pl.show()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
         <expression-string>pl.figure()
-pl.plot(v_traces[0])
+pl.plot(np.arange(len(theta))*dt_data, theta*300)
+pl.plot(np.arange(len(theta))*dt_data, phases_theta-180)
 pl.show()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>DAP_amp_step = get_spike_characteristics(v_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)],
-                                            t_exp_step[to_idx(659, dt_step):to_idx(719, dt_step)] - t_exp_step[to_idx(659, dt_step)],
-                                            ['DAP_amp'], v_exp_step[0], check=True,
-                                            **get_spike_characteristics_dict())</expression-string>
+        <expression-string>pl.figure()
+pl.plot(np.arange(len(theta))*dt_data, theta*300)
+pl.plot(np.arange(len(theta))*dt_data, phases_theta)
+pl.show()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>pl.figure()
+pl.plot(np.arange(len(theta))*dt_data, theta)
+pl.plot(np.arange(len(theta))*dt_data, phases_theta)
+pl.show()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>pl.figure()
+pl.plot(np.arange(len(theta))*dt_data, theta)
+pl.show()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>firing_rates[3]</expression-string>
+        <expression-string>np.array(cell_ids)[cell_id_idxs]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>firing_rates[4]</expression-string>
+        <expression-string>cell_id_idxs = np.array([np.where(c_id == np.array(cell_ids))[0][0] for c_id in cell_ids_new])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>firing_rates</expression-string>
+        <expression-string>cell_ids_new = np.unique(cell_ids_new)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>amps</expression-string>
+        <expression-string>np.unique(cell_ids_new)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>amps[np.where(firing_rates &gt; 0)[0][0]]</expression-string>
+        <expression-string>cell_ids_new[29] == cell_ids_new[30]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>amps[np.where(firing_rates &gt; 0)[0][0]-1]</expression-string>
+        <expression-string>cell_ids_new[29]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>b0</expression-string>
+        <expression-string>cell_ids_new</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>kernel._data_covariance *</expression-string>
+        <expression-string>np.where('2015_08_10g' == np.array(cell_ids))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>(len(sample)**(-1./5))</expression-string>
+        <expression-string>np.where('2015_08_10g' == np.array(cell_ids))[0]</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/stellate/nap.mod">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/stellate/hcn_fast.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/model/channels/stellate/hcn.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/comp_stellate_pyramidal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="105" column="28" lean-forward="true" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/model/OU_process/ConductanceClamp.mod">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="17" lean-forward="true" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_currents.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/change_leak_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/sensitivity_analysis/plot_correlation_param_characteristic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="118" column="42" selection-start-line="118" selection-start-column="42" selection-end-line="118" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/sensitivity_analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="80" column="15" selection-start-line="80" selection-start-column="15" selection-end-line="80" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels_step.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="49" column="24" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/util/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="298">
           <caret line="162" column="20" lean-forward="true" selection-start-line="162" selection-start-column="20" selection-end-line="162" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="53" column="42" lean-forward="true" selection-start-line="53" selection-start-column="42" selection-end-line="53" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="83" column="23" selection-start-line="83" selection-start-column="23" selection-end-line="83" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1326,9 +1144,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="e#0#47#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1336,16 +1151,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
           <caret line="101" column="27" lean-forward="true" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="81" column="46" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -1353,19 +1158,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
           <caret line="108" column="11" lean-forward="true" selection-start-line="108" selection-start-column="11" selection-end-line="108" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_firing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1373,19 +1165,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="64" column="32" selection-start-line="64" selection-start-column="32" selection-end-line="64" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_sine2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="151" column="80" selection-start-line="151" selection-start-column="80" selection-end-line="151" selection-end-column="80" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1424,19 +1203,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="35" column="11" lean-forward="true" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kde_double_sine.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="37" column="43" lean-forward="true" selection-start-line="37" selection-start-column="43" selection-end-line="37" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1458,9 +1224,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2034">
           <caret line="113" column="36" selection-start-line="113" selection-start-column="36" selection-end-line="113" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1468,9 +1231,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="37" column="54" selection-start-line="37" selection-start-column="54" selection-end-line="37" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1478,9 +1238,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1488,15 +1245,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
           <caret line="245" column="55" lean-forward="true" selection-start-line="245" selection-start-column="55" selection-end-line="245" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/dap_mechanism_old.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1514,33 +1262,10 @@ pl.show()</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/spike_phase/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2088">
-          <caret line="116" column="29" selection-start-line="116" selection-start-column="21" selection-end-line="116" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_sine2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="138" column="31" lean-forward="true" selection-start-line="138" selection-start-column="31" selection-end-line="138" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kernel_density_estimate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1548,9 +1273,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-111">
           <caret line="200" column="40" selection-start-line="200" selection-start-column="40" selection-end-line="200" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1565,16 +1287,6 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
           <caret line="48" column="13" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/data/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
         </state>
       </provider>
     </entry>
@@ -1582,29 +1294,13 @@ pl.show()</expression-string>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="808">
           <caret line="129" column="56" selection-start-line="129" selection-start-column="52" selection-end-line="129" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/models_compared_in_vitro.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="120" column="28" lean-forward="true" selection-start-line="120" selection-start-column="28" selection-end-line="120" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_IV/plot_fIcurve.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-558">
-          <caret line="50" column="56" lean-forward="true" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="720">
+          <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
         </state>
       </provider>
     </entry>
@@ -1615,20 +1311,98 @@ pl.show()</expression-string>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_firing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1476">
+          <caret line="94" column="30" selection-start-line="94" selection-start-column="30" selection-end-line="94" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/sklearn/metrics/regression.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-437">
+          <caret line="182" column="4" selection-start-line="182" selection-start-column="4" selection-end-line="182" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../packages/grid_cell_stimuli/grid_cell_stimuli/spike_phase/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="117" column="82" lean-forward="true" selection-start-line="117" selection-start-column="82" selection-end-line="117" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kde_firing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="65" column="52" lean-forward="true" selection-start-line="65" selection-start-column="52" selection-end-line="65" selection-end-column="52" />
+        <state relative-caret-position="571">
+          <caret line="65" column="52" selection-start-line="65" selection-start-column="52" selection-end-line="65" selection-end-column="52" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_firing.py">
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/kde_double_sine.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="94" column="30" selection-start-line="94" selection-start-column="30" selection-end-line="94" selection-end-column="30" />
+        <state relative-caret-position="267">
+          <caret line="32" column="55" lean-forward="true" selection-start-line="32" selection-start-column="55" selection-end-line="32" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_sine_stimulus/spike_phase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-192" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/look_for_good_cells.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1956" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_rampIV/plot_rampIV.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-66" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/plot_spike_characteristics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="60" column="63" lean-forward="true" selection-start-line="60" selection-start-column="63" selection-end-line="60" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/plot_spike_characteristic_distributions/save_spike_characteristics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="80" column="50" lean-forward="true" selection-start-line="80" selection-start-column="50" selection-end-line="80" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/data/data_sinus_mat/spike_phase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_sine2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="19" column="33" selection-start-line="100" selection-start-column="35" selection-end-line="100" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/reproduction_firing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-606">
+          <caret line="20" column="25" lean-forward="true" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -1637,8 +1411,83 @@ pl.show()</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/double_sine_poisson_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="72" column="50" lean-forward="true" selection-start-line="72" selection-start-column="50" selection-end-line="72" selection-end-column="50" />
+        <state relative-caret-position="582">
+          <caret line="131" column="25" selection-start-line="131" selection-start-column="25" selection-end-line="131" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_blocking/block_channel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="55" column="25" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/plot_spike_phase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="46" column="25" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/read_heka/i_inj_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="774">
+          <caret line="43" column="22" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_sine_stimulus/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="67" column="29" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_sine2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="80" column="87" selection-start-line="80" selection-start-column="87" selection-end-line="80" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/dap_mechanism/blocking_channels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="52" column="98" selection-start-line="52" selection-start-column="98" selection-end-line="52" selection-end-column="98" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_models/models_compared_in_vitro.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="292" column="50" selection-start-line="292" selection-start-column="50" selection-end-line="292" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plot_double_ramp/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="83" column="5" lean-forward="true" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cell_fitting/optimization/evaluation/plots_for_thesis/reproduction_stellate/reproduction_double_ramp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="153" column="46" selection-start-line="153" selection-start-column="46" selection-end-line="153" selection-end-column="46" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

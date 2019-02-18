@@ -97,7 +97,7 @@ if __name__ == '__main__':
                                               'v_deflections.npy'))
     ax.plot(sag_deflections_data, steady_state_amp, 'o', color=color_exp, alpha=0.5, label='Data')
 
-    axins = inset_axes(ax, width='60%', height='50%', loc=1)
+    axins = inset_axes(ax, width='50%', height='50%', loc=1)
     mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
     axins.plot(sag_deflections_data, steady_state_amp, 'o', color=color_exp, alpha=0.5, label='Data')
 
@@ -265,7 +265,7 @@ if __name__ == '__main__':
 
     ax.plot(phase_means_data, phase_stds_data, 'o', color=color_exp, alpha=0.5)
 
-    axins = inset_axes(ax, width='60%', height='50%', loc=1)
+    axins = inset_axes(ax, width='50%', height='50%', loc=1)
     mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
     axins.plot(phase_means_data, phase_stds_data, 'o', color=color_exp, alpha=0.5, label='Data')
 
@@ -278,8 +278,8 @@ if __name__ == '__main__':
         ax.plot(sine_dict_model['mean_phase'], sine_dict_model['std_phase'], 'o', color=color_model, alpha=0.5)
         axins.plot(sine_dict_model['mean_phase'], sine_dict_model['std_phase'], 'o', color=color_model, alpha=0.5)
         axins.annotate(str(model_idx + 1), xy=(sine_dict_model['mean_phase'][0] + 0.15, sine_dict_model['std_phase'][0] + 1.2), fontsize=8)
-    axins.set_ylim(18, 72)
-    axins.set_xlim(115, 195)
+    axins.set_xlim(115, 184)
+    axins.set_ylim(18, 95)
     axins.spines['top'].set_visible(True)
     axins.spines['right'].set_visible(True)
 
@@ -294,5 +294,5 @@ if __name__ == '__main__':
 
     pl.tight_layout()
     pl.subplots_adjust(bottom=0.05, top=0.98, left=0.11, wspace=0.35)
-    pl.savefig(os.path.join(save_dir_img, 'models_compared_in_vitro.png'))
+    pl.savefig(os.path.join(save_dir_img, 'models_compared_in_vitro.pdf'))
     pl.show()

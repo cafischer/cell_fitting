@@ -6,6 +6,7 @@ from cell_fitting.optimization.evaluation.plot_sine_stimulus import get_sine_sti
 from grid_cell_stimuli.spike_phase import get_spike_phases_by_min
 from cell_characteristics import to_idx
 from sklearn.metrics import mean_squared_error
+from cell_fitting.optimization.evaluation.plot_sine_stimulus.plot_spike_phase import get_theta_and_phases
 
 
 def get_poisson_rmse():
@@ -23,12 +24,17 @@ def get_poisson_rmse():
     #         refractory = 0
 
     # compute phases
-    phases_poisson = get_spike_phases_by_min(np.where(spike_train)[0], t, theta, order, dist_to_AP)
-    phases_poisson = phases_poisson[~np.isnan(phases_poisson)]
+    # phases_poisson = get_spike_phases_by_min(np.where(spike_train)[0], t, theta, order, dist_to_AP)
+    # phases_poisson = phases_poisson[~np.isnan(phases_poisson)]
+    phases_poisson = phases_theta[spike_train]
 
     # compute phase histogram
     hist_poisson, _ = np.histogram(phases_poisson, bins)
 
+    # compute dissimilarity to exp. cell phase histogram (rmse)
+    rmse = np.sqrt(mean_squared_error(hist_poisson, hist_data))
+
+    #print rmse
     # plots
     # pl.figure()
     # pl.plot(t[spike_train.astype(bool)], i_inj_data[spike_train.astype(bool)], 'or')
@@ -38,10 +44,6 @@ def get_poisson_rmse():
     # pl.bar(bins[:-1], hist_data, width=bin_width, color='k', alpha=0.5)
     # pl.bar(bins[:-1], hist_poisson, width=bin_width, color='r', alpha=0.5)
     # pl.show()
-
-    # compute dissimilarity to exp. cell phase histogram (rmse)
-    rmse = np.sqrt(mean_squared_error(hist_poisson, hist_data))
-
     return rmse, len(phases_poisson)
 
 
@@ -66,11 +68,7 @@ if __name__ == '__main__':
     i_inj_data = get_sine_stimulus(amp1_data, amp2_data, 1./freq1*1000/2., freq2, 500, 500-dt_data, dt_data)
 
     # get theta oscillation
-    x = np.arange(0, sine1_dur + dt_data, dt_data)
-    theta = amp2_data * np.sin(2 * np.pi * x * freq2 / 1000.)
-    onset = np.zeros(to_idx(onset_dur, dt_data))
-    offset = np.zeros(to_idx(offset_dur, dt_data))[:-1]
-    theta = np.concatenate((onset, theta, offset))
+    theta, phases_theta = get_theta_and_phases(sine1_dur, amp2_data, freq2, onset_dur, offset_dur, dt_data)
     # parameters for phase computation
     order = to_idx(20, dt_data)
     dist_to_AP = to_idx(1. / freq2 * 1000, dt_data)
@@ -97,10 +95,10 @@ if __name__ == '__main__':
     firing_rate = i_inj_data / np.mean(i_inj_data) * (len(phases_data) / tstop)
     t = np.arange(0, tstop + dt_data, dt_data)
 
-    rmses = np.zeros(n_poisson)
-    n_phasess = np.zeros(n_poisson)
+    rmses_poisson = np.zeros(n_poisson)
+    n_phases_poisson = np.zeros(n_poisson)
     for i in range(n_poisson):
-        rmses[i], n_phasess[i] = get_poisson_rmse()
+        rmses_poisson[i], n_phases_poisson[i] = get_poisson_rmse()
 
     rmse_model = np.sqrt(mean_squared_error(hist_model, hist_data))
 
@@ -108,29 +106,35 @@ if __name__ == '__main__':
     alpha = 0.01
     percentile = alpha * 100.
     assert percentile / 100. * n_poisson >= 10
-    test_val = np.percentile(rmses, percentile)
+    test_val = np.percentile(rmses_poisson, percentile)
 
+    print 'Mean RMSE (Poisson)', np.mean(rmses_poisson)
+    print 'Model RMSE', rmse_model
     print 'RMSE (Percentile: '+str(percentile)+')', test_val
-    print 'RMSE (Percentile: ' + str(0.1) + ')', np.percentile(rmses, 0.1)
-    print 'RMSE (Percentile: ' + str(0.01) + ')', np.percentile(rmses, 0.01)
-    print 'p-val: ', np.mean(rmse_model >= rmses)
+    print 'RMSE (Percentile: ' + str(0.1) + ')', np.percentile(rmses_poisson, 0.1)
+    print 'RMSE (Percentile: ' + str(0.01) + ')', np.percentile(rmses_poisson, 0.01)
+    print 'p-val: ', np.mean(rmse_model >= rmses_poisson)
     print 'Significant: ', rmse_model < test_val
-    print '# Phases (Poisson)', np.mean(n_phasess)
+    print '# Phases (Poisson)', np.mean(n_phases_poisson)
     print '# Phases (Data)', len(phases_data)
 
     # plot distribution of similarity values, plot similarity value of the model
     pl.figure()
-    pl.hist(rmses, bins=50, color='r', alpha=0.5)
+    pl.hist(rmses_poisson, bins=50, color='r', alpha=0.5)
     pl.axvline(rmse_model, 0, 1, color='b')
     pl.ylabel('Frequency')
     pl.xlabel('RMSE')
+    pl.savefig(os.path.join(save_dir_model, model, 'img', 'sine_stimulus', 'poisson.png'))
     pl.show()
 
     # np.random.seed(1)
-    # RMSE(Percentile: 1.0) 2.04124145232
-    # RMSE(Percentile: 0.1) 1.81045572742
-    # RMSE(Percentile: 0.01) 1.74801395058
-    # p-val: 0.0008 (1 - 0.9992)
+    # n_poisson = 1000000
+    # Mean RMSE(Poisson) 2.66505394994
+    # Model RMSE 1.76383420738
+    # RMSE(Percentile: 1.0) 2.03442593596
+    # RMSE(Percentile: 0.1) 1.82574185835
+    # RMSE(Percentile: 0.01) 1.66666583124
+    # p-val:  0.000456
     # Significant:  True
-    # # Phases (Poisson) 84.7244
+    # # Phases (Poisson) 85.642134
     # # Phases (Data) 83

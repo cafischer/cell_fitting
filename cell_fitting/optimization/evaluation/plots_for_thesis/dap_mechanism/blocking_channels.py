@@ -50,7 +50,8 @@ if __name__ == '__main__':
             block_channel(cell, channel_name, percent_block)
             v_after_block[i, :], _, _ = simulate_model(cell, 'rampIV', ramp_amp, **standard_sim_params)
 
-        plot_channel_block_on_ax(ax, channel_list, t_model, v_model, v_after_block, percent_block)
+        plot_channel_block_on_ax(ax, channel_list, t_model, v_model, v_after_block, percent_block,
+                                 plot_with_ellipses=True)
         ax.set_ylim(-100, 60)
         ax.set_xlim(0, t_model[-1])
         ax.get_yaxis().set_label_coords(-0.15, 0.5)
@@ -81,7 +82,8 @@ if __name__ == '__main__':
                                        t_model[fAHP_min_idx]+standard_sim_params['onset'])
             v_after_block[i, :], _, _ = simulate_model(cell, 'rampIV', ramp_amp, **standard_sim_params)
 
-        plot_channel_block_on_ax(ax, channel_list, t_model, v_model, v_after_block, percent_block)
+        plot_channel_block_on_ax(ax, channel_list, t_model, v_model, v_after_block, percent_block,
+                                 plot_with_ellipses=True)
         ax.set_ylim(-100, 60)
         ax.set_xlim(0, t_model[-1])
         ax.get_yaxis().set_label_coords(-0.15, 0.5)
