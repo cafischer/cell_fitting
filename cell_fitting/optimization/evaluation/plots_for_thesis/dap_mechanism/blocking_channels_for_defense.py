@@ -33,39 +33,13 @@ if __name__ == '__main__':
     currents, channel_list = simulate_model_currents(cell, 'rampIV', ramp_amp, **standard_sim_params)
 
     # plot
-    fig = pl.figure(figsize=(11, 7))
-    outer = gridspec.GridSpec(2, 3)
+    fig = pl.figure(figsize=(8, 5))
+    outer = gridspec.GridSpec(1, 2)
 
     # blocking ion channels whole trace
-    axes = [outer[0, 0], outer[0, 1], outer[0, 2]]
-    percent_blocks = [10, 50, 100]
-    letters = ['A', 'B', 'C']
-
-    for percent_block_idx, percent_block in enumerate(percent_blocks):
-        ax = pl.Subplot(fig, axes[percent_block_idx])
-        fig.add_subplot(ax)
-
-        v_after_block = np.zeros((len(channel_list), len(t_model)))
-        for i, channel_name in enumerate(channel_list):
-            cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'))
-            block_channel(cell, channel_name, percent_block)
-            v_after_block[i, :], _, _ = simulate_model(cell, 'rampIV', ramp_amp, **standard_sim_params)
-
-        plot_channel_block_on_ax(ax, channel_list, t_model, v_model, v_after_block, percent_block,
-                                 plot_with_ellipses=True)
-        ax.set_ylim(-100, 60)
-        ax.set_xlim(0, t_model[-1])
-        ax.get_yaxis().set_label_coords(-0.15, 0.5)
-        ax.text(-0.25, 1.0, letters[percent_block_idx], transform=ax.transAxes, size=18, weight='bold')
-
-        # from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
-        # AP_width_before_block = get_spike_characteristics(v_after_block[4], t_model, ['AP_width'], -75, **get_spike_characteristics_dict())
-        # AP_width_block_HCN = get_spike_characteristics(v_after_block[4], t_model, ['AP_width'], -75, **get_spike_characteristics_dict())
-        # AP width is the same
-
-    # blocking ion channels after AP
-    axes = [outer[1, 0], outer[1, 1], outer[1, 2]]
-    letters = ['D', 'E', 'F']
+    axes = [outer[0, 0], outer[0, 1]]
+    letters = ['A', 'B']
+    percent_blocks = [50, 100]
 
     start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
     v_rest = np.mean(v_model[0:start_i_inj])
@@ -91,6 +65,6 @@ if __name__ == '__main__':
         ax.text(-0.25, 1.0, letters[percent_block_idx], transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()
-    pl.subplots_adjust(left=0.07, bottom=0.07)
+    pl.subplots_adjust(left=0.1, bottom=0.1)
     #pl.savefig(os.path.join(save_dir_img, 'block_channels.png'))
     pl.show()

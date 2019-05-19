@@ -3,8 +3,8 @@ import pandas as pd
 
 def check_rat_or_gerbil(cell_id):
 
-    data_dir_gerbil = "/home/cf/Phd/DAP-Project/cell_data/division_rat_gerbil/Data+Immuno_Gerbil.csv"
-    data_dir_rat = "/home/cf/Phd/DAP-Project/cell_data/division_rat_gerbil/Data+Immuno_Rat.csv"
+    data_dir_gerbil = "/home/cfischer/Phd/DAP-Project/cell_data/division_rat_gerbil/Data+Immuno_Gerbil.csv"
+    data_dir_rat = "/home/cfischer/Phd/DAP-Project/cell_data/division_rat_gerbil/Data+Immuno_Rat.csv"
 
     data_gerbil = pd.read_csv(data_dir_gerbil, header=1)
     data_rat = pd.read_csv(data_dir_rat, header=1)

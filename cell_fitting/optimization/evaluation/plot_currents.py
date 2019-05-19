@@ -7,7 +7,8 @@ from cell_fitting.optimization.simulate import extract_simulation_params, simula
 from cell_fitting.util import merge_dicts, get_channel_dict_for_plotting, get_channel_color_for_plotting
 from cell_fitting.read_heka.i_inj_functions import get_i_inj_double_ramp
 from cell_fitting.read_heka import get_i_inj_from_function, get_sweep_index_for_amp
-pl.style.use('paper_subplots')
+from itertools import combinations
+pl.style.use('paper')
 
 
 def plot_currents_on_ax(ax1, channel_list, currents, t, v):
@@ -44,9 +45,9 @@ if __name__ == '__main__':
     # parameters
     #data_dir = '../../data/cell_csv_data/2015_08_26b/rampIV/3.0(nA).csv'
     #data_dir = '../../data/cell_csv_data/2015_08_26b/rampIV/3.1(nA).csv'
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     #save_dir = '../../results/server_17_12_04/2018-01-05_14:13:33/154/L-BFGS-B'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    model_dir = os.path.join(save_dir, 'cell_rounded.json')
     mechanism_dir = '../../model/channels/vavoulis'
     channel_dict = get_channel_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()
@@ -65,15 +66,19 @@ if __name__ == '__main__':
     simulation_params = {'sec': ('soma', None), 'i_inj': i_exp, 'v_init': -75, 'tstop': 1000,
                          'dt': 0.01, 'celsius': 35, 'onset': 200}
 
-    #cell.soma(.5).hcn_slow.gbar = 0
-    #cell.soma(.5).nap.gbar = 0
-    #cell.soma(.5).nat.gbar = 0
-    #cell.soma(.5).kdr.gbar = 0
-    #cell.soma(.5).g_pas = 0  #0.000430116611589
+    blocked_channels = ['nat', 'hcn_slow']  # ['nap', 'hcn_slow']
+    for channel in blocked_channels:
+        setattr(getattr(cell.soma(.5), channel), 'gbar', 0)
 
     # plot currents
     currents, channel_list = simulate_currents(cell, simulation_params, plot=False)
     v, t, _ = iclamp_handling_onset(cell, **simulation_params)
+
+    if len(blocked_channels) > 0:
+        channel_list = np.array(channel_list)
+        idxs_nonzero_currents = ~reduce(np.logical_or, [channel_list == c for c in blocked_channels])
+        channel_list = channel_list[idxs_nonzero_currents]
+        currents = currents[idxs_nonzero_currents]
 
     fig, ax = pl.subplots()
     plot_currents_on_ax(ax, channel_list, currents, t, v)
@@ -99,11 +104,7 @@ if __name__ == '__main__':
     #pl.show()
 
 
-    from itertools import combinations
-    from cell_fitting.optimization.helpers import get_channel_list
-
-    channel_list = get_channel_list(cell, 'soma')
-    len_comb = 3
+    len_comb = 2
 
     pl.figure()
     scale_fac = np.max(np.abs(-1*np.sum(currents))) / np.max(np.abs(np.diff(v)))

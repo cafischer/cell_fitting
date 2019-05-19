@@ -4,7 +4,7 @@ import matplotlib.pyplot as pl
 import numpy as np
 import copy
 from nrn_wrapper import Cell, load_mechanism_dir
-from bac_project.connectivity.connection import synaptic_input
+#from bac_project.connectivity.connection import synaptic_input
 from cell_fitting.optimization.simulate import iclamp_handling_onset
 from cell_characteristics import to_idx
 from time import time

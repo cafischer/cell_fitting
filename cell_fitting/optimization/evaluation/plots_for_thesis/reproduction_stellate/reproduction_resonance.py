@@ -13,15 +13,15 @@ from cell_fitting.optimization.evaluation.plot_zap import simulate_and_compute_z
 from matplotlib.lines import Line2D
 from cell_fitting.util import get_channel_color_for_plotting
 from cell_fitting.optimization.simulate import get_standard_simulation_params
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
     color_exp = '#0099cc'
@@ -100,6 +100,22 @@ if __name__ == '__main__':
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
+    id = impedance_dict_data['impedance']
+    fd = impedance_dict_data['frequencies']
+    ax.plot([fd[0], 15], [id[0], id[0]], '--', color='0.5')
+    ax.plot([fd[np.argmax(id)], 15], [np.max(id), np.max(id)], '--', color='0.5')
+    ax.annotate('', xy=(15, np.max(id)), xytext=(15, id[0]),
+                 arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
+    ax.annotate('Q-value',
+                 xy=(15.3, (np.max(id) - id[0]) / 2. + id[0]),
+                 verticalalignment='center', horizontalalignment='left', fontsize=6.5)
+
+    ax.annotate('', xy=(fd[np.argmax(id)], 32), xytext=(fd[np.argmax(id)], np.max(id)),
+                arrowprops={'arrowstyle': '->', 'shrinkA': 0, 'shrinkB': 0})
+    ax.annotate('Res. freq.',
+                xy=(fd[np.argmax(id)], 32),
+                verticalalignment='top', horizontalalignment='center', fontsize=6.5)
+
     # block HCN
     ax = pl.Subplot(fig, outer[1, 0])
     fig.add_subplot(ax)
@@ -148,5 +164,5 @@ if __name__ == '__main__':
 
     pl.tight_layout()
     pl.subplots_adjust(left=0.1, top=0.96)
-    pl.savefig(os.path.join(save_dir_img, 'reproduction_resonance.png'))
+    #pl.savefig(os.path.join(save_dir_img, 'reproduction_resonance.png'))
     pl.show()

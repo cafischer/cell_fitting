@@ -6,9 +6,9 @@ import re
 
 
 if __name__ == '__main__':
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    model = '6'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    model = '2'
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell.json'), mechanism_dir)
@@ -68,22 +68,22 @@ if __name__ == '__main__':
     gates = ['m', 'h']
     params = ['$g_{max}$', '$V_h$', '$V_s$', '$\\tau_{min}$', '$\\tau_{max}$', '$\\tau_{delta}$']
 
-    # param_format = {
-    #     '$c_m$': '%.2f',
-    #     '$length$': '%.2f',
-    #     '$diameter$': '%.2f',
-    #     '$E_{Leak}$': '%.2f',
-    #     '$E_{HCN}$': '%.2f',
-    #     '$E_{Na}$': '%.2f',
-    #     '$E_{K}$': '%.2f',
-    #     '$g_{Leak}$': '%.5f',
-    #     '$g_{max}$': '%.5f',
-    #     '$V_h$': '%.2f',
-    #     '$V_s$': '%.2f',
-    #     '$\\tau_{min}$': '%.3f',
-    #     '$\\tau_{max}$': '%.3f',
-    #     '$\\tau_{delta}$': '%.3f',
-    # }
+    param_format = {
+        '$c_m$': '%.2f',
+        '$length$': '%.2f',
+        '$diameter$': '%.2f',
+        '$E_{Leak}$': '%.2f',
+        '$E_{HCN}$': '%.2f',
+        '$E_{Na}$': '%.2f',
+        '$E_{K}$': '%.2f',
+        '$g_{Leak}$': '%.5f',
+        '$g_{max}$': '%.5f',
+        '$V_h$': '%.2f',
+        '$V_s$': '%.2f',
+        '$\\tau_{min}$': '%.3f',
+        '$\\tau_{max}$': '%.3f',
+        '$\\tau_{delta}$': '%.3f',
+    }
     # param_format = {
     #     '$c_m$': '%.10f',
     #     '$length$': '%.10f',
@@ -100,22 +100,22 @@ if __name__ == '__main__':
     #     '$\\tau_{max}$': '%.10f',
     #     '$\\tau_{delta}$': '%.10f',
     # }
-    param_format = {
-        '$c_m$': '%.9f',
-        '$length$': '%.9f',
-        '$diameter$': '%.9f',
-        '$E_{Leak}$': '%.9f',
-        '$E_{HCN}$': '%.9f',
-        '$E_{Na}$': '%.9f',
-        '$E_{K}$': '%.9f',
-        '$g_{Leak}$': '%.9f',
-        '$g_{max}$': '%.9f',
-        '$V_h$': '%.9f',
-        '$V_s$': '%.9f',
-        '$\\tau_{min}$': '%.9f',
-        '$\\tau_{max}$': '%.9f',
-        '$\\tau_{delta}$': '%.9f',
-    }
+    # param_format = {
+    #     '$c_m$': '%.9f',
+    #     '$length$': '%.9f',
+    #     '$diameter$': '%.9f',
+    #     '$E_{Leak}$': '%.9f',
+    #     '$E_{HCN}$': '%.9f',
+    #     '$E_{Na}$': '%.9f',
+    #     '$E_{K}$': '%.9f',
+    #     '$g_{Leak}$': '%.9f',
+    #     '$g_{max}$': '%.9f',
+    #     '$V_h$': '%.9f',
+    #     '$V_s$': '%.9f',
+    #     '$\\tau_{min}$': '%.9f',
+    #     '$\\tau_{max}$': '%.9f',
+    #     '$\\tau_{delta}$': '%.9f',
+    # }
 
     param_val_dict = {k: cell.get_attr(v) for k, v in param_key_dict.iteritems()}
 

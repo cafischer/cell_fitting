@@ -5,7 +5,7 @@ from cell_characteristics.analyze_APs import get_AP_onset_idxs
 from cell_fitting.read_heka import get_v_and_t_from_heka, get_cells_for_protocol, get_i_inj_from_function
 from cell_fitting.data.divide_rat_gerbil_cells import check_rat_or_gerbil
 from cell_fitting.data import check_cell_has_DAP
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 def find_current_threshold_data(v_mat, i_inj_mat, AP_threshold):

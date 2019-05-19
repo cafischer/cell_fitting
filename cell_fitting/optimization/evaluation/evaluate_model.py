@@ -16,11 +16,11 @@ def evaluate_model(model_dir, mechanism_dir, save_dir):
 
     with PdfPages(os.path.join(save_dir, 'summary_model.pdf')) as pdf:
 
-        data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
+        data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
         data_dir_characteristics = '../../data/plots/spike_characteristics/distributions/rat'
         evaluate_rampIV(pdf, cell, data_dir, data_dir_characteristics, save_dir)
 
-        data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
+        data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
         data_dir_FI_fit = '../../data/plots/IV/fi_curve/rat/summary'
         data_dir_sag = '../../data/plots/IV/sag_hist/rat'
         evaluate_IV(pdf, cell, data_dir, data_dir_FI_fit, data_dir_sag, save_dir)
@@ -38,7 +38,7 @@ def evaluate_model(model_dir, mechanism_dir, save_dir):
 
 if __name__ == '__main__':
     #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/server_17_12_04/2018-01-16_11:02:23/69/L-BFGS-B'
+    save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/hand_tuning/model4'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../model/channels/vavoulis'
     evaluate_model(model_dir, mechanism_dir, save_dir)

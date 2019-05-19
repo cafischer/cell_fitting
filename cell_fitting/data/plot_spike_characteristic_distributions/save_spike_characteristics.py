@@ -7,7 +7,8 @@ from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
 
 
 if __name__ == '__main__':
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    # data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/2019-04-03-Sicherung_all/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'rampIV'
     animal = 'rat'
     save_dir = os.path.join('../plots/spike_characteristics', animal)

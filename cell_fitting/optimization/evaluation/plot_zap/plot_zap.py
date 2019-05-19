@@ -20,10 +20,10 @@ def plot_zap(v, t,  imp_smooth, frequencies, res_freq, q_value, zap_params, save
 
 if __name__ == '__main__':
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/1'
+    save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
     cell_id = '2015_08_26b'
     zap_params = get_i_inj_standard_params('Zap20')
     #zap_params['dt'] = 0.01
@@ -43,6 +43,6 @@ if __name__ == '__main__':
     plot_zap(v, t, imp_smooth, frequencies, res_freq, q_value, zap_params, save_dir_img, data_dir)
 
     # save
-    #     impedance_dict = dict(impedance=list(imp_smooth), frequencies=list(frequencies))
-    #     with open(os.path.join(save_dir_img, 'impedance_dict.json'), 'w') as f:
-    #         json.dump(impedance_dict, f)
+    impedance_dict = dict(impedance=list(imp_smooth), frequencies=list(frequencies))
+    with open(os.path.join(save_dir_img, 'impedance_dict.json'), 'w') as f:
+        json.dump(impedance_dict, f)
