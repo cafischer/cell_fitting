@@ -119,10 +119,10 @@ def get_gates_of_channel():
 
 def get_channel_dict_for_plotting():
     return {
-        'nat': '$Na_T$',
-        'nap': '$Na_P$',
-        'hcn_slow': '$HCN$',
-        'kdr': '$K_{DR}$',
+        'nat': '$\mathrm{Na_T}$',
+        'nap': '$\mathrm{Na_P}$',
+        'hcn_slow': '$\mathrm{HCN}$',
+        'kdr': '$\mathrm{K_{DR}}$',
         'pas': 'Leak'
     }
 

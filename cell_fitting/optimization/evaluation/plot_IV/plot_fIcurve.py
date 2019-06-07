@@ -15,14 +15,17 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
-    save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/hand_tuning/model4'
+    save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    #save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/hand_tuning/model4'
     #save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/server_19_01_09/2019-01-09_17:15:50/49/L-BFGS-B'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    model_dir = os.path.join(save_dir, 'cell_rounded.json')
     #mechanism_dir = '../../../model/channels/vavoulis'
     mechanism_dir = '../../../model/channels/vavoulis'
     data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
     cell_id = '2015_08_26b'
+
+    if not os.path.exists(os.path.join(save_dir, 'img/IV/fi_curve')):
+        os.makedirs(os.path.join(save_dir, 'img/IV/fi_curve'))
 
     # load model
     cell = Cell.from_modeldir(model_dir, mechanism_dir)
@@ -68,9 +71,9 @@ if __name__ == '__main__':
         os.makedirs(save_dir_img)
 
     # save
-    #fi_dict = dict(amps=list(amps), firing_rates=list(firing_rates_model))
-    #with open(os.path.join(save_dir, 'img', 'IV', 'fi_curve', 'fi_dict.json'), 'w') as f:
-    #    json.dump(fi_dict, f)
+    fi_dict = dict(amps=list(amps), firing_rates=list(firing_rates_model))
+    with open(os.path.join(save_dir, 'img', 'IV', 'fi_curve', 'fi_dict.json'), 'w') as f:
+       json.dump(fi_dict, f)
 
     np.save(os.path.join(save_dir_img, 'amps_greater0.npy'), amps)
     np.save(os.path.join(save_dir_img, 'firing_rates.npy'), firing_rates_model)

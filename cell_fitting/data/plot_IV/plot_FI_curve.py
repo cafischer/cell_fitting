@@ -14,8 +14,8 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '../plots/IV/FI_curve/'
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    save_dir = '../plots/IV/fi_curve/'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'IV'
     animal = 'rat'
 
@@ -69,15 +69,15 @@ if __name__ == '__main__':
         with open(os.path.join(save_dir_img, 'fi_dict.json'), 'w') as f:
             json.dump(fi_dict, f)
 
-        pl.figure()
-        pl.plot(amps, firing_rates_data, '-ok', label='Exp. Data')
-        pl.xlabel('Current (nA)')
-        pl.ylabel('Firing Rate (Hz)')
-        #pl.legend(loc='lower right')
-        pl.ylim(0, 80)
-        pl.tight_layout()
-        #pl.savefig(os.path.join(save_dir_img, 'fIcurve.png'))
-        pl.show()
+        # pl.figure()
+        # pl.plot(amps, firing_rates_data, '-ok', label='Exp. Data')
+        # pl.xlabel('Current (nA)')
+        # pl.ylabel('Firing Rate (Hz)')
+        # #pl.legend(loc='lower right')
+        # pl.ylim(0, 80)
+        # pl.tight_layout()
+        # #pl.savefig(os.path.join(save_dir_img, 'fIcurve.png'))
+        # pl.show()
 
         # pl.figure()
         # pl.plot(amps, firing_rates_data_last_ISI, '-ok', label='Exp. Data')

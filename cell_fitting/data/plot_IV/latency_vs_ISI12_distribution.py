@@ -17,7 +17,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     # parameters
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'IV'
     animal = 'rat'
     AP_threshold = -10

@@ -10,7 +10,7 @@ from cell_fitting.util import get_channel_dict_for_plotting, get_channel_color_f
 from cell_fitting.test_channels.test_ionchannel import current_subtraction, plot_i_steps_on_ax
 from cell_fitting.optimization.simulate import get_standard_simulation_params
 
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 def plot_act_inact_on_ax(ax, v_range, steadystate_act, steadystate_inact, time_constanct_act, time_constanct_inact,
@@ -23,32 +23,32 @@ def plot_act_inact_on_ax(ax, v_range, steadystate_act, steadystate_inact, time_c
 
     if steadystate_act is not None:
         ax.plot(v_range, steadystate_act,
-                color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'brighter'),
+                color=change_color_brightness(to_rgb(channel_color[channel_name]), 60, 'brighter'),
                 label=channel_dict[channel_name] + ' m')
     if steadystate_inact is not None:
         ax.plot(v_range, steadystate_inact,
-                color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'darker'),
+                color=change_color_brightness(to_rgb(channel_color[channel_name]), 60, 'darker'),
                 label=channel_dict[channel_name] + ' h')
     if time_constanct_act is not None:
         ax_twin.plot(v_range, time_constanct_act, linestyle=':',
-                color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'brighter'))
+                color=change_color_brightness(to_rgb(channel_color[channel_name]), 60, 'brighter'))
     if time_constanct_inact is not None:
         ax_twin.plot(v_range, time_constanct_inact, linestyle=':',
-                color=change_color_brightness(to_rgb(channel_color[channel_name]), 35, 'darker'))
+                color=change_color_brightness(to_rgb(channel_color[channel_name]), 60, 'darker'))
     ax.set_xlabel('Mem. pot. (mV)')
     ax.set_ylabel('Degree of opening')
-    ax_twin.set_ylabel(r'$\tau$ (ms)')
+    ax_twin.set_ylabel(r'$\mathrm{\tau}$ (ms)')
     ax.set_ylim(0, 1)
     ax_twin.set_ylim(0, None)
-    ax.legend()
+    ax.legend(loc='upper right')
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results/new'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
     ramp_amp = 3.5

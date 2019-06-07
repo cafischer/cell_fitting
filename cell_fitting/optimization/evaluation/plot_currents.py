@@ -11,14 +11,13 @@ from itertools import combinations
 pl.style.use('paper')
 
 
-def plot_currents_on_ax(ax1, channel_list, currents, t, v):
+def plot_currents_on_ax(ax1, ax2, channel_list, currents, t, v):
     channel_dict = get_channel_dict_for_plotting()
     channel_color = get_channel_color_for_plotting()
 
     #t_plot = t - 7
     t_plot = t
 
-    ax2 = ax1.twinx()
     ax2.plot(t_plot, v, 'k', linestyle=':')
     ax2.set_yticks([])
 
@@ -35,9 +34,9 @@ def plot_currents_on_ax(ax1, channel_list, currents, t, v):
         ax1.set_xlabel('Time (ms)')
     h1, l1 = ax1.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
-    ax1.legend(h1 + h2, l1 + l2)
-    # ax2.set_ylim(-80, -40)
-    # ax1.set_ylim(-0.1, 0.1)
+    ax1.legend(h1 + h2, l1 + l2, loc='upper right')
+    #ax2.set_ylim(-80, -40)
+    #ax1.set_ylim(-0.1, 0.1)
     # ax1.set_xlim(0, 55)
 
 

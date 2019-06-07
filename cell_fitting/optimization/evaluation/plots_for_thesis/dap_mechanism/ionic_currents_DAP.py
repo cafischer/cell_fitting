@@ -9,15 +9,15 @@ from cell_fitting.optimization.evaluation.plot_currents import plot_currents_on_
 from cell_fitting.optimization.evaluation.plot_gates import plot_product_gates_on_ax, plot_gates_on_ax
 from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel_at_timepoint
 from cell_fitting.optimization.simulate import get_standard_simulation_params
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results/new'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
     ramp_amp = 3.5
@@ -39,18 +39,21 @@ if __name__ == '__main__':
     # ionic currents
     ax = pl.Subplot(fig, outer[0, 0])
     fig.add_subplot(ax)
-
-    plot_currents_on_ax(ax, channel_list, currents, t_model, v_model)
+    ax2 = ax.twinx()
+    plot_currents_on_ax(ax, ax2, channel_list, currents, t_model, v_model)
     ax.set_yticks([-0.1, -0.05, 0.0, 0.05, 0.1])
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.set_ylim(-0.1, 0.1)
+    ax2.set_ylim(-80, -40)
+    ax.set_xlim(0, 55)
     ax.text(-0.25, 1.0, 'A', transform=ax.transAxes, size=18, weight='bold')
 
     # ionic gates
     ax = pl.Subplot(fig, outer[0, 1])
     fig.add_subplot(ax)
 
-    plot_gates_on_ax(ax, gates, t_model, v_model)
-    #plot_product_gates_on_ax(ax, channel_list, gates, t_model, v_model, power_gates)
+    #plot_gates_on_ax(ax, gates, t_model, v_model)  TODO
+    plot_product_gates_on_ax(ax, channel_list, gates, t_model, v_model, power_gates)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
@@ -87,15 +90,19 @@ if __name__ == '__main__':
     gates['nat_h'][t_block_idx:] = np.nan
     gates['hcn_slow_n'][t_block_idx:] = np.nan
 
-    plot_currents_on_ax(ax, channel_list, currents, t_model, v_model)
-    # ax.plot(t_model - 7, -1 * (currents[np.array(channel_list) == 'nap'][0]
-    #                            + currents[np.array(channel_list) == 'kdr'][0]
-    #                            + currents[np.array(channel_list) == 'pas'][0]
-    #                            ), color='magenta')
-    # ax.plot(t_model - 7, -1 * (currents[np.array(channel_list) == 'nap'][0]
-    #                            + currents[np.array(channel_list) == 'kdr'][0]
-    #                            ), color='orange')
+    ax2 = ax.twinx()
+    plot_currents_on_ax(ax, ax2, channel_list, currents, t_model, v_model)
+    # ax.plot(t_model, -1 * (currents[np.array(channel_list) == 'nap'][0]
+    #                        + currents[np.array(channel_list) == 'kdr'][0]
+    #                        + currents[np.array(channel_list) == 'pas'][0]
+    #                        ), color='magenta')
+    # ax.plot(t_model, -1 * (currents[np.array(channel_list) == 'nap'][0]
+    #                        + currents[np.array(channel_list) == 'kdr'][0]
+    #                        ), color='orange')
     ax.set_yticks([-0.1, -0.05, 0.0, 0.05, 0.1])
+    ax.set_ylim(-0.1, 0.1)
+    ax2.set_ylim(-80, -40)
+    ax.set_xlim(0, 55)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
@@ -103,8 +110,8 @@ if __name__ == '__main__':
     ax = pl.Subplot(fig, outer[1, 1])
     fig.add_subplot(ax)
 
-    plot_gates_on_ax(ax, gates, t_model, v_model)
-    #plot_product_gates_on_ax(ax, channel_list, gates, t_model, v_model, power_gates)
+    #plot_gates_on_ax(ax, gates, t_model, v_model) TODO
+    plot_product_gates_on_ax(ax, channel_list, gates, t_model, v_model, power_gates)
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 

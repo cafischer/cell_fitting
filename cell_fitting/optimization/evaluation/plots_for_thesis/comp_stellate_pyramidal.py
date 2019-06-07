@@ -4,7 +4,7 @@ import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
 from cell_fitting.read_heka import load_data
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 if __name__ == '__main__':

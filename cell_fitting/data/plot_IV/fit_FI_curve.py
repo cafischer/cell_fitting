@@ -24,7 +24,7 @@ def fit_fun(x, a, b, c):
 if __name__ == '__main__':
 
     # parameters
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'IV'
     animal = 'rat'
     save_dir_img = os.path.join('../plots', protocol, 'fi_curve', animal)

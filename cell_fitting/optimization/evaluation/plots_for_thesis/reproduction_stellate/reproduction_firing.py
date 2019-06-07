@@ -3,7 +3,7 @@ import os
 import json
 import matplotlib.pyplot as pl
 import matplotlib.gridspec as gridspec
-#from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
 from nrn_wrapper import Cell
 from cell_fitting.read_heka import load_data
 from cell_fitting.optimization.evaluation import simulate_model
@@ -11,15 +11,21 @@ from cell_fitting.optimization.evaluation.plot_IV import plot_fi_curve_on_ax, si
     fit_fI_curve
 from cell_fitting.optimization.evaluation.plot_IV.latency_vs_ISI12_distribution import get_latency_and_ISI12
 from cell_fitting.optimization.simulate import get_standard_simulation_params
-pl.style.use('paper_subplots')
+pl.style.use('paper')
+
+
+def fit_fun(x, a, b, c):
+    sr = a * (x - b)**c
+    sr[x - b < 0] = 0
+    return sr
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results/new'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
     color_exp = '#0099cc'
@@ -51,6 +57,17 @@ if __name__ == '__main__':
     ax0.plot(t_model, v_model - vrest_model, color_model, label='Model')
     ax1.plot(t_data, i_inj, 'k')
 
+    axins = inset_axes(ax0, width='15%', height='80%', loc='upper left')
+    axins.plot(t_data, v_data - vrest_data, color_exp)
+    axins.plot(t_model, v_model - vrest_model, color_model)
+    axins.set_xlim(250, 285)
+    axins.set_ylim(0, 135)
+    axins.set_xticks([])
+    axins.set_yticks([])
+    axins.spines['top'].set_visible(True)
+    axins.spines['right'].set_visible(True)
+    mark_inset(ax0, axins, loc1=2, loc2=4, fc="none", ec="0.5")
+
     ax0.set_xlim(0, 1000.)
     ax1.set_xlim(0, 1000.)
     ax1.set_ylim(-0.01, 0.41)
@@ -78,7 +95,7 @@ if __name__ == '__main__':
     ax.set_xlim(0, None)
     ax.set_ylim(0, None)
     ax.set_xlabel('Latency of the first spike (ms)')
-    ax.set_ylabel('$ISI_{1/2}$ (ms)')
+    ax.set_ylabel('$\mathrm{ISI_{1/2}}$ (ms)')
     ax.text(-0.25, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
 
     # f-I curve
@@ -91,8 +108,26 @@ if __name__ == '__main__':
     with open(os.path.join(save_dir_data_plots, 'IV', 'fi_curve', 'rat', exp_cell, 'fi_dict.json'), 'r') as f:
         fi_dict_data = json.load(f)
 
+    FI_a_data, FI_b_data, FI_c_data, RMSE_data = fit_fI_curve(np.array(fi_dict_data['amps']),
+                                                              np.array(fi_dict_data['firing_rates']))
+    FI_a_model, FI_b_model, FI_c_model, RMSE_model = fit_fI_curve(np.array(fi_dict_model['amps']),
+                                                                  np.array(fi_dict_model['firing_rates']))
+    #print 'RMSE model: ', RMSE_model
+
     plot_fi_curve_on_ax(ax, color_line=color_model, **fi_dict_model)
     plot_fi_curve_on_ax(ax, color_line=color_exp, **fi_dict_data)
+
+    # plot fit
+    x = np.arange(0, 1.05, 0.01)
+    # ax.plot(fi_dict_data['amps'], fit_fun(fi_dict_data['amps'], FI_a_data, FI_b_data, FI_c_data), color_exp,
+    #         linestyle='--', dashes=(1, 1))
+    # ax.plot(fi_dict_model['amps'], fit_fun(fi_dict_model['amps'], FI_a_model, FI_b_model, FI_c_model), color_model,
+    #         linestyle='--', dashes=(1, 1))
+    ax.plot(x, fit_fun(x, FI_a_data, FI_b_data, FI_c_data), color_exp,
+            linestyle='--', dashes=(1, 1))
+    ax.plot(x, fit_fun(x, FI_a_model, FI_b_model, FI_c_model), color_model,
+            linestyle='--', dashes=(1, 1))
+
 
     ax.set_ylim(0, None)
     ax.set_xlim(0, None)
@@ -106,10 +141,6 @@ if __name__ == '__main__':
     FI_c = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'FI_c.npy'))
     RMSE = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'RMSE.npy'))
     print 'RMSE over cells: ', np.min(RMSE), np.max(RMSE)
-
-    amps_greater0, firing_rates_model = simulate_and_compute_fI_curve(cell)
-    FI_a_model, FI_b_model, FI_c_model, RMSE_model = fit_fI_curve(amps_greater0, firing_rates_model)
-    #print 'RMSE model: ', RMSE_model
 
     ax = pl.subplot(outer[0, 1])
     ax.plot(FI_a, FI_b, 'o', color=color_exp, alpha=0.5)
