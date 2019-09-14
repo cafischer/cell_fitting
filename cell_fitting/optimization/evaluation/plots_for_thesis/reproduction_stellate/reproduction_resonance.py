@@ -17,7 +17,7 @@ pl.style.use('paper')
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results_paper'
     save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
     save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
@@ -74,7 +74,7 @@ if __name__ == '__main__':
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     custom_lines = [Line2D([0], [0], color=color_exp, lw=1.0),
                     Line2D([0], [0], color=color_model, lw=1.0)]
-    ax0.legend(custom_lines, ['Data', 'Model'], loc='upper right')
+    #ax0.legend(custom_lines, ['Data', 'Model'], loc='upper right')
     ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
     # impedance
@@ -148,15 +148,19 @@ if __name__ == '__main__':
 
     res_freqs_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'res_freqs.npy'))
     q_values_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'q_values.npy'))
+    cell_ids_resq = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'cell_ids.npy'))
 
     ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data', clip_on=False)
     ax.plot(res_freq_model, q_value_model, 'o', color=color_model, alpha=0.5, label='Model')
+    ax.plot(res_freqs_data[cell_ids_resq==exp_cell], q_values_data[cell_ids_resq==exp_cell], 'o', color='m',
+            alpha=0.8, label='Target cell')
 
     ax.set_ylim(0, None)
     ax.set_xlim(0, None)
     ax.set_xlabel('Res. freq. (Hz)')
     ax.set_ylabel('Q-value')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax.legend(loc='upper left')
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     print 'res. freq. model: ', res_freq_model
@@ -164,5 +168,5 @@ if __name__ == '__main__':
 
     pl.tight_layout()
     pl.subplots_adjust(left=0.1, top=0.96)
-    #pl.savefig(os.path.join(save_dir_img, 'reproduction_resonance.png'))
+    pl.savefig(os.path.join(save_dir_img, 'reproduction_resonance.png'))
     pl.show()

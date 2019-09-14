@@ -23,7 +23,8 @@ if __name__ == '__main__':
 
     # parameters
     save_dir = '../plots/rampIV/rat'
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    #data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'rampIV'
     v_rest_shift = -16
     AP_threshold = -10
@@ -38,6 +39,7 @@ if __name__ == '__main__':
     #cell_ids = ['2015_08_26b']
 
     current_thresholds = np.zeros(len(cell_ids))
+    v_rest = np.zeros(len(cell_ids))
 
     for cell_idx, cell_id in enumerate(cell_ids):
         print cell_id
@@ -46,6 +48,8 @@ if __name__ == '__main__':
                                                          return_sweep_idxs=True)
         i_inj_mat = get_i_inj_from_function(protocol, sweep_idxs, t_mat[0][-1], t_mat[0][1]-t_mat[0][0])
         t = t_mat[0, :]
+
+        v_rest[cell_idx] = np.mean(v_mat[0, :100])
 
         current_threshold, idx = find_current_threshold_data(v_mat, i_inj_mat, AP_threshold)
 
@@ -81,6 +85,8 @@ if __name__ == '__main__':
             # data = pd.DataFrame(np.vstack((t, v_mat[idx], i_inj_mat[idx])).T, columns=['t', 'v', 'i'])
             # data.to_csv(os.path.join(save_dir_img, cell_id+'_rampIV.csv'))
 
+    print np.mean(v_rest)
+    print np.std(v_rest)
 
     pl.figure()
     pl.hist(current_thresholds)

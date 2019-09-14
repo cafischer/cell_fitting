@@ -132,7 +132,7 @@ if __name__ == '__main__':
     np.save(os.path.join(save_dir_img, 'FI_c.npy'), FI_c)
     np.save(os.path.join(save_dir_img, 'RMSE.npy'), RMSE)
     np.save(os.path.join(save_dir_img, 'max_diff_f.npy'), max_diff_f)
-    np.save(os.path.join(save_dir_img, 'cells.npy'), cell_ids_used)
+    np.save(os.path.join(save_dir_img, 'cell_ids.npy'), cell_ids_used)
 
     pl.figure()
     pl.hist(FI_a, bins=100, color='0.5')

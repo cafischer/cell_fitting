@@ -11,7 +11,7 @@ from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state 
 from cell_fitting.optimization.evaluation.plot_blocking.block_channel import block_channel, plot_channel_block_on_ax
 from cell_fitting.optimization.simulate import get_standard_simulation_params
 from cell_fitting.util import get_channel_color_for_plotting
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 if __name__ == '__main__':

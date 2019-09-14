@@ -21,7 +21,7 @@ def fit_fun(x, a, b, c):
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results/new'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results_paper'
     save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
     mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
     save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
@@ -78,7 +78,6 @@ if __name__ == '__main__':
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
-    ax0.legend()
     ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
     # latency vs ISI1/2
@@ -86,11 +85,14 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
     latency_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'latency.npy'))
     ISI12_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'ISI12.npy'))
+    cell_ids_latencyISI12 = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'cell_ids.npy'))
     ax.plot(latency_data[latency_data >= 0], ISI12_data[latency_data >= 0], 'o', color=color_exp,
             alpha=0.5, label='Data', clip_on=False)
 
     latency_model, ISI12_model = get_latency_and_ISI12(cell)
     ax.plot(latency_model, ISI12_model, 'o', color=color_model, alpha=0.5, label='Model')
+    ax.plot(latency_data[cell_ids_latencyISI12==exp_cell], ISI12_data[cell_ids_latencyISI12==exp_cell], 'o', color='m',
+            alpha=0.8, label='Target cell')
 
     ax.set_xlim(0, None)
     ax.set_ylim(0, None)
@@ -143,19 +145,22 @@ if __name__ == '__main__':
     print 'RMSE over cells: ', np.min(RMSE), np.max(RMSE)
 
     ax = pl.subplot(outer[0, 1])
-    ax.plot(FI_a, FI_b, 'o', color=color_exp, alpha=0.5)
-    ax.plot([FI_a_model], [FI_b_model], 'o', color=color_model, alpha=0.5)
+    ax.plot(FI_a, FI_b, 'o', color=color_exp, alpha=0.5, label='Data')
+    ax.plot([FI_a_model], [FI_b_model], 'o', color=color_model, alpha=0.5, label='Model')
+    ax.plot([FI_a_data], [FI_b_data], 'o', color='m', alpha=0.8, label='Target cell')
     ax.set_xlabel('a')
     ax.set_ylabel('b')
     ax.set_xlim(0, 380)
     ax.set_xticks(np.arange(0, 380, 50))
     ax.set_ylim(0, 0.8)
     ax.set_yticks(np.arange(0, 0.9, 0.2))
+    ax.legend()
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     ax = pl.subplot(outer[1, 1])
     ax.plot(FI_b, FI_c, 'o', color=color_exp, alpha=0.5)
     ax.plot([FI_b_model], [FI_c_model], 'o', color=color_model, alpha=0.5)
+    ax.plot([FI_b_data], [FI_c_data], 'o', color='m', alpha=0.8)
     ax.set_xlim(0, 0.8)
     ax.set_xticks(np.arange(0, 0.9, 0.2))
     ax.set_ylim(0, 1.0)
@@ -166,6 +171,7 @@ if __name__ == '__main__':
     ax = pl.subplot(outer[2, 1])
     ax.plot(FI_c, FI_a, 'o', color=color_exp, alpha=0.5)
     ax.plot([FI_c_model], [FI_a_model], 'o', color=color_model, alpha=0.5)
+    ax.plot([FI_c_data], [FI_a_data], 'o', color='m', alpha=0.8)
     ax.set_xlim(0, 1.0)
     ax.set_xticks(np.arange(0, 1.1, 0.2))
     ax.set_ylim(0, 380)

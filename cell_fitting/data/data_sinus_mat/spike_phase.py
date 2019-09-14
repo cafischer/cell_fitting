@@ -17,6 +17,7 @@ from cell_fitting.optimization.evaluation.plot_sine_stimulus.plot_spike_phase im
 
 
 if __name__ == '__main__':
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/programming/projects/cell_fitting/cell_fitting/data/data_sinus_mat/sinus_mat_files'
     protocol = 'sine_stimulus'
     animal = 'rat'
     amp1_use = None
@@ -28,11 +29,12 @@ if __name__ == '__main__':
     v_shift = -16
     save_dir = os.path.join('../plots', protocol, 'traces', animal)
 
-    v_mat, t_mat, cell_ids, amp1s, amp2s, freq1s, freq2s = find_sine_trace(amp1_use, amp2_use, freq1, freq2)
+    v_mat, t_mat, cell_ids, amp1s, amp2s, freq1s, freq2s = find_sine_trace(amp1_use, amp2_use, freq1, freq2,
+                                                                           data_dir)
     cell_ids_new = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
     cell_ids_new = filter(lambda id: check_cell_has_DAP(id), cell_ids_new)
     cell_ids_new = np.unique(cell_ids_new)  # no doubles
-    cell_id_idxs = np.array([np.where(c_id == np.array(cell_ids))[0][0] for c_id in cell_ids_new])
+    cell_id_idxs = np.array([np.where(c_id == np.array(cell_ids))[0][0] for c_id in cell_ids_new]).astype(int)
     v_mat = v_mat[cell_id_idxs]
     t_mat = t_mat[cell_id_idxs]
     amp1s = np.array(amp1s)[cell_id_idxs]
@@ -105,3 +107,5 @@ if __name__ == '__main__':
     np.save(os.path.join(save_dir_summary, 'phase_stds.npy'), phase_stds)
     np.save(os.path.join(save_dir_summary, 'amp1s.npy'), amp1s)
     np.save(os.path.join(save_dir_summary, 'amp2s.npy'), amp2s)
+    np.save(os.path.join(save_dir_summary, 'cell_ids.npy'), cell_ids)
+

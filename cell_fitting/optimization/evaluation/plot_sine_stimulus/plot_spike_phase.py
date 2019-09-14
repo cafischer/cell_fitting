@@ -28,13 +28,13 @@ def get_theta_and_phases(sine1_dur, amp2, freq2, onset_dur, offset_dur, dt):
 
 
 if __name__ == '__main__':
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/'
-    model_ids = [2]  #range(1, 7)
+    save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/'
+    model_ids = [6]  # [2]  # range(2, 7)
     mechanism_dir = '../../../model/channels/vavoulis'
     load_mechanism_dir(mechanism_dir)
 
-    amp1 = 0.4  # 0.5
-    amp2 = 0.4  # 0.2
+    amp1 = 0.7  # 0.5
+    amp2 = 0.5  # 0.2
     freq1 = 0.1  # 0.5: 1000, 0.25: 2000, 0.1: 5000, 0.05: 10000
     sine1_dur = 1./freq1 * 1000 / 2.
     freq2 = 5  # 5  # 20

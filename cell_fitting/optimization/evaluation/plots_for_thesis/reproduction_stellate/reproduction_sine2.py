@@ -11,7 +11,7 @@ from grid_cell_stimuli.spike_phase import plot_phase_hist_on_axes
 from cell_characteristics import to_idx
 from cell_fitting.util import init_nan
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 def get_phase_first_spike_in_period(phases, t_phases, v, t, dt):
@@ -41,11 +41,11 @@ def get_phase_first_spike_in_period(phases, t_phases, v, t, dt):
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results_paper'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
     color_exp = '#0099cc'

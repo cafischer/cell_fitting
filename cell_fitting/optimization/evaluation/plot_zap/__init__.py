@@ -49,6 +49,7 @@ def simulate_zap(cell, amp=0.1, freq0=0, freq1=20, onset_dur=2000, offset_dur=20
                  tstop=34000, dt=0.01, simulation_params=None):
     i_exp = get_i_inj_zap(amp=amp, freq0=freq0, freq1=freq1, onset_dur=onset_dur, offset_dur=offset_dur,
                           zap_dur=zap_dur, tstop=tstop, dt=dt)
+    i_exp -= 0.05  # TODO
     if simulation_params is None:
         simulation_params = get_standard_simulation_params()
     simulation_params = merge_dicts(simulation_params, {'i_inj': i_exp, 'tstop': tstop, 'dt': dt})

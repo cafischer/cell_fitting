@@ -15,7 +15,7 @@ pl.style.use('paper')
 
 if __name__ == '__main__':
     #data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
-    data_dir = '/media/cfischer/TOSHIBA EXT/2019-04-03-Sicherung_all/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     v_rest = None
     v_shift = -16
     protocol = 'Zap20'

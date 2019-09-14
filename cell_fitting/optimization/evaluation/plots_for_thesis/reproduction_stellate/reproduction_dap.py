@@ -10,9 +10,11 @@ from cell_fitting.optimization.evaluation import simulate_model, get_spike_chara
 from cell_fitting.optimization.evaluation.plot_rampIV import simulate_rampIV
 from cell_fitting.optimization.errfuns import rms
 from cell_fitting.optimization.simulate import get_standard_simulation_params
-from cell_fitting.util import characteristics_dict_for_plotting
+from cell_fitting.util import characteristics_dict_for_plotting, change_color_brightness
+from matplotlib.colors import to_rgb
 from cell_characteristics.analyze_APs import get_spike_characteristics
-pl.style.use('paper_subplots')
+from cell_characteristics import to_idx
+pl.style.use('paper')
 
 
 def curly_bracket(ax, pos=(0, 0), scalex=1, scaley=1, text="", textkw=None, linekw=None):
@@ -41,11 +43,11 @@ def rectangle_with_text(ax, x_m, y_m, width, height, text, fc='0.5'):
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results_paper'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
     exp_cell_dr = '2015_08_06d'
@@ -54,6 +56,9 @@ if __name__ == '__main__':
     ramp_amp = 3.5
     standard_sim_params = get_standard_simulation_params()
     units = ['mV', 'mV', 'ms', 'ms']
+
+    if not os.path.exists(save_dir_img):
+        os.makedirs(save_dir_img)
 
     # create model cell
     cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'), mechanism_dir)
@@ -70,10 +75,13 @@ if __name__ == '__main__':
     v_exp, t_exp, i_inj = load_data(os.path.join(save_dir_data, exp_cell + '.dat'), 'rampIV', ramp_amp)
     v_model, t_model, _ = simulate_model(cell, 'rampIV', ramp_amp, t_exp[-1], **standard_sim_params)
 
-    print 'RMSE: ', rms(v_exp, v_model)
-    fAHP_min_idx = get_spike_characteristics(v_model, t_model, ['fAHP_min_idx'], v_model[0], check=False,
-                                             **get_spike_characteristics_dict(for_data=False))[0]
-    print 'RMSE: ', rms(v_exp[fAHP_min_idx:], v_model[fAHP_min_idx:])
+    fAHP_min_idx, DAP_width_idx = get_spike_characteristics(v_model, t_model, ['fAHP_min_idx', 'DAP_width_idx'],
+                                                            v_model[0], check=False,
+                                                            **get_spike_characteristics_dict(for_data=False))
+    print 'RMSE (0 ms-fAHP): %.2f' % rms(v_exp[:fAHP_min_idx], v_model[:fAHP_min_idx])
+    print 'RMSE (fAHP-DAP width): %.2f' % rms(v_exp[fAHP_min_idx:DAP_width_idx], v_model[fAHP_min_idx:DAP_width_idx])
+    print 'RMSE (DAP width-150 ms): %.2f' % rms(v_exp[DAP_width_idx:to_idx(150, standard_sim_params['dt'])],
+                         v_model[DAP_width_idx:to_idx(150, standard_sim_params['dt'])])
 
     start_i_inj = np.where(i_inj)[0][0]
     vrest_data = np.mean(v_exp[:start_i_inj])
@@ -99,7 +107,7 @@ if __name__ == '__main__':
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
 
     pl.tight_layout()
-    pl.savefig(os.path.join(save_dir_img, 'reproduction_dap1.png'))
+    #pl.savefig(os.path.join(save_dir_img, 'reproduction_dap1.png'))
 
     # plot 2
     fig = pl.figure(figsize=(10, 4.5))
@@ -114,21 +122,21 @@ if __name__ == '__main__':
     characteristics = ['AP_max_idx', 'fAHP_min_idx', 'DAP_max_idx', 'DAP_width_idx']
     start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
     v_rest = np.mean(v_exp[0:start_i_inj])
-    characteristics_exp = np.array(get_spike_characteristics(v_exp, t_exp, characteristics, v_rest,
-                                                             std_idx_times=(0, 1), check=False,
-                                                             **get_spike_characteristics_dict(for_data=True)),
-                                   dtype=int)
+    characteristics_exp_cells = np.array(get_spike_characteristics(v_exp, t_exp, characteristics, v_rest,
+                                                                   std_idx_times=(0, 1), check=False,
+                                                                   **get_spike_characteristics_dict(for_data=True)),
+                                         dtype=int)
     t_shift = -8
     t_exp += t_shift
     ax.plot(t_exp, v_exp, 'k')
-    ax.annotate('', xy=(t_exp[characteristics_exp[0]], v_exp[characteristics_exp[0]]),
-                xytext=(t_exp[characteristics_exp[2]], v_exp[characteristics_exp[0]]),
+    ax.annotate('', xy=(t_exp[characteristics_exp_cells[0]], v_exp[characteristics_exp_cells[0]]),
+                xytext=(t_exp[characteristics_exp_cells[2]], v_exp[characteristics_exp_cells[0]]),
                 arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
-    ax.annotate('$Time_{AP-DAP}$', xy=((t_exp[characteristics_exp[0]] + t_exp[characteristics_exp[2]])/2.0,
-                                v_exp[characteristics_exp[0]] + 0.5),
+    ax.annotate('$\mathrm{Time_{AP-DAP}}$', xy=((t_exp[characteristics_exp_cells[0]] + t_exp[characteristics_exp_cells[2]]) / 2.0,
+                                       v_exp[characteristics_exp_cells[0]] + 0.5),
                 verticalalignment='bottom', horizontalalignment='left')
-    ax.plot([t_exp[characteristics_exp[2]], t_exp[characteristics_exp[2]]],
-            [v_exp[characteristics_exp[2]], v_exp[characteristics_exp[0]]],
+    ax.plot([t_exp[characteristics_exp_cells[2]], t_exp[characteristics_exp_cells[2]]],
+            [v_exp[characteristics_exp_cells[2]], v_exp[characteristics_exp_cells[0]]],
             '--', color='0.5')  # helper line DAP max vertical
     ax.set_xlim(0, 145)
     ax.set_ylabel('Mem. pot. (mV)')
@@ -137,32 +145,32 @@ if __name__ == '__main__':
     axins = inset_axes(ax, width='60%', height='60%', loc=1)
     axins.plot(t_exp, v_exp, 'k')
     ax.annotate('mAHP', xy=(63., -73), verticalalignment='top', horizontalalignment='center')
-    axins.annotate('fAHP', xy=(t_exp[characteristics_exp[1]], v_exp[characteristics_exp[1]] - 0.5),
+    axins.annotate('fAHP', xy=(t_exp[characteristics_exp_cells[1]], v_exp[characteristics_exp_cells[1]] - 0.5),
                    verticalalignment='top', horizontalalignment='center')
-    axins.annotate('', xy=(21+t_shift, v_exp[characteristics_exp[1]]),
-                   xytext=(21+t_shift, v_exp[characteristics_exp[2]]),
+    axins.annotate('', xy=(21+t_shift, v_exp[characteristics_exp_cells[1]]),
+                   xytext=(21+t_shift, v_exp[characteristics_exp_cells[2]]),
                    arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
-    axins.annotate('DAP deflection', xy=(21+t_shift + 1.0,
-                                         (v_exp[characteristics_exp[2]]+v_exp[characteristics_exp[1]])/2.),
+    axins.annotate('DAP deflection', xy=(21 + t_shift + 1.0,
+                                         (v_exp[characteristics_exp_cells[2]] + v_exp[characteristics_exp_cells[1]]) / 2.),
                    verticalalignment='center', horizontalalignment='left')
-    axins.annotate('', xy=(t_exp[characteristics_exp[2]], v_rest),
-                   xytext=(t_exp[characteristics_exp[2]], v_exp[characteristics_exp[2]]),
+    axins.annotate('', xy=(t_exp[characteristics_exp_cells[2]], v_rest),
+                   xytext=(t_exp[characteristics_exp_cells[2]], v_exp[characteristics_exp_cells[2]]),
                    arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
-    axins.annotate('DAP amp.', xy=(t_exp[characteristics_exp[2]] + 1.0, v_rest),
+    axins.annotate('DAP amp.', xy=(t_exp[characteristics_exp_cells[2]] + 1.0, v_rest),
                    verticalalignment='bottom', horizontalalignment='left')
-    halfmax = v_rest + (v_exp[characteristics_exp[1]] - v_rest) / 2.0
-    axins.annotate('', xy=(t_exp[characteristics_exp[1]], halfmax),
-                   xytext=(t_exp[characteristics_exp[3]], halfmax),
+    halfmax = v_rest + (v_exp[characteristics_exp_cells[1]] - v_rest) / 2.0
+    axins.annotate('', xy=(t_exp[characteristics_exp_cells[1]], halfmax),
+                   xytext=(t_exp[characteristics_exp_cells[3]], halfmax),
                    arrowprops={'arrowstyle': '<->', 'shrinkA': 0, 'shrinkB': 0})
-    axins.annotate('DAP width', xy=((t_exp[characteristics_exp[1]]+t_exp[characteristics_exp[3]])/2.0, halfmax),
+    axins.annotate('DAP width', xy=((t_exp[characteristics_exp_cells[1]] + t_exp[characteristics_exp_cells[3]]) / 2.0, halfmax),
                    verticalalignment='bottom', horizontalalignment='center')
-    axins.plot([t_exp[characteristics_exp[1]], t_exp[characteristics_exp[1]]], [v_rest, v_exp[characteristics_exp[1]]],
+    axins.plot([t_exp[characteristics_exp_cells[1]], t_exp[characteristics_exp_cells[1]]], [v_rest, v_exp[characteristics_exp_cells[1]]],
                '--', color='0.5')  # helper line fAHP vertical
-    axins.plot([t_exp[characteristics_exp[1]], 21+t_shift],
-               [v_exp[characteristics_exp[1]], v_exp[characteristics_exp[1]]],
+    axins.plot([t_exp[characteristics_exp_cells[1]], 21 + t_shift],
+               [v_exp[characteristics_exp_cells[1]], v_exp[characteristics_exp_cells[1]]],
                '--', color='0.5')  # helper line fAHP horizontal
-    axins.plot([t_exp[characteristics_exp[2]], 21+t_shift],
-               [v_exp[characteristics_exp[2]], v_exp[characteristics_exp[2]]],
+    axins.plot([t_exp[characteristics_exp_cells[2]], 21 + t_shift],
+               [v_exp[characteristics_exp_cells[2]], v_exp[characteristics_exp_cells[2]]],
                '--', color='0.5')  # helper line DAP max horizontal
     axins.axhline(v_rest, linestyle='--', color='0.5')  # helper line v_rest
 
@@ -186,28 +194,33 @@ if __name__ == '__main__':
     v, t, i_inj = simulate_rampIV(cell, ramp_amp, v_init=-75)
     start_i_inj = np.where(np.diff(np.abs(i_inj)) > 0)[0][0] + 1
     v_rest = np.mean(v[0:start_i_inj])
+    v_rest_exp = np.mean(v_exp[0:start_i_inj])
+    std_idx_times = (0, min(1, start_i_inj * (t_exp[1]-t_exp[0])))
     characteristics_mat_model = np.array(get_spike_characteristics(v, t, characteristics, v_rest, check=False,
-                                                                   **get_spike_characteristics_dict()),
-                                           dtype=float)
+                                                                   **get_spike_characteristics_dict()), dtype=float)
 
-    characteristics_mat_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
-                                                   'characteristics_mat.npy')).astype(float)
-    characteristics_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
-                                               'return_characteristics.npy'))
+    characteristics_mat_exp_cells = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
+                                                   'characteristics_mat.npy'), allow_pickle=True).astype(float)
+    characteristics_exp_cells = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
+                                        'return_characteristics.npy'))
+    cell_ids_characteristics = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
+                                                    'cell_ids.npy'))
 
     for characteristic_idx, characteristic in enumerate(characteristics):
         ax = pl.Subplot(fig, axes[characteristic_idx])
         fig.add_subplot(ax)
 
-        characteristic_idx_exp = np.where(characteristic == characteristics_exp)[0][0]
-        not_nan_exp = ~np.isnan(characteristics_mat_exp[:, characteristic_idx_exp])
-        ax.hist(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp], bins=100, color=color_exp,
+        characteristic_idx_exp = np.where(characteristic == characteristics_exp_cells)[0][0]
+        not_nan_exp = ~np.isnan(characteristics_mat_exp_cells[:, characteristic_idx_exp])
+        ax.hist(characteristics_mat_exp_cells[:, characteristic_idx_exp][not_nan_exp], bins=100, color=color_exp,
                 label='Data')
-        ax.axvline(characteristics_mat_model[characteristic_idx], 0, 1, color=color_model, linewidth=1.0, label='Model')
+        ax.axvline(characteristics_mat_model[characteristic_idx], 0, 1, color=color_model, linewidth=1.3, label='Model')
+        ax.axvline(characteristics_mat_exp_cells[cell_ids_characteristics==exp_cell, characteristic_idx_exp], 0, 1,
+                   color='m', linewidth=1.3)
 
         # inside std
-        std = np.std(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp])
-        mean = np.mean(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp])
+        std = np.std(characteristics_mat_exp_cells[:, characteristic_idx_exp][not_nan_exp])
+        mean = np.mean(characteristics_mat_exp_cells[:, characteristic_idx_exp][not_nan_exp])
         print mean-std, mean+std
         print characteristics_mat_model[characteristic_idx]
 
@@ -218,8 +231,9 @@ if __name__ == '__main__':
         if characteristic_idx == 0:
             # legend
             custom_lines = [Line2D([0], [0], color=color_exp, lw=1.0),
-                            Line2D([0], [0], color=color_model, lw=1.0)]
-            ax.legend(custom_lines, ['Data', 'Model'])
+                            Line2D([0], [0], color=color_model, lw=1.0),
+                            Line2D([0], [0], color='m', lw=1.0)]
+            legend = ax.legend(custom_lines, ['Data', 'Model', 'Target \ncell'])
 
             # letter
             ax.text(-0.37, 1.0, 'B', transform=ax.transAxes, size=18, weight='bold')
@@ -227,7 +241,7 @@ if __name__ == '__main__':
     pl.tight_layout()
     pl.subplots_adjust(top=0.95, bottom=0.12)
     pl.savefig(os.path.join(save_dir_img, 'reproduction_dap2.png'))
-
+    #pl.show()
 
     # 2d scatter plots
     fig, axes = pl.subplots(4, 4, figsize=(9, 9))
@@ -238,19 +252,22 @@ if __name__ == '__main__':
         for j, characteristic2 in enumerate(characteristics):
             ax = axes[i, j]
 
-            characteristic_idx1 = np.where(characteristic1 == characteristics_exp)[0][0]
-            characteristic_idx2 = np.where(characteristic2 == characteristics_exp)[0][0]
-            not_nan_exp = np.logical_and(~np.isnan(characteristics_mat_exp[:, characteristic_idx1]),
-                                         ~np.isnan(characteristics_mat_exp[:, characteristic_idx2]))
-            ax.scatter(characteristics_mat_exp[:, characteristic_idx1][not_nan_exp],
-                       characteristics_mat_exp[:, characteristic_idx2][not_nan_exp], color=color_exp,
+            characteristic_idx1 = np.where(characteristic1 == characteristics_exp_cells)[0][0]
+            characteristic_idx2 = np.where(characteristic2 == characteristics_exp_cells)[0][0]
+            not_nan_exp = np.logical_and(~np.isnan(characteristics_mat_exp_cells[:, characteristic_idx1]),
+                                         ~np.isnan(characteristics_mat_exp_cells[:, characteristic_idx2]))
+            ax.scatter(characteristics_mat_exp_cells[:, characteristic_idx1][not_nan_exp],
+                       characteristics_mat_exp_cells[:, characteristic_idx2][not_nan_exp], color=color_exp,
                        label='Data', alpha=0.5)
             ax.scatter(characteristics_mat_model[i], characteristics_mat_model[j], color=color_model, label='Model',
                        alpha=0.5)
+            ax.scatter(characteristics_mat_exp_cells[cell_ids_characteristics==exp_cell, characteristic_idx1],
+                       characteristics_mat_exp_cells[cell_ids_characteristics==exp_cell, characteristic_idx2],
+                       color='m', alpha=0.8)
 
-            ax.set_xticks(np.arange(0, np.max(characteristics_mat_exp[:, characteristic_idx1][not_nan_exp]),
+            ax.set_xticks(np.arange(0, np.max(characteristics_mat_exp_cells[:, characteristic_idx1][not_nan_exp]),
                                     dtick[characteristic1]))
-            ax.set_yticks(np.arange(0, np.max(characteristics_mat_exp[:, characteristic_idx2][not_nan_exp]),
+            ax.set_yticks(np.arange(0, np.max(characteristics_mat_exp_cells[:, characteristic_idx2][not_nan_exp]),
                                     dtick[characteristic2]))
 
             # characteristics = ['DAP_deflection', 'DAP_amp', 'DAP_time', 'DAP_width']

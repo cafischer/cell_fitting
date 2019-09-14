@@ -23,10 +23,12 @@ if __name__ == '__main__':
     save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
     model_dir = os.path.join(save_dir, 'cell.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    #data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     cell_id = '2015_08_26b'
     zap_params = get_i_inj_standard_params('Zap20')
     #zap_params['dt'] = 0.01
+    #zap_params['amp'] = 0.15
 
     save_dir_img = os.path.join(save_dir, 'img', 'zap')
     if not os.path.exists(save_dir_img):

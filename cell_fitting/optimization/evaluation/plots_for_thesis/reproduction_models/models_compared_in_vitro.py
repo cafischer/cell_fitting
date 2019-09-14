@@ -17,15 +17,15 @@ from cell_fitting.optimization.evaluation.plot_IV import simulate_and_compute_fI
     fit_fI_curve
 from cell_fitting.optimization.evaluation.plot_IV.latency_vs_ISI12_distribution import get_latency_and_ISI12
 from cell_fitting.optimization.evaluation.plot_zap import simulate_and_compute_zap_characteristics
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results_paper'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     models = ['2', '3', '4', '5', '6']
     exp_cell = '2015_08_26b'
     exp_cell_dr = '2015_08_06d'
@@ -45,8 +45,9 @@ if __name__ == '__main__':
     units = ['mV', 'mV', 'ms', 'ms']
     characteristics_dict_plot = characteristics_dict_for_plotting()
 
-    characteristics_mat_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
-                                                   'characteristics_mat.npy')).astype(float)
+    characteristics_mat_exp_cells = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
+                                                   'characteristics_mat.npy'), allow_pickle=True).astype(float)
+    cell_ids_characteristics = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat', 'cell_ids.npy'))
     characteristics_exp = np.load(os.path.join(save_dir_data_plots, 'spike_characteristics/rat',
                                                'return_characteristics.npy'))
 
@@ -55,8 +56,8 @@ if __name__ == '__main__':
         fig.add_subplot(ax)
 
         characteristic_idx_exp = np.where(characteristic == characteristics_exp)[0][0]
-        not_nan_exp = ~np.isnan(characteristics_mat_exp[:, characteristic_idx_exp])
-        ax.hist(characteristics_mat_exp[:, characteristic_idx_exp][not_nan_exp], bins=100, color=color_exp,
+        not_nan_exp = ~np.isnan(characteristics_mat_exp_cells[:, characteristic_idx_exp])
+        ax.hist(characteristics_mat_exp_cells[:, characteristic_idx_exp][not_nan_exp], bins=100, color=color_exp,
                 label='Data')
 
         characteristics_each_model = np.zeros(len(models))
@@ -68,9 +69,11 @@ if __name__ == '__main__':
             characteristics_mat_model = np.array(get_spike_characteristics(v, t, characteristics, v_rest, check=False,
                                                                            **get_spike_characteristics_dict()),
                                                  dtype=float)
-            ax.axvline(characteristics_mat_model[characteristic_idx], 0, 0.95, color=color_model, linewidth=1.0,
+            ax.axvline(characteristics_mat_model[characteristic_idx], 0, 0.95, color=color_model, linewidth=1.3,
                        label='Model')
             characteristics_each_model[model_idx] = characteristics_mat_model[characteristic_idx]
+        ax.axvline(characteristics_mat_exp_cells[cell_ids_characteristics==exp_cell, characteristic_idx_exp], 0, 0.95,
+                   color='m', linewidth=1.3)  # cell to fit
 
         order_models = np.argsort(characteristics_each_model) + 1
         ax.annotate(str(order_models).replace('[', '').replace(']', ''),
@@ -93,13 +96,17 @@ if __name__ == '__main__':
     step_amp = -0.1
     sag_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                          'sag_amps.npy'))
-    steady_state_amp = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
+    steady_state_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
                                               'v_deflections.npy'))
-    ax.plot(sag_deflections_data, steady_state_amp, 'o', color=color_exp, alpha=0.5, label='Data')
+    cell_ids_sag = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
+                                              'cell_ids.npy'))
+    ax.plot(sag_deflections_data, steady_state_amps_data, 'o', color=color_exp, alpha=0.5, label='Data')
+    ax.plot(sag_deflections_data[cell_ids_sag==exp_cell], steady_state_amps_data[cell_ids_sag==exp_cell],
+            'o', color='m', alpha=0.8)
 
     axins = inset_axes(ax, width='50%', height='50%', loc=1)
     mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
-    axins.plot(sag_deflections_data, steady_state_amp, 'o', color=color_exp, alpha=0.5, label='Data')
+    axins.plot(sag_deflections_data, steady_state_amps_data, 'o', color=color_exp, alpha=0.5, label='Data')
 
     for model_idx, model in enumerate(models):
         cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
@@ -114,7 +121,6 @@ if __name__ == '__main__':
         steady_state_amp_model = vrest - v_steady_states[0]
         ax.plot(sag_deflection_model, steady_state_amp_model, 'o', color=color_model, alpha=0.5,
                 label='Model' if model_idx == 0 else '')
-        #ax.annotate(str(model_idx+1), xy=(sag_amp_model+0.005, v_deflection_m  odel+0.05))
         axins.plot(sag_deflection_model, steady_state_amp_model, 'o', color=color_model, alpha=0.5,
                    label='Model' if model_idx == 0 else '')
         axins.annotate(str(model_idx + 1), xy=(sag_deflection_model + 0.01, steady_state_amp_model - 0.15), va='top', fontsize=8, )
@@ -136,8 +142,10 @@ if __name__ == '__main__':
 
     latency_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'latency.npy'))
     ISI12_data = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'ISI12.npy'))
+    cell_ids_latency = np.load(os.path.join(save_dir_data_plots, 'IV/latency_vs_ISI12/rat', 'cell_ids.npy'))
     ax.plot(latency_data[latency_data >= 0], ISI12_data[latency_data >= 0], 'o', color=color_exp,
                     alpha=0.5, label='Data', clip_on=False)
+    ax.plot(latency_data[cell_ids_latency==exp_cell], ISI12_data[cell_ids_latency==exp_cell], 'o', color='m', alpha=0.8)
 
     for model_idx, model in enumerate(models):
         cell = Cell.from_modeldir(os.path.join(save_dir_model, model, 'cell_rounded.json'))
@@ -150,7 +158,7 @@ if __name__ == '__main__':
     ax.set_xlim(0, None)
     ax.set_ylim(0, None)
     ax.set_xlabel('Latency of the first spike (ms)')
-    ax.set_ylabel('$ISI_{1/2}$ (ms)')
+    ax.set_ylabel('$\mathrm{ISI_{1/2}}$ (ms)}')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.text(-0.3, 1.0, 'C', transform=ax.transAxes, size=18, weight='bold')
 
@@ -165,6 +173,7 @@ if __name__ == '__main__':
     FI_b = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'FI_b.npy'))
     FI_c = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'FI_c.npy'))
     RMSE = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'RMSE.npy'))
+    cell_ids_FI = np.load(os.path.join(save_dir_data_plots, 'IV/fi_curve/rat', 'cell_ids.npy'))
 
     ax1.plot(FI_a, FI_b, 'o', color=color_exp, alpha=0.5)
     ax2.plot(FI_b, FI_c, 'o', color=color_exp, alpha=0.5)
@@ -182,13 +191,6 @@ if __name__ == '__main__':
         ax1.set_xticks(np.arange(0, 380, 50))
         ax1.set_ylim(0, 0.8)
         ax1.set_yticks(np.arange(0, 0.9, 0.2))
-        if model_idx == 0:
-            ax1.set_xlabel('a')
-            ax1.set_ylabel('b')
-            ax1.get_yaxis().set_label_coords(-0.15, 0.5)
-            ax1.text(-0.3, 1.0, 'D', transform=ax1.transAxes, size=18, weight='bold')
-            ax1.legend()
-
 
         ax2.plot([FI_b_model], [FI_c_model], 'o', color=color_model, alpha=0.5)
         ax2.annotate(str(model_idx + 1), xy=(FI_b_model + 0.01, FI_c_model + 0.01), fontsize=8)
@@ -214,14 +216,26 @@ if __name__ == '__main__':
             ax3.get_yaxis().set_label_coords(-0.15, 0.5)
             ax3.text(-0.3, 1.0, 'F', transform=ax3.transAxes, size=18, weight='bold')
 
+    ax1.plot(FI_a[cell_ids_FI == exp_cell], FI_b[cell_ids_FI == exp_cell], 'o', color='m', alpha=0.8,
+             label='Target cell')
+    ax2.plot(FI_b[cell_ids_FI == exp_cell], FI_c[cell_ids_FI == exp_cell], 'o', color='m', alpha=0.8)
+    ax3.plot(FI_c[cell_ids_FI == exp_cell], FI_a[cell_ids_FI == exp_cell], 'o', color='m', alpha=0.8)
+    ax1.set_xlabel('a')
+    ax1.set_ylabel('b')
+    ax1.get_yaxis().set_label_coords(-0.15, 0.5)
+    ax1.text(-0.3, 1.0, 'D', transform=ax1.transAxes, size=18, weight='bold')
+    ax1.legend()
+
     # resonance
     ax = pl.Subplot(fig, outer[3, 0])
     fig.add_subplot(ax)
 
     res_freqs_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'res_freqs.npy'))
     q_values_data = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'q_values.npy'))
+    cell_ids_res = np.load(os.path.join(save_dir_data_plots, 'Zap20/rat/summary', 'cell_ids.npy'))
 
     ax.plot(res_freqs_data, q_values_data, 'o', color=color_exp, alpha=0.5, label='Data', clip_on=False)
+    ax.plot(res_freqs_data[cell_ids_res==exp_cell], q_values_data[cell_ids_res==exp_cell], 'o', color='m', alpha=0.8)
 
     for model_idx, model in enumerate(models):
         zap_params = get_i_inj_standard_params('Zap20')
@@ -262,12 +276,20 @@ if __name__ == '__main__':
                                             'spike_phase',
                                             str(None)+'_'+str(None)+'_'+str(freq1)+'_'+str(freq2),
                                             'phase_stds.npy'))
+    cell_ids_phase = np.load(os.path.join(save_dir_data_plots, 'sine_stimulus', 'traces', 'rat', 'summary',
+                                           'spike_phase',
+                                           str(None) + '_' + str(None) + '_' + str(freq1) + '_' + str(freq2),
+                                           'cell_ids.npy'))
 
     ax.plot(phase_means_data, phase_stds_data, 'o', color=color_exp, alpha=0.5)
+    ax.plot(phase_means_data[cell_ids_phase==exp_cell], phase_stds_data[cell_ids_phase==exp_cell], 'o', color='m',
+            alpha=0.8)
 
     axins = inset_axes(ax, width='50%', height='50%', loc=1)
     mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
     axins.plot(phase_means_data, phase_stds_data, 'o', color=color_exp, alpha=0.5, label='Data')
+    axins.plot(phase_means_data[cell_ids_phase==exp_cell], phase_stds_data[cell_ids_phase==exp_cell], 'o', color='m',
+               alpha=0.8)
 
     for model_idx, model in enumerate(models):
         with open(os.path.join(save_dir_model, model, 'img', 'sine_stimulus/traces',

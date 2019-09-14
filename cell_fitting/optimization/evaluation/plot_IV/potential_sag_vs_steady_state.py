@@ -51,11 +51,11 @@ def plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags
 if __name__ == '__main__':
 
     # parameters
-    save_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
-    model_dir = os.path.join(save_dir, 'cell.json')
+    save_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models/2'
+    model_dir = os.path.join(save_dir, 'cell_rounded.json')
     mechanism_dir = '../../../model/channels/vavoulis'
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
-    AP_threshold = -30
+    data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data/2015_08_26b.dat'
+    AP_threshold = -20
     v_shift = -16
     protocol = 'IV'
 
@@ -91,6 +91,8 @@ if __name__ == '__main__':
     v_sags = np.array(v_sags)[amps_subtheshold_bool]
 
     sag_dict = dict(amps_subtheshold=list(amps_subtheshold), v_steady_states=list(v_steady_states), v_sags=list(v_sags))
+    if not os.path.exists(os.path.join(save_dir, 'img', 'IV', 'sag')):
+        os.makedirs(os.path.join(save_dir, 'img', 'IV', 'sag'))
     with open(os.path.join(save_dir, 'img', 'IV', 'sag', 'sag_dict.json'), 'w') as f:
         json.dump(sag_dict, f)
 

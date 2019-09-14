@@ -13,16 +13,16 @@ from cell_fitting.optimization.evaluation.plot_IV.potential_sag_vs_steady_state 
 from cell_fitting.optimization.simulate import get_standard_simulation_params
 from cell_fitting.util import get_channel_color_for_plotting
 from cell_characteristics import to_idx
-pl.style.use('paper_subplots')
+pl.style.use('paper')
 
 
 if __name__ == '__main__':
 
-    save_dir_img = '/home/cf/Dropbox/thesis/figures_results'
-    save_dir_model = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
-    mechanism_dir = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
-    save_dir_data = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
-    save_dir_data_plots = '/home/cf/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
+    save_dir_img = '/home/cfischer/Dropbox/thesis/figures_results_paper'
+    save_dir_model = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/results/best_models'
+    mechanism_dir = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/model/channels/vavoulis'
+    save_dir_data = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
+    save_dir_data_plots = '/home/cfischer/Phd/programming/projects/cell_fitting/cell_fitting/data/plots'
     model = '2'
     exp_cell = '2015_08_26b'
     color_exp = '#0099cc'
@@ -60,6 +60,12 @@ if __name__ == '__main__':
                                                                 end_step_idx=end_step_idx_model)
     sag_deflection_model = v_steady_states[0] - v_sags[0]
     steady_state_amp_model = vrest_model - v_steady_states[0]
+
+    v_sags, v_steady_states, _ = compute_v_sag_and_steady_state([v_data], [step_amp], AP_threshold=0,
+                                                                start_step_idx=start_step_idx_data,
+                                                                end_step_idx=end_step_idx_data)
+    sag_deflection_data = v_steady_states[0] - v_sags[0]
+    steady_state_amp_data = vrest_data - v_steady_states[0]
 
     # plot
     fig = pl.figure(figsize=(8, 6))
@@ -113,7 +119,7 @@ if __name__ == '__main__':
     ax0.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.get_yaxis().set_label_coords(-0.15, 0.5)
     ax1.set_yticks([np.min(i_inj), np.max(i_inj)])
-    ax0.legend(loc='lower right')
+    #ax0.legend(loc='lower right')
     # letter
     ax0.text(-0.25, 1.0, 'A', transform=ax0.transAxes, size=18, weight='bold')
 
@@ -165,18 +171,20 @@ if __name__ == '__main__':
     fig.add_subplot(ax)
 
     sag_deflections_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
-                                         'sag_amps.npy'))
+                                   'sag_amps.npy'))
     steady_state_amps_data = np.load(os.path.join(save_dir_data_plots, 'IV', 'sag', 'rat', str(step_amp),
-                                              'v_deflections.npy'))
+                                     'v_deflections.npy'))
     ax.plot(sag_deflections_data, steady_state_amps_data, 'o', color=color_exp, alpha=0.5, label='Data')
 
     ax.plot(sag_deflection_model, steady_state_amp_model, 'o', color=color_model, alpha=0.5, label='Model')
+    ax.plot(sag_deflection_data, steady_state_amp_data, 'o', color='m', alpha=0.8, label='Target cell')
 
     ax.set_xlabel('Sag deflection (mV)')
     ax.set_ylabel('Steady state amp. (mV)')
     ax.get_yaxis().set_label_coords(-0.15, 0.5)
     ax.set_ylim(0, None)
     ax.set_xlim(0, None)
+    ax.legend()
     ax.text(-0.25, 1.0, 'D', transform=ax.transAxes, size=18, weight='bold')
 
     pl.tight_layout()

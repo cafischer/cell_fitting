@@ -13,7 +13,8 @@ pl.style.use('paper')
 if __name__ == '__main__':
 
     # parameters
-    data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    #data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     AP_threshold = -30
     v_shift = -16
     animal = 'rat'
@@ -67,4 +68,4 @@ if __name__ == '__main__':
         plot_sag_vs_steady_state_on_ax(ax, amps_subtheshold, v_steady_states, v_sags)
         pl.tight_layout()
         pl.savefig(os.path.join(save_dir_img, 'sag_vs_steady_state.png'))
-        pl.show()
+        #pl.show()

@@ -8,7 +8,7 @@ from cell_fitting.optimization.evaluation import get_spike_characteristics_dict
 
 if __name__ == '__main__':
     # data_dir = '/home/cfischer/Phd/DAP-Project/cell_data/raw_data'
-    data_dir = '/media/cfischer/TOSHIBA EXT/2019-04-03-Sicherung_all/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     protocol = 'rampIV'
     animal = 'rat'
     save_dir = os.path.join('../plots/spike_characteristics', animal)
@@ -28,6 +28,7 @@ if __name__ == '__main__':
     cell_ids_with_DAP = []
     spike_characteristics_with_DAP = []
     v_with_DAP = []
+    ramp_amps = []
     count_cells_no_DAP = 0
     for cell_id in cell_ids:
         # find trace with AP
@@ -65,6 +66,7 @@ if __name__ == '__main__':
                     cell_ids_with_DAP.append(cell_id)
                     spike_characteristics_with_DAP.append(spike_characteristics)
                     v_with_DAP.append(v)
+                    ramp_amps.append(np.max(i_inj))
 
                 if spike_characteristics[4] is None:
                     count_cells_no_DAP += 1
@@ -90,3 +92,4 @@ if __name__ == '__main__':
     np.save(os.path.join(save_dir, 'AP_mat.npy'), AP_matrix)
     np.save(os.path.join(save_dir, 't.npy'), t)
     np.save(os.path.join(save_dir, 'cell_ids.npy'), cell_ids_with_DAP)
+    np.save(os.path.join(save_dir, 'ramp_amps.npy'), ramp_amps)

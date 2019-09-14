@@ -12,6 +12,7 @@ pl.style.use('paper')
 if __name__ == '__main__':
     # parameters
     data_dir = '/home/cf/Phd/DAP-Project/cell_data/raw_data'
+    data_dir = '/media/cfischer/TOSHIBA EXT/Sicherung_2018_05_19/Phd/DAP-Project/cell_data/raw_data'
     AP_threshold = 0
     v_shift = -16
     animal = 'rat'
@@ -23,6 +24,7 @@ if __name__ == '__main__':
     cell_ids = get_cells_for_protocol(data_dir, protocol)
     cell_ids = filter(lambda id: check_rat_or_gerbil(id) == animal, cell_ids)
     cell_ids = filter(lambda id: check_cell_has_DAP(id), cell_ids)
+    cell_ids_included = []
 
     sweep_idx = get_sweep_index_for_amp(amp, 'IV')
 
@@ -54,6 +56,8 @@ if __name__ == '__main__':
                 v_deflection = vrest - v_steady_states[0]
                 v_deflections.append(v_deflection)
 
+                cell_ids_included.append(cell_id)
+
                 # if v_deflection > 30 and sag_amp > 10:
                 #     pl.figure()
                 #     pl.plot(t, v)
@@ -75,6 +79,7 @@ if __name__ == '__main__':
 
     np.save(os.path.join(save_dir_img, 'sag_amps.npy'), sag_amps)
     np.save(os.path.join(save_dir_img, 'v_deflections.npy'), v_deflections)
+    np.save(os.path.join(save_dir_img, 'cell_ids.npy'), cell_ids_included)
 
     pl.figure()
     pl.hist(sag_amps, bins=100, color='0.5')
